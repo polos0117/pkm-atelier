@@ -89,6 +89,28 @@ body {color:var(--text);font-size:15px}
 .big {position:relative;width:100%;aspect-ratio:2/3;max-height:46dvh;overflow:hidden;
   background:var(--card2);border:1px solid var(--line);border-radius:12px}
 .big img {display:block;width:100%;height:100%;object-fit:contain}
+/* 카드 값 — 제목과 값을 두 칸으로 놓는다. 좁은 화면에서도 안 겹치게 최소폭을 준다 */
+.facts {display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 12px;
+  margin:0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.facts dt {margin:0;color:var(--muted);font-size:11px;white-space:nowrap;align-self:center}
+.facts dd {margin:0;font-size:13px;overflow-wrap:anywhere}
+.facts dd b {font-weight:700}
+/* 종족값 — 숫자만 늘어놓으면 어느 쪽이 높은지 안 읽힌다. 막대를 같이 둔다.
+   가장 높은 값(255)을 꽉 찬 것으로 잡는다 */
+.bars {display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 8px;align-items:center;
+  margin:0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.bars span {color:var(--muted);font-size:11px;white-space:nowrap}
+.bars i {display:block;height:7px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
+.bars i u {display:block;height:100%;background:var(--accent);text-decoration:none}
+.bars b {font:700 12px ui-monospace,monospace;text-align:right;min-width:3ch}
+.bars .sum {border-top:1px solid var(--line);padding-top:6px;margin-top:2px}
+/* 진화 — 이름을 눌러 그 카드로 건너간다 */
+.evo {display:flex;flex-wrap:wrap;gap:6px}
+.evo button {min-height:34px;padding:5px 10px;background:var(--card2);color:var(--accent);
+  border:1px solid var(--line);border-radius:999px;font:inherit;font-size:12px}
+.tag {display:inline-block;margin-left:6px;padding:2px 7px;border-radius:999px;
+  background:var(--accent-soft);color:var(--accent);font:700 10px ui-monospace,monospace;
+  vertical-align:middle}
 .gal {display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
 .gal img {display:block;width:100%;border:1px solid var(--line);border-radius:8px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
@@ -101,7 +123,10 @@ body {color:var(--text);font-size:15px}
 <body class="dex-page">
 <div id="app"></div>
 <script type="module">
-import { h, render } from 'https://esm.sh/preact@10.24.3';
+/* Fragment 는 h 에 안 붙어 있다. h.Fragment 로 부르면 undefined 가 넘어가고
+   preact 가 진짜 태그를 하나 만들어 버린다 — 격자(.facts)에서 그 태그가 칸을
+   차지해서 제목과 값이 세로로 겹쳐 붙었다. 따로 들여온다 */
+import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
 import { AppearanceControls, WorkspaceHeading } from './lib/workspace-ui.js';
@@ -155,13 +180,15 @@ function useDex() {
       fetch('data/card.json', { cache: 'no-cache' }).then(r => r.json()),
       fetch('data/style.json', { cache: 'no-cache' }).then(r => r.json()),
       IMG.load(),
-    ]).then(([card, style, img]) => {
+      fetch('data/group.json', { cache: 'no-cache' }).then(r => r.json()),
+      fetch('data/label.json', { cache: 'no-cache' }).then(r => r.json()),
+    ]).then(([card, style, img, group, label]) => {
       const cards = [];
       for (const kind of Object.keys(card.cards || {}))
         for (const c of card.cards[kind]) cards.push(Object.assign({ kind }, c));
       const styleName = {};
       for (const r of style.styles || []) styleName[r.key] = r.name;
-      set({ cards, defs: card.forms || {}, styleName, img });
+      set({ cards, defs: card.forms || {}, styleName, img, group, label });
     }).catch(e => set({ error: String((e && e.message) || e) }));
   }, []);
   return state;
@@ -185,7 +212,52 @@ function bestStyle(entry, want) {
   return best;
 }
 
-function Detail({ card, entry, defs, styleName, onClose }) {
+/* 카드가 들고 있는 값. 없는 값은 줄 자체를 안 만든다 —
+   "진화: 없음" 을 1,025장에 늘어놓아 봐야 읽을 것만 늘어난다 */
+function Facts({ card, group, label, onJump }) {
+  const gname = k => (group.name || {})[k] || k;
+  const el = [card.element, card.element2].filter(Boolean).map(gname).join(' · ');
+  const rows = [
+    [W('card.no'), html`<b>No.${String(card.no).padStart(4, '0')}</b>
+      ${' '}${W('card.gen', { n: card.gen })}
+      ${card.rare && html`<span class="tag">${W('card.rare.' + card.rare)}</span>`}`],
+    [W('group.one'), el],
+    card.genus && [W('kind.character'), card.genus],
+    card.h !== undefined && [W('card.size'),
+      W('card.height', { n: card.h }) + ' · ' + W('card.weight', { n: card.w })],
+    card.color && [W('card.color'), (label.color || {})[card.color] || card.color],
+    card.shape && [W('card.shape'), (label.shape || {})[card.shape] || card.shape],
+    card.egg && [W('card.egg'), card.egg.map(k => (label.egg || {})[k] || k).join(' · ')],
+  ].filter(Boolean);
+
+  const evo = [];
+  if (card.from) evo.push([W('card.evo.from'), [card.from]]);
+  if (card.to) evo.push([W('card.evo.to'), card.to]);
+
+  /* 종족값은 255 가 가장 높다. 그 값을 꽉 찬 것으로 잡아야 카드끼리 견줄 수 있다 */
+  const stats = card.stats || [];
+  const names = label.stat || [];
+  return html`
+    <dl class="facts">
+      ${rows.map(([k, v]) => html`<${Fragment} key=${k}><dt>${k}</dt><dd>${v}</dd><//>`)}
+      ${evo.map(([k, list]) => html`<${Fragment} key=${k}>
+        <dt>${W('card.evo')} ${k}</dt>
+        <dd><div class="evo">${list.map(n =>
+          html`<button key=${n} onClick=${() => onJump(n)}>${n}</button>`)}</div></dd><//>`)}
+      ${card.text && html`<${Fragment}><dt>${W('card.text')}</dt><dd>${card.text}</dd><//>`}
+    </dl>
+    ${stats.length > 0 && html`<div class="bars" role="group" aria-label=${W('card.stats')}>
+      ${stats.map((n, i) => html`<${Fragment} key=${i}>
+        <span>${names[i] || i}</span>
+        <i><u style=${'width:' + Math.round(n / 255 * 100) + '%'}></u></i>
+        <b>${n}</b><//>`)}
+      <span class="sum">${W('card.total')}</span>
+      <i class="sum"></i>
+      <b class="sum">${stats.reduce((a, b) => a + b, 0)}</b>
+    </div>`}`;
+}
+
+function Detail({ card, entry, defs, styleName, group, label, onClose, onJump }) {
   const want = wanted(defs, card);
   const keys = IMG.styleKeys(entry || {});
   const [wantStyle, setStyle] = useState('');
@@ -241,6 +313,9 @@ function Detail({ card, entry, defs, styleName, onClose }) {
       ${defs[form].note && html`<p class="note">${defs[form].note}</p>`}
     ` : html`<p class="empty">${W('art.none')}</p>`}
 
+    <p class="sec">${W('kind.character')}</p>
+    <${Facts} card=${card} group=${group} label=${label} onJump=${onJump} />
+
     ${acts.length > 0 && html`
       <p class="sec">${W('dex.action')}<span>${W('art.count', { n: acts.length })}</span></p>
       <div class="gal">${acts.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
@@ -294,7 +369,9 @@ function App() {
 
   const card = st.cards.find(c => c.name === open);
   if (card) return html`<${Detail} key=${card.name} card=${card} entry=${st.img[card.name] || null}
-    defs=${st.defs} styleName=${st.styleName} onClose=${() => setOpen('')} />`;
+    defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
+    onClose=${() => setOpen('')}
+    onJump=${n => st.cards.some(c => c.name === n) && setOpen(n)} />`;
   return html`<${List} st=${st} onOpen=${setOpen} />`;
 }
 

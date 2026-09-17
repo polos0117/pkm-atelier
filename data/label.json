@@ -1,0 +1,50 @@
+{
+ "version": 1,
+ "note": "카드 값의 이름표. data/card.json 은 열쇠와 숫자만 담고 사람이 읽는 말은 여기서 온다. stat 은 card.json 의 stats 배열과 같은 차례다 — 차례가 어긋나면 공격이 방어로 뜬다. shape 는 한국어 정본이 없어 영문 열쇠 그대로다. tools/fetch-cards.py 가 만든다.",
+ "stat": ["HP", "공격", "방어", "특수공격", "특수방어", "스피드"],
+ "color": {
+  "black": "검정",
+  "blue": "파랑",
+  "brown": "갈색",
+  "gray": "회색",
+  "green": "초록",
+  "pink": "담홍",
+  "purple": "보라",
+  "red": "빨강",
+  "white": "하양",
+  "yellow": "노랑"
+ },
+ "egg": {
+  "monster": "괴수",
+  "water1": "수중 1",
+  "bug": "벌레",
+  "flying": "비행",
+  "ground": "육상",
+  "fairy": "요정",
+  "plant": "식물",
+  "humanshape": "인간형",
+  "water3": "수중 3",
+  "mineral": "광물",
+  "indeterminate": "부정형",
+  "water2": "수중 2",
+  "ditto": "메타몽",
+  "dragon": "드래곤",
+  "no-eggs": "알미발견"
+ },
+ "shape": {
+  "ball": "ball",
+  "squiggle": "squiggle",
+  "fish": "fish",
+  "arms": "arms",
+  "blob": "blob",
+  "upright": "upright",
+  "legs": "legs",
+  "quadruped": "quadruped",
+  "wings": "wings",
+  "tentacles": "tentacles",
+  "heads": "heads",
+  "humanoid": "humanoid",
+  "bug-wings": "bug-wings",
+  "armor": "armor"
+ }
+}

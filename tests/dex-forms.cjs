@@ -17,6 +17,8 @@ vm.runInContext(fs.readFileSync('lib/words.js', 'utf8'), ctx);
 const W = ctx.window.AtelierWords.W;
 
 const CARD = JSON.parse(fs.readFileSync('data/card.json', 'utf8'));
+const LABEL = JSON.parse(fs.readFileSync('data/label.json', 'utf8'));
+const GROUP = JSON.parse(fs.readFileSync('data/group.json', 'utf8'));
 const IMGJSON = JSON.parse(fs.readFileSync('data/img.json', 'utf8'));
 const NAME = Object.keys(IMGJSON.img)[0];
 const DEFS = CARD.forms;
@@ -154,6 +156,79 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   }, WANT[1], { timeout: 4000 }).catch(() => {});
   const big2 = await P.$eval('.big img', i => decodeURIComponent(i.src));
   ck('폼을 바꾸면 큰 그림이 바뀐다', big2.indexOf('_' + WANT[1] + '_') > 0, big2);
+
+  /* ── 카드가 들고 있는 값 ─────────────────────────── */
+  const ME = CARD.cards.character.find(c => c.name === NAME);
+  const facts = await P.evaluate(() => {
+    const dl = document.querySelector('.facts');
+    if (!dl) return null;
+    const dt = [...dl.querySelectorAll('dt')], dd = [...dl.querySelectorAll('dd')];
+    const m = {};
+    dt.forEach((k, i) => { m[k.textContent.trim()] = (dd[i] || {}).textContent.trim(); });
+    /* 격자 칸은 dt·dd 여야 한다. 사이에 감싸는 태그가 끼면 그 태그가 칸을
+       차지해서 제목과 값이 세로로 겹쳐 붙는다 — preact 의 Fragment 를 h.Fragment
+       로 잘못 불러서 실제로 겪었다. 위치로만 재면 20px 차이라 안 잡힌다 */
+    const odd = [...dl.children].map(e => e.tagName)
+      .filter(t => t !== 'DT' && t !== 'DD');
+    const pairOk = odd.length === 0 &&
+      dt.every((k, i) => dd[i] &&
+        Math.abs(k.getBoundingClientRect().top - dd[i].getBoundingClientRect().top) < 24 &&
+        dd[i].getBoundingClientRect().left > k.getBoundingClientRect().left);
+    return { m, pairOk, odd, dt: dt.length, dd: dd.length };
+  });
+  ck('값 판이 뜬다', facts !== null);
+  ck('격자에 dt·dd 말고는 안 들어간다 · 제목 옆에 값이 선다', facts && facts.pairOk,
+    facts && ('끼어든 태그 ' + JSON.stringify(facts.odd)));
+  ck('도감 번호와 세대가 맞다',
+    facts && facts.m[W('card.no')] ===
+      'No.' + String(ME.no).padStart(4, '0') + ' ' + W('card.gen', { n: ME.gen }),
+    facts && facts.m[W('card.no')]);
+  ck('타입 이름은 group.json 에서 온다',
+    facts && facts.m[W('group.one')] === GROUP.name[ME.element],
+    facts && facts.m[W('group.one')]);
+  ck('크기가 맞다',
+    facts && facts.m[W('card.size')] ===
+      W('card.height', { n: ME.h }) + ' · ' + W('card.weight', { n: ME.w }),
+    facts && facts.m[W('card.size')]);
+  ck('알그룹 이름은 label.json 에서 온다',
+    facts && facts.m[W('card.egg')] === ME.egg.map(k => LABEL.egg[k]).join(' · '),
+    facts && facts.m[W('card.egg')]);
+  ck('도감 설명이 그대로 실린다',
+    facts && facts.m[W('card.text')] === ME.text, facts && facts.m[W('card.text')]);
+
+  const bars = await P.evaluate(() => {
+    const box = document.querySelector('.bars');
+    if (!box) return null;
+    return { name: [...box.querySelectorAll('span')].map(e => e.textContent.trim()),
+             num: [...box.querySelectorAll('b')].map(e => Number(e.textContent)),
+             width: [...box.querySelectorAll('u')].map(e => e.style.width) };
+  });
+  ck('종족값 이름이 label.json 의 차례와 같다',
+    bars && bars.name.slice(0, LABEL.stat.length).join(',') === LABEL.stat.join(','),
+    bars && bars.name.join(','));
+  ck('종족값 숫자가 card.json 과 같다',
+    bars && bars.num.slice(0, ME.stats.length).join(',') === ME.stats.join(','),
+    bars && bars.num.join(','));
+  ck('합계가 맞다',
+    bars && bars.num[bars.num.length - 1] === ME.stats.reduce((a, b) => a + b, 0),
+    bars && bars.num[bars.num.length - 1]);
+  ck('막대 길이가 값에 따라 다르다', bars && new Set(bars.width).size > 1,
+    bars && bars.width.join(' '));
+
+  /* 진화 이름을 누르면 그 카드로 건너간다 */
+  const nxt = ME.to && ME.to[0];
+  if (nxt) {
+    const went = await P.evaluate(n => {
+      const b = [...document.querySelectorAll('.evo button')].find(x => x.textContent.trim() === n);
+      if (b) b.click();
+      return !!b;
+    }, nxt);
+    await P.waitForTimeout(700);
+    const nowName = await P.$eval('.bar h2', e => e.textContent.trim());
+    ck('진화 이름을 누르면 그 카드로 건너간다', went && nowName === nxt, nowName);
+    await P.click('.back');
+    await openCard(P, NAME);
+  }
 
   const secs = await q(P, '.sec', els => els.map(e => e.textContent));
   ck('연출컷이 없으면 그 칸을 아예 안 그린다',

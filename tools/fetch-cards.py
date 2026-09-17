@@ -10,8 +10,9 @@ CSV 는 아홉 개만 받으면 되고 합쳐서 0.5 MB 다. 게다가 이름·�
 정리돼 있어 우리가 쓸 꼴로 바로 맞출 수 있다.
 
 만드는 것
-    data/card.json   카드 1,025장. {name, en, element, element2?, gen, genus, forms}
+    data/card.json   카드 1,025장
     data/group.json  타입 18가지 이름표와 색 (카드를 묶는 축이다)
+    data/label.json  종족값·색·알그룹 이름표 (카드에는 열쇠만 넣는다)
 
 이름은 한국어 정본을 쓴다. 그림 파일 이름이 카드 이름으로 만들어지므로
 (<카드>_<폼>_<화풍>_<성별>.webp) 여기서 한 번 정해 두면 뒤가 흔들리지 않는다.
@@ -33,7 +34,14 @@ import roster
 BASE = "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/"
 FILES = ("languages", "pokemon_species", "pokemon_species_names",
          "types", "type_names", "pokemon", "pokemon_types",
-         "generations", "generation_names")
+         "generations", "generation_names",
+         "stats", "stat_names", "pokemon_stats",
+         "pokemon_colors", "pokemon_color_names", "pokemon_shapes",
+         "egg_groups", "egg_group_prose", "pokemon_egg_groups",
+         "pokemon_species_flavor_text")
+
+# 종족값 여섯. 7·8(명중률·회피율)은 개체가 아니라 기술에 붙는 값이라 뺀다
+STAT_IDS = ("1", "2", "3", "4", "5", "6")
 KO, EN = "3", "9"          # languages.csv 의 한국어·영어 id
 
 # 폼은 아직 모든 카드가 같다. 카드마다 달라지면 여기가 아니라 card.json 을 손본다
@@ -90,6 +98,36 @@ def main():
     for r in t["pokemon_types"]:
         slots.setdefault(r["pokemon_id"], []).append((int(r["slot"]), r["type_id"]))
 
+    # 키·무게는 개체(기본 폼)에 붙는다. 자료는 dm·hg 단위라 m·kg 으로 돌린다
+    body = {r["species_id"]: r for r in t["pokemon"] if r["is_default"] == "1"}
+
+    # 종족값 여섯. STAT_IDS 차례대로 배열에 담는다 — 열쇠를 카드마다 되풀이하면
+    # 파일이 1,025번 두꺼워진다. 이름표는 data/label.json 이 준다
+    stat = {}
+    for r in t["pokemon_stats"]:
+        if r["stat_id"] in STAT_IDS:
+            stat.setdefault(r["pokemon_id"], {})[r["stat_id"]] = int(r["base_stat"])
+
+    color = {r["id"]: r["identifier"] for r in t["pokemon_colors"]}
+    shape = {r["id"]: r["identifier"] for r in t["pokemon_shapes"]}
+    egg = {}
+    for r in t["pokemon_egg_groups"]:
+        egg.setdefault(r["species_id"], []).append(r["egg_group_id"])
+    egg_id = {r["id"]: r["identifier"] for r in t["egg_groups"]}
+
+    # 도감 설명. 한 종에 판본마다 하나씩 있어 여럿이다 — 가장 나중 것을 쓴다
+    text = {}
+    for r in t["pokemon_species_flavor_text"]:
+        if r["language_id"] == KO:
+            text[r["species_id"]] = r["flavor_text"].replace("\n", " ").replace("\x0c", " ")
+
+    # 진화. evolves_from 만 있으므로 뒤집어서 "무엇으로 진화하나" 도 만든다
+    evo_to = {}
+    for r in t["pokemon_species"]:
+        prev = r["evolves_from_species_id"]
+        if prev:
+            evo_to.setdefault(prev, []).append(r["id"])
+
     cards, missing = [], []
     for s in sorted(t["pokemon_species"], key=lambda r: int(r["id"])):
         sid = s["id"]
@@ -105,6 +143,32 @@ def main():
              "genus": genus.get(sid, ""), "forms": list(FORMS)}
         if len(tid) > 1:
             c["element2"] = tid[1]
+
+        b = body.get(sid)
+        if b:
+            c["h"] = round(int(b["height"]) / 10, 1)     # dm → m
+            c["w"] = round(int(b["weight"]) / 10, 1)     # hg → kg
+            st = stat.get(b["id"])
+            if st and all(k in st for k in STAT_IDS):
+                c["stats"] = [st[k] for k in STAT_IDS]
+        if s["color_id"] in color:
+            c["color"] = color[s["color_id"]]
+        if s["shape_id"] in shape:
+            c["shape"] = shape[s["shape_id"]]
+        if sid in egg:
+            c["egg"] = [egg_id[g] for g in egg[sid] if g in egg_id]
+        if s["is_legendary"] == "1":
+            c["rare"] = "legendary"
+        elif s["is_mythical"] == "1":
+            c["rare"] = "mythical"
+        prev = s["evolves_from_species_id"]
+        if prev and prev in ko:
+            c["from"] = ko[prev]
+        nxt = [ko[x] for x in evo_to.get(sid, []) if x in ko]
+        if nxt:
+            c["to"] = nxt
+        if sid in text:
+            c["text"] = text[sid]
         cards.append(c)
 
     # 이름이 겹치면 그림 파일이 서로를 덮는다. 카드 이름은 파일 이름이기도 하다
@@ -138,6 +202,25 @@ def main():
         "count": len(cards),
         "cards": {"character": cards},
     }
+    # 종족값·색·알그룹 이름표. 카드에는 열쇠만 넣고 사람이 읽는 말은 여기 모은다
+    stat_ko = {r["stat_id"]: r["name"]
+               for r in t["stat_names"] if r["local_language_id"] == KO}
+    color_ko = {r["pokemon_color_id"]: r["name"]
+                for r in t["pokemon_color_names"] if r["local_language_id"] == KO}
+    egg_ko = {r["egg_group_id"]: r["name"]
+              for r in t["egg_group_prose"] if r["local_language_id"] == KO}
+    label = {
+        "version": 1,
+        "note": ("카드 값의 이름표. data/card.json 은 열쇠와 숫자만 담고 사람이 읽는 말은 "
+                 "여기서 온다. stat 은 card.json 의 stats 배열과 같은 차례다 — 차례가 "
+                 "어긋나면 공격이 방어로 뜬다. shape 는 한국어 정본이 없어 영문 열쇠 그대로다. "
+                 "tools/fetch-cards.py 가 만든다."),
+        "stat": [stat_ko.get(k, k) for k in STAT_IDS],
+        "color": {color[k]: color_ko[k] for k in sorted(color, key=int) if k in color_ko},
+        "egg": {egg_id[k]: egg_ko[k] for k in sorted(egg_id, key=int) if k in egg_ko},
+        "shape": {shape[k]: shape[k] for k in sorted(shape, key=int)},
+    }
+
     grp = roster.read("group")
     grp["name"] = {k: v for k, v in used}
     grp["color"] = {k: TYPE_COLOR[k] for k, _ in used}
@@ -146,6 +229,7 @@ def main():
     if not a.check and not missing:
         roster.write("card", doc)
         roster.write("group", grp)
+        roster.write("label", label)
 
     print("[%s] data/card.json · 카드 %d · 묶음 %d"
           % ("검증 실패·저장 안 함" if missing else ("대조" if a.check else "완료"),
@@ -154,9 +238,21 @@ def main():
     for c in cards:
         by_gen[c["gen"]] = by_gen.get(c["gen"], 0) + 1
     print("  세대별 " + " · ".join("%d세대 %d" % (g, by_gen[g]) for g in sorted(by_gen)))
-    print("  두 타입 %d · 한 타입 %d"
-          % (sum(1 for c in cards if "element2" in c),
-             sum(1 for c in cards if "element2" not in c)))
+    # 다 차야 하는 값과, 빈 것이 정상인 값을 갈라 적는다.
+    # 안 가르면 "진화 전 484/1025" 가 늘 경고처럼 보여서 진짜 구멍이 묻힌다
+    for k, what in (("stats", "종족값"), ("color", "색"), ("shape", "모양"),
+                    ("egg", "알그룹"), ("h", "키·무게")):
+        n = sum(1 for c in cards if k in c)
+        print("  %-9s %4d / %d%s" % (what, n, len(cards),
+                                     "" if n == len(cards) else "  ← 비었다"))
+    n = sum(1 for c in cards if "text" in c)
+    print("  %-9s %4d / %d%s" % ("도감 설명", n, len(cards),
+                                 "" if n == len(cards) else
+                                 "  ← 한국어 설명이 아직 없는 종이 있다"))
+    print("  없는 것이 정상: 진화 전 %d · 진화 후 %d · 전설·환상 %d · 두 타입 %d"
+          % (sum(1 for c in cards if "from" in c), sum(1 for c in cards if "to" in c),
+             sum(1 for c in cards if "rare" in c),
+             sum(1 for c in cards if "element2" in c)))
     if missing:
         print("  못 만든 카드 %d" % len(missing))
         for sid, why in missing[:10]:
