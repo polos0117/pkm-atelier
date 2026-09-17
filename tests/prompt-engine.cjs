@@ -36,6 +36,9 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert.equal(P.audit(outputMode,t).length,0); count++;
  }
 const first=P.buildPrompt(base);
+const tailAction=P.buildPrompt({...base,outputMode:'action'});
+assert(tailAction.includes('posterior centerline at the sacrum or lower back'));
+assert(tailAction.includes('never originate from the abdomen, front waist, side waist, chest or front hip'));
 // New creation never assumes an uploaded identity or source image, including optional face settings.
 for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action'])
  for(const form of ['light','heavy','mobility','overdrive']){
@@ -58,6 +61,7 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
  assert(sheet.includes('four detail insets')&&sheet.includes('vertical 3:4'));
  assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
+ assert(sheet.includes("rear three-quarter view and equipment inset must clearly show the tail's posterior attachment root"));
  assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
  assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
  assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
