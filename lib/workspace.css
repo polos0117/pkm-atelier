@@ -76,8 +76,14 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 }
 .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .workspace-header {flex:none;margin-bottom:18px}
-.workspace-nav {display:flex;gap:5px;padding:5px;margin:0;background:var(--card);border:1px solid var(--line);border-radius:18px;flex-wrap:nowrap}
-.workspace-nav a {flex:1 1 0;display:flex;align-items:center;justify-content:center;min-width:0;min-height:44px;border:0;border-radius:12px;font-size:12px;font-weight:650;opacity:1;color:var(--muted);white-space:nowrap;text-decoration:none}
+.workspace-nav-row {display:flex;gap:6px;align-items:stretch}
+.workspace-nav {display:flex;gap:5px;padding:5px;margin:0;background:var(--card);border:1px solid var(--line);border-radius:18px;flex-wrap:nowrap;flex:1 1 auto;min-width:0}
+.header-fold {flex:0 0 44px;min-height:44px;padding:0;border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--muted);font:inherit;font-size:14px;cursor:pointer}
+.header-fold:hover {color:var(--text);border-color:var(--accent)}
+.workspace-header.folded .workspace-heading,.workspace-header.folded .appearance-controls {display:none}
+.workspace-header.folded {margin-bottom:10px}
+.workspace-nav a {flex:1 1 0;display:flex;align-items:center;justify-content:center;min-width:0;min-height:44px;padding:0 2px;border:0;border-radius:12px;font-size:12px;font-weight:650;opacity:1;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+@media (max-width:599px) { .workspace-nav {gap:2px;padding:4px} .workspace-nav a {font-size:11px;letter-spacing:-.02em} .header-fold {flex-basis:40px} }
 .workspace-nav a[aria-current="page"] {color:var(--text);background:var(--accent-soft);box-shadow:inset 0 -2px var(--accent)}
 .appearance-controls {display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px 16px;margin:12px 0 0;color:var(--muted);font-size:11px}
 .appearance-controls label {display:flex;align-items:center;gap:6px;white-space:nowrap}

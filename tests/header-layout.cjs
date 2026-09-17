@@ -43,6 +43,19 @@ function same(actual,expected,label){
       }
      }
     }
+    /* 접기 — 제목과 테마가 숨고 항해만 남는다. 다음 화면에서도 접힌 채다. 펼치면 돌아온다 */
+    await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
+    const open=await geometry(p);
+    await p.locator('.header-fold').click();
+    await p.waitForSelector('.workspace-header.folded');
+    assert.equal(await p.locator('.workspace-heading').evaluate(e=>getComputedStyle(e).display),'none','접으면 제목이 숨는다');
+    assert.equal(await p.locator('.appearance-controls').evaluate(e=>getComputedStyle(e).display),'none','접으면 테마도 숨는다');
+    assert((await p.locator('.workspace-nav').boundingBox()).y<=open['.workspace-nav'].y,'접으면 항해가 위로 온다 (낮은 화면에서는 이미 제목이 숨어 같다)');
+    await p.locator('.workspace-nav a[href="run.html"]').click();await p.waitForSelector('.workspace-header.folded');
+    assert.equal(await p.locator('.workspace-heading').evaluate(e=>getComputedStyle(e).display),'none','다음 화면에서도 접힌 채');
+    await p.locator('.header-fold').click();await p.waitForFunction(()=>!document.querySelector('.workspace-header.folded'));
+    /* 낮은 화면(max-height:550)에서는 제목이 원래 숨어 있다 — 접기 전 상태로 돌아오면 된다 */
+    assert.equal(await p.locator('.workspace-heading').evaluate(e=>getComputedStyle(e).display!=='none'),open['.workspace-heading'].visible,'펼치면 접기 전으로 돌아온다');
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
