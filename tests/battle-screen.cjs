@@ -81,6 +81,20 @@ const { start, FOLD } = require('./browser-harness.cjs');
     await p.waitForFunction(() => document.querySelector('.bt-beat b').dataset.beat === '1');
     const lines = await p.locator('.bt-log li').evaluateAll(es => es.map(e => e.textContent));
     assert(lines.some(t => t.startsWith('피카츄 → 뮤')), lines.join(' | '));
+    /* 그림 — 등록된 피카츄는 폼 그림이 서고, 폼을 바꾸면 그림이 바뀐다. 없는 카드는 자리만 */
+    const src = async () => decodeURIComponent(await p.locator('.bt-actor[data-name="피카츄"] img.bt-pic').getAttribute('src'));
+    const form0 = await p.locator('.bt-actor[data-name="피카츄"]').getAttribute('data-form');
+    assert((await src()).includes('피카츄_' + form0 + '_'), await src());
+    assert.equal(await p.locator('.bt-actor[data-name="리자몽"] .bt-pic.none').count(), 1, '그림 없는 카드는 자리만');
+    assert.equal(await p.locator('.bt-actor[data-name="리자몽"] img').count(), 0);
+    const other = ['light', 'heavy', 'mobility'].find(f => f !== form0);
+    const pikaCmd = p.locator('.bt-cmd[data-name="피카츄"]');
+    if (!(await pikaCmd.locator(`button[data-cmd="${other}"]`).isDisabled())) {
+      await pikaCmd.locator(`button[data-cmd="${other}"]`).click();
+      await p.locator('.bt-step').click();
+      await p.waitForFunction(f => document.querySelector('.bt-actor[data-name="피카츄"]').dataset.form === f, other);
+      assert((await src()).includes('피카츄_' + other + '_'), await src());
+    }
     assert(lines.some(t => t.startsWith('거북왕 → 중장')), lines.join(' | '));
     assert.equal(await p.locator('.bt-cmd').nth(2).locator('button[data-cmd="heavy"]').isDisabled(), true, '이제 중장이라 중장 단추는 꺼진다');
     /* 끝까지 굴리면 결과가 뜨고 되감기로 넘어간다 */

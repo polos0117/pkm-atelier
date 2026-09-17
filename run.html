@@ -39,6 +39,7 @@ body {color:var(--text);font-size:15px}
   padding:10px 10px 12px;background:var(--card);min-width:0;display:flex;flex-direction:column;gap:6px}
 .run-card.down {opacity:.5}
 .run-card h3 {margin:0;font-size:15px;letter-spacing:-.02em;overflow-wrap:anywhere}
+.run-card .run-face {display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center top;border-radius:8px;background:var(--card2)}
 .run-card .run-types {display:flex;flex-wrap:wrap;gap:4px}
 .run-card .run-types span {font:700 10px ui-monospace,monospace;letter-spacing:.06em;padding:2px 6px;border-radius:5px;color:#fff;background:var(--tc,#888)}
 .run-card .run-genus {font-size:11px;color:var(--muted)}
@@ -97,6 +98,12 @@ body {color:var(--text);font-size:15px}
 .bt-gauge u i {display:block;height:100%;background:var(--accent)}
 .bt-gauge.hp u i {background:#3a9a5a}
 .bt-gauge.heat u i {background:#d0522f}
+.bt-actor {display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.bt-actor .bt-body {min-width:0}
+.bt-pic {display:block;width:76px;aspect-ratio:2/3;border-radius:7px;object-fit:cover;object-position:center top;background:var(--card2)}
+.bt-pic.none {display:grid;place-items:center;font:700 10px ui-monospace,monospace;color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px}
+.bt-actor.open .bt-pic {box-shadow:0 0 0 2px var(--accent)}
+.bt-actor.forced .bt-pic {box-shadow:0 0 0 2px #c33}
 .bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
 .bt-log li {padding:2px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
 .bt-log li.b {color:var(--muted)}
@@ -116,6 +123,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=pokemon1"></script>
 <script src="lib/fresh.js?v=4"></script>
+<script src="lib/img.js"></script>
 <script src="lib/battle.js"></script>
 <script src="lib/run.js"></script>
 </head>
@@ -126,7 +134,7 @@ import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
-import { Play } from './lib/battle-ui.js';
+import { Play, setImages, picOf } from './lib/battle-ui.js';
 const html = htm.bind(h);
 const W = window.W, B = window.AtelierBattle, RUN = window.AtelierRun;
 const KEY = 'pkm_run_v1';
@@ -146,8 +154,10 @@ function Shell({ head, children }) {
 function useData() {
   const [st, set] = useState({});
   useEffect(() => {
-    Promise.all(['card', 'chart', 'group', 'label'].map(n => fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json())))
-      .then(([card, chart, group, label]) => {
+    Promise.all(['card', 'chart', 'group', 'label'].map(n => fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json()))
+      .concat([window.AtelierImg.load().catch(() => ({}))]))
+      .then(([card, chart, group, label, img]) => {
+        setImages(img);
         const cards = [];
         for (const kind of Object.keys(card.cards || {})) for (const c of card.cards[kind]) cards.push(c);
         set({ cards, by: RUN.index(cards), chart: chart.chart, group, label });
@@ -167,7 +177,9 @@ function Card({ d, name, hp, growth, text, action, onPick }) {
   const types = [c.element].concat(c.element2 ? [c.element2] : []);
   const down = hp != null && hp <= 0;
   const stats = c.stats || [];
+  const pic = picOf(name, 'light', false);
   return html`<div class=${'run-card' + (down ? ' down' : '')} data-name=${name} style=${'--cc:' + (d.group.color[c.element] || 'var(--line)')}>
+    ${pic && html`<img class="run-face" src=${pic} alt="" />`}
     <h3>${c.name}</h3>
     <div class="run-types">${types.map(t => html`<span key=${t} style=${'--tc:' + (d.group.color[t] || '#888')}>${d.group.name[t] || t}</span>`)}</div>
     <div class="run-genus">${c.genus || ''}</div>

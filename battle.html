@@ -62,6 +62,12 @@ body {color:var(--text);font-size:15px}
 .bt-gauge u i {display:block;height:100%;background:var(--accent)}
 .bt-gauge.hp u i {background:#3a9a5a}
 .bt-gauge.heat u i {background:#d0522f}
+.bt-actor {display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.bt-actor .bt-body {min-width:0}
+.bt-pic {display:block;width:76px;aspect-ratio:2/3;border-radius:7px;object-fit:cover;object-position:center top;background:var(--card2)}
+.bt-pic.none {display:grid;place-items:center;font:700 10px ui-monospace,monospace;color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px}
+.bt-actor.open .bt-pic {box-shadow:0 0 0 2px var(--accent)}
+.bt-actor.forced .bt-pic {box-shadow:0 0 0 2px #c33}
 .bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
 .bt-log li {padding:2px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
 .bt-log li.a {color:var(--text)}
@@ -91,6 +97,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=pokemon1"></script>
 <script src="lib/fresh.js?v=4"></script>
+<script src="lib/img.js"></script>
 <script src="lib/battle.js"></script>
 </head>
 <body class="dex-page">
@@ -100,7 +107,7 @@ import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
-import { Actor, line, FORMS, Play } from './lib/battle-ui.js';
+import { Actor, line, FORMS, Play, setImages } from './lib/battle-ui.js';
 const html = htm.bind(h);
 const W = window.W, B = window.AtelierBattle;
 
@@ -127,7 +134,9 @@ function useData() {
     Promise.all([
       fetch('data/card.json', { cache: 'no-cache' }).then(r => r.json()),
       fetch('data/chart.json', { cache: 'no-cache' }).then(r => r.json()),
-    ]).then(([card, chart]) => {
+      window.AtelierImg.load().catch(() => ({})),    // 그림 표가 없어도 판은 선다
+    ]).then(([card, chart, img]) => {
+      setImages(img);
       const by = {}, byNo = {};
       for (const kind of Object.keys(card.cards || {})) for (const c of card.cards[kind]) { by[c.name] = c; byNo[c.no] = c; }
       set({ by, byNo, chart: chart.chart });
