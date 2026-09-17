@@ -181,6 +181,25 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   ck('아래로 굴릴 자리가 있다', scroll.room > 0, JSON.stringify(scroll));
   ck('실제로 굴러간다', scroll.at > 0, JSON.stringify(scroll));
   ck('굴리면 머리말이 접힌다(dex-scrolled)', scroll.folded === true, JSON.stringify(scroll));
+
+  /* 끝까지 내렸을 때. 큰 그림이 화면의 절반을 넘으면 한 장이 화면을 다 먹고
+     그 밑의 컷들이 저 아래로 밀린다. 마지막 칸이 화면 밑동에 붙어도 누르기 사납다 */
+  const foot = await P.evaluate(() => {
+    const box = document.querySelector('.collection-scroll'), r = box.getBoundingClientRect();
+    const vis = el => { const b = el.getBoundingClientRect();
+      return Math.round(Math.min(b.bottom, r.bottom) - Math.max(b.top, r.top)); };
+    const last = box.lastElementChild, lb = last.getBoundingClientRect();
+    return { tall: box.clientHeight,
+      big: Math.round(document.querySelector('.big').getBoundingClientRect().height),
+      lastSeen: vis(last), lastHigh: Math.round(lb.height),
+      tail: box.scrollHeight - box.scrollTop - (Math.round(lb.bottom - r.top)) };
+  });
+  const innerH2 = await P.evaluate(() => innerHeight);
+  ck('큰 그림이 화면의 절반을 넘지 않는다', foot.big <= innerH2 / 2,
+    foot.big + ' / ' + innerH2);
+  ck('끝까지 내리면 마지막 칸이 다 보인다', foot.lastSeen >= foot.lastHigh, JSON.stringify(foot));
+  ck('마지막 칸 아래에 여백이 있다', foot.tail >= 32, JSON.stringify(foot));
+
   await P.evaluate(() => { document.querySelector('.collection-scroll').scrollTop = 0; });
 
   await P.click('.back');
