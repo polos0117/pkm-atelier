@@ -2,6 +2,7 @@
 const assert=require('node:assert/strict'),{start,FOLD}=require('./browser-harness.cjs');
 const selectors=['.workspace-heading','.workspace-heading h1','.workspace-nav',
  '.workspace-nav a:nth-child(1)','.workspace-nav a:nth-child(2)','.workspace-nav a:nth-child(3)',
+ '.workspace-nav a:nth-child(4)','.workspace-nav a:nth-child(5)','.workspace-nav a:nth-child(6)',
  '.appearance-controls','.appearance-controls label:first-child select','.appearance-controls label:last-child select'];
 async function geometry(p){
  return p.evaluate(ss=>Object.fromEntries(ss.map(s=>{
@@ -29,7 +30,7 @@ function same(actual,expected,label){
      await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
      await p.evaluate(d=>window.AtelierAppearance.set('density',d),density);
      const reference=await geometry(p);
-     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['index.html','.theme-card']]){
+     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['survey.html','.sv-start'],['index.html','.theme-card']]){
       await p.locator(`.workspace-nav a[href="${file}"]`).click();
       await p.waitForSelector(ready);
       same(await geometry(p),reference,`${viewport.width} ${density} ${file}`);
@@ -59,6 +60,6 @@ function same(actual,expected,label){
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
-  console.log('PASS header layout: 5 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
+  console.log('PASS header layout: 6 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});
