@@ -3,9 +3,7 @@ body{margin:0;background-color:var(--bg);color:var(--text)}
 a{color:var(--accent)}
 button,input,select,textarea{font:inherit}
 .prompt-page .wrap{width:100%}
-.workspace-nav{display:flex;margin:12px 0!important}
-.workspace-nav a{flex:1;display:flex;align-items:center;justify-content:center;text-decoration:none}
-.studio-grid{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px;margin-top:18px;align-items:start}
+.studio-grid{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px;align-items:start}
 .studio-source,.studio-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:var(--shadow)}
 .studio-card{margin-bottom:14px}
 .studio-source{position:sticky;top:16px;border-top:3px solid var(--signal)}

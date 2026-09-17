@@ -286,7 +286,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
     scroll.tall + ' / ' + innerH);
   ck('아래로 굴릴 자리가 있다', scroll.room > 0, JSON.stringify(scroll));
   ck('실제로 굴러간다', scroll.at > 0, JSON.stringify(scroll));
-  ck('굴리면 머리말이 접힌다(dex-scrolled)', scroll.folded === true, JSON.stringify(scroll));
+  ck('굴리면 검색 도구가 간결해진다(dex-scrolled)', scroll.folded === true, JSON.stringify(scroll));
 
   /* 끝까지 내렸을 때. 큰 그림이 화면의 절반을 넘으면 한 장이 화면을 다 먹고
      그 밑의 컷들이 저 아래로 밀린다. 마지막 칸이 화면 밑동에 붙어도 누르기 사납다 */
