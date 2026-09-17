@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf9f3">
+<title>포켓몬 메카 연구소</title>
+<!--
+  전투 시험장. lib/battle.js 의 규칙을 그대로 브라우저에서 굴린다.
+  세 마리씩 세우고 한 판을 굴려 박자마다 되감아 보거나, 100판을 돌려 승률을 본다.
+  docs/GAME_CONCEPT.md 의 "굴려 본 것" 이 tests/battle-sim.cjs 로 낸 숫자이고,
+  이 화면은 같은 엔진의 얼굴이다 — 사람이 눈으로 한 판을 따라가는 자리.
+-->
+<link rel="stylesheet" href="lib/workspace.css?v=header1">
+<style>
+* {box-sizing:border-box}
+html,body {margin:0;padding:0}
+body {color:var(--text);font-size:15px}
+/* 껍데기는 도감과 같다 — .dex-page 가 100dvh 로 잠그고 .collection-scroll 만 구른다.
+   #app 이 키를 물려줘야 굴러가는 자리가 화면 몫을 받는다 (dex.html 의 같은 주석) */
+.dex-page > #app {display:flex;flex-direction:column;min-height:0;height:100%}
+.dex-page > #app > main {flex:1 1 auto;min-height:0}
+.collection-scroll {display:block}
+.dex-page .collection-scroll {padding-bottom:calc(44px + env(safe-area-inset-bottom))}
+
+/* 세우는 자리 — 두 편이 나란히, 폴드 덮개(344)에서는 위아래로 */
+.bt-setup {display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px}
+.bt-side {border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--card);min-width:0}
+.bt-side h3 {margin:0 0 6px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.bt-side input,.bt-side select {width:100%;min-width:0;min-height:38px;margin-top:4px;background:var(--card2);
+  border:1px solid var(--line);color:var(--text);font:inherit;font-size:13px;border-radius:8px;padding:6px 9px}
+.bt-side input.bad {border-color:#c33}
+.bt-tools {display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0 0}
+.bt-tools label {display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.bt-tools input {width:90px;min-height:40px;background:var(--card2);border:1px solid var(--line);
+  color:var(--text);font:inherit;border-radius:8px;padding:6px 9px}
+.bt-tools button {min-height:40px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;
+  background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:13px}
+.bt-tools button:disabled {opacity:.5}
+.bt-tools .bt-result {flex:1 1 100%;font-weight:700;font-size:14px}
+
+/* 판 — 박자 조종 + 두 편의 자리 + 그 박자의 사건 */
+.bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px}
+.bt-beat b {flex:1 1 auto;font:700 13px ui-monospace,monospace;letter-spacing:.06em}
+.bt-beat button {min-height:40px;min-width:44px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700}
+.bt-beat button:disabled {opacity:.4}
+.bt-field {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bt-team {display:grid;gap:8px;align-content:start;min-width:0}
+.bt-actor {border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);min-width:0}
+.bt-actor.open {border-left-color:var(--accent)}
+.bt-actor.forced {border-left-color:#c33}
+.bt-actor.down {opacity:.45}
+.bt-actor .bt-name {display:flex;justify-content:space-between;gap:6px;font-weight:700;font-size:13px;overflow-wrap:anywhere}
+.bt-actor .bt-name i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted);white-space:nowrap}
+.bt-actor .bt-name i.open {color:var(--accent)}
+.bt-actor .bt-name i.forced {color:#c33}
+.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px ui-monospace,monospace;color:var(--muted)}
+.bt-gauge span:last-child {text-align:right}
+.bt-gauge u {display:block;height:7px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
+.bt-gauge u i {display:block;height:100%;background:var(--accent)}
+.bt-gauge.hp u i {background:#3a9a5a}
+.bt-gauge.heat u i {background:#d0522f}
+.bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
+.bt-log li {padding:2px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
+.bt-log li.a {color:var(--text)}
+.bt-log li.b {color:var(--muted)}
+.sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+.empty {padding:24px 0;color:var(--muted);text-align:center}
+@media (max-width:420px) {
+  .bt-setup,.bt-field {grid-template-columns:1fr}
+}
+</style>
+<script src="lib/workspace-theme.js?v=pokemon1"></script>
+<script src="lib/words.js?v=pokemon1"></script>
+<script src="lib/fresh.js?v=4"></script>
+<script src="lib/battle.js"></script>
+</head>
+<body class="dex-page">
+<div id="app"></div>
+<script type="module">
+import { h, render } from 'https://esm.sh/preact@10.24.3';
+import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
+import htm from 'https://esm.sh/htm@3.1.1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
+const html = htm.bind(h);
+const W = window.W, B = window.AtelierBattle;
+
+const POLICIES = ['managed', 'stay:light', 'stay:heavy', 'stay:mobility', 'burn'];
+/* 처음 세워 두는 여섯 — 도감 번호로 적는다 (화면 코드에 이름을 안 적는다는 규칙) */
+const DEFAULT = { a: [25, 6, 9], b: [3, 151, 133] };
+const MANY = 100;
+
+function Shell({ head, children }) {
+  const [scrolled, setScrolled] = useState(false);
+  return html`<main class=${scrolled ? 'dex-scrolled' : ''}>
+    <${WorkspaceHeader} page="battle" />
+    <header>${head}</header>
+    <div class="collection-scroll" tabindex="0"
+      onScroll=${e => { const on = e.currentTarget.scrollTop > 8; setScrolled(v => v === on ? v : on); }}>
+      ${children}
+    </div>
+  </main>`;
+}
+
+function useData() {
+  const [st, set] = useState({});
+  useEffect(() => {
+    Promise.all([
+      fetch('data/card.json', { cache: 'no-cache' }).then(r => r.json()),
+      fetch('data/chart.json', { cache: 'no-cache' }).then(r => r.json()),
+    ]).then(([card, chart]) => {
+      const by = {}, byNo = {};
+      for (const kind of Object.keys(card.cards || {})) for (const c of card.cards[kind]) { by[c.name] = c; byNo[c.no] = c; }
+      set({ by, byNo, chart: chart.chart });
+    }).catch(e => set({ error: String((e && e.message) || e) }));
+  }, []);
+  return st;
+}
+
+/* 남은 진화 수 — 예산이 여기서 갈린다 (tests/battle-sim.cjs 와 같은 셈) */
+function left(by, n) { const c = by[n]; return !c || !c.to ? 0 : 1 + Math.max(0, ...c.to.filter(t => by[t]).map(t => left(by, t))); }
+function team(by, names, side, policy) {
+  return names.filter(n => by[n]).map(n => B.makeActor(by[n], { side, policy, remaining: left(by, n) }));
+}
+function fight(d, s, seed, snapshots) {
+  return B.battle(team(d.by, s.a, 'a', s.pa), team(d.by, s.b, 'b', s.pb), { seed, chart: d.chart, snapshots });
+}
+/* 같은 스피드면 앞쪽이 먼저라 앞쪽이 유리하다 — 양쪽을 바꿔 두 번 돌려 평균한다 */
+function many(d, s, n) {
+  let a = 0, b = 0, dr = 0;
+  for (let seed = 1; seed <= n; seed++) {
+    const r1 = fight(d, s, seed), r2 = fight(d, { a: s.b, b: s.a, pa: s.pb, pb: s.pa }, seed);
+    for (const [r, me, you] of [[r1, 'a', 'b'], [r2, 'b', 'a']]) {
+      if (r.winner === me) a++; else if (r.winner === you) b++; else dr++;
+    }
+  }
+  const g = 2 * n, pct = x => Math.round(x / g * 100);
+  return { a: pct(a), b: pct(b), d: pct(dr), n: g };
+}
+
+function Side({ side, names, policy, by, onChange }) {
+  return html`<div class="bt-side">
+    <h3>${W('battle.side.' + side)}</h3>
+    ${names.map((n, i) => html`<input key=${i} list="bt-cards" value=${n} class=${by[n] ? '' : 'bad'}
+      aria-label=${W('battle.slot')} placeholder=${W('battle.slot')}
+      onInput=${e => onChange({ names: names.map((x, j) => j === i ? e.currentTarget.value.trim() : x) })} />`)}
+    <select aria-label=${W('battle.policy')} value=${policy} onChange=${e => onChange({ policy: e.currentTarget.value })}>
+      ${POLICIES.map(p => html`<option key=${p} value=${p}>${W('battle.policy.' + p)}</option>`)}
+    </select>
+  </div>`;
+}
+
+function Gauge({ kind, value, max }) {
+  const w = max ? Math.max(0, Math.min(100, value / max * 100)) : 0;
+  return html`<div class=${'bt-gauge ' + kind}><span>${kind.toUpperCase()}</span><u><i style=${'width:' + w + '%'} /></u><span>${Math.round(value)}</span></div>`;
+}
+function Actor({ a }) {
+  const cls = 'bt-actor' + (!a.alive ? ' down' : a.forced ? ' forced' : a.open ? ' open' : '');
+  const tag = !a.alive ? W('battle.down') : a.forced ? W('battle.forced') : a.open ? W('battle.open') : '';
+  return html`<div class=${cls} data-name=${a.name} data-form=${a.form}>
+    <div class="bt-name"><span>${a.name}</span><i class=${a.forced ? 'forced' : a.open ? 'open' : ''}>${W('form.' + a.form)}${tag ? ' · ' + tag : ''}</i></div>
+    <${Gauge} kind="hp" value=${a.hp} max=${a.hpMax} />
+    <${Gauge} kind="heat" value=${a.heat} max=${B.TUNING.maxHeat} />
+    <${Gauge} kind="drive" value=${a.drive} max=${B.TUNING.maxDrive} />
+  </div>`;
+}
+
+/* 사건 한 줄. switch 의 to 는 폼이고 hit 의 to 는 이름이다 — 섞이지 않게 여기서 가른다 */
+function line(e) {
+  const v = Object.assign({}, e);
+  if (e.kind === 'switch') v.form = W('form.' + e.to);
+  v.guard = e.guard ? W('battle.ev.guard') : '';
+  v.untargeted = e.untargeted ? W('battle.ev.untargeted') : '';
+  const key = 'battle.ev.' + e.kind;
+  const s = W(key, v);
+  return s === key ? e.kind + ' ' + (e.who || '') : s;
+}
+
+function Replay({ r }) {
+  const [i, setI] = useState(0);
+  const last = r.snaps.length - 1;
+  const snap = r.snaps[Math.min(i, last)];
+  const evs = r.log.filter(e => e.beat === snap.beat);
+  const sideOf = s => snap.actors.filter(a => a.side === s);
+  return html`<div class="bt-beat">
+      <b data-beat=${snap.beat}>${W('battle.beat', { n: snap.beat, total: last })}</b>
+      <button type="button" onClick=${() => setI(0)} disabled=${i === 0}>${W('battle.first')}</button>
+      <button type="button" onClick=${() => setI(Math.max(0, i - 1))} disabled=${i === 0}>${W('battle.prev')}</button>
+      <button type="button" class="bt-next" onClick=${() => setI(Math.min(last, i + 1))} disabled=${i >= last}>${W('battle.next')}</button>
+      <button type="button" onClick=${() => setI(last)} disabled=${i >= last}>${W('battle.last')}</button>
+    </div>
+    <div class="bt-field">
+      <div class="bt-team" data-side="a">${sideOf('a').map(a => html`<${Actor} key=${a.name} a=${a} />`)}</div>
+      <div class="bt-team" data-side="b">${sideOf('b').map(a => html`<${Actor} key=${a.name} a=${a} />`)}</div>
+    </div>
+    <div class="sec">${W('battle.events')}</div>
+    <ul class="bt-log">${evs.map((e, k) => html`<li key=${k} class=${e.side || ''}>${line(e)}</li>`)}</ul>`;
+}
+
+function App() {
+  const d = useData();
+  const [s, setS] = useState({ a: [], b: [], pa: 'managed', pb: 'managed', seed: 1 });
+  useEffect(() => {
+    if (!d.byNo || s.a.length) return;
+    const pick = nos => nos.map(no => (d.byNo[no] || {}).name || '');
+    setS(v => ({ ...v, a: pick(DEFAULT.a), b: pick(DEFAULT.b) }));
+  }, [d.byNo]);
+  const [r, setR] = useState(null);
+  const [rate, setRate] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const names = useMemo(() => d.by ? Object.keys(d.by) : [], [d.by]);
+  const ready = d.by && s.a.every(n => d.by[n]) && s.b.every(n => d.by[n]) && s.a.some(Boolean) && s.b.some(Boolean);
+  const bad = d.by ? s.a.concat(s.b).filter(n => n && !d.by[n]) : [];
+
+  if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
+  if (!d.by) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
+
+  const run = () => { setRate(null); setR(fight(d, s, s.seed, true)); };
+  const runMany = () => {
+    setBusy(true); setR(null);
+    setTimeout(() => { setRate(many(d, s, MANY)); setBusy(false); }, 0);
+  };
+  /* 머리에는 굴리는 줄만 둔다. 세우는 자리(여섯 칸 + 운용 둘)는 본문에서 굴린다 —
+     머리에 넣으면 폴드 덮개(344)에서 굴러가는 자리가 100px 도 안 남는다 */
+  const head = html`<div class="bt-tools">
+      <label>${W('battle.seed')}<input type="number" min="1" value=${s.seed} onInput=${e => setS(v => ({ ...v, seed: Math.max(1, +e.currentTarget.value || 1) }))} /></label>
+      <button type="button" class="bt-run" onClick=${run} disabled=${!ready || busy}>${W('battle.run')}</button>
+      <button type="button" class="bt-many" onClick=${runMany} disabled=${!ready || busy}>${W('battle.many')}</button>
+      ${bad.length ? html`<span class="bt-result">${bad.map(n => W('battle.unknown', { name: n })).join(' · ')}</span>` : null}
+      ${busy ? html`<span class="bt-result">${W('battle.running')}</span>` : null}
+      ${r ? html`<span class="bt-result" data-winner=${r.winner}>${r.winner === 'draw' ? W('battle.draw', { beats: r.beats }) : W('battle.winner', { side: W('battle.side.' + r.winner), beats: r.beats })}</span>` : null}
+      ${rate ? html`<span class="bt-result" data-rate=${rate.a}>${W('battle.rate', rate)}</span>` : null}
+    </div>`;
+
+  return html`<${Shell} head=${head}>
+    <datalist id="bt-cards">${names.map(n => html`<option key=${n} value=${n} />`)}</datalist>
+    <div class="bt-setup">
+      <${Side} side="a" names=${s.a} policy=${s.pa} by=${d.by} onChange=${c => setS(v => ({ ...v, a: c.names || v.a, pa: c.policy || v.pa }))} />
+      <${Side} side="b" names=${s.b} policy=${s.pb} by=${d.by} onChange=${c => setS(v => ({ ...v, b: c.names || v.b, pb: c.policy || v.pb }))} />
+    </div>
+    ${r ? html`<${Replay} key=${s.seed + '|' + s.a.join() + '|' + s.b.join() + '|' + s.pa + s.pb} r=${r} />` : html`<p class="note">${W('battle.note')}</p>`}
+  <//>`;
+}
+
+render(html`<${App} />`, document.getElementById('app'));
+window.AtelierFresh.watch();
+</script>
+</body>
+</html>

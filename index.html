@@ -22,7 +22,7 @@ function App(){
     h(WorkspaceHeader,{page:'index'}),
     h('div',{class:'lab-intro'},h('div',null,h('h2',null,W('home.title')),h('p',null,W('home.intro'))),
       h('span',{class:'lab-tag'},W('home.tag'))),
-    h('div',{class:'lab-links'},['dex','prompt'].map(key=>
+    h('div',{class:'lab-links'},['dex','prompt','battle'].map(key=>
       h('a',{class:'lab-link',href:key+'.html',key},
         h('small',null,W('home.'+key+'.code')),h('h3',null,W('home.'+key+'.title')),
         h('p',null,W('home.'+key+'.note')),h('span',{class:'lab-arrow','aria-hidden':'true'},'↗')))),

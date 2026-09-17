@@ -72,7 +72,7 @@ node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나�
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 ```
 
-`battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 21가지만 본다. 빼고 돌리면
+`battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
 수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가
 아니라 보고다. 결과는 `docs/GAME_CONCEPT.md` 의 "굴려 본 것" 에 적는다.
 
@@ -97,7 +97,13 @@ ESM_DIR=<preact·htm 이 든 node_modules>
 ```bash
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 넷의 머리가 같은 자리에
 ```
+
+`battle.html` 은 `lib/battle.js` 의 얼굴이다. 규칙은 엔진에만 있고 화면은 굴리고
+보여 주기만 한다 — 판을 되감는 것은 엔진이 `snapshots` 로 박자마다 떠 둔 자리를
+읽는 것이지 화면이 다시 계산하는 것이 아니다.
 
 `dex-forms` 는 자료를 세 벌로 돌린다 — 등록된 그대로, 폼 둘을 지운 것,
 연출컷을 한 장 붙인 것. 채워진 자료만으로는 "빈 폼" 쪽을 볼 수가 없어서다.
