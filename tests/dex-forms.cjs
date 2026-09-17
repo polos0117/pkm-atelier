@@ -1,5 +1,5 @@
 /* 도감의 폼 보기. 여기서 보려는 것은 딱 셋이다.
-     · 정의된 폼이 card.json 차례대로 한 줄에 늘어서나 (없는 폼도 자리를 지키나)
+     · 일반 장갑 셋과 같은 장갑의 폭주 셋이 두 줄에서 자리를 지키나
      · 고르개에 그림이 있는 폼만 올라가나 (눌러도 아무 일 없는 단추를 안 만드나)
      · 빈 칸(연출컷)은 아예 안 그리나
 
@@ -21,8 +21,11 @@ const LABEL = JSON.parse(fs.readFileSync('data/label.json', 'utf8'));
 const GROUP = JSON.parse(fs.readFileSync('data/group.json', 'utf8'));
 const IMGJSON = JSON.parse(fs.readFileSync('data/img.json', 'utf8'));
 const NAME = Object.keys(IMGJSON.img)[0];
-const DEFS = CARD.forms;
-const WANT = (CARD.cards.character.find(c => c.name === NAME) || {}).forms;
+const NORMAL = (CARD.cards.character.find(c => c.name === NAME) || {}).forms.filter(k => k !== 'overdrive');
+const WANT = [...NORMAL, ...NORMAL.map(k => k + '_overdrive')];
+const DEFS = {...CARD.forms, ...Object.fromEntries(NORMAL.map(k => [k + '_overdrive', CARD.forms[k]]))};
+const BUCKET = Object.values(IMGJSON.img[NAME].byStyle)[0];
+const HAVE = WANT.filter(k => BUCKET.byForm[k]?.f);
 
 /* img.json 을 갈아 끼운 채로 화면을 연다. 페이지가 뜨기 전에 fetch 를 감싼다 */
 function withImg(doc) {
@@ -41,7 +44,8 @@ const SWAP = ([mark, body]) => {
 
 /* 폼 둘을 지운 자료 */
 const TRIMMED = JSON.parse(JSON.stringify(IMGJSON));
-const GONE = WANT.slice(-2);
+const GONE = NORMAL.slice(-2);
+const MISSING = WANT.filter(k => !HAVE.includes(k) || GONE.includes(k));
 {
   const byStyle = TRIMMED.img[NAME].byStyle, k = Object.keys(byStyle)[0];
   for (const f of GONE) delete byStyle[k].byForm[f];
@@ -99,7 +103,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
     cells.length + ' / ' + all);
   ck('목록에 등록된 카드가 뜬다', cells.some(t => t.indexOf(NAME) === 0), cells.join(' | '));
 
-  const prog = W('art.form.done', { done: WANT.length, all: WANT.length });
+  const prog = W('art.form.done', { done: HAVE.length, all: WANT.length });
   ck('목록 진척은 성별을 안 본다 — 여성만 있어도 ' + prog,
     cells.some(t => t.indexOf(prog) > 0), cells.join(' | '));
 
@@ -126,11 +130,14 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   ck('나란히 보기에 정의된 폼이 card.json 차례로 전부 선다',
     strip.map(s => s.form).join(',') === WANT.join(','), strip.map(s => s.form).join(','));
   ck('폼 이름은 낱말 표에서 온다',
-    strip.every(s => s.label === W(DEFS[s.form].word)), strip.map(s => s.label).join(','));
+    strip.every(s => s.label === (s.form.endsWith('_overdrive')
+      ? W('form.overdriveOf', {form: W(DEFS[s.form].word)}) : W(DEFS[s.form].word))),
+    strip.map(s => s.label).join(','));
   ck('겹 수를 눈금으로 보여 준다',
     strip.every(s => s.bar.length === (DEFS[s.form].layers || 1)),
     strip.map(s => s.form + ':' + s.bar).join(' '));
-  ck('그림이 다 있으면 빈 칸이 없다', strip.every(s => !s.gap && !s.off),
+  ck('등록된 폼만 차고 기준 미지정 폭주는 칸을 대신 채우지 않는다',
+    strip.every(s => s.gap === !HAVE.includes(s.form) && s.off === s.gap),
     strip.filter(s => s.gap || s.off).map(s => s.form).join(','));
   ck('처음에는 첫 폼이 골라져 있다',
     strip.filter(s => s.on).map(s => s.form).join(',') === WANT[0], strip.filter(s => s.on).length);
@@ -139,6 +146,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
     const i = document.querySelector('.big img');
     return i && i.complete && i.naturalWidth > 0;
   }, null, { timeout: 8000 }).catch(() => {});
+  await P.locator('.big').scrollIntoViewIfNeeded();
   const big1 = await P.$eval('.big img', i => {
     const r = i.getBoundingClientRect();
     return [decodeURIComponent(i.currentSrc || i.src), i.naturalWidth,
@@ -311,7 +319,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   await Q.waitForSelector('.grid .cell');
   ck('갈아 끼운 자료를 읽었다', await Q.evaluate(() => !!window.__DEX_IMG__));
 
-  const gapProg = W('art.form.done', { done: WANT.length - GONE.length, all: WANT.length });
+  const gapProg = W('art.form.done', { done: WANT.length - MISSING.length, all: WANT.length });
   await Q.fill('.search-row input', NAME);
   await Q.waitForFunction(n => {
     const caps = [...document.querySelectorAll('.grid .cell .cap')];
@@ -329,7 +337,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   ck('없는 폼도 줄에서 자리를 지킨다',
     strip2.map(s => s.form).join(',') === WANT.join(','), strip2.map(s => s.form).join(','));
   ck('없는 폼은 빈 칸으로 표시된다',
-    strip2.filter(s => s.gap).map(s => s.form).join(',') === GONE.join(','),
+    strip2.filter(s => s.gap).map(s => s.form).join(',') === MISSING.join(','),
     strip2.filter(s => s.gap).map(s => s.form).join(','));
   ck('없는 폼은 아예 눌리지 않는다',
     strip2.every(s => s.off === s.gap), strip2.map(s => s.form + ':' + s.off).join(' '));
@@ -339,7 +347,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
     strip2.filter(s => s.gap).every(s => s.pressed === null),
     strip2.map(s => s.form + ':' + s.pressed).join(' '));
 
-  const left = W('art.form.left', { n: GONE.length });
+  const left = W('art.form.left', { n: MISSING.length });
   ck('남은 폼 수를 적어 둔다', (await q(Q, '.sec', els => els.map(e => e.textContent)))
     .some(t => t.indexOf(left) > 0), left);
 

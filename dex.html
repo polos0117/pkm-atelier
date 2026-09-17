@@ -8,10 +8,7 @@
 <title>포켓몬 메카 연구소</title>
 <!--
   도감. 이 놀이에서 한 캐릭터는 여러 장으로 쪼개지지 않고 장갑을 갈아 입는다.
-  그래서 이 화면의 중심은 목록이 아니라 "한 캐릭터의 폼을 나란히 놓고 견주는 줄"이다.
-
-  없는 폼도 자리를 비워 놓는다. 있는 것만 그리면 화면은 늘 꽉 차 보이고
-  무엇을 더 그려야 하는지 아무도 모른다 — 앞선 저장소에서 실제로 겪었다.
+  위쪽은 일반 장갑 셋, 아래쪽은 같은 장갑의 폭주 상태를 나란히 견준다.
 
   화면은 data/img.json 에 적힌 것만 그린다. 그림 저장소에 파일이 있어도
   tools/register-images.py 를 거치기 전에는 없는 것으로 본다.
@@ -69,12 +66,13 @@ body {color:var(--text);font-size:15px}
 .bar .n {flex:none;font:700 11px ui-monospace,monospace;color:var(--accent);white-space:nowrap}
 .back {flex:none;min-height:40px;padding:8px 12px;background:var(--card2);color:var(--text);
   border:1px solid var(--line);border-radius:8px;font:inherit;font-size:12px;font-weight:700}
-/* 나란히 보기. 한 줄에 폼을 늘어놓고 옆으로 민다 — 두께가 한 축으로 늘어서야
-   어느 쪽이 겹쳤는지 눈으로 견줄 수 있다. 빈 폼은 점선으로 자리만 지킨다 */
-.fstrip {display:flex;gap:8px;overflow-x:auto;padding:2px 1px 10px;
-  scroll-snap-type:x proximity;scrollbar-width:thin}
-.fcell {flex:0 0 104px;scroll-snap-align:start;padding:0;overflow:hidden;text-align:center;
+/* 같은 열은 같은 장갑이다. 두 줄은 본문과 함께 굴려 작은 화면의 높이를 남긴다. */
+.fstrip {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+  padding:2px 1px 10px}
+.fcell {min-width:0;padding:0;overflow:hidden;text-align:center;
   background:var(--card2);color:var(--muted);border:1px solid var(--line);border-radius:10px;font:inherit}
+.fcell .face {max-height:180px}
+.fcell .face img {object-fit:contain;object-position:center}
 .fcell.on {border-color:var(--accent);color:var(--text);box-shadow:inset 0 -3px var(--accent)}
 .fcell.gap {opacity:.6;border-style:dashed}
 .fcell b {display:block;padding:7px 4px 2px;font-size:12px;line-height:1.3;overflow-wrap:anywhere}
@@ -88,6 +86,9 @@ body {color:var(--text);font-size:15px}
 .big {position:relative;width:100%;aspect-ratio:2/3;max-height:46dvh;overflow:hidden;
   background:var(--card2);border:1px solid var(--line);border-radius:12px}
 .big img {display:block;width:100%;height:100%;object-fit:contain}
+.legacy-overdrive {margin:16px 0;color:var(--muted);font-size:12px}
+.legacy-overdrive summary {cursor:pointer;padding:10px 0}
+.legacy-art {display:block;width:100%;max-height:46dvh;object-fit:contain}
 /* 카드 값 — 제목과 값을 두 칸으로 놓는다. 좁은 화면에서도 안 겹치게 최소폭을 준다 */
 .facts {display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 12px;
   margin:0;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:10px}
@@ -115,7 +116,7 @@ body {color:var(--text);font-size:15px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=pokemon1"></script>
+<script src="lib/words.js?v=dex-grid1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js"></script>
 </head>
@@ -194,11 +195,16 @@ function useDex() {
   return state;
 }
 
-/* 그 카드가 가져야 할 폼 차례. card.json 의 forms 차례를 그대로 따른다 —
-   img.json 에 붙은 차례를 쓰면 올린 순서대로 늘어서서 두께 축이 흐트러진다 */
+/* 장갑 선택과 폭주 상태는 별개다. 도감의 그림 자리만 일반 셋 + 폭주 셋으로 편다. */
 function wanted(defs, card) {
   const want = (card.forms && card.forms.length) ? card.forms : Object.keys(defs);
-  return want.filter(k => defs[k]);
+  const normal = want.filter(k => defs[k] && k !== 'overdrive');
+  return normal.concat(normal.map(k => k + '_overdrive'));
+}
+function baseForm(form) { return form.replace(/_overdrive$/, ''); }
+function formName(defs, form) {
+  const name = W(defs[baseForm(form)].word);
+  return form.endsWith('_overdrive') ? W('form.overdriveOf', { form: name }) : name;
 }
 
 /* 진척은 화풍마다 따로다(화풍을 섞어 견주지 않는다). 가장 많이 채운 화풍을
@@ -271,9 +277,9 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
   const form = have.indexOf(wantForm) >= 0 ? wantForm : (have[0] || '');
   const acts = form ? IMG.formActs(bucket, form, V) : [];
   const casual = IMG.cuts(bucket, 'casual', V);
+  const legacy = IMG.formOf(bucket, 'overdrive');
 
-  /* 이름·화풍·나란히 보기 줄은 붙박이 머리에 둔다. 폼을 바꿔 가며 아래를 훑는 것이
-     이 화면의 일이라, 줄이 같이 굴러가면 볼 때마다 위로 되돌아가야 한다 */
+  /* 이름과 화풍만 고정한다. 여섯 칸이 화면의 굴림 자리를 밀어내지 않게 한다. */
   const head = html`
     <div class="bar">
       <button class="back" onClick=${onClose}>${W('ui.back')}</button>
@@ -284,13 +290,14 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
     ${keys.length > 1 && html`<div class="sw" role="group" aria-label=${W('dex.style')}>
       ${keys.map(k => html`<button key=${k} class=${k === style ? 'on' : ''}
         onClick=${() => { setStyle(k); setForm(''); }}>${styleName[k] || k}</button>`)}
-    </div>`}
+    </div>`}`;
 
+  return html`<${Shell} head=${head}>
     <p class="sec">${W('dex.compare')}<span>${prog.ok ? '' : W('art.form.left', { n: prog.left.length })}</span></p>
     <div class="fstrip" role="group" aria-label=${W('dex.compare')}>
       ${want.map(k => {
         const box = IMG.formOf(bucket, k), file = box && box[V];
-        const layers = defs[k].layers || 0;
+        const layers = defs[baseForm(k)].layers || 0;
         return html`<button key=${k} data-form=${k} disabled=${!file}
           class=${'fcell' + (file ? (k === form ? ' on' : '') : ' gap')}
           aria-pressed=${file ? String(k === form) : undefined}
@@ -298,19 +305,16 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
           <span class="face">${file
             ? html`<${Pic} file=${file} />`
             : html`<span class="ph">${W('art.missing')}</span>`}</span>
-          <b>${W(defs[k].word)}</b>
+          <b>${formName(defs, k)}</b>
           <u>${layers ? '▮'.repeat(layers) : '—'}</u>
         </button>`;
       })}
-    </div>`;
-
-  return html`<${Shell} head=${head}>
-    <p class="note">${W('dex.compare.note')}</p>
+    </div>
 
     ${form ? html`
-      <p class="sec">${W(defs[form].word)}<span>${(defs[form].layers || 0) + W('dex.layers')}</span></p>
+      <p class="sec">${formName(defs, form)}<span>${(defs[baseForm(form)].layers || 0) + W('dex.layers')}</span></p>
       <div class="big"><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></div>
-      ${defs[form].note && html`<p class="note">${defs[form].note}</p>`}
+      <p class="note">${defs[form.endsWith('_overdrive') ? 'overdrive' : form].note}</p>
     ` : html`<p class="empty">${W('art.none')}</p>`}
 
     <p class="sec">${W('kind.character')}</p>
@@ -318,11 +322,17 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
 
     ${acts.length > 0 && html`
       <p class="sec">${W('dex.action')}<span>${W('art.count', { n: acts.length })}</span></p>
-      <div class="gal">${acts.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
+      <div class="gal form-actions">${acts.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
 
     ${casual.length > 0 && html`
       <p class="sec">${W('dex.casual')}<span>${W('art.count', { n: casual.length })}</span></p>
       <div class="gal">${casual.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
+
+    ${legacy && legacy[V] && html`<details class="legacy-overdrive">
+      <summary>${W('dex.overdrive.legacy')}</summary>
+      <img class="legacy-art" src=${IMG.imgURL(legacy[V])} alt=${W('dex.overdrive.legacy')} />
+      ${IMG.formActs(bucket, 'overdrive', V).map(f => html`<${Pic} key=${f} file=${f} />`)}
+    </details>`}
   <//>`;
 }
 
