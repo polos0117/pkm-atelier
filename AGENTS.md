@@ -70,6 +70,7 @@ node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
+node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 ```
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
@@ -97,9 +98,15 @@ ESM_DIR=<preact·htm 이 든 node_modules>
 ```bash
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
-ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판
-ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 넷의 머리가 같은 자리에
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 다섯의 머리가 같은 자리에
 ```
+
+`run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 뽑기·상대·체력 이어짐·보상)와
+`lib/battle.js`(한 판)에만 있다. 난이도 값(`RUN.DIFF`)은 `tests/run-sim.cjs` 로 잰다:
+자동 운용으로 완주율이 성장형·완성형 뽑기 모두 50% 언저리여야 한다. 한쪽이 죽으면
+뽑기가 선택이 아니다. 전투 화면 조각(`lib/battle-ui.js`)은 `battle.html` 과 같이 쓴다.
 
 `battle.html` 은 `lib/battle.js` 의 얼굴이다. 규칙은 엔진에만 있고 화면은 굴리고
 보여 주기만 한다 — 판을 되감는 것은 엔진이 `snapshots` 로 박자마다 떠 둔 자리를

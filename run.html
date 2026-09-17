@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf9f3">
+<title>포켓몬 메카 연구소</title>
+<!--
+  일곱 판 — 런 게임. 세 장을 뽑아 일곱 판을 이어 싸운다. 판 사이에 진화나 회복을 고르고,
+  체력은 다음 판으로 이어진다. 규칙은 lib/run.js (런) 와 lib/battle.js (한 판) 에만 있고,
+  이 화면은 보여 주고 고르기만 한다. 진행은 localStorage 에 두어 새로고침해도 이어진다.
+-->
+<link rel="stylesheet" href="lib/workspace.css?v=header1">
+<style>
+* {box-sizing:border-box}
+html,body {margin:0;padding:0}
+body {color:var(--text);font-size:15px}
+.dex-page > #app {display:flex;flex-direction:column;min-height:0;height:100%}
+.dex-page > #app > main {flex:1 1 auto;min-height:0}
+.collection-scroll {display:block}
+.dex-page .collection-scroll {padding-bottom:calc(44px + env(safe-area-inset-bottom))}
+
+/* 머리 — 어디까지 왔나, 새 런 */
+.run-head {display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 0 0}
+.run-head b {font:700 13px ui-monospace,monospace;letter-spacing:.06em}
+.run-head i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted)}
+.run-head .run-steps {display:flex;gap:3px;margin-left:auto}
+.run-head .run-steps u {display:block;width:18px;height:6px;border-radius:3px;background:var(--card2);text-decoration:none}
+.run-head .run-steps u.won {background:#3a9a5a}
+.run-head .run-steps u.now {background:var(--accent)}
+.run-head .run-steps u.lost {background:#c33}
+.run-head button {min-height:40px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:13px}
+
+/* 카드 — 뽑기·로스터·상대에 같은 꼴 */
+.run-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.run-card {position:relative;border:1px solid var(--line);border-top:3px solid var(--cc,var(--line));border-radius:12px;
+  padding:10px 10px 12px;background:var(--card);min-width:0;display:flex;flex-direction:column;gap:6px}
+.run-card.down {opacity:.5}
+.run-card h3 {margin:0;font-size:15px;letter-spacing:-.02em;overflow-wrap:anywhere}
+.run-card .run-types {display:flex;flex-wrap:wrap;gap:4px}
+.run-card .run-types span {font:700 10px ui-monospace,monospace;letter-spacing:.06em;padding:2px 6px;border-radius:5px;color:#fff;background:var(--tc,#888)}
+.run-card .run-genus {font-size:11px;color:var(--muted)}
+.run-card .run-growth {font:700 11px ui-monospace,monospace;color:var(--accent)}
+.run-card .run-stats {display:grid;grid-template-columns:auto 1fr;gap:3px 6px;font:10px ui-monospace,monospace;color:var(--muted);align-items:center}
+.run-card .run-stats u {display:block;height:5px;border-radius:3px;background:var(--card2);overflow:hidden;text-decoration:none}
+.run-card .run-stats u i {display:block;height:100%;background:var(--accent)}
+.run-card .run-hp {display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font:11px ui-monospace,monospace;color:var(--muted)}
+.run-card .run-hp u {display:block;height:8px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
+.run-card .run-hp u i {display:block;height:100%;background:#3a9a5a}
+.run-card .run-hp.low u i {background:#d0522f}
+.run-card button {margin-top:auto;min-height:40px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);
+  color:var(--text);font:inherit;font-weight:700;font-size:13px}
+.run-card .run-text {font-size:11px;line-height:1.5;color:var(--muted);word-break:keep-all}
+
+.run-tools {display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 0 4px}
+.run-tools button {min-height:44px;padding:8px 16px;border:1px solid var(--line);border-radius:8px;
+  background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
+.run-tools button.plain {background:var(--card)}
+.run-tools .run-result {flex:1 1 100%;font-weight:700;font-size:15px}
+.run-vs {display:flex;align-items:center;justify-content:center;padding:8px 0;font:700 12px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}
+
+/* 보상 — 둘 가운데 하나 */
+.run-rewards {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.run-reward {border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--card);text-align:left;color:var(--text);font:inherit;min-height:110px}
+.run-reward:hover {border-color:var(--accent)}
+.run-reward h3 {margin:0 0 6px;font-size:17px}
+.run-reward p {margin:0;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.run-end {padding:18px 0 6px}
+.run-end h2 {margin:0 0 10px;font-size:clamp(22px,4vw,30px);letter-spacing:-.03em}
+.run-end ol {margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.8;color:var(--muted)}
+.run-end ol li.win {color:var(--text)}
+
+.sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.sec span {color:var(--muted);font-weight:400;letter-spacing:0;margin-left:8px}
+.note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+.empty {padding:24px 0;color:var(--muted);text-align:center}
+/* 전투 조각 (lib/battle-ui.js) 의 옷 — battle.html 과 같다 */
+.bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px}
+.bt-beat b {flex:1 1 auto;font:700 13px ui-monospace,monospace;letter-spacing:.06em}
+.bt-beat button {min-height:40px;min-width:44px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700}
+.bt-beat button:disabled {opacity:.4}
+.bt-field {display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bt-team {display:grid;gap:8px;align-content:start;min-width:0}
+.bt-actor {border:1px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--card);min-width:0}
+.bt-actor.open {border-left-color:var(--accent)}
+.bt-actor.forced {border-left-color:#c33}
+.bt-actor.down {opacity:.45}
+.bt-actor .bt-name {display:flex;justify-content:space-between;gap:6px;font-weight:700;font-size:13px;overflow-wrap:anywhere}
+.bt-actor .bt-name i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted);white-space:nowrap}
+.bt-actor .bt-name i.open {color:var(--accent)}
+.bt-actor .bt-name i.forced {color:#c33}
+.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px ui-monospace,monospace;color:var(--muted)}
+.bt-gauge span:last-child {text-align:right}
+.bt-gauge u {display:block;height:7px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
+.bt-gauge u i {display:block;height:100%;background:var(--accent)}
+.bt-gauge.hp u i {background:#3a9a5a}
+.bt-gauge.heat u i {background:#d0522f}
+.bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
+.bt-log li {padding:2px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
+.bt-log li.b {color:var(--muted)}
+.bt-plan {margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+.bt-cmd {display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.bt-cmd button {min-height:34px;padding:4px 9px;border:1px solid var(--line);border-radius:7px;background:var(--card2);color:var(--text);font:inherit;font-size:12px;font-weight:700}
+.bt-cmd button.on {background:var(--accent-soft);box-shadow:inset 0 -2px var(--accent)}
+.bt-cmd button:disabled {opacity:.35}
+.bt-cmd select {min-height:34px;flex:1 1 100px;min-width:0;background:var(--card2);border:1px solid var(--line);color:var(--text);font:inherit;font-size:12px;border-radius:7px;padding:4px 8px}
+.bt-cmd label {display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.bt-step {min-height:44px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
+@media (max-width:520px) {
+  .run-cards {grid-template-columns:1fr}
+  .run-rewards,.bt-field {grid-template-columns:1fr}
+}
+</style>
+<script src="lib/workspace-theme.js?v=pokemon1"></script>
+<script src="lib/words.js?v=pokemon1"></script>
+<script src="lib/fresh.js?v=4"></script>
+<script src="lib/battle.js"></script>
+<script src="lib/run.js"></script>
+</head>
+<body class="dex-page">
+<div id="app"></div>
+<script type="module">
+import { h, render } from 'https://esm.sh/preact@10.24.3';
+import { useState, useEffect } from 'https://esm.sh/preact@10.24.3/hooks';
+import htm from 'https://esm.sh/htm@3.1.1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
+import { Play } from './lib/battle-ui.js';
+const html = htm.bind(h);
+const W = window.W, B = window.AtelierBattle, RUN = window.AtelierRun;
+const KEY = 'pkm_run_v1';
+
+function Shell({ head, children }) {
+  const [scrolled, setScrolled] = useState(false);
+  return html`<main class=${scrolled ? 'dex-scrolled' : ''}>
+    <${WorkspaceHeader} page="run" />
+    <header>${head}</header>
+    <div class="collection-scroll" tabindex="0"
+      onScroll=${e => { const on = e.currentTarget.scrollTop > 8; setScrolled(v => v === on ? v : on); }}>
+      ${children}
+    </div>
+  </main>`;
+}
+
+function useData() {
+  const [st, set] = useState({});
+  useEffect(() => {
+    Promise.all(['card', 'chart', 'group', 'label'].map(n => fetch('data/' + n + '.json', { cache: 'no-cache' }).then(r => r.json())))
+      .then(([card, chart, group, label]) => {
+        const cards = [];
+        for (const kind of Object.keys(card.cards || {})) for (const c of card.cards[kind]) cards.push(c);
+        set({ cards, by: RUN.index(cards), chart: chart.chart, group, label });
+      }).catch(e => set({ error: String((e && e.message) || e) }));
+  }, []);
+  return st;
+}
+
+/* 진행은 브라우저에 둔다. 읽기·쓰기가 막힌 자리(비공개 창 등)여도 화면은 돌아간다 */
+function load() { try { const s = localStorage.getItem(KEY); return s ? JSON.parse(s) : null; } catch (e) { return null; } }
+function save(st) { try { if (st) localStorage.setItem(KEY, JSON.stringify(st)); else localStorage.removeItem(KEY); } catch (e) {} }
+function freshSeed() { return 1 + Math.floor(Math.random() * 99999); }
+
+/* 카드 한 장 — 뽑기·로스터·상대에 같은 꼴. hp 가 있으면 체력 막대, growth 가 있으면 클 여지 */
+function Card({ d, name, hp, growth, text, action, onPick }) {
+  const c = d.by[name]; if (!c) return null;
+  const types = [c.element].concat(c.element2 ? [c.element2] : []);
+  const down = hp != null && hp <= 0;
+  const stats = c.stats || [];
+  return html`<div class=${'run-card' + (down ? ' down' : '')} data-name=${name} style=${'--cc:' + (d.group.color[c.element] || 'var(--line)')}>
+    <h3>${c.name}</h3>
+    <div class="run-types">${types.map(t => html`<span key=${t} style=${'--tc:' + (d.group.color[t] || '#888')}>${d.group.name[t] || t}</span>`)}</div>
+    <div class="run-genus">${c.genus || ''}</div>
+    ${growth != null && html`<div class="run-growth">${W('run.growth.' + growth)}</div>`}
+    ${hp != null && html`<div class=${'run-hp' + (hp > 0 && hp < 0.35 ? ' low' : '')}><u><i style=${'width:' + Math.round(hp * 100) + '%'} /></u><span>${down ? W('run.down') : W('run.hp', { n: Math.round(hp * 100) })}</span></div>`}
+    ${growth != null && html`<div class="run-stats">${stats.map((v, i) => html`<span key=${i}>${d.label.stat[i]}</span><u><i style=${'width:' + Math.min(100, v / 255 * 100) + '%'} /></u>`)}</div>`}
+    ${text && c.text && html`<div class="run-text">${c.text}</div>`}
+    ${action && html`<button type="button" onClick=${onPick}>${action}</button>`}
+  </div>`;
+}
+
+function Steps({ st }) {
+  const items = [];
+  for (let i = 1; i <= RUN.LENGTH; i++) {
+    const rec = st.log.find(l => l.stage === i);
+    items.push(html`<u key=${i} class=${rec ? (rec.winner === 'a' ? 'won' : 'lost') : (st.stage === i ? 'now' : '')} />`);
+  }
+  return html`<span class="run-steps">${items}</span>`;
+}
+
+function Draft({ d, st, onPick }) {
+  const offer = RUN.offer(st, d.cards);
+  return html`<div class="sec">${W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS })}</div>
+    <p class="note">${W('run.draft.note')}</p>
+    <div class="run-cards run-draft">${offer.map(n => html`<${Card} key=${n} d=${d} name=${n} growth=${RUN.left(d.by, n)} text action=${W('run.pick')} onPick=${() => onPick(n)} />`)}</div>
+    ${st.roster.length > 0 && html`<div class="sec">${W('run.roster')}</div>
+      <div class="run-cards run-roster">${st.roster.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} hp=${r.hp} />`)}</div>`}`;
+}
+
+function Roster({ d, st }) {
+  return html`<div class="sec">${W('run.roster')}</div>
+    <div class="run-cards run-roster">${st.roster.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} hp=${r.hp} />`)}</div>`;
+}
+
+/* 한 판. 맡기면 끝까지 굴리고, 직접이면 박자 사이에 멈춘다. 끝나면 런에 거둔다 */
+function Fight({ d, st, onDone }) {
+  const [game, setGame] = useState(null);
+  const [cmds, setCmds] = useState({});
+  const foe = RUN.encounter(st, d.cards);
+  const auto = () => {
+    const f = RUN.actors(st, d.cards, d.chart, 'managed');
+    onDone(B.battle(f.a, f.b, { seed: f.seed, chart: d.chart }), f.foes);
+  };
+  const manual = () => {
+    const f = RUN.actors(st, d.cards, d.chart, 'managed');
+    setGame({ g: B.createBattle(f.a, f.b, { seed: f.seed, chart: d.chart, snapshots: true }), foes: f.foes, n: 0 });
+  };
+  const step = () => {
+    const g = game.g;
+    for (const a of g.actors) {
+      if (a.side !== 'a' || !a.alive) continue;
+      const c = cmds[a.name] || {}, can = g.can(a);
+      let cmd = null;
+      if (c.kind === 'attack') cmd = { kind: 'attack', target: c.target || undefined, extra: !!c.extra };
+      else if (c.kind === 'open' && can.open) cmd = { kind: 'open', target: c.target || undefined };
+      else if (can.forms.includes(c.kind)) cmd = { kind: 'switch', form: c.kind };
+      g.reserve(a, cmd);
+    }
+    if (g.step()) onDone(g.result(), game.foes);
+    else setGame(Object.assign({}, game, { n: game.n + 1 }));
+  };
+  if (game) return html`<${Play} g=${game.g} tickCount=${game.n} cmds=${cmds} setCmds=${setCmds} onStep=${step} />`;
+  return html`<${Roster} d=${d} st=${st} />
+    <div class="run-vs">VS</div>
+    <div class="sec">${W('run.foes')}<span>${W('battle.policy.' + foe.policy)}</span></div>
+    <div class="run-cards run-foes">${foe.names.map(n => html`<${Card} key=${n} d=${d} name=${n} growth=${RUN.left(d.by, n)} />`)}</div>
+    <div class="run-tools">
+      <button type="button" class="run-auto" onClick=${auto}>${W('run.fight.auto')}</button>
+      <button type="button" class="run-manual plain" onClick=${manual}>${W('run.fight.manual')}</button>
+    </div>`;
+}
+
+function Reward({ d, st, last, onChoose }) {
+  const opts = RUN.rewards(st, d.cards);
+  return html`${last && html`<div class="run-tools"><span class="run-result" data-result="won">${W('run.fight.won', { beats: last.beats })}</span></div>`}
+    <${Roster} d=${d} st=${st} />
+    <div class="sec">${W('run.reward.title')}</div>
+    <div class="run-rewards">${opts.map((o, i) => html`<button type="button" key=${o.kind} class="run-reward" data-kind=${o.kind} onClick=${() => onChoose(i)}>
+      <h3>${W('run.reward.' + o.kind)}</h3>
+      <p>${o.kind === 'evolve'
+        ? W('run.reward.evolve.note', { list: o.steps.map(s => W('run.reward.step', s)).join(' · ') })
+        : W('run.reward.heal.note')}</p>
+    </button>`)}</div>`;
+}
+
+function End({ d, st, onAgain }) {
+  const won = st.phase === 'won';
+  return html`<div class="run-end">
+    <h2 data-end=${st.phase}>${won ? W('run.won.title') : W('run.lost.title', { n: st.stage })}</h2>
+    <${Roster} d=${d} st=${st} />
+    <div class="sec">${W('run.end.note')}</div>
+    <ol>${st.log.map(l => html`<li key=${l.stage} class=${l.winner === 'a' ? 'win' : ''}>${W('run.end.line', { stage: l.stage, result: W(l.winner === 'a' ? 'run.win' : 'run.lose'), foes: l.foes.join(' · '), beats: l.beats })}</li>`)}</ol>
+    <div class="run-tools"><button type="button" class="run-again" onClick=${onAgain}>${W('run.again')}</button></div>
+  </div>`;
+}
+
+function App() {
+  const d = useData();
+  const [st, setSt] = useState(() => load() || RUN.newRun(freshSeed()));
+  const [last, setLast] = useState(null);
+  const go = next => { setSt(next); save(next); };
+  const restart = () => { setLast(null); go(RUN.newRun(freshSeed())); };
+
+  if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
+  if (!d.cards) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
+
+  const head = html`<div class="run-head">
+    <b data-phase=${st.phase}>${st.phase === 'draft' ? W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS }) : W('run.stage', { n: st.stage, total: RUN.LENGTH })}</b>
+    <i>${W('run.seed', { n: st.seed })}</i>
+    <${Steps} st=${st} />
+    <button type="button" class="run-new" onClick=${restart}>${W('run.new')}</button>
+  </div>`;
+
+  let body;
+  if (st.phase === 'draft') body = html`<${Draft} d=${d} st=${st} onPick=${n => go(RUN.pick(st, n, d.cards))} />`;
+  else if (st.phase === 'fight') body = html`<${Fight} key=${st.seed + ':' + st.stage} d=${d} st=${st}
+    onDone=${(r, foes) => { setLast({ beats: r.beats, winner: r.winner }); go(RUN.settle(st, r, foes)); }} />`;
+  else if (st.phase === 'reward') body = html`<${Reward} d=${d} st=${st} last=${last} onChoose=${i => { setLast(null); go(RUN.choose(st, i, d.cards)); }} />`;
+  else body = html`<${End} d=${d} st=${st} onAgain=${restart} />`;
+
+  return html`<${Shell} head=${head}>
+    ${st.phase === 'draft' && st.round === 0 && html`<p class="note">${W('run.help')}</p>`}
+    ${body}
+  <//>`;
+}
+
+render(html`<${App} />`, document.getElementById('app'));
+window.AtelierFresh.watch();
+</script>
+</body>
+</html>

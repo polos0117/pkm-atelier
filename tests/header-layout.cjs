@@ -29,12 +29,12 @@ function same(actual,expected,label){
      await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
      await p.evaluate(d=>window.AtelierAppearance.set('density',d),density);
      const reference=await geometry(p);
-     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['index.html','.theme-card']]){
+     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['index.html','.theme-card']]){
       await p.locator(`.workspace-nav a[href="${file}"]`).click();
       await p.waitForSelector(ready);
       same(await geometry(p),reference,`${viewport.width} ${density} ${file}`);
       assert(await p.evaluate(()=>document.body.scrollWidth<=innerWidth),'horizontal overflow');
-      const scroll=p.locator(file==='dex.html'||file==='battle.html'?'.collection-scroll':'.wrap');
+      const scroll=p.locator(file==='dex.html'||file==='battle.html'||file==='run.html'?'.collection-scroll':'.wrap');
       assert((await scroll.boundingBox()).height>100,file+' usable scroll viewport');
       if(file==='dex.html'){
        await scroll.evaluate(e=>{e.scrollTop=300});
@@ -46,6 +46,6 @@ function same(actual,expected,label){
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
-  console.log('PASS header layout: 4 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
+  console.log('PASS header layout: 5 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});
