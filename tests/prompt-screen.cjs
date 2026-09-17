@@ -28,6 +28,8 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
    'omit both referenced_image_paths and num_last_images_to_include'));
   assert((await p.locator('#identity-note').innerText()).includes('첨부 없이'));
   assert((await p.locator('#output-mode-note').innerText()).includes('확대컷'));
+  assert((await p.locator('#output-mode-note').innerText()).includes('3:4'));
+  assert((await text()).includes('vertical 3:4'));
   await p.locator('#appearance-settings details').nth(1).locator('summary').click();
   await p.locator('#param-body-type').selectOption('athletic');
   await p.locator('#param-apparent-age').selectOption('30s');
