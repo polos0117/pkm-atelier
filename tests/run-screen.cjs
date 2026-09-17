@@ -41,6 +41,19 @@ const fixSeed = [function (seed) {
       await card.locator('button').click();
       if (r < 2) await p.waitForFunction(n => document.querySelectorAll('.run-roster .run-card').length === n, r + 1);
     }
+    /* 성격 — 셋에 맞는 것이 미리 켜져 있고, 하나를 바꿔도 되고, 다 고르면 나간다 */
+    await p.waitForSelector('.run-nature');
+    assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'nature');
+    assert.equal(await p.locator('.run-nature').count(), 3);
+    await p.waitForFunction(() => document.querySelectorAll('.run-nature button.on').length === 3);
+    assert.equal(await p.locator('.run-nature .fit').count(), 3, '맞는 성격 표시 셋');
+    const fitOn = await p.locator('.run-nature').evaluateAll(es => es.every(e => e.querySelector('button.on .fit')));
+    assert(fitOn, '처음 값은 맞는 성격');
+    await p.locator('.run-nature').first().locator('button[data-nature="light"]').click();
+    await p.waitForFunction(() => document.querySelector('.run-nature button[data-nature="light"]').classList.contains('on'));
+    await p.reload(); await p.waitForSelector('.run-nature');
+    assert(await p.locator('.run-nature').first().locator('button[data-nature="light"]').evaluate(e => e.classList.contains('on')), '성격 선택이 저장된다');
+    await p.locator('.run-nature-go').click();
     await p.waitForSelector('.run-foes .run-card');
     assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'fight');
     assert.deepEqual(await p.locator('.run-roster .run-card').evaluateAll(es => es.map(e => e.dataset.name)), picks, '집은 셋이 로스터');
@@ -64,7 +77,7 @@ const fixSeed = [function (seed) {
     assert(steps[0] === 'won' || steps[0] === 'lost', steps.join(','));
 
     /* 남은 판은 맡긴다. 보상은 둘(진화 있으면) 아니면 하나 — 진화가 있으면 진화를 집는다 */
-    let evolved = false, rewards = 0;
+    let evolved = false, rewards = 0, fired = false, odFired = 0, odHeld = 0;
     for (let guard = 0; guard < 20 && !['won', 'lost'].includes(phase); guard++) {
       if (phase === 'reward') {
         rewards++;
@@ -83,7 +96,19 @@ const fixSeed = [function (seed) {
           await p.waitForFunction(() => document.querySelector('.run-head b').dataset.phase === 'fight');
         }
       } else {
+        /* 맡기기 — 오버라이드가 차면 멈춰 묻는다. 처음은 터뜨리고 그 다음은 아낀다 */
         await p.locator('.run-auto').click();
+        for (let g = 0; g < 40; g++) {
+          const done = await p.evaluate(() => document.querySelector('.run-head b').dataset.phase !== 'fight');
+          if (done) break;
+          const od = await p.locator('.run-od').count();
+          if (od) {
+            assert((await p.locator('.run-od h3').textContent()).includes('오버라이드'));
+            if (!fired) { await p.locator('.run-od select').selectOption({ index: 1 }); await p.locator('.run-od-fire').click(); fired = true; odFired++; }
+            else { await p.locator('.run-od-hold').click(); odHeld++; }
+          }
+          await p.waitForTimeout(50);
+        }
         await p.waitForFunction(() => document.querySelector('.run-head b').dataset.phase !== 'fight');
       }
       phase = await p.locator('.run-head b').getAttribute('data-phase');
@@ -95,6 +120,7 @@ const fixSeed = [function (seed) {
     assert.equal(lines, won ? 7 : +(await p.locator('.run-head b').textContent()).match(/\d+/)[0], '판 기록 수');
     assert.equal(await p.locator('.run-roster .run-card').count(), 3);
     assert(rewards >= 0);
+    console.log('  오버라이드 물음: 터뜨림 ' + odFired + ' · 아낌 ' + odHeld);
     /* 새 런 — 뽑기로 돌아가고 저장이 바뀐다 */
     await p.locator('.run-again').click();
     await p.waitForSelector('.run-draft .run-card');
@@ -111,6 +137,6 @@ const fixSeed = [function (seed) {
     }
     assert.deepEqual(a.errors, []);
     await a.close();
-    console.log('PASS 일곱 판: 공유 팩 12장 · 집힌 표시 · 보급 요청 · 라이벌 여섯 · 저장 · 직접 조종 한 판 · 보상(진화는 이름이 바뀜) · 끝 · 새 런 · 세 화면 크기');
+    console.log('PASS 일곱 판: 공유 팩 12장 · 집힌 표시 · 보급 요청 · 성격 셋(맞는 것 미리, 저장) · 라이벌 여섯 · 직접 조종 한 판 · 맡기기는 오버라이드에서 멈춤 · 보상 · 끝 · 새 런 · 세 화면 크기');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exit(1); });

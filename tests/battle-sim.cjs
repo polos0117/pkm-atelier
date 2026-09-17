@@ -64,6 +64,27 @@ const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? ''
   ck('스피드는 원본 그대로 (피카츄 90)', pika.spe === by['피카츄'].stats[5] && T.budget.speedOut === true, pika.spe + ' vs ' + by['피카츄'].stats[5]);
 }
 
+/* 성격 — 두 칸 오르고 두 칸 내린다, 그 폼으로 선다, 운용이 그 폼을 일하는 폼으로 삼는다 */
+{
+  const plain = B.makeActor(by['거북왕'], {}), hv = B.makeActor(by['거북왕'], { nature: 'heavy' }), mb = B.makeActor(by['거북왕'], { nature: 'mobility' });
+  ck('중장형은 방어·특방이 오르고 공격·스피드가 내린다', hv.stats.def > plain.stats.def && hv.stats.spd > plain.stats.spd && hv.stats.atk < plain.stats.atk && hv.stats.spe < plain.stats.spe,
+    JSON.stringify([plain.stats, hv.stats]));
+  ck('고기동형은 반대다', mb.stats.atk > plain.stats.atk && mb.stats.spe > plain.stats.spe && mb.stats.def < plain.stats.def);
+  ck('성격이 있으면 그 폼으로 선다 · 없으면 경장', hv.form === 'heavy' && mb.form === 'mobility' && plain.form === 'light');
+  ck('없는 성격은 무시한다', B.makeActor(by['거북왕'], { nature: 'xx' }).nature === null);
+  ck('맞는 성격은 오르는 두 칸이 가장 큰 것 (거북왕 중장형 · 피카츄 고기동형)', B.fitNature(B.budgetStats(by['거북왕'], 0, B.TUNING)) === 'heavy' && B.fitNature(B.budgetStats(by['피카츄'], 1, B.TUNING)) === 'mobility');
+  /* 운용 — 경장으로 식힌 뒤 성격 폼으로 돌아간다. 거북왕(방어≥스피드)에 고기동형을 주면 고기동으로 간다 */
+  const a = B.makeActor(by['거북왕'], { side: 'a', policy: 'managed', nature: 'mobility' }); a.form = 'light'; a.heat = 0;
+  const foe = B.makeActor(by['뮤'], { side: 'b', policy: 'stay:light' }); foe.stats.atk = 1; foe.stats.spa = 1;
+  const r = B.battle([a], [foe], { seed: 2, chart, maxBeats: 2 });
+  const sw = r.log.find(e => e.kind === 'switch' && e.who === '거북왕');
+  ck('운용은 성격 폼을 일하는 폼으로 삼는다 (거북왕이 고기동으로)', sw && sw.to === 'mobility', sw && sw.to);
+  const l = B.makeActor(by['거북왕'], { side: 'a', policy: 'managed', nature: 'light' }), startForm = l.form;
+  const r2 = B.battle([l], [B.makeActor(by['뮤'], { side: 'b', policy: 'stay:light' })], { seed: 2, chart, maxBeats: 3 });
+  const sw2 = r2.log.find(e => e.kind === 'switch' && e.who === '거북왕');
+  ck('경장형은 시작만 경장, 일하는 폼은 능력치대로 (거북왕 → 중장)', startForm === 'light' && sw2 && sw2.to === 'heavy', startForm + ' → ' + (sw2 && sw2.to));
+}
+
 /* 상성은 표에서 온다 */
 ck('불꽃→풀 2배 · 전기→땅 0', B.typeMul(chart, 'fire', ['grass']) === 2 && B.typeMul(chart, 'electric', ['ground']) === 0);
 ck('두 타입은 곱한다 (불꽃→풀·독 = 2×1)', B.typeMul(chart, 'fire', ['grass', 'poison']) === 2);

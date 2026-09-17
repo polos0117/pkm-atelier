@@ -24,10 +24,19 @@ const REWARD = {
     const i = opts.findIndex(o => o.kind === 'evolve'); return i < 0 ? opts.length - 1 : i;
   },
 };
-function playRun(seed, draft, reward, policy) {
+/* 성격 전략 */
+const NATURE = {
+  fit: (st) => st.roster.map(r => RUN.suggest(by, r.name)),
+  anti: (st) => st.roster.map(r => { const f = RUN.suggest(by, r.name); return f === 'heavy' ? 'mobility' : f === 'mobility' ? 'light' : 'heavy'; }),
+  heavy: (st) => st.roster.map(() => 'heavy'),
+};
+function playRun(seed, draft, reward, policy, nature) {
   const R = B.rng(seed + 77);
   let st = RUN.newRun(seed, cards);
   while (st.phase === 'draft') st = RUN.pick(st, draft(RUN.open(st), R).name, cards);
+  const ns = (nature || NATURE.fit)(st);
+  for (let i = 0; i < ns.length; i++) st = RUN.setNature(st, i, ns[i], cards);
+  st = RUN.startRun(st);
   while (st.phase === 'fight' || st.phase === 'reward') {
     if (st.phase === 'reward') { st = RUN.choose(st, reward(RUN.rewards(st, cards), st), cards); continue; }
     const f = RUN.actors(st, cards, chart, policy || 'managed');
@@ -68,7 +77,14 @@ const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? ''
   ck('보급은 두 번까지', rr2.rerolls === 0 && rr3 === rr2);
   /* 세 바퀴 */
   let s3 = s2; while (s3.phase === 'draft') s3 = RUN.pick(s3, RUN.open(s3)[0].name, cards);
-  ck('세 바퀴가 끝나면 런 — 일곱 자리 모두 셋씩', s3.phase === 'fight' && s3.stage === 1 && s3.seats.every(s => s.roster.length === 3) && s3.roster.length === 3);
+  ck('세 바퀴가 끝나면 성격 고르기 — 일곱 자리 모두 셋씩', s3.phase === 'nature' && s3.stage === 1 && s3.seats.every(s => s.roster.length === 3) && s3.roster.length === 3);
+  ck('AI 는 능력치에 맞는 성격을 골라 두었다', s3.seats.slice(1).every(s => s.roster.every(r => r.nature === RUN.suggest(by, r.name))));
+  ck('성격을 다 고르기 전에는 못 나간다', RUN.startRun(s3) === s3 && !RUN.natureDone(s3));
+  ck('없는 성격은 안 붙는다', RUN.setNature(s3, 0, 'xx') === s3);
+  s3 = RUN.setNature(s3, 0, 'heavy'); s3 = RUN.setNature(s3, 1, 'light'); s3 = RUN.setNature(s3, 2, RUN.suggest(by, s3.roster[2].name));
+  ck('셋에 성격이 붙는다', s3.roster[0].nature === 'heavy' && s3.roster[1].nature === 'light' && RUN.natureDone(s3));
+  s3 = RUN.startRun(s3);
+  ck('다 고르면 1판', s3.phase === 'fight' && s3.stage === 1);
   ck('마지막 바퀴에는 보급이 없다', !RUN.canReroll(Object.assign({}, s2, { round: 2, turn: s2.order[2].indexOf(0) })));
   ck('스물한 장이 전부 다른 카드', new Set(s3.seats.flatMap(s => s.roster.map(r => r.name))).size === 21);
   ck('AI 여섯이 약한 순서로 늘어선다', s3.foes.length === 6 && s3.foes.every((f, i) => i === 0 || RUN.power(by, s3.seats[f].roster) >= RUN.power(by, s3.seats[s3.foes[i - 1]].roster)));
@@ -82,7 +98,11 @@ const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? ''
   const sum = a => a.stats.hp + a.stats.atk + a.stats.def + a.stats.spa + a.stats.spd;
   const f1 = RUN.actors(s3, cards, chart);
   ck('셋 대 셋으로 선다', f1.a.length === 3 && f1.b.length === 3);
-  ck('1판 상대 예산은 배율만큼 낮다', f1.b.every(x => Math.abs(sum(x) - (Math.round(B.TUNING.budget.final * RUN.DIFF.foeScale[0]) - B.TUNING.budget.step * RUN.left(by, x.name))) <= 3), f1.b.map(sum).join('/'));
+  ck('내 성격이 배우에 실린다 (그 폼으로 선다)', f1.a[0].nature === 'heavy' && f1.a[0].form === 'heavy' && f1.a[1].form === 'light');
+  ck('상대도 성격을 달고 선다', f1.b.every(x => x.nature && x.form === x.nature));
+  /* 성격이 두 칸을 올리고 두 칸을 내리니 합이 조금 흔들린다 — 성격까지 셈해서 견준다 */
+  const expect = x => { const T = B.merge(B.TUNING, { budget: { final: Math.round(B.TUNING.budget.final * RUN.DIFF.foeScale[0]) } }); return sum({ stats: B.applyNature(B.budgetStats(by[x.name], RUN.left(by, x.name), T), x.nature) }); };
+  ck('1판 상대 예산은 배율만큼 낮다 (성격 셈 포함)', f1.b.every(x => sum(x) === expect(x) && sum(x) < 0.7 * B.TUNING.budget.final), f1.b.map(x => sum(x) + '/' + expect(x)).join(' '));
   const grownSt = JSON.parse(JSON.stringify(s3)); grownSt.roster[0].grown = 2;
   const g0 = RUN.actors(s3, cards, chart).a[0], g2 = RUN.actors(grownSt, cards, chart).a[0];
   ck('런 안에서 두 번 진화한 것은 예산이 보정 × 2 만큼 더 크다', Math.abs(sum(g2) - sum(g0) - 2 * RUN.DIFF.grow) <= 3, sum(g0) + '→' + sum(g2));
@@ -98,6 +118,7 @@ const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? ''
     if (canEv) {
       const s5 = RUN.choose(s4, 0, cards);
       ck('진화하면 전부 한 단계, grown 이 하나 늘고 체력이 찬다', opts[0].steps.every(x => s5.roster[x.who].name === x.to && s5.roster[x.who].grown === (s4.roster[x.who].grown || 0) + 1 && s5.roster[x.who].hp === RUN.DIFF.evolveHeal) && s5.stage === 2);
+      ck('진화해도 성격은 남는다', opts[0].steps.every(x => s5.roster[x.who].nature === s4.roster[x.who].nature));
     }
     const hurt = JSON.parse(JSON.stringify(s4)); hurt.roster[0].hp = 0; hurt.roster[1].hp = 0.2;
     const s6 = RUN.choose(hurt, RUN.rewards(hurt, cards).length - 1, cards);
@@ -119,12 +140,15 @@ const N = +process.env.N || 150;
 function table(label, rows) {
   console.log('\n■ ' + label + ' — ' + N + '런, 완주율과 판별 생존율');
   console.log(''.padEnd(18) + '완주   ' + Array.from({ length: RUN.LENGTH }, (_, i) => ('' + (i + 1)).padStart(5)).join(''));
-  for (const [name, draft, reward] of rows) {
+  for (const [name, draft, reward, nature] of rows) {
     const alive = new Array(RUN.LENGTH).fill(0); let won = 0;
-    for (let s = 1; s <= N; s++) { const e = playRun(s, draft, reward); if (e.phase === 'won') won++; for (let i = 0; i < e.log.length; i++) if (e.log[i].winner === 'a') alive[i]++; }
+    for (let s = 1; s <= N; s++) { const e = playRun(s, draft, reward, null, nature); if (e.phase === 'won') won++; for (let i = 0; i < e.log.length; i++) if (e.log[i].winner === 'a') alive[i]++; }
     console.log(name.padEnd(18) + (won / N * 100).toFixed(0).padStart(3) + '%  ' + alive.map(x => (x / N * 100).toFixed(0).padStart(4) + '%').join(''));
   }
 }
+table('성격 — 맞게 고른 쪽이 이기나 (무작위 뽑기, 진화 우선)', [
+  ['맞는 성격', DRAFT.random, REWARD.smart, NATURE.fit], ['거꾸로 고른 성격', DRAFT.random, REWARD.smart, NATURE.anti], ['전부 중장형', DRAFT.random, REWARD.smart, NATURE.heavy],
+]);
 table('자동(관리) · 보상은 다치지 않았으면 진화', [
   ['완성형만', DRAFT.final, REWARD.smart], ['성장형만', DRAFT.growth, REWARD.smart], ['중간만', DRAFT.middle, REWARD.smart], ['무작위', DRAFT.random, REWARD.smart],
   ['성장형 · 회복만', DRAFT.growth, REWARD.heal], ['성장형 · 늘 진화', DRAFT.growth, REWARD.evolve],

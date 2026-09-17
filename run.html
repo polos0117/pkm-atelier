@@ -71,6 +71,20 @@ body {color:var(--text);font-size:15px}
 .run-reward:hover {border-color:var(--accent)}
 .run-reward h3 {margin:0 0 6px;font-size:17px}
 .run-reward p {margin:0;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.run-natures {display:grid;gap:10px}
+.run-nature {border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card);display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.run-nature h3 {margin:0;font-size:15px}
+.run-nature .run-nature-opts {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.run-nature button {min-height:44px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--text);font:inherit;font-size:12px;text-align:left;line-height:1.35}
+.run-nature button b {display:block;font-size:13px}
+.run-nature button small {display:block;color:var(--muted);font-size:10px}
+.run-nature button.on {background:var(--accent-soft);border-color:var(--accent);box-shadow:inset 0 -2px var(--accent)}
+.run-nature button .fit {color:var(--accent);font-weight:700;font-size:10px}
+.run-od {margin:12px 0;padding:14px;border:2px solid var(--accent);border-radius:12px;background:var(--accent-soft)}
+.run-od h3 {margin:0 0 6px;font-size:16px}
+.run-od p {margin:0 0 10px;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.run-od .run-tools {padding:0}
+.run-od select {min-height:44px;background:var(--card);border:1px solid var(--line);color:var(--text);font:inherit;border-radius:8px;padding:6px 10px}
 .run-end {padding:18px 0 6px}
 .run-end h2 {margin:0 0 10px;font-size:clamp(22px,4vw,30px);letter-spacing:-.03em}
 .run-end ol {margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.8;color:var(--muted)}
@@ -233,10 +247,30 @@ function Fight({ d, st, onDone }) {
   const [game, setGame] = useState(null);
   const [cmds, setCmds] = useState({});
   const foe = RUN.encounter(st, d.cards);
-  const auto = () => {
-    const f = RUN.actors(st, d.cards, d.chart, 'managed');
-    onDone(B.battle(f.a, f.b, { seed: f.seed, chart: d.chart }), f.foes, f.seat);
+  /* 맡기기 — 운용은 스스로 열지 않는다(오버라이드는 사람 것). 박자마다 굴리다가 아군 누군가의
+     오버라이드가 찼으면 멈춰 묻는다. 아끼면 그 아군은 Drive 가 값 밑으로 내려갔다 다시 찰 때까지 안 묻는다 */
+  const [od, setOd] = useState(null);       // { g, foes, seat, asked:{name:true}, who, target }
+  const NO_OPEN = B.managedWith({ openInLight: false, openHeatMax: -1 });
+  const runAuto = (game) => {
+    const g = game.g;
+    for (;;) {
+      const ask = g.actors.find(a => a.side === 'a' && a.alive && !game.asked[a.name] && g.can(a).open);
+      if (ask) { setOd(Object.assign({}, game, { who: ask.name, target: '' })); return; }
+      for (const a of g.actors) if (a.side === 'a' && a.alive && game.asked[a.name] && a.drive < B.TUNING.open.cost) game.asked[a.name] = false;
+      if (g.step()) { setOd(null); onDone(g.result(), game.foes, game.seat); return; }
+    }
   };
+  const auto = () => {
+    const f = RUN.actors(st, d.cards, d.chart, NO_OPEN);
+    runAuto({ g: B.createBattle(f.a, f.b, { seed: f.seed, chart: d.chart, snapshots: true }), foes: f.foes, seat: f.seat, asked: {} });
+  };
+  const fire = () => {
+    const g = od.g, a = g.actors.find(x => x.name === od.who);
+    g.reserve(a, { kind: 'open', target: od.target || undefined });
+    od.asked[od.who] = true;
+    const game = Object.assign({}, od); setOd(null); runAuto(game);
+  };
+  const hold = () => { od.asked[od.who] = true; const game = Object.assign({}, od); setOd(null); runAuto(game); };
   const manual = () => {
     const f = RUN.actors(st, d.cards, d.chart, 'managed');
     setGame({ g: B.createBattle(f.a, f.b, { seed: f.seed, chart: d.chart, snapshots: true }), foes: f.foes, seat: f.seat, n: 0 });
@@ -256,6 +290,22 @@ function Fight({ d, st, onDone }) {
     else setGame(Object.assign({}, game, { n: game.n + 1 }));
   };
   if (game) return html`<${Play} g=${game.g} tickCount=${game.n} cmds=${cmds} setCmds=${setCmds} onStep=${step} />`;
+  if (od) {
+    const a = od.g.actors.find(x => x.name === od.who), can = od.g.can(a);
+    return html`<div class="run-od" data-who=${od.who}>
+        <h3>${W('run.od.title', { name: od.who })}</h3>
+        <p>${W('run.od.note')}</p>
+        <div class="run-tools">
+          <select aria-label=${W('run.od.target')} value=${od.target} onChange=${e => setOd(Object.assign({}, od, { target: e.currentTarget.value }))}>
+            <option value="">${W('battle.cmd.any')}</option>
+            ${can.targets.map(t => html`<option key=${t} value=${t}>${t}</option>`)}
+          </select>
+          <button type="button" class="run-od-fire" onClick=${fire}>${W('run.od.fire')}</button>
+          <button type="button" class="run-od-hold plain" onClick=${hold}>${W('run.od.hold')}</button>
+        </div>
+      </div>
+      <${Play} g=${od.g} tickCount=${od.g.beat()} cmds=${{}} setCmds=${() => {}} onStep=${() => {}} />`;
+  }
   return html`<${Roster} d=${d} st=${st} />
     <div class="run-vs">VS</div>
     <div class="sec">${W('run.foes')}<span>${foe.seat < 0 ? W('run.foes.boss') : W('run.foes.seat', { seat: seatName(foe.seat), n: st.stage - 1 })} · ${W('battle.policy.' + foe.policy)}</span></div>
@@ -281,6 +331,22 @@ function Reward({ d, st, last, onChoose }) {
     </button>`)}</div>`;
 }
 
+/* 성격 — 셋에게 하나씩. 맞는 것을 미리 표시하고 처음 값으로 둔다 */
+const NATURES = ['heavy', 'mobility', 'light'];
+function Nature({ d, st, onSet, onSetAll, onGo }) {
+  /* 처음 값은 맞는 성격 — 한 번에 셋을 넣는다 (하나씩 넣으면 같은 상태에 덮어써서 마지막 것만 남는다) */
+  useEffect(() => { if (st.roster.some(r => !r.nature)) onSetAll(st.roster.map(r => r.nature || RUN.suggest(d.by, r.name))); }, []);
+  return html`<div class="sec">${W('run.nature.title')}</div>
+    <p class="note">${W('run.nature.note')}</p>
+    <div class="run-natures">${st.roster.map((r, i) => { const fit = RUN.suggest(d.by, r.name); return html`<div class="run-nature" key=${r.name} data-name=${r.name}>
+      <h3>${r.name}</h3>
+      <div class="run-nature-opts">${NATURES.map(n => html`<button type="button" key=${n} class=${r.nature === n ? 'on' : ''} data-nature=${n} onClick=${() => onSet(i, n)}>
+        <b>${W('run.nature.' + n)}</b><small>${W('run.nature.' + n + '.note')}</small>${fit === n && html`<span class="fit">${W('run.nature.fit')}</span>`}
+      </button>`)}</div>
+    </div>`; })}</div>
+    <div class="run-tools"><button type="button" class="run-nature-go" disabled=${!RUN.natureDone(st)} onClick=${onGo}>${W('run.nature.go')}</button></div>`;
+}
+
 function End({ d, st, onAgain }) {
   const won = st.phase === 'won';
   return html`<div class="run-end">
@@ -304,7 +370,7 @@ function App() {
   if (!d.cards || !st) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
 
   const head = html`<div class="run-head">
-    <b data-phase=${st.phase}>${st.phase === 'draft' ? W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS }) : W('run.stage', { n: st.stage, total: RUN.LENGTH })}</b>
+    <b data-phase=${st.phase}>${st.phase === 'draft' ? W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS }) : st.phase === 'nature' ? W('run.nature.title') : W('run.stage', { n: st.stage, total: RUN.LENGTH })}</b>
     <i>${W('run.seed', { n: st.seed })}</i>
     <${Steps} st=${st} />
     <button type="button" class="run-new" onClick=${restart}>${W('run.new')}</button>
@@ -312,6 +378,8 @@ function App() {
 
   let body;
   if (st.phase === 'draft') body = html`<${Draft} d=${d} st=${st} onPick=${n => go(RUN.pick(st, n, d.cards))} onReroll=${() => go(RUN.reroll(st, d.cards))} />`;
+  else if (st.phase === 'nature') body = html`<${Nature} d=${d} st=${st} onSet=${(i, n) => go(RUN.setNature(st, i, n))}
+    onSetAll=${ns => { let s = st; ns.forEach((n, i) => { s = RUN.setNature(s, i, n); }); go(s); }} onGo=${() => go(RUN.startRun(st))} />`;
   else if (st.phase === 'fight') body = html`<${Fight} key=${st.seed + ':' + st.stage} d=${d} st=${st}
     onDone=${(r, foes, seat) => { setLast({ beats: r.beats, winner: r.winner }); go(RUN.settle(st, r, foes, seat)); }} />`;
   else if (st.phase === 'reward') body = html`<${Reward} d=${d} st=${st} last=${last} onChoose=${i => { setLast(null); go(RUN.choose(st, i, d.cards)); }} />`;

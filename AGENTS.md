@@ -104,7 +104,10 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # �
 ```
 
 `run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·
-성장 보정·체력 이어짐·보상)와 `lib/battle.js`(한 판)에만 있다. 난이도 값(`RUN.DIFF`)은
+성격·성장 보정·체력 이어짐·보상)와 `lib/battle.js`(한 판, 성격 `NATURE`)에만 있다.
+맡긴 판에서 운용은 스스로 열지 않는다(`managedWith({openInLight:false, openHeatMax:-1})`) —
+오버라이드는 사람 것이라 판이 멈춰 묻는다. 그 멈춤도 화면이 엔진의 `can().open` 을 보고
+멈추는 것이지 규칙을 따로 셈하는 것이 아니다. 난이도 값(`RUN.DIFF`)은
 `tests/run-sim.cjs` 로 잰다: 자동 운용으로 완주율이 성장형·완성형 뽑기 모두 반 언저리,
 성장형이 조금 위(성장 보정이 뜻한 바). 한쪽이 죽으면 뽑기가 선택이 아니다.
 전투 화면 조각(`lib/battle-ui.js`)은 `battle.html` 과 같이 쓴다.
