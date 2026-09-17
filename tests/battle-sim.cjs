@@ -85,6 +85,26 @@ ck('두 타입은 곱한다 (불꽃→풀·독 = 2×1)', B.typeMul(chart, 'fire'
   ck('경장→중장 전환은 Heat 를 받는다 (딱 switchHeat 만큼)', sw2 && sw2.heat - sw2.heatBefore === B.TUNING.switchHeat, sw2 && (sw2.heatBefore + '→' + sw2.heat));
   ck('전환은 그 박자의 행동을 먹는다 (공격 없음)', !r.log.some(e => e.kind === 'attack' && e.who === '거북왕'));
 }
+/* 경장 복귀는 행동도 안 먹는다 — 돌아간 그 박자에 공격까지 한다 (규칙, 신호 8 의 D) */
+{
+  const a = team(['거북왕'], 'a', 'stay:light')[0]; a.form = 'heavy';
+  const foe = team(['뮤'], 'b', 'stay:light')[0];
+  const r = B.battle([a], [foe], { seed: 3, chart, maxBeats: 1 });
+  const sw = r.log.findIndex(e => e.kind === 'switch' && e.who === '거북왕' && e.to === 'light');
+  const at = r.log.findIndex(e => e.kind === 'attack' && e.who === '거북왕');
+  ck('경장 복귀는 행동을 안 먹는다 (같은 박자에 전환 → 공격)', sw >= 0 && at > sw && r.log[at].beat === r.log[sw].beat, sw + ' / ' + at);
+}
+/* 강제 방출은 Heat 를 안 뺀다 — 식히려면 경장으로 가야 한다 (규칙, 신호 8 의 B) */
+{
+  const { a, r } = forceAt('heavy', 8);
+  const end = r.log.find(e => e.kind === 'open-end' && e.who === '리자몽' && e.forced);
+  ck('강제 개방 끝에 Heat 가 안 빠진다 (forced.vent 0)', !!end && end.heatBefore === end.heat && B.TUNING.forced.vent === 0, end && (end.heatBefore + '→' + end.heat));
+  /* 자발 개방은 뺀다 — 그 차이가 규칙이다 */
+  ck('자발 개방은 뺀다 (open.vent > 0)', B.TUNING.open.vent > 0);
+  /* Heat 100 그대로 끝나도 냉각 잠금 동안은 다시 안 터진다 — 경장으로 갈 틈 */
+  const fos = r.log.filter(e => e.kind === 'forced-open' && e.who === '리자몽');
+  ck('강제 개방은 냉각 잠금 동안 다시 안 터진다 (4박자에 1번)', fos.length === 1 && a.heat >= 90, fos.length + '번, Heat ' + a.heat);
+}
 
 /* 과열 = 강제 개방, 그리고 그 폼이 하던 일을 친다 (규칙) */
 function forceAt(form, seed) {
