@@ -16,7 +16,7 @@
 카드 이름과 칸 사이에 화풍 key 를 끼우면 그 화풍 몫으로 들어간다.
     <카드 이름>_<화풍>_f.webp        건이지_glossy_kr_game_f.webp
     <카드 이름>_<화풍>_m_casual1.webp  화풍과 성별을 같이 쓸 수도 있다
-화풍 key 는 data/style.json 에 적힌 열한 가지뿐이고, 그 밖의 토막이 끼면
+화풍 key 는 prompt-spec.js에서 생성한 data/style.json 목록만 쓰고, 그 밖의 토막이 끼면
 카드 이름으로 읽히다 실패해 "그런 카드가 없다"로 남는다 — 오타를 잡으려고
 일부러 통과시키지 않는다. 이미 등록된 기본 자리는 화풍 미상으로 보존한다.
 신규 파일에는 화풍 key가 필수이며 byStyle[화풍] 밑에 등록한다.
@@ -52,7 +52,7 @@ SKIP = re.compile(r"^style-")
 
 
 def split_gender(head):
-    """'피카츄_light_semi_real_f' → (…, 'f'). 표시가 없으면 None.
+    """'피카츄_light_cinematic_semi_real_f' → (…, 'f'). 표시가 없으면 None.
 
     앞선 저장소는 표시가 없으면 여성으로 쳤는데, 그러면 한 그림을 두 철자로
     쓸 수 있어 언젠가 갈린다. 여기서는 _f 를 반드시 붙인다 — 지금은 여성만

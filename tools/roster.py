@@ -34,7 +34,7 @@ def forms():
 
 
 def styles():
-    """화풍 key → 이름."""
+    """화풍 key → 이름. prompt-spec.js에서 동기화한 style.json을 읽는다."""
     return {r["key"]: r["name"] for r in read("style")["styles"]}
 
 
