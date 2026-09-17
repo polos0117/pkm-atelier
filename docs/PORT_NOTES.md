@@ -15,6 +15,11 @@
 | `tests/browser-harness.cjs` | 105 | 브라우저 검사 껍데기 |
 | `tools/register-images.py` | — | 그림 등록·이름 규칙 검사 |
 | `tools/make-thumbs.py` | — | 썸네일 |
+| `lib/prompt-spec.js` | 1,249 | 프롬프트 자료 표 65개 (`toolkit-spec.js` 였다) |
+| `lib/prompt-anthro.js` | 193 | 의인화 글 조립 |
+| `lib/prompt-lifestyle.js` | 450 | 일상컷·콜라주 글 조립 |
+| `lib/figures.js` | 237 | 체형·머리 도형 (Canvas) |
+| `lib/toolkit.js` | 254 | 툴킷 기록 읽기 |
 
 ## 옮기면서 고친 것
 
@@ -39,14 +44,45 @@
 **말을 낱말 표로.** `fresh.js` 의 안내문 넷과 겉모습 고르개의 이름표를
 `lib/words.js` 로 뺐다. 옮기기 전에는 코드에 박혀 있었다.
 
+**프롬프트 엔진 — 구조는 그대로, 말만 표로.** `toolkit-spec.js` → `lib/prompt-spec.js`
+로 이름만 바꿔 통째로 왔다. 표 65개에 **함수는 하나도 없다** (원본도 그랬다).
+조립부 둘(`prompt-anthro.js` · `prompt-lifestyle.js`)은 한글이 0자리라 손댈 게
+없었고, 코드에 박혀 있던 영문 주제어 **7자리**만 표로 뺐다 —
+`SOURCE_WORD`(셋)와 `SOURCE_INPUT`(블록 하나). `toolkit.js` 의 이름표 둘
+(`CAT` · `LABEL`)과 요약 조각 넷도 표로 옮겼다. 이제 이 넷에는 한글도 주제어도 없다.
+
+**옮긴 것이 같은 글을 내놓는지 바이트로 확인했다.** 화풍 6 × 형태 3 × 번역 3 ×
+성별 2 = 의인화 **108벌**, 화풍 6 × 카테고리 6 × 성별 2 = 일상컷 **72벌**.
+180벌 전부 원본과 한 글자도 안 다르다. (표에서 한 단어를 바꿔 이 비교가 실제로
+차이를 잡는 것도 확인했다.)
+
+## 아직 건담 낱말이다 — GPT 가 고칠 자리
+
+말은 **`lib/prompt-spec.js` 한 파일**에 모여 있다. 다른 곳은 안 봐도 된다.
+
+| | 수 |
+|---|---|
+| 한글 | 1,515자리 (대부분 `PARAM_DEFS` · `ART_STYLES` 의 선택지 설명) |
+| `mobile suit` | 61 |
+| `mobile-suit` | 20 |
+| `MOBILE SUIT` | 4 |
+| `Gundam` | 3 |
+| `기체` | 34 |
+
+`mechanical` 은 **안 건드린다.** 그건 몸에 붙은 장갑을 가리키는 말이라
+(`"armor, mechanical parts, weapons"`, `Human ↔ Mechanical Balance`) 이 놀이에도
+그대로 쓰인다. 원본을 가리키는 말은 `mobile suit` 쪽이다.
+
+고친 뒤 `node tests/prompt-engine.cjs` 가 통과하면 뼈대는 안 깨진 것이다.
+
 ## 일부러 안 가져온 것
 
 | | 왜 |
 |---|---|
 | 드래프트 엔진 (`draft-engine.js` 1,506줄) | 놀이가 안 정해졌다. 같은 모양이면 그때 가져온다 |
 | 도감 (`dex.html` 883줄) | 카드 갈래가 정해져야 모양이 선다 |
-| 초상 툴킷 (`prompt.html` 2,283줄 · `toolkit-spec.js` 1,270줄) | 그림을 쓸 때 가져온다. `prompt-anthro.js` 는 주제 낱말이 0회라 그대로 온다 |
-| `lib/figures.js` | 위와 같음 |
+| 툴킷 화면 (`prompt.html` 2,283줄) | 엔진만 먼저 옮겼다. 화면은 한글이 1,189자리라 낱말 표로 빼는 일이 따로 남았다 |
+| `NAME_RULES` (21갈래) | 카드 **이름 정규식**으로 일상컷 후보를 골랐다. atelier 에서도 옛 화면(`prompt-legacy.html`)만 쓰고 지금 화면은 안 쓴다 — 이름에 규칙을 묶는 방식이 주제를 갈아 끼우면 깨지므로, 되살릴 일이 있으면 카드에 결을 적고 그걸 읽는 꼴로 다시 만든다 |
 
 ## 앞선 저장소가 남긴 측정
 

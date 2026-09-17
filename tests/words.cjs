@@ -27,12 +27,15 @@ const strip = s => s
   .replace(/(^|[^:])\/\/[^\n]*/g, '$1')
   .replace(/<!--[\s\S]*?-->/g, '')
   .replace(/<title>[^<]*<\/title>/g, '');
+/* 말을 담는 것이 일인 파일은 이 검사에서 뺀다. 대신 아래에서 "표 말고
+   아무것도 없나" 를 따로 본다 — 빼 준 자리에 화면 코드가 숨지 못하게 */
+const TABLES = ['lib/words.js', 'lib/prompt-spec.js'];
 const targets = [];
 for (const dir of ['.', 'lib']) {
   for (const f of fs.readdirSync(dir)) {
     const p = dir === '.' ? f : dir + '/' + f;
     if (!/\.(html|js)$/.test(f)) continue;
-    if (p === 'lib/words.js' || !fs.statSync(p).isFile()) continue;
+    if (TABLES.includes(p) || !fs.statSync(p).isFile()) continue;
     targets.push(p);
   }
 }
@@ -54,6 +57,29 @@ for (const p of targets) {
     assert(!body.includes(w), p + ' 에 ' + w + ' 가 박혀 있다 — lib/words.js 로 뺄 것');
 }
 
+/* 빼 준 파일은 정말 표뿐인가. 한글 검사를 면제받는 대가다 —
+   여기 화면 코드를 숨기면 주제를 갈아 끼울 때 또 190 자리가 된다 */
+for (const p of TABLES) {
+  if (!fs.existsSync(p)) continue;
+  const body = strip(fs.readFileSync(p, 'utf8'));
+  for (const bad of ['document.', 'addEventListener', 'localStorage', 'fetch(', 'innerHTML'])
+    assert(!body.includes(bad), p + ' 에 ' + bad + ' 가 있다 — 표만 두는 파일이다');
+  /* 내보내는 것이 전부 자료인가. 함수가 하나라도 있으면 표가 아니다 */
+  const box = { window: {}, console: { warn() {} } };
+  vm.createContext(box);
+  vm.runInContext(fs.readFileSync(p, 'utf8'), box);
+  for (const name of Object.keys(box.window)) {
+    const mod = box.window[name];
+    if (typeof mod !== 'object' || mod === null) continue;
+    const fns = Object.keys(mod).filter(k => typeof mod[k] === 'function');
+    /* lib/words.js 는 W·load·missing 을 내보낸다 — 표를 쓰는 손잡이라 봐준다 */
+    const allowed = p === 'lib/words.js' ? ['W', 'load', 'missing'] : [];
+    const odd = fns.filter(k => !allowed.includes(k));
+    assert.equal(odd.length, 0,
+      p + ' 의 ' + name + ' 이 함수를 내보낸다: ' + odd.join(', ') + ' — 표만 두는 파일이다');
+  }
+}
+
 /* 정적 <title> 은 낱말 표와 갈리면 안 된다 */
 for (const p of targets.filter(x => x.endsWith('.html'))) {
   const m = fs.readFileSync(p, 'utf8').match(/<title>([^<]*)<\/title>/);
@@ -62,4 +88,5 @@ for (const p of targets.filter(x => x.endsWith('.html'))) {
     p + ' 의 <title> 이 낱말 표의 app.title 과 다르다');
 }
 
-console.log(`PASS: 낱말 표 동작, 갈아 끼우기, 없는 열쇠 보고, 화면 ${targets.length}개에 박힌 말 없음, <title> 은 표와 일치`);
+console.log(`PASS: 낱말 표 동작, 갈아 끼우기, 없는 열쇠 보고, 화면 ${targets.length}개에 박힌 말 없음, `
+  + `표 파일 ${TABLES.length}개는 표뿐, <title> 은 표와 일치`);

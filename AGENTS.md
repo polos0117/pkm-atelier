@@ -22,6 +22,11 @@
 `<title>` 만 예외다 — HTML 이 읽히는 순간 필요해서 자바스크립트로 못 넣는다.
 대신 낱말 표의 `app.title` 과 같은지 검사가 본다.
 
+**말을 담는 것이 일인 파일**(`lib/words.js` · `lib/prompt-spec.js`)은 한글 검사에서
+빠진다. 대신 "정말 표뿐인가" 를 따로 본다 — 내보내는 것에 함수가 있거나
+`document.` · `localStorage` · `fetch(` 가 보이면 실패한다. 빼 준 자리에 화면 코드가
+숨으면 주제를 갈아 끼울 때 또 190 자리가 되기 때문이다.
+
 ### 2. 그림은 이 저장소에 두지 않는다
 
 `pkm-atelier-img` 저장소에 올리고 Pages 를 켠다. 그쪽이 1 GB 를 따로 받는다.
@@ -61,7 +66,11 @@ Preact 가 그리는 `#app` 이 사이에 끼면 키도 같이 물려줘야 한�
 node tests/words.cjs             # 낱말이 코드에 박히지 않았나
 node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
+node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 ```
+
+`prompt-engine` 은 브라우저를 안 띄운다. 조립부가 값을 인자로 받게 갈라져 있어서
+`node` 로 바로 부를 수 있다 — atelier 에서는 화면을 띄워야 확인이 됐다.
 
 브라우저 검사는 `tests/browser-harness.cjs` 를 쓴다. CDN(esm.sh)이 막힌 곳에서는
 `ESM_DIR` 에 preact·htm 이 든 `node_modules` 경로를 준다.
