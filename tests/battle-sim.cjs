@@ -204,6 +204,26 @@ function forceAt(form, seed) {
   }
   ck('Heat·Drive 가 범위 안에 있다 (50판)', bad === 0, bad);
 }
+/* 한 박자씩 굴려도 같은 판이고, 사람의 예약이 규칙보다 앞선다 (화면의 근거) */
+{
+  const whole = fight(ROSTER, 'managed', OTHER, 'stay:heavy', 41);
+  const g = B.createBattle(team(ROSTER, 'a', 'managed'), team(OTHER, 'b', 'stay:heavy'), { seed: 41, chart });
+  let n = 0; while (!g.step()) n++;
+  const r = g.result();
+  ck('한 박자씩 굴려도 끝까지 굴린 것과 같은 판', r.winner === whole.winner && r.beats === whole.beats && JSON.stringify(r.log) === JSON.stringify(whole.log));
+  const g2 = B.createBattle(team(ROSTER, 'a', 'managed'), team(OTHER, 'b', 'stay:light'), { seed: 5, chart });
+  const pika = g2.actors[0], tank = g2.actors[2];
+  const can = g2.can(pika);
+  ck('고를 수 있는 것을 알려 준다 (대상 셋 · 폼 둘 · 개방 불가)', can.targets.length === 3 && can.forms.length === 2 && can.open === false, JSON.stringify(can));
+  g2.reserve(pika, { kind: 'attack', target: '뮤' }); g2.reserve(tank, { kind: 'switch', form: 'heavy' });
+  g2.step();
+  const hit = g2.log.find(e => e.beat === 1 && e.kind === 'hit' && e.who === '피카츄');
+  const sw = g2.log.find(e => e.beat === 1 && e.kind === 'switch' && e.who === '거북왕');
+  ck('예약한 대상을 때린다', hit && hit.to === '뮤', hit && hit.to);
+  ck('예약한 폼으로 간다', sw && sw.to === 'heavy', sw && sw.to);
+  ck('예약은 한 박자만 산다', pika.reserved === null && tank.reserved === null);
+}
+
 /* 같은 씨앗은 같은 판 */
 {
   const x = fight(ROSTER, 'managed', OTHER, 'managed', 33), y = fight(ROSTER, 'managed', OTHER, 'managed', 33);
