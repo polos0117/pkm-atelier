@@ -40,10 +40,19 @@ const ck = (n, ok, got) => rows.push([n, !!ok, got === undefined ? '' : String(g
     els.findIndex(e => [...e.options].some(o => o.textContent.includes(n))), NAME);
   ck('카드 고르개에 card.json 의 카드가 뜬다', cardSel >= 0, cardSel);
 
-  const groupSel = await P.$$eval('select', (els, label) =>
-    els.some(e => [...e.options].some(o => o.textContent.trim() === label)),
-    GROUP.name[GROUP.order[0]]);
-  ck('묶음 고르개가 group.json 을 읽는다', groupSel, GROUP.name[GROUP.order[0]]);
+  /* 묶음 고르개는 group.json 의 name 으로 이름을 짓고 order 로 차례를 잡는다.
+     order 를 안 보면 카드에서 처음 나온 순서대로 늘어선다 — 고쳐도 안 바뀐다 */
+  const want = GROUP.order.map(k => GROUP.name[k]);
+  const got = await P.$$eval('select', els => {
+    const e = els.find(x => [...x.options].length > 3 &&
+      [...x.options].some(o => o.textContent.trim() === '전기'));
+    return e ? [...e.options].map(o => o.textContent.trim()).slice(1) : [];
+  });
+  ck('묶음 고르개가 group.json 의 이름을 쓴다',
+    got.length === want.length && want.every(n => got.includes(n)),
+    got.join(' ') + ' vs ' + want.join(' '));
+  ck('묶음 고르개가 group.json 의 차례를 따른다',
+    got.join(',') === want.join(','), got.slice(0, 6).join(' ') + ' … / ' + want.slice(0, 6).join(' ') + ' …');
 
   /* 없는 파일을 부르고 있지 않나 — 코드·자료는 다 있어야 한다.
      toolkit-data.json 은 아직 커밋한 기록이 없어 정상적으로 404 다 */

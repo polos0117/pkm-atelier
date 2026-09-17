@@ -91,3 +91,18 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 
 `data/*.json` 은 머리말 `note` 에 **모양을 적어 둔다.** 앞선 저장소에서 레코드
 모양을 몰라 배열로 만들었다가 터진 적이 있다.
+
+`data/card.json` 과 `data/group.json` 은 **손으로 고치지 않는다.** 만드는 것은
+`tools/fetch-cards.py` 다 — 다시 돌리면 손으로 넣은 것은 날아간다.
+
+```bash
+python3 tools/fetch-cards.py --check      # 무엇이 달라지는지만
+python3 tools/fetch-cards.py              # 받아서 덮어쓴다
+```
+
+PokéAPI 가 제 저장소에 올려 둔 CSV 아홉 장을 받는다. REST API 를 한 마리씩
+부르지 않는 까닭은 1,025종이면 호출이 1,025번이기 때문이다. CSV 는 합쳐서 0.5 MB 다.
+
+**카드 이름(`name`)은 그림 파일 이름이다.** `<카드>_<폼>_<화풍>_<성별>.webp` 가
+여기서 만들어지므로 한 번 정하면 못 바꾼다 — 바꾸면 이미 올린 그림이 미아가 된다.
+그래서 이 도구는 한국어 이름이 비거나 이름이 겹치면 파일을 안 쓰고 선다.

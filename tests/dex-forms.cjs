@@ -55,6 +55,18 @@ let ACTFILE = '';
 
 const q = (page, sel, fn) => page.$$eval(sel, fn);
 
+/* 카드가 1,025장이라 "첫 칸" 은 그림 있는 카드가 아니다. 검색으로 좁혀서 연다 —
+   자리를 박아 두면 카드가 늘 때마다 검사가 엉뚱한 카드를 열고 조용히 어긋난다 */
+async function openCard(P, name) {
+  await P.fill('.search-row input', name);
+  await P.waitForFunction(n => {
+    const caps = [...document.querySelectorAll('.grid .cell .cap')];
+    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+  }, name, { timeout: 5000 });
+  await P.click('.grid .cell');
+  await P.waitForSelector('.fstrip .fcell');
+}
+
 const rows = [];
 const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : String(got)]);
 
@@ -71,7 +83,18 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
 
   ck('페이지 오류 없음', a.errors.length === 0, a.errors.join(' / '));
 
+  const all = await q(P, '.grid .cell .cap', els => els.length);
+  ck('목록에 카드가 다 뜬다', all === CARD.count, all + ' / ' + CARD.count);
+
+  /* 검색으로 좁힌 뒤에 본다. 1,025장 가운데 그림이 있는 것은 아직 몇 장뿐이다 */
+  await P.fill('.search-row input', NAME);
+  await P.waitForFunction(n => {
+    const caps = [...document.querySelectorAll('.grid .cell .cap')];
+    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+  }, NAME, { timeout: 5000 });
   const cells = await q(P, '.grid .cell .cap', els => els.map(e => e.textContent));
+  ck('이름으로 검색하면 좁혀진다', cells.length > 0 && cells.length < all,
+    cells.length + ' / ' + all);
   ck('목록에 등록된 카드가 뜬다', cells.some(t => t.indexOf(NAME) === 0), cells.join(' | '));
 
   const prog = W('art.form.done', { done: WANT.length, all: WANT.length });
@@ -214,12 +237,16 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   ck('갈아 끼운 자료를 읽었다', await Q.evaluate(() => !!window.__DEX_IMG__));
 
   const gapProg = W('art.form.done', { done: WANT.length - GONE.length, all: WANT.length });
+  await Q.fill('.search-row input', NAME);
+  await Q.waitForFunction(n => {
+    const caps = [...document.querySelectorAll('.grid .cell .cap')];
+    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+  }, NAME, { timeout: 5000 });
   const gapCap = await q(Q, '.grid .cell .cap', els => els.map(e => e.textContent));
   ck('빠진 폼이 진척에 그대로 보인다 — ' + gapProg,
     gapCap.some(t => t.indexOf(gapProg) > 0), gapCap.join(' | '));
 
-  await Q.click('.grid .cell');
-  await Q.waitForSelector('.fstrip .fcell');
+  await openCard(Q, NAME);
   const strip2 = await q(Q, '.fstrip .fcell', els => els.map(e => ({
     form: e.dataset.form, off: e.disabled, gap: e.classList.contains('gap'),
     ph: !!e.querySelector('.ph'), pressed: e.getAttribute('aria-pressed'),
@@ -253,8 +280,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   const c = await h.open('dex.html', { viewport: FOLD.cover, mobile: true, init: [SWAP, withImg(WITHACT)] });
   const R = c.page;
   await R.waitForSelector('.grid .cell');
-  await R.click('.grid .cell');
-  await R.waitForSelector('.fstrip .fcell');
+  await openCard(R, NAME);
   const secs3 = await q(R, '.sec', els => els.map(e => e.textContent));
   ck('연출컷이 있으면 그 칸이 뜬다',
     secs3.some(t => t.indexOf(W('dex.action')) === 0), secs3.join(' | '));

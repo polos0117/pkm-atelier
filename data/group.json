@@ -1,7 +1,45 @@
 {
  "version": 1,
  "note": "묶음(진영·소속·계열 등) 이름표와 색. name 은 열쇠→표시 이름, color 는 열쇠→#RRGGBB 로 카드 테두리 색에 쓴다. order 는 화면에 늘어놓을 차례다 — 적어 두면 화면이 이 차례를 따른다(앞선 저장소는 order 를 두고도 안 써서 파일 순서대로 나왔다). 이 놀이에서는 카드의 element 를 이 표로 읽는다.",
- "name": {"electric": "전기"},
- "color": {},
- "order": ["electric"]
+ "name": {
+  "normal": "노말",
+  "fighting": "격투",
+  "flying": "비행",
+  "poison": "독",
+  "ground": "땅",
+  "rock": "바위",
+  "bug": "벌레",
+  "ghost": "고스트",
+  "steel": "강철",
+  "fire": "불꽃",
+  "water": "물",
+  "grass": "풀",
+  "electric": "전기",
+  "psychic": "에스퍼",
+  "ice": "얼음",
+  "dragon": "드래곤",
+  "dark": "악",
+  "fairy": "페어리"
+ },
+ "color": {
+  "normal": "#9FA19F",
+  "fighting": "#FF8000",
+  "flying": "#81B9EF",
+  "poison": "#9141CB",
+  "ground": "#915121",
+  "rock": "#AFA981",
+  "bug": "#91A119",
+  "ghost": "#704170",
+  "steel": "#60A1B8",
+  "fire": "#E62829",
+  "water": "#2980EF",
+  "grass": "#3FA129",
+  "electric": "#FAC000",
+  "psychic": "#EF4179",
+  "ice": "#3DCEF3",
+  "dragon": "#5060E1",
+  "dark": "#624D4E",
+  "fairy": "#EF70EF"
+ },
+ "order": ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic", "ice", "dragon", "dark", "fairy"]
 }
