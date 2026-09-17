@@ -107,6 +107,26 @@ function forceAt(form, seed) {
   const { a, r } = forceAt('mobility', 8);
   ck('고기동 강제 개방은 다음 행동을 잃는다', r.log.some(e => e.kind === 'skip' && e.who === '리자몽'));
 }
+/* 피하는 것도 공짜가 아니다 — 피하면 Heat 가 오르고, 계속 피하면 천장에 닿아 강제로 열린다 (규칙) */
+{
+  const m = team(['리자몽'], 'a', 'stay:mobility')[0]; m.form = 'mobility';
+  const foe = team(['뮤'], 'b', 'stay:light')[0]; foe.stats.atk = 1; foe.stats.spa = 1;   // 안 아픈 적 — 회피만 본다
+  const r = B.battle([m], [foe], { seed: 14, chart, maxBeats: 12 });
+  const evs = r.log.filter(e => e.kind === 'evade' && e.who === '리자몽');
+  const T = B.TUNING.form.mobility;
+  ck('피하면 Heat 가 오른다 (딱 evadeHeat 만큼)', evs.length > 0 && evs.every(e => e.heat > e.heatBefore && e.heat - e.heatBefore === T.evadeHeat),
+    evs.length + '번 ' + evs.map(e => e.heatBefore + '→' + e.heat).join(' '));
+  ck('피할 때 오르는 Heat 가 맞을 때보다 크다', T.evadeHeat > T.hitHeat, T.evadeHeat + ' vs ' + T.hitHeat);
+  /* 천장에서 evadeHeat 만큼 밑에 세워 두고 한 번 피하면 강제로 열린다.
+     자기 공격의 Heat 가 먼저 천장을 치면 안 되니 적을 더 빠르게 두고, 첫 타를 피하는 씨앗(7)을 쓴다 */
+  const m2 = team(['리자몽'], 'a', 'stay:mobility')[0]; m2.form = 'mobility'; m2.heat = B.TUNING.maxHeat - T.evadeHeat;
+  const foe2 = team(['뮤'], 'b', 'stay:light')[0]; foe2.stats.atk = 1; foe2.stats.spa = 1; foe2.stats.spe = 999;
+  const r2 = B.battle([m2], [foe2], { seed: 7, chart, maxBeats: 3 });
+  const first = r2.log.findIndex(e => e.who === '리자몽');
+  ck('계속 피하면 강제로 열린다 (첫 사건이 회피, 바로 뒤에 강제 개방)',
+    first === 0 && r2.log[0].kind === 'evade' && r2.log[1].kind === 'forced-open' && r2.log[1].who === '리자몽',
+    r2.log.slice(0, 3).map(e => e.kind).join(' → '));
+}
 {
   /* 중장 개방 중에는 아군을 못 받아낸다 */
   const tank = team(['거북왕'], 'a', 'stay:heavy')[0]; tank.form = 'heavy'; tank.heat = 99;
@@ -224,6 +244,26 @@ for (const [name, t] of sweep) {
   const w = winRate(ROSTER, 'managed', ROSTER, 'stay:heavy', N / 2, t);
   const b = winRate(ROSTER, 'managed', ROSTER, 'burn', N / 2, t);
   console.log('  ' + name.padEnd(22) + ' vs 중장 ' + pct(w.a) + '   vs 태우기 ' + pct(b.a) + '   ' + w.beats.toFixed(0) + '박자');
+}
+
+console.log('\n■ 회피의 값 흔들기 — stay:mobility 가 얼마나 남나 (' + (N / 2) + '판×2). 승률 · 고기동 강제개방/판');
+{
+  const heads = ['vs managed', 'vs stay:light', 'vs stay:heavy', 'vs burn'];
+  console.log('              ' + heads.map(h => h.padStart(20)).join(''));
+  for (const eh of [0, 6, 10, 15, 20]) {
+    const t = { form: { mobility: { evadeHeat: eh } } };
+    let row = ('evadeHeat ' + eh + (eh === B.TUNING.form.mobility.evadeHeat ? ' *' : '')).padEnd(14);
+    for (const q of ['managed', 'stay:light', 'stay:heavy', 'burn']) {
+      let a = 0, fm = 0, games = 0;
+      for (let s = 1; s <= N / 2; s++) for (const [r, me] of [[fight(ROSTER, 'stay:mobility', ROSTER, q, s, t), 'a'], [fight(ROSTER, q, ROSTER, 'stay:mobility', s, t), 'b']]) {
+        games++; if (r.winner === me) a++;
+        for (const e of r.log) if (e.kind === 'forced-open' && e.from === 'mobility' && e.side === me) fm++;
+      }
+      row += (pct(a / games) + ' · ' + (fm / games).toFixed(1)).padStart(20);
+    }
+    console.log(row);
+  }
+  console.log('  * 가 지금 값. 강제개방/판 은 고기동 쪽이 피하다 천장에 닿은 횟수다');
 }
 
 console.log('\n■ 완성형 vs 성장형 (예산만) — 리자몽·거북왕·이상해꽃 vs 파이리·꼬부기·이상해씨, managed');
