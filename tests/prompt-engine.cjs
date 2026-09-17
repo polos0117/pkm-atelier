@@ -53,7 +53,8 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
  assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
  for(const detail of ['face close-up','source-derived marking','back-mounted structure','footwear'])
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
- assert(sheet.includes('four detail insets')&&sheet.includes('vertical 2:3'));
+ assert(sheet.includes('four detail insets')&&sheet.includes('vertical 3:4'));
+ assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
  assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
  assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
  assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
