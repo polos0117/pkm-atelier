@@ -65,8 +65,9 @@ async function start() {
       /* 배포된 그림 주소는 체크아웃의 같은 파일로 돌린다.
          주소를 다시 요청하면 한글 파일 이름의 %xx 가 두 번 인코딩돼 404 가 된다 —
          디스크에서 바로 읽는다 */
-      if (origin === 'https://polos0117.github.io' && new URL(url).pathname.startsWith('/atelier/img/')) {
-        const rel = decodeURIComponent(new URL(url).pathname.slice('/atelier/'.length));
+      const local = origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
+      if (local) {
+        const rel = decodeURIComponent(local[1]);
         const file = path.resolve(ROOT, rel);
         if (!file.startsWith(ROOT + path.sep) || !fs.existsSync(file)) {
           return route.fulfill({ status: 404, body: 'no ' + rel });
@@ -77,7 +78,9 @@ async function start() {
       return route.abort();
     });
     if (opt.store) await ctx.addInitScript(([k, v]) => { try { localStorage.setItem(k, v); } catch (e) {} }, opt.store);
-    if (opt.init) await ctx.addInitScript(opt.init);
+    /* init 은 함수 하나, 또는 [함수, 넘길 값] 이다. 넘길 값은 브라우저 쪽으로
+       직렬화돼 건너가므로 바깥 변수를 붙잡지 않는다 */
+    if (opt.init) await ctx.addInitScript(...(Array.isArray(opt.init) ? opt.init : [opt.init]));
     const p = await ctx.newPage(), errors = [];
     p.on('pageerror', e => errors.push(String(e.message || e).slice(0, 160)));
     await p.goto(base + '/' + page, { waitUntil: 'domcontentloaded' });

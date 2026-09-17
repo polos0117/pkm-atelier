@@ -10,7 +10,7 @@
 | 이 문서 | 규칙과 자리 |
 | `docs/PORT_NOTES.md` | 어디서 무엇을 가져왔고, 무엇을 일부러 뺐나 |
 
-## 지켜야 할 것 셋
+## 지켜야 할 것 넷
 
 ### 1. 화면에 말을 적지 않는다
 
@@ -27,6 +27,13 @@
 `pkm-atelier-img` 저장소에 올리고 Pages 를 켠다. 그쪽이 1 GB 를 따로 받는다.
 `lib/img.js` 의 `BASE` 한 줄이 그 주소를 가리킨다.
 
+`img/` 는 `.gitignore` 에 있다. 브라우저 검사를 돌릴 때만 쓰는 임시 자리다 —
+`tests/browser-harness.cjs` 가 배포 주소를 이 폴더로 돌려준다. 여기 둔 파일은
+올라가지 않으므로, 실제로 화면에 띄우려면 그림 저장소에 같은 이름으로 올려야 한다.
+
+그리고 그림이 그림 저장소에 있다고 화면에 뜨지는 않는다.
+`python3 tools/register-images.py` 가 `data/img.json` 에 적은 것만 뜬다.
+
 앞선 저장소는 그림을 같이 두었다가 `.git` 이 323 MB 가 되었다. 그중 250 MB 가
 그림이고, 이력을 지워도 46 MB 밖에 안 줄어든다 — 옮기려면 이력 재작성이 필요하고
 그러면 남의 clone 이 다 깨진다. 처음부터 나눠 두면 그 일이 없다.
@@ -37,15 +44,35 @@
 `*-smoke.cjs` 다섯 개가 그렇게 죽었고 이틀 동안 아무도 몰랐다.
 늘 빨간 검사가 있으면 진짜 고장도 같이 묻힌다.
 
+### 4. 화면은 껍데기가 정한 자리에 들어간다
+
+`lib/workspace.css` 는 `.dex-page` · `.prompt-page` 를 `100dvh` 로 잠그고
+**한 자리만** 구르게 한다 — 도감은 `.collection-scroll`, 스튜디오는 `.wrap` 이다.
+그 자리를 안 쓰고 `main` 에 바로 내용을 넣으면 아래쪽이 통째로 잘린다.
+화면은 멀쩡해 보이고 스크롤만 안 되므로 눈으로는 잘 안 잡힌다.
+
+Preact 가 그리는 `#app` 이 사이에 끼면 키도 같이 물려줘야 한다. 안 그러면
+`flex:1 1 0` 인 굴림 자리가 높이 0 이 된다 — 굴러가기는 하는데 보이는 것이 없다.
+`dex.html` 의 `.dex-page > #app` 규칙이 그 자리다.
+
 ## 검사
 
 ```bash
 node tests/words.cjs             # 낱말이 코드에 박히지 않았나
 node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
+node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
 ```
 
 브라우저 검사는 `tests/browser-harness.cjs` 를 쓴다. CDN(esm.sh)이 막힌 곳에서는
 `ESM_DIR` 에 preact·htm 이 든 `node_modules` 경로를 준다.
+
+```bash
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
+```
+
+`dex-forms` 는 자료를 세 벌로 돌린다 — 등록된 그대로, 폼 둘을 지운 것,
+연출컷을 한 장 붙인 것. 채워진 자료만으로는 "빈 폼" 쪽을 볼 수가 없어서다.
+갈아 끼우기는 `browser-harness` 의 `init` 으로 `fetch` 를 감싸서 한다.
 
 **검사를 고칠 때는 일부러 어겨 실패하는 것을 먼저 본다.** 통과하는데 아무것도
 안 보는 검사가 제일 나쁘다.

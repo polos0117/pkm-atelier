@@ -43,6 +43,10 @@ function App() {
   }));
   return html`
     <${AppearanceControls} />
+    <nav class="workspace-nav">
+      <a href="index.html" aria-current="page">${W('nav.index')}</a>
+      <a href="dex.html">${W('nav.dex')}</a>
+    </nav>
     <${WorkspaceHeading} title=${W('app.title')} code=${W('app.code')}
       subtitle=${W('app.subtitle')} />
     <div class="panel"><div class="form-section">
