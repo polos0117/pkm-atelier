@@ -30,6 +30,29 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert.equal(P.audit(outputMode,t).length,0); count++;
  }
 const first=P.buildPrompt(base);
+// A creation portrait is an explicit reference sheet; all later modes stay independent.
+for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility','overdrive']){
+ const sheet=P.buildPrompt({...base,style,form,camera:'IGNORED_CAMERA',scene:'IGNORED_SCENE',aspect:'16:9'});
+ assert(sheet.includes('INITIAL CHARACTER REFERENCE SHEET'),style+' creation sheet');
+ assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
+ for(const detail of ['face close-up','source-derived marking','back-mounted structure','footwear'])
+  assert(sheet.includes(detail),'missing sheet detail: '+detail);
+ assert(sheet.includes('four detail insets')&&sheet.includes('vertical 2:3'));
+ assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
+ assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
+ assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
+ assert(sheet.includes(S.STYLE_PROFILES[style].core),'sheet preserves selected style');
+ for(const outputMode of ['portrait','action','casual']) for(const identityMode of ['create','reference']){
+  if(outputMode==='portrait'&&identityMode==='create')continue;
+  const other=P.buildPrompt({...base,style,form,outputMode,identityMode});
+  assert(!other.includes('INITIAL CHARACTER REFERENCE SHEET'),'sheet leaked into '+outputMode+'/'+identityMode);
+  assert(!other.includes('four detail insets'),'detail layout leaked into '+outputMode+'/'+identityMode);
+  if(outputMode==='portrait'){
+   assert(other.includes('SINGLE-FIGURE COMPARISON PORTRAIT'));
+   assert(other.includes('main front view'),'sheet reference resolves to its front view');
+  }
+ }
+}
 assert(first.includes('body type: athletic')); assert(first.includes('right eye is amber'));
 assert(first.includes('left eye is blue')); assert(!first.includes('Use the SAME'));
 assert(!first.includes('[BODY MEASUREMENT NOTE]'));
