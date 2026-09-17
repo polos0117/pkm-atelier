@@ -83,7 +83,10 @@ CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.
 최초 생성에 신체 치수를 지정하면 정체성 뒤에 치수 해석 문장이 붙는다.
 
 화풍은 렌더링만 담당한다. 원본 성격·폼·카메라를 화풍이 강제로 바꾸지 않는다.
-`bright_catalog`를 포함한 **12개 열쇠와 표시 이름을 유지**했다. 밝은 카탈로그
+`glossy_promo`를 추가해 강한 원근·발광 림라이트·스파크·얕은 심도의 2.5D
+프로모션 키아트를 만들 수 있게 했다. 이 화풍은 체형·노출·장갑·카메라를 임의로
+바꾸지 않으며 제목·번호·설명·UI·로고·워터마크를 그리지 않는다.
+`bright_catalog`를 포함한 **13개 열쇠와 표시 이름을 유지**한다. 밝은 카탈로그
 조명·재질을 보존하면서 고정 구도는 초상에만 적용한다.
 `data/style.json`은 계속 `ART_STYLES`에서 생성한다.
 
@@ -130,7 +133,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-controls.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ```
 
-엔진 검사는 12개 화풍 × 3개 모드 × 4개 폼, 기준 정체성 우선순위,
+엔진 검사는 13개 화풍 × 3개 모드 × 4개 폼, 기준 정체성 우선순위,
 폭주 기준, 생성 단계 치수·이색 눈, 모드별 입력 제외를 확인한다.
 모든 화풍·폼에서 최초 기준 시트의 필수 구성을 확인하고, 이미지 이어가기·액션·
 일상컷으로 그 구성이 새어 들어가지 않는지도 검사한다.

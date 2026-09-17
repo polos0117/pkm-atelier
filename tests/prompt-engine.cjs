@@ -5,8 +5,11 @@ for(const f of ['prompt-spec','figures','toolkit','prompt-anthro','prompt-lifest
   vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const {AtelierSpec:S,AtelierPrompt:P,AtelierLifestyle:L,AtelierFigures:F}=ctx.window;
 assert.equal(typeof P.buildPrompt,'function');
-assert(S.ART_STYLES.every(r=>r.length===3)); assert.equal(S.ART_STYLES.length,12);
+assert(S.ART_STYLES.every(r=>r.length===3)); assert.equal(S.ART_STYLES.length,13);
 assert(S.STYLE_PROFILES.bright_catalog);
+assert(S.STYLE_PROFILES.glossy_promo);
+assert(S.STYLE_PROFILES.glossy_promo.core.includes('TEXT AND GRAPHIC OVERLAYS'));
+assert(S.STYLE_PROFILES.glossy_promo.core.includes('no typography'));
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
