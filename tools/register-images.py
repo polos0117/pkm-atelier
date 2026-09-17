@@ -46,17 +46,21 @@ import roster
 # 폴더 없이 파일 이름만 적는다 — 경로는 화면 쪽 IMG_BASE 한 곳이 붙인다.
 IMG_DIR = "img"
 
-PAT = re.compile(r"^(.+?)_(m|f|casual(\d+)|extra(\d+))\.webp$", re.I)
+PAT = re.compile(r"^(.+?)_(m|f|casual(\d+)|extra(\d+)|action(\d+))\.webp$", re.I)
 # 툴킷 화풍 견본. 카드 초상이 아니다
 SKIP = re.compile(r"^style-")
 
 
 def split_gender(head):
-    """'건이지_m' → ('건이지', 'm'). 표시가 없으면 여성으로 친다."""
+    """'피카츄_light_semi_real_f' → (…, 'f'). 표시가 없으면 None.
+
+    앞선 저장소는 표시가 없으면 여성으로 쳤는데, 그러면 한 그림을 두 철자로
+    쓸 수 있어 언젠가 갈린다. 여기서는 _f 를 반드시 붙인다 — 지금은 여성만
+    만들지만 나중에 남성을 더해도 옛 파일의 뜻이 안 바뀐다."""
     for g in ("f", "m"):
         if head.lower().endswith("_" + g):
             return head[:-2], g
-    return head, "f"
+    return head, None
 
 
 def split_style(head, styles):
@@ -73,11 +77,22 @@ def split_style(head, styles):
 
 def card_index():
     """'공백을 밑줄로 바꾼 이름' → 카드 이름."""
-    idx = {}
-    for kind in roster.KINDS:
-        for c in roster.cards(kind):
-            idx[c["name"].replace(" ", "_")] = c["name"]
-    return idx
+    return {n.replace(" ", "_"): n for n in roster.cards()}
+
+
+def split_form(head, forms):
+    """'피카츄_mobility' → ('피카츄', 'mobility'). 폼이 없으면 form 자리가 None.
+
+    split_style 과 같은 방식이다 — 아는 폼일 때만 떼어낸다. 그래서 폼을 안 쓰는
+    카드는 이름이 그대로 남고, 폼처럼 생겼지만 목록에 없는 토막이 끼면 뒤에서
+    '그런 카드가 없다'로 걸린다.
+
+    이름 차례가 <카드>_<폼>_<화풍>_<성별> 인 까닭도 여기 있다. 뒤에서부터
+    성별 → 화풍 → 폼 순으로 벗겨야 남는 것이 카드 이름이 된다."""
+    for k in forms:
+        if head.lower().endswith("_" + k):
+            return head[: -len(k) - 1], k
+    return head, None
 
 
 def shots(bucket, slot):
@@ -87,14 +102,21 @@ def shots(bucket, slot):
 
 
 def buckets(img):
-    """카드 몫과 화풍 몫을 한 줄로 늘어놓는다. 둘의 속은 같은 꼴이다."""
-    for v in img.values():
+    """카드 몫·화풍 몫·폼 몫을 한 줄로 늘어놓는다. 셋의 속은 같은 꼴이다."""
+    def walk(v):
         yield v
         for b in (v.get("byStyle") or {}).values():
+            for x in walk(b):
+                yield x
+        for b in (v.get("byForm") or {}).values():
             yield b
 
+    for v in img.values():
+        for x in walk(v):
+            yield x
 
-SLOTS = ("m", "f", "face", "casual", "extra")
+
+SLOTS = ("m", "f", "face", "casual", "extra", "action", "byForm")
 
 
 def tidy(img, styles):
@@ -125,7 +147,7 @@ def listed_files(img):
         for k in ("m", "f"):
             if d.get(k):
                 out.add(d[k])
-        for k in ("casual", "extra"):
+        for k in ("casual", "extra", "action"):
             for lst in shots(d, k).values():
                 for f in lst or []:
                     out.add(f)
@@ -145,6 +167,7 @@ def main():
     img = doc["img"]
     idx = card_index()
     styles = roster.styles()
+    forms = roster.forms()
     disk = {f for f in os.listdir(IMG_DIR) if f.lower().endswith(".webp")}
     listed = listed_files(img)
 
@@ -156,11 +179,20 @@ def main():
         if not m:
             unknown.append((f, "이름 꼴이 안 맞는다"))
             continue
+        kind = m.group(2).lower()
         head, gender = split_gender(m.group(1))
+        # 초상은 성별이 뒤쪽 토막(kind)에 있고, 컷은 이름 가운데에 있다.
+        # 어느 쪽이든 반드시 적혀 있어야 한다 — 빠뜨리면 한 그림을 두 철자로 쓰게 된다
+        if kind in ("m", "f"):
+            gender = kind
+        elif not gender:
+            unknown.append((f, "성별 표시(_f)가 없다"))
+            continue
         head, style = split_style(head, styles)
+        head, form = split_form(head, forms)
         card = idx.get(head.replace(" ", "_"))
         if not card:
-            unknown.append((f, "카드 이름 또는 화풍 key가 잘못됐다"))
+            unknown.append((f, "카드 이름·화풍 key·폼 key 중에 잘못된 것이 있다"))
             continue
         if not style:
             unknown.append((f, "신규 파일에 화풍 key가 없다 — 과거 기본 자리는 기존 등록만 유지"))
@@ -168,15 +200,21 @@ def main():
         e = img.setdefault(card, {})
         if style:
             e = e.setdefault("byStyle", {}).setdefault(style, {})
-        kind = m.group(2).lower()
+        # 폼이 붙었으면 그 폼 몫으로 들어간다. 일상컷은 폼을 안 타므로 여기 안 온다
+        if form:
+            if not kind in ("m", "f") and not kind.startswith("action"):
+                unknown.append((f, "폼에는 초상과 action 만 붙는다 — 일상컷은 폼을 안 탄다"))
+                continue
+            e = e.setdefault("byForm", {}).setdefault(form, {})
         if kind in ("m", "f"):
             if e.get(kind):
                 unknown.append((f, "초상 슬롯 중복: " + e[kind]))
                 continue
             e[kind] = f
         else:
-            slot = "casual" if kind.startswith("casual") else "extra"
-            n = int(m.group(3) or m.group(4))
+            slot = ("casual" if kind.startswith("casual")
+                    else "action" if kind.startswith("action") else "extra")
+            n = int(m.group(3) or m.group(4) or m.group(5))
             if n < 1:
                 unknown.append((f, "컷 번호는 1 이상이어야 한다"))
                 continue
@@ -192,7 +230,7 @@ def main():
                 continue
             lst[:] = [x for x in lst if x]
             lst.append(f)
-            lst.sort(key=lambda x: int(re.search(r"_(?:casual|extra)(\d+)\.webp$", x, re.I).group(1)))
+            lst.sort(key=lambda x: int(re.search(r"_(?:casual|extra|action)(\d+)\.webp$", x, re.I).group(1)))
         added.append((card + ("" if not style else " · " + styles[style])
                       + ("" if kind in ("m", "f") else " · " + ("남" if gender == "m" else "여")), f))
 
