@@ -232,10 +232,12 @@ for (const p of pols) {
   console.log(row);
 }
 const managedBeatsAll = pols.filter(q => q !== 'managed').every(q => table['managed>' + q].a > 0.5);
-console.log(managedBeatsAll ? '  → 운용이 눌러앉기·태우기를 모두 이긴다' : '  → ⚠ 운용이 못 이기는 정책이 있다: '
+console.log(managedBeatsAll ? '  → 운용이 눌러앉기·개방 남용을 모두 이긴다' : '  → ⚠ 운용이 못 이기는 정책이 있다: '
   + pols.filter(q => q !== 'managed' && table['managed>' + q].a <= 0.5).join(', '));
 const burnVsManaged = table['burn>managed'].a;
-console.log('  일부러 태우기 vs 운용: ' + pct(burnVsManaged) + (burnVsManaged < 0.5 ? ' — 과열은 공짜 필살기가 아니다' : ' — ⚠ 태우는 쪽이 이긴다'));
+console.log('  개방 남용(burn = 중장 + 열 수 있으면 연다) vs 운용: ' + pct(burnVsManaged) + (burnVsManaged < 0.5 ? ' — 여는 것만으로는 못 이긴다' : ' — ⚠ 여는 쪽이 이긴다'));
+console.log('  일부러 과열(안 식히는 stay:heavy · stay:mobility) vs 운용: ' + pct(table['stay:heavy>managed'].a) + ' · ' + pct(table['stay:mobility>managed'].a)
+  + (Math.max(table['stay:heavy>managed'].a, table['stay:mobility>managed'].a) < 0.5 ? ' — 과열은 공짜 필살기가 아니다' : ' — ⚠ 안 식히는 쪽이 이긴다'));
 
 console.log('\n■ 다른 로스터 — ' + ROSTER.join('·') + ' vs ' + OTHER.join('·') + ' (managed 끼리)');
 {
@@ -266,7 +268,7 @@ const sweep = [
 for (const [name, t] of sweep) {
   const w = winRate(ROSTER, 'managed', ROSTER, 'stay:heavy', N / 2, t);
   const b = winRate(ROSTER, 'managed', ROSTER, 'burn', N / 2, t);
-  console.log('  ' + name.padEnd(22) + ' vs 중장 ' + pct(w.a) + '   vs 태우기 ' + pct(b.a) + '   ' + w.beats.toFixed(0) + '박자');
+  console.log('  ' + name.padEnd(22) + ' vs 중장 ' + pct(w.a) + '   vs 개방남용 ' + pct(b.a) + '   ' + w.beats.toFixed(0) + '박자');
 }
 
 console.log('\n■ 회피의 값 흔들기 — stay:mobility 가 얼마나 남나 (' + (N / 2) + '판×2). 승률 · 고기동 강제개방/판');
