@@ -106,5 +106,7 @@ for (const p of targets.filter(x => x.endsWith('.html'))) {
 }
 
 console.log(`PASS: 낱말 표 동작, 갈아 끼우기, 없는 열쇠 보고, 화면 ${targets.length}개에 박힌 말 없음, `
-  + `표 파일 ${TABLES.length}개는 표뿐, <title> 은 표와 일치\n`
-  + `      아직 안 뺀 화면: ` + Object.keys(left).map(k => k + ' ' + left[k] + '자리').join(', '));
+  + `표 파일 ${TABLES.length}개는 표뿐, <title> 은 표와 일치`
+  + (Object.keys(left).length
+      ? `\n      아직 안 뺀 화면: ` + Object.keys(left).map(k => k + ' ' + left[k] + '자리').join(', ')
+      : ''));
