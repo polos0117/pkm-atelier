@@ -26,6 +26,23 @@ ck('함수는 한 개도 안 섞였다',
   Object.keys(S).every(k => typeof S[k] !== 'function'),
   Object.keys(S).filter(k => typeof S[k] === 'function').join(','));
 ck('이름 정규식 표는 안 가져왔다', S.NAME_RULES === undefined);
+
+/* 화풍 줄은 [열쇠, 이름, 한글 설명] 셋뿐이다.
+   예전에는 네 번째 칸에 "core + anthro" 를 합친 옛 통짜 글이 남아 있었다.
+   조립부가 그걸 안 읽는데도(열쇠만 보고 STYLE_PROFILES 에서 글을 꺼낸다)
+   24,945자가 그대로 앉아 있어서, 고치는 사람이 거기를 고치면 되는 줄 안다.
+   다시 들어오면 여기서 선다 */
+ck('화풍 줄은 칸이 셋뿐이다',
+  S.ART_STYLES.every(r => Array.isArray(r) && r.length === 3),
+  [...new Set(S.ART_STYLES.map(r => r.length))].join(','));
+ck('화풍마다 열쇠·이름·설명이 다 있다',
+  S.ART_STYLES.every(r => /^[a-z][a-z0-9_]*$/.test(r[0]) && r[1] && r[2]),
+  S.ART_STYLES.filter(r => !(r[1] && r[2])).map(r => r[0]).join(','));
+ck('화풍마다 core·anthro·lifestyle 이 다 있다',
+  S.ART_STYLES.every(r => ['core', 'anthro', 'lifestyle']
+    .every(k => typeof (S.STYLE_PROFILES[r[0]] || {})[k] === 'string'
+             && S.STYLE_PROFILES[r[0]][k])),
+  S.ART_STYLES.filter(r => !S.STYLE_PROFILES[r[0]]).map(r => r[0]).join(','));
 for (const k of ['PARAM_DEFS', 'ART_STYLES', 'STYLE_PROFILES', 'STYLE_CORES', 'templateC',
                  'MORPHOLOGY_PROFILES', 'TRANSLATION_PROFILES', 'CATS', 'EXAMPLE_MAP',
                  'BODY_FIG', 'HAIR_FIG', 'CAT_SHORT', 'PARAM_SHORT', 'SUMMARY_WORDS'])
