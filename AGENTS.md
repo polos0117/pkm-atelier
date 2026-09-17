@@ -74,6 +74,18 @@ node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나�
 `prompt-engine` 은 브라우저를 안 띄운다. 조립부가 값을 인자로 받게 갈라져 있어서
 `node` 로 바로 부를 수 있다 — atelier 에서는 화면을 띄워야 확인이 됐다.
 
+브라우저 검사에는 **준비물이 둘** 있다. 없으면 무슨 일인지 모른 채 30초를 기다리다 죽는다.
+
+```bash
+# 1) 그림 — 배포 주소를 여기로 돌려 준다 (img/ 는 .gitignore 라 체크아웃에 없다)
+mkdir -p img/figure-previews
+cp <atelier>/assets/figures/*.png img/figure-previews/    # 체형·머리 미리보기 65장
+#    카드 그림은 pkm-atelier-img 에서 img/ 로 내려받는다
+
+# 2) CDN — esm.sh 가 막힌 곳에서만
+ESM_DIR=<preact·htm 이 든 node_modules>
+```
+
 브라우저 검사는 `tests/browser-harness.cjs` 를 쓴다. CDN(esm.sh)이 막힌 곳에서는
 `ESM_DIR` 에 preact·htm 이 든 `node_modules` 경로를 준다.
 
