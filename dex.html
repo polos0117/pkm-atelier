@@ -13,7 +13,7 @@
   화면은 data/img.json 에 적힌 것만 그린다. 그림 저장소에 파일이 있어도
   tools/register-images.py 를 거치기 전에는 없는 것으로 본다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=pokemon2">
+<link rel="stylesheet" href="lib/workspace.css?v=header1">
 <style>
 /* 색·밀도 토막은 lib/workspace.css 한 곳에 있다. 여기는 뼈대만 —
    workspace.css 의 .dex-page 규칙이 이 뼈대에 살을 붙인다.
@@ -22,9 +22,6 @@
 * {box-sizing:border-box}
 html,body {margin:0;padding:0}
 body {color:var(--text);font-size:15px}
-/* 세 화면의 상단 탭은 같은 차례와 같은 너비로 띠를 나눠 갖는다. */
-.workspace-nav {display:flex}
-.workspace-nav a {flex:1 1 0;display:flex;align-items:center;justify-content:center}
 /* 목록은 껍데기가 정한 자리(.collection-scroll)에서만 구른다.
    이걸 안 쓰면 .dex-page 가 100dvh 로 잠겨 있어 아래쪽이 통째로 잘린다 —
    화면은 멀쩡해 보이고 스크롤만 안 된다.
@@ -129,7 +126,7 @@ body {color:var(--text);font-size:15px}
 import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { AppearanceControls, WorkspaceHeading } from './lib/workspace-ui.js?v=pokemon1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg;
 
@@ -153,19 +150,11 @@ function Pic({ file, full, alt }) {
 /* 껍데기. lib/workspace.css 의 .dex-page 규칙이 화면을 100dvh 로 잠그고
    .collection-scroll 한 곳만 구르게 한다 — 그 자리를 안 쓰면 아래쪽이 통째로
    잘리고, 화면은 멀쩡해 보이는데 스크롤만 안 된다.
-   굴리면 main 에 dex-scrolled 가 붙어 겉모습 고르개와 큰 제목이 접힌다 */
+   굴리면 main 에 dex-scrolled 가 붙어 검색 도구만 간결해진다. 상단 탭은 움직이지 않는다 */
 function Shell({ head, children }) {
   const [scrolled, setScrolled] = useState(false);
   return html`<main class=${scrolled ? 'dex-scrolled' : ''}>
-    <div class="chrome">
-      <${WorkspaceHeading} title=${W('dex.title')} code=${W('app.code')} subtitle=${W('app.subtitle')} />
-      <nav class="workspace-nav">
-        <a href="index.html">${W('nav.index')}</a>
-        <a href="dex.html" aria-current="page">${W('nav.dex')}</a>
-        <a href="prompt.html">${W('prompt.title')}</a>
-      </nav>
-      <${AppearanceControls} />
-    </div>
+    <${WorkspaceHeader} page="dex" />
     <header>${head}</header>
     <div class="collection-scroll" tabindex="0"
       onScroll=${e => { const on = e.currentTarget.scrollTop > 8; setScrolled(v => v === on ? v : on); }}>
