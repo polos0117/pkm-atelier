@@ -1,103 +1,104 @@
-/* 툴킷 화면이 이 저장소 자료로 실제로 도나.
-
-   prompt.html 은 atelier 에서 한 글자도 안 고치고 옮겨 왔다. 고친 것은
-   부르는 자리뿐이다 — 자료 표 이름, 카드 파일, 없는 화면 링크.
-   그래서 여기서 볼 것은 "말이 바뀌었나" 가 아니라 "선이 이어졌나" 다.
-
-   화면 말(한글 1,189자리)은 아직 안 뺐다. tests/words.cjs 의 PENDING 이 지켜본다.
-   Run: ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs */
-const fs = require('node:fs');
-const { start, report, FOLD } = require('./browser-harness.cjs');
-
-const CARD = JSON.parse(fs.readFileSync('data/card.json', 'utf8'));
-const NAME = CARD.cards.character[0].name;
-const GROUP = JSON.parse(fs.readFileSync('data/group.json', 'utf8'));
-
-const rows = [];
-const ck = (n, ok, got) => rows.push([n, !!ok, got === undefined ? '' : String(got)]);
-
-(async () => {
-  const h = await start();
-  const a = await h.open('prompt.html', { viewport: FOLD.inner, mobile: true });
-  const P = a.page;
-  /* 못 받은 것을 모은다. 그림·기록은 아직 없는 것이 정상이라 따로 가른다 */
-  const missing = [];
-  P.on('response', r => { if (r.status() >= 400) missing.push(r.url().split('/').pop()); });
-  /* 선을 하나만 끊어도 화면이 통째로 안 선다. 그때 30초 기다리다 죽으면
-     무엇이 없어서 못 섰는지가 한 줄도 안 남는다 — 짧게 기다리고 그대로 보고한다 */
-  const stood = await P.waitForSelector('select', { timeout: 6000 }).then(() => true, () => false);
-  await P.waitForTimeout(stood ? 1500 : 500);
-
-  ck('페이지 오류 없음', a.errors.length === 0, a.errors.join(' / '));
-  ck('화면이 선다', stood, await P.evaluate(() => (document.body.innerText || '').slice(0, 80)));
-  ck('제목이 낱말 표와 같다', await P.title() === '제목 미정', await P.title());
-
-  /* 자료 표가 실렸나 — 고르개가 표에서 나온다 */
-  const sels = await P.$$eval('select', els => els.length);
-  ck('설정 고르개가 표에서 선다 (40개 넘게)', sels > 40, sels);
-
-  const cardSel = await P.$$eval('select', (els, n) =>
-    els.findIndex(e => [...e.options].some(o => o.textContent.includes(n))), NAME);
-  ck('카드 고르개에 card.json 의 카드가 뜬다', cardSel >= 0, cardSel);
-
-  /* 묶음 고르개는 group.json 의 name 으로 이름을 짓고 order 로 차례를 잡는다.
-     order 를 안 보면 카드에서 처음 나온 순서대로 늘어선다 — 고쳐도 안 바뀐다 */
-  const want = GROUP.order.map(k => GROUP.name[k]);
-  const got = await P.$$eval('select', els => {
-    const e = els.find(x => [...x.options].length > 3 &&
-      [...x.options].some(o => o.textContent.trim() === '전기'));
-    return e ? [...e.options].map(o => o.textContent.trim()).slice(1) : [];
-  });
-  ck('묶음 고르개가 group.json 의 이름을 쓴다',
-    got.length === want.length && want.every(n => got.includes(n)),
-    got.join(' ') + ' vs ' + want.join(' '));
-  ck('묶음 고르개가 group.json 의 차례를 따른다',
-    got.join(',') === want.join(','), got.slice(0, 6).join(' ') + ' … / ' + want.slice(0, 6).join(' ') + ' …');
-
-  /* 없는 파일을 부르고 있지 않나 — 코드·자료는 다 있어야 한다.
-     toolkit-data.json 은 아직 커밋한 기록이 없어 정상적으로 404 다 */
-  const codeMissing = missing.filter(f => /\.(js|css|json|html)$/.test(f) && f !== 'toolkit-data.json');
-  ck('코드·자료를 다 찾는다', codeMissing.length === 0, [...new Set(codeMissing)].join(' '));
-
-  if (!stood) { await a.close(); await h.stop(); return report(rows, '툴킷 화면'); }
-
-  /* 세 탭이 실제로 글을 뽑나 */
-  /* $$eval 은 넘길 값을 하나만 받는다 — 둘을 묶어 보낸다 */
-  const val = await P.$$eval('select', (els, arg) =>
-    [...els[arg.i].options].find(o => o.textContent.includes(arg.n)).value,
-    { i: cardSel, n: NAME });
-  await P.selectOption('select >> nth=' + cardSel, val);
-  await P.waitForTimeout(900);
-
-  const click = t => P.evaluate(t => {
-    const b = [...document.querySelectorAll('button')].find(x => x.textContent.trim() === t);
-    if (b) b.click();
-    return !!b;
-  }, t);
-  const textOf = async () => {
-    await click('텍스트 보기');
-    await P.waitForTimeout(800);
-    const t = await P.evaluate(() => {
-      const ta = document.querySelector('textarea'); return ta ? ta.value : '';
-    });
-    await click('텍스트 보기');
-    await P.waitForTimeout(250);
-    return t;
-  };
-
-  for (const [tab, least] of [['의인화', 15000], ['단일 컷', 5000], ['콜라주', 8000]]) {
-    ck(tab + ' 탭이 있다', await click(tab));
-    await P.waitForTimeout(1500);
-    const t = await textOf();
-    ck(tab + ' 이 글을 뽑는다', t.length > least, t.length + '자');
-    ck(tab + ' 에 고른 카드 이름이 실린다', t.includes(NAME), t.slice(0, 60));
+/* Browser contracts for the three image modes and approved-reference workflow.
+   ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs */
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const {start,FOLD}=require('./browser-harness.cjs');
+const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
+(async()=>{
+ const harness=await start();
+ try{
+  const a=await harness.open('prompt.html?mech='+encodeURIComponent('피카츄'),{viewport:FOLD.inner,mobile:true});
+  const p=a.page;
+  await p.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('[FINAL CHECK]'));
+  const text=()=>p.locator('#prompt-output').inputValue();
+  const settled=()=>p.waitForTimeout(90);
+  assert.equal(await p.locator('#source').inputValue(),'피카츄','dex deep link');
+  assert.deepEqual(await p.locator('#group option').evaluateAll(es=>es.slice(1).map(e=>e.textContent)),
+   groups.order.map(k=>groups.name[k]));
+  assert.equal(await p.locator('#style option').count(),12);
+  await p.locator('#appearance-settings details').nth(1).locator('summary').click();
+  await p.locator('#param-body-type').selectOption('athletic');
+  await p.locator('#param-apparent-age').selectOption('30s');
+  await settled();
+  assert((await text()).includes('body type: athletic'));
+  assert.equal(await p.locator('canvas[data-figure-ready="body"]').count(),1);
+  // A locked field must survive randomization.
+  await p.getByRole('button',{name:'무작위 변경 잠금 · 체형',exact:true}).click();
+  await p.locator('#randomize').click();await settled();
+  assert.equal(await p.locator('#param-body-type').inputValue(),'athletic');
+  await p.locator('#identity-mode').selectOption('reference');await settled();
+  assert.equal(await p.locator('#appearance-settings').count(),0);
+  assert(!(await text()).includes('body type: athletic'),'reference must not emit creation parameters');
+  assert((await text()).includes('user-approved'));
+  await p.locator('#form').selectOption('overdrive');await settled();
+  assert.equal(await p.locator('#base-form').inputValue(),'reference');
+  assert((await text()).includes('armor actually worn in the attached reference'));
+  await p.locator('#base-form').selectOption('heavy');await settled();
+  assert((await text()).includes('multiple overlapping'));
+  await p.locator('#form-override').fill('ONLY_LEFT_PANEL');await settled();
+  await p.locator('#mode-action').click();
+  await p.locator('#camera').fill('LOW_CAMERA_MARKER');
+  await p.locator('#scene').fill('ACTION_SCENE_MARKER');await settled();
+  assert((await text()).includes('LOW_CAMERA_MARKER'));
+  await p.locator('#mode-portrait').click();await settled();
+  assert.equal(await p.locator('#camera').count(),0);
+  assert(!(await text()).includes('LOW_CAMERA_MARKER'));
+  assert(!(await text()).includes('ACTION_SCENE_MARKER'));
+  await p.locator('#mode-action').click();await settled();
+  assert.equal(await p.locator('#camera').inputValue(),'LOW_CAMERA_MARKER');
+  await p.locator('#mode-casual').click();await settled();
+  assert.equal(await p.locator('#form').count(),0);
+  assert.equal(await p.locator('#identity-mode').count(),0);
+  assert(!(await text()).includes('[FORM DEFINITION]'));
+  assert(!(await text()).includes('ONLY_LEFT_PANEL'));
+  assert(!(await text()).includes('LOW_CAMERA_MARKER'));
+  await p.locator('#category').selectOption('everyday_basic');
+  await p.locator('#scene').fill('CASUAL_SCENE_MARKER');await settled();
+  const styleKeys=await p.locator('#style option').evaluateAll(es=>es.map(e=>e.value));
+  for(const key of styleKeys){
+   await p.locator('#style').selectOption(key);await settled();
+   assert((await text()).includes(await p.evaluate(k=>window.AtelierSpec.STYLE_PROFILES[k].core,key)),key);
+   assert(!(await text()).includes('undefined'),key);
   }
-  ck('탭을 다 돌아도 오류가 없다', a.errors.length === 0, a.errors.join(' / '));
+  await p.locator('#style').selectOption('bright_catalog');await settled();
+  const want=await text();
+  await p.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
+   writeText:async t=>{window.__copied=t}}}));
+  await p.locator('#copy-prompt').click();
+  assert.equal(await p.evaluate(()=>window.__copied),want);
+  // Denied clipboard access selects the output for manual copying.
+  await p.evaluate(()=>navigator.clipboard.writeText=async()=>{throw Error('denied')});
+  await p.locator('#copy-prompt').click();
+  assert(await p.locator('#prompt-output').evaluate(e=>e.selectionEnd-e.selectionStart===e.value.length));
+  await p.locator('#source').selectOption('이상해씨');await settled();
+  assert(!(await text()).includes('CASUAL_SCENE_MARKER'));
+  await p.locator('#source').selectOption('피카츄');await settled();
+  assert((await text()).includes('CASUAL_SCENE_MARKER'));
+  assert.equal(await p.locator('#style').inputValue(),'bright_catalog');
+  await p.reload();
+  await p.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('CASUAL_SCENE_MARKER'));
+  assert.equal(await p.locator('#style').inputValue(),'bright_catalog');
+  await p.locator('#mode-portrait').click();await settled();
+  assert((await text()).includes('ONLY_LEFT_PANEL'));
+  // The wrap owns scrolling on small and large viewports.
+  for(const viewport of [FOLD.cover,FOLD.inner,{width:1280,height:900}]){
+   await p.setViewportSize(viewport);
+   const dims=await p.evaluate(()=>{
+    const w=document.querySelector('.wrap');
+    w.scrollTop=w.scrollHeight;
+    return {width:innerWidth,body:document.body.scrollWidth,wrap:w.clientHeight,
+     scroll:w.scrollTop,bodyScroll:document.scrollingElement.scrollTop};
+   });
+   assert(dims.body<=dims.width+1,JSON.stringify(dims));
+   assert(dims.wrap>100&&dims.scroll>100,JSON.stringify(dims));
+   assert.equal(dims.bodyScroll,0);
+  }
+  assert.deepEqual(a.errors,[]);
+  assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
-  await h.stop();
-  report(rows, '툴킷 화면');
-})().catch(e => {
-  ck('검사가 도중에 죽었다', false, String((e && e.message) || e).split('\n')[0]);
-  report(rows, '툴킷 화면');
-  process.exit(1);
-});
+  const corrupt=await harness.open('prompt.html',{store:['pkm_prompt_v2','not json']});
+  await corrupt.page.waitForSelector('#prompt-output');
+  assert.deepEqual(corrupt.errors,[]);
+  await corrupt.close();
+  console.log('PASS prompt screen: modes, reference identity, forms, 12 styles, copy, saved settings, figures and 3 viewport sizes');
+ }finally{await harness.stop()}
+})().catch(e=>{console.error(e);process.exitCode=1});
