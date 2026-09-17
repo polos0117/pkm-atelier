@@ -3,23 +3,25 @@
 `polos0117/atelier` 에서 **주제와 무관한 것만** 가져왔다. 옮기면서 고친 것과
 일부러 뺀 것을 적는다.
 
-## 그대로 가져온 것
+## 가져온 것
 
 | 파일 | 줄 | 하는 일 |
 |---|---|---|
 | `lib/workspace.css` | 335 | 공통 껍데기 · 테마 여덟 · 밀도 둘 |
 | `lib/workspace-theme.js` | 57 | 테마·밀도를 그리기 전에 정한다 · `--atelier-vh` |
-| `lib/workspace-ui.js` | 123 | 겉모습 고르개 · 큰 제목 · 테마별 문장 |
-| `lib/fresh.js` | 116 | 새 판 감지 (홈 화면 앱은 새로고침 단추가 없다) |
-| `lib/img.js` | 111 | 그림 주소 규칙 · `img.json` 읽기 |
-| `tests/browser-harness.cjs` | 105 | 브라우저 검사 껍데기 |
-| `tools/register-images.py` | — | 그림 등록·이름 규칙 검사 |
-| `tools/make-thumbs.py` | — | 썸네일 |
-| `lib/prompt-spec.js` | 1,249 | 프롬프트 자료 표 65개 (`toolkit-spec.js` 였다) |
+| `lib/workspace-ui.js` | 126 | 겉모습 고르개 · 큰 제목 · 테마별 문장 |
+| `lib/fresh.js` | 118 | 새 판 감지 (홈 화면 앱은 새로고침 단추가 없다) |
+| `lib/img.js` | 172 | 그림 주소 규칙 · `img.json` 읽기 · 폼 몫 읽기 |
+| `tests/browser-harness.cjs` | 107 | 브라우저 검사 껍데기 |
+| `lib/prompt-spec.js` | 998 | 프롬프트 자료 표 65개 (`toolkit-spec.js` 였다) |
 | `lib/prompt-anthro.js` | 193 | 의인화 글 조립 |
 | `lib/prompt-lifestyle.js` | 450 | 일상컷·콜라주 글 조립 |
 | `lib/figures.js` | 237 | 체형·머리 도형 (Canvas) |
 | `lib/toolkit.js` | 254 | 툴킷 기록 읽기 |
+| `prompt.html` | 2,306 | 툴킷 화면 (한 글자도 안 고치고 옮긴 뒤 부르는 자리만 이었다) |
+| `tools/register-images.py` | 347 | 그림 등록·이름 규칙 검사 |
+| `tools/make-thumbs.py` | 90 | 썸네일 |
+| `tools/roster.py` | 99 | 자료 읽기·쓰기 (카드 모양은 여기 맞춰 바꿨다) |
 
 ## 옮기면서 고친 것
 
@@ -102,12 +104,32 @@
 
 고친 뒤 `node tests/prompt-engine.cjs` 가 통과하면 뼈대는 안 깨진 것이다.
 
+## 여기서 새로 쓴 것
+
+atelier 것을 옮긴 게 아니라 이 놀이에 맞춰 처음부터 쓴 것들이다.
+
+| 파일 | 줄 | 하는 일 |
+|---|---|---|
+| `dex.html` | 382 | 도감. 폼을 나란히 놓고 견주는 화면이 중심이다 |
+| `lib/words.js` | 133 | 낱말 표 — 화면에 뜨는 말은 전부 여기서 온다 |
+| `tools/fetch-cards.py` | 264 | 카드 자료 받기 (PokéAPI CSV → `card.json`·`group.json`·`label.json`) |
+| `tests/dex-forms.cjs` | 380 | 도감 폼 보기 검사 54가지 |
+| `tests/prompt-engine.cjs` | 107 | 프롬프트 엔진 검사 34가지 (브라우저 없이) |
+| `tests/prompt-screen.cjs` | 103 | 툴킷 화면 검사 18가지 |
+| `tests/words.cjs` | 110 | 낱말이 코드에 박히지 않았나 |
+| `tests/forms.cjs` | 83 | 폼 축 — 자료·등록기·`img.js` 가 같은 말을 하나 |
+
+도감은 atelier 의 `dex.html`(884줄)을 베끼지 않았다. 줄 단위로 대 보면 겹치는 것이
+28줄인데 그마저 `<!doctype html>` 과 닫는 괄호다. 네 줄 이상 붙어서 같은 덩어리는
+머리말 6줄과 꼬리 4줄, 둘뿐이다. 카드 갈래가 하나(`character`)로 정해졌고 이 놀이의
+중심이 "한 캐릭터가 폼을 갈아 입는다" 라, 화면의 모양 자체가 달라서 새로 썼다.
+`lib/workspace.css` 의 `.dex-page` 규칙만 그대로 쓴다.
+
 ## 일부러 안 가져온 것
 
 | | 왜 |
 |---|---|
 | 드래프트 엔진 (`draft-engine.js` 1,506줄) | 놀이가 안 정해졌다. 같은 모양이면 그때 가져온다 |
-| 도감 (`dex.html` 883줄) | 카드 갈래가 정해져야 모양이 선다 |
 | `NAME_RULES` (21갈래) | 카드 **이름 정규식**으로 일상컷 후보를 골랐다. atelier 에서도 옛 화면(`prompt-legacy.html`)만 쓰고 지금 화면은 안 쓴다 — 이름에 규칙을 묶는 방식이 주제를 갈아 끼우면 깨지므로, 되살릴 일이 있으면 카드에 결을 적고 그걸 읽는 꼴로 다시 만든다 |
 
 ## 앞선 저장소가 남긴 측정
@@ -198,6 +220,13 @@ anthro = 그 armor 문단
 
 ## 아직 안 정한 것
 
-- 카드 갈래를 몇으로 할지 (`data/card.json` 의 `kinds`)
-- 놀이 규칙
-- 그림을 쓸지
+- **놀이 규칙** — 무엇을 하는 놀이인지가 아직 없다
+- **화풍** — 열쇠는 12가지가 서 있지만 어느 것으로 갈지 안 정했다
+- `lib/prompt-spec.js` 의 **낱말** — 아직 건담 것이다 (위 표 참고)
+- `prompt.html` 의 **화면 말 1,189자리** — 낱말 표로 안 뺐다
+
+정해진 것:
+
+- 카드 갈래는 하나다 (`character`). 카드 1,025장
+- 그림은 쓴다. `pkm-atelier-img` 저장소에 두고 `img.json` 에 등록한 것만 뜬다
+- 폼은 넷이고 장갑을 몇 겹 겹쳤나로 가른다
