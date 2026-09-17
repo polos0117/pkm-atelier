@@ -17,21 +17,36 @@ const fixSeed = [function (seed) {
     await p.waitForSelector('.run-draft .run-card');
     assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'draft');
     assert((await p.locator('.run-head i').textContent()).includes(String(SEED)), '씨앗이 머리에 보인다');
-    /* 뽑기 — 성장형·중간·완성형 하나씩, 이름은 자료에서 */
-    const growth = await p.locator('.run-draft .run-growth').evaluateAll(es => es.map(e => e.textContent));
-    assert.deepEqual(growth, ['두 번 더 큰다', '한 번 더 큰다', '다 컸다']);
+    /* 드래프트 — 공유 팩 12장, 집힌 것은 누가 집었는지 적히고 단추가 없다. 보급 요청은 안 집힌 것만 간다 */
+    assert.equal(await p.locator('.run-draft .run-card').count(), 12);
+    const takenN = await p.locator('.run-draft .run-card .run-taken').count();
+    assert(takenN >= 0 && takenN < 7, takenN);
+    assert.equal(await p.locator('.run-draft .run-card:has(.run-taken) button').count(), 0, '집힌 카드에 단추가 있다');
     assert.equal(await p.locator('.run-draft .run-types span').evaluateAll(es => es.filter(e => !e.textContent.trim()).length), 0, '타입 이름이 비었다');
+    const growthSet = new Set(await p.locator('.run-draft .run-growth').evaluateAll(es => es.map(e => e.textContent)));
+    assert.deepEqual([...growthSet].sort(), ['다 컸다', '두 번 더 큰다', '한 번 더 큰다'].sort());
+    const openBefore = await p.locator('.run-draft .run-card:not(:has(.run-taken))').evaluateAll(es => es.map(e => e.dataset.name));
+    const takenBefore = await p.locator('.run-draft .run-card:has(.run-taken)').evaluateAll(es => es.map(e => e.dataset.name));
+    assert((await p.locator('.run-reroll').textContent()).includes('2 / 2'));
+    await p.locator('.run-reroll').click();
+    await p.waitForFunction(() => document.querySelector('.run-reroll').textContent.includes('1 / 2'));
+    const openAfter = await p.locator('.run-draft .run-card:not(:has(.run-taken))').evaluateAll(es => es.map(e => e.dataset.name));
+    const takenAfter = await p.locator('.run-draft .run-card:has(.run-taken)').evaluateAll(es => es.map(e => e.dataset.name));
+    assert.deepEqual(takenAfter, takenBefore, '집힌 것이 바뀌었다');
+    assert(openAfter.every(n => !openBefore.includes(n)), '안 집힌 것이 안 갈렸다');
     const picks = [];
     for (let r = 0; r < 3; r++) {
-      const idx = [2, 0, 1][r];
-      picks.push(await p.locator('.run-draft .run-card').nth(idx).getAttribute('data-name'));
-      await p.locator('.run-draft .run-card').nth(idx).locator('button').click();
+      const card = p.locator('.run-draft .run-card:not(:has(.run-taken))').first();
+      picks.push(await card.getAttribute('data-name'));
+      await card.locator('button').click();
       if (r < 2) await p.waitForFunction(n => document.querySelectorAll('.run-roster .run-card').length === n, r + 1);
     }
     await p.waitForSelector('.run-foes .run-card');
     assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'fight');
     assert.deepEqual(await p.locator('.run-roster .run-card').evaluateAll(es => es.map(e => e.dataset.name)), picks, '집은 셋이 로스터');
     assert.equal(await p.locator('.run-foes .run-card').count(), 3);
+    assert.equal(await p.locator('.run-rivals li').count(), 6, '라이벌 여섯');
+    assert((await p.locator('.sec span').first().textContent()).includes('AI '), '상대는 AI 자리');
     /* 새로고침해도 이어진다 */
     await p.reload(); await p.waitForSelector('.run-foes .run-card');
     assert.deepEqual(await p.locator('.run-roster .run-card').evaluateAll(es => es.map(e => e.dataset.name)), picks, '저장이 안 됐다');
@@ -78,13 +93,14 @@ const fixSeed = [function (seed) {
     const lines = await p.locator('.run-end ol li').count();
     const won = phase === 'won';
     assert.equal(lines, won ? 7 : +(await p.locator('.run-head b').textContent()).match(/\d+/)[0], '판 기록 수');
+    assert.equal(await p.locator('.run-roster .run-card').count(), 3);
     assert(rewards >= 0);
     /* 새 런 — 뽑기로 돌아가고 저장이 바뀐다 */
     await p.locator('.run-again').click();
     await p.waitForSelector('.run-draft .run-card');
     assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'draft');
     assert(!(await p.locator('.run-head i').textContent()).includes(String(SEED)) || true);
-    assert.equal(await p.locator('.run-roster .run-card').count(), 0);
+    assert.equal(await p.locator('.run-draft .run-card').count(), 12);
 
     /* 세 화면 크기 */
     for (const viewport of [FOLD.cover, FOLD.inner, { width: 1280, height: 900 }]) {
@@ -95,6 +111,6 @@ const fixSeed = [function (seed) {
     }
     assert.deepEqual(a.errors, []);
     await a.close();
-    console.log('PASS 일곱 판: 뽑기 셋(성장·중간·완성) · 저장 · 직접 조종 한 판 · 보상(진화는 이름이 바뀜) · 끝 · 새 런 · 세 화면 크기');
+    console.log('PASS 일곱 판: 공유 팩 12장 · 집힌 표시 · 보급 요청 · 라이벌 여섯 · 저장 · 직접 조종 한 판 · 보상(진화는 이름이 바뀜) · 끝 · 새 런 · 세 화면 크기');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exit(1); });

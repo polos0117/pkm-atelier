@@ -103,10 +103,11 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 다섯의 머리가 같은 자리에
 ```
 
-`run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 뽑기·상대·체력 이어짐·보상)와
-`lib/battle.js`(한 판)에만 있다. 난이도 값(`RUN.DIFF`)은 `tests/run-sim.cjs` 로 잰다:
-자동 운용으로 완주율이 성장형·완성형 뽑기 모두 50% 언저리여야 한다. 한쪽이 죽으면
-뽑기가 선택이 아니다. 전투 화면 조각(`lib/battle-ui.js`)은 `battle.html` 과 같이 쓴다.
+`run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·
+성장 보정·체력 이어짐·보상)와 `lib/battle.js`(한 판)에만 있다. 난이도 값(`RUN.DIFF`)은
+`tests/run-sim.cjs` 로 잰다: 자동 운용으로 완주율이 성장형·완성형 뽑기 모두 반 언저리,
+성장형이 조금 위(성장 보정이 뜻한 바). 한쪽이 죽으면 뽑기가 선택이 아니다.
+전투 화면 조각(`lib/battle-ui.js`)은 `battle.html` 과 같이 쓴다.
 
 `battle.html` 은 `lib/battle.js` 의 얼굴이다. 규칙은 엔진에만 있고 화면은 굴리고
 보여 주기만 한다 — 판을 되감는 것은 엔진이 `snapshots` 로 박자마다 떠 둔 자리를

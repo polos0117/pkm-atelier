@@ -44,6 +44,9 @@ body {color:var(--text);font-size:15px}
 .run-card .run-types span {font:700 10px ui-monospace,monospace;letter-spacing:.06em;padding:2px 6px;border-radius:5px;color:#fff;background:var(--tc,#888)}
 .run-card .run-genus {font-size:11px;color:var(--muted)}
 .run-card .run-growth {font:700 11px ui-monospace,monospace;color:var(--accent)}
+.run-card .run-taken {font:700 11px ui-monospace,monospace;color:var(--muted)}
+.run-card.down .run-face {filter:grayscale(1)}
+.run-rivals {margin:8px 0 0;padding:0;list-style:none;font-size:12px;line-height:1.7;color:var(--muted)}
 .run-card .run-stats {display:grid;grid-template-columns:auto 1fr;gap:3px 6px;font:10px ui-monospace,monospace;color:var(--muted);align-items:center}
 .run-card .run-stats u {display:block;height:5px;border-radius:3px;background:var(--card2);overflow:hidden;text-decoration:none}
 .run-card .run-stats u i {display:block;height:100%;background:var(--accent)}
@@ -172,10 +175,10 @@ function save(st) { try { if (st) localStorage.setItem(KEY, JSON.stringify(st));
 function freshSeed() { return 1 + Math.floor(Math.random() * 99999); }
 
 /* 카드 한 장 — 뽑기·로스터·상대에 같은 꼴. hp 가 있으면 체력 막대, growth 가 있으면 클 여지 */
-function Card({ d, name, hp, growth, text, action, onPick }) {
+function Card({ d, name, hp, growth, text, action, onPick, taken, grown }) {
   const c = d.by[name]; if (!c) return null;
   const types = [c.element].concat(c.element2 ? [c.element2] : []);
-  const down = hp != null && hp <= 0;
+  const down = (hp != null && hp <= 0) || !!taken;
   const stats = c.stats || [];
   const pic = picOf(name, 'light', false);
   return html`<div class=${'run-card' + (down ? ' down' : '')} data-name=${name} style=${'--cc:' + (d.group.color[c.element] || 'var(--line)')}>
@@ -183,7 +186,9 @@ function Card({ d, name, hp, growth, text, action, onPick }) {
     <h3>${c.name}</h3>
     <div class="run-types">${types.map(t => html`<span key=${t} style=${'--tc:' + (d.group.color[t] || '#888')}>${d.group.name[t] || t}</span>`)}</div>
     <div class="run-genus">${c.genus || ''}</div>
+    ${taken && html`<div class="run-taken" data-taken=${taken}>${W('run.draft.taken', { seat: taken })}</div>`}
     ${growth != null && html`<div class="run-growth">${W('run.growth.' + growth)}</div>`}
+    ${grown > 0 && html`<div class="run-growth">${W('run.grown', { n: grown, bonus: RUN.DIFF.grow * grown })}</div>`}
     ${hp != null && html`<div class=${'run-hp' + (hp > 0 && hp < 0.35 ? ' low' : '')}><u><i style=${'width:' + Math.round(hp * 100) + '%'} /></u><span>${down ? W('run.down') : W('run.hp', { n: Math.round(hp * 100) })}</span></div>`}
     ${growth != null && html`<div class="run-stats">${stats.map((v, i) => html`<span key=${i}>${d.label.stat[i]}</span><u><i style=${'width:' + Math.min(100, v / 255 * 100) + '%'} /></u>`)}</div>`}
     ${text && c.text && html`<div class="run-text">${c.text}</div>`}
@@ -200,18 +205,27 @@ function Steps({ st }) {
   return html`<span class="run-steps">${items}</span>`;
 }
 
-function Draft({ d, st, onPick }) {
-  const offer = RUN.offer(st, d.cards);
-  return html`<div class="sec">${W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS })}</div>
+const seatName = i => i === 0 ? W('run.seat.me') : W('run.seat.ai', { n: i });
+
+/* 드래프트 — 공유 팩. 집힌 카드는 누가 집었는지 적히고 못 집는다. 내 차례에만 보인다 */
+function Draft({ d, st, onPick, onReroll }) {
+  const open = RUN.open(st).length;
+  const mine = st.seats[0].roster;
+  return html`<div class="sec">${W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS })}<span>${W('run.draft.turn', { left: open })}</span></div>
     <p class="note">${W('run.draft.note')}</p>
-    <div class="run-cards run-draft">${offer.map(n => html`<${Card} key=${n} d=${d} name=${n} growth=${RUN.left(d.by, n)} text action=${W('run.pick')} onPick=${() => onPick(n)} />`)}</div>
-    ${st.roster.length > 0 && html`<div class="sec">${W('run.roster')}</div>
-      <div class="run-cards run-roster">${st.roster.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} hp=${r.hp} />`)}</div>`}`;
+    <div class="run-tools">
+      <button type="button" class="run-reroll plain" disabled=${!RUN.canReroll(st)} onClick=${onReroll}>
+        ${st.round >= RUN.ROUNDS - 1 ? W('run.reroll.last') : W('run.reroll', { n: st.rerolls, max: RUN.REROLL_MAX })}</button>
+    </div>
+    <div class="run-cards run-draft">${st.pack.map(x => html`<${Card} key=${x.name} d=${d} name=${x.name} growth=${RUN.left(d.by, x.name)} text
+      taken=${x.by === null ? null : seatName(x.by)} action=${x.by === null ? W('run.pick') : null} onPick=${() => onPick(x.name)} />`)}</div>
+    ${mine.length > 0 && html`<div class="sec">${W('run.roster')}</div>
+      <div class="run-cards run-roster">${mine.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} growth=${RUN.left(d.by, r.name)} />`)}</div>`}`;
 }
 
 function Roster({ d, st }) {
   return html`<div class="sec">${W('run.roster')}</div>
-    <div class="run-cards run-roster">${st.roster.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} hp=${r.hp} />`)}</div>`;
+    <div class="run-cards run-roster">${st.roster.map(r => html`<${Card} key=${r.name} d=${d} name=${r.name} hp=${r.hp} grown=${r.grown} />`)}</div>`;
 }
 
 /* 한 판. 맡기면 끝까지 굴리고, 직접이면 박자 사이에 멈춘다. 끝나면 런에 거둔다 */
@@ -221,11 +235,11 @@ function Fight({ d, st, onDone }) {
   const foe = RUN.encounter(st, d.cards);
   const auto = () => {
     const f = RUN.actors(st, d.cards, d.chart, 'managed');
-    onDone(B.battle(f.a, f.b, { seed: f.seed, chart: d.chart }), f.foes);
+    onDone(B.battle(f.a, f.b, { seed: f.seed, chart: d.chart }), f.foes, f.seat);
   };
   const manual = () => {
     const f = RUN.actors(st, d.cards, d.chart, 'managed');
-    setGame({ g: B.createBattle(f.a, f.b, { seed: f.seed, chart: d.chart, snapshots: true }), foes: f.foes, n: 0 });
+    setGame({ g: B.createBattle(f.a, f.b, { seed: f.seed, chart: d.chart, snapshots: true }), foes: f.foes, seat: f.seat, n: 0 });
   };
   const step = () => {
     const g = game.g;
@@ -238,14 +252,16 @@ function Fight({ d, st, onDone }) {
       else if (can.forms.includes(c.kind)) cmd = { kind: 'switch', form: c.kind };
       g.reserve(a, cmd);
     }
-    if (g.step()) onDone(g.result(), game.foes);
+    if (g.step()) onDone(g.result(), game.foes, game.seat);
     else setGame(Object.assign({}, game, { n: game.n + 1 }));
   };
   if (game) return html`<${Play} g=${game.g} tickCount=${game.n} cmds=${cmds} setCmds=${setCmds} onStep=${step} />`;
   return html`<${Roster} d=${d} st=${st} />
     <div class="run-vs">VS</div>
-    <div class="sec">${W('run.foes')}<span>${W('battle.policy.' + foe.policy)}</span></div>
-    <div class="run-cards run-foes">${foe.names.map(n => html`<${Card} key=${n} d=${d} name=${n} growth=${RUN.left(d.by, n)} />`)}</div>
+    <div class="sec">${W('run.foes')}<span>${foe.seat < 0 ? W('run.foes.boss') : W('run.foes.seat', { seat: seatName(foe.seat), n: st.stage - 1 })} · ${W('battle.policy.' + foe.policy)}</span></div>
+    <div class="run-cards run-foes">${foe.members.map(m => html`<${Card} key=${m.name} d=${d} name=${m.name} growth=${RUN.left(d.by, m.name)} grown=${m.grown} />`)}</div>
+    ${st.stage === 1 && html`<div class="sec">${W('run.rivals')}</div>
+      <ol class="run-rivals">${st.foes.map(i => html`<li key=${i}>${W('run.rival.line', { seat: seatName(i), names: st.seats[i].roster.map(r => r.name).join(' · ') })}</li>`)}</ol>`}
     <div class="run-tools">
       <button type="button" class="run-auto" onClick=${auto}>${W('run.fight.auto')}</button>
       <button type="button" class="run-manual plain" onClick=${manual}>${W('run.fight.manual')}</button>
@@ -278,13 +294,14 @@ function End({ d, st, onAgain }) {
 
 function App() {
   const d = useData();
-  const [st, setSt] = useState(() => load() || RUN.newRun(freshSeed()));
+  const [st, setSt] = useState(null);
+  useEffect(() => { if (d.cards && !st) { const s = load(); setSt(s && s.seats ? s : RUN.newRun(freshSeed(), d.cards)); } }, [d.cards]);
   const [last, setLast] = useState(null);
   const go = next => { setSt(next); save(next); };
-  const restart = () => { setLast(null); go(RUN.newRun(freshSeed())); };
+  const restart = () => { setLast(null); go(RUN.newRun(freshSeed(), d.cards)); };
 
   if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
-  if (!d.cards) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
+  if (!d.cards || !st) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
 
   const head = html`<div class="run-head">
     <b data-phase=${st.phase}>${st.phase === 'draft' ? W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS }) : W('run.stage', { n: st.stage, total: RUN.LENGTH })}</b>
@@ -294,14 +311,14 @@ function App() {
   </div>`;
 
   let body;
-  if (st.phase === 'draft') body = html`<${Draft} d=${d} st=${st} onPick=${n => go(RUN.pick(st, n, d.cards))} />`;
+  if (st.phase === 'draft') body = html`<${Draft} d=${d} st=${st} onPick=${n => go(RUN.pick(st, n, d.cards))} onReroll=${() => go(RUN.reroll(st, d.cards))} />`;
   else if (st.phase === 'fight') body = html`<${Fight} key=${st.seed + ':' + st.stage} d=${d} st=${st}
-    onDone=${(r, foes) => { setLast({ beats: r.beats, winner: r.winner }); go(RUN.settle(st, r, foes)); }} />`;
+    onDone=${(r, foes, seat) => { setLast({ beats: r.beats, winner: r.winner }); go(RUN.settle(st, r, foes, seat)); }} />`;
   else if (st.phase === 'reward') body = html`<${Reward} d=${d} st=${st} last=${last} onChoose=${i => { setLast(null); go(RUN.choose(st, i, d.cards)); }} />`;
   else body = html`<${End} d=${d} st=${st} onAgain=${restart} />`;
 
   return html`<${Shell} head=${head}>
-    ${st.phase === 'draft' && st.round === 0 && html`<p class="note">${W('run.help')}</p>`}
+    ${st.phase === 'draft' && st.round === 0 && st.seats[0].roster.length === 0 && html`<p class="note">${W('run.help')}</p>`}
     ${body}
   <//>`;
 }
