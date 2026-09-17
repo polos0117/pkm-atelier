@@ -89,7 +89,9 @@ def split_form(head, forms):
 
     이름 차례가 <카드>_<폼>_<화풍>_<성별> 인 까닭도 여기 있다. 뒤에서부터
     성별 → 화풍 → 폼 순으로 벗겨야 남는 것이 카드 이름이 된다."""
-    for k in forms:
+    # 폭주는 장갑별 그림 자리다. 긴 키부터 읽어 _overdrive 만 먼저 벗기지 않는다.
+    keys = list(forms) + [k + '_overdrive' for k in forms if k != 'overdrive']
+    for k in sorted(keys, key=len, reverse=True):
         if head.lower().endswith("_" + k):
             return head[: -len(k) - 1], k
     return head, None

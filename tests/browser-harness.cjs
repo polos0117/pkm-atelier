@@ -65,7 +65,10 @@ async function start() {
       /* 배포된 그림 주소는 체크아웃의 같은 파일로 돌린다.
          주소를 다시 요청하면 한글 파일 이름의 %xx 가 두 번 인코딩돼 404 가 된다 —
          디스크에서 바로 읽는다 */
-      const local = origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
+      const figure = origin === 'https://polos0117.github.io' &&
+        new URL(url).pathname.match(/^\/atelier\/assets\/figures\/([^/]+\.png)$/);
+      const local = figure ? [null, 'img/figure-previews/' + figure[1]] :
+        origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
       if (local) {
         const rel = decodeURIComponent(local[1]);
         const file = path.resolve(ROOT, rel);

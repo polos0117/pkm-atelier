@@ -37,7 +37,8 @@ for (const c of cards) {
     for (const [fk, fb] of Object.entries(A.formMap(bucket))) {
       assert(!fb.casual, where + '/' + fk + ' 안에 일상컷이 있다 — 폼 밖에 둬야 한다');
       assert(!fb.extra, where + '/' + fk + ' 안에 특별컷이 있다');
-      assert(FORMS[fk], where + ' 에 모르는 폼 ' + fk);
+      assert(FORMS[fk] || (fk.endsWith('_overdrive') && FORMS[fk.slice(0, -10)]?.pick),
+        where + ' 에 모르는 폼 ' + fk);
       assert(fb.f || fb.m, where + '/' + fk + ' 에 초상이 없다');
     }
     /* action 은 없어도 정상이다. 있는 폼만 있다 */
