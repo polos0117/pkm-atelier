@@ -18,6 +18,8 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert(t.includes(S.STYLE_PROFILES[style].core),style);
   assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
   assert(t.includes('Pikachu')); assert(t.includes('clearly adult woman')); assert(t.includes('user-approved'));
+  assert(t.startsWith('[GENERATION INPUT]')&&t.includes('IMAGE-GUIDED CONTINUATION'));
+  assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
   assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
   const order=['[STYLE CORE]','[PROJECT STYLE EXTENSION]','[SOURCE IDENTITY]',
    '[CHARACTER IDENTITY]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
@@ -30,6 +32,16 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert.equal(P.audit(outputMode,t).length,0); count++;
  }
 const first=P.buildPrompt(base);
+// New creation never assumes an uploaded identity or source image, including optional face settings.
+for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action'])
+ for(const form of ['light','heavy','mobility','overdrive']){
+  const t=P.buildPrompt({...base,style,outputMode,form,params:[...base.params,['facial ethnicity','East Asian']]});
+  assert(t.startsWith('[GENERATION INPUT]')&&t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
+  assert(t.includes('No input image is required'));
+  assert(t.includes('neither a character reference nor a source-creature picture'));
+  assert(!/Preserve attached design|attached reference identity|compare face, hair and body with the approved|reference image\x27s own rendering/i.test(t),style+' leaked image requirement');
+  assert(t.includes('facial ethnicity: East Asian'));
+ }
 // A creation portrait is an explicit reference sheet; all later modes stay independent.
 for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility','overdrive']){
  const sheet=P.buildPrompt({...base,style,form,camera:'IGNORED_CAMERA',scene:'IGNORED_SCENE',aspect:'16:9'});
