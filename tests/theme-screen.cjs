@@ -35,6 +35,18 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   assert.equal(backgrounds.size,8);assert.equal(marks.size,8);
   for(const [page,selector] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['index.html','.theme-card']]){
    await p.goto(harness.base+'/'+page);await p.waitForSelector(selector);
+   const nav=await p.locator('.workspace-nav a').evaluateAll(es=>es.map(e=>({
+    href:e.getAttribute('href'),current:e.getAttribute('aria-current'),decoration:getComputedStyle(e).textDecorationLine
+   })));
+   assert.deepEqual(nav.map(x=>x.href),['index.html','dex.html','prompt.html'],page+' common navigation');
+   assert.deepEqual(nav.filter(x=>x.current==='page').map(x=>x.href),[page],page+' selected tab');
+   assert(nav.every(x=>x.decoration==='none'),page+' navigation underlines');
+   assert(await p.evaluate(()=>{
+    const heading=document.querySelector('.workspace-heading'),nav=document.querySelector('.workspace-nav'),
+     controls=document.querySelector('.appearance-controls');
+    return !!(heading.compareDocumentPosition(nav)&Node.DOCUMENT_POSITION_FOLLOWING)&&
+     !!(nav.compareDocumentPosition(controls)&Node.DOCUMENT_POSITION_FOLLOWING);
+   }),page+' heading, navigation, appearance order');
    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'ember','theme follows navigation');
    const before=page==='prompt.html'?await p.locator('#prompt-output').inputValue():null;
    for(const key of keys){
