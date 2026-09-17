@@ -53,12 +53,15 @@ const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? ''
 /* 예산 = 최종형 − 남은 진화 × 한 단계 (규칙) */
 {
   const T = B.TUNING, f = B.budgetStats(by['리자몽'], 0, T), m = B.budgetStats(by['리자드'], 1, T), s = B.budgetStats(by['파이리'], 2, T);
-  const sum = o => Object.values(o).reduce((x, y) => x + y, 0);
-  ck('예산이 단계로 갈린다 (500 / 440 / 380 ±3)',
+  /* 예산은 다섯 칸이다 — 스피드는 순서만 정하니 예산 밖 (규칙, 신호 11) */
+  const sum = o => o.hp + o.atk + o.def + o.spa + o.spd;
+  ck('예산이 단계로 갈린다 (500 / 440 / 380 ±3, 스피드 빼고)',
     Math.abs(sum(f) - 500) <= 3 && Math.abs(sum(m) - 440) <= 3 && Math.abs(sum(s) - 380) <= 3, [sum(f), sum(m), sum(s)].join('/'));
   const mew = B.budgetStats(by['뮤'], 0, T);
   ck('전설도 최종형이면 같은 예산', Math.abs(sum(mew) - sum(f)) <= 3, sum(mew) + ' vs ' + sum(f));
   ck('분포는 원본 몫을 따른다 (리자몽 특공 > 방어)', f.spa > f.def);
+  const pika = B.budgetStats(by['피카츄'], 1, T);
+  ck('스피드는 원본 그대로 (피카츄 90)', pika.spe === by['피카츄'].stats[5] && T.budget.speedOut === true, pika.spe + ' vs ' + by['피카츄'].stats[5]);
 }
 
 /* 상성은 표에서 온다 */
