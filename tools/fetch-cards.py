@@ -13,6 +13,7 @@ CSV 는 아홉 개만 받으면 되고 합쳐서 0.5 MB 다. 게다가 이름·�
     data/card.json   카드 1,025장
     data/group.json  타입 18가지 이름표와 색 (카드를 묶는 축이다)
     data/label.json  종족값·색·알그룹 이름표 (카드에는 열쇠만 넣는다)
+    data/chart.json  타입 상성표. chart[공격 타입][방어 타입] = 배율 (0 · 0.5 · 1 · 2)
 
 이름은 한국어 정본을 쓴다. 그림 파일 이름이 카드 이름으로 만들어지므로
 (<카드>_<폼>_<화풍>_<성별>.webp) 여기서 한 번 정해 두면 뒤가 흔들리지 않는다.
@@ -38,7 +39,7 @@ FILES = ("languages", "pokemon_species", "pokemon_species_names",
          "stats", "stat_names", "pokemon_stats",
          "pokemon_colors", "pokemon_color_names", "pokemon_shapes",
          "egg_groups", "egg_group_prose", "pokemon_egg_groups",
-         "pokemon_species_flavor_text")
+         "pokemon_species_flavor_text", "type_efficacy")
 
 # 종족값 여섯. 7·8(명중률·회피율)은 개체가 아니라 기술에 붙는 값이라 뺀다
 STAT_IDS = ("1", "2", "3", "4", "5", "6")
@@ -221,6 +222,22 @@ def main():
         "shape": {shape[k]: shape[k] for k in sorted(shape, key=int)},
     }
 
+    # 상성표. 공격 타입 → 방어 타입 → 배율. 18타입만 (unknown·shadow·stellar 은 뺀다)
+    chart = {}
+    for r in t["type_efficacy"]:
+        atk_t, def_t = type_id.get(r["damage_type_id"]), type_id.get(r["target_type_id"])
+        if atk_t in TYPE_COLOR and def_t in TYPE_COLOR:
+            chart.setdefault(atk_t, {})[def_t] = int(r["damage_factor"]) / 100
+    chart_doc = {
+        "version": 1,
+        "note": ("타입 상성표. chart[공격 타입][방어 타입] = 배율이고 0 · 0.5 · 1 · 2 넷뿐이다. "
+                 "두 타입을 가진 쪽이 맞을 때는 둘을 곱한다. 원본 게임의 표 그대로이며 "
+                 "이 놀이에서 상성은 '누가 유리한가' 만 정하고 폼이 '그 교환을 할 여력이 "
+                 "있는가' 를 정한다. tools/fetch-cards.py 가 만든다."),
+        "types": [k for k, _ in used],
+        "chart": {x: {y: chart[x][y] for y, _ in used} for x, _ in used},
+    }
+
     grp = roster.read("group")
     grp["name"] = {k: v for k, v in used}
     grp["color"] = {k: TYPE_COLOR[k] for k, _ in used}
@@ -230,6 +247,7 @@ def main():
         roster.write("card", doc)
         roster.write("group", grp)
         roster.write("label", label)
+        roster.write("chart", chart_doc)
 
     print("[%s] data/card.json · 카드 %d · 묶음 %d"
           % ("검증 실패·저장 안 함" if missing else ("대조" if a.check else "완료"),
@@ -249,6 +267,9 @@ def main():
     print("  %-9s %4d / %d%s" % ("도감 설명", n, len(cards),
                                  "" if n == len(cards) else
                                  "  ← 한국어 설명이 아직 없는 종이 있다"))
+    n2 = sum(1 for a in chart_doc["chart"].values() for v in a.values() if v == 2)
+    n0 = sum(1 for a in chart_doc["chart"].values() for v in a.values() if v == 0)
+    print("  상성표 %d×%d · 2배 %d칸 · 무효 %d칸" % (len(chart_doc["types"]), len(chart_doc["types"]), n2, n0))
     print("  없는 것이 정상: 진화 전 %d · 진화 후 %d · 전설·환상 %d · 두 타입 %d"
           % (sum(1 for c in cards if "from" in c), sum(1 for c in cards if "to" in c),
              sum(1 for c in cards if "rare" in c),

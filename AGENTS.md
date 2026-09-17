@@ -69,7 +69,12 @@ node tests/words.cjs             # 낱말이 코드에 박히지 않았나
 node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
+node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 ```
+
+`battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 21가지만 본다. 빼고 돌리면
+수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가
+아니라 보고다. 결과는 `docs/GAME_CONCEPT.md` 의 "굴려 본 것" 에 적는다.
 
 `prompt-engine` 은 브라우저를 안 띄운다. 조립부가 값을 인자로 받게 갈라져 있어서
 `node` 로 바로 부를 수 있다 — atelier 에서는 화면을 띄워야 확인이 됐다.
