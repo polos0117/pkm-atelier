@@ -45,6 +45,10 @@
     {
       "key": "ink_wash",
       "name": "수묵 담채"
+    },
+    {
+      "key": "bright_catalog",
+      "name": "밝은 카탈로그"
     }
   ]
 }

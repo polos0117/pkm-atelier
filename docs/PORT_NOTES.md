@@ -157,6 +157,26 @@
   순서대로 늘어서서, `order` 를 고쳐도 화면이 안 바뀌었다. `group.json` 머리말이
   바로 그 함정을 적어 두고 있었는데 화면이 그대로 밟고 있었다. 고쳤고 검사가 본다.
 
+## 화풍 `bright_catalog` 를 되살렸다
+
+처음에 `data/style.json` 에 자리만 잡아 뒀던 열쇠다. 그림이 한 장도 없는 빈 열쇠라
+화풍 통합 때 빠졌는데, 특별컷에 쓸 자리라 프롬프트 쪽에 제대로 넣었다.
+
+`lib/prompt-spec.js` 에 `ART_STYLES` 줄과 `STYLE_PROFILES.bright_catalog`
+(`core`·`anthro`·`lifestyle`)을 더하고 `node tools/sync-styles.cjs --write` 로
+`data/style.json` 을 다시 만들었다. 화풍 12가지가 됐다.
+
+내용은 밝고 고른 빛의 카탈로그 도판이다 — 전신 2:3, 카메라·빛·배경을 폼마다
+똑같이, 글자 없음, 연출 절제. **나란히 놓고 견주는 것이 목적인 화풍**이라
+도감의 "나란히 보기" 와 짝이 맞는다.
+
+옮기면서 알게 된 것: **`ART_STYLES` 의 네 번째 칸은 아무도 안 읽는다.** 조립부는
+열쇠만 보고 `STYLE_PROFILES[key].core` 를 쓴다. 그래서 기존 11줄은 네 번째 칸과
+`core` 가 이미 갈라져 있다(`photoreal` 은 1,409자 대 1,117자). 새로 넣은 줄은
+`BRIGHT_CATALOG_CORE` 상수 하나를 두 곳이 같이 보게 해서 갈라지지 않게 했다.
+`ART_STYLES` 가 `STYLE_PROFILES` 보다 먼저 서기 때문에 상수를 위에 둬야 한다 —
+`STYLE_CORES` 가 위에 있는 까닭과 같다.
+
 ## 아직 안 정한 것
 
 - 카드 갈래를 몇으로 할지 (`data/card.json` 의 `kinds`)
