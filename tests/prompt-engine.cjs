@@ -20,6 +20,7 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert(t.includes('Pikachu')); assert(t.includes('clearly adult woman')); assert(t.includes('user-approved'));
   assert(t.startsWith('[GENERATION INPUT]')&&t.includes('IMAGE-GUIDED CONTINUATION'));
   assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
+  assert(!t.includes('referenced_image_paths')&&!t.includes('num_last_images_to_include'));
   assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
   const order=['[STYLE CORE]','[PROJECT STYLE EXTENSION]','[SOURCE IDENTITY]',
    '[CHARACTER IDENTITY]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
@@ -38,6 +39,9 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action']
   const t=P.buildPrompt({...base,style,outputMode,form,params:[...base.params,['facial ethnicity','East Asian']]});
   assert(t.startsWith('[GENERATION INPUT]')&&t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
   assert(t.includes('No input image is required'));
+  const input=t.slice(0,t.indexOf('[STYLE CORE]'));
+  assert(input.includes('omit both referenced_image_paths and num_last_images_to_include'));
+  assert(input.includes('Do not automatically use earlier conversation images'));
   assert(t.includes('neither a character reference nor a source-creature picture'));
   assert(!/Preserve attached design|attached reference identity|compare face, hair and body with the approved|reference image\x27s own rendering/i.test(t),style+' leaked image requirement');
   assert(t.includes('facial ethnicity: East Asian'));

@@ -69,6 +69,13 @@
 이미지를 이어가는지 명시한다. ‘기준 시트’는 최초 생성의 **출력물**이며 기존 첨부를
 뜻하지 않는다. 첨부 디자인 유지와 기준 이미지 대조 지시는 이어가기에만 들어간다.
 
+새 인물의 GENERATION INPUT에는 생성 도구를 호출하는 어시스턴트용 안내도 포함한다.
+참조 인수를 지원하는 도구라면 `referenced_image_paths`와
+`num_last_images_to_include`를 모두 생략하고, 이전 대화의 이미지를 자동 선택하지
+않도록 요청한다. 일반 복사 버튼으로 이 안내까지 함께 복사되므로 사용자가 별도
+문구를 덧붙일 필요가 없다. 이는 받는 쪽에 전달하는 지시이며, 이 사이트가 외부
+생성 도구의 호출 설정을 직접 바꾸는 것은 아니다. 이미지 이어가기에는 넣지 않는다.
+
 출력 순서는 GENERATION INPUT → STYLE CORE → PROJECT STYLE EXTENSION → SOURCE IDENTITY →
 CHARACTER IDENTITY → FORM DEFINITION/OVERRIDE(해당 모드만) → OUTPUT MODE →
 CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.

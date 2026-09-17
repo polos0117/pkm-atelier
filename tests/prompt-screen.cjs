@@ -18,6 +18,14 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert((await text()).includes('INITIAL CHARACTER REFERENCE SHEET'));
   assert((await text()).startsWith('[GENERATION INPUT]'));
   assert((await text()).includes('No input image is required'));
+  // The normal copy action includes the creation call instructions without a manual prefix.
+  await p.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
+   writeText:async t=>{window.__copied=t}}}));
+  await p.locator('#copy-prompt').click();
+  const creationCopy=await p.evaluate(()=>window.__copied);
+  assert.equal(creationCopy,await text());
+  assert(creationCopy.slice(0,creationCopy.indexOf('[STYLE CORE]')).includes(
+   'omit both referenced_image_paths and num_last_images_to_include'));
   assert((await p.locator('#identity-note').innerText()).includes('첨부 없이'));
   assert((await p.locator('#output-mode-note').innerText()).includes('확대컷'));
   await p.locator('#appearance-settings details').nth(1).locator('summary').click();
