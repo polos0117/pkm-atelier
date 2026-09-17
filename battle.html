@@ -66,6 +66,21 @@ body {color:var(--text);font-size:15px}
 .bt-log li {padding:2px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere}
 .bt-log li.a {color:var(--text)}
 .bt-log li.b {color:var(--muted)}
+.bt-tools label.bt-play {gap:8px;font-weight:700;color:var(--text)}
+.bt-tools label.bt-play input {width:auto;min-height:0;accent-color:var(--accent)}
+/* 조종 — 아군마다 이 박자에 할 것. 단추는 엔진의 can() 이 켜고 끈다 */
+.bt-plan {margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.6}
+.bt-cmd {display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.bt-cmd button {min-height:34px;padding:4px 9px;border:1px solid var(--line);border-radius:7px;background:var(--card2);
+  color:var(--text);font:inherit;font-size:12px;font-weight:700}
+.bt-cmd button.on {background:var(--accent-soft);box-shadow:inset 0 -2px var(--accent)}
+.bt-cmd button:disabled {opacity:.35}
+.bt-cmd select {min-height:34px;flex:1 1 100px;min-width:0;background:var(--card2);border:1px solid var(--line);
+  color:var(--text);font:inherit;font-size:12px;border-radius:7px;padding:4px 8px}
+.bt-cmd label {display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.bt-cmd label input {accent-color:var(--accent)}
+.bt-step {min-height:44px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;
+  background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
 .sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
 .note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
 .empty {padding:24px 0;color:var(--muted);text-align:center}
@@ -179,6 +194,57 @@ function line(e) {
   return s === key ? e.kind + ' ' + (e.who || '') : s;
 }
 
+/* 살아 있는 배우를 자리 꼴로 — Actor 는 스냅샷 꼴만 읽는다 */
+function view(a) {
+  return { name: a.name, side: a.side, form: a.form, hp: a.hp, hpMax: a.hpMax, heat: a.heat, drive: a.drive,
+           alive: a.alive, open: !!a.open, forced: !!(a.open && a.open.forced) };
+}
+const FORMS = ['light', 'heavy', 'mobility'];
+
+/* 아군 하나의 조종 단추. 엔진의 can() 이 켜고 끈다 — 규칙은 화면에 없다 */
+function Cmd({ a, can, cmd, onChange }) {
+  const kind = cmd.kind || 'auto';
+  const set = patch => onChange(Object.assign({}, cmd, patch));
+  const btn = (k, label, ok) => html`<button type="button" class=${kind === k ? 'on' : ''} disabled=${ok === false}
+    data-cmd=${k} onClick=${() => set({ kind: k })}>${label}</button>`;
+  return html`<div class="bt-cmd" data-name=${a.name}>
+    ${btn('auto', W('battle.cmd.auto'))}
+    ${btn('attack', W('battle.cmd.attack'))}
+    ${btn('open', W('battle.cmd.open'), can.open)}
+    ${FORMS.map(f => btn(f, W('form.' + f), can.forms.includes(f)))}
+    ${(kind === 'attack' || kind === 'open') && html`<select aria-label=${W('battle.cmd.target')} value=${cmd.target || ''}
+        onChange=${e => set({ target: e.currentTarget.value })}>
+      <option value="">${W('battle.cmd.any')}</option>
+      ${can.targets.map(t => html`<option key=${t} value=${t}>${t}</option>`)}
+    </select>`}
+    ${kind === 'attack' && can.extra && html`<label><input type="checkbox" checked=${!!cmd.extra}
+        onChange=${e => set({ extra: e.currentTarget.checked })} />${W('battle.cmd.extra')}</label>`}
+  </div>`;
+}
+
+/* 조종 — 박자 사이에 멈춘 자리. 아군마다 고르고 굴리면 한 박자가 간다 */
+function Play({ g, cmds, setCmds, onStep, tickCount }) {
+  const beat = g.beat();
+  const actors = g.actors.map(view);
+  const evs = g.log.filter(e => e.beat === beat);
+  const sideOf = s => g.actors.filter(a => a.side === s);
+  return html`<div class="bt-beat">
+      <b data-beat=${beat}>${W('battle.beat', { n: beat, total: '…' })}</b>
+      <button type="button" class="bt-step" onClick=${onStep}>${W('battle.step')}</button>
+    </div>
+    <p class="bt-plan">${W('battle.plan')}</p>
+    <div class="bt-field">
+      <div class="bt-team" data-side="a">${sideOf('a').map(a => html`<div key=${a.name}>
+        <${Actor} a=${view(a)} />
+        ${a.alive && html`<${Cmd} a=${a} can=${g.can(a)} cmd=${cmds[a.name] || {}}
+          onChange=${c => setCmds(v => Object.assign({}, v, { [a.name]: c }))} />`}
+      </div>`)}</div>
+      <div class="bt-team" data-side="b">${sideOf('b').map(a => html`<${Actor} key=${a.name} a=${view(a)} />`)}</div>
+    </div>
+    ${beat > 0 && html`<div class="sec">${W('battle.events')}</div>
+    <ul class="bt-log">${evs.map((e, k) => html`<li key=${k} class=${e.side || ''}>${line(e)}</li>`)}</ul>`}`;
+}
+
 function Replay({ r }) {
   const [i, setI] = useState(0);
   const last = r.snaps.length - 1;
@@ -211,6 +277,9 @@ function App() {
   const [r, setR] = useState(null);
   const [rate, setRate] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [play, setPlay] = useState(false);
+  const [game, setGame] = useState(null);     // { g, n } — n 은 굴린 횟수, 다시 그리게 하는 손잡이
+  const [cmds, setCmds] = useState({});
   const names = useMemo(() => d.by ? Object.keys(d.by) : [], [d.by]);
   const ready = d.by && s.a.every(n => d.by[n]) && s.b.every(n => d.by[n]) && s.a.some(Boolean) && s.b.some(Boolean);
   const bad = d.by ? s.a.concat(s.b).filter(n => n && !d.by[n]) : [];
@@ -218,16 +287,38 @@ function App() {
   if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
   if (!d.by) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
 
-  const run = () => { setRate(null); setR(fight(d, s, s.seed, true)); };
+  const run = () => {
+    setRate(null); setR(null); setCmds({});
+    if (!play) { setGame(null); setR(fight(d, s, s.seed, true)); return; }
+    const g = B.createBattle(team(d.by, s.a, 'a', s.pa), team(d.by, s.b, 'b', s.pb), { seed: s.seed, chart: d.chart, snapshots: true });
+    setGame({ g, n: 0 });
+  };
+  /* 고른 것을 예약하고 한 박자 굴린다. 이제 못 고르는 것(잠긴 폼 · 안 찬 개방)은 규칙에 맡긴다 */
+  const stepPlay = () => {
+    const g = game.g;
+    for (const a of g.actors) {
+      if (a.side !== 'a' || !a.alive) continue;
+      const c = cmds[a.name] || {}, can = g.can(a);
+      let cmd = null;
+      if (c.kind === 'attack') cmd = { kind: 'attack', target: c.target || undefined, extra: !!c.extra };
+      else if (c.kind === 'open' && can.open) cmd = { kind: 'open', target: c.target || undefined };
+      else if (FORMS.includes(c.kind) && can.forms.includes(c.kind)) cmd = { kind: 'switch', form: c.kind };
+      g.reserve(a, cmd);
+    }
+    const over = g.step();
+    if (over) { setGame(null); setR(g.result()); }
+    else setGame({ g, n: game.n + 1 });
+  };
   const runMany = () => {
-    setBusy(true); setR(null);
+    setBusy(true); setR(null); setGame(null);
     setTimeout(() => { setRate(many(d, s, MANY)); setBusy(false); }, 0);
   };
   /* 머리에는 굴리는 줄만 둔다. 세우는 자리(여섯 칸 + 운용 둘)는 본문에서 굴린다 —
      머리에 넣으면 폴드 덮개(344)에서 굴러가는 자리가 100px 도 안 남는다 */
   const head = html`<div class="bt-tools">
       <label>${W('battle.seed')}<input type="number" min="1" value=${s.seed} onInput=${e => setS(v => ({ ...v, seed: Math.max(1, +e.currentTarget.value || 1) }))} /></label>
-      <button type="button" class="bt-run" onClick=${run} disabled=${!ready || busy}>${W('battle.run')}</button>
+      <label class="bt-play"><input type="checkbox" checked=${play} onChange=${e => { setPlay(e.currentTarget.checked); setGame(null); }} />${W('battle.play')}</label>
+      <button type="button" class="bt-run" onClick=${run} disabled=${!ready || busy}>${play ? W('battle.start') : W('battle.run')}</button>
       <button type="button" class="bt-many" onClick=${runMany} disabled=${!ready || busy}>${W('battle.many')}</button>
       ${bad.length ? html`<span class="bt-result">${bad.map(n => W('battle.unknown', { name: n })).join(' · ')}</span>` : null}
       ${busy ? html`<span class="bt-result">${W('battle.running')}</span>` : null}
@@ -241,7 +332,9 @@ function App() {
       <${Side} side="a" names=${s.a} policy=${s.pa} by=${d.by} onChange=${c => setS(v => ({ ...v, a: c.names || v.a, pa: c.policy || v.pa }))} />
       <${Side} side="b" names=${s.b} policy=${s.pb} by=${d.by} onChange=${c => setS(v => ({ ...v, b: c.names || v.b, pb: c.policy || v.pb }))} />
     </div>
-    ${r ? html`<${Replay} key=${s.seed + '|' + s.a.join() + '|' + s.b.join() + '|' + s.pa + s.pb} r=${r} />` : html`<p class="note">${W('battle.note')}</p>`}
+    ${game ? html`<${Play} g=${game.g} tickCount=${game.n} cmds=${cmds} setCmds=${setCmds} onStep=${stepPlay} />`
+      : r ? html`<${Replay} key=${s.seed + '|' + s.a.join() + '|' + s.b.join() + '|' + s.pa + s.pb} r=${r} />`
+      : html`<p class="note">${play ? W('battle.help') : W('battle.note')}</p>`}
   <//>`;
 }
 

@@ -62,6 +62,33 @@ const { start, FOLD } = require('./browser-harness.cjs');
     assert.equal(nums.length, 3, txt);
     assert(Math.abs(nums[0] + nums[1] + nums[2] - 100) <= 2, txt);
 
+    /* 직접 조종 — 박자 사이에 멈춰서 고르고 굴린다 */
+    await p.locator('.bt-side input').first().fill('피카츄');
+    await p.locator('.bt-play input').check();
+    await p.locator('.bt-run').click();
+    await p.waitForSelector('.bt-cmd');
+    assert.equal(await p.locator('.bt-beat b').getAttribute('data-beat'), '0');
+    assert.equal(await p.locator('.bt-cmd').count(), 3, '아군 셋에 조종 줄');
+    assert.equal(await p.locator('.bt-team[data-side="b"] .bt-cmd').count(), 0, '상대는 못 고른다');
+    /* 처음엔 폼 셋 중 지금 폼은 꺼져 있고, 개방은 Drive 가 안 차 꺼져 있다 */
+    const first = p.locator('.bt-cmd').first();
+    assert(await first.locator('button[data-cmd="open"]').isDisabled(), '개방은 Drive 30 으로는 못 연다');
+    assert.equal(await first.locator('button[data-cmd]:disabled').count(), 2, '지금 폼 + 개방');
+    await first.locator('button[data-cmd="attack"]').click();
+    await first.locator('select').selectOption('뮤');
+    await p.locator('.bt-cmd').nth(2).locator('button[data-cmd="heavy"]').click();
+    await p.locator('.bt-step').click();
+    await p.waitForFunction(() => document.querySelector('.bt-beat b').dataset.beat === '1');
+    const lines = await p.locator('.bt-log li').evaluateAll(es => es.map(e => e.textContent));
+    assert(lines.some(t => t.startsWith('피카츄 → 뮤')), lines.join(' | '));
+    assert(lines.some(t => t.startsWith('거북왕 → 중장')), lines.join(' | '));
+    assert.equal(await p.locator('.bt-cmd').nth(2).locator('button[data-cmd="heavy"]').isDisabled(), true, '이제 중장이라 중장 단추는 꺼진다');
+    /* 끝까지 굴리면 결과가 뜨고 되감기로 넘어간다 */
+    for (let i = 0; i < 60 && (await p.locator('.bt-step').count()); i++) await p.locator('.bt-step').click();
+    await p.waitForSelector('.bt-result[data-winner]');
+    await p.waitForSelector('.bt-next');
+    assert.equal(await p.locator('.bt-cmd').count(), 0);
+
     /* 폴드 덮개에서 가로로 안 넘치고, 굴러가는 자리가 화면 몫을 받는다 */
     for (const viewport of [FOLD.cover, FOLD.inner, { width: 1280, height: 900 }]) {
       await p.setViewportSize(viewport);
@@ -71,6 +98,6 @@ const { start, FOLD } = require('./browser-harness.cjs');
     }
     assert.deepEqual(a.errors, []);
     await a.close();
-    console.log('PASS 전투 시험장: 여섯 세움 · 한 판 · 박자 되감기 · 진 쪽은 다 쓰러짐 · 없는 이름 막음 · 100판 승률 · 세 화면 크기');
+    console.log('PASS 전투 시험장: 여섯 세움 · 한 판 · 박자 되감기 · 진 쪽은 다 쓰러짐 · 없는 이름 막음 · 100판 승률 · 직접 조종(대상·폼 예약, 단추는 엔진이 켜고 끔) · 세 화면 크기');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exit(1); });
