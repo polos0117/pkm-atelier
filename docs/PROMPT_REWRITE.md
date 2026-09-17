@@ -1,163 +1,96 @@
-# 프롬프트 낱말 갈아 끼우기 — GPT 에게 넘길 일
+# 포켓몬 메카 프롬프트 생성 규칙
 
-`lib/prompt-spec.js` **한 파일**만 고치면 된다. 다른 파일은 안 봐도 된다.
+첨부 수정안과 후속 검토를 반영했다. 이전의 문구만 치환하는 범위에서,
+사용자 요청에 따라 생성 엔진·화면·검사까지 함께 정리했다.
 
-이 저장소는 `atelier`(기동전사 건담 드래프트)에서 프롬프트 엔진을 통째로 가져왔다.
-**구조는 그대로 쓰고 말만 이 놀이(포켓몬 메카 무스메)의 것으로 바꾸는 것**이 이 일이다.
+## 생성 흐름
 
----
+1. **새 인물 만들기**: 원본 포켓몬과 화풍, 성인 여성의 외형을 선택한다.
+2. 마음에 드는 결과를 사용자가 **기준 이미지로 확정**한다. 첫 결과가 자동 기준은 아니다.
+3. **확정한 이미지 이어가기**: 이미지 생성 서비스에 그 이미지를 첨부하고 프롬프트를 사용한다.
+   생성기는 이미지를 전송하거나 실제로 생성하지 않는다.
+4. 후속 결과를 계속 새 기준으로 교체하지 않는다. 승인한 원본을 인물 기준으로 유지한다.
 
-## 왜 파일 하나인가
+기준 이미지 한 장으로 시작할 수 있다. 얼굴·머리·체형은 이미지가 결정한다.
+저장된 외형 파라미터를 후속 프롬프트에 다시 실어 덮어쓰지 않는다.
+표정과 머리의 움직임은 바꿀 수 있지만 얼굴 구조나 머리 길이는 바뀌지 않는다.
 
-엔진이 이미 "구조"와 "말"로 갈라져 있다.
+## 서로 다른 세 출력
 
-| 파일 | 줄 | 한글 | 영문 주제어 |
-|---|---|---|---|
-| `lib/prompt-spec.js` | 998 | **1,521자리** | **82자리** |
-| `lib/prompt-anthro.js` | 193 | 0 | 0 |
-| `lib/prompt-lifestyle.js` | 450 | 0 | 0 |
-| `lib/figures.js` | 237 | 0 | 0 |
-| `lib/toolkit.js` | 254 | 0 | 0 |
-
-조립부 넷은 말을 한 자도 안 들고 있다. 전부 표에서 꺼내 쓴다.
-코드에 박혀 있던 영문 주제어 7자리는 이미 `SOURCE_WORD` · `SOURCE_INPUT` 로 빼 두었다.
-
----
-
-## 일 1 — 영문 주제어 82자리
-
-생성기에 나가는 프롬프트 본문에서 **원본을 가리키는 말**이다.
-건담에서는 "mobile suit" 였고, 이 놀이에서는 포켓몬 종(種)이다.
-
-| 표 | 자리 | 무엇 |
+| 열쇠 | 출력 | 적용 범위 |
 |---|---|---|
-| `templateC` | **45** | 의인화 프롬프트의 본문 틀. 여기가 제일 크다 |
-| `STYLE_PROFILES` | 14 | 화풍 12가지의 `core`·`anthro`·`lifestyle` |
-| `LIFESTYLE_REFERENCE_LOCK_BASE` | 5 | 일상컷의 참조 고정 문구 |
-| `SOURCE_WORD` | 3 | **여기가 지렛대** — 아래 참고 |
-| `AGGRESSIVE_MORPHOLOGY_CORE` | 3 | 난형 기체용 형태 문구 |
-| `CATS` | 3 | 카테고리 설명 |
-| `SOURCE_INPUT` | 2 | 일상컷 `[INPUT]` 블록 |
-| `LIMB_OWNERSHIP_LOCK` | 2 | 팔다리 귀속 고정 |
-| `TRANSLATION_PROFILES` | 2 | 번역 방침 |
-| `ANTHRO_STYLE_EXTENSIONS` · `MORPHOLOGY_COMMON` · `LIFESTYLE_STYLE_LOCK` | 각 1 | |
+| portrait | 폼 초상 | 폼 적용. 전신 2:3 비교 구도, 카메라와 피사체 크기 유지 |
+| action | 액션 | 폼 적용. 움직임·시점·배경 자유, 선택 화풍 유지 |
+| casual | 일상컷 | 기준 인물의 새로운 장면. 폼·폼 오버라이드 미적용 |
 
-### `SOURCE_WORD` 부터 고친다
+초상은 액션 카메라 설정을 이어받지 않는다. 액션 이미지가 인물 기준이라면
+중립적인 비교 구도를 새로 정한다. 액션과 일상 설정은 화면에서도 각각 보관한다.
+일상 의상은 자동으로 코스프레가 되지 않으며, 원본 색이나 작은 장신구만 남겨도 된다.
+장갑은 일상 장면에서 명시적으로 요청한 경우에만 사용한다.
 
-조립부가 원본을 부르는 말은 **이 셋만** 쓴다. 여기를 고치면 코드는 안 건드려도 된다.
+## 폼
 
-```js
-const SOURCE_WORD = {
-  param:   'mobile suit name',    // PARAMETERS 블록의 항목 이름
-  armor:   'mobile-suit armor',   // "원본의 장갑" 을 가리킬 때
-  heading: 'SOURCE MOBILE SUIT'   // [INPUT] 블록의 제목
-};
-```
+- **light**: 보디슈트 위 한 겹의 주 장갑. 피부 노출량을 뜻하지 않는다.
+- **heavy**: 중첩과 두께가 보이는 여러 겹 장갑. 인물 몸 자체를 키우지 않는다.
+- **mobility**: 얇은 장갑을 바깥으로 펼친 가벼운 구조. 큰 실루엣과 중량을 구분한다.
+- **overdrive**: 기준 장갑의 선택된 틈·패널을 개방한다. 기준보다 내부 보디슈트가
+  더 보이게 하며, 모든 관절을 열거나 새 장갑 블록을 추가하지 않는다.
+  부유는 기존 패널에 한해 선택적으로 허용한다.
 
-### `templateC` 의 첫 문장이 이렇다
+폭주 기준은 이미지 이어가기에서 **첨부 이미지의 장갑**이 기본이다.
+원하면 경장·중장·고기동을 명시한다. 최초 생성에는 첨부 장갑이 없으므로
+경장을 기본으로 사용하고 다른 기본 폼을 고를 수 있다.
 
-```
-Full-body anthropomorphization of a Gundam-series mobile suit. Every design
-decision — armor color scheme, head crest, backpack and weapon attachments,
-facial design, hair color, and hairstyle — is determined s…
-```
+## 프롬프트와 자료의 자리
 
-"Gundam-series mobile suit" 를 갈면 된다. 나머지(장갑 배색·머리 장식·백팩·무장)는
-이 놀이에도 그대로 있는 개념이라 살려도 된다.
+- `lib/prompt-spec.js`: 순수 자료. `PROJECT_RULES`, `FORM_PROFILES`,
+  `OUTPUT_PROFILES`에서 앞으로 생성 규칙을 추가한다.
+- `lib/prompt-anthro.js`: `buildPrompt(options)` 공통 조립기.
+  기존 `buildAnthro`는 초상 호출 호환용이다.
+- `lib/prompt-lifestyle.js`: 일상 카테고리·예시를 공통 조립기에 전달한다.
+- `lib/prompt-ui.js`, `lib/prompt.css`: 세 모드 화면. 화면 문장은 `lib/words.js`.
+- `prompt.html`: 공통 자원과 화면 모듈을 여는 껍데기.
 
----
+출력 순서는 STYLE CORE → PROJECT STYLE EXTENSION → SOURCE IDENTITY →
+CHARACTER IDENTITY → FORM DEFINITION/OVERRIDE(해당 모드만) → OUTPUT MODE →
+CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.
+최초 생성에 신체 치수를 지정하면 정체성 뒤에 치수 해석 문장이 붙는다.
 
-## 절대 건드리지 말 것
+화풍은 렌더링만 담당한다. 원본 성격·폼·카메라를 화풍이 강제로 바꾸지 않는다.
+`bright_catalog`를 포함한 **12개 열쇠와 표시 이름을 유지**했다. 밝은 카탈로그
+조명·재질을 보존하면서 고정 구도는 초상에만 적용한다.
+`data/style.json`은 계속 `ART_STYLES`에서 생성한다.
 
-### `mechanical` (87자리)
+원본 특징은 종에 맞는 핵심 몇 가지만 사용한다. 귀·꼬리·날개·뿔을 모두 강제하거나
+원본 색을 피부색으로 직역하지 않는다. 친근함을 모든 캐릭터에 강제하지 않고
+중장 폼의 무게감을 일괄 금지하지 않는다.
 
-**원본을 가리키는 말이 아니다.** 의인화된 몸에 붙은 **장갑**을 가리킨다.
-이 놀이에도 장갑이 그대로 있으므로 그대로 둔다.
+## 설정과 이미지
 
-```
-"armor, mechanical parts, weapons"        ← 몸에 붙은 것
-"Human ↔ Mechanical Balance"              ← 설정 항목 이름
-"ARMOR AND MECHANICAL SURFACES: …"        ← 화풍의 장갑 렌더링 지시
-```
+브라우저 설정은 `pkm_prompt_v2`에 카드별로 보관한다. 기존 `atelier_toolkit_v1`
+값은 삭제하거나 자동으로 새 인물 정체성에 주입하지 않는다.
+설정 내보내기와 콜라주 화면은 이번 흐름에 포함하지 않는다.
+화면에 보이는 등록 이미지는 기준으로 자동 지정되지 않는다.
 
-갈아 낄 것은 `mobile suit` 쪽이다. 둘을 섞지 말 것.
+이미지 파일명·스타일 키·`byForm` 구조는 그대로다.
+여성 폼 초상과 폼별 action, 폼 밖 casual을 해당 화풍에서 읽는다.
+카드와 그룹 원본은 계속 `tools/fetch-cards.py`에서 생성한다.
 
-### 열쇠(key) 이름
-
-`cinematic_semi_real`, `everyday_basic`, `apparent age` 같은 영문 열쇠는
-`data/style.json` · `data/img.json` · **그림 파일 이름**까지 이어져 있다.
-바꾸면 이미 올린 그림이 미아가 된다. 표시 이름(`name`)만 바꾼다.
-
-### 표 이름과 구조
-
-`const PARAM_DEFS` 같은 표 이름, 객체의 칸 이름(`core`·`anthro`·`lifestyle`),
-배열의 차례는 코드가 읽는다. 값만 바꾼다.
-
----
-
-## 일 2 — 한글 1,521자리
-
-화면에 뜨는 말이다. 여섯 표에 1,236자리(81%)가 몰려 있다.
-
-| 표 | 자리 | 무엇 |
-|---|---|---|
-| `PARAM_DEFS` | **504** | 설정 45가지의 선택지 설명 |
-| `EXAMPLE_MAP` | **397** | 카테고리별 예시 목록 |
-| `EX_NOTE` | 154 | 예시 한 줄 설명 |
-| `CAT_KO` | 64 | 카테고리 긴 설명 |
-| `ART_STYLES` | 62 | 화풍 12가지의 한글 설명 |
-| `HAIR_FIG` | 55 | 머리 모양 이름 |
-
-그 밖에 `ADV_VAL` 38 · `EXPRESSION_OPTIONS` 34 · `BODY_FIG` 29 ·
-`ORIENTATION_OPTIONS` 23 · `POSE_OPTIONS` 19 · `CAT_SHORT` 19 …
-
-### 꼴
-
-`PARAM_DEFS` 의 선택지는 `[열쇠, "표시 문자열"]` 이고, 표시 문자열은
-`"<영문 값> — <한글 설명>"` 꼴이다. **앞의 열쇠는 그대로 두고 뒤의 설명만 고친다.**
-
-```js
-["",    "AUTO — 기체 이미지에 맞춰 자동 결정"]   →  "AUTO — <이 놀이의 말>에 맞춰 자동 결정"
-["20s", "20s — 20대 성인"]                    →  그대로 (주제와 무관)
-```
-
-### 주제에 묶인 한글
-
-`기체` 34 · `원기체` 6 · `메카` 3 · `파일럿` 2. 나머지 한글은 대부분
-나이·체형·머리·표정처럼 주제와 무관한 말이라 손댈 것이 없다.
-
----
-
-## 고친 뒤 확인
+## 검사
 
 ```bash
-node tests/prompt-engine.cjs     # 표가 다 있나 · 글이 끝까지 나오나 (34가지)
-node tools/sync-styles.cjs       # data/style.json 이 ART_STYLES 와 맞나
-node tests/styles.cjs            # 화풍 12가지가 다 글을 뽑나
-node tests/words.cjs             # 화면 코드에 한글이 새로 박히지 않았나
+node tests/prompt-engine.cjs
+node tests/styles.cjs
+node tools/sync-styles.cjs --check
+node tests/words.cjs
+node tests/workspace-theme.cjs
+node tests/forms.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ```
 
-넷 다 통과하면 뼈대는 안 깨진 것이다.
-
-**화풍 열쇠나 이름을 바꿨으면** `node tools/sync-styles.cjs --write` 로
-`data/style.json` 을 다시 만든다. 열쇠를 바꿨다면 `pkm-atelier-img` 의 파일 이름과
-`data/img.json` 도 같이 가야 한다 — 안 그러면 화면에서 그림이 전부 404 난다.
-`python3 tools/register-images.py --check` 가 그걸 잡아 준다.
-
----
-
-## 이 일이 아닌 것
-
-`prompt.html`(2,306줄)에 **화면 말 1,189자리**가 따로 박혀 있다. 그건 이 일과 별개고,
-`lib/words.js` 의 낱말 표로 빼는 작업이다. `tests/words.cjs` 의 `PENDING` 이
-자리 수를 지켜보고 있다 — 늘어나면 실패하고, 다 빼면 그 줄을 지우라고 실패한다.
-
-낱말이 정해진 뒤에 하는 것이 순서상 낫다. 화면 말은 표에서 온 말을 따라가야 하니까.
-
----
-
-## 참고
-
-- `docs/PORT_NOTES.md` — 무엇을 어디서 가져왔고 무엇을 일부러 뺐나
-- `AGENTS.md` — 이 저장소의 규칙 넷
-- `lib/prompt-spec.js` 머리말 — 이 파일이 무엇인지, 왜 한글 검사에서 빠지는지
+엔진 검사는 12개 화풍 × 3개 모드 × 4개 폼, 기준 정체성 우선순위,
+폭주 기준, 생성 단계 치수·이색 눈, 모드별 입력 제외를 확인한다.
+화면 검사는 모드 전환·잠금 무작위·기준 이미지 전환·복사 실패 대안·
+카드별 설정 복원·세 화면 크기의 스크롤을 확인한다.
+이 검사는 프롬프트와 화면 동작 검증이며 실제 생성 이미지의 품질 판정은 아니다.

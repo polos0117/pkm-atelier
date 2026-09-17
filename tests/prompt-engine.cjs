@@ -1,107 +1,56 @@
-/* 프롬프트 엔진. 화면 없이 글이 끝까지 나오나 본다.
-
-   atelier 에서는 이걸 못 했다 — 조립 함수들이 스스로 화면을 뒤져서, 확인하려면
-   브라우저를 띄워야 했다. 값을 인자로 받게 갈라 놓은 덕에 여기서는 그냥 부른다.
-
-   여기서 보는 것은 뼈대다. 안에 든 말(건담 낱말)은 아직 안 고쳤고,
-   그건 lib/prompt-spec.js 한 곳에서 고칠 일이다.
-   Run: node tests/prompt-engine.cjs */
-const fs = require('node:fs'), vm = require('node:vm');
-const assert = require('node:assert/strict');
-
-const ctx = { window: {}, console: { warn() {} }, Date: Date, Math: Math, JSON: JSON };
-vm.createContext(ctx);
-for (const f of ['lib/prompt-spec.js', 'lib/figures.js', 'lib/toolkit.js',
-                 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
-  vm.runInContext(fs.readFileSync(f, 'utf8'), ctx);
-const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L,
-        AtelierToolkit: TK, AtelierFigures: F } = ctx.window;
-
-const ok = [];
-const ck = (name, cond, got) => { assert.ok(cond, name + (got === undefined ? '' : ' ← ' + got)); ok.push(name); };
-
-/* ── 표가 다 왔나 ─────────────────────────────── */
-ck('표 60개 넘게 왔다', Object.keys(S).length >= 60, Object.keys(S).length);
-ck('함수는 한 개도 안 섞였다',
-  Object.keys(S).every(k => typeof S[k] !== 'function'),
-  Object.keys(S).filter(k => typeof S[k] === 'function').join(','));
-ck('이름 정규식 표는 안 가져왔다', S.NAME_RULES === undefined);
-
-/* 화풍 줄은 [열쇠, 이름, 한글 설명] 셋뿐이다.
-   예전에는 네 번째 칸에 "core + anthro" 를 합친 옛 통짜 글이 남아 있었다.
-   조립부가 그걸 안 읽는데도(열쇠만 보고 STYLE_PROFILES 에서 글을 꺼낸다)
-   24,945자가 그대로 앉아 있어서, 고치는 사람이 거기를 고치면 되는 줄 안다.
-   다시 들어오면 여기서 선다 */
-ck('화풍 줄은 칸이 셋뿐이다',
-  S.ART_STYLES.every(r => Array.isArray(r) && r.length === 3),
-  [...new Set(S.ART_STYLES.map(r => r.length))].join(','));
-ck('화풍마다 열쇠·이름·설명이 다 있다',
-  S.ART_STYLES.every(r => /^[a-z][a-z0-9_]*$/.test(r[0]) && r[1] && r[2]),
-  S.ART_STYLES.filter(r => !(r[1] && r[2])).map(r => r[0]).join(','));
-ck('화풍마다 core·anthro·lifestyle 이 다 있다',
-  S.ART_STYLES.every(r => ['core', 'anthro', 'lifestyle']
-    .every(k => typeof (S.STYLE_PROFILES[r[0]] || {})[k] === 'string'
-             && S.STYLE_PROFILES[r[0]][k])),
-  S.ART_STYLES.filter(r => !S.STYLE_PROFILES[r[0]]).map(r => r[0]).join(','));
-for (const k of ['PARAM_DEFS', 'ART_STYLES', 'STYLE_PROFILES', 'STYLE_CORES', 'templateC',
-                 'MORPHOLOGY_PROFILES', 'TRANSLATION_PROFILES', 'CATS', 'EXAMPLE_MAP',
-                 'BODY_FIG', 'HAIR_FIG', 'CAT_SHORT', 'PARAM_SHORT', 'SUMMARY_WORDS'])
-  ck('표 ' + k, S[k] !== undefined);
-
-/* ── 의인화 글 ────────────────────────────────── */
-const st = {
-  mech: '피카츄', series: '전기', gender: 'female',
-  style: S.DEFAULT_STYLE, morph: Object.keys(S.MORPHOLOGY_PROFILES)[0],
-  translation: Object.keys(S.TRANSLATION_PROFILES)[0],
-  params: P.paramValues([['apparent age', '20s'], ['facial ethnicity', 'East Asian'],
-                         ['eye color', 'amber'], ['hair color', 'blonde']],
-                        { gender: 'female' }),
-};
-const anthro = P.buildAnthro(st);
-ck('의인화 글이 나온다', anthro.length > 2000, anthro.length + '자');
-ck('블록이 차례대로 선다',
-  ['[ANTHRO STYLE EXTENSION]', '[SOURCE MORPHOLOGY ADAPTER]', '[TRANSLATION PROFILE]']
-    .map(t => anthro.indexOf(t)).every((v, i, a) => v > 0 && (i === 0 || v > a[i - 1])),
-  ['[ANTHRO STYLE EXTENSION]', '[SOURCE MORPHOLOGY ADAPTER]', '[TRANSLATION PROFILE]']
-    .map(t => anthro.indexOf(t)).join(','));
-ck('고른 값이 글에 실린다', anthro.includes('apparent age: 20s') && anthro.includes('피카츄'));
-ck('일상 블록은 안 섞인다', !anthro.includes('[LIFESTYLE STYLE EXTENSION]'));
-ck('검산이 조용하다', P.audit(S.MODE.ANTHRO, anthro).length === 0);
-
-/* 숫자를 안 넣으면 치수 메모 자체가 없다 — 옛 글이 안 바뀌어야 한다 */
-ck('치수를 안 적으면 그 블록이 없다', !anthro.includes('[BODY MEASUREMENT NOTE]'));
-const withBWH = P.buildAnthro(Object.assign({}, st,
-  { params: st.params.concat([['body measurements (B/W/H)', '84/58/86']]) }));
-ck('치수를 적으면 그 블록이 붙는다', withBWH.includes('[BODY MEASUREMENT NOTE]'));
-
-/* ── 일상컷 ───────────────────────────────────── */
-ck('카테고리 표가 배열이다', Array.isArray(S.CATS), typeof S.CATS);
-/* 화면이 넘기던 꼴 그대로 넘긴다 (prompt.html 의 buildSingle 호출부와 같다) */
-const single = L.buildSingle({
-  source: { mech: '피카츄' }, gender: 'female', style: S.DEFAULT_STYLE, record: null,
-  cat: 'everyday_basic', catCustom: '', ex: '', exCustom: '',
-  aspect: '', frame: '', expr: '', orient: '', pose: '',
-  scene: '', outfit: '', camera: '', custom: '', axes: {},
-  carryFace: {}, carryBody: {},
-});
-ck('일상컷 글이 나온다', typeof single === 'string' && single.length > 500, (single || '').length + '자');
-ck('일상컷에 의인화 블록이 안 섞인다',
-  !['[ANTHRO STYLE EXTENSION]', '[TRANSLATION PROFILE]', '[SOURCE MORPHOLOGY ADAPTER]']
-    .some(t => single.includes(t)),
-  single.slice(0, 80));
-
-/* ── 이름표가 한 곳에서 온다 ──────────────────── */
-const w = TK.words();
-ck('toolkit 이 표에서 이름표를 꺼낸다',
-  w.cat.swimwear === S.CAT_SHORT.swimwear && w.label['eye color'] === S.PARAM_SHORT['eye color']);
-
-/* ── 도형 ─────────────────────────────────────── */
-/* 도형은 설정 항목 열쇠로 찾는다 — 'body'/'hair' 가 아니라 PARAM_DEFS 의 열쇠다 */
-ck('체형 도형이 산다', F.has('body type', Object.keys(S.BODY_FIG)[0]),
-  Object.keys(S.BODY_FIG)[0]);
-ck('머리 도형이 산다', F.has('hairstyle', Object.keys(S.HAIR_FIG)[0]),
-  Object.keys(S.HAIR_FIG)[0]);
-ck('없는 도형은 없다고 한다', !F.has('body type', '없는값'));
-
-console.log('PASS: ' + ok.length + '가지 — 표 ' + Object.keys(S).length +
-  '개, 의인화 ' + anthro.length + '자, 일상컷 ' + single.length + '자');
+/* Prompt contracts: identity authority, form transitions, and mode isolation. */
+const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
+const ctx={window:{},console}; vm.createContext(ctx);
+for(const f of ['prompt-spec','figures','toolkit','prompt-anthro','prompt-lifestyle'])
+  vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
+const {AtelierSpec:S,AtelierPrompt:P,AtelierLifestyle:L,AtelierFigures:F}=ctx.window;
+assert.equal(typeof P.buildPrompt,'function');
+assert(S.ART_STYLES.every(r=>r.length===3)); assert.equal(S.ART_STYLES.length,12);
+assert(S.STYLE_PROFILES.bright_catalog);
+assert(Object.values(S).every(x=>typeof x!=='function'));
+const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
+ form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
+let count=0;
+for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action','casual'])
+ for(const form of ['light','heavy','mobility','overdrive']){
+  const t=P.buildPrompt({...base,style,outputMode,form,identityMode:'reference',
+   baseForm:'reference',formOverride:'OPEN_LEFT_PANEL',camera:'LOW_CAMERA',scene:'CITY_PARK'});
+  assert(t.includes(S.STYLE_PROFILES[style].core),style);
+  assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
+  assert(t.includes('Pikachu')); assert(t.includes('clearly adult woman')); assert(t.includes('user-approved'));
+  assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
+  const order=['[STYLE CORE]','[PROJECT STYLE EXTENSION]','[SOURCE IDENTITY]',
+   '[CHARACTER IDENTITY]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
+   '[CONSISTENCY / NEGATIVE LOCK]','[FINAL CHECK]'].map(x=>t.indexOf(x));
+  assert(order.every((x,i)=>x>=0&&(!i||x>order[i-1])));
+  assert.equal(t.includes('[FORM DEFINITION]'),outputMode!=='casual');
+  assert.equal(t.includes('OPEN_LEFT_PANEL'),outputMode!=='casual');
+  assert.equal(t.includes('LOW_CAMERA'),outputMode!=='portrait');
+  assert.equal(t.includes('CITY_PARK'),outputMode!=='portrait');
+  assert.equal(P.audit(outputMode,t).length,0); count++;
+ }
+const first=P.buildPrompt(base);
+assert(first.includes('body type: athletic')); assert(first.includes('right eye is amber'));
+assert(first.includes('left eye is blue')); assert(!first.includes('Use the SAME'));
+assert(!first.includes('[BODY MEASUREMENT NOTE]'));
+assert(P.buildPrompt({...base,params:[['body measurements (B/W/H)','84/58/86']]}).includes('[BODY MEASUREMENT NOTE]'));
+assert(P.buildPrompt({...base,form:'heavy'}).includes('multiple overlapping'));
+assert(P.buildPrompt({...base,form:'mobility'}).includes('outward'));
+assert.throws(()=>P.buildPrompt({...base,form:'unknown'}));
+assert.throws(()=>P.buildPrompt({...base,style:'semi_real'}));
+assert.throws(()=>P.buildPrompt({...base,outputMode:'collage'}));
+assert.throws(()=>P.buildPrompt({...base,form:'overdrive',baseForm:'reference'}));
+const od=P.buildPrompt({...base,identityMode:'reference',form:'overdrive'});
+assert(od.includes('armor actually worn in the attached reference'));
+assert(od.includes('selected existing seams')); assert(od.includes('Floating is optional'));
+const explicit=P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'});
+assert(explicit.includes('multiple overlapping'));
+assert(!explicit.includes('armor actually worn in the attached reference'));
+const casual=L.buildSingle({source:{mech:'Pikachu'},style:S.DEFAULT_STYLE,cat:'everyday_basic',
+ axes:{source_influence:'subtle'},scene:'CITY_PARK',carryFace:true,carryBody:true,
+ record:{female:{params:{'body type':'LEGACY_BODY'}}}});
+assert(casual.includes('CITY_PARK')); assert(!casual.includes('LEGACY_BODY'));
+assert(!casual.includes('[FORM DEFINITION]')); assert(P.buildAnthro(base).includes('body type: athletic'));
+assert(F.has('body type',Object.keys(S.BODY_FIG)[0]));
+assert(F.has('hairstyle',Object.keys(S.HAIR_FIG)[0]));
+console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');

@@ -34,7 +34,7 @@ const TABLES = ['lib/words.js', 'lib/prompt-spec.js'];
 /* 아직 안 고친 화면. atelier 에서 그대로 옮겨 왔고 말을 아직 안 뺐다.
    빼 주되 조용히 잊히지는 않게 — 남은 자리 수를 늘 찍고, 늘어나면 실패한다.
    다 빼고 나면 이 줄을 지운다. */
-const PENDING = { 'prompt.html': 1189 };
+const PENDING = {};
 const targets = [];
 for (const dir of ['.', 'lib']) {
   for (const f of fs.readdirSync(dir)) {
