@@ -63,6 +63,8 @@ body {color:var(--text);font-size:15px}
   background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
 .run-tools button.plain {background:var(--card)}
 .run-tools .run-result {flex:1 1 100%;font-weight:700;font-size:15px}
+.run-tools .run-turn {flex:1 1 auto;font:700 12px ui-monospace,monospace;letter-spacing:.06em;color:var(--accent)}
+@media (max-width:600px) { .run-tools .run-turn {flex:1 1 100%} }
 .run-vs {display:flex;align-items:center;justify-content:center;padding:8px 0;font:700 12px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}
 
 /* 보상 — 둘 가운데 하나 */
@@ -132,9 +134,50 @@ body {color:var(--text);font-size:15px}
 .bt-cmd select {min-height:34px;flex:1 1 100px;min-width:0;background:var(--card2);border:1px solid var(--line);color:var(--text);font:inherit;font-size:12px;border-radius:7px;padding:4px 8px}
 .bt-cmd label {display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
 .bt-step {min-height:44px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
-@media (max-width:520px) {
-  .run-cards {grid-template-columns:1fr}
+/* 붙박이 — 굴리는 단추와 드래프트 줄은 굴러도 손 닿는 자리에 있다 */
+.run-sticky {position:sticky;z-index:3;background:var(--bg,#faf9f3);margin:0 -2px;padding-left:2px;padding-right:2px}
+.run-sticky.top {top:0;border-bottom:1px solid var(--line)}
+.run-sticky.bottom {bottom:0;border-top:1px solid var(--line);padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+.bt-beat {position:sticky;top:0;z-index:3;background:var(--bg,#faf9f3);margin:0 -2px;padding-left:2px;padding-right:2px;border-bottom:1px solid var(--line)}
+.run-rivals-box {margin:12px 0 0}
+.run-rivals-box summary {cursor:pointer;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);list-style:none}
+.run-rivals-box summary::before {content:'▸ '}
+.run-rivals-box[open] summary::before {content:'▾ '}
+.run-nature .run-nature-pick {margin:0;font-size:12px;color:var(--muted);line-height:1.5;word-break:keep-all}
+
+@media (max-width:600px) {
+  /* 판 표시 한 줄 — 머리가 화면을 덜 먹게 */
+  .run-head {flex-wrap:nowrap;gap:8px;padding-top:6px}
+  .run-head b {font-size:12px;white-space:nowrap}
+  .run-head i {display:none}
+  .run-head .run-steps u {width:12px;height:5px}
+  .run-head button {min-height:34px;padding:4px 10px;font-size:12px}
+  /* 카드 — 드래프트는 둘씩, 로스터·상대는 셋씩 압축 */
+  .run-cards.run-draft {grid-template-columns:1fr 1fr;gap:8px}
+  .run-cards.run-roster,.run-cards.run-foes {grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .run-card {padding:8px 8px 9px;gap:4px;border-radius:10px}
+  .run-card h3 {font-size:13px}
+  .run-card .run-text {display:none}
+  .run-card .run-genus {display:none}
+  .run-card .run-stats {gap:2px 4px;font-size:9px}
+  .run-card .run-stats u {height:4px}
+  .run-card .run-types span {font-size:9px;padding:1px 5px}
+  .run-card .run-growth,.run-card .run-taken {font-size:10px}
+  .run-card .run-face {aspect-ratio:1/1}
+  .run-card button {min-height:38px;font-size:12px}
+  .run-roster .run-card .run-hp,.run-foes .run-card .run-hp {grid-template-columns:1fr;gap:2px;font-size:10px}
+  .run-roster .run-card .run-hp span {text-align:right}
+  .run-foes .run-card .run-stats {display:none}
   .run-rewards,.bt-field {grid-template-columns:1fr}
+  .run-natures {gap:8px}
+  .run-nature {padding:8px 10px}
+  .run-nature .run-nature-opts {gap:4px}
+  .run-nature button {min-height:40px;padding:5px 6px;font-size:11px}
+  .run-nature button small {display:none}
+  .run-tools button {min-height:44px;padding:8px 12px;font-size:13px;flex:1 1 auto}
+  .run-vs {padding:4px 0}
+  .sec {margin:12px 0 6px}
+  .note {font-size:11px}
 }
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
@@ -225,9 +268,10 @@ const seatName = i => i === 0 ? W('run.seat.me') : W('run.seat.ai', { n: i });
 function Draft({ d, st, onPick, onReroll }) {
   const open = RUN.open(st).length;
   const mine = st.seats[0].roster;
-  return html`<div class="sec">${W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS })}<span>${W('run.draft.turn', { left: open })}</span></div>
+  return html`<div class="sec">${W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS })}</div>
     <p class="note">${W('run.draft.note')}</p>
-    <div class="run-tools">
+    <div class="run-tools run-sticky top">
+      <span class="run-turn">${W('run.draft.turn', { left: open })}</span>
       <button type="button" class="run-reroll plain" disabled=${!RUN.canReroll(st)} onClick=${onReroll}>
         ${st.round >= RUN.ROUNDS - 1 ? W('run.reroll.last') : W('run.reroll', { n: st.rerolls, max: RUN.REROLL_MAX })}</button>
     </div>
@@ -310,9 +354,11 @@ function Fight({ d, st, onDone }) {
     <div class="run-vs">VS</div>
     <div class="sec">${W('run.foes')}<span>${foe.seat < 0 ? W('run.foes.boss') : W('run.foes.seat', { seat: seatName(foe.seat), n: st.stage - 1 })} · ${W('battle.policy.' + foe.policy)}</span></div>
     <div class="run-cards run-foes">${foe.members.map(m => html`<${Card} key=${m.name} d=${d} name=${m.name} growth=${RUN.left(d.by, m.name)} grown=${m.grown} />`)}</div>
-    ${st.stage === 1 && html`<div class="sec">${W('run.rivals')}</div>
-      <ol class="run-rivals">${st.foes.map(i => html`<li key=${i}>${W('run.rival.line', { seat: seatName(i), names: st.seats[i].roster.map(r => r.name).join(' · ') })}</li>`)}</ol>`}
-    <div class="run-tools">
+    <details class="run-rivals-box" open=${st.stage === 1}>
+      <summary>${W('run.rivals')}</summary>
+      <ol class="run-rivals">${st.foes.map(i => html`<li key=${i}>${W('run.rival.line', { seat: seatName(i), names: st.seats[i].roster.map(r => r.name).join(' · ') })}</li>`)}</ol>
+    </details>
+    <div class="run-tools run-sticky bottom">
       <button type="button" class="run-auto" onClick=${auto}>${W('run.fight.auto')}</button>
       <button type="button" class="run-manual plain" onClick=${manual}>${W('run.fight.manual')}</button>
     </div>`;
@@ -343,8 +389,9 @@ function Nature({ d, st, onSet, onSetAll, onGo }) {
       <div class="run-nature-opts">${NATURES.map(n => html`<button type="button" key=${n} class=${r.nature === n ? 'on' : ''} data-nature=${n} onClick=${() => onSet(i, n)}>
         <b>${W('run.nature.' + n)}</b><small>${W('run.nature.' + n + '.note')}</small>${fit === n && html`<span class="fit">${W('run.nature.fit')}</span>`}
       </button>`)}</div>
+      ${r.nature && html`<p class="run-nature-pick">${W('run.nature.' + r.nature + '.note')}</p>`}
     </div>`; })}</div>
-    <div class="run-tools"><button type="button" class="run-nature-go" disabled=${!RUN.natureDone(st)} onClick=${onGo}>${W('run.nature.go')}</button></div>`;
+    <div class="run-tools run-sticky bottom"><button type="button" class="run-nature-go" disabled=${!RUN.natureDone(st)} onClick=${onGo}>${W('run.nature.go')}</button></div>`;
 }
 
 function End({ d, st, onAgain }) {

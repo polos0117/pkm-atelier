@@ -41,7 +41,7 @@ body {color:var(--text);font-size:15px}
 .bt-tools .bt-result {flex:1 1 100%;font-weight:700;font-size:14px}
 
 /* 판 — 박자 조종 + 두 편의 자리 + 그 박자의 사건 */
-.bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px}
+.bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px;position:sticky;top:0;z-index:3;background:var(--bg,#faf9f3);border-bottom:1px solid var(--line)}
 .bt-beat b {flex:1 1 auto;font:700 13px ui-monospace,monospace;letter-spacing:.06em}
 .bt-beat button {min-height:40px;min-width:44px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;
   background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700}
