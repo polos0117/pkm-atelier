@@ -20,7 +20,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await p.locator('#param-apparent-age').selectOption('30s');
   await settled();
   assert((await text()).includes('body type: athletic'));
-  assert.equal(await p.locator('canvas[data-figure-ready="body"]').count(),1);
+  assert.equal(await p.locator('[data-figure-picker="body type"] [data-value="athletic"][aria-pressed="true"]').count(),1);
   // A locked field must survive randomization.
   await p.getByRole('button',{name:'무작위 변경 잠금 · 체형',exact:true}).click();
   await p.locator('#randomize').click();await settled();

@@ -72,6 +72,19 @@ CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.
 설정 내보내기와 콜라주 화면은 이번 흐름에 포함하지 않는다.
 화면에 보이는 등록 이미지는 기준으로 자동 지정되지 않는다.
 
+### 외형을 이미지와 색상으로 선택
+
+새 인물 만들기의 체형·헤어스타일에는 PNG 선택 목록이 있다. 기존 여성 체형
+17개와 여성 헤어 33개를 `atelier/assets/figures`의 공개 PNG로 다시 연결했다.
+원본 그림을 이 저장소에 복제하지 않고 `lib/figures.js`의 `pngURL`에서 주소를
+관리한다. PNG가 없는 항목이나 이미지 로드 실패는 기존 Canvas 도식으로 표시한다.
+선택 카드의 그림 영역과 두 줄 이름 영역은 높이를 고정해 서로 정렬된다.
+
+눈동자 색·왼쪽 눈 색·머리색 팔레트는 `COLOR_KEYS`와 `COLOR_HEX`를 사용한다.
+그림·팔레트·셀렉트박스는 같은 파라미터를 바꾸며, 잠금과 직접 입력 및 카드별
+저장도 그대로 적용된다. 이미지 이어가기에서는 외형 선택기를 숨기고 기준 이미지의
+정체성을 유지한다. 설정 내보내기나 성별 선택을 다시 추가하지는 않았다.
+
 이미지 파일명·스타일 키·`byForm` 구조는 그대로다.
 여성 폼 초상과 폼별 action, 폼 밖 casual을 해당 화풍에서 읽는다.
 카드와 그룹 원본은 계속 `tools/fetch-cards.py`에서 생성한다.
@@ -86,6 +99,7 @@ node tests/words.cjs
 node tests/workspace-theme.cjs
 node tests/forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-controls.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ```
 
@@ -94,3 +108,8 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 화면 검사는 모드 전환·잠금 무작위·기준 이미지 전환·복사 실패 대안·
 카드별 설정 복원·세 화면 크기의 스크롤을 확인한다.
 이 검사는 프롬프트와 화면 동작 검증이며 실제 생성 이미지의 품질 판정은 아니다.
+
+`prompt-controls`는 PNG 로드·그림/색상 선택·잠금·직접 입력·저장 복원과
+기준 이미지 모드의 외형 제외, PNG 실패 시 Canvas 대체를 확인한다.
+오프라인 브라우저 검사에서는 원본 PNG를 `img/figure-previews/`에 같은 이름으로
+두면 공용 하네스가 해당 파일을 사용한다. 이 폴더는 검사 전용이며 Git에 올리지 않는다.
