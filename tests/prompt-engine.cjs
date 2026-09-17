@@ -12,7 +12,12 @@ assert(S.STYLE_PROFILES.glossy_promo.core.includes('TEXT AND GRAPHIC OVERLAYS'))
 assert(S.STYLE_PROFILES.glossy_promo.core.includes('no typography'));
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart);
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('illustrated hybrid'));
+assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('illustration-first'));
+assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('crisp readable midground'));
+assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes("selected hairstyle's exact length"));
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('Detail density is a rendering treatment'));
+assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('not permission to redesign'));
+assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes("not from changing the reference character's hairstyle"));
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('no typography'));
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
