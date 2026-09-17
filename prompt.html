@@ -5,14 +5,13 @@
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f1115">
-<title>Gundam Prompt Toolkit v9.25</title>
-<!-- 홈 화면에 두면 브라우저가 저장 자리를 걷어가지 못한다 -->
-<link rel="manifest" href="prompt.webmanifest">
+<title>제목 미정</title>
+<!-- 홈 화면에 두면 브라우저가 저장 자리를 걷어가지 못한다.
+     매니페스트와 아이콘은 아직 없다 — 그림이 생기면 그때 붙인다 -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="프롬프트">
-<link rel="apple-touch-icon" href="icon-prompt-180.png">
 <!--
   툴킷 세 탭(의인화·단일컷·콜라주)을 Preact + htm 으로 옮긴 판.
 
@@ -21,7 +20,7 @@
 
   글을 만드는 일은 화면 밖에 있다 — lib/prompt-anthro.js 와
   lib/prompt-lifestyle.js 가 값만 받아 글을 뽑는다. 자료 표는
-  lib/toolkit-spec.js, 저장은 lib/toolkit.js 가 맡는다.
+  lib/prompt-spec.js, 저장은 lib/toolkit.js 가 맡는다.
   ?v= 는 캐시 우회용이다. lib 를 고치면 이 값을 올린다.
 
   예전 판은 prompt-legacy.html 에 남겨 두었다. 되돌릴 일이 생기면 그 파일을
@@ -29,7 +28,8 @@
 -->
 <script src="lib/img.js?v=4"></script>
 <script src="lib/toolkit.js?v=4"></script>
-<script src="lib/toolkit-spec.js?v=4"></script>
+<script src="lib/prompt-spec.js?v=4"></script>
+<script src="lib/words.js?v=4"></script>
 <script src="lib/figures.js?v=5556f5baf3"></script>
 <script src="lib/prompt-anthro.js?v=4"></script>
 <script src="lib/prompt-lifestyle.js?v=4"></script>
@@ -230,6 +230,21 @@ const MORPHS = [
   ['silhouette_equipment_emphasis', '실루엣/장비 강조형 — 어깨·팔다리·바인더 등 외곽 인상이 중요할 때'],
   ['aggressive_restructure', '강변형형 — 일반 의인화로는 원본 느낌이 죽는 난형 기체용'],
 ];
+
+/* 카드 자료 꼴 맞추기.
+   atelier 는 기체 파일(mech.json)에 cards 배열이 통째로 있었고 시리즈 열쇠가
+   카드마다 붙어 있었다. 여기서는 card.json 이 갈래(kinds)별로 나뉘어 있고,
+   묶는 축이 시리즈가 아니라 element 다. 화면은 series 라는 이름으로 읽으므로
+   여기서 한 번만 맞춰 준다 — 화면 코드는 안 고친다 */
+function cardsOf(doc) {
+  const out = [];
+  for (const kind of Object.keys(doc.cards || {}))
+    for (const c of doc.cards[kind])
+      out.push(Object.assign({}, c, {
+        kind, series: c.series || (c.element ? [c.element] : []),
+      }));
+  return out;
+}
 
 function getJSON(p) {
   return fetch(p, { cache: 'no-cache' }).then(r => {
@@ -2205,10 +2220,11 @@ function App() {
        아니면 "시리즈 전체"로 두어 목록에서 기체가 사라지지 않게 한다 */
     const qs = new URLSearchParams(location.search);
     const qMech = qs.get('mech') || '', qSeries = qs.get('series') || '';
-    Promise.all([getJSON('data/mech.json'), getJSON('data/series.json'), ATK.load(), AIMG.load()])
+    Promise.all([getJSON('data/card.json'), getJSON('data/group.json'), ATK.load(), AIMG.load()])
       .then(([m, s, , img]) => {
-        setData({ cards: m.cards, series: s, img });
-        const owner = qMech && m.cards.find(c => c.name === qMech);
+        const cards = cardsOf(m);
+        setData({ cards, series: s, img });
+        const owner = qMech && cards.find(c => c.name === qMech);
         if (owner) {
           const sers = owner.series || [];
           setSeries(qSeries && sers.indexOf(qSeries) >= 0 ? qSeries : '');
@@ -2236,8 +2252,8 @@ function App() {
 
   return html`
     <nav class="workspace-nav" aria-label="Atelier 화면 이동">
+      <a href="index.html">들머리</a>
       <a href="prompt.html" aria-current="page">툴킷</a>
-      <a href="play.html">드래프트</a>
       <a href="dex.html">도감</a>
     </nav>
 

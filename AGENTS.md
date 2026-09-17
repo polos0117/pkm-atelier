@@ -77,6 +77,7 @@ node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나�
 
 ```bash
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ```
 
 `dex-forms` 는 자료를 세 벌로 돌린다 — 등록된 그대로, 폼 둘을 지운 것,

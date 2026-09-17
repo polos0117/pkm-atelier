@@ -56,21 +56,32 @@
 180벌 전부 원본과 한 글자도 안 다르다. (표에서 한 단어를 바꿔 이 비교가 실제로
 차이를 잡는 것도 확인했다.)
 
-## `prompt.html` 은 손 안 대고 그대로 옮겼다
+## `prompt.html` — 화면 코드는 안 건드리고 선만 이었다
 
-2,283줄을 한 글자도 안 고치고 복사했다. 그래서 **지금은 안 뜬다.** 부르는 것 중에
-이 저장소에 없는 것이 이만큼이다.
+2,283줄을 그대로 복사한 뒤, **부르는 자리 다섯 곳만** 고쳤다. 화면 코드도 말도
+손대지 않았다.
 
-| 부르는 것 | 사정 |
+| 고친 것 | 어떻게 |
 |---|---|
-| `lib/toolkit-spec.js` | 여기서는 `lib/prompt-spec.js` 로 이름이 바뀌었다 |
-| `data/mech.json` · `data/series.json` | 카드가 `data/card.json` 하나로 합쳐졌다 |
-| `play.html` · `prompt.webmanifest` · `icon-prompt-180.png` | 아직 없다 |
+| `lib/toolkit-spec.js` | → `lib/prompt-spec.js` (이름이 바뀌었다). `lib/words.js` 도 같이 싣는다 |
+| `data/mech.json` · `data/series.json` | → `data/card.json` · `data/group.json` |
+| 카드 꼴 | `cardsOf()` 한 함수로 맞춘다. atelier 는 `cards` 가 통째로 한 배열이고 묶는 축이 `series` 였는데, 여기는 갈래(`kinds`)별로 나뉘고 축이 `element` 다. 화면은 계속 `series` 로 읽는다 |
+| `play.html` 링크 | → `index.html` (드래프트 화면은 여기 없다) |
+| `prompt.webmanifest` · `icon-prompt-180.png` | 뺐다. 그림이 생기면 붙인다 |
+| `<title>` | 낱말 표의 `app.title` 과 맞췄다 |
 
-`<title>` 도 아직 건담 것이고, 낱말 검사의 `<title>` 대조에서도 빠져 있다.
+`data/group.json` 에 `electric → 전기` 한 줄을 넣었다. 카드의 `element` 를 이 표로 읽는다.
 
-한글 1,189자리는 `tests/words.cjs` 의 `PENDING` 에 적어 뒀다. 빼 주되 **자리 수를
-늘 찍고, 늘어나면 실패한다.** 다 빼고 나면 그 줄을 지우면 된다.
+**실제로 돈다.** 세 탭이 피카츄로 글을 뽑는다 — 의인화 21,671자, 단일 컷 8,582자,
+콜라주 11,999자. `tests/prompt-screen.cjs` 17가지가 지킨다. 이은 자리를 하나씩
+다시 끊어서 검사가 이름을 대고 실패하는 것도 봤다.
+
+화면 말(한글 1,189자리)은 **안 뺐다.** `tests/words.cjs` 의 `PENDING` 에 적어 두고
+자리 수를 늘 찍는다 — 늘어나면 실패하고, 다 빼면 그 줄을 지우라고 실패한다.
+
+아직 안 맞는 것 하나: 목록에 "초상 완료 0 / 1기" 로 뜬다. 이 화면은 초상을
+화풍 밑에서 찾는데 여기 초상은 폼(`byForm`) 안에 있어서다. 도감은 `coverOf` 로
+풀었다 — 툴킷도 폼 축에 맞출 때 같이 본다.
 
 ## 아직 건담 낱말이다 — GPT 가 고칠 자리
 
