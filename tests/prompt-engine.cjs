@@ -112,7 +112,7 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert(t.includes(S.STYLE_PROFILES[style].core),style);
   assertMaterials(t,outputMode);
   assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
-  assert(t.includes('Pikachu')); assert(t.includes('clearly adult woman')); assert(t.includes('user-approved'));
+  assert(t.includes('Pikachu')); assert(t.includes('woman')); assert(t.includes('user-approved'));
   assert(t.startsWith('[GENERATION INPUT]')&&t.includes('IMAGE-GUIDED CONTINUATION'));
   assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
   assert(!t.includes('referenced_image_paths')&&!t.includes('num_last_images_to_include'));

@@ -21,7 +21,7 @@ for(const outputMode of ['portrait','action','casual']) {
  assert(text.includes('grouped illustrated shadow shapes'));
  assert(text.includes('same high-impact promotional rendering intensity as the mechanical armor'));
  assert(text.includes('stronger upper-lash definition'));
- assert(text.includes('Preserve selected or approved eye shape, facial geometry, adult age and expression'));
+ assert(text.includes('Preserve selected or approved eye shape, facial geometry, age and expression'));
  assert(!text.includes('economical nose and lip lines, and selective soft transitions'));
  assert(text.includes('Restrained skin highlights'));
  assert(!text.includes('glossy highlights across body'));
@@ -56,3 +56,9 @@ for (const [name, entry] of Object.entries(images)) {
   }
 }
 console.log('PASS: ' + actual.styles.length + ' styles generate prompts; ' + count + ' image filenames match');
+
+for(const identityMode of ['create','reference']) {
+ const t=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode:'portrait',identityMode,form:'light',params:[['apparent age','20s'],['facial character','cute']]});
+ assert(!/\badult\b/i.test(t),'duplicate adult wording outside age settings');
+ if(identityMode==='create') assert(t.includes('apparent age: 20s'));
+}
