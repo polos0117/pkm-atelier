@@ -47,6 +47,18 @@ for(const outputMode of ['portrait','action','casual']) for(const baseForm of ['
 }
 assert(!P.buildPrompt({...base,form:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
 assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
+// Heavy coverage is a form transformation, isolated from light, mobility and casual.
+for(const outputMode of ['portrait','action','casual']) for(const form of ['light','heavy','mobility']) {
+ const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form});
+ assert.equal(t.includes('HEAVY COVERAGE:'),outputMode!=='casual'&&form==='heavy');
+}
+const heavyPrompt=P.buildPrompt({...base,identityMode:'reference',form:'heavy'});
+assert(heavyPrompt.includes('front and outer upper thighs'));
+assert(heavyPrompt.includes('one dominant broad front plate'));
+assert(heavyPrompt.includes('pelvis-to-knee'));
+const heavyOpen=P.buildPrompt({...base,identityMode:'reference',form:'overdrive',baseForm:'heavy'});
+assert(heavyOpen.includes('large solid doors'));
+assert(heavyOpen.includes('Do not subdivide'));
 // Form-specific staging must not leak into normal portraits, sheets or casual scenes.
 for(const baseForm of ['light','heavy','mobility','reference']) {
  const state={...base,identityMode:'reference',form:'overdrive',baseForm};
