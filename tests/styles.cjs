@@ -19,6 +19,10 @@ for(const outputMode of ['portrait','action','casual']) {
  assert(text.includes('Premium anime-mecha promotional key art with clean linework'));
  assert(text.includes('strong dimensional shading'));
  assert(text.includes('grouped illustrated shadow shapes'));
+ assert(text.includes('same high-impact promotional rendering intensity as the mechanical armor'));
+ assert(text.includes('stronger upper-lash definition'));
+ assert(text.includes('Preserve selected or approved eye shape, facial geometry, adult age and expression'));
+ assert(!text.includes('economical nose and lip lines, and selective soft transitions'));
  assert(text.includes('Restrained skin highlights'));
  assert(!text.includes('glossy highlights across body'));
  assert(text.includes('Do not force a background, expression'));

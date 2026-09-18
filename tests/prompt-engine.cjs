@@ -207,4 +207,15 @@ assert(P.buildPrompt(base).includes('overlapping rigid shell segments'));
 const compactSheet=P.buildPrompt({...base,style:'glossy_promo',params:[]});
 assert(compactSheet.length < 10000,'compact creation sheet exceeds text budget');
 assert(!compactSheet.includes('Lock skeletal shoulder width'),'creation must establish anatomy, not lock an absent reference');
+// Bilateral construction applies to armor only, once, across forms and identity modes.
+for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual'])
+ for(const form of ['light','heavy','mobility','overdrive']) {
+ const t=P.buildPrompt({...base,identityMode,outputMode,form});
+ assert.equal(t.split('BILATERAL ARMOR:').length-1,outputMode==='casual'?0:1);
+ if(outputMode!=='casual') {
+  assert(t.includes('matching part inventory, dimensions and anatomical mounting levels'));
+  assert(t.includes('explicitly requested or explicitly approved asymmetric equipment'));
+  assert(t.includes('Pose, perspective, cable curves and panel-opening angles may differ'));
+ }
+}
 console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');
