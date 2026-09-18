@@ -218,4 +218,17 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
   assert(t.includes('Pose, perspective, cable curves and panel-opening angles may differ'));
  }
 }
+for(const identityMode of ['create','reference']) {
+ for(const form of ['heavy','overdrive']) {
+  const t=P.buildPrompt({...base,identityMode,form,baseForm:'heavy'});
+  assert(t.includes('FULL-BODY ENCLOSURE:'));
+  assert(t.includes('previously exposed skin or textile'));
+  assert(t.includes('abdomen, waist, pelvis'));
+  assert(!t.includes('preserve established abdominal coverage unless'));
+ }
+ const light=P.buildPrompt({...base,identityMode,form:'light'});
+ assert(light.includes('separate regional armor assemblies'));
+ assert(!light.includes('FULL-BODY ENCLOSURE:'));
+ assert(!P.buildPrompt({...base,identityMode,outputMode:'casual',form:'heavy'}).includes('FULL-BODY ENCLOSURE:'));
+}
 console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');
