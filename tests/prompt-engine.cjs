@@ -204,4 +204,7 @@ for (const identityMode of ['create','reference']) {
 }
 assert(P.buildPrompt(base).includes('overlapping rigid shell segments'));
 
+const compactSheet=P.buildPrompt({...base,style:'glossy_promo',params:[]});
+assert(compactSheet.length < 10000,'compact creation sheet exceeds text budget');
+assert(!compactSheet.includes('Lock skeletal shoulder width'),'creation must establish anatomy, not lock an absent reference');
 console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');
