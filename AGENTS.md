@@ -11,6 +11,7 @@
 | `docs/PORT_NOTES.md` | 어디서 무엇을 가져왔고, 무엇을 일부러 뺐나 |
 | `docs/GAME_CONCEPT.md` | 게임 구조 — 정해진 것과 아직 시험할 것 |
 | `docs/PROMPT_REWRITE.md` | 포켓몬 메카 생성 규칙·기준 이미지·세 출력 모드와 검사 |
+| `docs/SURVEY_GAME.md` | 독립 배치 게임 탐사 작전 — 적성·폼·에너지·저장·검사 |
 
 ## 지켜야 할 것 넷
 
@@ -75,6 +76,7 @@ node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
+node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주
 ```
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
@@ -104,7 +106,8 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
-ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 다섯의 머리가 같은 자리에
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여섯의 머리가 같은 자리에
 ```
 
 `run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·
