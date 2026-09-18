@@ -39,6 +39,19 @@ function assertMaterials(t,mode){
  }
 }
 const materialProbe=P.buildPrompt(base);
+// Form-specific staging must not leak into normal portraits, sheets or casual scenes.
+for(const baseForm of ['light','heavy','mobility','reference']) {
+ const state={...base,identityMode:'reference',form:'overdrive',baseForm};
+ const portrait=P.buildPrompt(state);
+ assert(portrait.includes('OVERDRIVE COMPARISON STAGING'),'overdrive needs its own portrait staging');
+ assert(!portrait.includes('small pose variation and restrained effects'),'normal staging suppresses overdrive');
+ assert(portrait.includes('vertical 2:3')&&portrait.includes('main front view'));
+ for(const outputMode of ['action','casual'])
+  assert(!P.buildPrompt({...state,outputMode}).includes('OVERDRIVE COMPARISON STAGING'));
+ assert(!P.buildPrompt({...state,identityMode:'create',baseForm:'light'}).includes('OVERDRIVE COMPARISON STAGING'));
+}
+for(const form of ['light','heavy','mobility'])
+ assert(!P.buildPrompt({...base,identityMode:'reference',form}).includes('OVERDRIVE COMPARISON STAGING'));
 assertMaterials(materialProbe,'portrait');
 assert.throws(()=>assertMaterials(materialProbe.replace(/\[MATERIAL SEPARATION\][\s\S]*?(?=\n\n\[)/,''),'portrait'));
 let count=0;
