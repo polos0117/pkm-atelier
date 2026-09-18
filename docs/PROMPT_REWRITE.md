@@ -78,9 +78,23 @@
 생성 도구의 호출 설정을 직접 바꾸는 것은 아니다. 이미지 이어가기에는 넣지 않는다.
 
 출력 순서는 GENERATION INPUT → STYLE CORE → PROJECT STYLE EXTENSION → SOURCE IDENTITY →
-CHARACTER IDENTITY → FORM DEFINITION/OVERRIDE(해당 모드만) → OUTPUT MODE →
+CHARACTER IDENTITY → FORM DEFINITION/OVERRIDE(해당 모드만) → MATERIAL SEPARATION → OUTPUT MODE →
 CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.
 최초 생성에 신체 치수를 지정하면 정체성 뒤에 치수 해석 문장이 붙는다.
+
+### 피부·보디슈트·장갑 재질 구분
+
+모든 화풍과 생성 단계에 `MATERIAL SEPARATION`을 적용한다. 피부는 고유 피부색과
+부드러운 해부학적 명암, 보디슈트는 봉제·장력 주름·유연한 직물 반응, 장갑은 두께·
+단차·단단한 가장자리로 구분한다. 크림색이나 살색 슈트도 피부가 아닌 직물이며,
+장갑의 유광 반사가 몸과 슈트 전체로 번지지 않게 한다.
+
+이 규칙은 재질 구분이지 노출량 변경이 아니다. 슈트를 맨살로 바꾸거나 장갑을 더하지
+않고, 참조의 기존 경계를 유지한다. 새 인물은 처음부터 재질 경계를 명확히 설계한다.
+개방 폼도 기존 내부 재질을 드러낼 뿐 맨살을 기본으로 만들지 않는다.
+선택 화풍을 유지하며 사진 같은 모공이나 직물 미세결을 모든 화풍에 강제하지 않는다.
+일상컷에는 장갑·보디슈트 지시를 넣지 않고 피부와 의복 구분만 적용한다. 명시한 새틴·
+가죽 등 고유 광택은 유지한다. 실제 이미지 품질은 생성 후 별도로 확인해야 한다.
 
 화풍은 렌더링만 담당한다. 원본 성격·폼·카메라를 화풍이 강제로 바꾸지 않는다.
 `glossy_promo`를 추가해 강한 원근·발광 림라이트·스파크·얕은 심도의 2.5D
