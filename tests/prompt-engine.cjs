@@ -192,4 +192,16 @@ assert(casual.includes('CITY_PARK')); assert(!casual.includes('LEGACY_BODY'));
 assert(!casual.includes('[FORM DEFINITION]')); assert(P.buildAnthro(base).includes('body type: athletic'));
 assert(F.has('body type',Object.keys(S.BODY_FIG)[0]));
 assert(F.has('hairstyle',Object.keys(S.HAIR_FIG)[0]));
+
+
+for (const identityMode of ['create','reference']) {
+ const light=P.buildPrompt({...base,identityMode,form:'light'});
+ assert(light.includes('LIGHT STRUCTURAL DEPTH:'));
+ assert(light.includes('does not require a continuous bodysuit'));
+ assert(light.includes('Preserve approved coverage'));
+ assert(!P.buildPrompt({...base,identityMode,form:'heavy'}).includes('LIGHT STRUCTURAL DEPTH:'));
+ assert(!P.buildPrompt({...base,identityMode,outputMode:'casual'}).includes('LIGHT STRUCTURAL DEPTH:'));
+}
+assert(P.buildPrompt(base).includes('overlapping rigid shell segments'));
+
 console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');

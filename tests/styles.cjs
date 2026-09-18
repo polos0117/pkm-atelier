@@ -18,6 +18,9 @@ for(const outputMode of ['portrait','action','casual']) {
  const text=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode,identityMode:'reference',form:'heavy'});
  assert(text.includes('Premium anime-mecha promotional key art with clean linework'));
  assert(text.includes('strong dimensional shading'));
+ assert(text.includes('grouped illustrated shadow shapes'));
+ assert(text.includes('Restrained skin highlights'));
+ assert(!text.includes('glossy highlights across body'));
  assert(text.includes('Do not force a background, expression'));
  assert(!text.includes('luminous semi-real 2.5D rendering'));
  assert(!text.includes('selective shallow depth of field'));
