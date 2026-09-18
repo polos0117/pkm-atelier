@@ -22,12 +22,32 @@ assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('no typography'));
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
+// Material identity must survive every style, form and output mode without changing coverage.
+function assertMaterials(t,mode){
+ assert(t.includes('[MATERIAL SEPARATION]'),'missing material separation');
+ t=t.split('[MATERIAL SEPARATION]')[1].split('\n\n[')[0];
+ assert(t.includes('Exposed human skin is living skin'),'skin must not become shell');
+ assert(t.includes('Do not convert covered areas into bare skin'),'coverage guard');
+ assert(t.includes('selected style'),'material rules preserve style');
+ if(mode==='casual'){
+  assert(t.includes('Clothing remains clothing'));
+  assert(!t.includes('BODYSUIT:')&&!t.includes('ARMOR:'));
+ }else{
+  assert(t.includes('BODYSUIT:')&&t.includes('ARMOR:'));
+  assert(t.includes('cream or flesh-coloured bodysuit remains fabric'));
+  assert(t.includes('never bare skin by default'));
+ }
+}
+const materialProbe=P.buildPrompt(base);
+assertMaterials(materialProbe,'portrait');
+assert.throws(()=>assertMaterials(materialProbe.replace(/\[MATERIAL SEPARATION\][\s\S]*?(?=\n\n\[)/,''),'portrait'));
 let count=0;
 for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action','casual'])
  for(const form of ['light','heavy','mobility','overdrive']){
   const t=P.buildPrompt({...base,style,outputMode,form,identityMode:'reference',
    baseForm:'reference',formOverride:'OPEN_LEFT_PANEL',camera:'LOW_CAMERA',scene:'CITY_PARK'});
   assert(t.includes(S.STYLE_PROFILES[style].core),style);
+  assertMaterials(t,outputMode);
   assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
   assert(t.includes('Pikachu')); assert(t.includes('clearly adult woman')); assert(t.includes('user-approved'));
   assert(t.startsWith('[GENERATION INPUT]')&&t.includes('IMAGE-GUIDED CONTINUATION'));
@@ -53,6 +73,7 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action']
  for(const form of ['light','heavy','mobility','overdrive']){
   const t=P.buildPrompt({...base,style,outputMode,form,params:[...base.params,['facial ethnicity','East Asian']]});
   assert(t.startsWith('[GENERATION INPUT]')&&t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
+  assertMaterials(t,outputMode);
   assert(t.includes('No input image is required'));
   const input=t.slice(0,t.indexOf('[STYLE CORE]'));
   assert(input.includes('omit both referenced_image_paths and num_last_images_to_include'));
