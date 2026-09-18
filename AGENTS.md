@@ -40,7 +40,9 @@
 올라가지 않으므로, 실제로 화면에 띄우려면 그림 저장소에 같은 이름으로 올려야 한다.
 
 그리고 그림이 그림 저장소에 있다고 화면에 뜨지는 않는다.
-`python3 tools/register-images.py` 가 `data/img.json` 에 적은 것만 뜬다.
+`python3 tools/register-images.py` 가 `data/img.json` 에 적은 것만 뜬다 — 이건 워크플로
+`.github/workflows/register-images.yml` 이 한 시간마다(또는 수동 실행으로) 돌린다.
+썸네일은 그림 저장소의 워크플로가 만든다.
 
 이미지를 만들고 올리고 등록하는 작업은 먼저 [IMAGE_RULES.md](IMAGE_RULES.md) 를 읽는다 —
 한 캐릭터 = 기준 시트 1 + 폼 초상 3 + 폼별 개방 3 + 일상컷 1, 파일명, 두 저장소 순서,
