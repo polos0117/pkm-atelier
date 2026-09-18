@@ -39,6 +39,14 @@ function assertMaterials(t,mode){
  }
 }
 const materialProbe=P.buildPrompt(base);
+// Heavy panel travel applies only to heavy overdrive; unknown reference armor stays conditional.
+for(const outputMode of ['portrait','action','casual']) for(const baseForm of ['light','heavy','mobility','reference']) {
+ const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form:'overdrive',baseForm});
+ assert.equal(t.includes('HEAVY PANEL TRAVEL:'),outputMode!=='casual'&&['heavy','reference'].includes(baseForm));
+ if(baseForm==='reference'&&outputMode!=='casual') assert(t.includes('Only if the attached base armor is heavy'));
+}
+assert(!P.buildPrompt({...base,form:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
+assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
 // Form-specific staging must not leak into normal portraits, sheets or casual scenes.
 for(const baseForm of ['light','heavy','mobility','reference']) {
  const state={...base,identityMode:'reference',form:'overdrive',baseForm};
