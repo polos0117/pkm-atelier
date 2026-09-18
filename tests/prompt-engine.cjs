@@ -22,6 +22,22 @@ assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('no typography'));
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
+// Source engineering is separate from rendering and from continuation identity.
+for (const style of S.ART_STYLES.map(r=>r[0])) {
+ const fresh=P.buildPrompt({...base,style});
+ assert(fresh.includes('SOURCE-TO-MECHANISM DESIGN:'));
+ const designOrder=['[SOURCE IDENTITY]','[SOURCE ENGINEERING]','[CHARACTER IDENTITY]','[FORM DEFINITION]','[STYLE CORE]','[OUTPUT MODE]'].map(k=>fresh.indexOf(k));
+ assert(designOrder.every((n,i)=>n>=0&&(!i||n>designOrder[i-1])));
+ assert(fresh.includes('Start from a fresh design'));
+ assert(fresh.includes('visual mass in source-defining external equipment'));
+ const continued=P.buildPrompt({...base,style,identityMode:'reference'});
+ assert(continued.includes('Preserve the approved source-to-mechanism design'));
+ assert(!continued.includes('Start from a fresh design'));
+ const casualDesign=P.buildPrompt({...base,style,outputMode:'casual'});
+ assert(!casualDesign.includes('SOURCE-TO-MECHANISM DESIGN:'));
+}
+assert(!P.buildPrompt({...base,form:'heavy'}).includes('Build a unified substantial upper-chest cuirass'));
+assert(!P.buildPrompt({...base,form:'heavy'}).includes('Keep the central abdomen and natural waist in the established flexible undersuit by default'));
 // Material identity must survive every style, form and output mode without changing coverage.
 function assertMaterials(t,mode){
  assert(t.includes('[MATERIAL SEPARATION]'),'missing material separation');
@@ -59,6 +75,20 @@ assert(heavyPrompt.includes('pelvis-to-knee'));
 const heavyOpen=P.buildPrompt({...base,identityMode:'reference',form:'overdrive',baseForm:'heavy'});
 assert(heavyOpen.includes('large solid doors'));
 assert(heavyOpen.includes('Do not subdivide'));
+// Reference anatomy authority must survive all output modes, but never leak into new identities.
+for(const outputMode of ['portrait','action','casual']) {
+ const t=P.buildPrompt({...base,identityMode:'reference',outputMode});
+ assert(t.includes('FRONT-VIEW ANATOMY AUTHORITY:'));
+ assert(t.includes('Do not average conflicting views'));
+ if(outputMode!=='casual') assert(!P.buildPrompt({...base,identityMode:'create',outputMode}).includes('FRONT-VIEW ANATOMY AUTHORITY:'));
+}
+for(const form of ['heavy','overdrive']) {
+ const t=P.buildPrompt({...base,identityMode:'reference',form,baseForm:'heavy'});
+ assert(t.includes('The body does not need to fill the armor cavity'));
+ assert(t.includes('inner-thigh contours'));
+ assert(t.includes('Do not infer a larger breast or ribcage'));
+}
+assert(!P.buildPrompt({...base,identityMode:'reference',form:'light'}).includes('The body does not need to fill the armor cavity'));
 // Form-specific staging must not leak into normal portraits, sheets or casual scenes.
 for(const baseForm of ['light','heavy','mobility','reference']) {
  const state={...base,identityMode:'reference',form:'overdrive',baseForm};
@@ -87,8 +117,7 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
   assert(!t.includes('referenced_image_paths')&&!t.includes('num_last_images_to_include'));
   assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
-  const order=['[STYLE CORE]','[PROJECT STYLE EXTENSION]','[SOURCE IDENTITY]',
-   '[CHARACTER IDENTITY]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
+  const order=['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[STYLE CORE]','[PROJECT STYLE EXTENSION]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
    '[CONSISTENCY / NEGATIVE LOCK]','[FINAL CHECK]'].map(x=>t.indexOf(x));
   assert(order.every((x,i)=>x>=0&&(!i||x>order[i-1])));
   assert.equal(t.includes('[FORM DEFINITION]'),outputMode!=='casual');

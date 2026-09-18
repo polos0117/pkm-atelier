@@ -13,6 +13,15 @@ vm.createContext(ctx);
 for (const f of ['lib/prompt-spec.js', 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
   vm.runInContext(fs.readFileSync(f, 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
+// Glossy promo uses the approved anime-mecha core in every output mode.
+for(const outputMode of ['portrait','action','casual']) {
+ const text=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode,identityMode:'reference',form:'heavy'});
+ assert(text.includes('Premium anime-mecha promotional key art with clean linework'));
+ assert(text.includes('strong dimensional shading'));
+ assert(text.includes('Do not force a background, expression'));
+ assert(!text.includes('luminous semi-real 2.5D rendering'));
+ assert(!text.includes('selective shallow depth of field'));
+}
 for (const { key } of actual.styles) {
   const text = P.buildAnthro({ mech: 'test', series: 'test', gender: 'female', style: key,
     morph: 'standard_humanoid', translation: 'balanced', params: [] });
