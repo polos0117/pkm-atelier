@@ -15,6 +15,7 @@ tests/       검사
 ```
 
 그림은 이 저장소에 두지 않는다 — `pkm-atelier-img` 저장소에 올리고 Pages 를 켠다.
+이미지를 만들고 등록하는 규칙은 [IMAGE_RULES.md](IMAGE_RULES.md) 에 있다.
 
 ```bash
 node tests/words.cjs             # 낱말이 코드에 박히지 않았나
