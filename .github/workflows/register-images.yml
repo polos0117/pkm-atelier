@@ -1,10 +1,14 @@
 name: 그림 등록
 
 # 그림 저장소(pkm-atelier-img)의 img/ 를 읽어 data/img.json 에 적고 되커밋한다.
-# 그림 저장소의 푸시가 이 저장소를 직접 깨우지는 못한다(권한이 없다) — 그래서 한 시간마다
-# 돌고, 기다리기 싫으면 Actions 에서 "Run workflow" 를 누른다. 달라진 것이 없으면 커밋하지
-# 않는다. 썸네일은 그림 저장소의 워크플로가 만든다.
+# 깨우는 길은 셋이다.
+#   repository_dispatch — 그림 저장소의 썸네일 워크플로가 끝나면서 보낸다(토큰이 있을 때).
+#   schedule            — 뒤받침. GitHub 시간표는 자주 밀리고 빠진다(8시간에 1번 돈 적이 있다).
+#   workflow_dispatch   — 기다리기 싫으면 Actions 에서 "Run workflow".
+# 달라진 것이 없으면 커밋하지 않는다. 썸네일은 그림 저장소의 워크플로가 만든다.
 on:
+  repository_dispatch:
+    types: [images-updated]
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
@@ -51,7 +55,7 @@ jobs:
 
       - name: 등록
         run: |
-          if [ "${{ inputs.prune }}" = "true" ]; then
+          if [ "${{ inputs.prune || github.event.client_payload.prune }}" = "true" ]; then
             python3 tools/register-images.py --prune
           else
             python3 tools/register-images.py

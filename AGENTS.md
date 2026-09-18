@@ -41,7 +41,8 @@
 
 그리고 그림이 그림 저장소에 있다고 화면에 뜨지는 않는다.
 `python3 tools/register-images.py` 가 `data/img.json` 에 적은 것만 뜬다 — 이건 워크플로
-`.github/workflows/register-images.yml` 이 한 시간마다(또는 수동 실행으로) 돌린다.
+`.github/workflows/register-images.yml` 이 돌린다 — 그림 저장소의 썸네일 워크플로가 깨우거나
+(토큰 `CODE_REPO_TOKEN`), 매시 17분 시간표(자주 빠진다), 또는 수동 실행.
 썸네일은 그림 저장소의 워크플로가 만든다.
 
 이미지를 만들고 올리고 등록하는 작업은 먼저 [IMAGE_RULES.md](IMAGE_RULES.md) 를 읽는다 —
