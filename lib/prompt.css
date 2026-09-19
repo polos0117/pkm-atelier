@@ -9,10 +9,15 @@ button,input,select,textarea{font:inherit}
 .studio-source{position:sticky;top:16px;border-top:3px solid var(--signal)}
 .studio-main,.studio-source,.studio-field{min-width:0}
 .studio-field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
-.studio-field-help{font-size:12px;line-height:1.6;color:var(--muted);font-weight:400;overflow-wrap:anywhere}
+.studio-field-help{font-size:12px;line-height:1.6;color:var(--muted);font-weight:400;overflow-wrap:anywhere;white-space:pre-line}
 .studio-field>span,.studio-label{font-size:12px;font-weight:650;color:var(--muted)}
 .studio-field input,.studio-field select,.studio-field textarea{width:100%;min-width:0;border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--text);background:var(--bg);min-height:44px}
 .studio-field textarea{min-height:80px;resize:vertical}
+.scene-choice{min-width:0;margin-bottom:13px}
+.scene-choice .studio-field{margin-bottom:6px}
+.scene-choice-actions{display:flex;gap:6px;flex-wrap:wrap}
+.scene-choice-actions button{min-height:36px;padding:6px 12px;font-size:12px}
+#random-scene{max-width:100%;white-space:normal}
 .studio-note{font-size:12px;line-height:1.7;color:var(--muted);margin:8px 0 12px}
 .studio-tabs{display:flex;gap:5px;margin:0 0 16px;flex-wrap:wrap;padding:5px;background:var(--card);border:1px solid var(--line);border-radius:17px}
 .studio-tabs button{flex:1;white-space:nowrap;border-radius:11px;border-color:transparent;background:transparent}

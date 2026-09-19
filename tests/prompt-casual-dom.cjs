@@ -39,8 +39,17 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   assert(output().includes('action_level: '+action));
   const expected=[w.AtelierSpec.POSE_GUIDES.offering_food[1],w.AtelierSpec.FRAME_GUIDES.waist_up[1],w.AtelierSpec.LENS_GUIDES.wide24[1]];
   for(const v of expected)assert(output().includes(v),v);
-  assert.equal(get('frame-description').textContent,w.AtelierSpec.FRAME_GUIDES.waist_up[0]);
-  assert.equal(get('lens-description').textContent,w.AtelierSpec.LENS_GUIDES.wide24[0]);
+  assert(get('frame-description').textContent.includes(w.W('prompt.help.frame')));
+  assert(get('frame-description').textContent.includes(w.AtelierSpec.FRAME_GUIDES.waist_up[0]));
+  assert(get('lens-description').textContent.includes(w.W('prompt.help.lens')));
+  assert(get('lens-description').textContent.includes(w.AtelierSpec.LENS_GUIDES.wide24[0]));
+  for(const [value] of w.AtelierSpec.LENS_OPTIONS){
+   await set('lens',value);
+   const description=get('lens-description').textContent;
+   assert(description.includes(w.W('prompt.help.lens')),'lens explanation must stay visible');
+   if(value)assert(description.includes(w.AtelierSpec.LENS_GUIDES[value][0]));
+  }
+  await set('lens','wide24');
   for(const axis of w.AtelierSpec.LOCAL_AXES)assert(get('axis-'+axis+'-description').textContent.trim());
   await click('mode-portrait');assert(!get('frame')&&!get('lens'));
   for(const v of expected)assert(!output().includes(v),'casual choice leaked to portrait');
