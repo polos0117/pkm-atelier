@@ -198,6 +198,8 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action']
 for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility','overdrive']){
  const sheet=P.buildPrompt({...base,style,form,camera:'IGNORED_CAMERA',scene:'IGNORED_SCENE',aspect:'16:9'});
  assert(sheet.includes('INITIAL CHARACTER REFERENCE SHEET'),style+' creation sheet');
+ assert(sheet.includes('ENVIRONMENT DEFAULT:'),'sheet needs a spatial background');
+ assert(!sheet.includes('COMPARISON ENVIRONMENT:'),'sheet must establish, not inherit, the comparison environment');
  assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
  for(const detail of ['face close-up','source-derived marking','back-mounted structure','footwear'])
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
@@ -213,6 +215,12 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
   const other=P.buildPrompt({...base,style,form,outputMode,identityMode});
   assert(!other.includes('INITIAL CHARACTER REFERENCE SHEET'),'sheet leaked into '+outputMode+'/'+identityMode);
   assert(!other.includes('four detail insets'),'detail layout leaked into '+outputMode+'/'+identityMode);
+  assert.equal(other.includes('COMPARISON ENVIRONMENT:'),outputMode==='portrait','background continuity must stay in comparison mode');
+  if(outputMode==='portrait'){
+   assert(other.includes('If the reference has no setting, establish one once'));
+   assert(other.includes('same location, background layout and lighting across forms'));
+   assert(other.includes('Explicit user background requests override this default'));
+  }
   if(outputMode==='portrait'){
    assert(other.includes('SINGLE-FIGURE COMPARISON PORTRAIT'));
    assert(other.includes('main front view'),'sheet reference resolves to its front view');
