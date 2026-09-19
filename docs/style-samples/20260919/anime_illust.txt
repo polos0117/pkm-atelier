@@ -1,0 +1,61 @@
+[GENERATION INPUT]
+
+TEXT-TO-IMAGE NEW CHARACTER. No input image is required: neither a character reference nor a source-creature picture. Generate from the text; any reference sheet requested below is the output, not an input. Do not automatically use earlier conversation images. For the image tool, omit both referenced_image_paths and num_last_images_to_include; these are call instructions, not image text.
+
+[SOURCE IDENTITY]
+
+Source creature: 피카츄 (Pikachu)
+Source type/context: electric
+Use a few defining source colors, markings, silhouette cues and elemental motifs. Translate them into machinery, not mascot cosplay. Appendages are optional and species-specific. Source colors do not dictate human skin color; do not copy an existing trainer or pilot.
+
+[SOURCE ENGINEERING]
+
+SOURCE-TO-MECHANISM DESIGN: Start from a fresh design. Give the strongest source feature a prominent functional structure with readable mounts and articulation. For a source with a back bulb, use a rounded seed reactor with overlapping rigid shell segments, recessed seams, a mechanical cradle and cable sockets. Botanical sources may use leaf fins and articulated vine cables with pod terminals; adapt other species through their own features. Allocate visual mass in source-defining external equipment, shoulders and lower legs, independently of human build. Integrate head sensors into the engineering. Keep the chosen source palette, markings and defining equipment readable.
+
+[CHARACTER IDENTITY]
+
+Invent one distinctive, woman from the appearance settings below. Keep anatomy independent of equipment size. Explicit facial geometry takes priority over impression words and broad ethnicity cues.
+
+apparent age: youthful adult
+age clarity: A woman in her twenties with youthful facial styling; preserve explicit facial geometry and body settings.
+
+[FORM DEFINITION]
+
+Establish the selected anatomy first; fit the chosen armor outside it. Body size and skin/textile contours are independent of armor volume. Keep source colors and structural motifs, with a clearly readable form silhouette.
+BILATERAL ARMOR: paired shoulder, arm, thigh, knee, shin and footwear assemblies use matching part inventory, dimensions and anatomical mounting levels on both sides. Exceptions require explicitly requested or explicitly approved asymmetric equipment; an accidental mismatch in a reference is not an intentional exception. Pose, perspective, cable curves and panel-opening angles may differ without changing paired construction. Rear views and detail insets must document the same parts established in the front view; compare structural symmetry in body coordinates, not image-space widths.
+
+LIGHT: separate regional armor assemblies on a compact supporting frame, using one main protective layer. Distinct shoulder, arm, hip/thigh and lower-leg units leave flexible interfaces between regions rather than enclosing the whole body. Solid plate thickness and resolved machinery are welcome; lightness comes from regional coverage and articulation, not flimsy construction. Skin exposure is optional, and the selected outfit may fill the spaces. LIGHT STRUCTURAL DEPTH: readable plate cross-sections, bevelled rims, recessed connections and articulated joints, without heavy-form stacked shells or bulky housings. Flexible joint interfaces support movement; this does not require a continuous bodysuit or broad pale suit panels. Honor explicitly requested suits. Preserve approved coverage and skin/textile boundaries in continuation; do not add exposure, equipment or body volume to create detail.
+
+[STYLE CORE]
+
+polished modern anime character illustration with clean confident linework, clearly anime facial construction, and controlled two-to-three-step shading supported by soft gradients. The image must read unmistakably as a finished 2D anime illustration rather than photography, 3D CGI, painterly concept art, or glossy 2.5D game rendering. FACE: clearly anime, with expressive eyes, simplified but elegant nose and mouth construction, clean eyelid definition, and adult facial proportions appropriate to CHARACTER IDENTITY. Preserve individual face shape, ethnicity, maturity, and facial character rather than reusing one generic anime face. SKIN: smooth illustrated colour with clean shadow shapes and restrained soft gradients. No photographic pores, realistic skin noise, or wet CG-style specular response. HAIR: defined graphic locks with clean directional flow, selective internal strand lines, and stylized highlight shapes. LIGHTING: illustrated key and rim lighting expressed through designed colour shapes and gradients rather than physically perfect reflections. Avoid photographic skin, camera grain, realistic lens blur, 3D-render materials, loose brushwork, thick glossy mobile-game rendering, and completely flat low-detail television animation.
+
+[PROJECT STYLE EXTENSION]
+
+Create one woman as an original source-inspired mechanical heroine. Keep functional engineering and a readable human silhouette; avoid unrelated weapons, crests and decorative greebling.
+
+ARMOR, COSTUME, AND MECHANICAL PARTS: retain crisp source-specific geometry, clean outlines, controlled cel-like shading, and simplified illustrated highlights. Mechanical surfaces must remain part of the same 2D drawing and must not become photoreal PBR objects.
+
+Rendering choices never override CHARACTER IDENTITY, FORM DEFINITION or OUTPUT MODE.
+
+[MATERIAL SEPARATION]
+
+Render distinct materials in the selected style. Exposed human skin is living skin, with its own tone and soft anatomical shading, without panel seams or metallic reflections. Do not convert covered areas into bare skin or change coverage to solve a texture problem. Only an explicit form or outfit change authorizes new outer coverage; preserve underlying skin/textile boundaries. Source colors alone do not identify materials.
+
+BODYSUIT: where present, use flexible textile with seams, tension folds and a softer finish; a cream or flesh-coloured bodysuit remains fabric. Preserve explicitly requested finishes. ARMOR: reserve rigid thickness, bevels, panel seams and hard reflections for shells and machinery. Opening reveals the established underlying material, never bare skin by default.
+
+[OUTPUT MODE]
+
+INITIAL CHARACTER REFERENCE SHEET: show the same individual, one woman in the same selected armor configuration. Layout: large front full-body view on the left, equal-scale rear three-quarter full-body view in the middle, exactly four detail insets in a narrow right column. Insets, top to bottom: face close-up; source-derived marking or armor detail; main back-mounted structure and attachment; footwear and lower-leg construction. If a feature is absent, enlarge an existing characteristic detail instead. Document one design, not alternate forms.
+
+[CAMERA & PRESENTATION]
+
+One vertical 3:4 canvas. Align head and foot levels of both main views; keep head, feet and defining equipment fully visible. Front view frontal or slightly three-quarter, rear view revealing back attachments; neutral standing poses. Keep figures prominent with restrained spacing; do not pull the camera back or shrink them for extra margins. Only the insets use close framing. Use one quiet background and consistent lighting in the chosen style, without action perspective or foreground occlusion.
+
+[CONSISTENCY / NEGATIVE LOCK]
+
+All views and insets must match in face, hair, anatomy, coverage, armor parts, markings and left/right placement. Each full-body view has two arms and two legs; source appendages are equipment. For tailed designs, the rear three-quarter view and equipment inset must clearly show the tail's posterior attachment root at the sacrum/lower back, with continuous mounting and correct occlusion, never at the front waist or torso. No alternate faces, outfits, extra limbs, childlike proportions, captions, labels, logos or watermarks.
+
+[FINAL CHECK]
+
+Verify both full-body views and four matching detail insets, readable face and attachments, consistent anatomy and selected style. This sheet becomes an identity anchor only after user approval.
