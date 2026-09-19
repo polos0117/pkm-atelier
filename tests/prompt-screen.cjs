@@ -14,7 +14,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.equal(await p.locator('#source').inputValue(),'피카츄','dex deep link');
   assert.deepEqual(await p.locator('#group option').evaluateAll(es=>es.slice(1).map(e=>e.textContent)),
    groups.order.map(k=>groups.name[k]));
-  assert.equal(await p.locator('#style option').count(),13);
+  assert.equal(await p.locator('#style option').count(),14);
   assert((await text()).includes('INITIAL CHARACTER REFERENCE SHEET'));
   assert((await text()).startsWith('[GENERATION INPUT]'));
   assert((await text()).includes('No input image is required'));
@@ -120,6 +120,6 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);
   await corrupt.close();
-  console.log('PASS prompt screen: modes, reference identity, forms, 13 styles, copy, saved settings, figures and 3 viewport sizes');
+  console.log('PASS prompt screen: modes, reference identity, forms, 14 styles, copy, saved settings, figures and 3 viewport sizes');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});
