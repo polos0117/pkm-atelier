@@ -28,8 +28,15 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
   const t=P.buildPrompt({...base,mech:'Squirtle',identityMode,outputMode,form,baseForm:'heavy'});
   const marker='BODY-SPACE MOUNT LOCK:';
   assert.equal(t.split(marker).length-1,outputMode==='casual'?0:1,'mount rule must occur once in armored modes only');
+  assert.equal(t.includes('MOUNT CORRECTION PRIORITY:'),identityMode==='reference'&&outputMode!=='casual');
   if(outputMode!=='casual') {
    assert(t.includes('independent sacral root'));
+   assert(t.includes('not a camera-facing disk'));
+   assert(!t.includes('approved alternative mounting designs'));
+   if(identityMode==='reference') {
+    assert(t.includes('even when continuing the same form'));
+    assert(t.includes('Image approval alone does not approve an ambiguous attachment'));
+   }
    assert(t.includes('Natural occlusion by the torso or arms is correct'));
    assert(t.includes('not relocate the main mounts'));
   }
