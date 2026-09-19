@@ -37,11 +37,17 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
     assert(t.includes('even when continuing the same form'));
     assert(t.includes('Image approval alone does not approve an ambiguous attachment'));
    }
-   assert(t.includes('If correct geometry would hide the tail completely, hide it completely.'));
+   assert(!t.includes('If correct geometry would hide the tail completely, hide it completely.'));
+   assert(t.includes('Do not delete, shrink or forcibly conceal signature equipment'));
+   assert(t.includes('Natural lateral projection is allowed'));
+   assert.equal(t.includes('COMPARISON BODY ANGLE: 25-35 degrees'),identityMode==='reference'&&outputMode==='portrait');
    assert(t.includes('Natural distal overlap beside a limb is not itself a mounting error.'));
    assert(t.includes('FAIL CONDITIONS:'));
    assert(!t.includes('Allocate visual mass'));
-   assert.equal(t.includes('For front or front-three-quarter comparison views'),outputMode==='portrait');
+   if(identityMode==='reference'&&outputMode==='portrait') {
+    assert(t.includes('Rotate torso, pelvis and mounted equipment together'));
+    assert(t.includes('same turn direction and angle across light, heavy, mobility and overdrive'));
+   }
    assert(t.includes('not relocate the main mounts'));
   }
  }
