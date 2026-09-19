@@ -23,6 +23,18 @@ assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
 // Source engineering is separate from rendering and from continuation identity.
+for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual']) {
+ for(const form of ['light','heavy','mobility','overdrive']) {
+  const t=P.buildPrompt({...base,mech:'Squirtle',identityMode,outputMode,form,baseForm:'heavy'});
+  const marker='BODY-SPACE MOUNT LOCK:';
+  assert.equal(t.split(marker).length-1,outputMode==='casual'?0:1,'mount rule must occur once in armored modes only');
+  if(outputMode!=='casual') {
+   assert(t.includes('independent sacral root'));
+   assert(t.includes('Natural occlusion by the torso or arms is correct'));
+   assert(t.includes('not relocate the main mounts'));
+  }
+ }
+}
 for (const style of S.ART_STYLES.map(r=>r[0])) {
  const fresh=P.buildPrompt({...base,style});
  assert(fresh.includes('SOURCE-TO-MECHANISM DESIGN:'));
