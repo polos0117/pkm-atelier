@@ -37,7 +37,11 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
     assert(t.includes('even when continuing the same form'));
     assert(t.includes('Image approval alone does not approve an ambiguous attachment'));
    }
-   assert(t.includes('Natural occlusion by the torso or arms is correct'));
+   assert(t.includes('If correct geometry would hide the tail completely, hide it completely.'));
+   assert(t.includes('Natural distal overlap beside a limb is not itself a mounting error.'));
+   assert(t.includes('FAIL CONDITIONS:'));
+   assert(!t.includes('Allocate visual mass'));
+   assert.equal(t.includes('For front or front-three-quarter comparison views'),outputMode==='portrait');
    assert(t.includes('not relocate the main mounts'));
   }
  }
@@ -48,7 +52,7 @@ for (const style of S.ART_STYLES.map(r=>r[0])) {
  const designOrder=['[SOURCE IDENTITY]','[SOURCE ENGINEERING]','[CHARACTER IDENTITY]','[FORM DEFINITION]','[STYLE CORE]','[OUTPUT MODE]'].map(k=>fresh.indexOf(k));
  assert(designOrder.every((n,i)=>n>=0&&(!i||n>designOrder[i-1])));
  assert(fresh.includes('Start from a fresh design'));
- assert(fresh.includes('visual mass in source-defining external equipment'));
+ assert(fresh.includes('anatomically correct body-space mounts'));
  const continued=P.buildPrompt({...base,style,identityMode:'reference'});
  assert(continued.includes('Preserve the approved source-to-mechanism design'));
  assert(!continued.includes('Start from a fresh design'));
