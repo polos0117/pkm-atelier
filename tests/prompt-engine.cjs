@@ -52,6 +52,27 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
   }
  }
 }
+// Creative planning is restricted to new armored designs; insets only to sheets.
+for(const mech of ['Squirtle','Bulbasaur','Mew'])
+ for(const identityMode of ['create','reference'])
+  for(const outputMode of ['portrait','action','casual'])
+   for(const form of ['light','heavy','mobility','overdrive']) {
+    const t=P.buildPrompt({...base,mech,identityMode,outputMode,form,baseForm:'heavy'});
+    const armored=outputMode!=='casual';
+    assert.equal(t.includes('CREATIVE ENGINEERING PREPASS:'),armored&&identityMode==='create');
+    assert.equal(t.includes('APPROVED-DESIGN CREATIVE LOCK:'),armored&&identityMode==='reference');
+    assert.equal(t.includes('INSET FIDELITY LOCK:'),outputMode==='portrait'&&identityMode==='create');
+    if(armored) {
+     assert(t.includes('Hidden or stowed does not mean absent'));
+     assert(t.includes('core equipment and form-specific armor parts'));
+     assert(!t.includes('For a source with a back bulb'));
+     assert(!t.includes('hydro-pressure reactor'));
+    }
+    if(armored&&identityMode==='create') {
+     assert(t.includes('Optional is not absent by default'));
+     assert(t.includes('Include the concise design record with the result'));
+    }
+   }
 for (const style of S.ART_STYLES.map(r=>r[0])) {
  const fresh=P.buildPrompt({...base,style});
  assert(fresh.includes('SOURCE-TO-MECHANISM DESIGN:'));
@@ -231,7 +252,7 @@ for (const identityMode of ['create','reference']) {
  assert(!P.buildPrompt({...base,identityMode,form:'heavy'}).includes('LIGHT STRUCTURAL DEPTH:'));
  assert(!P.buildPrompt({...base,identityMode,outputMode:'casual'}).includes('LIGHT STRUCTURAL DEPTH:'));
 }
-assert(P.buildPrompt(base).includes('overlapping rigid shell segments'));
+assert(P.buildPrompt(base).includes('biology/silhouette and elemental type'));
 
 const compactSheet=P.buildPrompt({...base,style:'glossy_promo',params:[]});
 assert(compactSheet.length < 10000,'compact creation sheet exceeds text budget');
