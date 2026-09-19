@@ -11,6 +11,9 @@ async function open(store){
   url:'https://prompt.test/prompt.html',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc
  });
  const w=dom.window;w.localStorage.setItem(storeKey,store);
+ // jsdom has no layout or canvas renderer; these previews do not affect prompt values.
+ w.HTMLElement.prototype.scrollTo=function(){};
+ w.HTMLCanvasElement.prototype.getContext=function(){return null};
  w.fetch=async url=>({ok:true,json:async()=>JSON.parse(read(url))});
  const preact=path.dirname(require.resolve('preact/package.json'));
  w.eval(fs.readFileSync(path.join(preact,'dist/preact.umd.js'),'utf8'));

@@ -59,6 +59,8 @@ console.log('PASS: ' + actual.styles.length + ' styles generate prompts; ' + cou
 
 for(const identityMode of ['create','reference']) {
  const t=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode:'portrait',identityMode,form:'light',params:[['apparent age','20s'],['facial character','cute']]});
- assert(!/\badult\b/i.test(t),'duplicate adult wording outside age settings');
+ if(identityMode==='create') assert(t.includes('preserve age and geometry'),'demeanor must preserve the specified identity');
+ if(identityMode==='create') assert(t.includes('adult woman in her twenties'));
+ else assert(!t.includes('apparent age:'),'creation age must not override approved identity');
  if(identityMode==='create') assert(t.includes('apparent age: 20s'));
 }
