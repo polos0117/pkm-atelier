@@ -1,0 +1,123 @@
+{
+  "note": "Actual Preact UI capture. Empty motifs/inset overrides. Submitted prompt appends the required AI design prepass; it is not user data or an approved identity anchor.",
+  "sourceNo": 7,
+  "sourceRevision": 4628699,
+  "settings": {
+    "last": "꼬부기",
+    "cards": {
+      "꼬부기": {
+        "style": "glossy_promo",
+        "identityMode": "create",
+        "form": "light",
+        "baseForm": "light",
+        "motifs": "",
+        "formOverride": "",
+        "featureInsets": {
+          "face": "",
+          "front": "",
+          "rear": "",
+          "function": ""
+        },
+        "params": {
+          "apparent age": "20s",
+          "hair color": "blue",
+          "hairstyle": "wolf cut",
+          "hair length": "medium",
+          "eye color": "pink",
+          "jaw & chin": "soft rounded jaw"
+        },
+        "locks": {},
+        "mode": "portrait",
+        "scenes": {
+          "portrait": {
+            "expr": "",
+            "pose": "",
+            "orient": "",
+            "scene": "",
+            "outfit": "",
+            "frame": "",
+            "lens": "",
+            "camera": "",
+            "custom": "",
+            "aspect": "2:3",
+            "cat": "everyday_basic",
+            "catCustom": "",
+            "ex": "",
+            "exCustom": "",
+            "axes": {},
+            "action": {
+              "category": "",
+              "example": "",
+              "timing": "",
+              "equipment": "",
+              "power": "",
+              "effects": "",
+              "speed": "",
+              "environment": ""
+            },
+            "randomLocks": {}
+          },
+          "action": {
+            "expr": "",
+            "pose": "",
+            "orient": "",
+            "scene": "",
+            "outfit": "",
+            "frame": "",
+            "lens": "",
+            "camera": "",
+            "custom": "",
+            "aspect": "2:3",
+            "cat": "everyday_basic",
+            "catCustom": "",
+            "ex": "",
+            "exCustom": "",
+            "axes": {},
+            "action": {
+              "category": "",
+              "example": "",
+              "timing": "",
+              "equipment": "",
+              "power": "",
+              "effects": "",
+              "speed": "",
+              "environment": ""
+            },
+            "randomLocks": {}
+          },
+          "casual": {
+            "expr": "",
+            "pose": "",
+            "orient": "",
+            "scene": "",
+            "outfit": "",
+            "frame": "",
+            "lens": "",
+            "camera": "",
+            "custom": "",
+            "aspect": "2:3",
+            "cat": "everyday_basic",
+            "catCustom": "",
+            "ex": "",
+            "exCustom": "",
+            "axes": {},
+            "action": {
+              "category": "",
+              "example": "",
+              "timing": "",
+              "equipment": "",
+              "power": "",
+              "effects": "",
+              "speed": "",
+              "environment": ""
+            },
+            "randomLocks": {}
+          }
+        }
+      }
+    }
+  },
+  "generatorWords": 1388,
+  "generatorCharacters": 9935,
+  "submittedWords": 1591
+}

@@ -1,0 +1,84 @@
+[GENERATION INPUT]
+
+TEXT-TO-IMAGE NEW CHARACTER. No input image is required: neither a character reference nor a source-creature picture. Generate from the text; any reference sheet requested below is the output, not an input. Do not automatically use earlier conversation images. For the image tool, omit both referenced_image_paths and num_last_images_to_include; these are call instructions, not image text.
+
+[SOURCE IDENTITY]
+
+Source creature: 꼬부기 (Squirtle)
+Source type/context: water
+Use a few defining source colors, markings, silhouette cues and elemental motifs. Translate them into machinery, not mascot cosplay. Appendages are optional and species-specific. Source colors do not dictate human skin color; do not copy an existing trainer or pilot.
+Source appearance cues: brown dorsal shell with white rim; pale-yellow belly shell; inward-curled long tail; light-blue skin.
+These cues describe the source creature, not the human body or a fixed mecha blueprint. Translate selected cues into equipment shapes, materials and markings; chosen human appearance takes priority.
+
+[SOURCE ENGINEERING]
+
+SOURCE-TO-MECHANISM DESIGN: Start from a fresh design. CREATIVE ENGINEERING PREPASS: before one image call, record function, shape, materials, colors and anatomically correct body-space mounts in the prompt, not on canvas. User choices take priority. Distinguish core equipment and form-specific armor parts. Optional is not absent by default. Hidden or stowed does not mean absent. Combine source anatomy and type into one signature mechanism. For sheets, resolve FEATURE INSET LIST A/B/C into three exact installed components or surface regions; reuse them in every view and inset. Targets may share one mechanism. Include the concise design record with the result, provisional until approved.
+
+BODY-SPACE MOUNT LOCK: Apply only to selected equipment; never decide its presence. Shell cradle centered on spine, inner face against back, dome rearward. Tail: independent sacral root on posterior pelvic midline below shell, extending rearward before curling; separate shell/tail/nozzle mounts. The curl is 3D, not a camera-facing disk. Forms may articulate parts but not relocate the main mounts. Body-relative geometry, not screen coordinates; explicit user mounting instructions override defaults.
+
+REAR EQUIPMENT OCCLUSION LOCK: Natural lateral projection is allowed for shell rims and connected distal curls. Do not delete, shrink or forcibly conceal signature equipment to fix mounts. Keep established dimensions; equipment follows torso/pelvis rotation, never independent shifts for visibility. In-frame means no cropping, not no occlusion. Sheets show separate roots in rear view/inset.
+
+FAIL CONDITIONS: tail rooted on front/side waist, hip, shoulder or arm; shell shifted sideways or spiral re-aimed for display; framing/anatomy changed to expose equipment. Body turn follows CAMERA & PRESENTATION. Natural distal overlap beside a limb is not itself a mounting error.
+
+[CHARACTER IDENTITY]
+
+Invent one distinctive adult woman using the appearance settings. Anatomy is independent of equipment size.
+
+apparent age: 20s — adult woman in her twenties
+hair color: blue
+hairstyle: wolf cut — short layered crown transitioning to longer nape layers
+hair length: medium — neck-to-shoulder length unless the selected cut fixes another range
+eye color: pink
+jaw & chin: soft rounded jaw — rounded U-shaped lower-face outline with moderate width and a broad curved chin tip; no pointed apex, V taper or added cheek fullness
+hair scope: Keep hairstyle construction and fixed cut length; other hair settings adjust within it. Length is measured loose, texture is strand thickness, volume is hair mass. Hair choices do not set ethnicity.
+facial precedence: Explicit facial geometry controls the actual outline in every view and inset, above style, ethnicity or demeanor. Local chin, width/length, eye size and tilt refine broader face/eye shapes. Shading and expression must not reshape the outline.
+eye color consistency: both eyes are pink
+
+[FORM DEFINITION]
+
+Establish the selected anatomy first; fit the chosen armor outside it. Body size and skin/textile contours are independent of armor volume. Keep source colors and structural motifs, with a clearly readable form silhouette.
+BILATERAL ARMOR: paired shoulder, arm, thigh, knee, shin and footwear use matching part inventory, dimensions and anatomical mounting levels. Only explicitly requested or explicitly approved asymmetric equipment is exempt, not accidental mismatches. Pose, perspective, cable curves and panel-opening angles may differ. All views/insets document the same parts; compare in body coordinates, not screen widths.
+
+LIGHT: separate regional armor assemblies on a compact supporting frame: one protective layer at shoulders, arms, hips/thighs and lower legs, with flexible interfaces instead of full enclosure. Lightness comes from regional coverage and articulation, not flimsy plates. Skin exposure is optional; outfits may fill gaps. LIGHT STRUCTURAL DEPTH: plate cross-sections, bevelled rims, recessed connections and articulated joints, without heavy stacked shells. This does not require a continuous bodysuit or broad pale panels; honor explicit suits. Preserve approved coverage and skin/textile boundaries in continuation; detail adds no anatomy or equipment.
+
+[STYLE CORE]
+
+Premium anime-mecha promotional key art with clean linework, dense hard-surface detail, strong dimensional shading, vivid elegant colors and polished 2.5D rendering. FACE DESIGN: anime-designed face, stronger upper-lash definition, rich irises, decisive mouth, grouped illustrated shadow shapes and hair strands, selective luminous highlights. Preserve selected or approved eye shape, facial geometry, age and expression; angular shading must not reshape the face. Face carries the same high-impact promotional rendering intensity as the mechanical armor: matching clarity/contrast, not metallic gloss. Restrained skin highlights; controlled hair/armor gloss, deep mechanical contact shadows and crisp bevel reflections. Avoid soft generic bishoujo, pastel delicacy, semi-real beauty portraits, airbrushing, wet skin, flat cel-only shading and literal CGI. Do not force a background, expression, perspective or effects; follow output settings. TEXT AND GRAPHIC OVERLAYS: no typography, labels, logos or watermarks; requested sheet panels only.
+
+[PROJECT STYLE EXTENSION]
+
+Create one woman as an original source-inspired mechanical heroine. Keep functional engineering and a readable human silhouette; avoid unrelated weapons, crests and decorative greebling.
+
+Resolve plate edges, recessed joints, fasteners, actuators and mounting points in the existing design. Give light armor visible structural depth without extra heavy shells. Use broad shaded planes and dark mechanical gaps for weight. Keep skin, fabric and machinery distinct; detail never enlarges anatomy or adds equipment.
+
+Rendering choices never override CHARACTER IDENTITY, FORM DEFINITION or OUTPUT MODE.
+
+[MATERIAL SEPARATION]
+
+Render distinct materials in the selected style. Exposed human skin is living skin: natural tone and soft anatomical shading, no panel seams or metallic reflections. Do not convert covered areas into bare skin to fix textures. Only explicit form/outfit changes authorize outer coverage changes; preserve underlying skin/textile boundaries. Color alone does not identify material.
+
+BODYSUIT: flexible textile, seams and tension folds; a cream or flesh-coloured bodysuit remains fabric. Honor requested finishes. ARMOR: rigid thickness, bevels, seams and hard reflections. Openings reveal established underlying material, never bare skin by default.
+
+[OUTPUT MODE]
+
+INITIAL CHARACTER REFERENCE SHEET: same individual and same selected armor configuration in every view. Layout: large front full-body view left; equal-scale rear three-quarter full-body view center; exactly four detail insets in a narrow right column following FEATURE INSET LIST top to bottom. Document one design, not variants.
+
+[FEATURE INSET LIST — FIXED]
+
+1. FACE IDENTITY — pink eyes, blue wolf cut hair, soft rounded jaw.
+2. SIGNATURE DETAIL A — brown dorsal shell with white rim.
+3. SIGNATURE DETAIL B — pale-yellow belly shell.
+4. SIGNATURE DETAIL C — inward-curled long tail.
+A/B/C each document their resolved component or surface region and relevant connection. No mandatory backpack or weapon. Explicit user targets take priority. Generic armor/full-body repeats do not count.
+
+[CAMERA & PRESENTATION]
+
+One vertical 3:4 canvas; align main-view head/foot levels. Bodies/equipment in frame; natural occlusion. Neutral standing: front slightly turned or frontal, rear shows mounts. Compact spacing; no shrinking/zoom-out. Insets alone use close-ups. ENVIRONMENT DEFAULT: one setting with depth (lab/hangar/greenhouse), low contrast/detail, consistent light; follow style, including sparse ink cues. No empty void, action perspective or foreground obstruction. Explicit user background requests override this default.
+
+[CONSISTENCY / NEGATIVE LOCK]
+
+INSET FIDELITY LOCK: Each inset magnifies its named installed component or surface region, never a new design. Match main-view silhouette, panels, colors, markings, channels, fasteners and mounts; finer detail may increase, structure may not. Plan details before views. Keep face, hair, anatomy, coverage and left/right identity identical. Each full body has two arms and two legs; appendages are equipment. If tailed, the rear three-quarter view must show the posterior sacral attachment; a tail inset, when selected, documents that same connection. No alternate faces/outfits, extra limbs, childlike proportions or text overlays.
+
+[FINAL CHECK]
+
+Verify both full-body views and all four named matching detail insets, readable face and attachments, consistent anatomy and selected style. This sheet becomes an identity anchor only after user approval.

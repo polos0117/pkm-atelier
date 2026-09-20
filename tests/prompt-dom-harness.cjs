@@ -5,7 +5,7 @@ const root=path.resolve(__dirname,'..');
 const read=f=>fs.readFileSync(path.join(root,f),'utf8');
 const storeKey='pkm_prompt_v2';
 const pause=()=>new Promise(resolve=>setTimeout(resolve,25));
-async function open(store){
+async function open(store,options={}){
  const errors=[],vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
  const dom=new JSDOM('<!doctype html><html><head></head><body class="prompt-page"><div class="wrap"><div id="app"></div></div></body></html>',{
   url:'https://prompt.test/prompt.html',runScripts:'outside-only',pretendToBeVisual:true,virtualConsole:vc
@@ -14,7 +14,7 @@ async function open(store){
  // jsdom has no layout or canvas renderer; these previews do not affect prompt values.
  w.HTMLElement.prototype.scrollTo=function(){};
  w.HTMLCanvasElement.prototype.getContext=function(){return null};
- w.fetch=async url=>({ok:true,json:async()=>JSON.parse(read(url))});
+ w.fetch=async url=>({ok:url!==options.failFetch,json:async()=>JSON.parse(read(url))});
  const preact=path.dirname(require.resolve('preact/package.json'));
  w.eval(fs.readFileSync(path.join(preact,'dist/preact.umd.js'),'utf8'));
  w.eval(fs.readFileSync(path.join(preact,'hooks/dist/hooks.umd.js'),'utf8'));

@@ -31,7 +31,8 @@ const squirtleInsets=P.featureInsetSuggestions({
 });
 assert(squirtleInsets.face.includes('pink eyes')&&squirtleInsets.face.includes('blue wolf cut hair'));
 assert(squirtleInsets.front.includes('plastron chest plate'));
-assert(squirtleInsets.rear.includes('carapace')&&squirtleInsets.rear.includes('spiral tail'));
+assert(squirtleInsets.rear.includes('spiral tail'));
+assert(!squirtleInsets.rear.includes('carapace'),'one source target must not repeat in two insets');
 assert(squirtleInsets.function.includes('water-jet nozzles'));
 const namedInsets={
  face:'pink eyes, blue wolf cut, rounded jaw and chin',
@@ -265,12 +266,12 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
  assert(sheet.includes('ENVIRONMENT DEFAULT:'),'sheet needs a spatial background');
  assert(!sheet.includes('COMPARISON ENVIRONMENT:'),'sheet must establish, not inherit, the comparison environment');
  assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
- for(const detail of ['FACE IDENTITY','FRONT SIGNATURE','REAR MOUNTING SYSTEM','FUNCTIONAL COMPONENT'])
+ for(const detail of ['FACE IDENTITY','SIGNATURE DETAIL A','SIGNATURE DETAIL B','SIGNATURE DETAIL C'])
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
  assert(sheet.includes('[FEATURE INSET LIST — FIXED]'));
  assert(sheet.includes('four detail insets')&&sheet.includes('vertical 3:4'));
  assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
- assert(sheet.includes("rear three-quarter view and REAR MOUNTING SYSTEM inset must clearly show the tail's posterior attachment root"));
+ assert(sheet.includes('rear three-quarter view must show the posterior sacral attachment'));
  assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
  assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
  assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
@@ -325,7 +326,7 @@ for (const identityMode of ['create','reference']) {
  assert(!P.buildPrompt({...base,identityMode,form:'heavy'}).includes('LIGHT STRUCTURAL DEPTH:'));
  assert(!P.buildPrompt({...base,identityMode,outputMode:'casual'}).includes('LIGHT STRUCTURAL DEPTH:'));
 }
-assert(P.buildPrompt(base).includes('biology/silhouette and elemental type'));
+assert(P.buildPrompt(base).includes('source anatomy and type'));
 
 const compactSheet=P.buildPrompt({...base,style:'glossy_promo',params:[]});
 assert(compactSheet.length < 10000,'compact creation sheet exceeds text budget');
