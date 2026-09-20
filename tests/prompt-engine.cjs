@@ -23,6 +23,29 @@ assert.equal(JSON.stringify(Object.keys(S.ACTION_STYLE_CORES).sort()),JSON.strin
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
+// Reference-sheet insets are four named, editable targets rather than broad categories.
+assert.equal(typeof P.featureInsetSuggestions,'function');
+const squirtleInsets=P.featureInsetSuggestions({
+ params:[['eye color','pink'],['hair color','blue'],['hairstyle','wolf cut'],['jaw & chin','soft rounded jaw']],
+ motifs:'pale blue and cream colouring, hexagonal segmented carapace with a cream plastron chest plate, curled spiral tail, calf water-jet nozzles'
+});
+assert(squirtleInsets.face.includes('pink eyes')&&squirtleInsets.face.includes('blue wolf cut hair'));
+assert(squirtleInsets.front.includes('plastron chest plate'));
+assert(squirtleInsets.rear.includes('carapace')&&squirtleInsets.rear.includes('spiral tail'));
+assert(squirtleInsets.function.includes('water-jet nozzles'));
+const namedInsets={
+ face:'pink eyes, blue wolf cut, rounded jaw and chin',
+ front:'cream plastron chest plate with turtle segmentation and illuminated water channels',
+ rear:'centered spinal shell mount and sacral spiral-tail root, with both attachment points visible',
+ function:'calf water-jet nozzle, recessed port, lower-leg housing and footwear connection'
+};
+const namedSheet=P.buildPrompt({...base,mech:'Squirtle',featureInsets:namedInsets});
+assert(namedSheet.includes('[FEATURE INSET LIST — FIXED]'));
+const insetOrder=Object.values(namedInsets).map(value=>namedSheet.indexOf(value));
+assert(insetOrder.every((n,i)=>n>=0&&(!i||n>insetOrder[i-1])),'named feature insets must keep fixed order');
+for(const value of Object.values(namedInsets)) assert.equal(namedSheet.split(value).length-1,1,'feature must occur once: '+value);
+for(const vague of ['source-derived marking or armor detail','main back-mounted structure and attachment','footwear and lower-leg construction','If a feature is absent'])
+ assert(!namedSheet.includes(vague),'ambiguous inset fallback remains: '+vague);
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
@@ -242,11 +265,12 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
  assert(sheet.includes('ENVIRONMENT DEFAULT:'),'sheet needs a spatial background');
  assert(!sheet.includes('COMPARISON ENVIRONMENT:'),'sheet must establish, not inherit, the comparison environment');
  assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
- for(const detail of ['face close-up','source-derived marking','back-mounted structure','footwear'])
+ for(const detail of ['FACE IDENTITY','FRONT SIGNATURE','REAR MOUNTING SYSTEM','FUNCTIONAL COMPONENT'])
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
+ assert(sheet.includes('[FEATURE INSET LIST — FIXED]'));
  assert(sheet.includes('four detail insets')&&sheet.includes('vertical 3:4'));
  assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
- assert(sheet.includes("rear three-quarter view and equipment inset must clearly show the tail's posterior attachment root"));
+ assert(sheet.includes("rear three-quarter view and REAR MOUNTING SYSTEM inset must clearly show the tail's posterior attachment root"));
  assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
  assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
  assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
