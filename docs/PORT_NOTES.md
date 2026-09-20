@@ -355,3 +355,7 @@ anthro = 그 armor 문단
 node tests/dex-filter.cjs
 NODE_PATH=<jsdom·preact·htm이 있는 node_modules> node tests/dex-filter-dom.cjs
 ```
+
+### 도감 작게 보기
+
+목록 개수 옆의 작게 보기 버튼으로 기존 dex-compact 스타일을 켠다. 모바일은 한 줄 세 장, 넓은 화면은 최소 112px 카드로 표시한다. 기본 크기로 되돌릴 수 있으며 선택은 검색 조건과 별도로 저장해 상세에서 돌아오거나 새로고침해도 유지한다.

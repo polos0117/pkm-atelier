@@ -53,6 +53,10 @@ body {color:var(--text);font-size:15px}
 .search-row input::placeholder {color:var(--muted)}
 .search-row {grid-template-columns:minmax(0,1fr) auto;gap:8px}
 .dex-reset {background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:12px;min-height:40px}
+.dex-view-row {display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 0}
+.dex-view-row .sec {margin:0;flex-wrap:wrap;min-width:0}
+.dex-view-row button {flex-shrink:0;min-height:44px}
+.dex-view-row button[aria-pressed="true"] {border-color:var(--accent);color:var(--accent)}
 .dex-filters {margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px}
 .dex-filters summary {cursor:pointer;min-height:30px;font-weight:700;font-size:13px}
 .dex-filter-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
@@ -123,7 +127,7 @@ body {color:var(--text);font-size:15px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=dex-filters1"></script>
+<script src="lib/words.js?v=dex-compact1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js"></script>
 <script src="lib/dex-filter.js?v=1"></script>
@@ -348,7 +352,7 @@ function shotLabel(shot, defs) {
   const cut = W('dex.cut.' + shot.cut);
   return [form, shot.index ? W('dex.cut.number', {cut, n:shot.index}) : cut].filter(Boolean).join(' · ');
 }
-function List({ st, filters, onFilter, onOpen }) {
+function List({ st, filters, onFilter, onOpen, compact, onCompact }) {
   const f = FILTER.normalize(filters, st);
   const shown = useMemo(() => FILTER.select(st, filters), [st, filters]);
   const update = (key,value) => onFilter(FILTER.normalize({...f,[key]:value},st));
@@ -379,8 +383,10 @@ function List({ st, filters, onFilter, onOpen }) {
       </div>
       <p class="note">${W('dex.filter.note')} ${W('dex.filter.formNote')}</p>
     </details>
-    <p class="sec" role="status">${W('kind.character')}<span>${W('dex.filter.count',{
+    <div class="dex-view-row"><p class="sec" role="status">${W('kind.character')}<span>${W('dex.filter.count',{
       cards:new Set(shown.map(r=>r.card.name)).size,images:shown.filter(r=>r.file).length})}</span></p>
+      <button class="dex-reset" id="dex-size" aria-pressed=${compact} onClick=${onCompact}>${W(compact?'dex.view.normal':'dex.view.small')}</button>
+    </div>
     ${shown.length === 0
       ? html`<p class="empty">${W('dex.filter.empty')}</p>`
       : html`<div class="grid">${shown.map((shot,i) => {
@@ -404,6 +410,14 @@ function List({ st, filters, onFilter, onOpen }) {
 function App() {
   const st = useDex();
   const [open, setOpen] = useState(null);
+  const [compact,setCompact] = useState(() => {
+    try {return localStorage.getItem('pkm_dex_compact_v1') === 'true';} catch {return false;}
+  });
+  useEffect(() => {
+    document.body.classList.toggle('dex-compact',compact);
+    try {localStorage.setItem('pkm_dex_compact_v1',String(compact));} catch {}
+    return () => document.body.classList.remove('dex-compact');
+  },[compact]);
   const [filters,setFilters] = useState(() => {
     try { return FILTER.normalize(JSON.parse(localStorage.getItem(FILTER_STORE))); }
     catch { return FILTER.defaults(); }
@@ -420,7 +434,7 @@ function App() {
     selection=${open} defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
     onClose=${() => setOpen(null)}
     onJump=${n => { const next=st.cards.find(c=>c.name===n); if(next)setOpen({card:next,style:open.style}); }} />`;
-  return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${setOpen} />`;
+  return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${setOpen} compact=${compact} onCompact=${()=>setCompact(v=>!v)} />`;
 }
 
 render(html`<${App} />`, document.getElementById('app'));
