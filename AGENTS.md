@@ -12,8 +12,9 @@
 | `docs/GAME_CONCEPT.md` | 게임 구조 — 정해진 것과 아직 시험할 것 |
 | `docs/PROMPT_REWRITE.md` | 포켓몬 메카 생성 규칙·기준 이미지·세 출력 모드와 검사 |
 | `docs/SURVEY_GAME.md` | 독립 배치 게임 탐사 작전 — 적성·폼·에너지·저장·검사 |
+| `docs/PATCH.md` | 무엇을 고쳤나 — 고친 쪽이 직접 적는다 (아래 규칙 5) |
 
-## 지켜야 할 것 넷
+## 지켜야 할 것 다섯
 
 ### 1. 화면에 말을 적지 않는다
 
@@ -70,6 +71,24 @@ Preact 가 그리는 `#app` 이 사이에 끼면 키도 같이 물려줘야 한�
 `flex:1 1 0` 인 굴림 자리가 높이 0 이 된다 — 굴러가기는 하는데 보이는 것이 없다.
 `dex.html` 의 `.dex-page > #app` 규칙이 그 자리다.
 
+### 5. 고쳤으면 적는다
+
+파일을 고쳤으면 `docs/PATCH.md` 맨 위에 한 칸 적는다. 커밋 메시지로 갈음하지 않는다 —
+이 저장소는 두 세션(`claude` · `gpt`)이 같은 `main` 에 번갈아 밀기 때문에, 상대가
+무엇을 왜 바꿨는지 `git log` 를 뒤져야만 아는 상태가 계속 문제였다. 실제로 한쪽이
+프롬프트를 줄여 놓은 것을 다른 쪽이 몰라 같은 일을 또 하려 한 적이 있다.
+
+```
+## 2026-09-21 · claude · 무엇을 바꿨나
+- lib/foo.js — 왜 고쳤나
+```
+
+날짜는 `2026-09-21` 꼴, 누가는 `claude` 또는 `gpt`, 새 칸이 맨 위로 간다. 파일마다
+한 줄씩, 이유를 같이 적는다. 자동 커밋(`[skip actions]` 붙은 등록·썸네일)은 적지 않는다.
+
+집 화면의 **패치 기록** 단추가 이 파일을 그대로 읽는다. 그래서 모양이 틀어지면 화면이
+빈다 — `node tests/patch.cjs` 가 날짜·차례·빈 칸을 본다.
+
 ## 검사
 
 ```bash
@@ -80,6 +99,7 @@ node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나�
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주
+node tests/patch.cjs             # 패치 기록의 모양 — 날짜·차례·빈 칸
 ```
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
@@ -111,6 +131,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여섯의 머리가 같은 자리에
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
 ```
 
 `run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·
