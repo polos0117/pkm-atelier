@@ -51,6 +51,16 @@ body {color:var(--text);font-size:15px}
 .search-row input {width:100%;background:var(--card);border:1px solid var(--line);
   color:var(--text);font:inherit;border-radius:8px;padding:9px 11px;min-width:0}
 .search-row input::placeholder {color:var(--muted)}
+.search-row {grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.dex-reset {background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;font-size:12px;min-height:40px}
+.dex-filters {margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px}
+.dex-filters summary {cursor:pointer;min-height:30px;font-weight:700;font-size:13px}
+.dex-filter-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+.dex-filter-grid label {display:grid;gap:5px;min-width:0;color:var(--muted);font-size:12px}
+.dex-filter-grid select {width:100%;min-width:0;min-height:40px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--text);padding:6px;font:inherit}
+.dex-filter-grid select:disabled {opacity:.5}
+.dex-page .grid .cell .face img {object-fit:contain}
+@media(min-width:720px){.dex-filter-grid {grid-template-columns:repeat(5,minmax(0,1fr))}}
 .sw {display:flex;flex-wrap:wrap;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px}
 .sw button {flex:1 1 auto;background:var(--card);border:0;border-radius:6px;color:var(--muted);
   font:inherit;font-weight:700;font-size:12px;min-height:40px;padding:6px 10px}
@@ -113,9 +123,10 @@ body {color:var(--text);font-size:15px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=dex-grid1"></script>
+<script src="lib/words.js?v=dex-filters1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js"></script>
+<script src="lib/dex-filter.js?v=1"></script>
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -128,7 +139,8 @@ import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hook
 import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
 const html = htm.bind(h);
-const W = window.W, IMG = window.AtelierImg;
+const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;
+const FILTER_STORE = 'pkm_dex_filters_v1';
 
 /* 지금 만드는 것은 여성체뿐이다. 그래도 파일 이름에는 _f 를 적어 두므로,
    나중에 m 을 더해도 옛 파일의 뜻이 안 바뀐다. 완료 판정은 성별을 안 본다 */
@@ -252,13 +264,15 @@ function Facts({ card, group, label, onJump }) {
     </div>`}`;
 }
 
-function Detail({ card, entry, defs, styleName, group, label, onClose, onJump }) {
+function Detail({ card, entry, defs, styleName, group, label, selection, onClose, onJump }) {
   const want = wanted(defs, card);
   const keys = IMG.styleKeys(entry || {});
-  const [wantStyle, setStyle] = useState('');
-  const [wantForm, setForm] = useState('');
+  if(FILTER.shots(entry,defs).some(s=>!s.style))keys.push('');
+  const [wantStyle, setStyle] = useState(selection?.style || '');
+  const [focus, setFocus] = useState(selection?.file ? selection : null);
+  const [wantForm, setForm] = useState(selection?.form || '');
   const style = keys.indexOf(wantStyle) >= 0 ? wantStyle : (bestStyle(entry, want).style || keys[0] || '');
-  const bucket = (style && IMG.styleMap(entry)[style]) || {};
+  const bucket = (style ? IMG.styleMap(entry)[style] : entry) || {};
   const prog = IMG.formsDone(bucket, want, V);
   /* 고르개에는 그림이 있는 폼만 올린다. 빈 폼을 고를 수 있게 두면
      눌렀을 때 아무 일도 안 일어나는 단추가 된다 */
@@ -278,7 +292,7 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
 
     ${keys.length > 1 && html`<div class="sw" role="group" aria-label=${W('dex.style')}>
       ${keys.map(k => html`<button key=${k} class=${k === style ? 'on' : ''}
-        onClick=${() => { setStyle(k); setForm(''); }}>${styleName[k] || k}</button>`)}
+        onClick=${() => { setStyle(k); setForm(''); setFocus(null); }}>${styleName[k] || k || W('dex.style.unknown')}</button>`)}
     </div>`}`;
 
   return html`<${Shell} head=${head}>
@@ -290,7 +304,7 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
         return html`<button key=${k} data-form=${k} disabled=${!file}
           class=${'fcell' + (file ? (k === form ? ' on' : '') : ' gap')}
           aria-pressed=${file ? String(k === form) : undefined}
-          onClick=${() => setForm(k)}>
+          onClick=${() => { setForm(k); setFocus(null); }}>
           <span class="face">${file
             ? html`<${Pic} file=${file} />`
             : html`<span class="ph">${W('art.missing')}</span>`}</span>
@@ -300,7 +314,10 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
       })}
     </div>
 
-    ${form ? html`
+    ${focus && (focus.cut !== 'portrait' || !have.includes(focus.form)) ? html`
+      <p class="sec">${shotLabel(focus, defs)}<span>${W('dex.selected')}</span></p>
+      <div class="big"><${Pic} full file=${focus.file} alt=${card.name} /></div>
+    ` : form ? html`
       <p class="sec">${formName(defs, form)}<span>${(defs[baseForm(form)].layers || 0) + W('dex.layers')}</span></p>
       <div class="big"><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></div>
       <p class="note">${defs[form.endsWith('_overdrive') ? 'overdrive' : form].note}</p>
@@ -311,11 +328,11 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
 
     ${acts.length > 0 && html`
       <p class="sec">${W('dex.action')}<span>${W('art.count', { n: acts.length })}</span></p>
-      <div class="gal form-actions">${acts.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
+      <div class="gal form-actions">${acts.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'action',form,index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.action')} /></button>`)}</div>`}
 
     ${casual.length > 0 && html`
       <p class="sec">${W('dex.casual')}<span>${W('art.count', { n: casual.length })}</span></p>
-      <div class="gal">${casual.map(f => html`<${Pic} key=${f} file=${f} />`)}</div>`}
+      <div class="gal">${casual.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'casual',index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.casual')} /></button>`)}</div>`}
 
     ${legacy && legacy[V] && html`<details class="legacy-overdrive">
       <summary>${W('dex.overdrive.legacy')}</summary>
@@ -325,33 +342,60 @@ function Detail({ card, entry, defs, styleName, group, label, onClose, onJump })
   <//>`;
 }
 
-function List({ st, onOpen }) {
-  const [q, setQ] = useState('');
-  const shown = useMemo(() => {
-    const t = q.trim().toLowerCase();
-    return st.cards.filter(c => !t || c.name.toLowerCase().indexOf(t) >= 0);
-  }, [st.cards, q]);
-
+function shotLabel(shot, defs) {
+  const form = shot.form === 'overdrive' ? W('dex.form.legacy') :
+    shot.form && defs[baseForm(shot.form)] ? formName(defs, shot.form) : '';
+  const cut = W('dex.cut.' + shot.cut);
+  return [form, shot.index ? W('dex.cut.number', {cut, n:shot.index}) : cut].filter(Boolean).join(' · ');
+}
+function List({ st, filters, onFilter, onOpen }) {
+  const f = FILTER.normalize(filters, st);
+  const shown = useMemo(() => FILTER.select(st, filters), [st, filters]);
+  const update = (key,value) => onFilter(FILTER.normalize({...f,[key]:value},st));
+  const reset = () => onFilter(FILTER.defaults());
+  const generations = [...new Set(st.cards.map(c => c.gen))].sort((a,b)=>a-b);
+  const types = [...new Set(st.cards.flatMap(c => [c.element,c.element2]).filter(Boolean))];
+  const typeOrder = st.group.order || types;
+  types.sort((a,b)=>typeOrder.indexOf(a)-typeOrder.indexOf(b));
+  const all = ['',W('dex.filter.all')];
+  const pick = (key,options,disabled=false) => html`<label for=${'dex-'+key}>${W('dex.filter.'+key)}
+    <select id=${'dex-'+key} value=${f[key]} disabled=${disabled} onChange=${e=>update(key,e.currentTarget.value)}>
+      ${options.map(([v,label])=>html`<option key=${v} value=${v}>${label}</option>`)}
+    </select></label>`;
   const head = html`<div class="search-row">
-    <input type="search" value=${q} placeholder=${W('ui.search')} aria-label=${W('ui.search')}
-      onInput=${e => setQ(e.currentTarget.value)} />
+    <input type="search" value=${f.q} placeholder=${W('dex.filter.search')} aria-label=${W('dex.filter.search')}
+      onInput=${e => update('q',e.currentTarget.value)} />
+    <button class="dex-reset" id="dex-reset" onClick=${reset}>${W('dex.filter.reset')}</button>
   </div>`;
-
   return html`<${Shell} head=${head}>
-    <p class="sec">${W('kind.character')}<span>${W('art.count', { n: shown.length })}</span></p>
+    <details class="dex-filters" open>
+      <summary>${W('dex.filter.title')}</summary>
+      <div class="dex-filter-grid">
+        ${pick('style',[all,...Object.entries(st.styleName)])}
+        ${pick('gen',[all,...generations.map(n=>[String(n),W('card.gen',{n})])])}
+        ${pick('type',[all,...types.map(k=>[k,st.group.name[k]||k])])}
+        ${pick('cut',FILTER.CUTS.map(k=>[k,W('dex.cut.'+k)]))}
+        ${pick('form',[all,...FILTER.forms(st.defs).map(k=>[k,k==='overdrive'?W('dex.form.legacy'):formName(st.defs,k)])],['base','casual','extra'].includes(f.cut))}
+      </div>
+      <p class="note">${W('dex.filter.note')} ${W('dex.filter.formNote')}</p>
+    </details>
+    <p class="sec" role="status">${W('kind.character')}<span>${W('dex.filter.count',{
+      cards:new Set(shown.map(r=>r.card.name)).size,images:shown.filter(r=>r.file).length})}</span></p>
     ${shown.length === 0
-      ? html`<p class="empty">${W('ui.empty')}</p>`
-      : html`<div class="grid">${shown.map(c => {
-          const entry = st.img[c.name] || null;
-          const want = wanted(st.defs, c), best = bestStyle(entry, want);
-          /* 자세히 보기가 첫 폼부터 여는데 목록 그림만 딴 폼이면, 눌렀을 때
-             그림이 바뀐 것처럼 보인다. 둘이 같은 폼을 가리키게 한다 */
-          const cover = IMG.coverOf(entry, V, best.style, want[0]);
-          return html`<button key=${c.name} class="cell" onClick=${() => onOpen(c.name)}>
-            <span class="face">${cover
-              ? html`<${Pic} file=${cover} />`
+      ? html`<p class="empty">${W('dex.filter.empty')}</p>`
+      : html`<div class="grid">${shown.map((shot,i) => {
+          const c=shot.card,entry=st.img[c.name],want=wanted(st.defs,c);
+          const prog=IMG.formsDone(shot.style?IMG.styleMap(entry)[shot.style]:entry,want,V);
+          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class="cell"
+            data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut}
+            onClick=${() => onOpen(shot)}>
+            <span class="face">${shot.file
+              ? html`<${Pic} file=${shot.file} alt=${c.name+' · '+shotLabel(shot,st.defs)} />`
               : html`<span class="ph">${W('art.none')}</span>`}</span>
-            <span class="cap">${c.name}<i>${W('art.form.done', best.prog)}</i></span>
+            <span class="cap">${c.name}
+              ${shot.file&&html`<i>${st.styleName[shot.style]||W('dex.style.unknown')}</i><i>${shotLabel(shot,st.defs)}</i>`}
+              <i>${W('art.form.done',prog)}</i>
+            </span>
           </button>`;
         })}</div>`}
   <//>`;
@@ -359,19 +403,24 @@ function List({ st, onOpen }) {
 
 function App() {
   const st = useDex();
-  const [open, setOpen] = useState('');
+  const [open, setOpen] = useState(null);
+  const [filters,setFilters] = useState(() => {
+    try { return FILTER.normalize(JSON.parse(localStorage.getItem(FILTER_STORE))); }
+    catch { return FILTER.defaults(); }
+  });
+  useEffect(() => { try {localStorage.setItem(FILTER_STORE,JSON.stringify(filters));} catch {} }, [filters]);
 
   if (st.error) return html`<${Shell} head=${null}>
     <p class="empty">${W('ui.error', { message: st.error })}</p><//>`;
   if (!st.cards) return html`<${Shell} head=${null}>
     <p class="empty">${W('ui.loading')}</p><//>`;
 
-  const card = st.cards.find(c => c.name === open);
+  const card = st.cards.find(c => c.name === open?.card?.name);
   if (card) return html`<${Detail} key=${card.name} card=${card} entry=${st.img[card.name] || null}
-    defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
-    onClose=${() => setOpen('')}
-    onJump=${n => st.cards.some(c => c.name === n) && setOpen(n)} />`;
-  return html`<${List} st=${st} onOpen=${setOpen} />`;
+    selection=${open} defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
+    onClose=${() => setOpen(null)}
+    onJump=${n => { const next=st.cards.find(c=>c.name===n); if(next)setOpen({card:next,style:open.style}); }} />`;
+  return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${setOpen} />`;
 }
 
 render(html`<${App} />`, document.getElementById('app'));
