@@ -37,8 +37,13 @@ for(const form of ['light','heavy','mobility','overdrive'])for(const identityMod
  const plain=P.buildPrompt({...input,action:{}});
  const block=x=>x.split('[FORM DEFINITION]')[1].split('\n\n[')[0];
  assert.equal(block(t),block(plain),'action changes selected armor');
- assert(t.includes('ACTION DIRECTION PRIORITY:'));
- assert(t.includes('Do not add equipment'));
+ if(identityMode==='reference') {
+  assert(t.includes('Explicit scene selections control pose'));
+  assert(!t.includes('ACTION DIRECTION PRIORITY:')&&!t.includes('Do not add equipment'));
+ } else {
+  assert(t.includes('ACTION DIRECTION PRIORITY:'));
+  assert(t.includes('Do not add equipment'));
+ }
  for(const mode of ['portrait','casual']){
   const isolated=P.buildPrompt({...input,outputMode:mode});
   assert(!isolated.includes('[ACTION DIRECTION]'));
@@ -48,8 +53,8 @@ for(const form of ['light','heavy','mobility','overdrive'])for(const identityMod
 // Form images for the game come from action mode: whole figure, face to camera, unless the user picks otherwise.
 for(const form of ['light','heavy','mobility','overdrive']){
  const t=P.buildPrompt({...base,form,baseForm:'heavy'});
- assert(t.includes('CARD-READY DEFAULT:')&&t.includes('never a back view'),'action must stay usable as card art');
- assert(t.includes('OVERDRIVE IN ACTION:'),'overdrive action keeps the base image composition');
+ assert(t.includes('dynamic full-body card illustration')&&t.includes('turn the face toward the camera'),'action must stay usable as card art');
+ if(form==='overdrive') assert(t.includes('open selected existing panels'),'overdrive action must open its base form');
  for(const outputMode of ['portrait','casual'])
   assert(!P.buildPrompt({...base,form,baseForm:'heavy',outputMode}).includes('CARD-READY DEFAULT:'),'card default leaked into '+outputMode);
 }

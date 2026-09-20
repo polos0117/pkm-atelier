@@ -19,13 +19,36 @@ assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('Detail density i
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('not permission to redesign'));
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes("not from changing the reference character's hairstyle"));
 assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('no typography'));
+assert.equal(JSON.stringify(Object.keys(S.ACTION_STYLE_CORES).sort()),JSON.stringify(Array.from(S.ART_STYLES,r=>r[0]).sort()));
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
+// The common approved-sheet -> action path stays concise and uses only relevant mount modules.
+const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
+ motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
+const shortWords=shortAction.trim().split(/\s+/).length;
+const shortNegatives=(shortAction.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length;
+assert(shortWords<800,'reference action prompt grew beyond its compact budget: '+shortWords);
+assert((shortAction.match(/^\[/gm)||[]).length<=10,'too many compact action blocks');
+assert(shortNegatives<=12,'compact action accumulated prohibitions: '+shortNegatives);
+for(const legacy of ['MOUNT LOCK','OCCLUSION LOCK','CORRECTION PRIORITY','FAIL CONDITIONS']) assert(!shortAction.includes(legacy));
+assert(shortAction.includes('SHELL:')&&shortAction.includes('TAIL:'));
+const rearAction=P.buildPrompt({...base,mech:'Bulbasaur',identityMode:'reference',outputMode:'action'});
+assert(rearAction.includes('REAR UNIT:')&&!rearAction.includes('SHELL:')&&!rearAction.includes('TAIL:'));
+const plainAction=P.buildPrompt({...base,identityMode:'reference',outputMode:'action'});
+assert(!plainAction.includes('REAR UNIT:')&&!plainAction.includes('SHELL:')&&!plainAction.includes('TAIL:'));
 // Source engineering is separate from rendering and from continuation identity.
 for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual']) {
  for(const form of ['light','heavy','mobility','overdrive']) {
   const t=P.buildPrompt({...base,mech:'Squirtle',identityMode,outputMode,form,baseForm:'heavy'});
+  const compact=identityMode==='reference'&&outputMode==='action';
+  if(compact){
+   assert(!t.includes('BODY-SPACE MOUNT LOCK:')&&!t.includes('MOUNT CORRECTION PRIORITY:'));
+   assert(!t.includes('OCCLUSION LOCK:')&&!t.includes('FAIL CONDITIONS:'));
+   assert(t.includes('SHELL:')&&t.includes('TAIL:'));
+   assert(t.includes('natural occlusion'));
+   continue;
+  }
   const marker='BODY-SPACE MOUNT LOCK:';
   assert.equal(t.split(marker).length-1,outputMode==='casual'?0:1,'mount rule must occur once in armored modes only');
   assert.equal(t.includes('MOUNT CORRECTION PRIORITY:'),identityMode==='reference'&&outputMode!=='casual');
@@ -59,15 +82,17 @@ for(const mech of ['Squirtle','Bulbasaur','Mew'])
    for(const form of ['light','heavy','mobility','overdrive']) {
     const t=P.buildPrompt({...base,mech,identityMode,outputMode,form,baseForm:'heavy'});
     const armored=outputMode!=='casual';
+    const compact=identityMode==='reference'&&outputMode==='action';
     assert.equal(t.includes('CREATIVE ENGINEERING PREPASS:'),armored&&identityMode==='create');
-    assert.equal(t.includes('APPROVED-DESIGN CREATIVE LOCK:'),armored&&identityMode==='reference');
+    assert.equal(t.includes('APPROVED-DESIGN CREATIVE LOCK:'),armored&&identityMode==='reference'&&!compact);
     assert.equal(t.includes('INSET FIDELITY LOCK:'),outputMode==='portrait'&&identityMode==='create');
-    if(armored) {
+    if(armored&&!compact) {
      assert(t.includes('Hidden or stowed does not mean absent'));
      assert(t.includes('core equipment and form-specific armor parts'));
      assert(!t.includes('For a source with a back bulb'));
      assert(!t.includes('hydro-pressure reactor'));
     }
+    if(compact) assert(t.includes('approved sheet defines the core equipment'));
     if(armored&&identityMode==='create') {
      assert(t.includes('Optional is not absent by default'));
      assert(t.includes('Include the concise design record with the result'));
@@ -92,6 +117,12 @@ assert(!P.buildPrompt({...base,form:'heavy'}).includes('Keep the central abdomen
 function assertMaterials(t,mode){
  assert(t.includes('[MATERIAL SEPARATION]'),'missing material separation');
  t=t.split('[MATERIAL SEPARATION]')[1].split('\n\n[')[0];
+ if(t.includes('Render skin with soft anatomical shading')){
+  assert(t.includes('undersuit as flexible fabric'));
+  assert(t.includes('armor as rigid plates'));
+  assert(t.includes('selected form explicitly adds outer armor'));
+  return;
+ }
  assert(t.includes('Exposed human skin is living skin'),'skin must not become shell');
  assert(t.includes('Do not convert covered areas into bare skin'),'coverage guard');
  assert(t.includes('selected style'),'material rules preserve style');
@@ -108,15 +139,15 @@ const materialProbe=P.buildPrompt(base);
 // Heavy panel travel applies only to heavy overdrive; unknown reference armor stays conditional.
 for(const outputMode of ['portrait','action','casual']) for(const baseForm of ['light','heavy','mobility','reference']) {
  const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form:'overdrive',baseForm});
- assert.equal(t.includes('HEAVY PANEL TRAVEL:'),outputMode!=='casual'&&['heavy','reference'].includes(baseForm));
- if(baseForm==='reference'&&outputMode!=='casual') assert(t.includes('Only if the attached base armor is heavy'));
+ assert.equal(t.includes('HEAVY PANEL TRAVEL:'),outputMode==='portrait'&&['heavy','reference'].includes(baseForm));
+ if(baseForm==='reference'&&outputMode==='portrait') assert(t.includes('Only if the attached base armor is heavy'));
 }
 assert(!P.buildPrompt({...base,form:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
 assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
 // Heavy coverage is a form transformation, isolated from light, mobility and casual.
 for(const outputMode of ['portrait','action','casual']) for(const form of ['light','heavy','mobility']) {
  const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form});
- assert.equal(t.includes('HEAVY COVERAGE:'),outputMode!=='casual'&&form==='heavy');
+ assert.equal(t.includes('HEAVY COVERAGE:'),outputMode==='portrait'&&form==='heavy');
 }
 const heavyPrompt=P.buildPrompt({...base,identityMode:'reference',form:'heavy'});
 assert(heavyPrompt.includes('front and outer upper thighs'));
@@ -128,8 +159,13 @@ assert(heavyOpen.includes('Do not subdivide'));
 // Reference anatomy authority must survive all output modes, but never leak into new identities.
 for(const outputMode of ['portrait','action','casual']) {
  const t=P.buildPrompt({...base,identityMode:'reference',outputMode});
- assert(t.includes('FRONT-VIEW ANATOMY AUTHORITY:'));
- assert(t.includes('Do not average conflicting views'));
+ if(outputMode==='action') {
+  assert(t.includes('same woman from the approved identity anchor'));
+  assert(t.includes('height and body proportions'));
+ } else {
+  assert(t.includes('FRONT-VIEW ANATOMY AUTHORITY:'));
+  assert(t.includes('Do not average conflicting views'));
+ }
  if(outputMode!=='casual') assert(!P.buildPrompt({...base,identityMode:'create',outputMode}).includes('FRONT-VIEW ANATOMY AUTHORITY:'));
 }
 for(const form of ['heavy','overdrive']) {
@@ -159,7 +195,11 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
  for(const form of ['light','heavy','mobility','overdrive']){
   const t=P.buildPrompt({...base,style,outputMode,form,identityMode:'reference',
    baseForm:'reference',formOverride:'OPEN_LEFT_PANEL',camera:'LOW_CAMERA',scene:'CITY_PARK'});
-  assert(t.includes(S.STYLE_PROFILES[style].core),style);
+  assert(t.includes(outputMode==='action'?S.ACTION_STYLE_CORES[style]:S.STYLE_PROFILES[style].core),style);
+  if(outputMode==='action') {
+   assert(t.trim().split(/\s+/).length<800,style+' compact action exceeded word budget');
+   assert((t.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length<=12,style+' compact action accumulated prohibitions');
+  }
   assertMaterials(t,outputMode);
   assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
   assert(t.includes('Pikachu')); assert(t.includes('woman')); assert(t.includes('user-approved'));
@@ -167,8 +207,9 @@ for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action',
   assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
   assert(!t.includes('referenced_image_paths')&&!t.includes('num_last_images_to_include'));
   assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
-  const order=['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[STYLE CORE]','[PROJECT STYLE EXTENSION]','[OUTPUT MODE]','[CAMERA & PRESENTATION]',
-   '[CONSISTENCY / NEGATIVE LOCK]','[FINAL CHECK]'].map(x=>t.indexOf(x));
+  const order=(outputMode==='action'?
+   ['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[SOURCE ENGINEERING]','[FORM DEFINITION]','[STYLE CORE]','[MATERIAL SEPARATION]','[OUTPUT MODE]','[FINAL CHECK]']:
+   ['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[STYLE CORE]','[PROJECT STYLE EXTENSION]','[OUTPUT MODE]','[CAMERA & PRESENTATION]','[CONSISTENCY / NEGATIVE LOCK]','[FINAL CHECK]']).map(x=>t.indexOf(x));
   assert(order.every((x,i)=>x>=0&&(!i||x>order[i-1])));
   assert.equal(t.includes('[FORM DEFINITION]'),outputMode!=='casual');
   assert.equal(t.includes('OPEN_LEFT_PANEL'),outputMode!=='casual');
@@ -269,12 +310,14 @@ assert(!compactSheet.includes('Lock skeletal shoulder width'),'creation must est
 for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual'])
  for(const form of ['light','heavy','mobility','overdrive']) {
  const t=P.buildPrompt({...base,identityMode,outputMode,form});
- assert.equal(t.split('BILATERAL ARMOR:').length-1,outputMode==='casual'?0:1);
- if(outputMode!=='casual') {
+ const compact=identityMode==='reference'&&outputMode==='action';
+ assert.equal(t.split('BILATERAL ARMOR:').length-1,outputMode==='casual'||compact?0:1);
+ if(outputMode!=='casual'&&!compact) {
   assert(t.includes('matching part inventory, dimensions and anatomical mounting levels'));
   assert(t.includes('explicitly requested or explicitly approved asymmetric equipment'));
   assert(t.includes('Pose, perspective, cable curves and panel-opening angles may differ'));
  }
+ if(compact) assert(t.includes('Paired shoulder, arm, thigh, knee, shin and footwear armor uses matching parts'));
 }
 for(const identityMode of ['create','reference']) {
  for(const form of ['heavy','overdrive']) {

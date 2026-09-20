@@ -13,9 +13,16 @@ vm.createContext(ctx);
 for (const f of ['lib/prompt-spec.js', 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
   vm.runInContext(fs.readFileSync(f, 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
-// Glossy promo uses the approved anime-mecha core in every output mode.
+// Glossy promo keeps the same identity; approved-sheet actions use its concise style core.
 for(const outputMode of ['portrait','action','casual']) {
  const text=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode,identityMode:'reference',form:'heavy'});
+ if(outputMode==='action') {
+  assert(text.includes(S.ACTION_STYLE_CORES.glossy_promo));
+  assert(text.includes('Premium glossy anime-mecha promotional key art'));
+  assert(text.includes('same polished rendering intensity'));
+  assert(!text.includes('PROJECT STYLE EXTENSION'));
+  continue;
+ }
  assert(text.includes('Premium anime-mecha promotional key art with clean linework'));
  assert(text.includes('strong dimensional shading'));
  assert(text.includes('grouped illustrated shadow shapes'));

@@ -118,6 +118,30 @@ MATERIAL SEPARATION → OUTPUT MODE →
 CAMERA & PRESENTATION → CONSISTENCY / NEGATIVE LOCK → FINAL CHECK 이다.
 최초 생성에 신체 치수를 지정하면 정체성 뒤에 치수 해석 문장이 붙는다.
 
+### 확정 시트에서 액션을 만드는 짧은 경로
+
+`reference + action`은 이미 확정된 시트가 설계 논쟁의 답을 가지고 있으므로 별도의
+짧은 조립 경로를 사용한다. 인물 정체성, 핵심 장비, 선택 폼, 화풍, 재질, 장면 선택과
+최종 검사만 싣는다. `PROJECT STYLE EXTENSION`, 초상 카메라, 공통 네거티브 잠금과
+`MOUNT/OCCLUSION/CORRECTION/FAIL` 법조문은 이 경로에 넣지 않는다. 14개 화풍에는
+액션 이어가기용 1~2문장 핵심 설명을 따로 두어 화풍 선택만으로 프롬프트가 다시
+길어지지 않게 한다.
+
+장착 교정은 모든 종에 공통으로 강제하지 않는다. 종 이름·선택 모티프·사용자 폼
+조정에서 등 장비, 등껍질, 꼬리가 실제로 확인된 경우에만 짧은 긍정문 모듈을 붙인다.
+등 장비는 몸 기준 장착점과 몸통을 함께 따르고, 등껍질은 척추 중앙, 꼬리는 후방 골반
+중앙에서 시작한다고 서술한다. 자연스러운 가림은 허용한다. 다른 캐릭터에는 이 문구가
+들어가지 않는다.
+
+폼 설명도 액션 전용 요약을 사용한다. 기준 신체·핵심 장비는 유지하고 경장·중장·
+고기동의 장갑 층과 실루엣 차이만 긍정문으로 기술한다. 폭주는 기존 패널의 개방과
+에너지·긴장을 요약하고, 두 번째 일반 폼 이미지가 첨부되면 그 이미지의 카메라·자세·
+인물 크기를 유지한다. 자유 입력 폼 조정은 요약 뒤에 그대로 보존한다.
+
+이 짧은 경로의 순서는 GENERATION INPUT → SOURCE IDENTITY → CHARACTER IDENTITY →
+SOURCE ENGINEERING → FORM DEFINITION → STYLE CORE → MATERIAL SEPARATION →
+ACTION DIRECTION(선택값이 있을 때만) → OUTPUT MODE → FINAL CHECK 이다.
+
 ### 피부·보디슈트·장갑 재질 구분
 
 모든 화풍과 생성 단계에 `MATERIAL SEPARATION`을 적용한다. 피부는 고유 피부색과
