@@ -40,15 +40,13 @@ for(const identityMode of ['create','reference']) for(const outputMode of ['port
    assert(!t.includes('If correct geometry would hide the tail completely, hide it completely.'));
    assert(t.includes('Do not delete, shrink or forcibly conceal signature equipment'));
    assert(t.includes('Natural lateral projection is allowed'));
-   assert.equal(t.includes('FREE POSE AND VIEWPOINT:'),identityMode==='reference'&&outputMode==='portrait');
-   assert(!t.includes('COMPARISON BODY ANGLE'),'a fixed comparison angle hides back-mounted equipment');
+   assert.equal(t.includes('COMPARISON BODY ANGLE: 25-35 degrees'),identityMode==='reference'&&outputMode==='portrait');
    assert(t.includes('Natural distal overlap beside a limb is not itself a mounting error.'));
    assert(t.includes('FAIL CONDITIONS:'));
    assert(!t.includes('Allocate visual mass'));
    if(identityMode==='reference'&&outputMode==='portrait') {
     assert(t.includes('Rotate torso, pelvis and mounted equipment together'));
-    assert(t.includes('matching angles across forms is not required'));
-    assert(t.includes('OVERDRIVE EXCEPTION: an overdrive portrait keeps the camera angle, pose, subject scale and framing'));
+    assert(t.includes('same turn direction and angle across light, heavy, mobility and overdrive'));
    }
    assert(t.includes('not relocate the main mounts'));
   }

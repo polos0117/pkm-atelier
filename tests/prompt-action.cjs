@@ -45,6 +45,15 @@ for(const form of ['light','heavy','mobility','overdrive'])for(const identityMod
   assert(!isolated.includes('ACTION DIRECTION PRIORITY:'));
  }
 }
+// Form images for the game come from action mode: whole figure, face to camera, unless the user picks otherwise.
+for(const form of ['light','heavy','mobility','overdrive']){
+ const t=P.buildPrompt({...base,form,baseForm:'heavy'});
+ assert(t.includes('CARD-READY DEFAULT:')&&t.includes('never a back view'),'action must stay usable as card art');
+ assert(t.includes('OVERDRIVE IN ACTION:'),'overdrive action keeps the base image composition');
+ for(const outputMode of ['portrait','casual'])
+  assert(!P.buildPrompt({...base,form,baseForm:'heavy',outputMode}).includes('CARD-READY DEFAULT:'),'card default leaked into '+outputMode);
+}
+assert(P.buildPrompt({...base,orient:'rear_3q'}).includes(S.ORIENTATION_GUIDES.rear_3q[1]),'an explicit orientation still wins');
 assert.equal(P.buildPrompt({...base,action:{}}),P.buildPrompt(base),'automatic choices add prompt noise');
 assert.equal(P.buildPrompt({...base,action:{category:'UNKNOWN',example:'INVALID',effects:'UNKNOWN'}}),P.buildPrompt(base));
 assert.equal(P.buildPrompt({...base,action:[]}),P.buildPrompt(base));
