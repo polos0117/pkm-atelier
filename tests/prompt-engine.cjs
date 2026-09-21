@@ -73,10 +73,8 @@ assert(!heavyAction.includes('layered armor around chest, back, ribs'),'the old 
 assert(heavyAction.includes('OCCLUSION:')&&heavyAction.includes('never shifted to a shoulder, flank, hip or arm'),'shell/tail species need the occlusion rule');
 assert(heavyAction.includes('never by relocating it')&&!heavyAction.includes('show head, feet and mounted equipment'),'output must not demand visible rear gear');
 assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('OCCLUSION:'),'no rear gear, no occlusion rule');
-// Rear-gear species default to a looking-back rear three-quarter composition; an explicit orientation replaces it.
-assert(heavyAction.includes('rear three-quarter view caught mid-action')&&heavyAction.includes('never a standing pose'),'shell/tail species need the mid-action rear default');
-assert(!P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',orient:'front'}).includes('caught mid-action'),'explicit orientation must win');
-assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('caught mid-action'),'no rear gear, no rear pose');
+// An action card faces the camera; rear gear may be hidden by the body and is never relocated. No default rear view.
+assert(!heavyAction.includes('rear three-quarter view'),'no forced rear composition');
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
