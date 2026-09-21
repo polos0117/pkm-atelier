@@ -74,9 +74,9 @@ assert(heavyAction.includes('OCCLUSION:')&&heavyAction.includes('never shifted t
 assert(heavyAction.includes('never by relocating it')&&!heavyAction.includes('show head, feet and mounted equipment'),'output must not demand visible rear gear');
 assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('OCCLUSION:'),'no rear gear, no occlusion rule');
 // Rear-gear species default to a looking-back rear three-quarter composition; an explicit orientation replaces it.
-assert(heavyAction.includes('rear three-quarter view')&&heavyAction.includes('looks back over that shoulder'),'shell/tail species need the looking-back default');
-assert(!P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',orient:'front'}).includes('looks back over that shoulder'),'explicit orientation must win');
-assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('looks back over that shoulder'),'no rear gear, no rear pose');
+assert(heavyAction.includes('rear three-quarter view caught mid-action')&&heavyAction.includes('never a standing pose'),'shell/tail species need the mid-action rear default');
+assert(!P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',orient:'front'}).includes('caught mid-action'),'explicit orientation must win');
+assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('caught mid-action'),'no rear gear, no rear pose');
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
