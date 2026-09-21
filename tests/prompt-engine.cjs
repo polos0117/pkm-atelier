@@ -62,13 +62,24 @@ for(const form of ['light','heavy','mobility','overdrive']){
  assert(t.includes('Eyes, bangs and the jaw outline stay visible'),form+' action needs the head rule');
  if(form==='overdrive')assert(t.includes('never generate a new helmet'),'reference overdrive must not invent a helmet');
  assert(!t.includes('HEAD AND FACE:'),'the long head rule stays out of the compact action prompt');
+ assert(t.includes('PLATE DISCIPLINE:')&&t.includes('never a small backpack'),form+' action needs the plate discipline');
 }
+// Heavy action: the body stays the sheet's; the silhouette grows by plate thickness and clearance, not by a bigger woman or more parts.
+const heavyAction=P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy'});
+for(const need of ['stand-off brackets','one cuirass','one wraparound cuisse','stays exactly the sheet','floats over it rather than thickening the limb','no cannons, weapons or new appendages'])
+ assert(heavyAction.includes(need),'heavy action lost: '+need);
+assert(!heavyAction.includes('layered armor around chest, back, ribs'),'the old twelve-region list invites tiling');
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
 const shortWords=shortAction.trim().split(/\s+/).length;
 const shortNegatives=(shortAction.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length;
 assert(shortWords<800,'reference action prompt grew beyond its compact budget: '+shortWords);
+for(const form of ['light','heavy','mobility','overdrive']){
+ const n=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form,baseForm:'heavy'}).trim().split(/\s+/).length;
+ // 폭주는 기본 폼 정의 위에 개방 문장이 얹혀 50낱말쯤 더 든다 — 그만큼만 허용한다
+ assert(n<(form==='overdrive'?850:800),form+' action prompt grew beyond its compact budget: '+n);
+}
 assert((shortAction.match(/^\[/gm)||[]).length<=10,'too many compact action blocks');
 assert(shortNegatives<=12,'compact action accumulated prohibitions: '+shortNegatives);
 for(const legacy of ['MOUNT LOCK','OCCLUSION LOCK','CORRECTION PRIORITY','FAIL CONDITIONS']) assert(!shortAction.includes(legacy));
