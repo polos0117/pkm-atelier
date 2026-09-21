@@ -69,16 +69,21 @@ const heavyAction=P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference
 for(const need of ['stand-off brackets','one cuirass','one wraparound cuisse','stays exactly the sheet','floats over it rather than thickening the limb','no cannons, weapons or new appendages'])
  assert(heavyAction.includes(need),'heavy action lost: '+need);
 assert(!heavyAction.includes('layered armor around chest, back, ribs'),'the old twelve-region list invites tiling');
+// Rear equipment is revealed by the pose, never relocated to be seen; the rule rides with the mount hints.
+assert(heavyAction.includes('OCCLUSION:')&&heavyAction.includes('never shifted to a shoulder, flank, hip or arm'),'shell/tail species need the occlusion rule');
+assert(heavyAction.includes('never by relocating it')&&!heavyAction.includes('show head, feet and mounted equipment'),'output must not demand visible rear gear');
+assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('OCCLUSION:'),'no rear gear, no occlusion rule');
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
 const shortWords=shortAction.trim().split(/\s+/).length;
 const shortNegatives=(shortAction.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length;
-assert(shortWords<800,'reference action prompt grew beyond its compact budget: '+shortWords);
+// 2026-09-21: 800 → 900. 등 장비를 보이려고 옮기던 것을 막는 OCCLUSION 문단이 실린다(사용자가 예산 확대를 허락).
+assert(shortWords<900,'reference action prompt grew beyond its compact budget: '+shortWords);
 for(const form of ['light','heavy','mobility','overdrive']){
  const n=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form,baseForm:'heavy'}).trim().split(/\s+/).length;
  // 폭주는 기본 폼 정의 위에 개방 문장이 얹혀 50낱말쯤 더 든다 — 그만큼만 허용한다
- assert(n<(form==='overdrive'?850:800),form+' action prompt grew beyond its compact budget: '+n);
+ assert(n<(form==='overdrive'?950:900),form+' action prompt grew beyond its compact budget: '+n);
 }
 assert((shortAction.match(/^\[/gm)||[]).length<=10,'too many compact action blocks');
 assert(shortNegatives<=12,'compact action accumulated prohibitions: '+shortNegatives);
