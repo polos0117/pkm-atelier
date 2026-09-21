@@ -19,7 +19,9 @@ assert(!full.includes('second eye color:'),'duplicate same-eye entry');
 assert(!full.includes('parameter precedence:'),'old global parent precedence must not affect unrelated groups');
 assert(!full.includes('must clearly read as Korean'),'ancestry must not override explicit geometry');
 assert(identity(full).includes('actual outline in every view and inset'));
-assert(full.length<12000,'detailed fixture exceeds compacted budget');
+// 2026-09-21: 12000 → 13000. 기준 시트가 확대컷 세 칸의 역할, 폼별 머리 장비, 얼굴 보존 규칙을 싣게 되어
+// 약 750자가 늘었다(11965 → 12723). 더 늘면 다시 깎는다 — 상한을 또 올리기 전에 문장을 줄일 것.
+assert(full.length<13000,'detailed fixture exceeds compacted budget: '+full.length);
 assert.equal(JSON.stringify(params),original,'assembly mutated stored settings');
 const sharp=build({params:[['jaw & chin','narrow tapered chin']]});
 assert(!sharp.includes('U-shaped lower-face outline'),'round lock leaked into another jaw');

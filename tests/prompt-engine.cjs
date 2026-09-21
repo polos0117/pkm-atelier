@@ -23,30 +23,46 @@ assert.equal(JSON.stringify(Object.keys(S.ACTION_STYLE_CORES).sort()),JSON.strin
 assert(Object.values(S).every(x=>typeof x!=='function'));
 const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
  form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
-// Reference-sheet insets are four named, editable targets rather than broad categories.
+// Reference-sheet insets: face, head-shoulder design language, rear mount — three named, editable targets.
 assert.equal(typeof P.featureInsetSuggestions,'function');
 const squirtleInsets=P.featureInsetSuggestions({
  params:[['eye color','pink'],['hair color','blue'],['hairstyle','wolf cut'],['jaw & chin','soft rounded jaw']],
  motifs:'pale blue and cream colouring, hexagonal segmented carapace with a cream plastron chest plate, curled spiral tail, calf water-jet nozzles'
 });
 assert(squirtleInsets.face.includes('pink eyes')&&squirtleInsets.face.includes('blue wolf cut hair'));
-assert(squirtleInsets.front.includes('plastron chest plate'));
-assert(squirtleInsets.rear.includes('spiral tail'));
-assert(!squirtleInsets.rear.includes('carapace'),'one source target must not repeat in two insets');
-assert(squirtleInsets.function.includes('water-jet nozzles'));
+assert(squirtleInsets.design.includes('temple')&&squirtleInsets.design.includes('shoulder plate'));
+assert(squirtleInsets.mount.includes('carapace')&&squirtleInsets.mount.includes('spiral tail'),'the mount inset takes rooted equipment from the motifs');
+assert(!squirtleInsets.mount.includes('water-jet')&&!squirtleInsets.mount.includes('colouring'),'nozzles and colours are not body mounts');
+assert(P.featureInsetSuggestions({motifs:'lavender palette, glossy plates'}).mount.includes('harness anchors'),'no rooted equipment falls back to the harness');
 const namedInsets={
  face:'pink eyes, blue wolf cut, rounded jaw and chin',
- front:'cream plastron chest plate with turtle segmentation and illuminated water channels',
- rear:'centered spinal shell mount and sacral spiral-tail root, with both attachment points visible',
- function:'calf water-jet nozzle, recessed port, lower-leg housing and footwear connection'
+ design:'temple hardpoints, collar and hexagonal shoulder plate with cream rim and teal channel seams',
+ mount:'centered spinal shell cradle and sacral spiral-tail root, with both attachment points visible'
 };
 const namedSheet=P.buildPrompt({...base,mech:'Squirtle',featureInsets:namedInsets});
 assert(namedSheet.includes('[FEATURE INSET LIST — FIXED]'));
 const insetOrder=Object.values(namedInsets).map(value=>namedSheet.indexOf(value));
 assert(insetOrder.every((n,i)=>n>=0&&(!i||n>insetOrder[i-1])),'named feature insets must keep fixed order');
 for(const value of Object.values(namedInsets)) assert.equal(namedSheet.split(value).length-1,1,'feature must occur once: '+value);
-for(const vague of ['source-derived marking or armor detail','main back-mounted structure and attachment','footwear and lower-leg construction','If a feature is absent'])
+for(const vague of ['source-derived marking or armor detail','main back-mounted structure and attachment','footwear and lower-leg construction','If a feature is absent','SIGNATURE DETAIL','four detail insets'])
  assert(!namedSheet.includes(vague),'ambiguous inset fallback remains: '+vague);
+// Head feature treatment is a sheet choice; helmets belong to the form definitions.
+const headSheet=P.buildPrompt({...base,mech:'Pikachu',headFeature:'accessory'});
+assert(headSheet.includes('earrings, ear cuffs or a choker'),'head feature option text reaches the sheet');
+assert(P.buildPrompt({...base,mech:'Pikachu',headFeature:'MY_OWN_HEAD_TEXT'}).includes('species head feature treatment: MY_OWN_HEAD_TEXT'));
+assert(headSheet.includes('HEAD AND FACE:')&&headSheet.includes('HEAD (light):'));
+for(const [form,mark] of [['heavy','HEAD (heavy):'],['mobility','HEAD (mobility):']]){
+ const t=P.buildPrompt({...base,form});
+ assert(t.includes(mark)&&t.includes('HEAD AND FACE:'),form+' headgear rule');
+}
+assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('never generate a new helmet'));
+for(const form of ['light','heavy','mobility','overdrive']){
+ const t=P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form,baseForm:'heavy'});
+ assert(t.includes('REFERENCE ROLES:')&&t.includes('Do not copy the light shoulder'),form+' action needs reference roles');
+ assert(t.includes('Eyes, bangs and the jaw outline stay visible'),form+' action needs the head rule');
+ if(form==='overdrive')assert(t.includes('never generate a new helmet'),'reference overdrive must not invent a helmet');
+ assert(!t.includes('HEAD AND FACE:'),'the long head rule stays out of the compact action prompt');
+}
 // The common approved-sheet -> action path stays concise and uses only relevant mount modules.
 const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
  motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
@@ -266,10 +282,10 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
  assert(sheet.includes('ENVIRONMENT DEFAULT:'),'sheet needs a spatial background');
  assert(!sheet.includes('COMPARISON ENVIRONMENT:'),'sheet must establish, not inherit, the comparison environment');
  assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
- for(const detail of ['FACE IDENTITY','SIGNATURE DETAIL A','SIGNATURE DETAIL B','SIGNATURE DETAIL C'])
+ for(const detail of ['FACE IDENTITY','HEAD-SHOULDER DESIGN LANGUAGE','REAR MOUNT'])
   assert(sheet.includes(detail),'missing sheet detail: '+detail);
  assert(sheet.includes('[FEATURE INSET LIST — FIXED]'));
- assert(sheet.includes('four detail insets')&&sheet.includes('vertical 3:4'));
+ assert(sheet.includes('three detail insets')&&sheet.includes('vertical 3:4'));
  assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
  assert(sheet.includes('rear three-quarter view must show the posterior sacral attachment'));
  assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
@@ -280,7 +296,7 @@ for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility'
   if(outputMode==='portrait'&&identityMode==='create')continue;
   const other=P.buildPrompt({...base,style,form,outputMode,identityMode});
   assert(!other.includes('INITIAL CHARACTER REFERENCE SHEET'),'sheet leaked into '+outputMode+'/'+identityMode);
-  assert(!other.includes('four detail insets'),'detail layout leaked into '+outputMode+'/'+identityMode);
+  assert(!other.includes('three detail insets'),'detail layout leaked into '+outputMode+'/'+identityMode);
   assert.equal(other.includes('COMPARISON ENVIRONMENT:'),outputMode==='portrait','background continuity must stay in comparison mode');
   if(outputMode==='portrait'){
    assert(other.includes('If the reference has no setting, establish one once'));

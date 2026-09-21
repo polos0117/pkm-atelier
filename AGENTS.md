@@ -100,6 +100,8 @@ node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주
 node tests/patch.cjs             # 패치 기록의 모양 — 날짜·차례·빈 칸
+node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·장착부 확대컷·머리 특징·이어가기 격리
+node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견본 파일명이 맞나
 ```
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
@@ -132,6 +134,9 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여섯의 머리가 같은 자리에
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
+NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·확대컷·머리 특징·저장
+NODE_PATH=<같은 경로> node tests/source-appearance-dom.cjs                        # 자료 자동 채움·수동 보정·자료 실패
+python3 tests/appearance-extractor.py   # 외형 추출기 — tools/appearance-requirements.txt 설치 후
 ```
 
 `run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·

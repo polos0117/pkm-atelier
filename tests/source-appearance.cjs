@@ -25,14 +25,16 @@ const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const P=ctx.window.AtelierPrompt;
 const base={style:'glossy_promo',form:'light',outputMode:'portrait',identityMode:'create',params:[]};
+let rooted=0,fallback=0;
 for(const c of cards){
  const st={...base,mech:c.name,sourceName:c.en,sourceAppearance:data.entries[c.no],motifs:''};
  const text=P.buildPrompt(st),targets=P.featureInsetSuggestions(st);
  assert(text.includes('Source appearance cues:'));
  assert(text.includes(data.entries[c.no].features[0].detail),c.en);
- assert.equal(new Set([targets.front,targets.rear,targets.function]).size,3,c.en+' duplicate insets');
- for(const v of [targets.front,targets.rear,targets.function])assert(text.includes(v));
- assert(!text.includes('REAR MOUNTING SYSTEM —'),'backpack category forced');
+ for(const v of [targets.face,targets.design,targets.mount])assert(text.includes(v));
+ assert(!/REAR MOUNT — rear close-up of the (?:[a-z-]+ )*(?:skin|fur|body|coat|scales?|feathers?|underside|belly|plastron) body mount/.test(text),c.en+': a colour, body or front plate became the rear mount');
+ assert(!text.includes('SIGNATURE DETAIL'),'old A/B/C slots remain');
+ if(/harness anchors/.test(targets.mount))fallback++;else rooted++;
  for(const outputMode of ['portrait','action','casual']){
   const ref=P.buildPrompt({...st,outputMode,identityMode:'reference'});
   assert(!ref.includes('Source appearance cues:'),'source data must not overwrite approved design');
@@ -40,7 +42,10 @@ for(const c of cards){
  }
 }
 const st={...base,mech:'꼬부기',sourceAppearance:data.entries['7']};
-const overridden=P.buildPrompt({...st,motifs:'USER_MOTIFS',featureInsets:{rear:'USER_TARGET'}});
+assert(rooted>=550&&rooted+fallback===1025,'rooted mounts '+rooted+' / harness fallback '+fallback);
+assert(P.headFeatureText({sourceAppearance:data.entries['25']}).includes('ears'),'Pikachu ears are a permanent head feature');
+assert(P.headFeatureText({sourceAppearance:data.entries['7']}).includes('no species head feature'));
+const overridden=P.buildPrompt({...st,motifs:'USER_MOTIFS',featureInsets:{mount:'USER_TARGET'}});
 assert(overridden.includes('USER_MOTIFS')&&overridden.includes('USER_TARGET'));
 assert(!overridden.includes('Source appearance cues:'));
 assert(!overridden.includes(data.entries['7'].features[0].detail));
@@ -48,4 +53,4 @@ assert(P.buildPrompt({...st,sourceAppearance:null}).includes('[OUTPUT MODE]'));
 assert(!/jet|nozzle|reactor/i.test(data.entries['7'].features.map(f=>f.detail).join(' ')));
 assert.equal(data.entries['964'].formScope,'Zero Form');
 assert.equal(data.entries['718'].formScope,'50% Forme');
-console.log('PASS 1025 source records; 4100 create/reference prompts; overrides, distinct insets, provenance and corruption checks');
+console.log('PASS 1025 source records; 4100 create/reference prompts; rear-mount '+rooted+'/harness '+fallback+', head features, overrides, provenance and corruption checks');

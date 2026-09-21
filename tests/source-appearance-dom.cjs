@@ -12,7 +12,7 @@ const data=require('../data/source-appearance.json').entries;
   assert(!a.output().includes(data['7'].features[0].detail));
   await a.set('motifs','CUSTOM_PURPLE_SURFACE');
   assert(a.output().includes('CUSTOM_PURPLE_SURFACE')&&!a.output().includes('Source appearance cues:'));
-  await a.set('feature-inset-front','CUSTOM_INSET');
+  await a.set('feature-inset-mount','CUSTOM_INSET');
   assert(a.output().includes('CUSTOM_INSET'));
   const state=a.w.localStorage.getItem(storeKey);a.dom.window.close();a=await open(state);
   assert(a.output().includes('CUSTOM_INSET')&&a.output().includes('CUSTOM_PURPLE_SURFACE'));
