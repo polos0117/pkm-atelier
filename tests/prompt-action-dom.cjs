@@ -14,7 +14,7 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   assert.equal(get('camera').value,'SAVED_ACTION_CAMERA');
   assert.equal(get('pose').value,'walking','saved legacy pose must stay selectable');
   assert(output().includes(S.POSE_GUIDES.walking[1]));
-  assert(!output().includes('[ACTION DIRECTION]'),'automatic choices add no instructions');
+  assert(!output().includes('Action category:'),'automatic choices add no instructions');
   for(const id of ['action-category','action-example',...S.ACTION_CONTROLS.map(r=>'action-'+r.key)]){
    assert(get(id+'-description')?.textContent.trim(),id+' description');
    assert.equal(get(id).getAttribute('aria-describedby'),id+'-description');
@@ -44,10 +44,11 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   assert.equal(get('action-effects').value,'none','category switch must retain detailed settings');
   assert(!output().includes(S.ACTION_CATEGORIES.find(r=>r.key==='ranged').examples[0].prompt));
   await set('action-example','defense_brace');
-  await click('mode-casual');assert(!get('action-category'));assert(!output().includes('[ACTION DIRECTION]'));
+  await click('mode-casual');assert(!get('action-category'));assert(!output().includes('Action category:'));
   assert(!Array.from(get('pose').options).some(o=>o.value==='low_guard'),'action poses leaked to casual menu');
-  await click('mode-portrait');assert(!get('action-category'));assert(!output().includes('[ACTION DIRECTION]'));
-  await click('mode-action');assert.equal(get('action-effects').value,'none');
+  await click('mode-action');const form0=get('form').value;await set('form','overdrive');
+  assert(!get('action-category'));assert(!output().includes('Action category:'),'action direction leaked into overdrive');
+  await set('form',form0);assert.equal(get('action-effects').value,'none');
   assert.equal(get('pose').value,'low_guard');assert.equal(get('action-example').value,'defense_brace');
   await set('source','이상해씨');assert.equal(get('action-category').value,'');
   await set('source','피카츄');assert.equal(get('action-category').value,'defense');
@@ -61,7 +62,7 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   const stale=JSON.parse(saved);stale.cards['피카츄'].scenes.action.action={category:'UNKNOWN',example:'defense_brace',effects:'BROKEN'};
   a.dom.window.close();a=await open(JSON.stringify(stale));
   for(const id of ['action-category','action-example','action-effects'])assert.equal(a.get(id).value,'');
-  assert(!a.output().includes('[ACTION DIRECTION]'));
+  assert(!a.output().includes('Action category:'));
   assert.deepEqual(a.errors,[]);
   console.log('PASS action DOM: menus, descriptions, old pose/camera values, dependent examples, form/mode/card isolation and restore');
  }finally{a.dom.window.close()}

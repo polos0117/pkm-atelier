@@ -1,394 +1,140 @@
-/* Prompt contracts: identity authority, form transitions, and mode isolation. */
+/* 프롬프트 계약 (2026-10-02 간결화). 화면 없이 node 로 돈다.
+   - 새 인물: 첨부 없이 한 장. 원작 특징은 "어떻게 입나"(WEAR) 로만 — 장착점·가림·FAIL 법조문은 없다.
+   - 이어가기: 확정한 그림을 첨부하고 장갑 겹만 바꾼다. 외형 값·색·입는 법을 다시 싣지 않는다.
+   - 개방: 그 폼 그림을 첨부하고 같은 그림에서 판만 연다.
+   - 일상: 평상복. 장갑·폼 말이 새지 않는다. */
 const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
 const ctx={window:{},console}; vm.createContext(ctx);
 for(const f of ['prompt-spec','figures','toolkit','prompt-anthro','prompt-lifestyle'])
   vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
-const {AtelierSpec:S,AtelierPrompt:P,AtelierLifestyle:L,AtelierFigures:F}=ctx.window;
-assert.equal(typeof P.buildPrompt,'function');
-assert(S.ART_STYLES.every(r=>r.length===3)); assert.equal(S.ART_STYLES.length,14);
-assert(S.STYLE_PROFILES.bright_catalog);
-assert(S.STYLE_PROFILES.glossy_promo);
-assert(S.STYLE_PROFILES.glossy_promo.core.includes('TEXT AND GRAPHIC OVERLAYS'));
-assert(S.STYLE_PROFILES.glossy_promo.core.includes('no typography'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart);
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('illustrated hybrid'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('illustration-first'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('crisp readable midground'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes("selected hairstyle's exact length"));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('Detail density is a rendering treatment'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes('not permission to redesign'));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.anthro.includes("not from changing the reference character's hairstyle"));
-assert(S.STYLE_PROFILES.mecha_cinematic_keyart.core.includes('no typography'));
-assert.equal(JSON.stringify(Object.keys(S.ACTION_STYLE_CORES).sort()),JSON.stringify(Array.from(S.ART_STYLES,r=>r[0]).sort()));
-assert(Object.values(S).every(x=>typeof x!=='function'));
-const base={mech:'Pikachu',style:S.DEFAULT_STYLE,outputMode:'portrait',identityMode:'create',
- form:'light',params:[['body type','athletic'],['eye color','amber'],['second eye color','blue']]};
-// Reference-sheet insets: face, head-shoulder design language, rear mount — three named, editable targets.
-assert.equal(typeof P.featureInsetSuggestions,'function');
-const squirtleInsets=P.featureInsetSuggestions({
- params:[['eye color','pink'],['hair color','blue'],['hairstyle','wolf cut'],['jaw & chin','soft rounded jaw']],
- motifs:'pale blue and cream colouring, hexagonal segmented carapace with a cream plastron chest plate, curled spiral tail, calf water-jet nozzles'
-});
-assert(squirtleInsets.face.includes('pink eyes')&&squirtleInsets.face.includes('blue wolf cut hair'));
-assert(squirtleInsets.design.includes('temple')&&squirtleInsets.design.includes('shoulder plate'));
-assert(squirtleInsets.mount.includes('carapace')&&squirtleInsets.mount.includes('spiral tail'),'the mount inset takes rooted equipment from the motifs');
-assert(!squirtleInsets.mount.includes('water-jet')&&!squirtleInsets.mount.includes('colouring'),'nozzles and colours are not body mounts');
-assert(P.featureInsetSuggestions({motifs:'lavender palette, glossy plates'}).mount.includes('harness anchors'),'no rooted equipment falls back to the harness');
-const namedInsets={
- face:'pink eyes, blue wolf cut, rounded jaw and chin',
- design:'temple hardpoints, collar and hexagonal shoulder plate with cream rim and teal channel seams',
- mount:'centered spinal shell cradle and sacral spiral-tail root, with both attachment points visible'
-};
-const namedSheet=P.buildPrompt({...base,mech:'Squirtle',featureInsets:namedInsets});
-assert(namedSheet.includes('[FEATURE INSET LIST — FIXED]'));
-const insetOrder=Object.values(namedInsets).map(value=>namedSheet.indexOf(value));
-assert(insetOrder.every((n,i)=>n>=0&&(!i||n>insetOrder[i-1])),'named feature insets must keep fixed order');
-for(const value of Object.values(namedInsets)) assert.equal(namedSheet.split(value).length-1,1,'feature must occur once: '+value);
-for(const vague of ['source-derived marking or armor detail','main back-mounted structure and attachment','footwear and lower-leg construction','If a feature is absent','SIGNATURE DETAIL','four detail insets'])
- assert(!namedSheet.includes(vague),'ambiguous inset fallback remains: '+vague);
-// Head feature treatment is a sheet choice; helmets belong to the form definitions.
-const headSheet=P.buildPrompt({...base,mech:'Pikachu',headFeature:'accessory'});
-assert(headSheet.includes('earrings, ear cuffs or a choker'),'head feature option text reaches the sheet');
-assert(P.buildPrompt({...base,mech:'Pikachu',headFeature:'MY_OWN_HEAD_TEXT'}).includes('species head feature treatment: MY_OWN_HEAD_TEXT'));
-assert(headSheet.includes('HEAD AND FACE:')&&headSheet.includes('HEAD (light):'));
-for(const [form,mark] of [['heavy','HEAD (heavy):'],['mobility','HEAD (mobility):']]){
- const t=P.buildPrompt({...base,form});
- assert(t.includes(mark)&&t.includes('HEAD AND FACE:'),form+' headgear rule');
+const {AtelierSpec:S,AtelierPrompt:P,AtelierLifestyle:L}=ctx.window;
+const app=JSON.parse(fs.readFileSync('data/source-appearance.json','utf8')).entries;
+const cards=JSON.parse(fs.readFileSync('data/card.json','utf8')).cards.character;
+const words=t=>(t.match(/\S+/g)||[]).length;
+function input(name,extra){
+ const c=cards.find(x=>x.name===name||x.en===name);
+ return {mech:c.name,sourceName:c.en,series:[c.element,c.element2].filter(Boolean).join(' / '),
+  sourceAppearance:app[String(c.no)],style:'glossy_promo',params:[],outputMode:'action',identityMode:'create',form:'light',...extra};
 }
-assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('never generate a new helmet'));
-for(const form of ['light','heavy','mobility','overdrive']){
- const t=P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form,baseForm:'heavy'});
- assert(t.includes('REFERENCE ROLES:')&&t.includes('Do not copy the light shoulder'),form+' action needs reference roles');
- assert(t.includes('Eyes, bangs and the jaw outline stay visible'),form+' action needs the head rule');
- if(form==='overdrive')assert(t.includes('never generate a new helmet'),'reference overdrive must not invent a helmet');
- assert(!t.includes('HEAD AND FACE:'),'the long head rule stays out of the compact action prompt');
- assert(t.includes('PLATE DISCIPLINE:')&&t.includes('never a small backpack'),form+' action needs the plate discipline');
-}
-// Heavy action: the body stays the sheet's; the silhouette grows by plate thickness and clearance, not by a bigger woman or more parts.
-const heavyAction=P.buildPrompt({...base,mech:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy'});
-for(const need of ['stand-off brackets','one cuirass','one wraparound cuisse','stays exactly the sheet','floats over it rather than thickening the limb','no cannons, weapons or new appendages'])
- assert(heavyAction.includes(need),'heavy action lost: '+need);
-assert(!heavyAction.includes('layered armor around chest, back, ribs'),'the old twelve-region list invites tiling');
-// Rear equipment is revealed by the pose, never relocated to be seen; the rule rides with the mount hints.
-assert(heavyAction.includes('OCCLUSION:')&&heavyAction.includes('never shifted to a shoulder, flank, hip or arm'),'shell/tail species need the occlusion rule');
-assert(heavyAction.includes('never by relocating it')&&!heavyAction.includes('show head, feet and mounted equipment'),'output must not demand visible rear gear');
-assert(!P.buildPrompt({...base,identityMode:'reference',outputMode:'action'}).includes('OCCLUSION:'),'no rear gear, no occlusion rule');
-// An action card faces the camera; rear gear may be hidden by the body and is never relocated. No default rear view.
-assert(!heavyAction.includes('rear three-quarter view'),'no forced rear composition');
-// The common approved-sheet -> action path stays concise and uses only relevant mount modules.
-const shortAction=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form:'heavy',
- motifs:'hexagonal segmented carapace, curled spiral tail and water-jet nozzles'});
-const shortWords=shortAction.trim().split(/\s+/).length;
-const shortNegatives=(shortAction.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length;
-// 2026-09-21: 800 → 900. 등 장비를 보이려고 옮기던 것을 막는 OCCLUSION 문단이 실린다(사용자가 예산 확대를 허락).
-assert(shortWords<950,'reference action prompt grew beyond its compact budget: '+shortWords);
-for(const form of ['light','heavy','mobility','overdrive']){
- const n=P.buildPrompt({...base,mech:'Squirtle',sourceName:'Squirtle',identityMode:'reference',outputMode:'action',form,baseForm:'heavy'}).trim().split(/\s+/).length;
- // 폭주는 기본 폼 정의 위에 개방 문장이 얹혀 50낱말쯤 더 든다 — 그만큼만 허용한다
- assert(n<(form==='overdrive'?1000:950),form+' action prompt grew beyond its compact budget: '+n);
-}
-assert((shortAction.match(/^\[/gm)||[]).length<=10,'too many compact action blocks');
-assert(shortNegatives<=12,'compact action accumulated prohibitions: '+shortNegatives);
-for(const legacy of ['MOUNT LOCK','OCCLUSION LOCK','CORRECTION PRIORITY','FAIL CONDITIONS']) assert(!shortAction.includes(legacy));
-assert(shortAction.includes('SHELL:')&&shortAction.includes('TAIL:'));
-const rearAction=P.buildPrompt({...base,mech:'Bulbasaur',identityMode:'reference',outputMode:'action'});
-assert(rearAction.includes('REAR UNIT:')&&!rearAction.includes('SHELL:')&&!rearAction.includes('TAIL:'));
-const plainAction=P.buildPrompt({...base,identityMode:'reference',outputMode:'action'});
-assert(!plainAction.includes('REAR UNIT:')&&!plainAction.includes('SHELL:')&&!plainAction.includes('TAIL:'));
-// Source engineering is separate from rendering and from continuation identity.
-for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual']) {
- for(const form of ['light','heavy','mobility','overdrive']) {
-  const t=P.buildPrompt({...base,mech:'Squirtle',identityMode,outputMode,form,baseForm:'heavy'});
-  const compact=identityMode==='reference'&&outputMode==='action';
-  if(compact){
-   assert(!t.includes('BODY-SPACE MOUNT LOCK:')&&!t.includes('MOUNT CORRECTION PRIORITY:'));
-   assert(!t.includes('OCCLUSION LOCK:')&&!t.includes('FAIL CONDITIONS:'));
-   assert(t.includes('SHELL:')&&t.includes('TAIL:'));
-   assert(t.includes('natural occlusion'));
-   continue;
-  }
-  const marker='BODY-SPACE MOUNT LOCK:';
-  assert.equal(t.split(marker).length-1,outputMode==='casual'?0:1,'mount rule must occur once in armored modes only');
-  assert.equal(t.includes('MOUNT CORRECTION PRIORITY:'),identityMode==='reference'&&outputMode!=='casual');
-  if(outputMode!=='casual') {
-   assert(t.includes('independent sacral root'));
-   assert(t.includes('not a camera-facing disk'));
-   assert(!t.includes('approved alternative mounting designs'));
-   if(identityMode==='reference') {
-    assert(t.includes('even when continuing the same form'));
-    assert(t.includes('Image approval alone does not approve an ambiguous attachment'));
-   }
-   assert(!t.includes('If correct geometry would hide the tail completely, hide it completely.'));
-   assert(t.includes('Do not delete, shrink or forcibly conceal signature equipment'));
-   assert(t.includes('Natural lateral projection is allowed'));
-   assert.equal(t.includes('COMPARISON BODY ANGLE: 25-35 degrees'),identityMode==='reference'&&outputMode==='portrait');
-   assert(t.includes('Natural distal overlap beside a limb is not itself a mounting error.'));
-   assert(t.includes('FAIL CONDITIONS:'));
-   assert(!t.includes('Allocate visual mass'));
-   if(identityMode==='reference'&&outputMode==='portrait') {
-    assert(t.includes('Rotate torso, pelvis and mounted equipment together'));
-    assert(t.includes('same turn direction and angle across light, heavy, mobility and overdrive'));
-   }
-   assert(t.includes('not relocate the main mounts'));
-  }
- }
-}
-// Creative planning is restricted to new armored designs; insets only to sheets.
-for(const mech of ['Squirtle','Bulbasaur','Mew'])
- for(const identityMode of ['create','reference'])
-  for(const outputMode of ['portrait','action','casual'])
-   for(const form of ['light','heavy','mobility','overdrive']) {
-    const t=P.buildPrompt({...base,mech,identityMode,outputMode,form,baseForm:'heavy'});
-    const armored=outputMode!=='casual';
-    const compact=identityMode==='reference'&&outputMode==='action';
-    assert.equal(t.includes('CREATIVE ENGINEERING PREPASS:'),armored&&identityMode==='create');
-    assert.equal(t.includes('APPROVED-DESIGN CREATIVE LOCK:'),armored&&identityMode==='reference'&&!compact);
-    assert.equal(t.includes('INSET FIDELITY LOCK:'),outputMode==='portrait'&&identityMode==='create');
-    if(armored&&!compact) {
-     assert(t.includes('Hidden or stowed does not mean absent'));
-     assert(t.includes('core equipment and form-specific armor parts'));
-     assert(!t.includes('For a source with a back bulb'));
-     assert(!t.includes('hydro-pressure reactor'));
-    }
-    if(compact) assert(t.includes('approved sheet defines the core equipment'));
-    if(armored&&identityMode==='create') {
-     assert(t.includes('Optional is not absent by default'));
-     assert(t.includes('Include the concise design record with the result'));
-    }
-   }
-for (const style of S.ART_STYLES.map(r=>r[0])) {
- const fresh=P.buildPrompt({...base,style});
- assert(fresh.includes('SOURCE-TO-MECHANISM DESIGN:'));
- const designOrder=['[SOURCE IDENTITY]','[SOURCE ENGINEERING]','[CHARACTER IDENTITY]','[FORM DEFINITION]','[STYLE CORE]','[OUTPUT MODE]'].map(k=>fresh.indexOf(k));
- assert(designOrder.every((n,i)=>n>=0&&(!i||n>designOrder[i-1])));
- assert(fresh.includes('Start from a fresh design'));
- assert(fresh.includes('anatomically correct body-space mounts'));
- const continued=P.buildPrompt({...base,style,identityMode:'reference'});
- assert(continued.includes('Preserve the approved source-to-mechanism design'));
- assert(!continued.includes('Start from a fresh design'));
- const casualDesign=P.buildPrompt({...base,style,outputMode:'casual'});
- assert(!casualDesign.includes('SOURCE-TO-MECHANISM DESIGN:'));
-}
-assert(!P.buildPrompt({...base,form:'heavy'}).includes('Build a unified substantial upper-chest cuirass'));
-assert(!P.buildPrompt({...base,form:'heavy'}).includes('Keep the central abdomen and natural waist in the established flexible undersuit by default'));
-// Material identity must survive every style, form and output mode without changing coverage.
-function assertMaterials(t,mode){
- assert(t.includes('[MATERIAL SEPARATION]'),'missing material separation');
- t=t.split('[MATERIAL SEPARATION]')[1].split('\n\n[')[0];
- if(t.includes('Render skin with soft anatomical shading')){
-  assert(t.includes('undersuit as flexible fabric'));
-  assert(t.includes('armor as rigid plates'));
-  assert(t.includes('selected form explicitly adds outer armor'));
-  return;
- }
- assert(t.includes('Exposed human skin is living skin'),'skin must not become shell');
- assert(t.includes('Do not convert covered areas into bare skin'),'coverage guard');
- assert(t.includes('selected style'),'material rules preserve style');
- if(mode==='casual'){
-  assert(t.includes('Clothing remains clothing'));
-  assert(!t.includes('BODYSUIT:')&&!t.includes('ARMOR:'));
- }else{
-  assert(t.includes('BODYSUIT:')&&t.includes('ARMOR:'));
-  assert(t.includes('cream or flesh-coloured bodysuit remains fabric'));
-  assert(t.includes('never bare skin by default'));
- }
-}
-const materialProbe=P.buildPrompt(base);
-// Heavy panel travel applies only to heavy overdrive; unknown reference armor stays conditional.
-for(const outputMode of ['portrait','action','casual']) for(const baseForm of ['light','heavy','mobility','reference']) {
- const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form:'overdrive',baseForm});
- assert.equal(t.includes('HEAVY PANEL TRAVEL:'),outputMode==='portrait'&&['heavy','reference'].includes(baseForm));
- if(baseForm==='reference'&&outputMode==='portrait') assert(t.includes('Only if the attached base armor is heavy'));
-}
-assert(!P.buildPrompt({...base,form:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
-assert(P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'}).includes('HEAVY PANEL TRAVEL:'));
-// Heavy coverage is a form transformation, isolated from light, mobility and casual.
-for(const outputMode of ['portrait','action','casual']) for(const form of ['light','heavy','mobility']) {
- const t=P.buildPrompt({...base,identityMode:'reference',outputMode,form});
- assert.equal(t.includes('HEAVY COVERAGE:'),outputMode==='portrait'&&form==='heavy');
-}
-const heavyPrompt=P.buildPrompt({...base,identityMode:'reference',form:'heavy'});
-assert(heavyPrompt.includes('front and outer upper thighs'));
-assert(heavyPrompt.includes('one dominant broad front plate'));
-assert(heavyPrompt.includes('pelvis-to-knee'));
-const heavyOpen=P.buildPrompt({...base,identityMode:'reference',form:'overdrive',baseForm:'heavy'});
-assert(heavyOpen.includes('large solid doors'));
-assert(heavyOpen.includes('Do not subdivide'));
-// Reference anatomy authority must survive all output modes, but never leak into new identities.
-for(const outputMode of ['portrait','action','casual']) {
- const t=P.buildPrompt({...base,identityMode:'reference',outputMode});
- if(outputMode==='action') {
-  assert(t.includes('same woman from the approved identity anchor'));
-  assert(t.includes('height and body proportions'));
- } else {
-  assert(t.includes('FRONT-VIEW ANATOMY AUTHORITY:'));
-  assert(t.includes('Do not average conflicting views'));
- }
- if(outputMode!=='casual') assert(!P.buildPrompt({...base,identityMode:'create',outputMode}).includes('FRONT-VIEW ANATOMY AUTHORITY:'));
-}
-for(const form of ['heavy','overdrive']) {
- const t=P.buildPrompt({...base,identityMode:'reference',form,baseForm:'heavy'});
- assert(t.includes('The body does not need to fill the armor cavity'));
- assert(t.includes('inner-thigh contours'));
- assert(t.includes('Do not infer a larger breast or ribcage'));
-}
-assert(!P.buildPrompt({...base,identityMode:'reference',form:'light'}).includes('The body does not need to fill the armor cavity'));
-// Form-specific staging must not leak into normal portraits, sheets or casual scenes.
-for(const baseForm of ['light','heavy','mobility','reference']) {
- const state={...base,identityMode:'reference',form:'overdrive',baseForm};
- const portrait=P.buildPrompt(state);
- assert(portrait.includes('OVERDRIVE COMPARISON STAGING'),'overdrive needs its own portrait staging');
- assert(!portrait.includes('small pose variation and restrained effects'),'normal staging suppresses overdrive');
- assert(portrait.includes('vertical 2:3')&&portrait.includes('main front view'));
- for(const outputMode of ['action','casual'])
-  assert(!P.buildPrompt({...state,outputMode}).includes('OVERDRIVE COMPARISON STAGING'));
- assert(!P.buildPrompt({...state,identityMode:'create',baseForm:'light'}).includes('OVERDRIVE COMPARISON STAGING'));
-}
-for(const form of ['light','heavy','mobility'])
- assert(!P.buildPrompt({...base,identityMode:'reference',form}).includes('OVERDRIVE COMPARISON STAGING'));
-assertMaterials(materialProbe,'portrait');
-assert.throws(()=>assertMaterials(materialProbe.replace(/\[MATERIAL SEPARATION\][\s\S]*?(?=\n\n\[)/,''),'portrait'));
-let count=0;
-for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action','casual'])
- for(const form of ['light','heavy','mobility','overdrive']){
-  const t=P.buildPrompt({...base,style,outputMode,form,identityMode:'reference',
-   baseForm:'reference',formOverride:'OPEN_LEFT_PANEL',camera:'LOW_CAMERA',scene:'CITY_PARK'});
-  assert(t.includes(outputMode==='action'?S.ACTION_STYLE_CORES[style]:S.STYLE_PROFILES[style].core),style);
-  if(outputMode==='action') {
-   assert(t.trim().split(/\s+/).length<800,style+' compact action exceeded word budget');
-   assert((t.match(/\b(?:no|not|never|without|avoid|do not|must not|cannot)\b/gi)||[]).length<=12,style+' compact action accumulated prohibitions');
-  }
-  assertMaterials(t,outputMode);
-  assert(!/undefined|null|Gundam|mobile.suit|\[TRANSLATION PROFILE\]/i.test(t),style);
-  assert(t.includes('Pikachu')); assert(t.includes('woman')); assert(t.includes('user-approved'));
-  assert(t.startsWith('[GENERATION INPUT]')&&t.includes('IMAGE-GUIDED CONTINUATION'));
-  assert(!t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
-  assert(!t.includes('referenced_image_paths')&&!t.includes('num_last_images_to_include'));
-  assert(!t.includes('body type: athletic')); assert(!t.includes('eye color: amber'));
-  const order=(outputMode==='action'?
-   ['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[SOURCE ENGINEERING]','[FORM DEFINITION]','[STYLE CORE]','[MATERIAL SEPARATION]','[OUTPUT MODE]','[FINAL CHECK]']:
-   ['[SOURCE IDENTITY]','[CHARACTER IDENTITY]','[STYLE CORE]','[PROJECT STYLE EXTENSION]','[OUTPUT MODE]','[CAMERA & PRESENTATION]','[CONSISTENCY / NEGATIVE LOCK]','[FINAL CHECK]']).map(x=>t.indexOf(x));
-  assert(order.every((x,i)=>x>=0&&(!i||x>order[i-1])));
-  assert.equal(t.includes('[FORM DEFINITION]'),outputMode!=='casual');
-  assert.equal(t.includes('OPEN_LEFT_PANEL'),outputMode!=='casual');
-  assert.equal(t.includes('LOW_CAMERA'),outputMode!=='portrait');
-  assert.equal(t.includes('CITY_PARK'),outputMode!=='portrait');
-  assert.equal(P.audit(outputMode,t).length,0); count++;
- }
-const first=P.buildPrompt(base);
-const tailAction=P.buildPrompt({...base,outputMode:'action'});
-assert(tailAction.includes('posterior centerline at the sacrum or lower back'));
-assert(tailAction.includes('never originate from the abdomen, front waist, side waist, chest or front hip'));
-// New creation never assumes an uploaded identity or source image, including optional face settings.
-for(const [style] of S.ART_STYLES) for(const outputMode of ['portrait','action'])
- for(const form of ['light','heavy','mobility','overdrive']){
-  const t=P.buildPrompt({...base,style,outputMode,form,params:[...base.params,['facial ethnicity','East Asian']]});
-  assert(t.startsWith('[GENERATION INPUT]')&&t.includes('TEXT-TO-IMAGE NEW CHARACTER'));
-  assertMaterials(t,outputMode);
-  assert(t.includes('No input image is required'));
-  const input=t.slice(0,t.indexOf('[STYLE CORE]'));
-  assert(input.includes('omit both referenced_image_paths and num_last_images_to_include'));
-  assert(input.includes('Do not automatically use earlier conversation images'));
-  assert(t.includes('neither a character reference nor a source-creature picture'));
-  assert(!/Preserve attached design|attached reference identity|compare face, hair and body with the approved|reference image\x27s own rendering/i.test(t),style+' leaked image requirement');
-  assert(t.includes('facial ethnicity: East Asian'));
- }
-// A creation portrait is an explicit reference sheet; all later modes stay independent.
-for(const [style] of S.ART_STYLES) for(const form of ['light','heavy','mobility','overdrive']){
- const sheet=P.buildPrompt({...base,style,form,camera:'IGNORED_CAMERA',scene:'IGNORED_SCENE',aspect:'16:9'});
- assert(sheet.includes('INITIAL CHARACTER REFERENCE SHEET'),style+' creation sheet');
- assert(sheet.includes('ENVIRONMENT DEFAULT:'),'sheet needs a spatial background');
- assert(!sheet.includes('COMPARISON ENVIRONMENT:'),'sheet must establish, not inherit, the comparison environment');
- assert(sheet.includes('front full-body view')&&sheet.includes('rear three-quarter full-body view'));
- for(const detail of ['FACE IDENTITY','HEAD-SHOULDER DESIGN LANGUAGE','REAR MOUNT'])
-  assert(sheet.includes(detail),'missing sheet detail: '+detail);
- assert(sheet.includes('[FEATURE INSET LIST — FIXED]'));
- assert(sheet.includes('three detail insets')&&sheet.includes('vertical 3:4'));
- assert(!sheet.includes('vertical 2:3'),'initial reference sheet kept the narrow portrait ratio');
- assert(sheet.includes('rear three-quarter view must show the posterior sacral attachment'));
- assert(sheet.includes('same individual')&&sheet.includes('same selected armor configuration'));
- assert(!sheet.includes('IGNORED_CAMERA')&&!sheet.includes('IGNORED_SCENE')&&!sheet.includes('16:9'));
- assert(!sheet.includes('SINGLE-FIGURE COMPARISON PORTRAIT'),'mutually exclusive portrait instructions');
- assert(sheet.includes(S.STYLE_PROFILES[style].core),'sheet preserves selected style');
- for(const outputMode of ['portrait','action','casual']) for(const identityMode of ['create','reference']){
-  if(outputMode==='portrait'&&identityMode==='create')continue;
-  const other=P.buildPrompt({...base,style,form,outputMode,identityMode});
-  assert(!other.includes('INITIAL CHARACTER REFERENCE SHEET'),'sheet leaked into '+outputMode+'/'+identityMode);
-  assert(!other.includes('three detail insets'),'detail layout leaked into '+outputMode+'/'+identityMode);
-  assert.equal(other.includes('COMPARISON ENVIRONMENT:'),outputMode==='portrait','background continuity must stay in comparison mode');
-  if(outputMode==='portrait'){
-   assert(other.includes('If the reference has no setting, establish one once'));
-   assert(other.includes('same location, background layout and lighting across forms'));
-   assert(other.includes('Explicit user background requests override this default'));
-  }
-  if(outputMode==='portrait'){
-   assert(other.includes('SINGLE-FIGURE COMPARISON PORTRAIT'));
-   assert(other.includes('main front view'),'sheet reference resolves to its front view');
-  }
- }
-}
-assert(first.includes('body type: athletic')); assert(first.includes('right eye is amber'));
-assert(first.includes('left eye is blue')); assert(!first.includes('Use the SAME'));
-assert(!first.includes('[BODY MEASUREMENT NOTE]'));
-assert(P.buildPrompt({...base,params:[['body measurements (B/W/H)','84/58/86']]}).includes('[BODY MEASUREMENT NOTE]'));
-assert(P.buildPrompt({...base,form:'heavy'}).includes('multiple overlapping'));
-assert(P.buildPrompt({...base,form:'mobility'}).includes('outward'));
-assert.throws(()=>P.buildPrompt({...base,form:'unknown'}));
-assert.throws(()=>P.buildPrompt({...base,style:'semi_real'}));
-assert.throws(()=>P.buildPrompt({...base,outputMode:'collage'}));
-assert.throws(()=>P.buildPrompt({...base,form:'overdrive',baseForm:'reference'}));
-const od=P.buildPrompt({...base,identityMode:'reference',form:'overdrive'});
-assert(od.includes('armor actually worn in the attached reference'));
-assert(od.includes('selected existing seams')); assert(od.includes('Floating is optional'));
-const explicit=P.buildPrompt({...base,form:'overdrive',baseForm:'heavy'});
-assert(explicit.includes('multiple overlapping'));
-assert(!explicit.includes('armor actually worn in the attached reference'));
-const casual=L.buildSingle({source:{mech:'Pikachu'},style:S.DEFAULT_STYLE,cat:'everyday_basic',
- axes:{source_influence:'subtle'},scene:'CITY_PARK',carryFace:true,carryBody:true,
- record:{female:{params:{'body type':'LEGACY_BODY'}}}});
-assert(casual.includes('CITY_PARK')); assert(!casual.includes('LEGACY_BODY'));
-assert(!casual.includes('[FORM DEFINITION]')); assert(P.buildAnthro(base).includes('body type: athletic'));
-assert(F.has('body type',Object.keys(S.BODY_FIG)[0]));
-assert(F.has('hairstyle',Object.keys(S.HAIR_FIG)[0]));
+const build=(name,extra)=>P.buildPrompt(input(name,extra));
+assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
+assert.equal(S.ART_STYLES.length,14);
+for(const [k] of S.ART_STYLES) assert(S.ACTION_STYLE_CORES[k]&&S.CASUAL_STYLE_CORES[k],'style lines: '+k);
 
+/* 옛 법조문이 돌아오면 실패 — 이 문단들이 "보여 주려고 옮기는" 그림을 만들었다 */
+const LAW=['MOUNT','OCCLUSION','FAIL','REFERENCE ROLES','PLATE DISCIPLINE','INSET','reference sheet','sacral','spinal','hardpoint',
+ 'equipment readable','show every core component','rear view','three-quarter rear','[GENERATION INPUT]','[CHARACTER IDENTITY]'];
+const law=t=>LAW.filter(w=>t.includes(w));
 
-for (const identityMode of ['create','reference']) {
- const light=P.buildPrompt({...base,identityMode,form:'light'});
- assert(light.includes('LIGHT STRUCTURAL DEPTH:'));
- assert(light.includes('does not require a continuous bodysuit'));
- assert(light.includes('Preserve approved coverage'));
- assert(!P.buildPrompt({...base,identityMode,form:'heavy'}).includes('LIGHT STRUCTURAL DEPTH:'));
- assert(!P.buildPrompt({...base,identityMode,outputMode:'casual'}).includes('LIGHT STRUCTURAL DEPTH:'));
-}
-assert(P.buildPrompt(base).includes('source anatomy and type'));
+/* 꼬부기 — 보고된 실패(등딱지가 어깨에, 꼬리가 엉덩이 옆 원판)의 종 */
+const sq=build('꼬부기');
+assert.deepEqual(law(sq),[],'law block came back');
+assert(sq.startsWith('INPUT: text only'),'new character needs no image');
+assert(sq.includes('omit referenced_image_paths and num_last_images_to_include'));
+assert(sq.includes('SOURCE: Squirtle (꼬부기), water type.'));
+assert(sq.includes('PALETTE: brown, white, light blue, pale yellow.'),'colors from the data, body color first');
+assert(sq.includes('the brown dorsal shell with white rim becomes a dome-backed mantle'),'shell is worn, not mounted');
+assert(sq.includes('the pale-yellow belly shell becomes her breastplate'));
+assert(sq.includes('the inward-curled long tail becomes a long sash hanging from the back of her belt'));
+assert(!sq.includes('light-blue skin'),'a skin color must not reach the prompt as a noun');
+assert(sq.includes('Her skin is human skin.'));
+assert(sq.includes('nothing is carried, mounted or put on display'));
+assert(sq.includes(S.FORM_LINES.light)&&sq.includes(S.ACTION_STYLE_CORES.glossy_promo));
+assert(sq.includes('face toward the camera')&&sq.includes('never a back view'));
+assert(!sq.includes('IDENTITY'),'no identity block without chosen values');
+assert(words(sq)<=360,'anchor budget: '+words(sq));
 
-const compactSheet=P.buildPrompt({...base,style:'glossy_promo',params:[]});
-assert(compactSheet.length < 10000,'compact creation sheet exceeds text budget');
-assert(!compactSheet.includes('Lock skeletal shoulder width'),'creation must establish anatomy, not lock an absent reference');
-// Bilateral construction applies to armor only, once, across forms and identity modes.
-for(const identityMode of ['create','reference']) for(const outputMode of ['portrait','action','casual'])
- for(const form of ['light','heavy','mobility','overdrive']) {
- const t=P.buildPrompt({...base,identityMode,outputMode,form});
- const compact=identityMode==='reference'&&outputMode==='action';
- assert.equal(t.split('BILATERAL ARMOR:').length-1,outputMode==='casual'||compact?0:1);
- if(outputMode!=='casual'&&!compact) {
-  assert(t.includes('matching part inventory, dimensions and anatomical mounting levels'));
-  assert(t.includes('explicitly requested or explicitly approved asymmetric equipment'));
-  assert(t.includes('Pose, perspective, cable curves and panel-opening angles may differ'));
- }
- if(compact) assert(t.includes('Paired shoulder, arm, thigh, knee, shin and footwear armor uses matching parts'));
+/* 머리 특징 표현을 고르면 자동 머리 문장(귀·볼주머니)을 대신한다 */
+const pk=build('피카츄'), pkHead=build('피카츄',{headFeature:'accessory'});
+assert(pk.includes('long black-tipped ears become a headpiece')&&pk.includes('cheek pouches become two small round ornaments'));
+assert(pkHead.includes('HEAD: her species head features are echoed by small jewelry'));
+assert(!pkHead.includes('ears become')&&!pkHead.includes('pouches become'),'head option replaces automatic head wear');
+assert(pkHead.includes('lightning-shaped tail becomes'),'non-head wear stays');
+assert(build('피카츄',{headFeature:'MY_HEAD_TEXT'}).includes('HEAD: MY_HEAD_TEXT.'));
+/* 직접 쓴 입는 법이 자동을 대신한다 */
+const mine=build('꼬부기',{motifs:'MY_WEAR_TEXT'});
+assert(mine.includes('WEAR (user choice): MY_WEAR_TEXT.')&&!mine.includes('dome-backed mantle'));
+
+/* 폼 셋은 겹으로 갈린다 */
+const forms={light:'one close-fitting armor layer',heavy:'plates over plates',mobility:'split and fan outward and back'};
+for(const [form,mark] of Object.entries(forms)) for(const identityMode of ['create','reference']){
+ const t=build('꼬부기',{form,identityMode});
+ assert(t.includes(mark),form);
+ for(const [other,m] of Object.entries(forms)) if(other!==form) assert(!t.includes(m),form+' carries '+other);
+ assert.deepEqual(law(t),[],form+' law');
 }
-for(const identityMode of ['create','reference']) {
- for(const form of ['heavy','overdrive']) {
-  const t=P.buildPrompt({...base,identityMode,form,baseForm:'heavy'});
-  assert(t.includes('FULL-BODY ENCLOSURE:'));
-  assert(t.includes('previously exposed skin or textile'));
-  assert(t.includes('abdomen, waist, pelvis'));
-  assert(!t.includes('preserve established abdominal coverage unless'));
- }
- const light=P.buildPrompt({...base,identityMode,form:'light'});
- assert(light.includes('separate regional armor assemblies'));
- assert(!light.includes('FULL-BODY ENCLOSURE:'));
- assert(!P.buildPrompt({...base,identityMode,outputMode:'casual',form:'heavy'}).includes('FULL-BODY ENCLOSURE:'));
+/* 이어가기 — 첨부가 인물을 정한다. 외형 값·색·입는 법을 다시 싣지 않는다 */
+const params=[['hair color','mint'],['eye color','red'],['jaw & chin','soft rounded jaw']];
+const ref=build('꼬부기',{identityMode:'reference',form:'heavy',params});
+assert(ref.startsWith('INPUT: the attached image is the approved character'));
+assert(ref.includes('the HEAVY form of the woman in the attached image'));
+assert(ref.includes('change only her armor'));
+assert(ref.includes('the species features she wears as costume'));
+for(const s of ['PALETTE','WEAR','IDENTITY','mint','U-shaped','omit referenced_image_paths']) assert(!ref.includes(s),'continuation re-sends '+s);
+assert(words(ref)<=260,'continuation budget: '+words(ref));
+assert(build('꼬부기',{identityMode:'reference',motifs:'KEEP_THIS'}).includes('MOTIFS to keep: KEEP_THIS.'));
+/* 새 인물은 고른 외형만 */
+const chosen=build('꼬부기',{params});
+assert(chosen.includes(S.PROMPT_LINES.identity)&&chosen.includes('hair color: mint')&&chosen.includes('both eyes are red'));
+assert(build('꼬부기',{params:[['body measurements (B/W/H)','94 / 61 / 95']]}).includes('circumferences in cm'));
+
+/* 개방 — 첨부한 그 폼 그림에서 판만. 기준 폼마다 여는 법, 타입마다 빛 */
+for(const base of ['light','heavy','mobility','reference']){
+ const t=build('꼬부기',{form:'overdrive',baseForm:base,params,frame:'waist_up',pose:'low_guard',custom:'OPEN_NOTE'});
+ assert(t.includes(S.OPEN_LINES[base]),base);
+ assert(t.includes(S.TYPE_ENERGY.water));
+ assert(t.includes('same picture before and after')&&t.includes("Keep its camera, pose, framing, subject scale"));
+ assert(t.includes('No new armor, no new helmet, no weapon'));
+ assert(!t.includes('FORM —')&&!t.includes('IDENTITY')&&!t.includes('WEAR')&&!t.includes('PALETTE'),base+' overdrive re-designs');
+ assert(!t.includes(S.FRAME_GUIDES.waist_up[1]),'overdrive keeps the attached camera');
+ assert(t.includes('NOTE: OPEN_NOTE'));
+ assert.deepEqual(law(t),[]);
+ assert(words(t)<=210,'overdrive budget: '+words(t));
 }
-console.log('PASS prompt engine: '+count+' combinations + identity and transition contracts');
+assert(build('꼬부기',{form:'overdrive',baseForm:'heavy'}).includes("attach this character's heavy-form card image"));
+assert(build('파이리',{form:'overdrive',baseForm:'light'}).includes(S.TYPE_ENERGY.fire));
+for(const type of new Set(cards.map(c=>c.element))) assert(S.TYPE_ENERGY[type],'energy for '+type);
+
+/* 일상 — 평상복. 장갑·폼·입는 법이 새지 않는다 */
+const cas=L.buildSingle(input('꼬부기',{cat:'everyday_basic',form:'heavy',params}));
+assert(cas.startsWith('CHARACTER: the same woman as the attached image'));
+assert(cas.includes('STYLE: '+S.CASUAL_STYLE_CORES.glossy_promo));
+assert(cas.includes('never armor, never a creature costume'));
+for(const s of ['FORM —','WEAR','PALETTE','IDENTITY','mint','plates']) assert(!cas.includes(s),'casual carries '+s);
+for(const [k] of S.ART_STYLES) assert(!/armor|mecha|hard-surface|mechanical/i.test(S.CASUAL_STYLE_CORES[k]),'casual style speaks armor: '+k);
+assert(words(cas)<=320,'casual budget: '+words(cas));
+
+/* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
+/* 몸 부위(코·입·눈·다리·몸통·털·피부…)로 적힌 특징은 입는 법 문장이 되지 않는다 — 색만 PALETTE 로 */
+const BODY=/^(nose|mouth|lip|toe|finger|eye|pupil|iris|snout|tooth|beak|neck|leg|arm|paw|foot|hand|head|face|body|fur|skin|limb|muzzle|jaw|belly|chest|torso|abdomen|back|waist|digit|tongue|eyebrow|eyelash|brow|sclera|hoof|hair|underside|coat)$/;
+let most=[0,''], none=0;
+for(const c of cards){
+ const s=input(c.name,{}), w=P.wearClauses(s), t=P.buildPrompt(s);
+ assert(w.length<=5,c.en);
+ w.forEach(x=>assert(/ becomes? /.test(x),c.en+': '+x));
+ for(const f of s.sourceAppearance.features) if(BODY.test(String(f.part).toLowerCase()))
+  assert(!w.some(x=>x.startsWith('the '+f.detail+' ')),c.en+' body part as wear: '+f.detail);
+ assert(!/undefined|\[object Object\]|\{\w+\}/.test(t),c.en);
+ assert.deepEqual(law(t),[],c.en);
+ if(!w.length) none++;
+ if(words(t)>most[0]) most=[words(t),c.en];
+ const pal=P.palette(s); assert(pal.length<=5,c.en);
+}
+assert(most[0]<=360,'anchor budget over 1025: '+most.join(' '));
+assert(none<120,'too many species get no wear line: '+none);
+
+/* 스타일·모드 행렬 */
+let matrix=0;
+for(const [style] of S.ART_STYLES) for(const identityMode of ['create','reference'])
+ for(const form of ['light','heavy','mobility','overdrive']) for(const baseForm of ['light','reference']){
+  const t=build('이상해씨',{style,identityMode,form,baseForm});
+  assert(t.includes(S.ACTION_STYLE_CORES[style]),style);
+  assert(!/undefined|\{\w+\}/.test(t));
+  matrix++;
+ }
+/* 옛 저장값의 폼 초상은 액션으로 */
+assert.equal(build('꼬부기',{outputMode:'portrait'}),sq);
+for(const bad of [{style:'nope'},{form:'nope'},{form:'overdrive',baseForm:'nope'},{outputMode:'nope'},{identityMode:'nope'}])
+ assert.throws(()=>build('꼬부기',bad),JSON.stringify(bad));
+assert.throws(()=>P.buildPrompt({style:'glossy_promo'}),/Source creature/);
+console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix}`);

@@ -34,7 +34,8 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   for(const button of Array.from(w.document.querySelectorAll('button[id^="lock-"]')))
    if(button.getAttribute('aria-pressed')!=='true')await click(button.id);
   assert(get('random-scene').disabled);
-  await click('mode-portrait');assert(!get('random-scene')&&!get('lock-pose'));
+  await set('form','overdrive');assert(!get('random-scene')&&!get('lock-pose'),'overdrive has no scene randomizer');
+  await set('form','heavy');
   await click('mode-casual');assert.equal(get('lens').value,lens);assert.equal(get('lock-lens').getAttribute('aria-pressed'),'true');
   await set('source','이상해씨');assert.equal(get('lock-lens').getAttribute('aria-pressed'),'false');
   await set('source','피카츄');assert.equal(get('lock-lens').getAttribute('aria-pressed'),'true');

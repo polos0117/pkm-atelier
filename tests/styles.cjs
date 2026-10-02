@@ -13,37 +13,17 @@ vm.createContext(ctx);
 for (const f of ['lib/prompt-spec.js', 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
   vm.runInContext(fs.readFileSync(f, 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
-// Glossy promo keeps the same identity; approved-sheet actions use its concise style core.
-for(const outputMode of ['portrait','action','casual']) {
- const text=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode,identityMode:'reference',form:'heavy'});
- if(outputMode==='action') {
-  assert(text.includes(S.ACTION_STYLE_CORES.glossy_promo));
-  assert(text.includes('Premium glossy anime-mecha promotional key art'));
-  assert(text.includes('same polished rendering intensity'));
-  assert(!text.includes('PROJECT STYLE EXTENSION'));
-  continue;
- }
- assert(text.includes('Premium anime-mecha promotional key art with clean linework'));
- assert(text.includes('strong dimensional shading'));
- assert(text.includes('grouped illustrated shadow shapes'));
- assert(text.includes('same high-impact promotional rendering intensity as the mechanical armor'));
- assert(text.includes('stronger upper-lash definition'));
- assert(text.includes('Preserve selected or approved eye shape, facial geometry, age and expression'));
- assert(!text.includes('economical nose and lip lines, and selective soft transitions'));
- assert(text.includes('Restrained skin highlights'));
- assert(!text.includes('glossy highlights across body'));
- assert(text.includes('Do not force a background, expression'));
- assert(!text.includes('luminous semi-real 2.5D rendering'));
- assert(!text.includes('selective shallow depth of field'));
-}
+// 화풍은 한 줄 — 갑주 출력은 ACTION_STYLE_CORES, 일상은 장갑 말이 없는 CASUAL_STYLE_CORES
 for (const { key } of actual.styles) {
-  const text = P.buildAnthro({ mech: 'test', series: 'test', gender: 'female', style: key,
-    morph: 'standard_humanoid', translation: 'balanced', params: [] });
-  assert(text.includes(S.STYLE_PROFILES[key].core), 'Wrong anthro style: ' + key);
-  const casual = L.buildSingle({ source: { mech: 'test' }, gender: 'female', style: key,
-    cat: 'everyday_basic', aspect: '2:3', axes: {}, carryFace: false, carryBody: false });
-  assert(casual.includes(S.STYLE_PROFILES[key].core), 'Wrong casual style: ' + key);
-  assert(!text.includes('undefined') && !casual.includes('undefined'), 'Unresolved prompt: ' + key);
+  for (const form of ['light', 'heavy', 'overdrive']) for (const identityMode of ['create', 'reference']) {
+    const text = P.buildPrompt({ mech: 'test', series: 'water', style: key, outputMode: 'action', identityMode, form, baseForm: 'light', params: [] });
+    assert(text.includes('STYLE: ' + S.ACTION_STYLE_CORES[key]), 'Wrong action style: ' + key);
+    assert(!text.includes('undefined'), 'Unresolved prompt: ' + key);
+  }
+  const casual = L.buildSingle({ mech: 'test', series: 'water', style: key, cat: 'everyday_basic', aspect: '2:3', axes: {} });
+  assert(casual.includes('STYLE: ' + S.CASUAL_STYLE_CORES[key]), 'Wrong casual style: ' + key);
+  assert(!casual.includes(S.ACTION_STYLE_CORES[key]), 'Armor style leaked into casual: ' + key);
+  assert(!casual.includes('undefined'), 'Unresolved prompt: ' + key);
 }
 const known = new Set(actual.styles.map(s => s.key));
 const images = JSON.parse(fs.readFileSync('data/img.json', 'utf8')).img;

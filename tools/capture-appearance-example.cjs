@@ -7,7 +7,7 @@ const root=path.resolve(__dirname,'..');
  const a=await open(JSON.stringify({last:'꼬부기',cards:{}}));
  try{
   await a.set('source','꼬부기');
-  await a.click('mode-portrait');
+  await a.click('mode-action');
   await a.set('identity-mode','create');
   await a.set('form','light');
   await a.set('style','glossy_promo');
@@ -17,30 +17,18 @@ const root=path.resolve(__dirname,'..');
   assert.equal(a.get('motifs').value,'');
   assert.deepEqual(a.errors,[]);
   const prompt=a.output();
-  assert(prompt.includes('brown dorsal shell with white rim'));
-  assert(prompt.includes('pale-yellow belly shell'));
-  assert(prompt.includes('inward-curled long tail'));
+  assert(prompt.includes('brown dorsal shell with white rim becomes'));
+  assert(prompt.includes('pale-yellow belly shell becomes'));
+  assert(prompt.includes('inward-curled long tail becomes'));
   const data=JSON.parse(fs.readFileSync(path.join(root,'data/source-appearance.json'))).entries['7'];
-  const designRecord='[RESOLVED DESIGN RECORD — provisional, not text on canvas]\n'+
-   'Source: Squirtle; the three automatic source targets are resolved below before rendering. '+
-   'One water-type defense mechanism links a compact dorsal reservoir with a ventral protective plastron. '+
-   'A: brown segmented shell reservoir, white rim, centered on the thoracic spine with a visible two-point spinal cradle; dome faces rearward. '+
-   'B: pale-yellow segmented chest plastron, mounted to the front torso harness, with thin cyan water-channel seams. '+
-   'C: light-blue articulated tail curling inward, attached through its own sacral socket below the shell, projecting backward before curling. '+
-   'The shell and tail have separate roots. All three components retain the same panels, colors, scale and attachment points across the front view, rear view and their dedicated insets. '+
-   'Human skin remains human skin; source light blue is carried by hair and armor. '+
-   'Light armor uses blue painted composite, pale-yellow ceramic plating, dark flexible fabric and small metallic joints. '+
-   'Four right-column crops, top to bottom: selected human face; shell with spinal cradle; chest plastron; tail with sacral socket. '+
-   'The rear view and tail crop show the root above the curl. Frame the distinct human face clearly. '+
-   'A quiet clean aquatic maintenance hangar supports the three-column reference sheet. Produce exactly one image.\n';
   const dir=path.join(root,'docs/examples');fs.mkdirSync(dir,{recursive:true});
   fs.writeFileSync(path.join(dir,'squirtle-auto-generator.txt'),prompt+'\n');
-  fs.writeFileSync(path.join(dir,'squirtle-auto-submitted.txt'),prompt+'\n\n'+designRecord);
+  /* 2026-10-02 부터 제출문은 생성기 출력 그대로다 — 설계 기록(design record)을 덧붙이지 않는다 */
+  fs.writeFileSync(path.join(dir,'squirtle-auto-submitted.txt'),prompt+'\n');
   fs.writeFileSync(path.join(dir,'squirtle-auto-settings.json'),JSON.stringify({
-   note:'Actual Preact UI capture. Empty motifs/inset overrides. Submitted prompt appends the required AI design prepass; it is not user data or an approved identity anchor.',
+   note:'Actual Preact UI capture: Squirtle, new character, light form, glossy_promo, automatic wear. The submitted prompt is the generator output unchanged; it is not an approved identity anchor.',
    sourceNo:7,sourceRevision:data.revision,settings:JSON.parse(a.w.localStorage.getItem(storeKey)),
-   generatorWords:prompt.split(/\s+/).length,generatorCharacters:prompt.length,
-   submittedWords:(prompt+'\n'+designRecord).split(/\s+/).length
+   generatorWords:prompt.split(/\s+/).length,generatorCharacters:prompt.length
   },null,2)+'\n');
   console.log('Captured actual editor output:',prompt.length,'characters;',prompt.split(/\s+/).length,'words.');
  }finally{a.dom.window.close()}

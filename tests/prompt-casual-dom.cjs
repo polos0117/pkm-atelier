@@ -51,8 +51,10 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   }
   await set('lens','wide24');
   for(const axis of w.AtelierSpec.LOCAL_AXES)assert(get('axis-'+axis+'-description').textContent.trim());
-  await click('mode-portrait');assert(!get('frame')&&!get('lens'));
-  for(const v of expected)assert(!output().includes(v),'casual choice leaked to portrait');
+  // 개방은 첨부한 그림의 구도를 쓴다 — 카메라 메뉴가 없고 일상 선택이 새지 않는다
+  await click('mode-action');const form0=get('form').value;await set('form','overdrive');assert(!get('frame')&&!get('lens'));
+  for(const v of expected)assert(!output().includes(v),'casual choice leaked to overdrive');
+  await set('form',form0);
   await click('mode-action');assert.equal(get('frame').value,'');assert.equal(get('camera').value,'');
   await click('mode-casual');assert.equal(get('frame').value,'waist_up');
   await set('source','이상해씨');assert.equal(get('frame').value,'');

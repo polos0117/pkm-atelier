@@ -24,33 +24,27 @@ assert.equal(data.sources.license,'CC-BY-NC-SA-2.5');
 const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const P=ctx.window.AtelierPrompt;
-const base={style:'glossy_promo',form:'light',outputMode:'portrait',identityMode:'create',params:[]};
-let rooted=0,fallback=0;
+const base={style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params:[]};
+// 자료는 새 인물에만 — 색(PALETTE)과 입는 법(WEAR)으로. 이어가기·개방·일상은 첨부가 정하므로 다시 싣지 않는다.
+let worn=0,prompts=0;
 for(const c of cards){
- const st={...base,mech:c.name,sourceName:c.en,sourceAppearance:data.entries[c.no],motifs:''};
- const text=P.buildPrompt(st),targets=P.featureInsetSuggestions(st);
- assert(text.includes('Source appearance cues:'));
- assert(text.includes(data.entries[c.no].features[0].detail),c.en);
- for(const v of [targets.face,targets.design,targets.mount])assert(text.includes(v));
- assert(!/REAR MOUNT — rear close-up of the (?:[a-z-]+ )*(?:skin|fur|body|coat|scales?|feathers?|underside|belly|plastron) body mount/.test(text),c.en+': a colour, body or front plate became the rear mount');
- assert(!text.includes('SIGNATURE DETAIL'),'old A/B/C slots remain');
- if(/harness anchors/.test(targets.mount))fallback++;else rooted++;
- for(const outputMode of ['portrait','action','casual']){
-  const ref=P.buildPrompt({...st,outputMode,identityMode:'reference'});
-  assert(!ref.includes('Source appearance cues:'),'source data must not overwrite approved design');
-  assert(!ref.includes('[FEATURE INSET LIST — FIXED]'));
+ const st={...base,mech:c.name,sourceName:c.en,series:c.element,sourceAppearance:data.entries[c.no],motifs:''};
+ const text=P.buildPrompt(st),wear=P.wearClauses(st),pal=P.palette(st);prompts++;
+ if(wear.length){worn++;assert(text.includes('WEAR: '+wear.join('; ')+'.'),c.en);}
+ if(pal.length)assert(text.includes('PALETTE: '+pal.join(', ')+'.'),c.en);
+ assert(!/\b(?:light|pale|dark)?[- ]?\w+[- ]skin\b/.test(text.replace('Her skin is human skin.','')),c.en+': a skin color reached the prompt');
+ for(const extra of [{identityMode:'reference'},{form:'overdrive',baseForm:'light'},{outputMode:'casual'}]){
+  const ref=P.buildPrompt({...st,...extra});prompts++;
+  assert(!ref.includes('WEAR:')&&!ref.includes('PALETTE:'),c.en+' source data overwrote the approved image');
  }
 }
-const st={...base,mech:'꼬부기',sourceAppearance:data.entries['7']};
-assert(rooted>=550&&rooted+fallback===1025,'rooted mounts '+rooted+' / harness fallback '+fallback);
-assert(P.headFeatureText({sourceAppearance:data.entries['25']}).includes('ears'),'Pikachu ears are a permanent head feature');
-assert(P.headFeatureText({sourceAppearance:data.entries['7']}).includes('no species head feature'));
-const overridden=P.buildPrompt({...st,motifs:'USER_MOTIFS',featureInsets:{mount:'USER_TARGET'}});
-assert(overridden.includes('USER_MOTIFS')&&overridden.includes('USER_TARGET'));
-assert(!overridden.includes('Source appearance cues:'));
-assert(!overridden.includes(data.entries['7'].features[0].detail));
-assert(P.buildPrompt({...st,sourceAppearance:null}).includes('[OUTPUT MODE]'));
+assert(worn>=900,'species with a wear line: '+worn);
+const st={...base,mech:'꼬부기',sourceName:'Squirtle',series:'water',sourceAppearance:data.entries['7']};
+const overridden=P.buildPrompt({...st,motifs:'USER_MOTIFS'});
+assert(overridden.includes('WEAR (user choice): USER_MOTIFS.'));
+assert(!overridden.includes(data.entries['7'].features[0].detail+' becomes'));
+assert(P.buildPrompt({...st,sourceAppearance:null}).includes('SOURCE: Squirtle (꼬부기), water type.'),'missing data still builds');
 assert(!/jet|nozzle|reactor/i.test(data.entries['7'].features.map(f=>f.detail).join(' ')));
 assert.equal(data.entries['964'].formScope,'Zero Form');
 assert.equal(data.entries['718'].formScope,'50% Forme');
-console.log('PASS 1025 source records; 4100 create/reference prompts; rear-mount '+rooted+'/harness '+fallback+', head features, overrides, provenance and corruption checks');
+console.log('PASS 1025 source records; '+prompts+' create/continuation prompts; wear lines for '+worn+' species, overrides, provenance and corruption checks');

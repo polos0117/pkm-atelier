@@ -10,7 +10,7 @@
 | 이 문서 | 규칙과 자리 |
 | `docs/PORT_NOTES.md` | 어디서 무엇을 가져왔고, 무엇을 일부러 뺐나 |
 | `docs/GAME_CONCEPT.md` | 게임 구조 — 정해진 것과 아직 시험할 것 |
-| `docs/PROMPT_REWRITE.md` | 포켓몬 메카 생성 규칙·기준 이미지·세 출력 모드와 검사 |
+| `docs/PROMPT_REWRITE.md` | 포켓몬 메카 생성 규칙 — 첫 절이 지금 규칙(간결화), 아래는 옛 기록 |
 | `docs/SURVEY_GAME.md` | 독립 배치 게임 탐사 작전 — 적성·폼·에너지·저장·검사 |
 | `docs/PATCH.md` | 무엇을 고쳤나 — 고친 쪽이 직접 적는다 (아래 규칙 5) |
 
@@ -47,7 +47,7 @@
 썸네일은 그림 저장소의 워크플로가 만든다.
 
 이미지를 만들고 올리고 등록하는 작업은 먼저 [IMAGE_RULES.md](IMAGE_RULES.md) 를 읽는다 —
-한 캐릭터 = 기준 시트 1 + 폼 초상 3 + 폼별 개방 3 + 일상컷 1, 파일명, 두 저장소 순서,
+한 캐릭터 = 경장 ①(인물 기준) + 중장·고기동 + 폼별 개방 3 + 일상컷 1, 파일명, 두 저장소 순서,
 중단 복구가 거기 있다.
 
 앞선 저장소는 그림을 같이 두었다가 `.git` 이 323 MB 가 되었다. 그중 250 MB 가
@@ -100,7 +100,7 @@ node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주
 node tests/patch.cjs             # 패치 기록의 모양 — 날짜·차례·빈 칸
-node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·장착부 확대컷·머리 특징·이어가기 격리
+node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·색과 입는 법·이어가기 격리
 node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견본 파일명이 맞나
 ```
 
@@ -134,7 +134,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여섯의 머리가 같은 자리에
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
-NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·확대컷·머리 특징·저장
+NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·입는 법·머리 특징·개방·저장
 NODE_PATH=<같은 경로> node tests/source-appearance-dom.cjs                        # 자료 자동 채움·수동 보정·자료 실패
 python3 tests/appearance-extractor.py   # 외형 추출기 — tools/appearance-requirements.txt 설치 후
 ```

@@ -31,32 +31,24 @@ for(const pose of S.ACTION_POSES){
  assert(!P.buildPrompt({...base,outputMode:'casual',pose:pose.key}).includes(pose.prompt));
 }
 const action={category:'ranged',example:'aimed_release',equipment:'unarmed',power:'none',effects:'none',speed:'still',environment:'forest',timing:'impact'};
-for(const form of ['light','heavy','mobility','overdrive'])for(const identityMode of ['create','reference']){
- const input={...base,form,identityMode,baseForm:'heavy',action};
- const t=P.buildPrompt(input);
- const plain=P.buildPrompt({...input,action:{}});
- const block=x=>x.split('[FORM DEFINITION]')[1].split('\n\n[')[0];
- assert.equal(block(t),block(plain),'action changes selected armor');
- if(identityMode==='reference') {
-  assert(t.includes('Explicit scene selections control pose'));
-  assert(!t.includes('ACTION DIRECTION PRIORITY:')&&!t.includes('Do not add equipment'));
- } else {
-  assert(t.includes('ACTION DIRECTION PRIORITY:'));
-  assert(t.includes('Do not add equipment'));
- }
- for(const mode of ['portrait','casual']){
-  const isolated=P.buildPrompt({...input,outputMode:mode});
-  assert(!isolated.includes('[ACTION DIRECTION]'));
-  assert(!isolated.includes('ACTION DIRECTION PRIORITY:'));
- }
+const formLine=t=>(t.split('\n\n').find(x=>x.startsWith('FORM —'))||'');
+for(const form of ['light','heavy','mobility'])for(const identityMode of ['create','reference']){
+ const input={...base,form,identityMode,action};
+ const t=P.buildPrompt(input), plain=P.buildPrompt({...input,action:{}});
+ assert.equal(formLine(t),formLine(plain),'action changes selected armor');
+ assert(t.includes(S.PROMPT_LINES.sceneRule),'chosen direction carries its priority line');
+ assert(!plain.includes(S.PROMPT_LINES.sceneRule),'no priority line without choices');
+ const casual=P.buildPrompt({...input,outputMode:'casual'});
+ assert(!casual.includes('Action category:')&&!casual.includes(S.PROMPT_LINES.sceneRule));
 }
+// 개방은 첨부한 그림의 구도를 그대로 — 액션 연출이 새지 않는다
+const open=P.buildPrompt({...base,form:'overdrive',baseForm:'heavy',action,pose:'low_guard'});
+assert(!open.includes('Action category:')&&!open.includes(S.ACTION_POSES.find(r=>r.key==='low_guard').prompt),'action direction leaked into overdrive');
 // Form images for the game come from action mode: whole figure, face to camera, unless the user picks otherwise.
-for(const form of ['light','heavy','mobility','overdrive']){
- const t=P.buildPrompt({...base,form,baseForm:'heavy'});
- assert(t.includes('dynamic full-body card illustration')&&t.includes('turn the face toward the camera'),'action must stay usable as card art');
- if(form==='overdrive') assert(t.includes('open selected existing panels'),'overdrive action must open its base form');
- for(const outputMode of ['portrait','casual'])
-  assert(!P.buildPrompt({...base,form,baseForm:'heavy',outputMode}).includes('CARD-READY DEFAULT:'),'card default leaked into '+outputMode);
+for(const form of ['light','heavy','mobility'])for(const identityMode of ['create','reference']){
+ const t=P.buildPrompt({...base,form,identityMode});
+ assert(t.includes('card')&&t.includes('face toward the camera')&&t.includes('never a back view'),'action must stay usable as card art');
+ assert(!P.buildPrompt({...base,form,identityMode,outputMode:'casual'}).includes('card art'),'card default leaked into casual');
 }
 assert(P.buildPrompt({...base,orient:'rear_3q'}).includes(S.ORIENTATION_GUIDES.rear_3q[1]),'an explicit orientation still wins');
 assert.equal(P.buildPrompt({...base,action:{}}),P.buildPrompt(base),'automatic choices add prompt noise');

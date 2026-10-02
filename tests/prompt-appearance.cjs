@@ -4,9 +4,9 @@ const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const {AtelierSpec:S,AtelierPrompt:P}=ctx.window;
 const params=require('./fixtures/appearance-bulbasaur.json');
-const base={mech:'이상해씨',sourceName:'Bulbasaur',series:'grass / poison',style:'glossy_promo',form:'light',outputMode:'portrait',identityMode:'create',params,expr:'smirk'};
+const base={mech:'이상해씨',sourceName:'Bulbasaur',series:'grass / poison',style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params,expr:'smirk'};
 const build=override=>P.buildPrompt({...base,...override});
-const identity=t=>t.split('[CHARACTER IDENTITY]')[1].split('[FORM DEFINITION]')[0];
+const identity=t=>(t.split('\n\n').find(x=>x.startsWith(S.PROMPT_LINES.identity))||'');
 const original=JSON.stringify(params);
 const full=build();
 assert(full.includes('U-shaped lower-face outline'),'rounded jaw must specify actual outline');
@@ -18,10 +18,9 @@ assert(full.includes('both eyes are red'));
 assert(!full.includes('second eye color:'),'duplicate same-eye entry');
 assert(!full.includes('parameter precedence:'),'old global parent precedence must not affect unrelated groups');
 assert(!full.includes('must clearly read as Korean'),'ancestry must not override explicit geometry');
-assert(identity(full).includes('actual outline in every view and inset'));
-// 2026-09-21: 12000 → 13000. 기준 시트가 확대컷 세 칸의 역할, 폼별 머리 장비, 얼굴 보존 규칙을 싣게 되어
-// 약 750자가 늘었다(11965 → 12723). 더 늘면 다시 깎는다 — 상한을 또 올리기 전에 문장을 줄일 것.
-assert(full.length<13000,'detailed fixture exceeds compacted budget: '+full.length);
+assert(identity(full).includes('controls the actual outline'));
+// 2026-10-02 간결화: 외형 서른 개를 다 고른 새 인물이 12723 → 약 5000자. 늘면 상한을 올리기 전에 문장을 줄인다.
+assert(full.length<5200,'detailed fixture exceeds compacted budget: '+full.length);
 assert.equal(JSON.stringify(params),original,'assembly mutated stored settings');
 const sharp=build({params:[['jaw & chin','narrow tapered chin']]});
 assert(!sharp.includes('U-shaped lower-face outline'),'round lock leaked into another jaw');
@@ -51,21 +50,20 @@ for(const k of S.LOCAL_AXES)for(const v of S.ADVANCED_OPTIONS[k].filter(v=>v!=='
  const t=build({outputMode:'casual',axes:{[k]:v}});
  assert(S.SCENE_AXIS_GUIDES[k][v].every(Boolean));
  assert(t.includes(S.SCENE_AXIS_GUIDES[k][v][1]));
- assert(!build({axes:{[k]:v}}).includes(k+':'),'scene axis leaked into portrait');
+ assert(!build({axes:{[k]:v}}).includes(k+':'),'scene axis leaked into action');
 }
 for(const [v] of S.ORIENTATION_OPTIONS.filter(([v])=>v)) {
  assert(S.ORIENTATION_GUIDES[v].every(Boolean));
  assert(build({outputMode:'action',orient:v}).includes(S.ORIENTATION_GUIDES[v][1]));
- assert(!build({orient:v}).includes('orient:'),'scene orientation leaked into sheet');
 }
 let matrix=0;
-for(const [style] of S.ART_STYLES)for(const outputMode of ['portrait','action','casual'])
+for(const [style] of S.ART_STYLES)for(const outputMode of ['action','casual'])
  for(const identityMode of ['create','reference'])for(const form of ['light','heavy','mobility','overdrive']) {
   const t=build({style,outputMode,identityMode,form,baseForm:'heavy'});
   assert(!/undefined|\[object Object\]/.test(t));
-  const fresh=identityMode==='create'&&outputMode!=='casual';
+  const fresh=identityMode==='create'&&outputMode!=='casual'&&form!=='overdrive';
   assert.equal(t.includes('U-shaped lower-face outline'),fresh,'identity controls leaked');
   assert.equal(t.includes('PARAM_GUIDES'),false);
   matrix++;
  }
-console.log(`PASS appearance: ${options} saved options, ${matrix} output combinations; detailed sheet ${full.length} characters`);
+console.log(`PASS appearance: ${options} saved options, ${matrix} output combinations; detailed new character ${full.length} characters`);

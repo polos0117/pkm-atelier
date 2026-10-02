@@ -47,12 +47,11 @@ for(const [options,guides,key] of [[S.FRAME_OPTIONS,S.FRAME_GUIDES,'frame'],[S.L
 const camera={frame:'waist_up',lens:'wide24',camera:'KEEP_CUSTOM_CAMERA',pose:'offering_food'};
 const casual=L.buildSingle({...base,...camera,cat:'partner_care',ex:'care_feeding'});
 assert(casual.includes('KEEP_CUSTOM_CAMERA'));
-assert(casual.includes('SELECTED SCENE PRIORITY:'));
-assert(!casual.includes('[FORM DEFINITION]'));
+assert(casual.includes('SCENE (chosen):'));
+assert(!casual.includes('FORM —'));
 assert(P.buildPrompt({...base,outputMode:'action',frame:'CUSTOM_CROP'}).includes('CUSTOM_CROP'));
-for(const identityMode of ['create','reference']){
- const portrait=P.buildPrompt({...base,...camera,identityMode,outputMode:'portrait'});
- for(const s of ['KEEP_CUSTOM_CAMERA',S.FRAME_GUIDES.waist_up[1],S.LENS_GUIDES.wide24[1],S.POSE_GUIDES.offering_food[1]])
-  assert(!portrait.includes(s),'casual camera/pose leaked to portrait');
-}
+// 개방은 첨부한 그림의 카메라를 그대로 — 일상 카메라·자세가 새지 않는다
+const open=P.buildPrompt({...base,...camera,outputMode:'action',form:'overdrive',baseForm:'heavy'});
+for(const s of ['KEEP_CUSTOM_CAMERA',S.FRAME_GUIDES.waist_up[1],S.LENS_GUIDES.wide24[1],S.POSE_GUIDES.offering_food[1]])
+ assert(!open.includes(s),'casual camera/pose leaked to overdrive');
 console.log('PASS casual options: categories, descriptions, Pokémon jobs, poses, camera and mode isolation');

@@ -17,9 +17,8 @@ function registry() {
   assert.equal(new Set(styles.map(s => s.key)).size, styles.length, 'Duplicate style key');
   for (const { key, name } of styles) {
     assert(/^[a-z][a-z0-9_]*$/.test(key) && name, 'Invalid style row: ' + key);
-    for (const part of ['core', 'anthro', 'lifestyle'])
-      assert(typeof S.STYLE_PROFILES[key]?.[part] === 'string' && S.STYLE_PROFILES[key][part],
-        'Missing prompt profile: ' + key + '/' + part);
+    for (const table of ['ACTION_STYLE_CORES', 'CASUAL_STYLE_CORES'])
+      assert(typeof S[table][key] === 'string' && S[table][key], 'Missing prompt style: ' + table + '/' + key);
   }
   assert(styles.some(s => s.key === S.DEFAULT_STYLE), 'Default style is not selectable');
   return {
