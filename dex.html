@@ -13,7 +13,7 @@
   화면은 data/img.json 에 적힌 것만 그린다. 그림 저장소에 파일이 있어도
   tools/register-images.py 를 거치기 전에는 없는 것으로 본다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=header1">
+<link rel="stylesheet" href="lib/workspace.css?v=settings1">
 <style>
 /* 색·밀도 토막은 lib/workspace.css 한 곳에 있다. 여기는 뼈대만 —
    workspace.css 의 .dex-page 규칙이 이 뼈대에 살을 붙인다.
@@ -127,7 +127,7 @@ body {color:var(--text);font-size:15px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=dex-compact1"></script>
+<script src="lib/words.js?v=settings1-compact1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js"></script>
 <script src="lib/dex-filter.js?v=1"></script>
@@ -141,7 +141,7 @@ body {color:var(--text);font-size:15px}
 import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=header1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=settings1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;
 const FILTER_STORE = 'pkm_dex_filters_v1';
