@@ -42,7 +42,11 @@ assert(sq.includes('nothing is carried, mounted or put on display'));
 assert(sq.includes(S.FORM_LINES.light)&&sq.includes(S.ACTION_STYLE_CORES.glossy_promo));
 assert(sq.includes('face toward the camera')&&sq.includes('never a back view'));
 assert(!sq.includes('IDENTITY'),'no identity block without chosen values');
-assert(words(sq)<=360,'anchor budget: '+words(sq));
+/* 손 줄 — 개수·모양·자세·장갑·효과. 옛 "drawn correctly as hands" 한 줄로는 손가락이 늘고 뭉쳤다 */
+assert(sq.includes(S.PROMPT_LINES.hands)&&sq.includes(S.PROMPT_LINES.handsArmor),'action carries the hand line');
+assert(sq.includes('one thumb and four fingers')&&sq.includes('never fingerless')&&sq.includes('no hand thrust at the camera'));
+assert(!sq.includes('drawn correctly as hands'),'the weak hand line came back');
+assert(words(sq)<=400,'anchor budget: '+words(sq));
 
 /* 머리 특징 표현을 고르면 자동 머리 문장(귀·볼주머니)을 대신한다 */
 const pk=build('피카츄'), pkHead=build('피카츄',{headFeature:'accessory'});
@@ -71,7 +75,8 @@ assert(ref.includes('the HEAVY form of the woman in the attached image'));
 assert(ref.includes('change only her armor'));
 assert(ref.includes('the species features she wears as costume'));
 for(const s of ['PALETTE','WEAR','IDENTITY','mint','U-shaped','omit referenced_image_paths']) assert(!ref.includes(s),'continuation re-sends '+s);
-assert(words(ref)<=260,'continuation budget: '+words(ref));
+assert(ref.includes(S.PROMPT_LINES.hands)&&ref.includes(S.PROMPT_LINES.handsArmor));
+assert(words(ref)<=310,'continuation budget: '+words(ref));
 assert(build('꼬부기',{identityMode:'reference',motifs:'KEEP_THIS'}).includes('MOTIFS to keep: KEEP_THIS.'));
 /* 새 인물은 고른 외형만 */
 const chosen=build('꼬부기',{params});
@@ -89,7 +94,10 @@ for(const base of ['light','heavy','mobility','reference']){
  assert(!t.includes(S.FRAME_GUIDES.waist_up[1]),'overdrive keeps the attached camera');
  assert(t.includes('NOTE: OPEN_NOTE'));
  assert.deepEqual(law(t),[]);
- assert(words(t)<=210,'overdrive budget: '+words(t));
+ assert(t.includes(S.PROMPT_LINES.handsKeep),base+' overdrive keeps the hands');
+ assert(!/hands and expression tighten/.test(t)&&t.includes('eyes keep their color'),base+' overdrive moves hands or eye color');
+ assert(!t.includes('never fingerless'),'overdrive must not re-glove the attached hands');
+ assert(words(t)<=240,'overdrive budget: '+words(t));
 }
 assert(build('꼬부기',{form:'overdrive',baseForm:'heavy'}).includes("attach this character's heavy-form card image"));
 assert(build('파이리',{form:'overdrive',baseForm:'light'}).includes(S.TYPE_ENERGY.fire));
@@ -102,7 +110,8 @@ assert(cas.includes('STYLE: '+S.CASUAL_STYLE_CORES.glossy_promo));
 assert(cas.includes('never armor, never a creature costume'));
 for(const s of ['FORM —','WEAR','PALETTE','IDENTITY','mint','plates']) assert(!cas.includes(s),'casual carries '+s);
 for(const [k] of S.ART_STYLES) assert(!/armor|mecha|hard-surface|mechanical/i.test(S.CASUAL_STYLE_CORES[k]),'casual style speaks armor: '+k);
-assert(words(cas)<=320,'casual budget: '+words(cas));
+assert(cas.includes(S.PROMPT_LINES.hands)&&!cas.includes('Gloves'),'casual: hand line without armor gloves');
+assert(words(cas)<=360,'casual budget: '+words(cas));
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
 /* 몸 부위(코·입·눈·다리·몸통·털·피부…)로 적힌 특징은 입는 법 문장이 되지 않는다 — 색만 PALETTE 로 */
@@ -120,7 +129,7 @@ for(const c of cards){
  if(words(t)>most[0]) most=[words(t),c.en];
  const pal=P.palette(s); assert(pal.length<=5,c.en);
 }
-assert(most[0]<=360,'anchor budget over 1025: '+most.join(' '));
+assert(most[0]<=400,'anchor budget over 1025: '+most.join(' '));
 assert(none<120,'too many species get no wear line: '+none);
 
 /* 스타일·모드 행렬 */

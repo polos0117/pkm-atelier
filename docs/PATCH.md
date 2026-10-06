@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 생성기 — 손가락이 늘고 뭉치지 않게 손 줄, 개방에서 손·눈 색 고정
+
+- lib/prompt-spec.js — ANATOMY 의 "both hands drawn correctly as hands" 한 줄을 HANDS 로 뺐다: 엄지 하나 손가락 넷·떨어져 있고 붙거나 겹치지 않음, 주먹·편 손바닥·어딘가에 얹은 손, 카메라로 내민 손·벌린 손가락 금지. 액션은 손가락 있는 밀착 장갑(손가락 없는 장갑 금지)·효과가 손가락에 감기지 않음을 더한다. 꼬부기·어니부기 그림에서 망가진 손이 다 내민 손·손가락 없는 장갑·손에 감긴 물줄기였다
+- lib/prompt-spec.js — 개방의 "her hands and expression tighten" 을 지웠다(손을 움직이라는 말이라 고정한 손이 다시 그려졌다). "her eyes catch that light" 는 "눈 색은 그대로, 빛만 맺힘" 으로 — 개방 한 장씩 눈 색이 바뀌었다. 개방에는 HANDS(첨부 그림의 손 그대로)를 붙인다
+- lib/prompt-anthro.js — 액션·이어가기 끝에 HANDS+장갑, 일상에 HANDS, 개방에 손 고정 줄
+- prompt.html — prompt-spec·prompt-anthro 꼬리표 ?v=hands1
+- tests/prompt-engine.cjs — 손 줄·장갑·개방 손 고정·눈 색 검사, 낱말 예산을 앵커 400·이어가기 310·개방 240·일상 360 으로(손 줄 몫)
+
 ## 2026-10-06 · claude · 폼 결투 — 리뷰 뒤 손질: 날씨 줄 타격, 두 화면의 저장 되읽기, 꼬리표
 
 - lib/gwent.js — 상성 타격이 날씨 줄의 카드를 고르지 않는다(어차피 1로 세니 합이 안 바뀌고 맑은 줄의 표적을 놓쳤다)
