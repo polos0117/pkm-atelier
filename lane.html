@@ -11,7 +11,7 @@
   프로필과 진행 중인 판은 이 브라우저(localStorage 의 pkm_duel_v1)에 남는다. 상태가 통째로 JSON 이라 그대로 넣고 꺼낸다.
   설계: docs/superpowers/specs/2026-10-06-lane-duel-design.md
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=lane1">
+<link rel="stylesheet" href="lib/workspace.css?v=gwent1">
 <style>
 :root {--row-h:108px}
 * {box-sizing:border-box}
@@ -220,7 +220,7 @@ body {color:var(--text);font-size:15px}
 @media (prefers-reduced-motion:reduce) {.ln-flipcard.flipped .ln-flipper {animation:none;transform:rotateY(180deg)} .ln-flipcard.flipped::before {animation:none;opacity:0}}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=lane1"></script>
+<script src="lib/words.js?v=gwent1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
 <script src="lib/collection.js?v=1"></script>
@@ -232,7 +232,7 @@ body {color:var(--text);font-size:15px}
 import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo, useRef } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=lane1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, A = window.AtelierLane;
 const STORE = 'pkm_duel_v1';

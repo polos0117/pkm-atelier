@@ -11,7 +11,7 @@
   체력은 다음 판으로 이어진다. 규칙은 lib/run.js (런) 와 lib/battle.js (한 판) 에만 있고,
   이 화면은 보여 주고 고르기만 한다. 진행은 localStorage 에 두어 새로고침해도 이어진다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=lane1">
+<link rel="stylesheet" href="lib/workspace.css?v=gwent1">
 <style>
 * {box-sizing:border-box}
 html,body {margin:0;padding:0}
@@ -181,7 +181,7 @@ body {color:var(--text);font-size:15px}
 }
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=lane1"></script>
+<script src="lib/words.js?v=gwent1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
 <script src="lib/battle.js"></script>
@@ -193,7 +193,7 @@ body {color:var(--text);font-size:15px}
 import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=lane1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
 import { Play, setImages, picOf } from './lib/battle-ui.js';
 const html = htm.bind(h);
 const W = window.W, B = window.AtelierBattle, RUN = window.AtelierRun;

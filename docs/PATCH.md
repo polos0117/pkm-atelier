@@ -10,6 +10,15 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 폼 결투 — 말·항해·집·허브
+
+- lib/words.js — gwent.* 와 nav.gwent·home.gwent.* (공통 말은 lane.* 를 같이 쓴다)
+- lib/workspace-ui.js — 탭 여덟, 폼 결투 제목·부제
+- lib/workspace.css — 덮개에서 탭 일곱이 한 줄에 들도록 글자 11px
+- index.html — 놀이 목록에 폼 결투
+- *.html, lib/prompt-ui.js, lib/survey-ui.js — words·workspace-ui·workspace.css 를 ?v=gwent1 로
+- tests/header-layout.cjs, tests/theme-screen.cjs — 화면 여덟
+
 ## 2026-10-06 · claude · 폼 결투 — AI·정산·균형 보고
 
 - lib/gwent.js — AI 셋(신참 무작위·숙련 값 최대와 패스 둘·에이스 1라운드 영웅 아끼기와 일찍 접기), 정산(stats.gwent·보상·금·상점 돌림). 균형 보고로 FIRST_BONUS=12(선공 42%)

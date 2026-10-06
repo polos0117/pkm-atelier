@@ -32,14 +32,14 @@ function same(actual,expected,label){
      await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
      await p.evaluate(d=>window.AtelierAppearance.set('density',d),density);
      const reference=await geometry(p);
-     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['lane.html','.ln-screen'],['survey.html','.sv-start'],['index.html','.theme-card']]){
+     for(const [file,ready] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['lane.html','.ln-screen'],['gwent.html','.gw-screen'],['survey.html','.sv-start'],['index.html','.theme-card']]){
       /* 연구소 탭은 덮개에서 숨는다 — 집으로는 문양·제목 링크로 간다 */
       const tab=p.locator(`.workspace-nav a[href="${file}"]`);
       await (file==='index.html'&&!await tab.isVisible()?p.locator('a.workspace-title'):tab).click();
       await p.waitForSelector(ready);
       same(await geometry(p),reference,`${viewport.width} ${density} ${file}`);
       assert(await p.evaluate(()=>document.body.scrollWidth<=innerWidth),'horizontal overflow');
-      const scroll=p.locator(file==='dex.html'||file==='battle.html'||file==='run.html'||file==='lane.html'?'.collection-scroll':'.wrap');
+      const scroll=p.locator(file==='dex.html'||file==='battle.html'||file==='run.html'||file==='lane.html'||file==='gwent.html'?'.collection-scroll':'.wrap');
       assert((await scroll.boundingBox()).height>100,file+' usable scroll viewport');
       if(file==='dex.html'){
        await scroll.evaluate(e=>{e.scrollTop=300});
@@ -55,7 +55,7 @@ function same(actual,expected,label){
     const titleShown=await p.locator('a.workspace-title[href="index.html"]').isVisible();
     assert.equal(await p.locator('.workspace-nav a[href="index.html"]').isVisible(),!narrow||!titleShown,viewport.width+' 연구소 탭은 넓은 화면에서만(제목이 숨는 낮은 화면은 예외)');
     assert(titleShown||await p.locator('.workspace-nav a[href="index.html"]').isVisible(),viewport.width+' 집으로 가는 길이 하나는 있다');
-    assert(await p.locator('.workspace-nav a[href="lane.html"]').isVisible()&&await p.locator('.workspace-nav a[href="survey.html"]').isVisible(),viewport.width+' 결투·탐사 탭이 보인다');
+    assert(await p.locator('.workspace-nav a[href="lane.html"]').isVisible()&&await p.locator('.workspace-nav a[href="gwent.html"]').isVisible()&&await p.locator('.workspace-nav a[href="survey.html"]').isVisible(),viewport.width+' 결투·폼 결투·탐사 탭이 보인다');
     for(const a of await p.locator('.workspace-nav a').all()) if(await a.isVisible()) assert(await a.evaluate(e=>e.scrollWidth<=e.clientWidth+1),viewport.width+' 탭 글자가 안 잘린다: '+await a.textContent());
     /* 접기 — 제목이 숨고 항해(와 ⚙)만 남는다. 다음 화면에서도 접힌 채다. 펼치면 돌아온다 */
     await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
@@ -78,6 +78,6 @@ function same(actual,expected,label){
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
-  console.log('PASS header layout: 7 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
+  console.log('PASS header layout: 8 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

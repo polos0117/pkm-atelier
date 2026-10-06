@@ -84,7 +84,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .workspace-header.folded {margin-bottom:10px}
 .workspace-nav a {flex:1 1 0;display:flex;align-items:center;justify-content:center;min-width:0;min-height:44px;padding:0 2px;border:0;border-radius:12px;font-size:12px;font-weight:650;opacity:1;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
 /* 항해가 일곱 — 폰에서는 '연구소' 탭을 숨겨 여섯을 한 줄에. 연구소는 문양·제목(.workspace-title)이 데려간다 */
-@media (max-width:599px) { .workspace-nav {gap:2px;padding:4px} .workspace-nav a {padding:0 1px} .workspace-nav a[href="index.html"] {display:none} .header-fold {flex-basis:40px} }
+@media (max-width:599px) { .workspace-nav {gap:2px;padding:4px} .workspace-nav a {padding:0 1px;font-size:11px} .workspace-nav a[href="index.html"] {display:none} .header-fold {flex-basis:40px} }   /* 탭 일곱(폼 결투까지)이 한 줄에 들도록 11px */
 /* 좁고 낮은 화면은 제목도 숨으므로 연구소 탭을 되살린다 — 집으로 가는 길이 하나는 있어야 한다 */
 @media (max-width:599px) and (max-height:550px) { .workspace-nav a[href="index.html"] {display:flex} }
 /* 접어도 덮개에서는 제목을 아예 숨기지 않는다 — 문양 + 제목 한 줄(44px 누르는 자리)만 남기고, 그 줄이 연구소 링크다 */
