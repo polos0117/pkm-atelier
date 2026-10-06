@@ -97,6 +97,8 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     await q.locator('#ln-mull-go').tap(); await q.waitForSelector('.ln-screen[data-screen="match"]');
     assert.equal(await q.locator('.ln-lane').count(), 3, '세 줄');
     await myTurn(q); await noOverflow(q);
+    /* 덮개 첫 판(길잡이 켜짐)에서 패스·개방·? 가 손패 칸에 깔리지 않는다 — 굴리기 전에 그 자리를 짚으면 그 단추가 잡혀야 한다 */
+    for (const id of ['ln-pass', 'ln-open', 'ln-help']) assert.equal(await q.evaluate(id => { const r = document.getElementById(id).getBoundingClientRect(); const e = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return e && (e.id === id || (e.closest('button') || {}).id === id) ? id : (e && (e.className || e.tagName)); }, id), id, id + ' 가 가려지지 않았다');
     /* 놓기 — 손패 → 상세 → 중장 → 놓기 → 줄 고르기 */
     await q.locator('.ln-hand .cell[data-id="이상해씨"]').tap(); await q.waitForSelector('.ln-detail');
     assert.equal(await q.locator('.ln-detail .ln-form[aria-pressed="true"]').getAttribute('data-form'), 'light', '기본은 경장');
@@ -209,12 +211,12 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert.deepEqual(c2.errors, [], '결과·로비 오류 없음');
     await c2.close();
     /* ── 옛 저장 — deck 하나·stats 없음·모르는 이름 ── */
-    const oldOwned = card.filter(c => c.gen === 1 && !c.rare).slice(0, 25).map(c => c.name);
-    const d = await openLane(h, { store: [KEY, JSON.stringify({ v: 1, profile: { main: 1, owned: oldOwned.concat(['없는카드']), deck: oldOwned } })] }), o = d.page;
+    const oldOwned = card.filter(c => c.gen === 1 && !c.rare).slice(0, 24).map(c => c.name), gone = card.find(c => c.gen === 4 && !c.rare).name;   /* 4세대 — 아는 카드지만 그림이 없어 풀 밖 */
+    const d = await openLane(h, { store: [KEY, JSON.stringify({ v: 1, profile: { main: 1, owned: oldOwned.concat(['없는카드', gone]), deck: oldOwned.concat([gone]) } })] }), o = d.page;
     await o.waitForSelector('.ln-screen[data-screen="lobby"]');
-    assert((await o.locator('.ln-deck').getAttribute('data-ok')) === 'true' && /25 \//.test(await o.locator('.ln-coll').textContent()), '옛 저장을 올려 쓴다 — 모르는 이름은 걸러 냈다');
+    assert((await o.locator('.ln-deck').getAttribute('data-ok')) === 'false' && /24\/25/.test(await o.locator('.ln-deck').textContent()) && /25 \//.test(await o.locator('.ln-coll').textContent()), '옛 저장을 올려 쓴다 — 모르는 이름은 걸러 내고, 풀에서 빠진 카드는 덱에서만 빠져 24/25: ' + await o.locator('.ln-deck').textContent());
     const up = JSON.parse(await o.evaluate(k => localStorage.getItem(k), KEY));
-    assert(up.profile.decks.lane.length === 25 && up.profile.stats.lane.games === 0 && up.profile.shop.stock.length === 6, '올린 꼴로 다시 저장');
+    assert(up.profile.decks.lane.length === 24 && up.profile.owned.includes(gone) && up.profile.stats.lane.games === 0 && up.profile.shop.stock.length === 6, '올린 꼴로 다시 저장 — 컬렉션엔 남긴다(그림이 돌아오면 쓰게)');
     assert.deepEqual(d.errors, [], '옛 저장 오류 없음');
     await d.close();
     console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 새로고침 · 옛 저장');

@@ -143,7 +143,9 @@ body {color:var(--text);font-size:15px}
 .ln-mode .ln-btn {margin-left:auto}
 .ln-bar {position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:6px 0;padding:8px 10px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:10px;background:var(--bg);font:700 12px ui-monospace,monospace;color:var(--muted)}
 .ln-score b {font-size:16px;color:var(--text);letter-spacing:.1em} .ln-score b[data-side="foe"] {color:var(--signal,#c33)}
-.ln-bar-act {display:flex;gap:6px;margin-left:auto}
+/* 패스·개방·? 는 손패 칸 제목 줄에 — 덮개 첫 판에서 길잡이가 켜지면 위 막대가 손패 칸에 깔려 단추를 못 눌렀다(리뷰) */
+.ln-bar-act {display:flex;gap:6px;margin-left:8px}
+.ln-dock .sec {min-height:46px}
 .ln-last-round {flex-basis:100%;color:var(--text);font-size:12px}
 .ln-turn[data-turn="me"] {color:var(--gold,#c9a227)}
 .ln-help {min-width:44px;padding:0 10px}
@@ -267,7 +269,8 @@ function sanitise(data, profile, match) {
   const D = A.cardsOf(data), known = id => !!D.cards[id];
   let changed = false;
   if (profile) {
-    const owned = profile.owned.filter(known), lane = C.deckOf(profile, 'lane').filter(known);
+    /* 컬렉션은 아는 이름이면 남긴다(그림이 돌아오면 쓰게). 덱은 풀 안의 카드만 — 그림이 내려간 카드가 남으면 "25장인데 규칙 미달" 로 틀리게 말한다(리뷰) */
+    const owned = profile.owned.filter(known), lane = C.deckOf(profile, 'lane').filter(id => known(id) && C.inPool(data, id));
     if (owned.length !== profile.owned.length || lane.length !== profile.decks.lane.length) { profile = JSON.parse(JSON.stringify(profile)); profile.owned = owned; profile.decks.lane = lane; changed = true; }
     const stock = (profile.shop && profile.shop.stock) || [];
     if (stock.length < C.SHOP_SLOTS || stock.some(x => x && !known(x.id))) { profile = JSON.parse(JSON.stringify(profile)); profile.shop.stock = stock.filter(x => !x || known(x.id)); C.upgradeProfile(profile, data); changed = true; }
@@ -549,15 +552,15 @@ function Match({ data, profile, st, actMatch, act }) {
       <span class="ln-lives" data-me=${st.lives.me} data-foe=${st.lives.foe}>${W('lane.lives')} ${'♥'.repeat(st.lives.me)}${'♡'.repeat(A.LIVES - st.lives.me)} : ${'♥'.repeat(st.lives.foe)}${'♡'.repeat(A.LIVES - st.lives.foe)}</span>
       ${st.round === 1 && st.coin === 'me' && A.FIRST_CARDS > 0 && html`<span class="ln-first">${W('lane.first.cards', { n: A.FIRST_CARDS })}</span>`}
       <span class="ln-turn" data-turn=${st.turn || ''}>${st.passed.me ? W('lane.passed') : W(mine ? 'lane.turn.me' : 'lane.turn.foe')}</span>
-      <span class="ln-bar-act">
-        <button type="button" class="ln-btn ln-help" id="ln-help" aria-label=${W('lane.rules.title')} title=${W('lane.rules.title')} onClick=${() => setHelp(true)}>?</button>
-        <button type="button" class="ln-btn" id="ln-open" disabled=${!mine || st.me.opened || !L.open.length} onClick=${() => setMode({ kind: 'open' })}>${W(st.me.opened ? 'lane.open.used' : 'lane.open')}</button>
-        <button type="button" class="ln-btn" id="ln-pass" disabled=${!L.pass} onClick=${() => { setMode(null); setDetail(null); actMatch(m => A.pass(data, m)); }}>${W('lane.pass')}</button>
-      </span>
       ${lastRound && html`<span class="ln-last-round">${roundText(lastRound, st.roundLog.length)}</span>`}
     </div>
     <div class="ln-dock">${!profile.tutorial && html`<${Guide} st=${st} onSkip=${() => act(p => { p.tutorial = true; })} />`}
-      <p class="sec">${W('lane.hand', { n: st.me.hand.length })}<span class="ln-deck-pile">${W('lane.deck.left', { n: st.me.deck.length })}</span></p>
+      <p class="sec">${W('lane.hand', { n: st.me.hand.length })}<span class="ln-deck-pile">${W('lane.deck.left', { n: st.me.deck.length })}</span>
+        <span class="ln-bar-act">
+          <button type="button" class="ln-btn ln-help" id="ln-help" aria-label=${W('lane.rules.title')} title=${W('lane.rules.title')} onClick=${() => setHelp(true)}>?</button>
+          <button type="button" class="ln-btn" id="ln-open" disabled=${!mine || st.me.opened || !L.open.length} onClick=${() => setMode({ kind: 'open' })}>${W(st.me.opened ? 'lane.open.used' : 'lane.open')}</button>
+          <button type="button" class="ln-btn" id="ln-pass" disabled=${!L.pass} onClick=${() => { setMode(null); setDetail(null); actMatch(m => A.pass(data, m)); }}>${W('lane.pass')}</button>
+        </span></p>
       <div class="ln-hand">${st.me.hand.map((id, i) => html`<${Card} key=${id + i} data=${data} id=${id} onClick=${() => { setForm('light'); setDetail({ id, hand: true }); }} />`)}</div></div>
     ${detail && html`<${Detail} data=${data} id=${detailId} unit=${unitOf(detail)} form=${detail.hand ? form : undefined} onForm=${detail.hand ? setForm : null} actions=${detailActions()} onClose=${() => setDetail(null)} />`}
     ${help && html`<${Rules} onClose=${() => setHelp(false)} />`}
