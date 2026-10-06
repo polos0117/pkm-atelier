@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf9f3">
+<title>포켓몬 메카 연구소</title>
+<!--
+  폼 결투(궨트식)의 얼굴. 규칙은 lib/gwent.js 에만, 컬렉션·보상·상점은 lib/collection.js 에만 있다 — 여기는 상태를 그리고 단추를 엔진에 넘길 뿐이다.
+  진화 결투(lane.html)와 같은 저장(localStorage 의 pkm_duel_v1)을 쓴다 — decks.gwent · stats.gwent · matches.gwent.
+  설계: docs/superpowers/specs/2026-10-06-gwent-duel-design.md
+-->
+<link rel="stylesheet" href="lib/workspace.css?v=gwent1">
+<style>
+:root {--row-h:108px}
+* {box-sizing:border-box}
+html,body {margin:0;padding:0}
+body {color:var(--text);font-size:15px}
+.dex-page > #app {display:flex;flex-direction:column;min-height:0;height:100%}
+.dex-page > #app > main {flex:1 1 auto;min-height:0}
+.collection-scroll {display:block}
+.dex-page .collection-scroll {padding-bottom:calc(44px + env(safe-area-inset-bottom))}
+.gw-screen {display:block;min-height:120px}
+.gw-btn {min-height:44px;padding:8px 14px;background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.gw-btn.primary {background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent);min-height:46px;font-size:14px}
+.gw-btn:disabled {opacity:.45;cursor:default}
+.sec {margin:16px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.sec span {color:var(--muted);font-weight:400;letter-spacing:0}
+.note {margin:6px 0 10px;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+/* 첫 고르기 — 세대 아홉 */
+.gw-gens {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0 14px}
+.gw-gen {min-height:64px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:14px;text-align:left;cursor:pointer}
+.gw-gen.on {outline:3px solid var(--accent);outline-offset:1px}
+.gw-gen:disabled {opacity:.5;cursor:default}
+.gw-gen small,.gw-need {display:block;color:var(--muted);font-weight:400;font-size:11px}
+.gw-need {color:var(--signal,#c33)}
+/* 로비 */
+.gw-head {display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:10px 0 4px;font:700 12px ui-monospace,monospace;letter-spacing:.04em;color:var(--muted)}
+.gw-head b {color:var(--text);font-size:14px}
+.gw-deck[data-ok="false"] b {color:var(--signal,#c33)}
+.gw-gold {color:var(--gold,#c9a227)}
+.gw-tools {display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.gw-lv {display:flex;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;margin:6px 0}
+.gw-lv button {flex:1;min-height:44px;background:var(--card);border:0;border-radius:6px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.gw-lv button.on {background:var(--accent-soft);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
+.gw-conquered {margin:8px 0;padding:10px 12px;border:1px solid var(--gold,#c9a227);border-radius:8px;color:var(--gold,#c9a227);font-weight:700;text-align:center;font-size:13px}
+.gw-champions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:600px) {.gw-champions {grid-template-columns:repeat(3,minmax(0,1fr))}}
+.gw-champion {display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:center;min-height:92px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.gw-champion .face {width:52px;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--card2)}
+.gw-champion b {display:block;font-size:14px;overflow-wrap:anywhere}
+.gw-champion small {display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.gw-champion:disabled {opacity:.5;cursor:default}
+/* 덱 짜기 */
+.gw-main-pick {display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.gw-main-pick button {min-height:44px;min-width:44px;padding:0 10px;background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.gw-main-pick button.on {color:var(--text);background:var(--accent-soft);border-color:var(--accent)}
+.gw-rule {display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 2px;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.gw-rule span.bad {color:var(--signal,#c33)}
+.gw-why {margin:2px 0 8px;color:var(--signal,#c33);font-size:12px;line-height:1.5}
+.gw-why:empty {display:none}
+.gw-build-act,.gw-chips {display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;align-items:center}
+.gw-chips > i {flex:none;margin-right:4px;font:700 10px ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);font-style:normal}
+.gw-chips button {min-height:44px;padding:0 12px;background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.gw-chips button.on {background:var(--accent-soft);color:var(--text);border-color:var(--accent)}
+.grid {display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
+@media (min-width:600px) {.grid {grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.gw-pick-cell {display:flex;flex-direction:column;gap:4px}
+.gw-pick-cell .cell {flex:1}
+.gw-toggle {min-height:44px;background:var(--card2);border:1px solid var(--line);border-radius:8px;color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.gw-toggle.in {background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.gw-empty {margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
+/* 카드 한 칸 — 도감 칸 꼴 */
+.cell {display:flex;flex-direction:column;width:100%;min-height:44px;padding:0;text-align:left;color:inherit;font:inherit;background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden;cursor:pointer}
+.cell.in {outline:3px solid var(--accent);outline-offset:-3px}
+.face {display:block;flex:none;position:relative;width:100%;aspect-ratio:2/3;background:var(--card2);overflow:hidden}
+.face img {display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.ph {display:block;height:100%;background:linear-gradient(160deg,var(--card2),var(--card))}
+.cap {display:block;flex:1;padding:6px 8px 8px;font-weight:700;font-size:12px;overflow-wrap:anywhere}
+.cap .cnm {display:block;min-height:2.8em;max-height:2.8em;overflow:hidden;word-break:keep-all;line-height:1.4}
+.gw-types {display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
+.gw-type {display:inline-block;padding:1px 6px;border-radius:999px;font:700 10px ui-monospace,monospace;color:#fff;background:var(--tc,#888);text-shadow:0 1px 1px #0008;font-style:normal}
+.gw-pw {position:absolute;left:6px;bottom:6px;min-width:26px;padding:2px 6px;border-radius:7px;text-align:center;font:800 13px ui-monospace,monospace;background:#000a;color:#fff}
+.gw-pw.rare {background:var(--gold,#c9a227);color:#221a06}
+.gw-tag {display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font:700 10px ui-monospace,monospace}
+/* 상세 — 바닥에서 올라오는 판. 폼 셋 그림이 나란히 */
+.gw-detail {position:fixed;left:0;right:0;bottom:0;z-index:50;max-height:88dvh;overflow:auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:2px solid var(--accent);border-radius:14px 14px 0 0;box-shadow:0 -10px 30px #000a}
+.gw-detail h4 {margin:0 0 6px;font-size:17px}
+.gw-forms {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:6px 0}
+.gw-form {position:relative;padding:0;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card2);font:inherit;color:inherit;cursor:pointer;min-height:44px}
+.gw-form.on {border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.gw-form .face {aspect-ratio:2/3}
+.gw-form b {display:block;padding:4px 6px 2px;font-size:12px;text-align:center}
+.gw-form small {display:block;padding:0 6px 6px;font-size:10px;color:var(--muted);text-align:center;line-height:1.3;word-break:keep-all}
+.gw-detail dl {margin:0;font-size:12px;line-height:1.5} .gw-detail dt {color:var(--muted);margin-top:4px} .gw-detail dd {margin:0;color:var(--text)}
+.gw-detail .lore {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+.gw-detail-act {display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .gw-detail-act .primary {flex:1}
+/* ── 대결 ── */
+.gw-mull .grid {grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+@media (min-width:600px) {.gw-mull .grid {grid-template-columns:repeat(8,minmax(0,1fr))}}
+.gw-mull .cap {display:none}
+.gw-mull .cell.swapped {outline:3px solid var(--gold,#c9a227);outline-offset:-3px}
+.gw-mull-left {margin:8px 0;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.gw-foe {display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 0 4px;font:700 11px ui-monospace,monospace;letter-spacing:.04em;color:var(--muted)}
+.gw-foe .face {width:30px;aspect-ratio:2/3;border-radius:5px;overflow:hidden;background:var(--card2);flex:none}
+.gw-foe b {color:var(--text);font-size:13px;margin-right:4px}
+.gw-foe-fan {display:flex;align-items:center;gap:6px} .gw-foe-fan .gw-cards {display:flex;height:30px;align-items:flex-end}
+.gw-back {display:block;width:20px;aspect-ratio:2/3;margin-left:-9px;border:1px solid var(--gold,#c9a227);border-radius:3px;background:linear-gradient(160deg,var(--gc,#555),#1a1420);box-shadow:0 1px 3px #000a} .gw-back:first-child {margin-left:0}
+.gw-foe-open[data-used="true"] {text-decoration:line-through;opacity:.6}
+@keyframes gw-burst {0% {opacity:0;transform:scale(.5)} 30% {opacity:.9} 100% {opacity:0;transform:scale(1.5)}}
+@keyframes gw-pulse {from {opacity:.7} to {opacity:1}}
+.gw-mode {position:sticky;top:0;z-index:7;display:flex;align-items:center;gap:8px;margin:4px 0;padding:6px 10px;border:1px solid var(--accent);border-radius:10px;background:var(--bg);font:700 12px ui-monospace,monospace;color:var(--text)}
+.gw-mode .gw-btn {margin-left:auto}
+.gw-bar {position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:6px 0;padding:8px 10px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:10px;background:var(--bg);font:700 12px ui-monospace,monospace;color:var(--muted)}
+.gw-score b {font-size:16px;color:var(--text);letter-spacing:.1em} .gw-score b[data-side="foe"] {color:var(--signal,#c33)}
+/* 패스·개방·? 는 손패 칸 제목 줄에 — 덮개 첫 판에서 길잡이가 켜지면 위 막대가 손패 칸에 깔려 단추를 못 눌렀다(리뷰) */
+.gw-bar-act {display:flex;gap:6px;margin-left:8px}
+.gw-dock .sec {min-height:46px}
+.gw-last-round {flex-basis:100%;color:var(--text);font-size:12px}
+.gw-turn[data-turn="me"] {color:var(--gold,#c9a227)}
+.gw-help {min-width:44px;padding:0 10px}
+/* 손패는 바닥에 붙는 칸 */
+.gw-dock {position:sticky;bottom:0;z-index:6;margin-top:10px;padding:2px 10px calc(6px + env(safe-area-inset-bottom));background:var(--bg);border:1px solid var(--line);border-bottom:0;border-top:2px solid var(--accent);border-radius:12px 12px 0 0;box-shadow:0 -10px 24px #0007}
+.gw-dock .sec {margin:4px 0 2px}
+.gwent-page .collection-scroll:has(.gw-dock) {padding-bottom:0}
+.gw-hand {display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;scroll-snap-type:x proximity}
+.gw-hand .cell {flex:none;width:72px;scroll-snap-align:start}
+.gw-hand .cap {padding:3px 4px 4px;font-size:10px} .gw-hand .cnm {min-height:2.6em;max-height:2.6em;line-height:1.3} .gw-hand .gw-types {display:none} .gw-hand .gw-tag {display:none}
+.gw-deck-pile {margin-left:auto;font:700 11px ui-monospace,monospace;color:var(--muted)}
+.gw-banner {position:fixed;left:50%;top:38%;z-index:60;transform:translate(-50%,-50%);max-width:calc(100vw - 32px);padding:14px 24px;background:var(--card);border:1px solid var(--gold,#c9a227);border-radius:12px;color:var(--text);font-weight:800;font-size:16px;text-align:center;line-height:1.4;box-shadow:0 10px 30px #000a;animation:gw-banner 1.4s forwards;pointer-events:none}
+@keyframes gw-banner {0% {opacity:0;transform:translate(-50%,-40%)} 15% {opacity:1;transform:translate(-50%,-50%)} 80% {opacity:1} 100% {opacity:0}}
+#gw-fxlayer {position:fixed;inset:0;z-index:45;pointer-events:none;overflow:hidden}
+.gw-ghost {position:fixed;left:0;top:0;border-radius:6px;overflow:hidden;background:var(--card2);box-shadow:0 10px 24px #000a;will-change:transform}
+.gw-ghost img,.gw-ghost .ph {width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.gw-guide {display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 10px;margin:6px 0 0;padding:4px 10px 8px;border:1px solid var(--gold,#c9a227);border-radius:10px;background:var(--accent-soft);font-size:12px;line-height:1.5;color:var(--text);word-break:keep-all}
+.gw-guide small {grid-column:1;grid-row:1;justify-self:start;padding:2px 6px;border-radius:999px;background:var(--gold,#c9a227);color:#221a06;font:700 10px ui-monospace,monospace}
+.gw-guide p {grid-column:1/-1;grid-row:2;margin:0}
+.gw-guide .gw-btn {grid-column:2;grid-row:1;justify-self:end;min-height:44px;padding:4px 10px;font-size:11px;background:transparent;border-color:transparent;color:var(--muted)}
+.gw-rules {margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-top:2px solid var(--gold,#c9a227);border-radius:12px;background:var(--card)}
+.gw-rules-head {display:flex;align-items:center;justify-content:space-between;gap:8px} .gw-rules-head h3 {margin:0;font-size:16px}
+.gw-rules-grid {display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px} @media (min-width:600px) {.gw-rules-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gw-rule-card {padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;background:var(--card2)}
+.gw-rule-card b {display:block;margin-bottom:4px;font-size:14px} .gw-rule-card p {margin:0;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.gw-board .gw-rules {position:fixed;left:12px;right:12px;top:10%;z-index:70;max-height:80dvh;overflow:auto;box-shadow:0 14px 40px #000b}
+/* ── 결과 · 보상 뒤집기 · 전적 · 상점 ── */
+.gw-result h2 {margin:14px 0 4px;font-size:26px;letter-spacing:.04em}
+.gw-result[data-result="win"] h2 {color:var(--gold,#c9a227)} .gw-result[data-result="lose"] h2 {color:var(--signal,#c33)}
+.gw-gold-earned {display:inline-block;margin-left:10px;color:var(--gold,#c9a227);font:800 16px ui-monospace,monospace}
+.gw-rounds {list-style:none;margin:6px 0 12px;padding:0;display:flex;gap:8px;flex-wrap:wrap;font:700 13px ui-monospace,monospace;color:var(--muted)}
+.gw-rounds li {padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card)} .gw-rounds li b {color:var(--text);letter-spacing:.1em}
+.gw-reveal {display:flex;flex-direction:column;align-items:center;gap:10px;margin:10px 0 14px;padding:14px;border:1px solid var(--gold,#c9a227);border-radius:14px;background:var(--card)}
+.gw-pool {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.gw-flipcard {position:relative;width:100%;min-height:44px;padding:0;border:0;background:transparent;font:inherit;color:inherit;cursor:pointer;perspective:900px;--rc:#e8e8e8}
+.gw-flipcard:disabled {cursor:default}
+.gw-flipcard[data-rare] {--rc:var(--gold,#c9a227)}
+.gw-flipper {position:relative;transform-style:preserve-3d;transform:rotateY(0)}
+.gw-flipper > * {backface-visibility:hidden}
+.gw-flipper .gw-backface {position:absolute;inset:0}
+.gw-flipper .cell {transform:rotateY(180deg);cursor:default}
+.gw-flipcard.flipped .gw-flipper {animation:gw-reveal .8s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes gw-reveal {from {transform:rotateY(0)} to {transform:rotateY(180deg)}}
+.gw-flipcard.flipped .cell {box-shadow:0 0 0 2px var(--rc),0 0 24px var(--rc)}
+.gw-flipcard.flipped::before {content:'';position:absolute;inset:-18%;z-index:-1;border-radius:50%;background:radial-gradient(circle,var(--rc) 0,transparent 62%);opacity:0;animation:gw-burst 1s .45s both;pointer-events:none}
+.gw-flipcard.missed .gw-flipper {animation:none;transform:rotateY(180deg)} .gw-flipcard.missed {opacity:.45;filter:grayscale(.6)}
+.gw-backface {display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border-radius:11px;border:2px solid var(--gold,#c9a227);background:linear-gradient(160deg,var(--gc,#555) 0%,#1a1420 85%);color:#fff;font:800 13px ui-monospace,monospace;letter-spacing:.1em;text-shadow:0 1px 3px #000}
+.gw-result-left {font:700 12px ui-monospace,monospace;color:var(--gold,#c9a227)}
+.gw-reward-none {margin:10px 0;color:var(--muted);font-size:13px}
+.gw-result-act {display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.gw-stats,.gw-shop {margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:12px;background:var(--card)}
+.gw-stats-head,.gw-shop-head {display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap} .gw-stats-head h3,.gw-shop-head h3 {margin:0;font-size:16px}
+.gw-stats-line {margin:8px 0;font:700 13px ui-monospace,monospace;color:var(--text)}
+.gw-stats-tables {display:grid;grid-template-columns:1fr;gap:10px} @media (min-width:600px) {.gw-stats-tables {grid-template-columns:repeat(3,minmax(0,1fr))}}
+.gw-stats table {width:100%;border-collapse:collapse;font-size:12px} .gw-stats th {text-align:left;color:var(--accent);font:700 11px ui-monospace,monospace;letter-spacing:.08em;padding:4px 0}
+.gw-stats td {padding:3px 0;border-top:1px solid var(--line);color:var(--muted)} .gw-stats td.win {text-align:right;color:var(--text);font:700 12px ui-monospace,monospace}
+.gw-stats-nums {display:flex;gap:14px;flex-wrap:wrap;margin:10px 0;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.gw-stats-cards .grid {grid-template-columns:repeat(3,minmax(0,1fr))} .gw-stats-cards .cell {cursor:default} .gw-stats-cards .gw-types {display:none}
+.gw-stat {position:absolute;right:4px;bottom:4px;padding:2px 6px;border-radius:6px;background:#000a;color:#fff;font:700 10px ui-monospace,monospace}
+.gw-stats-lines {list-style:none;margin:6px 0 0;padding:0;display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.gw-stats-empty {margin:8px 0;color:var(--muted);font-size:13px}
+.gw-shop-head .gw-gold {font:800 15px ui-monospace,monospace}
+.gw-shop-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.gw-shop-slot.empty {display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-size:12px}
+.gw-shop-slot:disabled:not(.flipped):not(.empty) {opacity:.6}
+.gw-price {position:absolute;left:50%;bottom:8%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:#000c;color:var(--gold,#c9a227);font:800 12px ui-monospace,monospace;white-space:nowrap;border:1px solid var(--gold,#c9a227)}
+.gw-shop-slot.flipped .gw-price {display:none}
+.gw-rare {position:absolute;left:50%;top:7%;transform:translateX(-50%);padding:2px 8px;border-radius:999px;background:var(--gold,#c9a227);color:#221a06;font:800 10px ui-monospace,monospace;letter-spacing:.1em}
+.gw-shop-slot[data-rare] .gw-backface {box-shadow:0 0 0 1px var(--gold,#c9a227),0 0 16px var(--gold,#c9a227)}
+.gw-shop-act {display:flex;gap:8px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce) {.gw-flipcard.flipped .gw-flipper {animation:none;transform:rotateY(180deg)} .gw-flipcard.flipped::before {animation:none;opacity:0}}
+/* ── 줄 판 — 상대 셋 ↑ 막대 ↓ 내 셋. 줄은 머리(폼·날씨·합) + 카드 띠 ── */
+.gw-rows {display:flex;flex-direction:column;gap:4px;margin:4px 0}
+.gw-row {position:relative;display:grid;grid-template-columns:54px minmax(0,1fr);gap:4px;min-height:64px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.gw-row[data-side="foe"] {background:color-mix(in srgb,var(--signal,#c33) 6%,var(--card))}
+.gw-row.weathered {background:repeating-linear-gradient(135deg,var(--card) 0 8px,var(--card2) 8px 16px)}
+.gw-row.won-me {box-shadow:inset 0 0 0 2px var(--accent)} .gw-row.won-foe {box-shadow:inset 0 0 0 2px var(--signal,#c33)}
+.gw-row-head {display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 2px;font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.02em}
+.gw-row-head b {font-size:15px;color:var(--text)} .gw-row[data-side="foe"] .gw-row-head b {color:var(--signal,#c33)}
+.gw-row-head .gw-wx {color:var(--accent);font-size:10px}
+.gw-units {display:flex;gap:4px;overflow-x:auto;align-items:center;min-height:58px}
+.gw-units .gw-row-empty {font:700 10px ui-monospace,monospace;color:var(--muted);padding-left:4px}
+.gw-unit {position:relative;flex:none;width:44px;height:58px;padding:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--card2);font:inherit;color:inherit;cursor:pointer}
+.gw-unit img,.gw-unit .ph {width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.gw-unit .gw-pw {left:2px;bottom:2px;min-width:18px;padding:1px 3px;font-size:11px;border-radius:4px}
+.gw-unit.rare {border-color:var(--gold,#c9a227);box-shadow:0 0 0 1px var(--gold,#c9a227)}
+.gw-unit.hurt .gw-pw {background:var(--signal,#c33)} .gw-unit.bond .gw-pw {background:var(--gold,#c9a227);color:#221a06} .gw-unit.open {box-shadow:0 0 0 2px var(--accent),0 0 12px var(--accent)}
+.gw-unit.flip {animation:gw-flip .5s ease-out} @keyframes gw-flip {from {transform:rotateY(90deg)} to {transform:rotateY(0)}}
+.gw-unit.hit {animation:gw-hit .6s} @keyframes gw-hit {0%,100% {transform:none} 25% {transform:translateX(-4px);filter:brightness(1.6) sepia(1) hue-rotate(-50deg)} 75% {transform:translateX(4px)}}
+.gw-unit.burst::after {content:'';position:absolute;inset:-10px;border-radius:50%;background:radial-gradient(circle,var(--accent) 0,transparent 65%);animation:gw-burst .8s ease-out forwards;pointer-events:none}
+.gw-target {position:absolute;inset:3px;z-index:2;display:flex;align-items:center;justify-content:center;min-height:44px;border:2px dashed var(--accent);border-radius:8px;background:var(--accent-soft);color:var(--text);font:800 15px ui-monospace,monospace;cursor:pointer;animation:gw-pulse 1.2s infinite alternate}
+.gw-target[data-kind="open"] {position:static;inset:auto;flex:none;width:44px;height:58px;font-size:11px;border-color:var(--gold,#c9a227);background:color-mix(in srgb,var(--gold,#c9a227) 25%,transparent)}
+.gw-pw3 {position:absolute;left:6px;bottom:6px;padding:2px 6px;border-radius:7px;font:800 11px ui-monospace,monospace;background:#000a;color:#fff;letter-spacing:.04em}
+.gw-pw3.rare {background:var(--gold,#c9a227);color:#221a06}
+.gw-wtag {position:absolute;right:6px;top:6px;padding:2px 6px;border-radius:999px;background:var(--accent);color:var(--on-accent,#fff);font:700 10px ui-monospace,monospace}
+.gw-form .gw-fp {display:block;padding:0 6px 6px;text-align:center;font:800 14px ui-monospace,monospace;color:var(--text)}
+.gw-toggle-w {min-height:44px;background:var(--card2);border:1px solid var(--line);border-radius:8px;color:var(--muted);font:inherit;font-weight:700;font-size:11px;cursor:pointer}
+.gw-toggle-w.in {background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.gw-toggle-w:disabled {opacity:.4;cursor:default}
+.gw-bar .gw-sumline b {font-size:18px;color:var(--text);letter-spacing:.06em} .gw-bar .gw-sumline b[data-side="foe"] {color:var(--signal,#c33)}
+@media (prefers-reduced-motion:reduce) {.gw-unit.flip,.gw-unit.hit,.gw-target {animation:none} .gw-unit.burst::after {display:none}}
+</style>
+<script src="lib/workspace-theme.js?v=pokemon1"></script>
+<script src="lib/words.js?v=gwent1"></script>
+<script src="lib/fresh.js?v=4"></script>
+<script src="lib/img.js"></script>
+<script src="lib/collection.js?v=1"></script>
+<script src="lib/gwent.js?v=1"></script>
+</head>
+<body class="dex-page gwent-page">
+<div id="app"></div>
+<script type="module">
+import { h, render } from 'https://esm.sh/preact@10.24.3';
+import { useState, useEffect, useMemo, useRef } from 'https://esm.sh/preact@10.24.3/hooks';
+import htm from 'https://esm.sh/htm@3.1.1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
+const html = htm.bind(h);
+const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, G = window.AtelierGwent;
+const STORE = 'pkm_duel_v1';
+
+function Shell({ children }) {
+  return html`<main>
+    <${WorkspaceHeader} page="gwent" />
+    <div class="collection-scroll" tabindex="0">${children}</div>
+  </main>`;
+}
+/* 자료 — card·chart·group·label·lane(챔피언)·gwent 와 그림 등록부 */
+function useData() {
+  const [state, set] = useState(null);
+  useEffect(() => {
+    const get = f => fetch(f, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
+    Promise.all([get('data/card.json'), get('data/chart.json'), get('data/group.json'), get('data/label.json'), get('data/lane.json'), get('data/gwent.json'), IMG.load()])
+      .then(([card, chart, group, label, lane, gwent, img]) => set({ data: { cards: card.cards.character, chart: chart.chart, group, label, img, lane, gwent } }))
+      .catch(e => set({ error: String((e && e.message) || e) }));
+  }, []);
+  return state;
+}
+/* 저장 하나 — 진화 결투와 같은 열쇠. 여기는 matches.gwent 만 읽고 쓴다 */
+function load() {
+  try {
+    const j = JSON.parse(localStorage.getItem(STORE));
+    if (!j || !j.profile) return { profile: null, match: null };
+    return { profile: C.upgradeProfile(j.profile), match: j.v === C.VERSION && j.matches && j.matches.gwent ? j.matches.gwent : null };
+  } catch { return { profile: null, match: null }; }
+}
+function save(profile, match) { try { const j = JSON.parse(localStorage.getItem(STORE) || '{}'); localStorage.setItem(STORE, JSON.stringify({ v: C.VERSION, profile, matches: { ...(j.matches || {}), gwent: match } })); } catch {} }
+function seed() { return (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0; }
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+/* 모르는 이름은 컬렉션에서, 풀 밖·일상컷 없는 날씨판은 덱에서만 뺀다. 판에 모르는 id 가 있으면 판을 버린다 */
+function sanitise(data, profile, match) {
+  const D = G.cardsOf(data), known = id => !!D.cards[G.baseName(id)];
+  let changed = false;
+  if (profile) {
+    const owned = profile.owned.filter(known), deck = C.deckOf(profile, 'gwent').filter(id => G.canUse(data, profile, id));
+    if (owned.length !== profile.owned.length || deck.length !== profile.decks.gwent.length) { profile = JSON.parse(JSON.stringify(profile)); profile.owned = owned; profile.decks.gwent = deck; changed = true; }
+    const stock = (profile.shop && profile.shop.stock) || [];
+    if (stock.length < C.SHOP_SLOTS || stock.some(x => x && !known(x.id))) { profile = JSON.parse(JSON.stringify(profile)); profile.shop.stock = stock.filter(x => !x || known(x.id)); C.upgradeProfile(profile, data); changed = true; }
+  }
+  if (match) {
+    const ids = [];
+    for (const side of ['me', 'foe']) { const sd = match[side] || {}; ids.push(...(sd.hand || []), ...(sd.deck || []), ...(sd.grave || [])); for (const r of sd.rows || []) for (const u of r) ids.push(u.id); }
+    if (!ids.every(id => G.cardOf(data, id))) { match = null; changed = true; }
+  }
+  return { profile, match, changed };
+}
+
+/* ── 그림 — 폼 초상·개방·일상컷 ── */
+function formArt(data, name, form, open) {
+  const entry = data.img[name]; if (!entry) return null;
+  const bs = IMG.styleMap(entry), want = open ? [form + '_overdrive', 'overdrive', form] : [form];
+  for (const k of Object.keys(bs)) for (const f of want) { const one = IMG.formOf(bs[k], f); if (one && one.f) return one.f; }
+  return null;
+}
+function casualArt(data, name) {
+  const entry = data.img[name]; if (!entry) return null;
+  const bs = IMG.styleMap(entry);
+  for (const k of Object.keys(bs)) { const c = bs[k].casual, f = c && (Array.isArray(c) ? c : c.f); if (f && f.length) return f[0]; }
+  return null;
+}
+function Thumb({ file, cls }) {
+  if (!file) return html`<span class=${'ph ' + (cls || '')}></span>`;
+  return html`<img src=${IMG.thumbURL(file)} alt="" loading="lazy" class=${cls}
+    onError=${e => { const t = e.currentTarget; if (t.dataset.f) { t.replaceWith(Object.assign(document.createElement('span'), { className: 'ph' })); return; } t.dataset.f = '1'; t.src = IMG.imgURL(file); }} />`;
+}
+const typeName = (data, t) => data.group.name[t] || t, typeColor = (data, t) => data.group.color[t] || '#888';
+function TypeChips({ data, types }) { return html`<span class="gw-types">${types.map(t => html`<i key=${t} class="gw-type" style=${'--tc:' + typeColor(data, t)}>${typeName(data, t)}</i>`)}</span>`; }
+const p3 = c => [c.power.light, c.power.heavy, c.power.mobility].join('·');
+const wxName = (data, lane) => W('gwent.weather.' + G.weatherOf(data, lane));
+/* 카드 한 칸 — 경장 초상 + 힘 셋 + 타입. 날씨판 id 면 일상컷 + 날씨판 표시 */
+function Card({ data, id, art, onClick, cls, attrs, children }) {
+  const c = G.cardOf(data, id); if (!c) return null;
+  const file = art !== undefined ? art : c.weather ? casualArt(data, c.name) : formArt(data, c.name, 'light');
+  return html`<button type="button" class=${'cell ' + (cls || '')} data-id=${id} onClick=${onClick} ...${attrs || {}}>
+    <span class="face"><${Thumb} file=${file} />
+      ${c.weather ? html`<span class="gw-wtag">${W('gwent.weather.tag')}</span>` : html`<span class=${'gw-pw3' + (c.rare ? ' rare' : '')}>${p3(c)}</span>`}
+      ${children}</span>
+    <span class="cap"><span class="cnm">${c.name}</span><${TypeChips} data=${data} types=${c.types} />
+      ${c.rare && html`<span class="gw-tag">${W('lane.rare')}</span>`}</span>
+  </button>`;
+}
+/* 상세 — 폼 셋 그림과 그 줄의 힘. unit 은 판 위 카드(피해·개방). actions 단추가 붙는다 */
+function Detail({ data, id, unit, lane, actions, onClose }) {
+  const c = G.cardOf(data, id), base = G.cardsOf(data).cards[G.baseName(id)], raw = data.cards.find(x => x.name === base.name) || {};
+  const line = C.lineOf(data, base.name);
+  return html`<div class="gw-detail" data-id=${id} role="dialog" aria-label=${base.name}>
+    <h4>${base.name}${base.rare ? html`<span class="gw-tag">${W('lane.rare')}</span>` : ''}${c && c.weather ? html`<span class="gw-tag">${W('gwent.weather.tag')}</span>` : ''}</h4>
+    ${c && c.weather ? html`<div class="face" style="max-width:160px;border-radius:10px;overflow:hidden"><${Thumb} file=${casualArt(data, base.name)} /></div><p class="note">${W('gwent.weather.note')}</p>`
+    : html`<div class="gw-forms">${C.FORMS.map((f, i) => html`<span key=${f} class=${'gw-form' + (lane === i ? ' on' : '')} data-form=${f}>
+      <span class="face"><${Thumb} file=${formArt(data, base.name, f, !!(unit && unit.open && lane === i))} /></span><b>${W('form.' + f)}</b><span class="gw-fp">${base.power[f]}</span><small>${W('gwent.form.' + f + '.text')}</small></span>`)}</div>`}
+    <dl>
+      <dt>${W('lane.power')}</dt><dd>${W('gwent.power3', base.power)} <${TypeChips} data=${data} types=${base.types} /></dd>
+      ${line.names.length > 1 && html`<dt>${W('lane.line')}</dt><dd>${line.names.join(' → ')}</dd>`}
+      ${base.rare && html`<dt>${W('gwent.hero')}</dt>`}
+      ${unit && unit.dmg ? html`<dt>${W('gwent.unit.dmg', { n: unit.dmg })}</dt>` : ''}
+      ${unit && unit.open ? html`<dt>${W('gwent.unit.open', { n: unit.open })}</dt>` : ''}
+    </dl>
+    ${raw.text && html`<p class="lore">${raw.text}</p>`}
+    <div class="gw-detail-act">
+      ${(actions || []).map(a => html`<button type="button" key=${a.id} id=${a.id} class=${'gw-btn ' + (a.cls || 'primary')} disabled=${a.disabled} onClick=${a.onClick}>${a.label}</button>`)}
+      <button type="button" class="gw-btn" id="gw-close" onClick=${onClose}>${W('lane.close')}</button>
+    </div>
+  </div>`;
+}
+
+/* ── 첫 고르기 ── */
+function Pick({ data, onPick }) {
+  const [gen, setGen] = useState(null);
+  return html`<section class="gw-screen gw-pick" data-screen="pick">
+    <p class="sec">${W('gwent.pick.title')}</p><p class="note">${W('gwent.pick.note')}</p>
+    <div class="gw-gens" role="group" aria-label=${W('gwent.pick.title')}>${data.lane.champions.map(ch => { const can = C.canPickGen(data, ch.gen); return html`<button key=${ch.gen} type="button"
+      class=${'gw-gen' + (gen === ch.gen ? ' on' : '')} data-gen=${ch.gen} aria-pressed=${gen === ch.gen} disabled=${!can.ok} onClick=${() => setGen(ch.gen)}>
+      ${W('lane.gen', { n: ch.gen })}${can.ok ? html`<small>${can.n}</small>` : html`<span class="gw-need">${W('lane.locked', { n: can.need })}</span>`}</button>`; })}</div>
+    <button type="button" class="gw-btn primary" id="gw-pick-go" disabled=${gen === null} onClick=${() => onPick(gen)}>${W('gwent.pick.go')}</button>
+  </section>`;
+}
+/* ── 로비 ── */
+function Lobby({ data, profile, act, setScreen, onChallenge, panel }) {
+  const v = G.validateDeck(data, profile), pool = C.pool(data).length;
+  return html`<section class="gw-screen gw-lobby" data-screen="lobby">
+    <div class="gw-head">
+      <span>${W('lane.lobby.main')} <b class="gw-main">${W('lane.gen', { n: profile.main })}</b></span>
+      <span class="gw-deck" data-ok=${v.ok ? 'true' : 'false'}><b>${W('gwent.lobby.deck', { n: v.n, max: C.DECK })}</b> ${W(v.ok ? 'lane.lobby.deck.ok' : 'lane.lobby.deck.bad')}</span>
+      <span class="gw-coll">${W('lane.lobby.collection', { n: profile.owned.length, pool, all: data.cards.length })}</span>
+      <span class="gw-gold">${W('lane.gold', { n: profile.gold || 0 })}</span>
+    </div>
+    <div class="gw-tools">
+      <button type="button" class="gw-btn" id="gw-build" onClick=${() => setScreen('build')}>${W('gwent.lobby.build')}</button>
+      <button type="button" class="gw-btn" id="gw-stats" onClick=${() => setScreen('stats')}>${W('lane.lobby.stats')}</button>
+      <button type="button" class="gw-btn" id="gw-shop" onClick=${() => setScreen('shop')}>${W('lane.lobby.shop')}</button>
+      <button type="button" class="gw-btn" id="gw-learn" onClick=${() => setScreen('learn')}>${W('lane.learn')}</button>
+    </div>
+    ${panel}
+    <p class="sec">${W('lane.lobby.level')}<span class="help">${W('gwent.lv.note')}</span></p>
+    <div class="gw-lv" role="group" aria-label=${W('lane.lobby.level')}>${C.LEVELS.map(l => html`<button key=${l} type="button" data-lv=${l}
+      class=${profile.level === l ? 'on' : ''} aria-pressed=${profile.level === l} onClick=${() => act(p => { p.level = l; })}>${W('lane.lv.' + l)}</button>`)}</div>
+    ${C.conquered(data, profile) && html`<div class="gw-conquered">${W('lane.lobby.conquered')}</div>`}
+    <p class="sec">${W('lane.lobby.champions')}<span class="help">${W('gwent.lobby.champions.note')}</span></p>
+    <div class="gw-champions">${data.lane.champions.map(ch => { const ready = G.championReady(data, ch.gen), portrait = G.championPortrait(data, ch.gen); return html`<button key=${ch.gen} type="button" class="gw-champion" data-gen=${ch.gen}
+      disabled=${!v.ok || !ready.ok} onClick=${() => onChallenge(ch.gen)}>
+      <span class="face"><${Thumb} file=${portrait && formArt(data, portrait, 'light')} /></span>
+      <span><b>${W('lane.champion', { n: ch.gen })}</b><small>${W('lane.gen', { n: ch.ally })}</small>
+        ${ready.ok ? html`<small>${W('lane.champion.wins', { n: C.winsOf(profile, ch.gen) })} · ${W('lane.champion.go')}</small>` : html`<span class="gw-need">${W('lane.locked', { n: ready.need })}</span>`}</span></button>`; })}</div>
+    ${!v.ok && html`<p class="note">${W('lane.need.deck')}</p>`}
+  </section>`;
+}
+/* ── 덱 짜기 — 기본판 넣기/빼기와 날씨판 넣기/빼기 ── */
+function Build({ data, profile, act, setScreen }) {
+  const D = G.cardsOf(data), v = G.validateDeck(data, profile), deck = C.deckOf(profile, 'gwent');
+  const [view, setView] = useState('all'), [genf, setGenf] = useState('all'), [detail, setDetail] = useState(null);
+  const ids = useMemo(() => profile.owned.filter(x => D.cards[x] && C.inPool(data, x)).sort((a, b) => D.cards[a].no - D.cards[b].no), [profile.owned]);
+  const inDeck = id => deck.includes(id), wid = id => id + G.WSUF;
+  const shown = ids.filter(id => { const c = D.cards[id];
+    return (view === 'all' || (view === 'in') === (inDeck(id) || inDeck(wid(id)))) && (genf === 'all' || (genf === 'main') === (c.gen === profile.main)); });
+  const rule = (key, text) => html`<span data-rule=${key} class=${v.problems.includes(key) ? 'bad' : ''}>${text}</span>`;
+  const chips = (label, attr, cur, set, list) => html`<div class="gw-chips" role="group" aria-label=${label}><i>${label}</i>${list.map(([k, text]) => html`<button key=${k} type="button" ...${{ [attr]: k }} class=${cur === k ? 'on' : ''} aria-pressed=${cur === k} onClick=${() => set(k)}>${text}</button>`)}</div>`;
+  const toggle = id => act(p => G.toggleDeck(data, p, id));
+  const why = k => W(k === 'weather' ? 'gwent.why.weather' : 'lane.why.' + k);
+  return html`<section class="gw-screen gw-build" data-screen="build">
+    <p class="sec">${W('lane.build')}<span class="help">${W('gwent.build.note')}</span></p>
+    <div class="gw-main-pick" role="group" aria-label=${W('lane.lobby.main')}>${data.lane.champions.map(ch => html`<button key=${ch.gen} type="button" data-gen=${ch.gen}
+      class=${profile.main === ch.gen ? 'on' : ''} aria-pressed=${profile.main === ch.gen} onClick=${() => act(p => G.setMain(p, ch.gen))}>${W('lane.gen', { n: ch.gen })}</button>`)}</div>
+    <div class="gw-rule" data-ok=${v.ok ? 'true' : 'false'}>${rule('count', W('lane.build.rule.count', { n: v.n }))}${rule('main', W('lane.build.rule.main', { n: v.main }))}${rule('rare', W('lane.build.rule.rare', { n: v.rare }))}${rule('weather', W('gwent.build.rule.weather', { n: v.weather }))}</div>
+    <p class="gw-why">${v.problems.map(why).join(' · ')}</p>
+    <div class="gw-build-act">
+      <button type="button" class="gw-btn primary" id="gw-build-done" onClick=${() => setScreen('lobby')}>${W('lane.build.done')}</button>
+      <button type="button" class="gw-btn" id="gw-autofill" title=${W('gwent.build.autofill.note')} onClick=${() => act(p => G.autoFill(data, p))}>${W('lane.build.autofill')}</button>
+    </div>
+    ${chips(W('lane.build.view'), 'data-view', view, setView, [['all', W('lane.build.view.all')], ['in', W('lane.build.view.in')], ['out', W('lane.build.view.out')]])}
+    ${chips(W('lane.build.filter.gen'), 'data-genf', genf, setGenf, [['all', W('lane.build.view.all')], ['main', W('lane.build.filter.main')], ['other', W('lane.build.filter.other')]])}
+    ${shown.length ? html`<div class="grid">${shown.map(id => html`<div key=${id} class="gw-pick-cell">
+      <${Card} data=${data} id=${id} cls=${inDeck(id) ? 'in' : ''} attrs=${{ 'aria-pressed': inDeck(id) }} onClick=${() => setDetail(id)} />
+      <button type="button" class=${'gw-toggle' + (inDeck(id) ? ' in' : '')} data-id=${id} onClick=${() => toggle(id)}>${W(inDeck(id) ? 'lane.build.remove' : 'lane.build.add')}</button>
+      <button type="button" class=${'gw-toggle-w' + (inDeck(wid(id)) ? ' in' : '')} data-id=${id} disabled=${!D.cards[id].casual} title=${D.cards[id].casual ? '' : W('gwent.build.weather.none')} onClick=${() => toggle(wid(id))}>${W(inDeck(wid(id)) ? 'gwent.build.weather.remove' : 'gwent.build.weather.add')}</button></div>`)}</div>`
+      : html`<p class="gw-empty">${W('ui.empty')}</p>`}
+    ${detail && html`<${Detail} data=${data} id=${detail} onClose=${() => setDetail(null)}
+      actions=${[{ id: 'gw-detail-act', label: W(inDeck(detail) ? 'lane.build.remove' : 'lane.build.add'), cls: inDeck(detail) ? '' : 'primary', onClick: () => { toggle(detail); setDetail(null); } },
+        { id: 'gw-detail-w', label: W(inDeck(wid(detail)) ? 'gwent.build.weather.remove' : 'gwent.build.weather.add'), cls: '', disabled: !D.cards[detail].casual, onClick: () => { toggle(wid(detail)); setDetail(null); } }]} />`}
+  </section>`;
+}
+/* ── 규칙 한눈에 · 첫 판 길잡이 ── */
+function Rules({ onClose, onGuideAgain }) {
+  return html`<section class="gw-rules" role="dialog" aria-label=${W('gwent.rules.title')}>
+    <div class="gw-rules-head"><h3>${W('gwent.rules.title')}</h3><button type="button" class="gw-btn" id="gw-rules-close" onClick=${onClose}>${W('lane.close')}</button></div>
+    <div class="gw-rules-grid">${[1, 2, 3, 4].map(i => html`<div key=${i} class="gw-rule-card"><b>${W('gwent.rules.' + i + '.title')}</b><p>${W('gwent.rules.' + i + '.text')}</p></div>`)}</div>
+    ${onGuideAgain && html`<div class="gw-build-act"><button type="button" class="gw-btn" id="gw-guide-again" onClick=${onGuideAgain}>${W('lane.guide.again')}</button></div>`}
+  </section>`;
+}
+const GUIDE_STEPS = 6;
+function guideStep(st) {
+  const mine = st.log.filter(e => e.who === 'me'), theirs = st.log.filter(e => e.who === 'foe' && e.t !== 'pass');
+  if (!mine.some(e => e.t === 'play')) return 1;
+  if (!theirs.length) return 2;
+  if (mine.filter(e => e.t === 'play').length < 2 && st.round < 2) return 3;
+  if (!st.roundLog.length) return 4;
+  if (!st.me.opened) return 5;
+  return 6;
+}
+function Guide({ st, onSkip }) {
+  const n = guideStep(st);
+  return html`<div class="gw-guide" data-step=${n}><small>${W('lane.guide.step', { n, total: GUIDE_STEPS })}</small><p>${W('gwent.guide.' + n)}</p>
+    <button type="button" class="gw-btn" id="gw-guide-skip" onClick=${onSkip}>${W('lane.guide.skip')}</button></div>`;
+}
+/* ── 멀리건 ── */
+function Mulligan({ data, st, actMatch }) {
+  const [swapped, setSwapped] = useState([]);
+  const left = G.MULLIGAN - st.mulligans;
+  return html`<section class="gw-screen gw-mull" data-screen="mulligan">
+    <p class="sec">${W('lane.mull.title')}<span class="help">${W('lane.mull.note')}</span></p>
+    <p class="gw-mull-left">${W('lane.mull.left', { n: left })}</p>
+    <div class="grid">${st.me.hand.map((id, i) => html`<${Card} key=${i} data=${data} id=${id} cls=${swapped.includes(i) ? 'swapped' : ''}
+      onClick=${() => { if (swapped.includes(i) || left <= 0) return; if (actMatch(m => G.mulligan(m, i)).ok) setSwapped(swapped.concat([i])); }} />`)}</div>
+    <button type="button" class="gw-btn primary" id="gw-mull-go" onClick=${() => actMatch(m => { G.confirm(data, m); return { ok: true }; })}>${W('lane.mull.go')}</button>
+  </section>`;
+}
+/* ── 대결 — Task 8 ── */
+function Match({ data, profile, st, actMatch, act }) {
+  return html`<section class="gw-screen gw-board" data-screen="match"><p class="note">${W('lane.round', { n: st.round })}</p></section>`;
+}
+
+/* 카드 뒷면 — 세대만 보인다 */
+const GEN_COLORS = ['#c0392b', '#d68910', '#1e8449', '#1f618d', '#6c3483', '#117a65', '#b03a2e', '#2e4053', '#7d6608'];
+function CardBack({ gen }) { return html`<span class="gw-backface" style=${'--gc:' + GEN_COLORS[(gen - 1) % 9]}>${W('lane.gen', { n: gen })}</span>`; }
+/* ── 결과 — 라운드별 합, 뒷장 다섯 뒤집기 ── */
+function Result({ data, st, onLobby, onAgain, onFlip }) {
+  const D = G.cardsOf(data), o = st.outcome;
+  const pool = (o && o.pool) || [], taken = (o && o.taken) || [], picks = o ? o.picks : 0, left = Math.max(0, picks - taken.length), done = o && left === 0;
+  return html`<section class="gw-screen gw-result" data-screen="result" data-result=${o ? o.result : undefined}>
+    ${o && html`<h2>${W('lane.result.' + o.result)}${o.gold ? html`<span class="gw-gold-earned">${W('lane.gold.earned', { n: o.gold })}</span>` : ''}</h2>`}
+    <p class="sec">${W('lane.result.rounds')}</p>
+    <ul class="gw-rounds">${st.roundLog.map((r, i) => html`<li key=${i} data-winner=${r.winner}>${W('lane.round', { n: i + 1 })} <b>${W('gwent.sum', { me: r.me, foe: r.foe })}</b> ${W('lane.round.' + (r.winner === 'me' ? 'win' : r.winner === 'foe' ? 'lose' : 'draw') + '.short', { n: i + 1 })}</li>`)}</ul>
+    ${o && html`<p class="sec">${W('lane.result.reward')}<span class="help">${W('gwent.result.pool.note')}</span></p>`}
+    ${o && !pool.length && html`<p class="gw-reward-none">${W(o.result === 'win' ? 'lane.result.reward.all' : 'lane.result.reward.none')}</p>`}
+    ${pool.length ? html`<div class="gw-reveal">
+      <p class="gw-result-left">${done ? W('lane.result.flipped') : taken.length ? W('lane.result.left', { n: left }) : W('lane.result.flip', { n: picks })}</p>
+      <div class="gw-pool">${pool.map((id, i) => { const c = D.cards[id], flipped = taken.includes(i), missed = done && !flipped;
+        return html`<button type="button" key=${id} class=${'gw-flipcard' + (flipped ? ' flipped' : '') + (missed ? ' missed' : '')} data-index=${i} data-rare=${c.rare ? '1' : undefined}
+          disabled=${flipped || done} aria-label=${flipped || missed ? c.name : W('lane.result.flip', { n: picks })} onClick=${() => onFlip(i)}>
+          <div class="gw-flipper"><${CardBack} gen=${c.gen} /><${Card} data=${data} id=${id} art=${casualArt(data, id) || formArt(data, id, 'light')} /></div></button>`; })}</div></div>` : ''}
+    <div class="gw-result-act">
+      <button type="button" class="gw-btn primary" id="gw-result-lobby" onClick=${onLobby}>${W('lane.result.lobby')}</button>
+      <button type="button" class="gw-btn" id="gw-result-again" onClick=${onAgain}>${W('lane.result.again')}</button>
+    </div>
+  </section>`;
+}
+/* ── 전적 ── */
+function Stats({ data, profile, onClose }) {
+  const D = G.cardsOf(data), v = G.statsView(data, profile), L = v.line;
+  const cell = e => e.games ? W('lane.stats.cell', { win: e.win, games: e.games }) : W('lane.stats.none');
+  const table = (cls, title, rows, key, name) => html`<table class=${cls}><thead><tr><th colspan="2">${title}</th></tr></thead>
+    <tbody>${rows.map(r => html`<tr key=${r[key]} ...${{ ['data-' + (key === 'level' ? 'lv' : 'gen')]: r[key] }}><td>${name(r)}</td><td class="win">${cell(r)}</td></tr>`)}</tbody></table>`;
+  return html`<section class="gw-stats" aria-label=${W('lane.stats')}>
+    <div class="gw-stats-head"><h3>${W('lane.stats')}</h3><button type="button" class="gw-btn" id="gw-stats-close" onClick=${onClose}>${W('lane.stats.close')}</button></div>
+    ${!L.games ? html`<p class="gw-stats-empty">${W('lane.stats.empty')}</p>` : html`
+      <p class="gw-stats-line">${W('lane.stats.line', { games: L.games, win: L.win, lose: L.lose, draw: L.draw, streak: L.streak, best: L.best })}</p>
+      <div class="gw-stats-tables">
+        ${table('gw-stats-boss', W('lane.stats.byBoss'), v.byBoss, 'gen', r => W('lane.champion', { n: r.gen }))}
+        ${table('gw-stats-level', W('lane.stats.byLevel'), v.byLevel, 'level', r => W('lane.lv.' + r.level))}
+        ${table('gw-stats-main', W('lane.stats.byMain'), v.byMain, 'gen', r => W('lane.gen', { n: r.gen }))}
+      </div>
+      <div class="gw-stats-nums"><span>${W('gwent.stats.best', { n: v.bestRound })}</span><span>${W('lane.stats.rounds', { n: v.avgRounds === null ? W('lane.stats.none') : v.avgRounds })}</span><span>${W('gwent.stats.weather', { n: v.weather })}</span><span>${W('gwent.stats.opens', { n: v.opens })}</span></div>
+      <div class="gw-stats-cards"><p class="sec">${W('lane.stats.cards')}<span class="help">${W('lane.stats.cards.note')}</span></p>
+        <div class="grid">${v.cards.filter(c => D.cards[c.id]).map(c => html`<${Card} key=${c.id} data=${data} id=${c.id}>
+          <span class="gw-stat">${W('lane.stats.card', { played: c.played, rate: c.rate === null ? W('lane.stats.none') : Math.round(c.rate * 100) + '%' })}</span><//>`)}</div></div>`}
+  </section>`;
+}
+/* ── 상점 ── */
+function Shop({ data, profile, act, onClose }) {
+  const D = G.cardsOf(data), stock = profile.shop.stock, gold = profile.gold || 0, closed = C.shopClosed(data, profile);
+  return html`<section class="gw-shop" aria-label=${W('lane.shop')}>
+    <div class="gw-shop-head"><h3>${W('lane.shop')}</h3><span class="gw-gold">${W('lane.gold', { n: gold })}</span></div>
+    <p class="note help">${W('lane.shop.note')}</p>
+    ${closed && html`<p class="gw-reward-none">${W('lane.shop.closed')}</p>`}
+    <div class="gw-shop-grid">${stock.map((slot, i) => { const c = slot && D.cards[slot.id];
+      if (!c) return html`<button key=${'e' + i} type="button" class="gw-shop-slot empty" data-index=${i} disabled>${W('lane.shop.empty')}</button>`;
+      return html`<button key=${slot.id} type="button" class=${'gw-shop-slot gw-flipcard' + (slot.bought ? ' flipped' : '')} data-index=${i} data-id=${slot.id} data-rare=${slot.rare ? '1' : undefined}
+        disabled=${slot.bought || gold < slot.price} aria-label=${slot.bought ? c.name : W('lane.shop.price', { n: slot.price })} onClick=${() => act(p => C.shopBuy(data, p, i))}>
+        <div class="gw-flipper"><${CardBack} gen=${c.gen} /><${Card} data=${data} id=${slot.id} /></div>
+        ${slot.rare && !slot.bought && html`<span class="gw-rare">${W('lane.shop.rare')}</span>`}
+        <span class="gw-price">${W('lane.shop.price', { n: slot.price })}</span></button>`; })}</div>
+    <div class="gw-shop-act">
+      <button type="button" class="gw-btn" id="gw-shop-reroll" disabled=${gold < C.SHOP_REROLL} onClick=${() => act(p => C.shopReroll(data, p))}>${W('lane.shop.reroll', { n: C.SHOP_REROLL })}</button>
+      <button type="button" class="gw-btn primary" id="gw-shop-done" onClick=${onClose}>${W('lane.shop.done')}</button>
+    </div>
+  </section>`;
+}
+
+function App() {
+  const loaded = useData();
+  const [saved] = useState(load);
+  const [profile, setProfile] = useState(saved.profile), [match, setMatch] = useState(saved.match);
+  const [screen, setScreen] = useState('lobby');
+  const data = loaded && loaded.data;
+  const cleaned = useRef(false);
+  const profileRef = useRef(profile); profileRef.current = profile;   /* 상대 턴 타이머가 옛 프로필을 쥐지 않게 */
+  useEffect(() => {
+    if (!data || !match || match.phase !== 'play' || match.turn !== 'foe') return;
+    const t = setTimeout(() => { const next = JSON.parse(JSON.stringify(match)); G.aiTurn(data, next); save(profileRef.current, next); setMatch(next); }, reduced() ? 0 : 600);
+    return () => clearTimeout(t);
+  }, [match, data]);
+  useEffect(() => {
+    if (!data || !match || match.phase !== 'done' || match.rewarded) return;
+    const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match));
+    G.settle(data, p, m); p.tutorialGwent = true; save(p, m); setProfile(p); setMatch(m);
+  }, [match, data]);
+  if (data && !cleaned.current) {
+    cleaned.current = true;
+    const r = sanitise(data, profile, match);
+    if (r.changed) { save(r.profile, r.match); setProfile(r.profile); setMatch(r.match); }
+  }
+  if (!loaded) return html`<${Shell}><section class="gw-screen"><p class="note">${W('ui.loading')}</p></section><//>`;
+  if (loaded.error) return html`<${Shell}><section class="gw-screen"><p class="note">${W('ui.error', { message: loaded.error })}</p></section><//>`;
+  const actMatch = fn => { const next = JSON.parse(JSON.stringify(match)); const r = fn(next) || { ok: true }; if (r.ok !== false) { save(profile, next); setMatch(next); } return r; };
+  const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
+  /* 첫 고르기 — 진화 결투와 같은 프로필을 만들고 폼 결투 덱은 가진 카드 그대로 */
+  const onPick = gen => { const p = C.newProfile(data, gen, seed()); C.setDeck(p, 'gwent', p.owned.slice()); save(p, null); setProfile(p); };
+  const onChallenge = gen => { const m = G.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
+  const onFlip = i => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); if (!G.pickReward(data, p, m, i).ok) return; save(p, m); setProfile(p); setMatch(m); };
+  const finish = () => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); G.finishRewards(data, p, m); return p; };
+  const onLobby = () => { const p = finish(); save(p, null); setProfile(p); setMatch(null); setScreen('lobby'); };
+  const onAgain = () => { const p = finish(); const m = G.newMatch(data, p, match.champion, match.level, seed()); save(p, m); setProfile(p); setMatch(m); };
+  const panel = screen === 'stats' ? html`<${Stats} data=${data} profile=${profile} onClose=${() => setScreen('lobby')} />`
+    : screen === 'shop' ? html`<${Shop} data=${data} profile=${profile} act=${act} onClose=${() => setScreen('lobby')} />`
+    : screen === 'learn' ? html`<${Rules} onClose=${() => setScreen('lobby')} onGuideAgain=${() => { act(p => { p.tutorialGwent = false; }); setScreen('lobby'); }} />` : null;
+  /* 진화 결투에서 만든 프로필이면 폼 결투 덱이 비어 있다 — 가진 카드로 채운다 */
+  if (profile && !C.deckOf(profile, 'gwent').length && profile.owned.length) { const p = JSON.parse(JSON.stringify(profile)); G.autoFill(data, p); save(p, match); setProfile(p); }
+  const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
+  return html`<${Shell}>
+    ${which === 'pick' ? html`<${Pick} data=${data} onPick=${onPick} />`
+    : which === 'mulligan' ? html`<${Mulligan} data=${data} st=${match} actMatch=${actMatch} />`
+    : which === 'match' ? html`<${Match} data=${data} profile=${profile} st=${match} actMatch=${actMatch} act=${act} />`
+    : which === 'result' ? html`<${Result} data=${data} st=${match} onLobby=${onLobby} onAgain=${onAgain} onFlip=${onFlip} />`
+    : which === 'build' ? html`<${Build} data=${data} profile=${profile} act=${act} setScreen=${setScreen} />`
+    : html`<${Lobby} data=${data} profile=${profile} act=${act} setScreen=${setScreen} onChallenge=${onChallenge} panel=${panel} />`}
+  <//>`;
+}
+render(html`<${App} />`, document.getElementById('app'));
+window.AtelierFresh.watch();
+</script>
+</body>
+</html>

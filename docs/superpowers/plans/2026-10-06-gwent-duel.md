@@ -1180,7 +1180,7 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     /* 덱 짜기 — 빼면 빨갛고, 날씨판을 넣으면 날씨 1/3, 네 장이면 빨갛다 */
     await p.locator('#gw-build').tap(); await p.waitForSelector('.gw-screen[data-screen="build"]');
     assert.equal(await p.locator('.gw-pick-cell').count(), 25, '가진 카드 25');
-    assert(/5/.test(await p.locator('.gw-pick-cell .gw-pw3').first().textContent()), '카드에 힘 셋');
+    assert(/^\d+·\d+·\d+$/.test(await p.locator('.gw-pick-cell .gw-pw3').first().textContent()), '카드에 힘 셋');
     await p.locator('.gw-pick-cell .gw-toggle').first().tap();
     assert.equal(await p.locator('.gw-rule span[data-rule="count"].bad').count(), 1, '24장 — 규칙 줄이 빨갛다');
     const firstId = await p.locator('.gw-pick-cell .gw-toggle-w').first().getAttribute('data-id');

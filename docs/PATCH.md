@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 폼 결투 — 화면 뼈대
+
+- gwent.html — 고르기·로비·덱 짜기(날씨판 넣기/빼기)·상세(폼 셋과 힘)·규칙·멀리건·결과·전적·상점. 대결 판은 다음 칸. 같은 저장(pkm_duel_v1)의 decks.gwent·matches.gwent
+- tests/gwent-screen.cjs — 덮개 흐름 검사 1(고르기 → 로비 → 덱 짜기 → 배우기 → 멀리건)
+- lib/words.js — 탭 말을 '폼결투'로(띄면 덮개 탭에서 잘린다)
+
 ## 2026-10-06 · claude · 폼 결투 — 말·항해·집·허브
 
 - lib/words.js — gwent.* 와 nav.gwent·home.gwent.* (공통 말은 lane.* 를 같이 쓴다)
