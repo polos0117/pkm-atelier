@@ -161,4 +161,106 @@ ok(C.conquered(data, p), '아홉을 다 이기면 정복');
   { const a = A.championDeck(data, { rngState: 1 }, 1, 'rookie'), b = A.championDeck(data, { rngState: 2 }, 1, 'rookie'); ok(a.join() !== b.join(), '신참은 무작위'); }
 }
 
+/* ── 판 — 시드·멀리건·선공·보충 ── */
+const freshMatch = (seed, gen, level, deck) => { const pr = C.newProfile(data, gen || 1, seed); if (deck) C.setDeck(pr, 'lane', deck); return [pr, A.newMatch(data, pr, A.championOf(data, gen || 1).ally, level || 'veteran', seed)]; };
+{
+  const [, m1] = freshMatch(42), [, m2] = freshMatch(42);
+  ok(JSON.stringify(m1) === JSON.stringify(m2), '같은 시드 같은 판');
+  ok(m1.phase === 'mulligan' && m1.me.hand.length === 8 && m1.me.deck.length === 17 && m1.foe.hand.length === 8 && m1.lives.me === 2 && m1.round === 1, '손 8 · 덱 17 · 목숨 둘 · 1라운드');
+  ok(m1.me.lanes.length === 3 && m1.me.lanes.every(x => x === null) && !m1.me.opened, '빈 줄 셋, 개방 안 씀');
+  const first = m1.me.hand[0], topDeck = m1.me.deck[0];
+  ok(A.mulligan(m1, 0).ok && m1.me.hand[0] === topDeck && m1.me.deck[m1.me.deck.length - 1] === first, '멀리건 — 덱 맨 위와 바꾸고 옛 카드는 맨 아래');
+  ok(A.mulligan(m1, 1).ok && A.mulligan(m1, 2).why === 'mulligan', '2장까지');
+  ok(A.mulligan(m1, -1).why === 'mulligan' || A.mulligan(m1, -1).why === 'hand', '없는 자리');
+  A.confirm(data, m1);
+  ok(m1.phase === 'play' && (m1.first === 'me' || m1.first === 'foe') && m1.turn === m1.first && m1.coin === m1.first, '선공 결정');
+  ok(m1[m1.first].hand.length === 8 + A.FIRST_CARDS && m1[A.other(m1.first)].hand.length === 8, '선공은 FIRST_CARDS 장 더: ' + A.FIRST_CARDS);
+  ok(A.mulligan(m1, 0).why === 'phase', '시작 뒤엔 멀리건 없음');
+  let me = 0; for (let s = 0; s < 40; s++) { const [, m] = freshMatch(s); A.confirm(data, m); if (m.first === 'me') me++; }
+  ok(me > 8 && me < 32, '선공은 양쪽 다 나온다: ' + me);
+}
+/* ── 승부 수학 — 손으로 짠 판 ── */
+/* 판을 손으로 만든다: 양쪽 손패를 정하고 선공을 me 로 고정. 손이 비면 자동 패스라서 여분 한 장(잉어킹)을 붙인다 — exact 면 안 붙인다 */
+const rig = (myHand, foeHand, opt) => {
+  opt = opt || {};
+  const [pr, m] = freshMatch(opt.seed || 1, opt.gen || 1, opt.level || 'veteran');
+  m.me.hand = myHand.concat(opt.exact ? [] : ['잉어킹']); m.foe.hand = foeHand.concat(opt.exact ? [] : ['잉어킹']); m.me.deck = []; m.foe.deck = [];
+  m.phase = 'play'; m.first = m.turn = m.coin = opt.first || 'me';
+  return [pr, m];
+};
+/* 수는 st.turn 쪽 것이다 — put 은 차례를 그쪽으로 돌려놓고 낸다 */
+const put = (m, who, id, lane, form) => { m.turn = who; const r = A.place(data, m, id, lane, form || 'light'); assert(r.ok, `${who} ${id} 줄 ${lane}: ${r.why}`); return r; };
+{
+  const [, m] = rig(['이상해씨', '꼬부기', '피카츄'], ['파이리', '파이리', '꼬마돌']);
+  put(m, 'me', '이상해씨', 0); put(m, 'foe', '파이리', 0);
+  let u = A.matchup(data, m, 0);
+  ok(u.me.power === 6 && u.me.mult === 1 && u.me.atk === 6 && u.foe.mult === 2 && u.foe.atk === 12 && u.winner === 'foe' && u.by === 'atk', '풀·독 6 대 불 6 → 독으로 때려 6 : 12 파이리');
+  put(m, 'me', '꼬부기', 1); put(m, 'foe', '파이리', 1);
+  u = A.matchup(data, m, 1); ok(u.me.atk === 12 && u.foe.atk === 3 && u.winner === 'me', '물 대 불 → 12 : 3');
+  put(m, 'me', '피카츄', 2);
+  ok(m.passed.me && m.round === 1, '줄 셋이 다 차고 할 일이 없으면 자동 패스 — 여분 한 장이 있어도');
+  put(m, 'foe', '꼬마돌', 2);
+  ok(m.round === 2 && m.roundLog[0].me === 1 && m.roundLog[0].foe === 2 && m.roundLog[0].lanes.join() === 'foe,me,foe', '둘 다 할 일이 없어 라운드 끝 — 딴 줄 1 : 2');
+}
+{ /* 전기 → 바위·땅 — 두 타입을 곱해 면역, 상대는 유리한 쪽으로 */
+  const [, m] = rig(['피카츄'], ['꼬마돌']);
+  put(m, 'me', '피카츄', 0); put(m, 'foe', '꼬마돌', 0);
+  const u = A.matchup(data, m, 0); ok(u.me.atk === 0 && u.me.mult === 0 && u.foe.mult === 2 && u.foe.atk === 12 && u.winner === 'foe', '전기 → 바위·땅 은 1 × 0 = 면역, 땅 → 전기 2배(유리한 쪽으로)');
+  const sc = A.scores(data, m); ok(sc.me === 0 && sc.foe === 1 && sc.lanes.join() === 'foe,,', '딴 줄 0 : 1');
+}
+{ /* 빈 자리·양쪽 0·속도·먼저 놓인 쪽·같은 카드 */
+  const [, m] = rig(['이브이', '피카츄'], ['무우마', '피카츄']);
+  ok(A.matchup(data, m, 0).winner === null && A.matchup(data, m, 0).by === 'none', '둘 다 비면 아무도');
+  put(m, 'me', '이브이', 0); ok(A.matchup(data, m, 0).winner === 'me' && A.matchup(data, m, 0).by === 'empty', '상대 자리가 비면 내가');
+  put(m, 'foe', '무우마', 0);
+  let u = A.matchup(data, m, 0); ok(u.me.atk === 0 && u.foe.atk === 0 && u.winner === 'foe' && u.by === 'speed', '노말 ↔ 고스트 양쪽 0 → 속도(55 대 85)');
+  put(m, 'me', '피카츄', 1); put(m, 'foe', '피카츄', 1);
+  u = A.matchup(data, m, 1); ok(u.me.atk === 3 && u.foe.atk === 3 && u.winner === 'me' && u.by === 'first', '같은 카드(전기 ↔ 전기 ½) — 속도도 같으면 먼저 놓인 쪽');
+}
+/* ── 놓기·패스·턴 ── */
+{
+  const [, m] = rig(['이상해씨', '꼬부기'], ['파이리']);
+  ok(A.place(data, m, '파이리', 0, 'light').why === 'hand', '손에 없는 카드');
+  ok(A.place(data, m, '이상해씨', 3, 'light').why === 'lane' && A.place(data, m, '이상해씨', 0, 'wings').why === 'form', '없는 줄·없는 폼');
+  ok(A.legal(data, m, 'me').place.length === 3 && A.legal(data, m, 'me').place[0].lanes.join() === '0,1,2' && A.legal(data, m, 'foe').place.length === 0, '내 차례의 합법 수');
+  ok(A.place(data, m, '이상해씨', 1, 'heavy').ok && m.me.hand.join() === '꼬부기,잉어킹' && m.me.lanes[1].cards.join() === '이상해씨' && m.me.lanes[1].form === 'heavy' && m.turn === 'foe', '놓으면 손에서 줄로, 차례가 넘어간다');
+  ok(m.played.join() === '이상해씨' && m.log[m.log.length - 1].t === 'place', '낸 카드 기록');
+  ok(A.place(data, m, '꼬부기', 1, 'light').why === 'hand', '수는 st.turn 쪽 것 — 상대 차례에 내 카드를 내면 상대 손에 없다');
+  ok(A.pass(data, m).ok && m.passed.foe && m.turn === 'me', '상대 패스 → 내 차례');
+  ok(A.place(data, m, '꼬부기', 0, 'light').ok && m.turn === 'me', '상대가 패스했으니 내 차례가 이어진다');
+  ok(A.pass(data, m).ok && m.roundLog.length === 1 && m.round === 2, '둘 다 패스 → 라운드 끝');
+  const r = m.roundLog[0]; ok(r.winner === 'me' && r.me === 2 && r.foe === 0 && m.lives.foe === 1 && m.lives.me === 2, '줄 2 : 0 → 내가 따고 상대 목숨 하나');
+  ok(m.me.lanes.every(x => x === null) && m.me.grave.join() === '꼬부기,이상해씨' && !m.passed.me && !m.passed.foe, '판은 묘지로(줄 차례), 패스 풀림');
+  ok(m.first === 'foe' && m.turn === 'foe', '진 쪽이 선공');
+}
+{ /* 보충 3장 · 빈 손 자동 패스 · 동점은 둘 다 잃음 */
+  const [, m] = rig(['이상해씨'], ['파이리'], { exact: true });
+  m.me.deck = ['꼬부기', '피카츄', '이브이', '뮤츠']; m.foe.deck = ['꼬마돌'];
+  put(m, 'me', '이상해씨', 0); ok(m.passed.me && m.turn === 'foe', '손이 비면 자동 패스');
+  put(m, 'foe', '파이리', 1);
+  ok(m.round === 2 && m.roundLog[0].winner === 'draw' && m.lives.me === 1 && m.lives.foe === 1, '1 : 1 동점 → 둘 다 목숨을 잃는다');
+  ok(m.me.hand.join() === '꼬부기,피카츄,이브이' && m.me.deck.join() === '뮤츠' && m.foe.hand.join() === '꼬마돌', '라운드가 바뀌면 3장 보충(있는 만큼)');
+  ok(m.first === 'foe' && m.turn === 'foe', '동점이면 선공이 바뀐다');
+  put(m, 'foe', '꼬마돌', 0); ok(m.passed.foe && m.turn === 'me', '상대 손이 비면 자동 패스 → 내 차례');
+  put(m, 'me', '피카츄', 1); ok(m.turn === 'me', '상대가 패스 상태면 내 차례가 이어진다');
+  put(m, 'me', '이브이', 2);
+  A.pass(data, m);
+  ok(m.phase === 'done' && m.winner === 'me' && m.lives.foe === 0 && m.turn === null, '줄 2 : 1 → 상대 목숨 0 → 끝');
+  ok(A.place(data, m, '꼬부기', 0, 'light').why === 'phase' && A.pass(data, m).why === 'phase', '끝난 판엔 못 둔다');
+}
+{ /* 둘 다 빈 손으로 라운드가 시작되면 0 : 0 동점 → 둘 다 잃고 끝 */
+  const [, m] = rig(['이상해씨'], ['파이리'], { exact: true });
+  put(m, 'me', '이상해씨', 0); put(m, 'foe', '파이리', 1);
+  ok(m.round === 2 && m.me.hand.length === 0 && m.foe.hand.length === 0 && m.phase === 'done' && m.winner === 'draw' && m.roundLog.length === 2, '2라운드가 빈 손 0:0 → 둘 다 0 → 무승부로 끝');
+}
+{ /* 세 라운드 상한 */
+  const [, m] = rig(['이상해씨', '꼬부기', '피카츄'], ['파이리', '파이리', '파이리']);
+  put(m, 'me', '꼬부기', 0); A.pass(data, m); A.pass(data, m);           /* 1R: 상대 패스, 나 패스 */
+  ok(m.round === 2 && m.lives.foe === 1 && m.first === 'foe', '1R 나');
+  put(m, 'foe', '파이리', 0); A.pass(data, m); A.pass(data, m);          /* 2R: 나 패스, 상대 패스 */
+  ok(m.round === 3 && m.lives.me === 1 && m.first === 'me', '2R 상대 → 3R, 진 쪽 선공');
+  put(m, 'me', '피카츄', 0); put(m, 'foe', '파이리', 1); A.pass(data, m); A.pass(data, m);
+  ok(m.phase === 'done' && m.winner === 'draw' && m.roundLog.length === 3 && m.roundLog[2].lanes.join() === 'me,foe,', '3R 1:1 동점 → 무승부, 세 라운드');
+}
+
 console.log('PASS 결투 규칙: ' + n + ' 가지');
