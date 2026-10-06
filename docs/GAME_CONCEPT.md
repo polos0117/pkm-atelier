@@ -1101,3 +1101,4 @@ burn                  3%           69%              23%             50%
 | `docs/PORT_NOTES.md` | 무엇을 어디서 가져왔고 무엇을 일부러 뺐나 |
 | `docs/PROMPT_REWRITE.md` | 프롬프트 낱말을 이 놀이 것으로 바꾸는 일 |
 | `AGENTS.md` | 저장소 규칙 넷 |
+| `docs/LANE_GAME.md` | 넷째 놀이 진화 결투(줄 싸움). 설계 `docs/superpowers/specs/2026-10-06-lane-duel-design.md` |

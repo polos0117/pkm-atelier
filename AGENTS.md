@@ -12,6 +12,7 @@
 | `docs/GAME_CONCEPT.md` | 게임 구조 — 정해진 것과 아직 시험할 것 |
 | `docs/PROMPT_REWRITE.md` | 포켓몬 메카 생성 규칙 — 첫 절이 지금 규칙(간결화), 아래는 옛 기록 |
 | `docs/SURVEY_GAME.md` | 독립 배치 게임 탐사 작전 — 적성·폼·에너지·저장·검사 |
+| `docs/LANE_GAME.md` | 진화 결투 — 세 줄 1 대 1·진화·교체·폼·보상·저장·검사 |
 | `docs/PATCH.md` | 무엇을 고쳤나 — 고친 쪽이 직접 적는다 (아래 규칙 5) |
 
 ## 지켜야 할 것 다섯
@@ -99,6 +100,7 @@ node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나�
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주
+node tests/lane-sim.cjs --quick   # 진화 결투 — 규칙·AI·보상 (--quick 없이 돌리면 297판 균형 보고)
 node tests/patch.cjs             # 패치 기록의 모양 — 날짜·차례·빈 칸
 node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·색과 입는 법·이어가기 격리
 node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견본 파일명이 맞나
@@ -132,7 +134,8 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
-ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여섯의 머리가 같은 자리에
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/lane-screen.cjs     # 진화 결투 — 고르기·덱 짜기·대결·결과·전적·상점
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 일곱의 머리가 같은 자리에
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
 NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·입는 법·머리 특징·개방·저장
 NODE_PATH=<같은 경로> node tests/source-appearance-dom.cjs                        # 자료 자동 채움·수동 보정·자료 실패
