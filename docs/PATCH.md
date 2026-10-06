@@ -10,6 +10,13 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 폼 결투 — 자료와 파생
+
+- data/gwent.json — 폼 결투 자료(overrides·줄별 날씨 열쇠). 챔피언은 lane.json 것을 같이 쓴다
+- lib/gwent.js — 둘째 결투 엔진의 뼈대: 힘 셋(경장 공격+특공·중장 방어+특방·고기동 속도×2, ÷20, 1~15)·계통·날씨판 id(이름|w)
+- tests/gwent-sim.cjs — 파생 검사(정한 예·천장·날씨판 id)
+- tests/forms.cjs — gwent.json 의 날씨 셋·overrides 범위
+
 ## 2026-10-06 · claude · 폼 결투(궨트식) 구현 계획
 
 - docs/superpowers/plans/2026-10-06-gwent-duel.md — 아홉 과제: 자료·파생 → 덱 규칙·챔피언 → 판 → 타격·결속·개방·날씨 → AI·정산·균형 → 말·항해·허브 → 화면 뼈대 → 대결 판 → 문서

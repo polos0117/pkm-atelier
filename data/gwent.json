@@ -1,0 +1,6 @@
+{
+ "version": 1,
+ "note": "폼 결투(gwent.html) 자료. overrides[카드 이름] = {light, heavy, mobility} 가 힘 셋을 덮는다(1~15, 적은 것만). weather 는 줄(폼)마다 깔리는 날씨 열쇠 — 말은 lib/words.js 의 gwent.weather.<열쇠>. 챔피언 아홉은 data/lane.json 의 champions 를 그대로 쓴다. 규칙은 lib/gwent.js, 설계는 docs/superpowers/specs/2026-10-06-gwent-duel-design.md",
+ "overrides": {},
+ "weather": { "light": "hail", "heavy": "sand", "mobility": "rain" }
+}

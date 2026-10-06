@@ -95,6 +95,9 @@ const shots = Object.values(img).reduce((n, e) =>
   assert.deepEqual(lane.champions.map(x => x.gen), [1, 2, 3, 4, 5, 6, 7, 8, 9], '세대 1~9 차례');
   for (const ch of lane.champions) assert(ch.ally >= 1 && ch.ally <= 9 && ch.ally !== ch.gen, `${ch.gen}세대 이웃`);
   for (const k in lane.overrides) assert(by1[k], `overrides 의 ${k} 는 없는 카드`);
+  const gw = JSON.parse(fs.readFileSync('data/gwent.json', 'utf8'));
+  assert.deepEqual(Object.keys(gw.weather).sort(), ['heavy', 'light', 'mobility'], '폼 결투 날씨는 폼 셋에 하나씩');
+  for (const k in gw.overrides) { assert(by1[k], `gwent overrides 의 ${k} 는 없는 카드`); for (const f in gw.overrides[k]) assert(['light', 'heavy', 'mobility'].includes(f) && gw.overrides[k][f] >= 1 && gw.overrides[k][f] <= 15, `${k} 의 ${f} 는 1~15`); }
 }
 console.log(`PASS: 폼 ${forms}가지 정의, 카드 ${cards.length}장, 폼 초상 ${shots}장, `
   + `일상컷 폼 밖, action 선택, 완료 판정은 성별을 안 봄`);
