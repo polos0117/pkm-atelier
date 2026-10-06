@@ -153,4 +153,89 @@ const unit = (m, who, lane, i) => m[who].rows[lane][i || 0];
   ok(G.play(data, m, '이상해씨', 0).why === 'phase' && G.pass(data, m).why === 'phase', '끝난 판엔 못 둔다');
 }
 
+/* ── 상성 타격 — 놓을 때 한 번, 상대 판 전체에서 내 타입에 2배 이상인 비영웅 가운데 가장 센 것 ── */
+{
+  const [, m] = rig(['리자몽', '꼬부기', '피카츄', '파이리'], ['이상해꽃', '이상해씨', '뮤츠', '꼬마돌']);
+  ok(G.mult(data, ['fire', 'flying'], ['grass', 'poison']) === 2 && G.mult(data, ['water'], ['rock', 'ground']) === 4 && G.mult(data, ['electric'], ['rock', 'ground']) === 0 && G.mult(data, ['normal'], ['ghost']) === 0, '배율 — 유리한 쪽으로, 상대 둘은 곱');
+  put(m, 'foe', '이상해꽃', 0); put(m, 'foe', '이상해씨', 1); put(m, 'foe', '뮤츠', 2);
+  put(m, 'me', '리자몽', 0);
+  const hit = m.last.hit; ok(hit && hit.id === '이상해꽃' && hit.lane === 0 && hit.n === 2 && hit.mult === 2 && unit(m, 'foe', 0).dmg === 2 && G.cur(unit(m, 'foe', 0)) === G.cardOf(data, '이상해꽃').power.light - 2, '불→풀 2배 → 가장 센 이상해꽃 −2: ' + JSON.stringify(hit));
+  ok(unit(m, 'foe', 1).dmg === 0, '약한 쪽은 안 맞는다');
+  m.turn = 'me'; put(m, 'me', '파이리', 1);
+  ok(m.last.hit.id === '이상해꽃' && unit(m, 'foe', 0).dmg === 4, '또 가장 센 것(현재 힘으로) — 이상해꽃 −4');
+  put(m, 'foe', '꼬마돌', 1); ok(m.last.hit && m.last.hit.id === '리자몽' && m.last.hit.mult === 4 && m.last.hit.n === 3 && unit(m, 'me', 0).dmg === 3, '바위 → 불·비행 4배 → 리자몽 −3: ' + JSON.stringify(m.last.hit));
+  m.turn = 'me'; put(m, 'me', '꼬부기', 2);
+  ok(m.last.hit.id === '꼬마돌' && m.last.hit.n === 3 && m.last.hit.mult === 4 && unit(m, 'foe', 1, 1).dmg === 3, '물→바위·땅 4배 → −3 (꼬마돌이 이상해꽃보다 세진 않아도 4배가 아니라 "가장 센 2배 이상" — 꼬마돌 ' + G.cur(unit(m, 'foe', 1, 1)) + ' vs 이상해꽃 ' + G.cur(unit(m, 'foe', 0)) + ')');
+}
+{ /* 영웅은 안 맞는다 · 바닥 1 · 힘 1 은 그냥 넘어간다 */
+  const [, m] = rig(['꼬부기', '꼬부기', '꼬부기'], ['뮤츠', '파이리']);
+  put(m, 'foe', '뮤츠', 0); put(m, 'me', '꼬부기', 0); ok(m.last.hit === null, '전설(에스퍼)은 물에 2배여도 안 맞는다');
+  put(m, 'foe', '파이리', 0); m.turn = 'me'; put(m, 'me', '꼬부기', 1);
+  const f = unit(m, 'foe', 0, 1); ok(m.last.hit && m.last.hit.id === '파이리' && G.cur(f) === Math.max(1, f.base - 2), '파이리 −2');
+  f.dmg = f.base - 1; m.turn = 'me'; put(m, 'me', '꼬부기', 2); ok(m.last.hit === null && G.cur(f) === 1, '힘 1 은 더 못 깎는다 — 타격 없음');
+}
+/* ── 결속 — 같은 계통 비영웅이 같은 줄에 둘 이상이면 각각 기본 힘만큼 ── */
+{
+  const [, m] = rig(['이상해씨', '이상해풀', '이상해꽃', '피카츄'], ['꼬부기']);   /* 상대는 물 — 풀·독을 2배로 못 때려 합이 그대로 */
+  const b = id => G.cardOf(data, id).power.heavy;
+  put(m, 'me', '이상해씨', 1); ok(G.unitValue(data, m, 'me', 1, 0).bond === false && G.rowSum(data, m, 'me', 1) === b('이상해씨'), '혼자는 결속 없음');
+  put(m, 'foe', '꼬부기', 1); m.turn = 'me'; put(m, 'me', '이상해풀', 1);
+  ok(G.unitValue(data, m, 'me', 1, 0).bond && G.unitValue(data, m, 'me', 1, 1).bond && G.rowSum(data, m, 'me', 1) === 2 * (b('이상해씨') + b('이상해풀')), '둘이면 둘 다 두 배');
+  m.turn = 'me'; put(m, 'me', '이상해꽃', 1); ok(G.rowSum(data, m, 'me', 1) === 2 * (b('이상해씨') + b('이상해풀') + b('이상해꽃')), '셋이면 셋 다');
+  m.turn = 'me'; put(m, 'me', '피카츄', 1); ok(G.unitValue(data, m, 'me', 1, 3).bond === false, '다른 계통은 아니다');
+  unit(m, 'me', 1, 0).dmg = 2; ok(G.unitValue(data, m, 'me', 1, 0).value === b('이상해씨') - 2 + b('이상해씨'), '피해를 받아도 더하는 값은 기본 힘');
+  ok(G.rowSum(data, m, 'me', 0) === 0, '다른 줄엔 결속 없음');
+}
+{ /* 영웅은 결속에 안 든다 */
+  const [, m] = rig(['뮤츠', '뮤'], ['파이리']);
+  put(m, 'me', '뮤츠', 0); put(m, 'foe', '파이리', 0); m.turn = 'me'; put(m, 'me', '뮤', 0);
+  ok(!G.unitValue(data, m, 'me', 0, 0).bond && G.rowSum(data, m, 'me', 0) === 13 + 10, '뮤츠·뮤는 계통이 달라 결속 없음, 영웅은 기본 힘');
+}
+/* ── 개방 — 한 판에 한 번, 내 판 위 비영웅 +5, 내 차례가 시작될 때마다 −1, 바닥은 개방 전 ── */
+{
+  const [, m] = rig(['꼬부기', '피카츄', '이브이', '뮤츠'], ['파이리', '파이리', '파이리', '파이리']);
+  ok(G.open(data, m, 0, 0).why === 'lane' && G.legal(data, m, 'me').open.length === 0, '빈 줄은 못 연다');
+  put(m, 'me', '꼬부기', 0); put(m, 'foe', '파이리', 0); m.turn = 'me'; put(m, 'me', '뮤츠', 1); put(m, 'foe', '파이리', 1); m.turn = 'me';
+  ok(G.legal(data, m, 'me').open.length === 1 && G.legal(data, m, 'me').open[0].lane === 0 && G.open(data, m, 1, 0).why === 'rare', '열 수 있는 것은 비영웅뿐');
+  const base = G.cur(unit(m, 'me', 0));
+  ok(G.open(data, m, 0, 0).ok && unit(m, 'me', 0).open === 5 && m.me.opened && m.opens === 1 && G.cur(unit(m, 'me', 0)) === base + 5 && m.turn === 'foe', '개방 +5, 턴을 쓴다');
+  put(m, 'foe', '파이리', 2);   /* 상대 수 → 내 차례 시작 → −1 */
+  ok(m.turn === 'me' && unit(m, 'me', 0).open === 4 && G.cur(unit(m, 'me', 0)) === base + 4, '내 차례가 오면 −1');
+  ok(G.open(data, m, 0, 0).why === 'opened' && G.legal(data, m, 'me').open.length === 0, '한 판에 한 번');
+  put(m, 'me', '피카츄', 2); put(m, 'foe', '파이리', 2);
+  ok(unit(m, 'me', 0).open === 3, '또 −1');
+  G.pass(data, m); G.pass(data, m);
+  ok(m.round === 2 && m.me.opened && G.legal(data, m, m.turn).open.length === 0 && m.me.rows[0].length === 0, '라운드가 바뀌어도 개방은 쓴 채, 판은 비었다');
+  for (let k = 0; k < 6; k++) { m.turn = 'foe'; G.pass(data, m); m.turn = 'me'; }
+  ok(true, '(바닥 검사는 아래)');
+}
+{ /* 바닥 — 개방분이 다 식어도 개방 전 현재 힘 아래로는 안 간다 */
+  const [, m] = rig(['꼬부기'], ['파이리', '파이리', '파이리', '파이리', '파이리', '파이리', '파이리'], { first: 'foe' });
+  m.turn = 'foe'; put(m, 'foe', '파이리', 0); put(m, 'me', '꼬부기', 0); m.turn = 'me';
+  const base = G.cur(unit(m, 'me', 0)); G.open(data, m, 0, 0);
+  for (let k = 0; k < 6; k++) { m.turn = 'foe'; put(m, 'foe', '파이리', 1); }
+  ok(unit(m, 'me', 0).open === 0 && G.cur(unit(m, 'me', 0)) === base, '여섯 차례 뒤 개방 0, 힘은 개방 전으로');
+}
+/* ── 날씨판 — 줄을 골라 깐다, 양쪽 비영웅은 1, 영웅은 그대로, 또 내면 걷힘, 라운드 끝에 걷힘 ── */
+{
+  const [, m] = rig(['파이리|w', '꼬부기|w', '피카츄', '이상해씨', '이상해풀'], ['뮤츠', '파이리', '리자드|w']);
+  put(m, 'me', '이상해씨', 0); put(m, 'foe', '뮤츠', 0); m.turn = 'me'; put(m, 'me', '이상해풀', 0); put(m, 'foe', '파이리', 0); m.turn = 'me';
+  const before = G.rowSum(data, m, 'me', 0);
+  ok(G.play(data, m, '파이리|w', 0).ok && m.weather[0] === 'hail' && m.last.kind === 'weather' && m.last.on === true && m.me.grave.includes('파이리|w') && m.weathers === 1 && m.turn === 'foe', '경장 줄에 싸라기눈, 날씨판은 묘지로');
+  ok(G.rowSum(data, m, 'me', 0) === 2 && G.unitValue(data, m, 'me', 0, 0).weather && G.rowSum(data, m, 'foe', 0) === 13 + 1, '날씨 줄 — 양쪽 비영웅 1(결속 무시), 뮤츠는 13 그대로: ' + before + ' → 2');
+  ok(G.sums(data, m).rows.me[0] === 2, '줄별 합도');
+  G.pass(data, m); m.turn = 'me';   /* 상대 패스 */
+  ok(G.play(data, m, '꼬부기|w', 0).ok && m.weather[0] === null && m.last.on === false && G.rowSum(data, m, 'me', 0) === before, '같은 줄에 또 내면 걷힌다');
+  ok(G.play(data, m, '피카츄', 1).ok && m.turn === 'me', '(상대가 패스해 내 차례가 이어진다)');
+  m.passed.foe = false; m.turn = 'foe';
+  ok(G.play(data, m, '리자드|w', 1).ok && m.weather[1] === 'sand' && G.rowSum(data, m, 'me', 1) === 1, '상대도 날씨판을 — 중장 줄에 모래바람, 내 피카츄 1');
+  m.turn = 'me'; G.pass(data, m); m.turn = 'foe'; G.pass(data, m);
+  ok(m.round === 2 && m.weather.join() === ',,', '라운드가 끝나면 걷힌다');
+}
+{ /* 날씨판은 타격이 없고, 상대 영웅만 있는 줄에 깔아도 아무 일 없음 */
+  const [, m] = rig(['꼬부기|w'], ['이상해씨']);
+  put(m, 'foe', '이상해씨', 2); m.turn = 'me';
+  ok(G.play(data, m, '꼬부기|w', 2).ok && m.last.hit === undefined && unit(m, 'foe', 2).dmg === 0 && G.rowSum(data, m, 'foe', 2) === 1, '날씨판 — 타격 없음, 비 깔림');
+}
+
 console.log('PASS 폼 결투 규칙: ' + n + ' 가지');

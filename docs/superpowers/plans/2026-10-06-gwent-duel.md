@@ -673,7 +673,7 @@ git add lib/gwent.js tests/gwent-sim.cjs docs/PATCH.md && git commit -m "폼 결
   ok(unit(m, 'foe', 1).dmg === 0, '약한 쪽은 안 맞는다');
   m.turn = 'me'; put(m, 'me', '파이리', 1);
   ok(m.last.hit.id === '이상해꽃' && unit(m, 'foe', 0).dmg === 4, '또 가장 센 것(현재 힘으로) — 이상해꽃 −4');
-  put(m, 'foe', '꼬마돌', 1); ok(m.last.hit === null, '바위·땅 → 불·비행·물·전기 모두 2배 아님 → 타격 없음');
+  put(m, 'foe', '꼬마돌', 1); ok(m.last.hit && m.last.hit.id === '리자몽' && m.last.hit.mult === 4 && m.last.hit.n === 3 && unit(m, 'me', 0).dmg === 3, '바위 → 불·비행 4배 → 리자몽 −3: ' + JSON.stringify(m.last.hit));
   m.turn = 'me'; put(m, 'me', '꼬부기', 2);
   ok(m.last.hit.id === '꼬마돌' && m.last.hit.n === 3 && m.last.hit.mult === 4 && unit(m, 'foe', 1, 1).dmg === 3, '물→바위·땅 4배 → −3 (꼬마돌이 이상해꽃보다 세진 않아도 4배가 아니라 "가장 센 2배 이상" — 꼬마돌 ' + G.cur(unit(m, 'foe', 1, 1)) + ' vs 이상해꽃 ' + G.cur(unit(m, 'foe', 0)) + ')');
 }
@@ -686,10 +686,10 @@ git add lib/gwent.js tests/gwent-sim.cjs docs/PATCH.md && git commit -m "폼 결
 }
 /* ── 결속 — 같은 계통 비영웅이 같은 줄에 둘 이상이면 각각 기본 힘만큼 ── */
 {
-  const [, m] = rig(['이상해씨', '이상해풀', '이상해꽃', '피카츄'], ['파이리']);
+  const [, m] = rig(['이상해씨', '이상해풀', '이상해꽃', '피카츄'], ['꼬부기']);   /* 상대는 물 — 풀·독을 2배로 못 때려 합이 그대로 */
   const b = id => G.cardOf(data, id).power.heavy;
   put(m, 'me', '이상해씨', 1); ok(G.unitValue(data, m, 'me', 1, 0).bond === false && G.rowSum(data, m, 'me', 1) === b('이상해씨'), '혼자는 결속 없음');
-  put(m, 'foe', '파이리', 1); m.turn = 'me'; put(m, 'me', '이상해풀', 1);
+  put(m, 'foe', '꼬부기', 1); m.turn = 'me'; put(m, 'me', '이상해풀', 1);
   ok(G.unitValue(data, m, 'me', 1, 0).bond && G.unitValue(data, m, 'me', 1, 1).bond && G.rowSum(data, m, 'me', 1) === 2 * (b('이상해씨') + b('이상해풀')), '둘이면 둘 다 두 배');
   m.turn = 'me'; put(m, 'me', '이상해꽃', 1); ok(G.rowSum(data, m, 'me', 1) === 2 * (b('이상해씨') + b('이상해풀') + b('이상해꽃')), '셋이면 셋 다');
   m.turn = 'me'; put(m, 'me', '피카츄', 1); ok(G.unitValue(data, m, 'me', 1, 3).bond === false, '다른 계통은 아니다');
