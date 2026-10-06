@@ -10,6 +10,13 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 생성기 — 손 줄은 해부만, 고른 손 동작과 이어가기 손복장을 덮어쓰지 않게
+
+- lib/prompt-spec.js — HANDS 를 손가락 수·분리만으로 줄였다. 손 자세 기본값(주먹·편 손바닥·카메라로 내민 손 금지)은 handsDefault 로 따로, 이어가기용 handsWear(첨부 그림의 장갑·맨손 그대로) 추가. 69b8b95 는 일상 끝에 "loose fist, open palm" 을 늘 붙여 컵 들기·사진 찍기·손 흔들기 같은 고른 자세와 부딪혔고, 이어가기에 "never fingerless" 장갑을 늘 붙여 맨손 인물에 장갑을 씌울 수 있었다
+- lib/prompt-anthro.js — 액션: 고른 장면·자세가 없을 때만 handsDefault, 장갑 규칙은 새 인물만, 이어가기는 handsWear. 일상은 HANDS 만. 개방은 그대로
+- prompt.html — prompt-spec·prompt-anthro 꼬리표 ?v=hands2
+- tests/prompt-engine.cjs — 회귀 검사: HANDS 에 자세 말이 없고, 컵 들기·사진 찍기·손 흔들기·책 읽기·머리 정리·물건 들기 자세가 일상·액션에서 손 줄에 덮이지 않으며, 이어가기에 장갑 규칙이 붙지 않는다
+
 ## 2026-10-06 · claude · 생성기 — 손가락이 늘고 뭉치지 않게 손 줄, 개방에서 손·눈 색 고정
 
 - lib/prompt-spec.js — ANATOMY 의 "both hands drawn correctly as hands" 한 줄을 HANDS 로 뺐다: 엄지 하나 손가락 넷·떨어져 있고 붙거나 겹치지 않음, 주먹·편 손바닥·어딘가에 얹은 손, 카메라로 내민 손·벌린 손가락 금지. 액션은 손가락 있는 밀착 장갑(손가락 없는 장갑 금지)·효과가 손가락에 감기지 않음을 더한다. 꼬부기·어니부기 그림에서 망가진 손이 다 내민 손·손가락 없는 장갑·손에 감긴 물줄기였다

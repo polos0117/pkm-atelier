@@ -75,7 +75,9 @@ assert(ref.includes('the HEAVY form of the woman in the attached image'));
 assert(ref.includes('change only her armor'));
 assert(ref.includes('the species features she wears as costume'));
 for(const s of ['PALETTE','WEAR','IDENTITY','mint','U-shaped','omit referenced_image_paths']) assert(!ref.includes(s),'continuation re-sends '+s);
-assert(ref.includes(S.PROMPT_LINES.hands)&&ref.includes(S.PROMPT_LINES.handsArmor));
+/* 이어가기는 첨부 그림의 손복장을 그대로 — 맨손이던 인물에 장갑을 새로 씌우지 않는다 */
+assert(ref.includes(S.PROMPT_LINES.hands)&&ref.includes(S.PROMPT_LINES.handsWear),'continuation keeps the attached hand wear');
+for(const s of [S.PROMPT_LINES.handsArmor,'Gloves are','never fingerless']) assert(!ref.includes(s),'continuation forces gloves: '+s);
 assert(words(ref)<=310,'continuation budget: '+words(ref));
 assert(build('꼬부기',{identityMode:'reference',motifs:'KEEP_THIS'}).includes('MOTIFS to keep: KEEP_THIS.'));
 /* 새 인물은 고른 외형만 */
@@ -111,6 +113,20 @@ assert(cas.includes('never armor, never a creature costume'));
 for(const s of ['FORM —','WEAR','PALETTE','IDENTITY','mint','plates']) assert(!cas.includes(s),'casual carries '+s);
 for(const [k] of S.ART_STYLES) assert(!/armor|mecha|hard-surface|mechanical/i.test(S.CASUAL_STYLE_CORES[k]),'casual style speaks armor: '+k);
 assert(cas.includes(S.PROMPT_LINES.hands)&&!cas.includes('Gloves'),'casual: hand line without armor gloves');
+/* HANDS 는 해부만 — 고른 손 동작(컵 들기·사진 찍기…)을 끝의 손 줄이 덮어쓰지 않는다 */
+const HAND_POSE=/relaxed|loose fist|open palm|resting on something|no hand thrust|clawed/;
+assert(!HAND_POSE.test(S.PROMPT_LINES.hands),'HANDS must stay anatomy-only');
+for(const pose of ['holding_cup','taking_photo','waving','reading_book','hands_in_hair','carrying_something']){
+ const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',pose}));
+ assert(t.includes('Pose: '+S.POSE_GUIDES[pose][1]),pose+' pose is in the prompt');
+ const tail=t.slice(t.indexOf('HANDS:'));
+ assert(!HAND_POSE.test(tail),pose+': the hand line overrides the chosen pose');
+ assert(!t.includes(S.PROMPT_LINES.handsDefault),pose+': default hand pose leaked into casual');
+ const act=build('꼬부기',{pose});
+ assert(!act.includes(S.PROMPT_LINES.handsDefault),pose+': default hand pose with a chosen action pose');
+ assert(act.includes(S.PROMPT_LINES.hands)&&act.includes(S.PROMPT_LINES.handsArmor),pose+': action keeps anatomy and the new-character glove rule');
+}
+assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default hand pose applies');
 assert(words(cas)<=360,'casual budget: '+words(cas));
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
