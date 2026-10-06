@@ -80,5 +80,21 @@ for (const c of cards) {
 const forms = Object.keys(FORMS).length;
 const shots = Object.values(img).reduce((n, e) =>
   n + Object.values(A.styleMap(e)).reduce((m, b) => m + A.formKeys(b).length, 0), 0);
+/* ── 진화 결투가 믿는 자료 — 상성표·계통·챔피언 ── */
+{
+  const chart = JSON.parse(fs.readFileSync('data/chart.json', 'utf8')), T = chart.types, M = chart.chart;
+  assert.equal(T.length, 18, '타입 18');
+  for (const a of T) for (const d of T) assert([0, 0.5, 1, 2].includes(M[a][d]), `상성표 ${a}→${d}`);
+  const cards1 = JSON.parse(fs.readFileSync('data/card.json', 'utf8')).cards.character, by1 = Object.fromEntries(cards1.map(c => [c.name, c]));
+  for (const c of cards1) {
+    if (c.from) assert(by1[c.from] && (by1[c.from].to || []).includes(c.name), `${c.name} 의 from ${c.from} 이 되돌아오지 않는다`);
+    for (const t of c.to || []) assert(by1[t] && by1[t].from === c.name, `${c.name} 의 to ${t} 가 되돌아오지 않는다`);
+  }
+  const lane = JSON.parse(fs.readFileSync('data/lane.json', 'utf8'));
+  assert.equal(lane.champions.length, 9, '챔피언 아홉');
+  assert.deepEqual(lane.champions.map(x => x.gen), [1, 2, 3, 4, 5, 6, 7, 8, 9], '세대 1~9 차례');
+  for (const ch of lane.champions) assert(ch.ally >= 1 && ch.ally <= 9 && ch.ally !== ch.gen, `${ch.gen}세대 이웃`);
+  for (const k in lane.overrides) assert(by1[k], `overrides 의 ${k} 는 없는 카드`);
+}
 console.log(`PASS: 폼 ${forms}가지 정의, 카드 ${cards.length}장, 폼 초상 ${shots}장, `
   + `일상컷 폼 밖, action 선택, 완료 판정은 성별을 안 봄`);

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "note": "진화 결투 자료. overrides 는 카드 이름 → {power} 로 lib/lane.js 의 derive() 가 종족값에서 만든 힘(합/50)을 덮어쓴다(비어 있어도 된다). champions 는 세대 챔피언 아홉 — gen 은 세대, ally 는 덱에 8장 섞는 이웃 세대. 이름은 낱말 표 lane.champion(\"{n}세대 챔피언\")이라 사람 이름이 없다. 초상은 그 세대 풀에서 종족값이 가장 큰 카드를 화면이 고른다.",
+  "overrides": {},
+  "champions": [
+    {"gen": 1, "ally": 2}, {"gen": 2, "ally": 3}, {"gen": 3, "ally": 4},
+    {"gen": 4, "ally": 5}, {"gen": 5, "ally": 6}, {"gen": 6, "ally": 7},
+    {"gen": 7, "ally": 8}, {"gen": 8, "ally": 9}, {"gen": 9, "ally": 8}
+  ]
+}
