@@ -225,7 +225,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/words.js?v=gwent1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
-<script src="lib/collection.js?v=1"></script>
+<script src="lib/collection.js?v=gwent1"></script>
 <script src="lib/gwent.js?v=1"></script>
 </head>
 <body class="dex-page gwent-page">
@@ -466,7 +466,8 @@ function Unit({ data, st, side, lane, i, fx, onClick, target, onTarget }) {
 function Row({ data, st, side, lane, mode, onTarget, onDetail, fxOf, won }) {
   const s = G.sums(data, st), wx = st.weather[lane], units = st[side].rows[lane];
   const mine = side === 'me' && st.turn === 'me' && mode;
-  const playLabel = () => { const c = G.cardOf(data, mode.id); return c.weather ? wxName(data, lane) : String(c.power[C.FORMS[lane]]); };
+  /* 미리보기 — 날씨판이면 날씨 이름, 날씨 줄의 비영웅은 1(엔진의 합산 규칙과 같이), 아니면 그 줄의 힘 */
+  const playLabel = () => { const c = G.cardOf(data, mode.id); return c.weather ? wxName(data, lane) : wx && !c.rare ? '1' : String(c.power[C.FORMS[lane]]); };
   return html`<div class=${'gw-row' + (wx ? ' weathered' : '') + (won ? ' won-' + won : '')} data-side=${side} data-lane=${lane}>
     <div class="gw-row-head"><span>${W('form.' + C.FORMS[lane])}</span><b class="gw-sum">${s.rows[side][lane]}</b>${wx && html`<span class="gw-wx">${W('gwent.weather.' + wx)}</span>`}</div>
     <div class="gw-units">${units.length ? units.map((u, i) => html`<${Unit} key=${u.id + i} data=${data} st=${st} side=${side} lane=${lane} i=${i} fx=${fxOf(side, lane, i)} onClick=${() => onDetail(side, lane, i)}
@@ -613,6 +614,13 @@ function App() {
   const data = loaded && loaded.data;
   const cleaned = useRef(false);
   const profileRef = useRef(profile); profileRef.current = profile;   /* 상대 턴 타이머가 옛 프로필을 쥐지 않게 */
+  /* 같은 저장(pkm_duel_v1)을 두 화면·여러 탭이 쓴다 — 다른 데서 고쳤으면 다시 읽는다. 옛 프로필을 쥔 채 저장하면 그쪽 보상을 지운다(리뷰). 뒤로 가기(bfcache)도 같다 */
+  useEffect(() => {
+    const onStore = e => { if (e.key === STORE) location.reload(); };
+    const onShow = e => { if (e.persisted) location.reload(); };
+    addEventListener('storage', onStore); addEventListener('pageshow', onShow);
+    return () => { removeEventListener('storage', onStore); removeEventListener('pageshow', onShow); };
+  }, []);
   useEffect(() => {
     if (!data || !match || match.phase !== 'play' || match.turn !== 'foe') return;
     const t = setTimeout(() => { const next = JSON.parse(JSON.stringify(match)); G.aiTurn(data, next); save(profileRef.current, next); setMatch(next); }, reduced() ? 0 : 600);

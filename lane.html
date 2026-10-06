@@ -223,7 +223,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/words.js?v=gwent1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
-<script src="lib/collection.js?v=1"></script>
+<script src="lib/collection.js?v=gwent1"></script>
 <script src="lib/lane.js?v=1"></script>
 </head>
 <body class="dex-page lane-page">
@@ -644,6 +644,13 @@ function App() {
   const [screen, setScreen] = useState('lobby');   /* 'lobby' | 'build' | 'stats' | 'shop' | 'learn' — 판이 있으면 판이 앞선다 */
   const data = loaded && loaded.data;
   const cleaned = useRef(false);
+  /* 같은 저장(pkm_duel_v1)을 두 화면·여러 탭이 쓴다 — 다른 데서 고쳤으면 다시 읽는다. 옛 프로필을 쥔 채 저장하면 그쪽 보상을 지운다(리뷰). 뒤로 가기(bfcache)도 같다 */
+  useEffect(() => {
+    const onStore = e => { if (e.key === STORE) location.reload(); };
+    const onShow = e => { if (e.persisted) location.reload(); };
+    addEventListener('storage', onStore); addEventListener('pageshow', onShow);
+    return () => { removeEventListener('storage', onStore); removeEventListener('pageshow', onShow); };
+  }, []);
   /* 상대 턴 — 0.6초 뒤 한 수. 움직임 줄이기면 바로 */
   useEffect(() => {
     if (!data || !match || match.phase !== 'play' || match.turn !== 'foe') return;

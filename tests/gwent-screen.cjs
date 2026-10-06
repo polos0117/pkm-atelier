@@ -42,6 +42,11 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     /* 로비 — 프로필은 진화 결투와 같은 저장, 덱은 decks.gwent */
     const saved = JSON.parse(await p.evaluate(k => localStorage.getItem(k), KEY));
     assert(saved.profile.main === 1 && saved.profile.owned.length === 25 && saved.profile.decks.gwent.length === 25 && saved.profile.decks.lane.length === 25, '프로필이 저장됐다 — 두 덱');
+    { /* 다른 탭(또는 진화 결투 화면)이 같은 저장을 고치면 다시 읽는다 — 옛 프로필을 쥔 채 저장하면 그쪽 보상을 지운다(리뷰) */
+      const p2 = await a.ctx.newPage(); await p2.goto(h.base + '/gwent.html'); await p2.waitForSelector('.gw-screen[data-screen="lobby"]');
+      await p2.evaluate(k => { const j = JSON.parse(localStorage.getItem(k)); j.profile.gold = 777; localStorage.setItem(k, JSON.stringify(j)); }, KEY);
+      await p.waitForFunction(() => /777/.test((document.querySelector('.gw-gold') || {}).textContent || ''), null, { timeout: 10000 });
+      await p2.close(); }
     assert.equal(await p.locator('.gw-champion').count(), 9, '챔피언 아홉');
     assert(await p.locator('.gw-champion[data-gen="1"]').isEnabled() && await p.locator('.gw-champion[data-gen="3"]').isDisabled(), '1세대 도전 가능, 3세대 잠김');
     assert((await p.locator('.gw-deck').getAttribute('data-ok')) === 'true', '시작 덱은 출전 가능');
@@ -131,6 +136,10 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     await q2.waitForSelector('.gw-row[data-side="me"][data-lane="0"].weathered');
     assert(await q2.locator('.gw-row[data-side="foe"][data-lane="0"].weathered').count() === 1, '상대 경장 줄도 흐려진다');
     await myTurn(q2);
+    /* 날씨 줄의 힘 미리보기 — 그 줄에선 1 로 센다(리뷰) */
+    await q2.locator('.gw-hand .cell[data-id="이브이"]').tap(); await q2.locator('#gw-play').tap(); await q2.waitForSelector('.gw-mode');
+    assert.equal(await q2.locator('.gw-target[data-kind="play"][data-lane="0"]').textContent(), '1', '싸라기눈 줄에 놓으면 1');
+    await q2.locator('#gw-cancel').tap(); await q2.waitForSelector('.gw-mode', { state: 'detached' });
     /* 개방 — 손패 칸의 개방 → 내 비영웅 카드마다 표적 → 피카츄 */
     await q2.locator('#gw-open').tap(); await q2.waitForSelector('.gw-mode');
     assert.equal(await q2.locator('.gw-target[data-kind="open"]').count(), 3, '열 수 있는 카드 셋(피카츄·이상해씨·이상해풀)');

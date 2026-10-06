@@ -47,6 +47,11 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     /* 로비 */
     const saved = JSON.parse(await p.evaluate(k => localStorage.getItem(k), KEY));
     assert(saved.profile.main === 1 && saved.profile.owned.length === 25 && saved.profile.decks.lane.length === 25 && saved.v === 1, '프로필이 저장됐다');
+    { /* 다른 탭(또는 폼 결투 화면)이 같은 저장을 고치면 다시 읽는다 — 옛 프로필을 쥔 채 저장하면 그쪽 보상을 지운다(리뷰) */
+      const p2 = await a.ctx.newPage(); await p2.goto(h.base + '/lane.html'); await p2.waitForSelector('.ln-screen[data-screen="lobby"]');
+      await p2.evaluate(k => { const j = JSON.parse(localStorage.getItem(k)); j.profile.gold = 777; localStorage.setItem(k, JSON.stringify(j)); }, KEY);
+      await p.waitForFunction(() => /777/.test((document.querySelector('.ln-gold') || {}).textContent || ''), null, { timeout: 10000 });
+      await p2.close(); }
     assert.equal(await p.locator('.ln-champion').count(), 9, '챔피언 아홉');
     assert(await p.locator('.ln-champion[data-gen="1"]').isEnabled() && await p.locator('.ln-champion[data-gen="2"]').isEnabled(), '1·2세대 챔피언 도전 가능(이웃 2·3 이 풀에)');
     assert(await p.locator('.ln-champion[data-gen="3"]').isDisabled() && /\d/.test(await p.locator('.ln-champion[data-gen="3"] .ln-need').textContent()), '3세대 챔피언은 이웃 4세대가 없어 잠김');

@@ -311,4 +311,16 @@ if (!quick) {
   assert(av.w / av.n >= 0.55, '에이스가 숙련을 55% 는 이겨야 한다');
 }
 
+/* ── 리뷰 뒤 — 날씨 줄의 카드는 타격 대상이 아니다(어차피 1로 세니 때려 봤자 합이 안 바뀌고, 맑은 줄의 진짜 표적을 놓친다) ── */
+{
+  const [, m] = rig(['꼬부기', '파이리|w'], ['리자몽', '파이리', '잉어킹']);
+  put(m, 'foe', '리자몽', 0); put(m, 'foe', '파이리', 1); m.turn = 'me';
+  put(m, 'me', '파이리|w', 0);   /* 경장 줄에 싸라기눈 — 리자몽은 1 */
+  m.turn = 'foe'; G.pass(data, m); m.turn = 'me';
+  put(m, 'me', '꼬부기', 2);
+  ok(m.last.hit && m.last.hit.id === '파이리' && unit(m, 'foe', 0).dmg === 0, '물은 날씨 줄의 리자몽이 아니라 맑은 줄의 파이리를 때린다: ' + JSON.stringify(m.last.hit));
+}
+/* ── 공유 파일 꼬리표 — collection.js 가 바뀌었으니 두 화면이 같은 새 꼬리표로 읽어야 한다(옛 캐시가 statsView 의 새 값을 모른다) ── */
+for (const f of ['lane.html', 'gwent.html']) ok(fs.readFileSync(f, 'utf8').includes('lib/collection.js?v=gwent1"'), f + ' 은 collection.js?v=gwent1');
+
 console.log('PASS 폼 결투 규칙: ' + n + ' 가지');

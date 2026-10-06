@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-06 · claude · 폼 결투 — 리뷰 뒤 손질: 날씨 줄 타격, 두 화면의 저장 되읽기, 꼬리표
+
+- lib/gwent.js — 상성 타격이 날씨 줄의 카드를 고르지 않는다(어차피 1로 세니 합이 안 바뀌고 맑은 줄의 표적을 놓쳤다)
+- gwent.html, lane.html — 같은 저장을 두 화면·여러 탭이 쓰므로 storage 사건과 뒤로 가기(pageshow persisted)에 다시 읽는다 — 옛 프로필을 쥔 채 저장하면 그쪽 보상을 지웠다. collection.js 꼬리표를 ?v=gwent1 로(통계 그릇이 바뀌었다)
+- gwent.html — 날씨 줄에 놓을 때 힘 미리보기가 1(엔진 합산과 같이)
+- tests/gwent-sim.cjs, tests/gwent-screen.cjs, tests/lane-screen.cjs — 그 검사
+- docs/GWENT_GAME.md — 타격 규칙에 날씨 줄 제외를 적음
+
 ## 2026-10-06 · claude · 폼 결투 — 규칙 문서, 검사 목록, README
 
 - docs/GWENT_GAME.md — 플레이어가 읽는 규칙과 자료·저장·검사·굴려 본 숫자
