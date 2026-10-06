@@ -1102,3 +1102,4 @@ burn                  3%           69%              23%             50%
 | `docs/PROMPT_REWRITE.md` | 프롬프트 낱말을 이 놀이 것으로 바꾸는 일 |
 | `AGENTS.md` | 저장소 규칙 넷 |
 | `docs/LANE_GAME.md` | 넷째 놀이 진화 결투(줄 싸움). 설계 `docs/superpowers/specs/2026-10-06-lane-duel-design.md` |
+| `docs/GWENT_GAME.md` | 다섯째 놀이 폼 결투(궨트식). 설계 `docs/superpowers/specs/2026-10-06-gwent-duel-design.md` |

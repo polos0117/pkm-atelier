@@ -9,6 +9,7 @@
 ```
 index.html   바탕이 서는지 보여 주는 화면. 놀이가 정해지면 지워도 된다
 lane.html    진화 결투 — 세 줄 1 대 1, 힘 × 상성, 줄 위에서 진화. 규칙은 docs/LANE_GAME.md
+gwent.html   폼 결투 — 세 줄 합, 줄이 폼. 진화 결투와 같은 컬렉션. 규칙은 docs/GWENT_GAME.md
 lib/         주제와 무관한 층 (껍데기 · 테마 여덟 · 낱말 표 · 새 판 감지 · 그림 주소)
 data/        자료. 머리말 note 에 모양이 적혀 있다
 tools/       그림 등록 · 썸네일
