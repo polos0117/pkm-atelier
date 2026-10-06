@@ -216,6 +216,8 @@ body {color:var(--text);font-size:15px}
 .gw-toggle-w {min-height:44px;background:var(--card2);border:1px solid var(--line);border-radius:8px;color:var(--muted);font:inherit;font-weight:700;font-size:11px;cursor:pointer}
 .gw-toggle-w.in {background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
 .gw-toggle-w:disabled {opacity:.4;cursor:default}
+.gw-hitline {flex-basis:100%;color:var(--signal,#c33);font-size:12px}
+.gw-target[data-kind="play"] {left:60px}
 .gw-bar .gw-sumline b {font-size:18px;color:var(--text);letter-spacing:.06em} .gw-bar .gw-sumline b[data-side="foe"] {color:var(--signal,#c33)}
 @media (prefers-reduced-motion:reduce) {.gw-unit.flip,.gw-unit.hit,.gw-target {animation:none} .gw-unit.burst::after {display:none}}
 </style>
@@ -451,9 +453,89 @@ function Mulligan({ data, st, actMatch }) {
     <button type="button" class="gw-btn primary" id="gw-mull-go" onClick=${() => actMatch(m => { G.confirm(data, m); return { ok: true }; })}>${W('lane.mull.go')}</button>
   </section>`;
 }
-/* ── 대결 — Task 8 ── */
+/* ── 판 위 카드 하나 — 그 줄 폼의 초상(개방이면 개방 그림), 현재 힘. 피해 빨강·결속 금빛·개방 테두리 ── */
+function Unit({ data, st, side, lane, i, fx, onClick, target, onTarget }) {
+  const u = st[side].rows[lane][i], c = G.cardsOf(data).cards[u.name], v = G.unitValue(data, st, side, lane, i);
+  const cls = 'gw-unit' + (c.rare ? ' rare' : '') + (u.dmg ? ' hurt' : '') + (v.bond ? ' bond' : '') + (u.open ? ' open' : '') + (fx ? ' ' + fx : '');
+  if (target) return html`<button type="button" class="gw-target" data-kind="open" data-lane=${lane} data-i=${i} onClick=${() => onTarget(lane, i)}>${W('gwent.open')}</button>`;
+  return html`<button type="button" class=${cls} data-id=${u.id} data-side=${side} data-lane=${lane} data-i=${i} data-form=${C.FORMS[lane]} onClick=${onClick}>
+    <${Thumb} file=${formArt(data, u.name, C.FORMS[lane], u.open > 0)} /><span class=${'gw-pw' + (c.rare ? ' rare' : '')}>${v.weather ? 1 : G.cur(u)}</span>
+  </button>`;
+}
+/* ── 줄 하나 — 머리(폼·날씨·합) + 카드 띠. mode 면 누를 자리가 빛난다 ── */
+function Row({ data, st, side, lane, mode, onTarget, onDetail, fxOf, won }) {
+  const s = G.sums(data, st), wx = st.weather[lane], units = st[side].rows[lane];
+  const mine = side === 'me' && st.turn === 'me' && mode;
+  const playLabel = () => { const c = G.cardOf(data, mode.id); return c.weather ? wxName(data, lane) : String(c.power[C.FORMS[lane]]); };
+  return html`<div class=${'gw-row' + (wx ? ' weathered' : '') + (won ? ' won-' + won : '')} data-side=${side} data-lane=${lane}>
+    <div class="gw-row-head"><span>${W('form.' + C.FORMS[lane])}</span><b class="gw-sum">${s.rows[side][lane]}</b>${wx && html`<span class="gw-wx">${W('gwent.weather.' + wx)}</span>`}</div>
+    <div class="gw-units">${units.length ? units.map((u, i) => html`<${Unit} key=${u.id + i} data=${data} st=${st} side=${side} lane=${lane} i=${i} fx=${fxOf(side, lane, i)} onClick=${() => onDetail(side, lane, i)}
+      target=${mine && mode.kind === 'open' && !G.cardsOf(data).cards[u.name].rare} onTarget=${(l, i) => onTarget('open', l, i)} />`) : html`<span class="gw-row-empty">${W('gwent.row.empty')}</span>`}</div>
+    ${mine && mode.kind === 'play' && html`<button type="button" class="gw-target" data-kind="play" data-lane=${lane} onClick=${() => onTarget('play', lane)}>${playLabel()}</button>`}
+  </div>`;
+}
+/* ── 대결 ── */
 function Match({ data, profile, st, actMatch, act }) {
-  return html`<section class="gw-screen gw-board" data-screen="match"><p class="note">${W('lane.round', { n: st.round })}</p></section>`;
+  const D = G.cardsOf(data), portrait = G.championPortrait(data, st.champion);
+  const s = G.sums(data, st), L = G.legal(data, st, 'me'), mine = st.turn === 'me' && st.phase === 'play';
+  const [detail, setDetail] = useState(null);   /* {id, hand:true} | {side, lane, i} */
+  const [mode, setMode] = useState(null), [banner, setBanner] = useState(null), [help, setHelp] = useState(false);
+  const rounds = useRef(st.roundLog.length);
+  useEffect(() => { if (st.roundLog.length > rounds.current) { setMode(null); setDetail(null); if (!reduced()) { setBanner(st.roundLog.length); const t = setTimeout(() => setBanner(null), 1400); rounds.current = st.roundLog.length; return () => clearTimeout(t); } } rounds.current = st.roundLog.length; }, [st.roundLog.length]);
+  /* 이번 수의 연출 — 새로 놓인 카드 flip, 맞은 카드 hit, 개방 burst */
+  const fxOf = (side, lane, i) => { const l = st.last; if (!l) return null;
+    if (l.kind === 'play' && l.who === side && l.lane === lane && l.i === i) return 'flip';
+    if (l.kind === 'play' && l.hit && l.who !== side && l.hit.lane === lane && l.hit.i === i) return 'hit';
+    if (l.kind === 'open' && l.who === side && l.lane === lane && l.i === i) return 'burst'; return null; };
+  const lastRound = st.roundLog.length ? st.roundLog[st.roundLog.length - 1] : null;
+  const roundText = (r, n, short) => W('gwent.round.' + (r.winner === 'me' ? 'win' : r.winner === 'foe' ? 'lose' : 'draw') + (short ? '.short' : ''), { n, me: r.me, foe: r.foe });
+  const won = () => banner && lastRound ? (lastRound.winner === 'draw' ? null : lastRound.winner) : null;
+  const onTarget = (kind, lane, i) => {
+    const m = mode; setMode(null); setDetail(null);
+    if (kind === 'play') actMatch(x => G.play(data, x, m.id, lane));
+    else if (kind === 'open') actMatch(x => G.open(data, x, lane, i));
+  };
+  const openDetail = (side, lane, i) => setDetail({ side, lane, i });
+  const unitOf = d => d && d.side ? st[d.side].rows[d.lane][d.i] : null;
+  const detailId = detail ? (detail.hand ? detail.id : (unitOf(detail) || {}).id) : null;
+  const detailActions = () => {
+    if (!detail) return [];
+    if (detail.hand) return [{ id: 'gw-play', label: W('gwent.play'), disabled: !mine || !L.play.some(x => x.id === detail.id), onClick: () => { setMode({ kind: 'play', id: detail.id }); setDetail(null); } }];
+    if (detail.side === 'me') return [{ id: 'gw-open-this', label: W('gwent.open.this'), disabled: !mine || !L.open.some(x => x.lane === detail.lane && x.i === detail.i), onClick: () => { setDetail(null); actMatch(x => G.open(data, x, detail.lane, detail.i)); } }];
+    return [];
+  };
+  const hit = st.last && st.last.kind === 'play' && st.last.hit ? st.last.hit : null;
+  const rowProps = { data, st, mode, onTarget, onDetail: openDetail, fxOf };
+  return html`<section class="gw-screen gw-board" data-screen="match">
+    <div class="gw-foe"><span class="face"><${Thumb} file=${portrait && formArt(data, portrait, 'light')} /></span>
+      <span><b>${W('lane.champion', { n: st.champion })}</b>${W('lane.lv.' + st.level)}</span>
+      <span class="gw-foe-fan"><span class="gw-cards" aria-hidden="true">${st.foe.hand.map((_, i) => html`<span key=${i} class="gw-back" style=${'--gc:' + typeColor(data, (D.cards[portrait] || { types: ['normal'] }).types[0])}></span>`)}</span><span class="gw-foe-hand">${W('lane.foe.hand', { n: st.foe.hand.length })}</span></span>
+      <span class="gw-foe-grave">${W('lane.foe.grave', { n: st.foe.grave.length })}</span>
+      <span class="gw-foe-open" data-used=${st.foe.opened ? 'true' : 'false'}>${W(st.foe.opened ? 'lane.open.used' : 'lane.open')}</span></div>
+    ${mode && html`<div class="gw-mode">${W(mode.kind === 'play' ? 'gwent.play.where' : 'gwent.open.pick')}<button type="button" class="gw-btn" id="gw-cancel" onClick=${() => setMode(null)}>${W('lane.cancel')}</button></div>`}
+    <div class="gw-rows">${[2, 1, 0].map(l => html`<${Row} key=${'f' + l} ...${rowProps} side="foe" lane=${l} won=${won() === 'foe' ? 'foe' : null} />`)}</div>
+    <div class="gw-bar">
+      <span class="gw-sumline"><b data-side="me">${s.me}</b> : <b data-side="foe">${s.foe}</b></span>
+      <span class="gw-round">${W('lane.round', { n: st.round })}</span>
+      <span class="gw-lives" data-me=${st.lives.me} data-foe=${st.lives.foe}>${W('lane.lives')} ${'♥'.repeat(st.lives.me)}${'♡'.repeat(G.LIVES - st.lives.me)} : ${'♥'.repeat(st.lives.foe)}${'♡'.repeat(G.LIVES - st.lives.foe)}</span>
+      ${st.bonus.me > 0 && html`<span class="gw-first">${W('gwent.first.bonus', { n: st.bonus.me })}</span>`}
+      <span class="gw-turn" data-turn=${st.turn || ''}>${st.passed.me ? W('lane.passed') : W(mine ? 'lane.turn.me' : 'lane.turn.foe')}</span>
+      ${hit && html`<span class="gw-hitline">${W('gwent.hit', { name: G.baseName(hit.id), n: hit.n })}</span>`}
+      ${lastRound && html`<span class="gw-last-round">${roundText(lastRound, st.roundLog.length)}</span>`}
+    </div>
+    <div class="gw-rows">${[0, 1, 2].map(l => html`<${Row} key=${'m' + l} ...${rowProps} side="me" lane=${l} won=${won() === 'me' ? 'me' : null} />`)}</div>
+    <div class="gw-dock">${!profile.tutorialGwent && html`<${Guide} st=${st} onSkip=${() => act(p => { p.tutorialGwent = true; })} />`}
+      <p class="sec">${W('lane.hand', { n: st.me.hand.length })}<span class="gw-deck-pile">${W('lane.deck.left', { n: st.me.deck.length })}</span>
+        <span class="gw-bar-act">
+          <button type="button" class="gw-btn gw-help" id="gw-help" aria-label=${W('gwent.rules.title')} title=${W('gwent.rules.title')} onClick=${() => setHelp(true)}>?</button>
+          <button type="button" class="gw-btn" id="gw-open" disabled=${!mine || st.me.opened || !L.open.length} onClick=${() => setMode({ kind: 'open' })}>${W(st.me.opened ? 'gwent.open.used' : 'gwent.open')}</button>
+          <button type="button" class="gw-btn" id="gw-pass" disabled=${!L.pass} onClick=${() => { setMode(null); setDetail(null); actMatch(m => G.pass(data, m)); }}>${W('lane.pass')}</button>
+        </span></p>
+      <div class="gw-hand">${st.me.hand.map((id, i) => html`<${Card} key=${id + i} data=${data} id=${id} onClick=${() => setDetail({ id, hand: true })} />`)}</div></div>
+    ${detail && detailId && html`<${Detail} data=${data} id=${detailId} unit=${unitOf(detail)} lane=${detail.hand ? undefined : detail.lane} actions=${detailActions()} onClose=${() => setDetail(null)} />`}
+    ${help && html`<${Rules} onClose=${() => setHelp(false)} />`}
+    ${banner && lastRound && html`<div class="gw-banner">${roundText(lastRound, st.roundLog.length, true)}<br />${W('gwent.sum', { me: lastRound.me, foe: lastRound.foe })}</div>`}
+  </section>`;
 }
 
 /* 카드 뒷면 — 세대만 보인다 */
@@ -544,7 +626,10 @@ function App() {
   if (data && !cleaned.current) {
     cleaned.current = true;
     const r = sanitise(data, profile, match);
-    if (r.changed) { save(r.profile, r.match); setProfile(r.profile); setMatch(r.match); }
+    let p = r.profile, changed = r.changed;
+    /* 진화 결투에서 만든 프로필이면 폼 결투 덱이 비어 있다 — 걸러 낸 컬렉션으로 채운다(걸러 내기와 같은 번에, 아니면 옛 프로필이 덮어쓴다) */
+    if (p && !C.deckOf(p, 'gwent').length && p.owned.length) { p = JSON.parse(JSON.stringify(p)); G.autoFill(data, p); changed = true; }
+    if (changed) { save(p, r.match); setProfile(p); setMatch(r.match); }
   }
   if (!loaded) return html`<${Shell}><section class="gw-screen"><p class="note">${W('ui.loading')}</p></section><//>`;
   if (loaded.error) return html`<${Shell}><section class="gw-screen"><p class="note">${W('ui.error', { message: loaded.error })}</p></section><//>`;
@@ -560,8 +645,6 @@ function App() {
   const panel = screen === 'stats' ? html`<${Stats} data=${data} profile=${profile} onClose=${() => setScreen('lobby')} />`
     : screen === 'shop' ? html`<${Shop} data=${data} profile=${profile} act=${act} onClose=${() => setScreen('lobby')} />`
     : screen === 'learn' ? html`<${Rules} onClose=${() => setScreen('lobby')} onGuideAgain=${() => { act(p => { p.tutorialGwent = false; }); setScreen('lobby'); }} />` : null;
-  /* 진화 결투에서 만든 프로필이면 폼 결투 덱이 비어 있다 — 가진 카드로 채운다 */
-  if (profile && !C.deckOf(profile, 'gwent').length && profile.owned.length) { const p = JSON.parse(JSON.stringify(profile)); G.autoFill(data, p); save(p, match); setProfile(p); }
   const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
   return html`<${Shell}>
     ${which === 'pick' ? html`<${Pick} data=${data} onPick=${onPick} />`
