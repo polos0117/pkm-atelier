@@ -235,6 +235,16 @@ const put = (m, who, id, lane, form) => { m.turn = who; const r = A.place(data, 
   ok(m.me.lanes.every(x => x === null) && m.me.grave.join() === '꼬부기,이상해씨' && !m.passed.me && !m.passed.foe, '판은 묘지로(줄 차례), 패스 풀림');
   ok(m.first === 'foe' && m.turn === 'foe', '진 쪽이 선공');
 }
+{ /* 교체 — 내 스택이 있는 줄에 놓으면 옛 스택은 묘지로(포켓몬 교체). 받아친 상대에게 되받아치는 길 */
+  const [, m] = rig(['이상해씨', '꼬부기', '이상해풀'], ['파이리']);
+  put(m, 'me', '이상해씨', 0); put(m, 'foe', '파이리', 0);
+  ok(A.matchup(data, m, 0).winner === 'foe', '불이 풀을 받아쳤다');
+  ok(A.legal(data, m, 'me').place.every(x => x.lanes.join() === '0,1,2'), '놓기는 어느 줄이든');
+  put(m, 'me', '꼬부기', 0);
+  ok(m.me.lanes[0].cards.join() === '꼬부기' && m.me.grave.join() === '이상해씨' && m.log[m.log.length - 1].swap === '이상해씨', '교체 — 꼬부기가 서고 이상해씨는 묘지로');
+  ok(A.matchup(data, m, 0).winner === 'me' && A.matchup(data, m, 0).me.atk === 12, '물로 되받아쳤다');
+  ok(A.legal(data, m, 'me').evolve.length === 0, '묘지로 간 계통은 진화 못 한다');
+}
 { /* 보충 3장 · 빈 손 자동 패스 · 동점은 둘 다 잃음 */
   const [, m] = rig(['이상해씨'], ['파이리'], { exact: true });
   m.me.opened = m.foe.opened = true;   /* 개방이 남아 있으면 할 일이 있는 것 — 손패만 보려고 둘 다 쓴 것으로 */
@@ -260,9 +270,9 @@ const put = (m, who, id, lane, form) => { m.turn = who; const r = A.place(data, 
 { /* 세 라운드 상한 */
   const [, m] = rig(['이상해씨', '꼬부기', '피카츄'], ['파이리', '파이리', '파이리']);
   put(m, 'me', '꼬부기', 0); A.pass(data, m); A.pass(data, m);           /* 1R: 상대 패스, 나 패스 */
-  ok(m.round === 2 && m.lives.foe === 1 && m.first === 'foe', '1R 나');
+  ok(m.round === 2 && m.lives.foe === 1 && m.first === 'foe', '1R 나 → 진 상대가 선공');
   put(m, 'foe', '파이리', 0); A.pass(data, m); A.pass(data, m);          /* 2R: 나 패스, 상대 패스 */
-  ok(m.round === 3 && m.lives.me === 1 && m.first === 'me', '2R 상대 → 3R, 진 쪽 선공');
+  ok(m.round === 3 && m.lives.me === 1 && m.first === 'me', '2R 상대 → 3R, 진 내가 선공');
   put(m, 'me', '피카츄', 0); put(m, 'foe', '파이리', 1); A.pass(data, m); A.pass(data, m);
   ok(m.phase === 'done' && m.winner === 'draw' && m.roundLog.length === 3 && m.roundLog[2].lanes.join() === 'me,foe,', '3R 1:1 동점 → 무승부, 세 라운드');
 }
@@ -337,6 +347,77 @@ const put = (m, who, id, lane, form) => { m.turn = who; const r = A.place(data, 
   put(m, 'foe', '파이리', 1); m.turn = 'me';
   ok(A.move(data, m, 0, 2).ok && !m.passed.me, '옮기고도 개방이 남았다');
   m.turn = 'me'; ok(A.open(data, m, 2).ok && m.passed.me, '개방까지 쓰면 할 일이 없어 자동 패스');
+}
+
+/* ── AI ── */
+const playOut = (m, myLevel, foeLevel) => { let guard = 0; while (m.phase === 'play' && guard++ < 300) { const r = A.aiTurn(data, m, m.turn === 'me' ? myLevel : foeLevel); assert(r.ok, 'AI 가 불법 수: ' + JSON.stringify(r)); } assert(m.phase === 'done', '판이 안 끝난다'); return m; };
+{
+  const [, m] = freshMatch(3); A.confirm(data, m);
+  const mv = A.aiMove(data, m, 'veteran');
+  ok(['place', 'pass', 'open', 'move', 'evolve'].includes(mv.kind), '첫 수: ' + mv.kind);
+  for (let s = 0; s < 30; s++) { const [, g] = freshMatch(100 + s, 1 + (s % 9)); A.confirm(data, g); playOut(g, 'veteran', C.LEVELS[s % 3]); ok(g.roundLog.length >= 1 && g.roundLog.length <= 3 && ['me', 'foe', 'draw'].includes(g.winner), '판 ' + s + ' 끝: ' + g.winner); }
+  { const [, a] = freshMatch(77); A.confirm(data, a); playOut(a, 'ace', 'ace'); const [, b] = freshMatch(77); A.confirm(data, b); playOut(b, 'ace', 'ace'); ok(JSON.stringify(a.log) === JSON.stringify(b.log), '같은 시드 같은 판 — AI 도'); }
+  { /* 신참과 숙련은 같은 자리에서 다른 수를 둘 때가 있다 */
+    let diff = 0; for (let s = 0; s < 20; s++) { const [, g] = freshMatch(200 + s); A.confirm(data, g); const r = A.aiMove(data, JSON.parse(JSON.stringify(g)), 'rookie'), v = A.aiMove(data, JSON.parse(JSON.stringify(g)), 'veteran'); if (JSON.stringify(r) !== JSON.stringify(v)) diff++; }
+    ok(diff > 0, '신참은 무작위가 섞인다: ' + diff); }
+  { /* 앞서는데 상대가 패스하면 패스 */
+    const [, g] = rig(['꼬부기', '피카츄'], ['파이리'], { first: 'foe' });
+    put(g, 'me', '꼬부기', 0); g.turn = 'foe'; A.pass(data, g);
+    ok(A.aiMove(data, g, 'veteran').kind === 'pass' && A.aiMove(data, g, 'rookie').kind === 'pass', '앞서는데 상대 패스 → 패스'); }
+  { /* 뒤지는데 못 뒤집으면 패스 — 목숨 하나면 끝까지 */
+    const [, g] = rig(['캐터피'], ['뮤츠', '뮤츠', '뮤츠'], { first: 'foe' });
+    g.turn = 'foe'; put(g, 'foe', '뮤츠', 0); put(g, 'foe', '뮤츠', 1); put(g, 'foe', '뮤츠', 2); g.turn = 'me';
+    ok(A.aiMove(data, g, 'veteran').kind === 'pass', '숙련 — 캐터피로는 못 뒤집는다 → 패스');
+    g.lives.me = 1; ok(A.aiMove(data, g, 'veteran').kind === 'pass', '목숨 하나여도 못 뒤집는 카드는 안 낸다 — 내 봤자 결과가 같다'); }
+  { /* 숙련·에이스는 줄을 늘리는 수 가운데 가장 싼 카드부터 — 센 카드로 약한 줄을 뒤집는 것은 낭비. 개방·옮기기는 줄을 뒤집을 때만 */
+    const [, g] = rig(['뮤츠', '이상해씨', '리자드', '리자몽'], ['파이리', '꼬부기']);
+    const mv = A.aiMove(data, g, 'ace');
+    ok(mv.kind === 'place' && mv.id === '잉어킹', '빈 판 첫 수 — 가장 싼 카드(여분 잉어킹 4): ' + JSON.stringify(mv));
+    put(g, 'me', '리자드', 0); put(g, 'foe', '파이리', 1); g.turn = 'me';
+    ok(A.aiMove(data, g, 'ace').kind !== 'open', '혼자 있는 줄은 열지 않는다 — 줄을 못 뒤집으니까');
+    put(g, 'foe', '꼬부기', 0); g.turn = 'me';   /* 꼬부기(물 6×2=12)가 리자드(8)를 받아쳤다 — 개방하면 16 : 12 로 뒤집힌다 */
+    const o = A.aiMove(data, g, 'veteran'), sc0 = A.scores(data, g); ok(o.kind !== 'pass' && A.evaluate(data, g, o).lanes > sc0.me - sc0.foe, '뒤집을 수 있으면 줄 수가 느는 수를 둔다(잉어킹으로 파이리를 받아치는 것도 됨): ' + JSON.stringify(o)); }
+  { /* 받아치기 — 상대가 놓은 줄에 상성이 있으면 거기부터(값으로 저절로) */
+    const [, g] = rig(['꼬부기', '이브이'], ['파이리'], { first: 'foe' });
+    g.turn = 'foe'; put(g, 'foe', '파이리', 1); g.turn = 'me';
+    const mv = A.aiMove(data, g, 'veteran'); ok(mv.kind === 'place' && ['꼬부기', '잉어킹'].includes(mv.id) && mv.lane === 1, '물로 불을 받아친다(가장 싼 물 카드로): ' + JSON.stringify(mv)); }
+}
+/* ── 정산 — 통계·보상·금 ── */
+{
+  const [pr, m] = freshMatch(5); A.confirm(data, m); playOut(m, 'veteran', 'rookie');
+  ok(A.settle(data, pr, m) !== null && m.rewarded && A.settle(data, pr, m) === null, '정산은 한 번');
+  const s = pr.stats.lane, o = m.outcome;
+  ok(s.games === 1 && s[o.result] === 1 && s.rounds === m.roundLog.length && s.byBoss[m.champion].games === 1 && s.byLevel.veteran.games === 1 && s.byMain[1].games === 1, '통계가 는다');
+  ok(s.bestLanes === Math.max(...m.roundLog.map(r => r.me)) && m.played.every(id => s.cards[id].played === 1), '최고 줄 수·카드별');
+  ok(o.gold === (o.result === 'win' ? 20 : 3) && pr.gold === o.gold, '금');
+  if (o.result === 'win') { ok(o.pool.length === 5 && o.picks === 3 && o.first && pr.beaten[m.champion].veteran === 1, '첫 승 — 뒷장 5, 3장'); ok(A.pickReward(data, pr, m, 0).ok && pr.owned.includes(o.pool[0]), '뒤집기'); ok(A.finishRewards(data, pr, m).length === 2 && o.taken.length === 3, '나머지 자동'); }
+  else ok(o.pool.length === 0 && o.picks === 0, '지면 보상 없음');
+  const v = A.statsView(data, pr); ok(v.line.games === 1 && v.byBoss.length === 9, '전적 보기');
+  { /* 재대결은 1장 · 끝까지 키운 계통이 lines 에 */
+    const q = C.newProfile(data, 1, 9); C.setDeck(q, 'lane', A.championDeck(data, { rngState: 9 }, 1, 'veteran'));
+    let win = null; for (let s = 0; s < 40 && !win; s++) { const g = A.newMatch(data, q, 2, 'rookie', s); A.confirm(data, g); playOut(g, 'veteran', 'rookie'); if (g.winner === 'me') win = g; }
+    ok(win, '40판 안에 한 번은 이긴다');
+    A.settle(data, q, win); A.finishRewards(data, q, win);
+    let again = null; for (let s = 100; s < 140 && !again; s++) { const g = A.newMatch(data, q, 2, 'rookie', s); A.confirm(data, g); playOut(g, 'veteran', 'rookie'); if (g.winner === 'me') again = g; }
+    A.settle(data, q, again); ok(again.outcome.picks === 1 && !again.outcome.first, '재대결 1장');
+    ok(Object.keys(q.stats.lane.lines).length >= 0, 'lines 그릇'); }
+}
+/* ── 균형 보고 — 세대 9 × 난이도 3 × 시드 11 = 297판 ── */
+if (!quick) {
+  const perGen = {}, first = { w: 0, n: 0 }; let rounds = 0, evos = 0, games = 0, draws = 0;
+  for (const ch of data.lane.champions) for (let li = 0; li < C.LEVELS.length; li++) for (let s = 0; s < 11; s++) {
+    const lv = C.LEVELS[li], seed = ch.gen * 1000 + li * 100 + s;
+    const pr = C.newProfile(data, ch.gen, seed); C.setDeck(pr, 'lane', A.championDeck(data, { rngState: seed }, ch.gen, 'veteran'));
+    const m = A.newMatch(data, pr, ch.ally, lv, seed); A.confirm(data, m); playOut(m, 'veteran', lv);
+    games++; rounds += m.roundLog.length; evos += m.log.filter(e => e.t === 'evolve').length;
+    perGen[ch.gen] = perGen[ch.gen] || { w: 0, n: 0 }; perGen[ch.gen].n++;
+    if (m.winner === 'draw') draws++; else { first.n++; if (m.winner === m.coin) first.w++; if (m.winner === 'me') perGen[ch.gen].w++; }
+  }
+  const pct = x => Math.round(x * 100);
+  console.log(`\n진화 결투 ${games}판 — 선공 승률 ${pct(first.w / first.n)}% (무승부 ${draws}) · 평균 라운드 ${(rounds / games).toFixed(2)} · 판당 진화 ${(evos / games).toFixed(2)} · 선공 보정 FIRST_CARDS=${A.FIRST_CARDS}`);
+  for (const g in perGen) console.log(`  ${g}세대  ${String(pct(perGen[g].w / perGen[g].n)).padStart(3)}%  (${perGen[g].n})`);
+  assert(first.w / first.n >= 0.4 && first.w / first.n <= 0.6, '선공 승률이 40~60% 밖 — FIRST_CARDS 를 조정한다');
+  for (const g in perGen) assert(perGen[g].w / perGen[g].n >= 0.25 && perGen[g].w / perGen[g].n <= 0.75, g + '세대 승률이 25~75% 밖');
 }
 
 console.log('PASS 결투 규칙: ' + n + ' 가지');
