@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf9f3">
+<title>포켓몬 메카 연구소</title>
+<!--
+  진화 결투의 얼굴. 규칙은 lib/lane.js 에만, 컬렉션·보상·상점은 lib/collection.js 에만 있다 — 여기는 상태를 그리고 단추를 엔진에 넘길 뿐이다.
+  프로필과 진행 중인 판은 이 브라우저(localStorage 의 pkm_duel_v1)에 남는다. 상태가 통째로 JSON 이라 그대로 넣고 꺼낸다.
+  설계: docs/superpowers/specs/2026-10-06-lane-duel-design.md
+-->
+<link rel="stylesheet" href="lib/workspace.css?v=lane1">
+<style>
+:root {--row-h:108px}
+* {box-sizing:border-box}
+html,body {margin:0;padding:0}
+body {color:var(--text);font-size:15px}
+.dex-page > #app {display:flex;flex-direction:column;min-height:0;height:100%}
+.dex-page > #app > main {flex:1 1 auto;min-height:0}
+.collection-scroll {display:block}
+.dex-page .collection-scroll {padding-bottom:calc(44px + env(safe-area-inset-bottom))}
+.ln-screen {display:block;min-height:120px}
+.ln-btn {min-height:44px;padding:8px 14px;background:var(--card2);color:var(--text);border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.ln-btn.primary {background:var(--accent);color:var(--on-accent,#fff);border-color:var(--accent);min-height:46px;font-size:14px}
+.ln-btn:disabled {opacity:.45;cursor:default}
+.sec {margin:16px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.sec span {color:var(--muted);font-weight:400;letter-spacing:0}
+.note {margin:6px 0 10px;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+/* Task 8~10 이 여기에 화면 CSS 를 더한다 */
+</style>
+<script src="lib/workspace-theme.js?v=pokemon1"></script>
+<script src="lib/words.js?v=lane1"></script>
+<script src="lib/fresh.js?v=4"></script>
+<script src="lib/img.js"></script>
+<script src="lib/collection.js?v=1"></script>
+<script src="lib/lane.js?v=1"></script>
+</head>
+<body class="dex-page lane-page">
+<div id="app"></div>
+<script type="module">
+import { h, render } from 'https://esm.sh/preact@10.24.3';
+import { useState, useEffect, useMemo, useRef } from 'https://esm.sh/preact@10.24.3/hooks';
+import htm from 'https://esm.sh/htm@3.1.1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=lane1';
+const html = htm.bind(h);
+const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, A = window.AtelierLane;
+const STORE = 'pkm_duel_v1';
+
+function Shell({ children }) {
+  return html`<main>
+    <${WorkspaceHeader} page="lane" />
+    <div class="collection-scroll" tabindex="0">${children}</div>
+  </main>`;
+}
+/* 자료 — card·chart·group·label·lane 과 그림 등록부. 엔진이 받는 data 꼴로 묶는다 */
+function useData() {
+  const [state, set] = useState(null);
+  useEffect(() => {
+    const get = f => fetch(f, { cache: 'no-cache' }).then(r => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
+    Promise.all([get('data/card.json'), get('data/chart.json'), get('data/group.json'), get('data/label.json'), get('data/lane.json'), IMG.load()])
+      .then(([card, chart, group, label, lane, img]) => set({ data: { cards: card.cards.character, chart: chart.chart, group, label, img, lane } }))
+      .catch(e => set({ error: String((e && e.message) || e) }));
+  }, []);
+  return state;
+}
+function App() {
+  const loaded = useData();
+  if (!loaded) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.loading')}</p></section><//>`;
+  if (loaded.error) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.error', { message: loaded.error })}</p></section><//>`;
+  return html`<${Shell}><section class="ln-screen" data-screen="pick"><p class="note">${W('lane.pick.title')}</p></section><//>`;
+}
+render(html`<${App} />`, document.getElementById('app'));
+window.AtelierFresh.watch();
+</script>
+</body>
+</html>
