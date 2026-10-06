@@ -2,6 +2,7 @@
    Run: node tests/lane-sim.cjs [--quick] */
 const fs = require('node:fs'), assert = require('node:assert/strict');
 const C = require('../lib/collection.js');
+const A = require('../lib/lane.js');
 const quick = process.argv.includes('--quick');
 const J = n => JSON.parse(fs.readFileSync('data/' + n + '.json', 'utf8'));
 const card = J('card'), chart = J('chart'), img = J('img');
@@ -104,6 +105,60 @@ ok(C.conquered(data, p), '아홉을 다 이기면 정복');
   const pr = C.newProfile(data, 1, 1); pr.stats.lane = s;
   const v = C.statsView(data, pr, 'lane');
   ok(v.line.games === 2 && v.byBoss.length === 9 && v.byLevel.length === 3 && v.cards[0].id === '피카츄' && v.cards[0].rate === null && v.avgRounds === 2.5, '전적 보기 — 5판 미만은 승률 없음');
+}
+
+/* ── 파생 ── */
+{
+  const D = A.cardsOf(data);
+  ok(D.list.length === 1025 && D.pool.length === 1025, '전부 파생, 풀(allowAll)');
+  for (const id of D.list) { const c = D.cards[id]; ok(c.power >= 4 && c.power <= 14 && c.types.length >= 1 && c.types.length <= 2 && typeof c.speed === 'number' && Array.isArray(c.to), id + ' 힘 4~14·타입·속도·to'); }
+  ok(D.cards['이상해씨'].power === 6 && D.cards['이상해꽃'].power === 11 && D.cards['뮤츠'].power === 14 && D.cards['잉어킹'].power === 4, '힘 = 합/50');
+  ok(D.cards['이상해씨'].types.join() === 'grass,poison' && D.cards['파이리'].types.join() === 'fire' && D.cards['리자몽'].types.join() === 'fire,flying', '타입');
+  ok(D.cards['이상해씨'].to.join() === '이상해풀' && D.cards['이브이'].to.length === 8 && D.cards['뮤츠'].to.length === 0 && D.cards['뮤츠'].rare, '계통·전설');
+  ok(D.cards['이상해씨'].speed === 45 && D.cards['파이리'].speed === 65, '속도');
+  const dat2 = { ...data, lane: { ...data.lane, overrides: { '잉어킹': { power: 9 } } } }; delete dat2.__lane;
+  ok(A.cardsOf(dat2).cards['잉어킹'].power === 9, 'overrides 가 힘을 덮는다');
+  ok(A.cardsOf(real).pool.length === C.pool(real).length, '진짜 풀');
+}
+/* ── 덱 규칙 넷 — 25장 · 주 세대 15 · 전설 4 · 같은 카드 1 · 안 가진 카드 ── */
+{
+  const pr = C.newProfile(data, 1, 3);
+  ok(A.validateDeck(data, pr).ok, '시작 덱은 규칙에 맞는다');
+  const deck = C.deckOf(pr, 'lane');
+  deck.pop(); { const v = A.validateDeck(data, pr); ok(!v.ok && v.problems.join() === 'count' && v.n === 24, '24장'); }
+  deck.push(deck[0]); { const v = A.validateDeck(data, pr); ok(v.problems.includes('dup'), '같은 카드 둘'); }
+  deck.pop(); deck.push('뮤츠'); { const v = A.validateDeck(data, pr); ok(v.problems.join() === 'owned', '안 가진 카드'); }
+  deck.pop();   /* 안 가진 뮤츠를 도로 뺀다 — 아래서 전설 다섯을 앞에 넣으면 둘이 되니까 */
+  pr.owned.push('뮤츠', '뮤', '프리져', '썬더', '파이어'); deck.splice(0, 5, '뮤츠', '뮤', '프리져', '썬더', '파이어');
+  { const v = A.validateDeck(data, pr); ok(v.problems.includes('rare') && v.rare === 5, '전설 5'); }
+  A.setMain(pr, 2); { const v = A.validateDeck(data, pr); ok(v.problems.includes('main') && v.main < 15, '주 세대를 바꾸면 15 규칙을 다시'); }
+  A.setMain(pr, 1);
+  ok(A.toggleDeck(data, pr, '뮤츠').ok && !deck.includes('뮤츠'), '빼기');
+  ok(A.toggleDeck(data, pr, '망나뇽').why === 'owned', '안 가진 카드는 못 넣는다');
+  const fill = A.autoFill(data, pr);
+  ok(fill.ok && A.validateDeck(data, pr).ok && deck.length === 25, '자동 채우기가 규칙을 채운다: ' + JSON.stringify(fill));
+  { const q = C.newProfile(data, 1, 3); q.decks.lane = ['없는카드', '뮤츠']; const f = A.autoFill(data, q); ok(f.removed.join() === '없는카드,뮤츠' && A.validateDeck(data, q).ok, '모르는 카드·안 가진 카드는 빼고 채운다'); }
+  { const q = C.newProfile(data, 1, 3); q.owned = q.owned.slice(0, 20); q.decks.lane = q.owned.slice(); const f = A.autoFill(data, q); ok(!f.ok && A.validateDeck(data, q).problems.join() === 'count', '카드가 20장뿐이면 못 채운다 — 죽지 않고 count'); }
+}
+/* ── 챔피언 ── */
+{
+  ok(A.championOf(data, 1).ally === 2 && A.championOf(data, 9).ally === 8 && A.championOf(data, 10) === null, '챔피언·이웃');
+  ok(A.championReady(data, 1).ok && !A.championReady(real, 1).ok && A.championReady(real, 1).need > 0, '그림 문턱 — 진짜 풀에선 n장 더');
+  ok(A.championPortrait(data, 1) === '뮤츠' && C.inPool(data, A.championPortrait(data, 5)), '초상은 그 세대 종족값 최고');
+  const D = A.cardsOf(data);
+  for (const lv of C.LEVELS) for (const g of [1, 5, 9]) {
+    const d1 = A.championDeck(data, { rngState: 1 }, g, lv), d2 = A.championDeck(data, { rngState: 1 }, g, lv);
+    ok(d1.length === 25 && new Set(d1).size === 25 && d1.join() === d2.join(), `${g}세대 ${lv} 덱 25·같은 시드`);
+    const own = d1.filter(x => D.cards[x].gen === g), ally = d1.filter(x => D.cards[x].gen === A.championOf(data, g).ally);
+    ok(own.length === 17 && ally.length === 8, `${g}세대 ${lv} 자기 17 + 이웃 8`);
+    const rare = d1.filter(x => D.cards[x].rare).length;
+    ok(lv === 'ace' ? rare === 4 : rare === 0, `${g}세대 ${lv} 전설 ${rare}`);
+    if (lv !== 'rookie') { /* 계통이 완성된 것부터 — 자기 세대 17 안에 통째 계통이 있다 */
+      const whole = own.filter(x => { const l = C.lineOf(data, x).names; return l.length > 1 && l.every(y => own.includes(y)); });
+      ok(whole.length >= 3, `${g}세대 ${lv} 통째 계통: ` + whole.length);
+    }
+  }
+  { const a = A.championDeck(data, { rngState: 1 }, 1, 'rookie'), b = A.championDeck(data, { rngState: 2 }, 1, 'rookie'); ok(a.join() !== b.join(), '신참은 무작위'); }
 }
 
 console.log('PASS 결투 규칙: ' + n + ' 가지');
