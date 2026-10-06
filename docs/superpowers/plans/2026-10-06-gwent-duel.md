@@ -465,13 +465,13 @@ const unit = (m, who, lane, i) => m[who].rows[lane][i || 0];
   const r = m.roundLog[0]; ok(r.winner === 'me' && r.me === G.cardOf(data, '이상해씨').power.heavy + G.cardOf(data, '꼬부기').power.light && r.foe === 0 && m.lives.foe === 1 && m.lives.me === 2, '합으로 내가 땄다 → 상대 목숨 하나: ' + JSON.stringify(r));
   ok(m.me.rows.every(x => x.length === 0) && m.me.grave.sort().join() === '꼬부기,이상해씨' && !m.passed.me && !m.passed.foe && m.bonus.me === 0, '판은 묘지로, 패스 풀림, 보너스 없음');
   ok(m.first === 'foe' && m.turn === 'foe', '진 쪽이 선공');
-  ok(m.me.hand.length === 1 && m.foe.hand.length === 1, '라운드 사이 보충 없음');
+  ok(m.me.hand.length === 1 && m.foe.hand.length === 2, '라운드 사이 보충 없음 — 나 1(잉어킹), 상대 2(파이리·잉어킹)');
 }
 { /* 빈 손 자동 패스 · 동점은 둘 다 잃음 */
   const [, m] = rig(['피카츄'], ['피카츄'], { exact: true });
   put(m, 'me', '피카츄', 0); ok(m.passed.me && m.turn === 'foe', '손이 비면 자동 패스');
   put(m, 'foe', '피카츄', 0);
-  ok(m.phase === 'done' && m.roundLog[0].winner === 'draw' && m.lives.me === 1 && m.lives.foe === 1 && m.roundLog.length === 2 && m.winner === 'draw', '5 : 5 동점 → 둘 다 잃고, 2라운드는 빈 손 0:0 → 둘 다 0 → 무승부로 끝');
+  ok(m.phase === 'done' && m.roundLog[0].winner === 'draw' && m.lives.me === 0 && m.lives.foe === 0 && m.roundLog.length === 2 && m.winner === 'draw', '5 : 5 동점 → 둘 다 잃고, 2라운드는 빈 손 0:0 → 둘 다 0 → 무승부로 끝');
 }
 { /* 선공 보너스 — 1라운드만, 동점이면 선공이 바뀐다 */
   const [, m] = rig(['피카츄', '꼬부기'], ['피카츄', '꼬부기']);
@@ -479,7 +479,7 @@ const unit = (m, who, lane, i) => m[who].rows[lane][i || 0];
   put(m, 'me', '피카츄', 0); put(m, 'foe', '피카츄', 0); G.pass(data, m); G.pass(data, m);
   ok(m.roundLog[0].me === 5 + G.FIRST_BONUS && m.roundLog[0].foe === 5 && m.roundLog[0].winner === 'me' && m.bonus.me === 0 && m.first === 'foe', '보너스로 땄다 · 2라운드엔 보너스 없음');
   m.turn = 'foe'; put(m, 'foe', '꼬부기', 0); put(m, 'me', '꼬부기', 0); G.pass(data, m); G.pass(data, m);
-  ok(m.round === 3 && m.roundLog[1].winner === 'draw' && m.lives.me === 1 && m.lives.foe === 0 && m.phase === 'done' && m.winner === 'me', '2R 동점 → 둘 다 잃고 상대 0 → 내가 이김');
+  ok(m.round === 2 && m.roundLog[1].winner === 'draw' && m.lives.me === 1 && m.lives.foe === 0 && m.phase === 'done' && m.winner === 'me', '2R 동점 → 둘 다 잃고 상대 0 → 내가 이김(끝난 판은 라운드 수가 안 는다)');
 }
 { /* 세 라운드 상한 */
   const [, m] = rig(['피카츄', '꼬부기', '이상해씨'], ['파이리', '파이리', '파이리']);
