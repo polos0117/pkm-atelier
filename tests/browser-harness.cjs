@@ -83,7 +83,8 @@ async function start() {
       }
       return route.abort();
     });
-    if (opt.store) await ctx.addInitScript(([k, v]) => { try { localStorage.setItem(k, v); } catch (e) {} }, opt.store);
+    /* 저장값 심기는 그 탭에서 한 번만 — 초기화 스크립트는 새로고침마다 다시 돌므로, 안 막으면 화면이 저장한 것을 덮어 "새로고침해도 이어진다" 를 못 본다 */
+    if (opt.store) await ctx.addInitScript(([k, v]) => { try { if (!sessionStorage.getItem('__seeded')) { localStorage.setItem(k, v); sessionStorage.setItem('__seeded', '1'); } } catch (e) {} }, opt.store);
     /* init 은 함수 하나, 또는 [함수, 넘길 값] 이다. 넘길 값은 브라우저 쪽으로
        직렬화돼 건너가므로 바깥 변수를 붙잡지 않는다 */
     if (opt.init) await ctx.addInitScript(...(Array.isArray(opt.init) ? opt.init : [opt.init]));

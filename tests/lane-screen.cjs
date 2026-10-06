@@ -153,6 +153,70 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     await tappable(q, '#ln-pass, #ln-open, .ln-hand .cell'); await noOverflow(q);
     assert.deepEqual(b.errors, [], '대결 화면 오류 없음');
     await b.close();
-    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결');
+    /* ── 결과·보상 뒤집기 — 이기기 직전의 판을 저장에 넣는다: 2라운드, 상대 목숨 하나, 상대 손 없음 ── */
+    const pr2 = C.newProfile(dataN, 1, 8), m2 = A.newMatch(dataN, pr2, 2, 'rookie', 8); A.confirm(dataN, m2);
+    Object.assign(m2, { round: 2, turn: 'me', first: 'me', coin: 'me', passed: { me: false, foe: false }, lives: { me: 2, foe: 1 }, roundLog: [{ me: 0, foe: 2, lanes: [null, 'foe', 'foe'], winner: 'foe' }] });
+    m2.me.hand = ['뮤츠']; m2.me.deck = []; m2.foe.hand = []; m2.foe.deck = []; m2.me.lanes = [null, null, null]; m2.foe.lanes = [null, null, null];
+    const c2 = await openLane(h, { store: [KEY, JSON.stringify({ v: 1, profile: pr2, matches: { lane: m2 } })] }), r = c2.page;
+    await r.waitForSelector('.ln-screen[data-screen="match"]');
+    /* 새로고침 — 판이 이어진다 */
+    await r.reload(); await r.waitForSelector('.ln-screen[data-screen="match"]');
+    assert.equal(await r.locator('.ln-hand .cell').count(), 1, '새로고침해도 손패 그대로');
+    await myTurn(r);
+    await r.locator('.ln-hand .cell[data-id="뮤츠"]').tap(); await r.locator('#ln-place').tap(); await r.locator('.ln-target[data-kind="place"][data-lane="0"]').tap();
+    await r.waitForSelector('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack');
+    await myTurn(r); await r.locator('#ln-pass').tap();
+    await r.waitForSelector('.ln-result[data-result]', { timeout: 15000 });   /* 정산 효과가 한 번 돈 뒤 */
+    assert.equal(await r.locator('.ln-result').getAttribute('data-result'), 'win', '승리');
+    assert(/10/.test(await r.locator('.ln-gold-earned').textContent()), '신참 +10금');
+    assert.equal(await r.locator('.ln-rounds li').count(), 2, '라운드 둘');
+    assert.equal(await r.locator('.ln-flipcard').count(), 5, '뒷장 다섯');
+    assert.equal(await r.locator('.ln-flipcard.flipped').count(), 0, '아직 안 뒤집었다');
+    await tappable(r, '.ln-flipcard, #ln-result-lobby, #ln-result-again');
+    await r.locator('.ln-flipcard[data-index="1"]').tap(); await r.waitForSelector('.ln-flipcard[data-index="1"].flipped');
+    assert.equal(await r.locator('.ln-flipcard.flipped').count(), 1, '누른 장만 뒤집힌다');
+    assert(/2/.test(await r.locator('.ln-result-left').textContent()), '2장 더');
+    await r.reload(); await r.waitForSelector('.ln-screen[data-screen="result"]');
+    assert.equal(await r.locator('.ln-flipcard.flipped').count(), 1, '새로고침해도 뒤집은 채');
+    await r.locator('.ln-flipcard[data-index="0"]').tap(); await r.locator('.ln-flipcard[data-index="4"]').tap();
+    await r.waitForSelector('.ln-flipcard.missed');
+    assert.equal(await r.locator('.ln-flipcard.flipped').count(), 3, '셋 뒤집으면 끝');
+    assert.equal(await r.locator('.ln-flipcard.missed').count(), 2, '나머지는 놓친 카드');
+    assert(await r.locator('.ln-flipcard[data-index="2"]').isDisabled(), '더 못 뒤집는다');
+    const after = JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY));
+    assert(after.profile.owned.length === 28 && after.profile.gold === 10 && after.profile.beaten[2].rookie === 1 && after.profile.stats.lane.games === 1 && after.profile.stats.lane.win === 1, '컬렉션 +3 · 금 · 이긴 횟수 · 통계');
+    assert(after.matches.lane && after.matches.lane.rewarded, '정산은 한 번(저장에 rewarded)');
+    /* 로비로 — 판이 비고, 전적·상점·배우기 */
+    await r.locator('#ln-result-lobby').tap(); await r.waitForSelector('.ln-screen[data-screen="lobby"]');
+    assert.equal(JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY)).matches.lane, null, '판을 비웠다');
+    assert(/1승/.test(await r.locator('.ln-champion[data-gen="2"]').textContent()), '챔피언 카드에 1승');
+    await r.locator('#ln-stats').tap(); await r.waitForSelector('.ln-stats');
+    assert(/1/.test(await r.locator('.ln-stats-line').textContent()) && await r.locator('.ln-stats-boss tr[data-gen="2"] td.win').textContent() === '1 / 1', '전적에 이 판');
+    assert.equal(await r.locator('.ln-stats-cards .cell').count(), 1, '카드별 — 뮤츠');
+    await r.locator('#ln-stats-close').tap(); await r.waitForSelector('.ln-stats', { state: 'detached' });
+    await r.locator('#ln-shop').tap(); await r.waitForSelector('.ln-shop');
+    assert.equal(await r.locator('.ln-shop-slot').count(), 6, '진열 여섯');
+    assert.equal(await r.locator('.ln-shop-slot:enabled').count(), 0, '10금으로는 못 산다(값 15 이상)');
+    assert(await r.locator('#ln-shop-reroll').isEnabled(), '10금이면 새로 깔 수 있다');
+    const before = await r.locator('.ln-shop-slot').first().getAttribute('data-id');
+    await r.locator('#ln-shop-reroll').tap(); await r.waitForFunction(() => /\b0금/.test(document.querySelector('.ln-shop .ln-gold').textContent));
+    assert(await r.locator('.ln-shop-slot').first().getAttribute('data-id') !== before || await r.locator('.ln-shop-slot').nth(1).getAttribute('data-id') !== before, '새로 깔렸다');
+    await r.locator('#ln-shop-done').tap(); await r.waitForSelector('.ln-shop', { state: 'detached' });
+    await r.locator('#ln-learn').tap(); await r.waitForSelector('.ln-rules');
+    assert.equal(await r.locator('.ln-rule-card').count(), 4, '규칙 넷');
+    await r.locator('#ln-rules-close').tap(); await r.waitForSelector('.ln-rules', { state: 'detached' });
+    await tappable(r, '.ln-tools .ln-btn'); await noOverflow(r);
+    assert.deepEqual(c2.errors, [], '결과·로비 오류 없음');
+    await c2.close();
+    /* ── 옛 저장 — deck 하나·stats 없음·모르는 이름 ── */
+    const oldOwned = card.filter(c => c.gen === 1 && !c.rare).slice(0, 25).map(c => c.name);
+    const d = await openLane(h, { store: [KEY, JSON.stringify({ v: 1, profile: { main: 1, owned: oldOwned.concat(['없는카드']), deck: oldOwned } })] }), o = d.page;
+    await o.waitForSelector('.ln-screen[data-screen="lobby"]');
+    assert((await o.locator('.ln-deck').getAttribute('data-ok')) === 'true' && /25 \//.test(await o.locator('.ln-coll').textContent()), '옛 저장을 올려 쓴다 — 모르는 이름은 걸러 냈다');
+    const up = JSON.parse(await o.evaluate(k => localStorage.getItem(k), KEY));
+    assert(up.profile.decks.lane.length === 25 && up.profile.stats.lane.games === 0 && up.profile.shop.stock.length === 6, '올린 꼴로 다시 저장');
+    assert.deepEqual(d.errors, [], '옛 저장 오류 없음');
+    await d.close();
+    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 새로고침 · 옛 저장');
   } finally { await h.stop(); }
 })();

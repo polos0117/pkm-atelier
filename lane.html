@@ -171,7 +171,51 @@ body {color:var(--text);font-size:15px}
 .ln-rule-card b {display:block;margin-bottom:4px;font-size:14px} .ln-rule-card p {margin:0;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
 .ln-board .ln-rules {position:fixed;left:12px;right:12px;top:10%;z-index:70;max-height:80dvh;overflow:auto;box-shadow:0 14px 40px #000b}
 @media (prefers-reduced-motion:reduce) {.ln-stack.flip .ln-top,.ln-stack.evo .ln-top,.ln-stack.slide .ln-top,.ln-stack.slide .ln-under,.ln-mult,.ln-banner,.ln-target {animation:none} .ln-stack.burst::after {display:none}}
-/* Task 8~10 이 여기에 화면 CSS 를 더한다 */
+/* ── 결과 · 보상 뒤집기 · 전적 · 상점 ── */
+.ln-result h2 {margin:14px 0 4px;font-size:26px;letter-spacing:.04em}
+.ln-result[data-result="win"] h2 {color:var(--gold,#c9a227)} .ln-result[data-result="lose"] h2 {color:var(--signal,#c33)}
+.ln-gold-earned {display:inline-block;margin-left:10px;color:var(--gold,#c9a227);font:800 16px ui-monospace,monospace}
+.ln-rounds {list-style:none;margin:6px 0 12px;padding:0;display:flex;gap:8px;flex-wrap:wrap;font:700 13px ui-monospace,monospace;color:var(--muted)}
+.ln-rounds li {padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card)} .ln-rounds li b {color:var(--text);letter-spacing:.1em}
+.ln-reveal {display:flex;flex-direction:column;align-items:center;gap:10px;margin:10px 0 14px;padding:14px;border:1px solid var(--gold,#c9a227);border-radius:14px;background:var(--card)}
+.ln-pool {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.ln-flipcard {position:relative;width:100%;min-height:44px;padding:0;border:0;background:transparent;font:inherit;color:inherit;cursor:pointer;perspective:900px;--rc:#e8e8e8}
+.ln-flipcard:disabled {cursor:default}
+.ln-flipcard[data-rare] {--rc:var(--gold,#c9a227)}
+.ln-flipper {position:relative;transform-style:preserve-3d;transform:rotateY(0)}
+.ln-flipper > * {backface-visibility:hidden}
+.ln-flipper .ln-backface {position:absolute;inset:0}
+.ln-flipper .cell {transform:rotateY(180deg);cursor:default}
+.ln-flipcard.flipped .ln-flipper {animation:ln-reveal .8s cubic-bezier(.3,.7,.2,1) forwards}
+@keyframes ln-reveal {from {transform:rotateY(0)} to {transform:rotateY(180deg)}}
+.ln-flipcard.flipped .cell {box-shadow:0 0 0 2px var(--rc),0 0 24px var(--rc)}
+.ln-flipcard.flipped::before {content:'';position:absolute;inset:-18%;z-index:-1;border-radius:50%;background:radial-gradient(circle,var(--rc) 0,transparent 62%);opacity:0;animation:ln-burst 1s .45s both;pointer-events:none}
+.ln-flipcard.missed .ln-flipper {animation:none;transform:rotateY(180deg)} .ln-flipcard.missed {opacity:.45;filter:grayscale(.6)}
+.ln-backface {display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border-radius:11px;border:2px solid var(--gold,#c9a227);background:linear-gradient(160deg,var(--gc,#555) 0%,#1a1420 85%);color:#fff;font:800 13px ui-monospace,monospace;letter-spacing:.1em;text-shadow:0 1px 3px #000}
+.ln-result-left {font:700 12px ui-monospace,monospace;color:var(--gold,#c9a227)}
+.ln-reward-none {margin:10px 0;color:var(--muted);font-size:13px}
+.ln-result-act {display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.ln-stats,.ln-shop {margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:12px;background:var(--card)}
+.ln-stats-head,.ln-shop-head {display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap} .ln-stats-head h3,.ln-shop-head h3 {margin:0;font-size:16px}
+.ln-stats-line {margin:8px 0;font:700 13px ui-monospace,monospace;color:var(--text)}
+.ln-stats-tables {display:grid;grid-template-columns:1fr;gap:10px} @media (min-width:600px) {.ln-stats-tables {grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ln-stats table {width:100%;border-collapse:collapse;font-size:12px} .ln-stats th {text-align:left;color:var(--accent);font:700 11px ui-monospace,monospace;letter-spacing:.08em;padding:4px 0}
+.ln-stats td {padding:3px 0;border-top:1px solid var(--line);color:var(--muted)} .ln-stats td.win {text-align:right;color:var(--text);font:700 12px ui-monospace,monospace}
+.ln-stats-nums {display:flex;gap:14px;flex-wrap:wrap;margin:10px 0;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.ln-stats-cards .grid {grid-template-columns:repeat(3,minmax(0,1fr))} .ln-stats-cards .cell {cursor:default} .ln-stats-cards .ln-types {display:none}
+.ln-stat {position:absolute;right:4px;bottom:4px;padding:2px 6px;border-radius:6px;background:#000a;color:#fff;font:700 10px ui-monospace,monospace}
+.ln-stats-lines {list-style:none;margin:6px 0 0;padding:0;display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.ln-stats-empty {margin:8px 0;color:var(--muted);font-size:13px}
+.ln-shop-head .ln-gold {font:800 15px ui-monospace,monospace}
+.ln-shop-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.ln-shop-slot.empty {display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-size:12px}
+.ln-shop-slot:disabled:not(.flipped):not(.empty) {opacity:.6}
+.ln-price {position:absolute;left:50%;bottom:8%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:#000c;color:var(--gold,#c9a227);font:800 12px ui-monospace,monospace;white-space:nowrap;border:1px solid var(--gold,#c9a227)}
+.ln-shop-slot.flipped .ln-price {display:none}
+.ln-rare {position:absolute;left:50%;top:7%;transform:translateX(-50%);padding:2px 8px;border-radius:999px;background:var(--gold,#c9a227);color:#221a06;font:800 10px ui-monospace,monospace;letter-spacing:.1em}
+.ln-shop-slot[data-rare] .ln-backface {box-shadow:0 0 0 1px var(--gold,#c9a227),0 0 16px var(--gold,#c9a227)}
+.ln-shop-act {display:flex;gap:8px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce) {.ln-flipcard.flipped .ln-flipper {animation:none;transform:rotateY(180deg)} .ln-flipcard.flipped::before {animation:none;opacity:0}}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=lane1"></script>
@@ -521,6 +565,75 @@ function Match({ data, profile, st, actMatch, act }) {
   </section>`;
 }
 
+/* 카드 뒷면 — 세대만 보인다(운이다). 색은 그 카드 타입이 아니라 세대 차례의 색: 타입을 보이면 뒷장이 샌다 */
+const GEN_COLORS = ['#c0392b', '#d68910', '#1e8449', '#1f618d', '#6c3483', '#117a65', '#b03a2e', '#2e4053', '#7d6608'];
+function CardBack({ gen }) { return html`<span class="ln-backface" style=${'--gc:' + GEN_COLORS[(gen - 1) % 9]}>${W('lane.gen', { n: gen })}</span>`; }
+/* ── 결과 — 승·패·무, 라운드별 줄, 뒷장 다섯을 눌러 뒤집는다(일상컷으로 공개) ── */
+function Result({ data, st, onLobby, onAgain, onFlip }) {
+  const D = A.cardsOf(data), o = st.outcome;
+  const pool = (o && o.pool) || [], taken = (o && o.taken) || [], picks = o ? o.picks : 0, left = Math.max(0, picks - taken.length), done = o && left === 0;
+  const lanesText = r => r.lanes.map(w => w === 'me' ? '●' : w === 'foe' ? '○' : '·').join('');
+  return html`<section class="ln-screen ln-result" data-screen="result" data-result=${o ? o.result : undefined}>
+    ${o && html`<h2>${W('lane.result.' + o.result)}${o.gold ? html`<span class="ln-gold-earned">${W('lane.gold.earned', { n: o.gold })}</span>` : ''}</h2>`}
+    <p class="sec">${W('lane.result.rounds')}</p>
+    <ul class="ln-rounds">${st.roundLog.map((r, i) => html`<li key=${i} data-winner=${r.winner}>${W('lane.round', { n: i + 1 })} <b>${lanesText(r)}</b> ${W('lane.lanes', { me: r.me, foe: r.foe })}</li>`)}</ul>
+    ${o && html`<p class="sec">${W('lane.result.reward')}<span class="help">${W('lane.result.pool.note')}</span></p>`}
+    ${o && !pool.length && html`<p class="ln-reward-none">${W(o.result === 'win' ? 'lane.result.reward.all' : 'lane.result.reward.none')}</p>`}
+    ${pool.length ? html`<div class="ln-reveal">
+      <p class="ln-result-left">${done ? W('lane.result.flipped') : taken.length ? W('lane.result.left', { n: left }) : W('lane.result.flip', { n: picks })}</p>
+      <div class="ln-pool">${pool.map((id, i) => { const c = D.cards[id], flipped = taken.includes(i), missed = done && !flipped;
+        return html`<button type="button" key=${id} class=${'ln-flipcard' + (flipped ? ' flipped' : '') + (missed ? ' missed' : '')} data-index=${i} data-rare=${c.rare ? '1' : undefined}
+          disabled=${flipped || done} aria-label=${flipped || missed ? c.name : W('lane.result.flip', { n: picks })} onClick=${() => onFlip(i)}>
+          <div class="ln-flipper"><${CardBack} gen=${c.gen} /><${Card} data=${data} id=${id} art=${casualArt(data, id) || formArt(data, id, 'light')} /></div></button>`; })}</div></div>` : ''}
+    <div class="ln-result-act">
+      <button type="button" class="ln-btn primary" id="ln-result-lobby" onClick=${onLobby}>${W('lane.result.lobby')}</button>
+      <button type="button" class="ln-btn" id="ln-result-again" onClick=${onAgain}>${W('lane.result.again')}</button>
+    </div>
+  </section>`;
+}
+/* ── 전적 ── */
+function Stats({ data, profile, onClose }) {
+  const D = A.cardsOf(data), v = A.statsView(data, profile), L = v.line;
+  const cell = e => e.games ? W('lane.stats.cell', { win: e.win, games: e.games }) : W('lane.stats.none');
+  const table = (cls, title, rows, key, name) => html`<table class=${cls}><thead><tr><th colspan="2">${title}</th></tr></thead>
+    <tbody>${rows.map(r => html`<tr key=${r[key]} ...${{ ['data-' + (key === 'level' ? 'lv' : 'gen')]: r[key] }}><td>${name(r)}</td><td class="win">${cell(r)}</td></tr>`)}</tbody></table>`;
+  return html`<section class="ln-stats" aria-label=${W('lane.stats')}>
+    <div class="ln-stats-head"><h3>${W('lane.stats')}</h3><button type="button" class="ln-btn" id="ln-stats-close" onClick=${onClose}>${W('lane.stats.close')}</button></div>
+    ${!L.games ? html`<p class="ln-stats-empty">${W('lane.stats.empty')}</p>` : html`
+      <p class="ln-stats-line">${W('lane.stats.line', { games: L.games, win: L.win, lose: L.lose, draw: L.draw, streak: L.streak, best: L.best })}</p>
+      <div class="ln-stats-tables">
+        ${table('ln-stats-boss', W('lane.stats.byBoss'), v.byBoss, 'gen', r => W('lane.champion', { n: r.gen }))}
+        ${table('ln-stats-level', W('lane.stats.byLevel'), v.byLevel, 'level', r => W('lane.lv.' + r.level))}
+        ${table('ln-stats-main', W('lane.stats.byMain'), v.byMain, 'gen', r => W('lane.gen', { n: r.gen }))}
+      </div>
+      <div class="ln-stats-nums"><span>${W('lane.stats.best', { n: v.bestLanes })}</span><span>${W('lane.stats.rounds', { n: v.avgRounds === null ? W('lane.stats.none') : v.avgRounds })}</span></div>
+      <div class="ln-stats-cards"><p class="sec">${W('lane.stats.cards')}<span class="help">${W('lane.stats.cards.note')}</span></p>
+        <div class="grid">${v.cards.filter(c => D.cards[c.id]).map(c => html`<${Card} key=${c.id} data=${data} id=${c.id}>
+          <span class="ln-stat">${W('lane.stats.card', { played: c.played, rate: c.rate === null ? W('lane.stats.none') : Math.round(c.rate * 100) + '%' })}</span><//>`)}</div></div>
+      ${v.lines.length ? html`<p class="sec">${W('lane.stats.lines')}</p><ul class="ln-stats-lines">${v.lines.map(l => html`<li key=${l.root}>${C.lineOf(data, l.root).names.join(' → ')} ${W('lane.stats.line.n', { n: l.n })}</li>`)}</ul>` : ''}`}
+  </section>`;
+}
+/* ── 상점 — 뒷장 여섯에 값표만. 사면 그 자리에서 뒤집힌다 ── */
+function Shop({ data, profile, act, onClose }) {
+  const D = A.cardsOf(data), stock = profile.shop.stock, gold = profile.gold || 0, closed = C.shopClosed(data, profile);
+  return html`<section class="ln-shop" aria-label=${W('lane.shop')}>
+    <div class="ln-shop-head"><h3>${W('lane.shop')}</h3><span class="ln-gold">${W('lane.gold', { n: gold })}</span></div>
+    <p class="note help">${W('lane.shop.note')}</p>
+    ${closed && html`<p class="ln-reward-none">${W('lane.shop.closed')}</p>`}
+    <div class="ln-shop-grid">${stock.map((slot, i) => { const c = slot && D.cards[slot.id];
+      if (!c) return html`<button key=${'e' + i} type="button" class="ln-shop-slot empty" data-index=${i} disabled>${W('lane.shop.empty')}</button>`;
+      return html`<button key=${slot.id} type="button" class=${'ln-shop-slot ln-flipcard' + (slot.bought ? ' flipped' : '')} data-index=${i} data-id=${slot.id} data-rare=${slot.rare ? '1' : undefined}
+        disabled=${slot.bought || gold < slot.price} aria-label=${slot.bought ? c.name : W('lane.shop.price', { n: slot.price })} onClick=${() => act(p => C.shopBuy(data, p, i))}>
+        <div class="ln-flipper"><${CardBack} gen=${c.gen} /><${Card} data=${data} id=${slot.id} /></div>
+        ${slot.rare && !slot.bought && html`<span class="ln-rare">${W('lane.shop.rare')}</span>`}
+        <span class="ln-price">${W('lane.shop.price', { n: slot.price })}</span></button>`; })}</div>
+    <div class="ln-shop-act">
+      <button type="button" class="ln-btn" id="ln-shop-reroll" disabled=${gold < C.SHOP_REROLL} onClick=${() => act(p => C.shopReroll(data, p))}>${W('lane.shop.reroll', { n: C.SHOP_REROLL })}</button>
+      <button type="button" class="ln-btn primary" id="ln-shop-done" onClick=${onClose}>${W('lane.shop.done')}</button>
+    </div>
+  </section>`;
+}
+
 function App() {
   const loaded = useData();
   const [saved] = useState(load);
@@ -533,6 +646,12 @@ function App() {
     if (!data || !match || match.phase !== 'play' || match.turn !== 'foe') return;
     const t = setTimeout(() => { const next = JSON.parse(JSON.stringify(match)); A.aiTurn(data, next); save(profile, next); setMatch(next); }, reduced() ? 0 : 600);
     return () => clearTimeout(t);
+  }, [match, data]);
+  /* 판이 끝나면 한 번만 정산 — 보상 뒷장과 통계. st.rewarded 가 두 번을 막는다(새로고침해도) */
+  useEffect(() => {
+    if (!data || !match || match.phase !== 'done' || match.rewarded) return;
+    const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match));
+    A.settle(data, p, m); p.tutorial = true; save(p, m); setProfile(p); setMatch(m);
   }, [match, data]);
   if (data && !cleaned.current) {
     cleaned.current = true;
@@ -547,14 +666,21 @@ function App() {
   const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
   const onPick = gen => { const p = C.newProfile(data, gen, seed()); save(p, null); setProfile(p); };
   const onChallenge = gen => { const m = A.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
+  const onFlip = i => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); if (!A.pickReward(data, p, m, i).ok) return; save(p, m); setProfile(p); setMatch(m); };
+  const finish = () => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); A.finishRewards(data, p, m); return p; };
+  const onLobby = () => { const p = finish(); save(p, null); setProfile(p); setMatch(null); setScreen('lobby'); };
+  const onAgain = () => { const p = finish(); const m = A.newMatch(data, p, match.champion, match.level, seed()); save(p, m); setProfile(p); setMatch(m); };
+  const panel = screen === 'stats' ? html`<${Stats} data=${data} profile=${profile} onClose=${() => setScreen('lobby')} />`
+    : screen === 'shop' ? html`<${Shop} data=${data} profile=${profile} act=${act} onClose=${() => setScreen('lobby')} />`
+    : screen === 'learn' ? html`<${Rules} onClose=${() => setScreen('lobby')} onGuideAgain=${() => { act(p => { p.tutorial = false; }); setScreen('lobby'); }} />` : null;
   const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
   return html`<${Shell}>
     ${which === 'pick' ? html`<${Pick} data=${data} onPick=${onPick} />`
     : which === 'mulligan' ? html`<${Mulligan} data=${data} st=${match} actMatch=${actMatch} />`
     : which === 'match' ? html`<${Match} data=${data} profile=${profile} st=${match} actMatch=${actMatch} act=${act} />`
-    : which === 'result' ? html`<section class="ln-screen" data-screen="result"><p class="note">${W('lane.result.' + (match.winner === 'me' ? 'win' : match.winner === 'foe' ? 'lose' : 'draw'))}</p></section>`
+    : which === 'result' ? html`<${Result} data=${data} st=${match} onLobby=${onLobby} onAgain=${onAgain} onFlip=${onFlip} />`
     : which === 'build' ? html`<${Build} data=${data} profile=${profile} act=${act} setScreen=${setScreen} />`
-    : html`<${Lobby} data=${data} profile=${profile} act=${act} setScreen=${setScreen} onChallenge=${onChallenge} panel=${null} />`}
+    : html`<${Lobby} data=${data} profile=${profile} act=${act} setScreen=${setScreen} onChallenge=${onChallenge} panel=${panel} />`}
   <//>`;
 }
 render(html`<${App} />`, document.getElementById('app'));
