@@ -102,6 +102,7 @@ ok(C.conquered(data, p), '아홉을 다 이기면 정복');
   ok(s.games === 2 && s.win === 1 && s.lose === 1 && s.streak === 0 && s.bestStreak === 1 && s.rounds === 5, '판·승·패·연승');
   ok(s.byBoss[1].games === 2 && s.byBoss[1].win === 1 && s.byLevel.ace.games === 1 && s.byMain[1].win === 1, '챔피언·난이도·주 세대별');
   ok(s.cards['피카츄'].played === 2 && s.cards['피카츄'].won === 1 && s.cards['라이츄'].won === 1, '카드별');
+  ok(s.bestRound === 0 && s.weather === 0 && s.opens === 0, '폼 결투 몫도 그릇에');
   const pr = C.newProfile(data, 1, 1); pr.stats.lane = s;
   const v = C.statsView(data, pr, 'lane');
   ok(v.line.games === 2 && v.byBoss.length === 9 && v.byLevel.length === 3 && v.cards[0].id === '피카츄' && v.cards[0].rate === null && v.avgRounds === 2.5, '전적 보기 — 5판 미만은 승률 없음');

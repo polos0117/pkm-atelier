@@ -238,4 +238,77 @@ const unit = (m, who, lane, i) => m[who].rows[lane][i || 0];
   ok(G.play(data, m, '꼬부기|w', 2).ok && m.last.hit === undefined && unit(m, 'foe', 2).dmg === 0 && G.rowSum(data, m, 'foe', 2) === 1, '날씨판 — 타격 없음, 비 깔림');
 }
 
+/* ── AI ── */
+const playOut = (m, myLevel, foeLevel) => { let guard = 0; while (m.phase === 'play' && guard++ < 200) { const r = G.aiTurn(data, m, m.turn === 'me' ? myLevel : foeLevel); assert(r.ok, 'AI 가 불법 수: ' + JSON.stringify(r)); } assert(m.phase === 'done', '판이 안 끝난다'); return m; };
+{
+  const [, m] = freshMatch(3); G.confirm(data, m);
+  const mv = G.aiMove(data, m, 'veteran'); ok(['play', 'pass', 'open'].includes(mv.kind), '첫 수: ' + mv.kind);
+  for (let s = 0; s < 30; s++) { const [, g] = freshMatch(100 + s, 1 + (s % 9)); G.confirm(data, g); playOut(g, 'veteran', C.LEVELS[s % 3]); ok(g.roundLog.length >= 1 && g.roundLog.length <= 3 && ['me', 'foe', 'draw'].includes(g.winner), '판 ' + s + ' 끝: ' + g.winner); }
+  { const [, a] = freshMatch(77); G.confirm(data, a); playOut(a, 'ace', 'ace'); const [, b] = freshMatch(77); G.confirm(data, b); playOut(b, 'ace', 'ace'); ok(JSON.stringify(a.log) === JSON.stringify(b.log), '같은 시드 같은 판 — AI 도'); }
+  { let diff = 0; for (let s = 0; s < 20; s++) { const [, g] = freshMatch(200 + s); G.confirm(data, g); const r = G.aiMove(data, JSON.parse(JSON.stringify(g)), 'rookie'), v = G.aiMove(data, JSON.parse(JSON.stringify(g)), 'veteran'); if (JSON.stringify(r) !== JSON.stringify(v)) diff++; } ok(diff > 0, '신참은 무작위가 섞인다: ' + diff); }
+  { /* 가장 센 줄에 놓는다 — 피카츄는 고기동 9 */
+    const [, g] = rig(['피카츄'], ['파이리'], { exact: true });
+    const mv = G.aiMove(data, g, 'veteran'); ok(mv.kind === 'play' && mv.id === '피카츄' && mv.lane === 2, '피카츄는 고기동 줄(9): ' + JSON.stringify(mv)); }
+  { /* 앞서는데 상대가 패스하면 패스 */
+    const [, g] = rig(['꼬부기', '피카츄'], ['파이리'], { first: 'foe' });
+    put(g, 'me', '꼬부기', 0); g.turn = 'foe'; G.pass(data, g);
+    ok(G.aiMove(data, g, 'veteran').kind === 'pass' && G.aiMove(data, g, 'ace').kind === 'pass', '앞서는데 상대 패스 → 패스');
+    ok(G.aiMove(data, g, 'rookie').kind === 'play', '신참은 패스를 모른다'); }
+  { /* 뒤지는데 손패 전부로도 못 뒤집으면 패스 */
+    const [, g] = rig(['캐터피'], ['뮤츠', '뮤츠', '뮤츠'], { first: 'foe', exact: true });
+    g.turn = 'foe'; put(g, 'foe', '뮤츠', 0); put(g, 'foe', '뮤츠', 1); put(g, 'foe', '뮤츠', 2); g.turn = 'me';
+    ok(G.potential(data, g, 'me') < 39 && G.aiMove(data, g, 'veteran').kind === 'pass', '숙련 — 캐터피(+개방 5)로는 39 를 못 넘는다 → 패스'); }
+  { /* 결속을 센다 — 같은 줄에 두 번째 단계를 */
+    const [, g] = rig(['이상해씨', '이상해풀', '피카츄'], ['파이리', '파이리', '파이리'], { first: 'foe' });
+    g.turn = 'foe'; put(g, 'foe', '파이리', 0); put(g, 'me', '이상해씨', 1);
+    g.turn = 'foe'; put(g, 'foe', '파이리', 1); g.turn = 'me';
+    const mv = G.aiMove(data, g, 'veteran'); ok(mv.kind === 'play' && mv.id === '이상해풀' && mv.lane === 1, '이상해풀을 이상해씨 줄(중장)에 — 결속: ' + JSON.stringify(mv)); }
+  { /* 날씨판은 상대 줄이 셀 때 — 내 줄이 비고 상대 줄이 크면 값이 양 */
+    const [, g] = rig(['파이리|w'], ['이상해꽃', '이상해씨'], { first: 'foe', exact: true });
+    g.turn = 'foe'; put(g, 'foe', '이상해꽃', 0); put(g, 'foe', '이상해씨', 0); g.turn = 'me';
+    const mv = G.aiMove(data, g, 'veteran'); ok(mv.kind === 'play' && mv.id === '파이리|w' && mv.lane === 0, '경장 줄(상대 결속 큰 줄)에 싸라기눈: ' + JSON.stringify(mv)); }
+  { /* 에이스는 1라운드에 영웅·날씨·개방을 아낀다 — 목숨이 하나면 다 쓴다 */
+    const [, g] = rig(['뮤츠', '파이리|w', '피카츄'], ['파이리', '파이리'], { exact: true, level: 'ace' });
+    const mv = G.aiMove(data, g, 'ace'); ok(mv.kind === 'play' && mv.id === '피카츄', '에이스 1R — 뮤츠(영웅)는 아낀다, 날씨판은 값이 없어 안 낸다: ' + JSON.stringify(mv));
+    g.round = 2; g.lives.me = 1; const mv2 = G.aiMove(data, g, 'ace'); ok(mv2.kind === 'play' && mv2.id === '뮤츠', '목숨 하나면 뮤츠: ' + JSON.stringify(mv2)); }
+}
+/* ── 정산 — 통계·보상·금 ── */
+{
+  const [pr, m] = freshMatch(5); G.confirm(data, m); playOut(m, 'veteran', 'rookie');
+  ok(G.settle(data, pr, m) !== null && m.rewarded && G.settle(data, pr, m) === null, '정산은 한 번');
+  const s = pr.stats.gwent, o = m.outcome;
+  ok(s.games === 1 && s[o.result] === 1 && s.rounds === m.roundLog.length && s.byBoss[m.champion].games === 1 && s.byLevel.veteran.games === 1 && s.byMain[1].games === 1, '통계가 는다');
+  ok(s.bestRound === Math.max(...m.roundLog.map(r => r.me)) && s.weather === m.weathers && s.opens === m.opens && m.played.every(id => s.cards[id].played === 1 && !G.isWeather(id)), '최고 합·날씨·개방·카드별(기본 이름으로)');
+  ok(pr.stats.lane.games === 0, '진화 결투 통계는 그대로');
+  ok(o.gold === (o.result === 'win' ? 20 : 3) && pr.gold === o.gold, '금');
+  if (o.result === 'win') { ok(o.pool.length === 5 && o.picks === 3 && o.first && pr.beaten[m.champion].veteran === 1, '첫 승 — 뒷장 5, 3장'); ok(G.pickReward(data, pr, m, 0).ok && pr.owned.includes(o.pool[0]), '뒤집기'); ok(G.finishRewards(data, pr, m).length === 2 && o.taken.length === 3, '나머지 자동'); }
+  else ok(o.pool.length === 0 && o.picks === 0, '지면 보상 없음');
+  const v = G.statsView(data, pr); ok(v.line.games === 1 && v.byBoss.length === 9 && typeof v.bestRound === 'number' && typeof v.weather === 'number' && typeof v.opens === 'number', '전적 보기 — 최고 합·날씨·개방');
+  { const old = C.upgradeProfile({ main: 1, owned: ['피카츄'], decks: { lane: ['피카츄'] }, stats: { lane: { games: 3 } } }, data);
+    ok(old.decks.gwent.length === 0 && old.stats.gwent.games === 0 && old.stats.gwent.bestRound === 0 && old.stats.lane.games === 3 && old.stats.lane.bestRound === 0, '옛 저장(gwent 없음)도 올린다'); }
+}
+/* ── 균형 보고 — 세대 9 × 난이도 3 × 시드 11 = 297판, 거기에 난이도 맞대결 ── */
+if (!quick) {
+  const perGen = {}, first = { w: 0, n: 0 }; let rounds = 0, games = 0, draws = 0, opens = 0, weathers = 0, strikes = 0;
+  for (const ch of data.lane.champions) for (let li = 0; li < C.LEVELS.length; li++) for (let s = 0; s < 11; s++) {
+    const lv = C.LEVELS[li], seed = ch.gen * 1000 + li * 100 + s;
+    const pr = C.newProfile(data, ch.gen, seed); C.setDeck(pr, 'gwent', G.championDeck(data, { rngState: seed }, ch.gen, 'veteran'));
+    const m = G.newMatch(data, pr, ch.ally, lv, seed); G.confirm(data, m); playOut(m, 'veteran', lv);
+    games++; rounds += m.roundLog.length; opens += m.log.filter(e => e.t === 'open').length; weathers += m.log.filter(e => e.t === 'weather').length; strikes += m.log.filter(e => e.t === 'play' && e.hit).length;
+    perGen[ch.gen] = perGen[ch.gen] || { w: 0, n: 0 }; perGen[ch.gen].n++;
+    if (m.winner === 'draw') draws++; else { first.n++; if (m.winner === m.coin) first.w++; if (m.winner === 'me') perGen[ch.gen].w++; }
+  }
+  /* 난이도 맞대결 — 내 쪽은 그 난이도의 결정과 덱(에이스는 전설 4 + 날씨판 2)으로, 상대는 아래 난이도로. 플레이어가 만나는 것이 결정 + 덱이다 */
+  const duel = (a, b, n) => { let w = 0, d = 0; for (let s = 0; s < n; s++) { const g = 1 + (s % 9), pr = C.newProfile(data, g, 500 + s); C.setDeck(pr, 'gwent', G.championDeck(data, { rngState: 500 + s }, g, a)); const m = G.newMatch(data, pr, G.championOf(data, g).ally, b, 500 + s); G.confirm(data, m); playOut(m, a, b); if (m.winner === 'me') w++; else if (m.winner === 'draw') d++; } return { w, d, n }; };
+  const vr = duel('veteran', 'rookie', 60), av = duel('ace', 'veteran', 60);
+  const pct = x => Math.round(x * 100);
+  console.log(`\n폼 결투 ${games}판 — 선공 승률 ${pct(first.w / first.n)}% (무승부 ${draws}) · 평균 라운드 ${(rounds / games).toFixed(2)} · 판당 개방 ${(opens / games).toFixed(2)} 날씨 ${(weathers / games).toFixed(2)} 타격 ${(strikes / games).toFixed(1)} · FIRST_BONUS=${G.FIRST_BONUS}`);
+  for (const g in perGen) console.log(`  ${g}세대  ${String(pct(perGen[g].w / perGen[g].n)).padStart(3)}%  (${perGen[g].n})`);
+  console.log(`  숙련 vs 신참 ${pct(vr.w / vr.n)}% (무 ${vr.d}) · 에이스 vs 숙련 ${pct(av.w / av.n)}% (무 ${av.d})`);
+  assert(first.w / first.n >= 0.4 && first.w / first.n <= 0.6, '선공 승률이 40~60% 밖 — FIRST_BONUS 를 조정한다');
+  for (const g in perGen) assert(perGen[g].w / perGen[g].n >= 0.25 && perGen[g].w / perGen[g].n <= 0.75, g + '세대 승률이 25~75% 밖');
+  assert(vr.w / vr.n >= 0.55, '숙련이 신참을 55% 는 이겨야 한다');
+  assert(av.w / av.n >= 0.55, '에이스가 숙련을 55% 는 이겨야 한다');
+}
+
 console.log('PASS 폼 결투 규칙: ' + n + ' 가지');
