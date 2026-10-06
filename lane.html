@@ -97,6 +97,80 @@ body {color:var(--text);font-size:15px}
 .ln-detail dl {margin:0;font-size:12px;line-height:1.5} .ln-detail dt {color:var(--muted);margin-top:4px} .ln-detail dd {margin:0;color:var(--text)}
 .ln-detail .lore {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
 .ln-detail-act {display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .ln-detail-act .primary {flex:1}
+/* ── 대결 ── */
+.ln-mull .grid {grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+@media (min-width:600px) {.ln-mull .grid {grid-template-columns:repeat(8,minmax(0,1fr))}}
+.ln-mull .cap {display:none}
+.ln-mull .cell.swapped {outline:3px solid var(--gold,#c9a227);outline-offset:-3px}
+.ln-mull-left {margin:8px 0;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.ln-foe {display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:8px 0 4px;font:700 11px ui-monospace,monospace;letter-spacing:.04em;color:var(--muted)}
+.ln-foe .face {width:30px;aspect-ratio:2/3;border-radius:5px;overflow:hidden;background:var(--card2);flex:none}
+.ln-foe b {color:var(--text);font-size:13px;margin-right:4px}
+.ln-foe-fan {display:flex;align-items:center;gap:6px} .ln-foe-fan .ln-cards {display:flex;height:30px;align-items:flex-end}
+.ln-back {display:block;width:20px;aspect-ratio:2/3;margin-left:-9px;border:1px solid var(--gold,#c9a227);border-radius:3px;background:linear-gradient(160deg,var(--gc,#555),#1a1420);box-shadow:0 1px 3px #000a} .ln-back:first-child {margin-left:0}
+.ln-foe-open[data-used="true"] {text-decoration:line-through;opacity:.6}
+.ln-lanes {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:4px 0}
+.ln-lane {display:flex;flex-direction:column;gap:4px;padding:4px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.ln-lane.won-me {box-shadow:inset 0 0 0 2px var(--accent)} .ln-lane.won-foe {box-shadow:inset 0 0 0 2px var(--signal,#c33)}
+.ln-slot {position:relative;min-height:var(--row-h);display:flex;align-items:center;justify-content:center}
+.ln-slot .ln-empty-slot {font:700 10px ui-monospace,monospace;color:var(--muted);letter-spacing:.04em}
+.ln-stack {position:relative;width:72px;height:var(--row-h);padding:0;border:0;background:transparent;font:inherit;color:inherit;cursor:pointer}
+.ln-stack .ln-under {position:absolute;left:0;top:0;width:72px;height:var(--row-h);border-radius:6px;overflow:hidden;opacity:.85;transform-origin:50% 100%;border:1px solid var(--line);background:var(--card2)}
+.ln-stack .ln-under:nth-child(1) {transform:translate(-8px,-6px) rotate(-6deg)} .ln-stack .ln-under:nth-child(2) {transform:translate(-4px,-3px) rotate(-3deg)}
+.ln-stack .ln-top {position:absolute;inset:0;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:var(--card2);perspective:300px}
+.ln-stack .ln-top img,.ln-stack .ln-under img,.ln-stack .ph {width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.ln-stack.rare .ln-top {border-color:var(--gold,#c9a227);box-shadow:0 0 0 1px var(--gold,#c9a227)}
+.ln-stack.open .ln-top {border-color:var(--tc,#fff);box-shadow:0 0 0 2px var(--tc,#fff),0 0 16px var(--tc,#fff)}
+.ln-stack .ln-pw {left:3px;bottom:3px;min-width:22px;padding:1px 5px;font-size:12px;border-radius:5px}
+.ln-stack .ln-formtag {position:absolute;right:3px;top:3px;padding:1px 5px;border-radius:999px;font:700 9px ui-monospace,monospace;background:#000a;color:#fff}
+.ln-stack.flip .ln-top {animation:ln-flip .5s ease-out}
+@keyframes ln-flip {from {transform:rotateY(90deg)} to {transform:rotateY(0)}}
+.ln-stack.evo .ln-top {animation:ln-evo .7s ease-out}
+@keyframes ln-evo {0% {transform:scale(.6);filter:brightness(3)} 60% {transform:scale(1.08);filter:brightness(1.4)} 100% {transform:none;filter:none}}
+.ln-stack.burst::after {content:'';position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle,var(--tc,#fff) 0,transparent 65%);animation:ln-burst .8s ease-out forwards;pointer-events:none}
+@keyframes ln-burst {0% {opacity:0;transform:scale(.5)} 30% {opacity:.9} 100% {opacity:0;transform:scale(1.5)}}
+.ln-stack.slide .ln-top,.ln-stack.slide .ln-under {animation:ln-slide .4s cubic-bezier(.2,.8,.3,1)}
+@keyframes ln-slide {from {transform:translateX(var(--dx,0))} to {transform:none}}
+.ln-vs {display:flex;flex-direction:column;align-items:center;gap:1px;min-height:38px;padding:2px;border-radius:8px;background:var(--card2);font:800 13px ui-monospace,monospace}
+.ln-vs .ln-row {display:flex;align-items:center;gap:4px} .ln-atk {min-width:22px;text-align:center} .ln-atk.win {color:var(--accent)} .ln-atk[data-side="foe"].win {color:var(--signal,#c33)}
+.ln-arrow {font-size:11px;color:var(--muted)} .ln-mult {padding:0 4px;border-radius:999px;font-size:9px;background:#000a;color:#fff;animation:ln-pop .4s} .ln-by {font:700 9px ui-monospace,monospace;color:var(--muted)}
+@keyframes ln-pop {from {transform:scale(.4);opacity:0} to {transform:scale(1);opacity:1}}
+.ln-target {position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;min-height:44px;border:2px dashed var(--accent);border-radius:8px;background:var(--accent-soft);color:var(--text);font:700 12px ui-monospace,monospace;cursor:pointer;animation:ln-pulse 1.2s infinite alternate}
+.ln-target[data-kind="evolve"] {border-color:var(--gold,#c9a227);background:color-mix(in srgb,var(--gold,#c9a227) 25%,transparent)}
+.ln-target[data-kind="swap"] {border-color:var(--signal,#c33);background:color-mix(in srgb,var(--signal,#c33) 18%,transparent)}
+@keyframes ln-pulse {from {opacity:.7} to {opacity:1}}
+.ln-mode {position:sticky;top:0;z-index:7;display:flex;align-items:center;gap:8px;margin:4px 0;padding:6px 10px;border:1px solid var(--accent);border-radius:10px;background:var(--bg);font:700 12px ui-monospace,monospace;color:var(--text)}
+.ln-mode .ln-btn {margin-left:auto}
+.ln-bar {position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin:6px 0;padding:8px 10px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:10px;background:var(--bg);font:700 12px ui-monospace,monospace;color:var(--muted)}
+.ln-score b {font-size:16px;color:var(--text);letter-spacing:.1em} .ln-score b[data-side="foe"] {color:var(--signal,#c33)}
+.ln-bar-act {display:flex;gap:6px;margin-left:auto}
+.ln-last-round {flex-basis:100%;color:var(--text);font-size:12px}
+.ln-turn[data-turn="me"] {color:var(--gold,#c9a227)}
+.ln-help {min-width:44px;padding:0 10px}
+/* 손패는 바닥에 붙는 칸 */
+.ln-dock {position:sticky;bottom:0;z-index:6;margin-top:10px;padding:2px 10px calc(6px + env(safe-area-inset-bottom));background:var(--bg);border:1px solid var(--line);border-bottom:0;border-top:2px solid var(--accent);border-radius:12px 12px 0 0;box-shadow:0 -10px 24px #0007}
+.ln-dock .sec {margin:4px 0 2px}
+.lane-page .collection-scroll:has(.ln-dock) {padding-bottom:0}
+.ln-hand {display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;scroll-snap-type:x proximity}
+.ln-hand .cell {flex:none;width:72px;scroll-snap-align:start}
+.ln-hand .cap {padding:3px 4px 4px;font-size:10px} .ln-hand .cnm {min-height:2.6em;max-height:2.6em;line-height:1.3} .ln-hand .ln-types {display:none} .ln-hand .ln-tag {display:none}
+.ln-deck-pile {margin-left:auto;font:700 11px ui-monospace,monospace;color:var(--muted)}
+.ln-banner {position:fixed;left:50%;top:38%;z-index:60;transform:translate(-50%,-50%);max-width:calc(100vw - 32px);padding:14px 24px;background:var(--card);border:1px solid var(--gold,#c9a227);border-radius:12px;color:var(--text);font-weight:800;font-size:16px;text-align:center;line-height:1.4;box-shadow:0 10px 30px #000a;animation:ln-banner 1.4s forwards;pointer-events:none}
+@keyframes ln-banner {0% {opacity:0;transform:translate(-50%,-40%)} 15% {opacity:1;transform:translate(-50%,-50%)} 80% {opacity:1} 100% {opacity:0}}
+#ln-fxlayer {position:fixed;inset:0;z-index:45;pointer-events:none;overflow:hidden}
+.ln-ghost {position:fixed;left:0;top:0;border-radius:6px;overflow:hidden;background:var(--card2);box-shadow:0 10px 24px #000a;will-change:transform}
+.ln-ghost img,.ln-ghost .ph {width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.ln-guide {display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 10px;margin:6px 0 0;padding:4px 10px 8px;border:1px solid var(--gold,#c9a227);border-radius:10px;background:var(--accent-soft);font-size:12px;line-height:1.5;color:var(--text);word-break:keep-all}
+.ln-guide small {grid-column:1;grid-row:1;justify-self:start;padding:2px 6px;border-radius:999px;background:var(--gold,#c9a227);color:#221a06;font:700 10px ui-monospace,monospace}
+.ln-guide p {grid-column:1/-1;grid-row:2;margin:0}
+.ln-guide .ln-btn {grid-column:2;grid-row:1;justify-self:end;min-height:44px;padding:4px 10px;font-size:11px;background:transparent;border-color:transparent;color:var(--muted)}
+.ln-rules {margin:10px 0;padding:12px 14px;border:1px solid var(--line);border-top:2px solid var(--gold,#c9a227);border-radius:12px;background:var(--card)}
+.ln-rules-head {display:flex;align-items:center;justify-content:space-between;gap:8px} .ln-rules-head h3 {margin:0;font-size:16px}
+.ln-rules-grid {display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px} @media (min-width:600px) {.ln-rules-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ln-rule-card {padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;background:var(--card2)}
+.ln-rule-card b {display:block;margin-bottom:4px;font-size:14px} .ln-rule-card p {margin:0;font-size:12px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.ln-board .ln-rules {position:fixed;left:12px;right:12px;top:10%;z-index:70;max-height:80dvh;overflow:auto;box-shadow:0 14px 40px #000b}
+@media (prefers-reduced-motion:reduce) {.ln-stack.flip .ln-top,.ln-stack.evo .ln-top,.ln-stack.slide .ln-top,.ln-stack.slide .ln-under,.ln-mult,.ln-banner,.ln-target {animation:none} .ln-stack.burst::after {display:none}}
 /* Task 8~10 이 여기에 화면 CSS 를 더한다 */
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
@@ -293,6 +367,160 @@ function Build({ data, profile, act, setScreen }) {
   </section>`;
 }
 
+/* ── 연출 층 — 유령 카드가 손패에서 줄로 날아간다. 규칙과 무관, 움직임 줄이기면 아무것도 안 한다 ── */
+const fxLayer = () => { let l = document.getElementById('ln-fxlayer'); if (!l) { l = document.createElement('div'); l.id = 'ln-fxlayer'; document.body.appendChild(l); } return l; };
+function fly(file, from, to, onDone) {
+  if (reduced() || !from || !to) { onDone && onDone(); return; }
+  const g = document.createElement('div'); g.className = 'ln-ghost';
+  g.style.cssText = `width:${from.width}px;height:${from.height}px`; g.innerHTML = file ? `<img src="${IMG.thumbURL(file)}" alt="">` : '<span class="ph"></span>';
+  fxLayer().appendChild(g);
+  const sx = to.width / from.width, sy = to.height / from.height;
+  const anim = g.animate([{ transform: `translate(${from.left}px,${from.top}px)` }, { transform: `translate(${to.left}px,${to.top}px) scale(${sx},${sy})` }], { duration: 360, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
+  anim.onfinish = () => { g.remove(); onDone && onDone(); };
+  setTimeout(() => g.remove(), 900);
+}
+const fmt = n => Number.isInteger(n) ? String(n) : String(Math.round(n * 100) / 100);
+const multKey = m => 'lane.mult.' + (m === 0 ? '0' : m === 0.25 ? '0.25' : m === 0.5 ? '0.5' : m === 2 ? '2' : '4');
+
+/* ── 규칙 한눈에 · 첫 판 길잡이 ── */
+function Rules({ onClose, onGuideAgain }) {
+  return html`<section class="ln-rules" role="dialog" aria-label=${W('lane.rules.title')}>
+    <div class="ln-rules-head"><h3>${W('lane.rules.title')}</h3><button type="button" class="ln-btn" id="ln-rules-close" onClick=${onClose}>${W('lane.close')}</button></div>
+    <div class="ln-rules-grid">${[1, 2, 3, 4].map(i => html`<div key=${i} class="ln-rule-card"><b>${W('lane.rules.' + i + '.title')}</b><p>${W('lane.rules.' + i + '.text')}</p></div>`)}</div>
+    ${onGuideAgain && html`<div class="ln-build-act"><button type="button" class="ln-btn" id="ln-guide-again" onClick=${onGuideAgain}>${W('lane.guide.again')}</button></div>`}
+  </section>`;
+}
+const GUIDE_STEPS = 6;
+function guideStep(st) {
+  const mine = st.log.filter(e => e.who === 'me'), theirs = st.log.filter(e => e.who === 'foe' && e.t !== 'pass');
+  if (!mine.some(e => e.t === 'place')) return 1;
+  if (!theirs.length) return 2;
+  if (!mine.some(e => e.t === 'evolve') && st.round < 2) return 3;
+  if (!st.roundLog.length) return 4;
+  if (!st.me.opened) return 5;
+  return 6;
+}
+function Guide({ st, onSkip }) {
+  const n = guideStep(st);
+  return html`<div class="ln-guide" data-step=${n}><small>${W('lane.guide.step', { n, total: GUIDE_STEPS })}</small><p>${W('lane.guide.' + n)}</p>
+    <button type="button" class="ln-btn" id="ln-guide-skip" onClick=${onSkip}>${W('lane.guide.skip')}</button></div>`;
+}
+/* ── 멀리건 ── */
+function Mulligan({ data, st, actMatch }) {
+  const [swapped, setSwapped] = useState([]);
+  const left = A.MULLIGAN - st.mulligans;
+  return html`<section class="ln-screen ln-mull" data-screen="mulligan">
+    <p class="sec">${W('lane.mull.title')}<span class="help">${W('lane.mull.note')}</span></p>
+    <p class="ln-mull-left">${W('lane.mull.left', { n: left })}</p>
+    <div class="grid">${st.me.hand.map((id, i) => html`<${Card} key=${i} data=${data} id=${id} cls=${swapped.includes(i) ? 'swapped' : ''}
+      onClick=${() => { if (swapped.includes(i) || left <= 0) return; if (actMatch(m => A.mulligan(m, i)).ok) setSwapped(swapped.concat([i])); }} />`)}</div>
+    <button type="button" class="ln-btn primary" id="ln-mull-go" onClick=${() => actMatch(m => { A.confirm(data, m); return { ok: true }; })}>${W('lane.mull.go')}</button>
+  </section>`;
+}
+/* ── 스택 — 맨 위 카드(폼 초상·개방이면 개방 그림), 앞 단계는 뒤에 부채꼴 ── */
+function Stack({ data, st, side, lane, stack, fx, onClick }) {
+  const D = A.cardsOf(data), id = A.top(stack), c = D.cards[id], u = A.matchup(data, st, lane)[side];
+  const cls = 'ln-stack' + (c.rare ? ' rare' : '') + (stack.open ? ' open' : '') + (fx ? ' ' + fx : '');
+  return html`<button type="button" class=${cls} data-form=${stack.form} data-lane=${lane} data-side=${side} data-id=${id} style=${'--tc:' + typeColor(data, c.types[0]) + (fx === 'slide' ? ';--dx:' + (st.last && st.last.kind === 'move' ? (st.last.from - st.last.to) * 110 : 0) + 'px' : '')} onClick=${onClick}>
+    ${stack.cards.slice(0, -1).map((x, i) => html`<span key=${i} class="ln-under"><${Thumb} file=${formArt(data, x, stack.form)} /></span>`)}
+    <span class="ln-top"><${Thumb} file=${formArt(data, id, stack.form, stack.open)} />
+      <span class=${'ln-pw' + (c.rare ? ' rare' : '')}>${u ? fmt(u.power) : c.power}</span>
+      <span class="ln-formtag">${W('form.' + stack.form)}</span></span>
+  </button>`;
+}
+/* ── 줄 하나 — 위 상대, 가운데 승부, 아래 나. mode 면 누를 자리가 빛난다 ── */
+function Lane({ data, st, lane, mode, onTarget, onDetail, fxOf, won }) {
+  const D = A.cardsOf(data), u = A.matchup(data, st, lane), ms = st.me.lanes[lane], fs = st.foe.lanes[lane];
+  let target = null;
+  if (mode && st.turn === 'me') {
+    if (mode.kind === 'place') { if (!ms) target = 'place'; else if (D.cards[A.top(ms)].to.includes(mode.id)) target = 'evolve'; else target = 'swap'; }
+    else if (mode.kind === 'move' && mode.from !== lane) target = 'move';
+    else if (mode.kind === 'open' && ms) target = 'open';
+  }
+  const atk = side => u[side] ? html`<span class=${'ln-atk' + (u.winner === side ? ' win' : '')} data-side=${side}>${fmt(u[side].atk)}</span>` : html`<span class="ln-atk" data-side=${side}>·</span>`;
+  const mult = side => u[side] && u[side].mult !== 1 ? html`<span class="ln-mult">${W(multKey(u[side].mult))}</span>` : '';
+  return html`<div class=${'ln-lane' + (won ? ' won-' + won : '')} data-lane=${lane}>
+    <div class="ln-slot" data-side="foe">${fs ? html`<${Stack} data=${data} st=${st} side="foe" lane=${lane} stack=${fs} fx=${fxOf('foe', lane)} onClick=${() => onDetail('foe', lane)} />` : html`<span class="ln-empty-slot">${W('lane.lane.empty')}</span>`}</div>
+    <div class="ln-vs" data-lane=${lane} data-winner=${u.winner || ''}>
+      <span class="ln-row">${mult('foe')}${atk('foe')}</span>
+      <span class="ln-arrow">${u.winner === 'me' ? '▼' : u.winner === 'foe' ? '▲' : '—'}${u.by === 'speed' || u.by === 'form' || u.by === 'first' ? html`<span class="ln-by"> ${W('lane.vs.' + u.by)}</span>` : ''}</span>
+      <span class="ln-row">${mult('me')}${atk('me')}</span>
+    </div>
+    <div class="ln-slot" data-side="me">${ms ? html`<${Stack} data=${data} st=${st} side="me" lane=${lane} stack=${ms} fx=${fxOf('me', lane)} onClick=${() => onDetail('me', lane)} />` : html`<span class="ln-empty-slot">${W('lane.lane.empty')}</span>`}
+      ${target && html`<button type="button" class="ln-target" data-kind=${target} data-lane=${lane} onClick=${() => onTarget(target, lane)}>${W(target === 'place' ? 'lane.place' : target === 'evolve' ? 'lane.evolve' : target === 'swap' ? 'lane.swap' : target === 'move' ? 'lane.move' : 'lane.open')}</button>`}</div>
+  </div>`;
+}
+/* ── 대결 ── */
+function Match({ data, profile, st, actMatch, act }) {
+  const D = A.cardsOf(data), portrait = A.championPortrait(data, st.champion);
+  const sc = A.scores(data, st), L = A.legal(data, st, 'me'), mine = st.turn === 'me' && st.phase === 'play';
+  const [detail, setDetail] = useState(null);   /* {id, hand:true} | {side, lane} */
+  const [form, setForm] = useState('light'), [mode, setMode] = useState(null), [banner, setBanner] = useState(null), [help, setHelp] = useState(false);
+  const rounds = useRef(st.roundLog.length), flyRef = useRef(null);
+  useEffect(() => { if (st.roundLog.length > rounds.current) { setMode(null); setDetail(null); if (!reduced()) { setBanner(st.roundLog.length); const t = setTimeout(() => setBanner(null), 1400); rounds.current = st.roundLog.length; return () => clearTimeout(t); } } rounds.current = st.roundLog.length; }, [st.roundLog.length]);
+  /* 내가 낸 카드가 손패에서 줄로 날아간다 — 놓기 직전에 손패 자리를 적어 둔 것(flyRef)을 쓴다 */
+  useEffect(() => {
+    const last = st.last;
+    if (!last || reduced() || last.who !== 'me' || !(last.kind === 'place' || last.kind === 'evolve') || !flyRef.current || flyRef.current.id !== last.id) { flyRef.current = null; return; }
+    const unit = document.querySelector(`.ln-lane[data-lane="${last.lane}"] .ln-slot[data-side="me"] .ln-stack`);
+    fly(formArt(data, last.id, 'light'), flyRef.current.from, unit && unit.getBoundingClientRect());
+    flyRef.current = null;
+  }, [st.log.length]);
+  /* 이번 수의 연출 종류 — 스택에 붙는 class */
+  const fxOf = (side, lane) => { const l = st.last; if (!l || l.who !== side) return null;
+    if (l.kind === 'place' && l.lane === lane) return 'flip'; if (l.kind === 'evolve' && l.lane === lane) return 'evo'; if (l.kind === 'open' && l.lane === lane) return 'burst'; if (l.kind === 'move' && l.to === lane) return 'slide'; return null; };
+  const lastRound = st.roundLog.length ? st.roundLog[st.roundLog.length - 1] : null;
+  const roundText = (r, n, short) => W('lane.round.' + (r.winner === 'me' ? 'win' : r.winner === 'foe' ? 'lose' : 'draw') + (short ? '.short' : ''), { n, me: r.me, foe: r.foe });
+  const won = lane => banner && lastRound ? lastRound.lanes[lane] : null;
+  const onTarget = (kind, lane) => {
+    const m = mode; setMode(null); setDetail(null);
+    if (kind === 'place' || kind === 'swap') { const el = document.querySelector(`.ln-hand .cell[data-id="${m.id}"]`); flyRef.current = el ? { id: m.id, from: el.getBoundingClientRect() } : null; actMatch(x => A.place(data, x, m.id, lane, m.form)); }
+    else if (kind === 'evolve') { const el = document.querySelector(`.ln-hand .cell[data-id="${m.id}"]`); flyRef.current = el ? { id: m.id, from: el.getBoundingClientRect() } : null; actMatch(x => A.evolve(data, x, m.id, lane)); }
+    else if (kind === 'move') actMatch(x => A.move(data, x, m.from, lane));
+    else if (kind === 'open') actMatch(x => A.open(data, x, lane));
+  };
+  const openDetail = (side, lane) => setDetail({ side, lane });
+  const unitOf = d => d && d.side ? st[d.side].lanes[d.lane] : null;
+  const detailId = detail ? (detail.hand ? detail.id : A.top(unitOf(detail))) : null;
+  const detailActions = () => {
+    if (!detail) return [];
+    if (detail.hand) return [{ id: 'ln-place', label: W('lane.place'), disabled: !mine || !L.place.some(x => x.id === detail.id), onClick: () => { setMode({ kind: 'place', id: detail.id, form }); setDetail(null); } }];
+    if (detail.side === 'me') return [
+      { id: 'ln-move', label: W('lane.move'), disabled: !mine || !L.move.some(x => x.from === detail.lane), onClick: () => { setMode({ kind: 'move', from: detail.lane }); setDetail(null); } },
+      { id: 'ln-open-this', label: W('lane.open'), cls: '', disabled: !mine || !L.open.includes(detail.lane), onClick: () => { setDetail(null); actMatch(x => A.open(data, x, detail.lane)); } }];
+    return [];
+  };
+  const modeText = mode ? (mode.kind === 'place' ? W('lane.place.where') : mode.kind === 'move' ? W('lane.move.where') : W('lane.open.pick')) : '';
+  return html`<section class="ln-screen ln-board" data-screen="match">
+    <div class="ln-foe"><span class="face"><${Thumb} file=${portrait && formArt(data, portrait, 'light')} /></span>
+      <span><b>${W('lane.champion', { n: st.champion })}</b>${W('lane.lv.' + st.level)}</span>
+      <span class="ln-foe-fan"><span class="ln-cards" aria-hidden="true">${st.foe.hand.map((_, i) => html`<span key=${i} class="ln-back" style=${'--gc:' + typeColor(data, (D.cards[portrait] || { types: ['normal'] }).types[0])}></span>`)}</span><span class="ln-foe-hand">${W('lane.foe.hand', { n: st.foe.hand.length })}</span></span>
+      <span class="ln-foe-grave">${W('lane.foe.grave', { n: st.foe.grave.length })}</span>
+      <span class="ln-foe-open" data-used=${st.foe.opened ? 'true' : 'false'}>${W(st.foe.opened ? 'lane.open.used' : 'lane.open')}</span></div>
+    ${mode && html`<div class="ln-mode">${modeText}<button type="button" class="ln-btn" id="ln-cancel" onClick=${() => setMode(null)}>${W('lane.cancel')}</button></div>`}
+    <div class="ln-lanes">${[0, 1, 2].map(l => html`<${Lane} key=${l} data=${data} st=${st} lane=${l} mode=${mode} onTarget=${onTarget} onDetail=${openDetail} fxOf=${fxOf} won=${won(l)} />`)}</div>
+    <div class="ln-bar">
+      <span class="ln-score"><b data-side="me">${'●'.repeat(sc.me)}${'○'.repeat(3 - sc.me)}</b> : <b data-side="foe">${'●'.repeat(sc.foe)}${'○'.repeat(3 - sc.foe)}</b></span>
+      <span class="ln-round">${W('lane.round', { n: st.round })}</span>
+      <span class="ln-lives" data-me=${st.lives.me} data-foe=${st.lives.foe}>${W('lane.lives')} ${'♥'.repeat(st.lives.me)}${'♡'.repeat(A.LIVES - st.lives.me)} : ${'♥'.repeat(st.lives.foe)}${'♡'.repeat(A.LIVES - st.lives.foe)}</span>
+      ${st.round === 1 && st.coin === 'me' && A.FIRST_CARDS > 0 && html`<span class="ln-first">${W('lane.first.cards', { n: A.FIRST_CARDS })}</span>`}
+      <span class="ln-turn" data-turn=${st.turn || ''}>${st.passed.me ? W('lane.passed') : W(mine ? 'lane.turn.me' : 'lane.turn.foe')}</span>
+      <span class="ln-bar-act">
+        <button type="button" class="ln-btn ln-help" id="ln-help" aria-label=${W('lane.rules.title')} title=${W('lane.rules.title')} onClick=${() => setHelp(true)}>?</button>
+        <button type="button" class="ln-btn" id="ln-open" disabled=${!mine || st.me.opened || !L.open.length} onClick=${() => setMode({ kind: 'open' })}>${W(st.me.opened ? 'lane.open.used' : 'lane.open')}</button>
+        <button type="button" class="ln-btn" id="ln-pass" disabled=${!L.pass} onClick=${() => { setMode(null); setDetail(null); actMatch(m => A.pass(data, m)); }}>${W('lane.pass')}</button>
+      </span>
+      ${lastRound && html`<span class="ln-last-round">${roundText(lastRound, st.roundLog.length)}</span>`}
+    </div>
+    <div class="ln-dock">${!profile.tutorial && html`<${Guide} st=${st} onSkip=${() => act(p => { p.tutorial = true; })} />`}
+      <p class="sec">${W('lane.hand', { n: st.me.hand.length })}<span class="ln-deck-pile">${W('lane.deck.left', { n: st.me.deck.length })}</span></p>
+      <div class="ln-hand">${st.me.hand.map((id, i) => html`<${Card} key=${id + i} data=${data} id=${id} onClick=${() => { setForm('light'); setDetail({ id, hand: true }); }} />`)}</div></div>
+    ${detail && html`<${Detail} data=${data} id=${detailId} unit=${unitOf(detail)} form=${detail.hand ? form : undefined} onForm=${detail.hand ? setForm : null} actions=${detailActions()} onClose=${() => setDetail(null)} />`}
+    ${help && html`<${Rules} onClose=${() => setHelp(false)} />`}
+    ${banner && lastRound && html`<div class="ln-banner">${roundText(lastRound, st.roundLog.length, true)}<br />${W('lane.lanes', { me: lastRound.me, foe: lastRound.foe })}</div>`}
+  </section>`;
+}
+
 function App() {
   const loaded = useData();
   const [saved] = useState(load);
@@ -300,6 +528,12 @@ function App() {
   const [screen, setScreen] = useState('lobby');   /* 'lobby' | 'build' | 'stats' | 'shop' | 'learn' — 판이 있으면 판이 앞선다 */
   const data = loaded && loaded.data;
   const cleaned = useRef(false);
+  /* 상대 턴 — 0.6초 뒤 한 수. 움직임 줄이기면 바로 */
+  useEffect(() => {
+    if (!data || !match || match.phase !== 'play' || match.turn !== 'foe') return;
+    const t = setTimeout(() => { const next = JSON.parse(JSON.stringify(match)); A.aiTurn(data, next); save(profile, next); setMatch(next); }, reduced() ? 0 : 600);
+    return () => clearTimeout(t);
+  }, [match, data]);
   if (data && !cleaned.current) {
     cleaned.current = true;
     const r = sanitise(data, profile, match);
@@ -307,14 +541,18 @@ function App() {
   }
   if (!loaded) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.loading')}</p></section><//>`;
   if (loaded.error) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.error', { message: loaded.error })}</p></section><//>`;
+  /* 판을 고치는 손 — 사본에 엔진 함수를 적용하고 저장 */
+  const actMatch = fn => { const next = JSON.parse(JSON.stringify(match)); const r = fn(next) || { ok: true }; if (r.ok !== false) { save(profile, next); setMatch(next); } return r; };
   /* 프로필을 고치는 손 — 사본을 고치고 저장 */
   const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
   const onPick = gen => { const p = C.newProfile(data, gen, seed()); save(p, null); setProfile(p); };
   const onChallenge = gen => { const m = A.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
-  const which = !profile ? 'pick' : match ? 'match' : screen;
+  const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
   return html`<${Shell}>
     ${which === 'pick' ? html`<${Pick} data=${data} onPick=${onPick} />`
-    : which === 'match' ? html`<section class="ln-screen" data-screen="match"><p class="note">${W('lane.turn.me')}</p></section>`
+    : which === 'mulligan' ? html`<${Mulligan} data=${data} st=${match} actMatch=${actMatch} />`
+    : which === 'match' ? html`<${Match} data=${data} profile=${profile} st=${match} actMatch=${actMatch} act=${act} />`
+    : which === 'result' ? html`<section class="ln-screen" data-screen="result"><p class="note">${W('lane.result.' + (match.winner === 'me' ? 'win' : match.winner === 'foe' ? 'lose' : 'draw'))}</p></section>`
     : which === 'build' ? html`<${Build} data=${data} profile=${profile} act=${act} setScreen=${setScreen} />`
     : html`<${Lobby} data=${data} profile=${profile} act=${act} setScreen=${setScreen} onChallenge=${onChallenge} panel=${null} />`}
   <//>`;

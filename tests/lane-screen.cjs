@@ -5,6 +5,13 @@ const fs = require('node:fs'), assert = require('node:assert/strict'), { start, 
 const card = JSON.parse(fs.readFileSync('data/card.json', 'utf8')).cards.character;
 const NAMES = card.filter(c => c.gen <= 3).map(c => c.name);
 const KEY = 'pkm_duel_v1';
+const C = require('../lib/collection.js'), A = require('../lib/lane.js');
+const J = n => JSON.parse(fs.readFileSync('data/' + n + '.json', 'utf8'));
+/* 화면과 같은 풀(1~3세대)로 node 쪽 자료를 만든다 — 판을 손으로 짜서 저장에 넣으려고 */
+const fakeImgObj = (() => { const img = {}; for (const n of NAMES) img[n] = { byStyle: { test: { byForm: { light: { f: n + '_light_test_f.webp' }, heavy: { f: n + '_heavy_test_f.webp' }, mobility: { f: n + '_mobility_test_f.webp' } }, casual: { f: [n + '_test_f_casual1.webp'] } } } }; return img; })();
+const dataN = { cards: card, chart: J('chart').chart, group: J('group'), label: J('label'), img: fakeImgObj, lane: J('lane') };
+/* 내 차례가 올 때까지(상대 수는 0.6초마다) */
+const myTurn = p => p.waitForSelector('.ln-turn[data-turn="me"]', { timeout: 15000 });
 /* fetch 를 가로채 data/img.json 만 검사용으로 */
 const fakeImg = [names => {
   const real = window.fetch;
@@ -77,6 +84,75 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     await p.locator('#ln-build-done').tap(); await p.waitForSelector('.ln-screen[data-screen="lobby"]');
     assert.deepEqual(a.errors, [], '화면 오류 없음');
     await a.close();
-    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기');
+    /* ── 대결 — 멀리건 → 놓기(폼) → 진화 → 개방 → 옮기기 → 패스 → 라운드 결과. 판은 손으로 짜서 저장에 넣는다 ── */
+    const pr = C.newProfile(dataN, 1, 7), m = A.newMatch(dataN, pr, 2, 'rookie', 7);
+    m.me.hand = ['이상해씨', '이상해풀', '이상해꽃', '꼬부기', '피카츄', '파이리', '잉어킹', '이브이'];
+    m.foe.hand = ['치코리타', '베이리프', '브케인', '리아코', '꼬리선', '토게피', '네이티', '에레키드'].filter(n => NAMES.includes(n));
+    const store = [KEY, JSON.stringify({ v: 1, profile: pr, matches: { lane: m } })];
+    const b = await openLane(h, { store }), q = b.page;
+    assert.equal(await q.locator('.ln-screen').getAttribute('data-screen'), 'mulligan', '저장된 판은 멀리건부터');
+    assert.equal(await q.locator('.ln-mull .cell').count(), 8, '손패 8');
+    await q.locator('.ln-mull .cell').nth(7).tap(); assert.equal(await q.locator('.ln-mull .cell.swapped').count(), 1, '한 장 바꿈');
+    await tappable(q, '.ln-mull .cell, #ln-mull-go');
+    await q.locator('#ln-mull-go').tap(); await q.waitForSelector('.ln-screen[data-screen="match"]');
+    assert.equal(await q.locator('.ln-lane').count(), 3, '세 줄');
+    await myTurn(q); await noOverflow(q);
+    /* 놓기 — 손패 → 상세 → 중장 → 놓기 → 줄 고르기 */
+    await q.locator('.ln-hand .cell[data-id="이상해씨"]').tap(); await q.waitForSelector('.ln-detail');
+    assert.equal(await q.locator('.ln-detail .ln-form[aria-pressed="true"]').getAttribute('data-form'), 'light', '기본은 경장');
+    await q.locator('.ln-detail .ln-form[data-form="heavy"]').tap();
+    await q.locator('#ln-place').tap(); await q.waitForSelector('.ln-mode');
+    assert.equal(await q.locator('.ln-target[data-kind="place"]').count(), 3, '빈 줄 셋이 빛난다');
+    await tappable(q, '.ln-target');
+    await q.locator('.ln-target[data-kind="place"][data-lane="0"]').tap();
+    await q.waitForSelector('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack');
+    assert.equal(await q.locator('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack').getAttribute('data-form'), 'heavy', '중장으로 놓였다');
+    assert.equal(await q.locator('.ln-hand .cell').count(), 7, '손패가 줄었다');
+    assert.equal(await q.locator('.ln-mode').count(), 0, '고르기 모드가 닫혔다');
+    await myTurn(q);
+    assert(await q.locator('.ln-vs[data-lane="0"] .ln-atk[data-side="me"]').textContent() !== '', '승부 칸에 내 공격값');
+    /* 진화 — 이상해풀을 같은 줄에 */
+    await q.locator('.ln-hand .cell[data-id="이상해풀"]').tap(); await q.waitForSelector('.ln-detail');
+    await q.locator('#ln-place').tap(); await q.waitForSelector('.ln-mode');
+    assert.equal(await q.locator('.ln-target[data-kind="evolve"][data-lane="0"]').count(), 1, '0번 줄은 진화로 빛난다');
+    assert.equal(await q.locator('.ln-target[data-kind="swap"]').count(), 0, '진화되는 줄엔 교체가 아니라 진화');
+    await q.locator('.ln-target[data-kind="evolve"][data-lane="0"]').tap();
+    await q.waitForFunction(() => document.querySelectorAll('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack .ln-under').length === 1);
+    assert.equal(await q.locator('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack .ln-pw').textContent(), '10', '이상해풀 8 + 중장 2');
+    await myTurn(q);
+    /* 교체 — 꼬부기를 0번 줄에 */
+    await q.locator('.ln-hand .cell[data-id="꼬부기"]').tap(); await q.waitForSelector('.ln-detail');
+    await q.locator('#ln-place').tap(); await q.waitForSelector('.ln-mode');
+    assert.equal(await q.locator('.ln-target[data-kind="swap"][data-lane="0"]').count(), 1, '내 스택이 있는 줄은 교체로 빛난다');
+    await q.locator('#ln-cancel').tap(); assert.equal(await q.locator('.ln-mode').count(), 0, '취소');
+    /* 개방 — 막대의 개방 → 줄 고르기 */
+    await q.locator('#ln-open').tap(); await q.waitForSelector('.ln-mode');
+    assert.equal(await q.locator('.ln-target[data-kind="open"]').count(), 1, '열 수 있는 스택 하나');
+    await q.locator('.ln-target[data-kind="open"][data-lane="0"]').tap();
+    await q.waitForSelector('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack.open');
+    assert(await q.locator('#ln-open').isDisabled(), '개방은 한 번');
+    await myTurn(q);
+    /* 옮기기 — 고기동 피카츄를 1번에 놓고 2번으로 */
+    await q.locator('.ln-hand .cell[data-id="피카츄"]').tap(); await q.waitForSelector('.ln-detail');
+    await q.locator('.ln-detail .ln-form[data-form="mobility"]').tap(); await q.locator('#ln-place').tap();
+    await q.locator('.ln-target[data-kind="place"][data-lane="1"]').tap();
+    await q.waitForSelector('.ln-lane[data-lane="1"] .ln-slot[data-side="me"] .ln-stack[data-form="mobility"]');
+    await myTurn(q);
+    await q.locator('.ln-lane[data-lane="1"] .ln-slot[data-side="me"] .ln-stack').tap(); await q.waitForSelector('.ln-detail');
+    await q.locator('#ln-move').tap(); await q.waitForSelector('.ln-mode');
+    assert.equal(await q.locator('.ln-target[data-kind="move"]').count(), 2, '갈 수 있는 줄 둘(0번은 자리 바꿈)');
+    await q.locator('.ln-target[data-kind="move"][data-lane="2"]').tap();
+    await q.waitForSelector('.ln-lane[data-lane="2"] .ln-slot[data-side="me"] .ln-stack[data-form="mobility"]');
+    assert.equal(await q.locator('.ln-lane[data-lane="1"] .ln-slot[data-side="me"] .ln-stack').count(), 0, '1번 줄은 비었다');
+    await myTurn(q);
+    /* 패스 → 라운드 결과 */
+    await q.locator('#ln-pass').tap();
+    await q.waitForSelector('.ln-last-round', { timeout: 20000 });
+    const savedM = JSON.parse(await q.evaluate(k => localStorage.getItem(k), KEY)).matches.lane;
+    assert(savedM.roundLog.length >= 1 && savedM.log.some(e => e.t === 'evolve') && savedM.log.some(e => e.t === 'open') && savedM.log.some(e => e.t === 'move'), '매 수 저장 — 진화·개방·옮기기가 기록에');
+    await tappable(q, '#ln-pass, #ln-open, .ln-hand .cell'); await noOverflow(q);
+    assert.deepEqual(b.errors, [], '대결 화면 오류 없음');
+    await b.close();
+    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결');
   } finally { await h.stop(); }
 })();
