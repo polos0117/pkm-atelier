@@ -28,6 +28,75 @@ body {color:var(--text);font-size:15px}
 .sec {margin:16px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
 .sec span {color:var(--muted);font-weight:400;letter-spacing:0}
 .note {margin:6px 0 10px;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+/* 첫 고르기 — 세대 아홉 */
+.ln-gens {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0 14px}
+.ln-gen {min-height:64px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:14px;text-align:left;cursor:pointer}
+.ln-gen.on {outline:3px solid var(--accent);outline-offset:1px}
+.ln-gen:disabled {opacity:.5;cursor:default}
+.ln-gen small,.ln-need {display:block;color:var(--muted);font-weight:400;font-size:11px}
+.ln-need {color:var(--signal,#c33)}
+/* 로비 */
+.ln-head {display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding:10px 0 4px;font:700 12px ui-monospace,monospace;letter-spacing:.04em;color:var(--muted)}
+.ln-head b {color:var(--text);font-size:14px}
+.ln-deck[data-ok="false"] b {color:var(--signal,#c33)}
+.ln-gold {color:var(--gold,#c9a227)}
+.ln-tools {display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.ln-lv {display:flex;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;margin:6px 0}
+.ln-lv button {flex:1;min-height:44px;background:var(--card);border:0;border-radius:6px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.ln-lv button.on {background:var(--accent-soft);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
+.ln-conquered {margin:8px 0;padding:10px 12px;border:1px solid var(--gold,#c9a227);border-radius:8px;color:var(--gold,#c9a227);font-weight:700;text-align:center;font-size:13px}
+.ln-champions {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (min-width:600px) {.ln-champions {grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ln-champion {display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px;align-items:center;min-height:92px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:inherit;text-align:left;cursor:pointer}
+.ln-champion .face {width:52px;aspect-ratio:2/3;border-radius:8px;overflow:hidden;background:var(--card2)}
+.ln-champion b {display:block;font-size:14px;overflow-wrap:anywhere}
+.ln-champion small {display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.ln-champion:disabled {opacity:.5;cursor:default}
+/* 덱 짜기 */
+.ln-main-pick {display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.ln-main-pick button {min-height:44px;min-width:44px;padding:0 10px;background:var(--card);border:1px solid var(--line);border-radius:8px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.ln-main-pick button.on {color:var(--text);background:var(--accent-soft);border-color:var(--accent)}
+.ln-rule {display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 2px;font:700 12px ui-monospace,monospace;color:var(--muted)}
+.ln-rule span.bad {color:var(--signal,#c33)}
+.ln-why {margin:2px 0 8px;color:var(--signal,#c33);font-size:12px;line-height:1.5}
+.ln-why:empty {display:none}
+.ln-build-act,.ln-chips {display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;align-items:center}
+.ln-chips > i {flex:none;margin-right:4px;font:700 10px ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);font-style:normal}
+.ln-chips button {min-height:44px;padding:0 12px;background:var(--card);border:1px solid var(--line);border-radius:999px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.ln-chips button.on {background:var(--accent-soft);color:var(--text);border-color:var(--accent)}
+.grid {display:grid;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
+@media (min-width:600px) {.grid {grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}}
+.ln-pick-cell {display:flex;flex-direction:column;gap:4px}
+.ln-pick-cell .cell {flex:1}
+.ln-toggle {min-height:44px;background:var(--card2);border:1px solid var(--line);border-radius:8px;color:var(--text);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
+.ln-toggle.in {background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.ln-empty {margin:14px 0;color:var(--muted);font-size:13px;text-align:center}
+/* 카드 한 칸 — 도감 칸 꼴 */
+.cell {display:flex;flex-direction:column;width:100%;min-height:44px;padding:0;text-align:left;color:inherit;font:inherit;background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden;cursor:pointer}
+.cell.in {outline:3px solid var(--accent);outline-offset:-3px}
+.face {display:block;flex:none;position:relative;width:100%;aspect-ratio:2/3;background:var(--card2);overflow:hidden}
+.face img {display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.ph {display:block;height:100%;background:linear-gradient(160deg,var(--card2),var(--card))}
+.cap {display:block;flex:1;padding:6px 8px 8px;font-weight:700;font-size:12px;overflow-wrap:anywhere}
+.cap .cnm {display:block;min-height:2.8em;max-height:2.8em;overflow:hidden;word-break:keep-all;line-height:1.4}
+.ln-types {display:flex;gap:3px;margin-top:3px;flex-wrap:wrap}
+.ln-type {display:inline-block;padding:1px 6px;border-radius:999px;font:700 10px ui-monospace,monospace;color:#fff;background:var(--tc,#888);text-shadow:0 1px 1px #0008;font-style:normal}
+.ln-pw {position:absolute;left:6px;bottom:6px;min-width:26px;padding:2px 6px;border-radius:7px;text-align:center;font:800 13px ui-monospace,monospace;background:#000a;color:#fff}
+.ln-pw.rare {background:var(--gold,#c9a227);color:#221a06}
+.ln-stage {position:absolute;right:6px;bottom:6px;padding:2px 6px;border-radius:6px;font:700 10px ui-monospace,monospace;background:#000a;color:#fff}
+.ln-tag {display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font:700 10px ui-monospace,monospace}
+/* 상세 — 바닥에서 올라오는 판. 폼 셋 그림이 나란히 */
+.ln-detail {position:fixed;left:0;right:0;bottom:0;z-index:50;max-height:88dvh;overflow:auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--card);border-top:2px solid var(--accent);border-radius:14px 14px 0 0;box-shadow:0 -10px 30px #000a}
+.ln-detail h4 {margin:0 0 6px;font-size:17px}
+.ln-forms {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:6px 0}
+.ln-form {position:relative;padding:0;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card2);font:inherit;color:inherit;cursor:pointer;min-height:44px}
+.ln-form.on {border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.ln-form .face {aspect-ratio:2/3}
+.ln-form b {display:block;padding:4px 6px 2px;font-size:12px;text-align:center}
+.ln-form small {display:block;padding:0 6px 6px;font-size:10px;color:var(--muted);text-align:center;line-height:1.3;word-break:keep-all}
+.ln-detail dl {margin:0;font-size:12px;line-height:1.5} .ln-detail dt {color:var(--muted);margin-top:4px} .ln-detail dd {margin:0;color:var(--text)}
+.ln-detail .lore {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+.ln-detail-act {display:flex;gap:8px;margin-top:12px;flex-wrap:wrap} .ln-detail-act .primary {flex:1}
 /* Task 8~10 이 여기에 화면 CSS 를 더한다 */
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
@@ -65,11 +134,190 @@ function useData() {
   }, []);
   return state;
 }
+/* 저장 하나 — {v, profile, matches:{lane}}. 모르는 카드 이름은 걸러 낸다(이름이 바뀐 뒤) */
+function load() {
+  try {
+    const j = JSON.parse(localStorage.getItem(STORE));
+    if (!j || !j.profile) return { profile: null, match: null };
+    return { profile: C.upgradeProfile(j.profile), match: j.v === C.VERSION && j.matches && j.matches.lane ? j.matches.lane : null };
+  } catch { return { profile: null, match: null }; }
+}
+function save(profile, match) { try { const j = JSON.parse(localStorage.getItem(STORE) || '{}'); localStorage.setItem(STORE, JSON.stringify({ v: C.VERSION, profile, matches: { ...(j.matches || {}), lane: match } })); } catch {} }
+function seed() { return (Date.now() ^ Math.floor(Math.random() * 1e9)) | 0; }
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+function sanitise(data, profile, match) {
+  const D = A.cardsOf(data), known = id => !!D.cards[id];
+  let changed = false;
+  if (profile) {
+    const owned = profile.owned.filter(known), lane = C.deckOf(profile, 'lane').filter(known);
+    if (owned.length !== profile.owned.length || lane.length !== profile.decks.lane.length) { profile = JSON.parse(JSON.stringify(profile)); profile.owned = owned; profile.decks.lane = lane; changed = true; }
+    const stock = (profile.shop && profile.shop.stock) || [];
+    if (stock.length < C.SHOP_SLOTS || stock.some(x => x && !known(x.id))) { profile = JSON.parse(JSON.stringify(profile)); profile.shop.stock = stock.filter(x => !x || known(x.id)); C.upgradeProfile(profile, data); changed = true; }
+  }
+  if (match) {
+    const ids = [];
+    for (const side of ['me', 'foe']) { const sd = match[side] || {}; ids.push(...(sd.hand || []), ...(sd.deck || []), ...(sd.grave || [])); for (const s of sd.lanes || []) if (s) ids.push(...s.cards); }
+    if (!ids.every(known)) { match = null; changed = true; }
+  }
+  return { profile, match, changed };
+}
+
+/* ── 그림 — 폼 초상·개방·일상컷. 등록부에 없으면 null → 빈 자리 ── */
+function formArt(data, name, form, open) {
+  const entry = data.img[name]; if (!entry) return null;
+  const bs = IMG.styleMap(entry), want = open ? [form + '_overdrive', 'overdrive', form] : [form];
+  for (const k of Object.keys(bs)) for (const f of want) { const one = IMG.formOf(bs[k], f); if (one && one.f) return one.f; }
+  return null;
+}
+function casualArt(data, name) {
+  const entry = data.img[name]; if (!entry) return null;
+  const bs = IMG.styleMap(entry);
+  for (const k of Object.keys(bs)) { const c = bs[k].casual, f = c && (Array.isArray(c) ? c : c.f); if (f && f.length) return f[0]; }
+  return null;
+}
+function Thumb({ file, cls }) {
+  if (!file) return html`<span class=${'ph ' + (cls || '')}></span>`;
+  return html`<img src=${IMG.thumbURL(file)} alt="" loading="lazy" class=${cls}
+    onError=${e => { const t = e.currentTarget; if (t.dataset.f) { t.replaceWith(Object.assign(document.createElement('span'), { className: 'ph' })); return; } t.dataset.f = '1'; t.src = IMG.imgURL(file); }} />`;
+}
+const typeName = (data, t) => data.group.name[t] || t, typeColor = (data, t) => data.group.color[t] || '#888';
+function TypeChips({ data, types }) { return html`<span class="ln-types">${types.map(t => html`<i key=${t} class="ln-type" style=${'--tc:' + typeColor(data, t)}>${typeName(data, t)}</i>`)}</span>`; }
+/* 계통에서 몇 단째인가 — 뿌리 1 */
+function stageOf(data, name) { const l = C.lineOf(data, name), D = A.cardsOf(data); let n = 1, cur = name; while (D.cards[cur] && D.cards[cur].from && l.names.includes(D.cards[cur].from)) { n++; cur = D.cards[cur].from; } let depth = 1, x = name; while (D.cards[x] && D.cards[x].to.length) { depth++; x = D.cards[x].to[0]; } return { n, total: n + depth - 1, line: l }; }
+/* 카드 한 칸 — 경장 초상 + 힘 + 타입 + 단계 */
+function Card({ data, id, art, onClick, cls, attrs, children }) {
+  const c = A.cardsOf(data).cards[id], st = stageOf(data, id);
+  return html`<button type="button" class=${'cell ' + (cls || '')} data-id=${id} onClick=${onClick} ...${attrs || {}}>
+    <span class="face"><${Thumb} file=${art === undefined ? formArt(data, id, 'light') : art} />
+      <span class=${'ln-pw' + (c.rare ? ' rare' : '')}>${c.power}</span>
+      ${st.total > 1 && html`<span class="ln-stage">${W('lane.stage', { n: st.n, total: st.total })}</span>`}
+      ${children}</span>
+    <span class="cap"><span class="cnm">${c.name}</span><${TypeChips} data=${data} types=${c.types} />
+      ${c.rare && html`<span class="ln-tag">${W('lane.rare')}</span>`}</span>
+  </button>`;
+}
+/* 상세 — 폼 셋 그림이 나란히. onForm 이면 폼을 고를 수 있고, actions 단추가 붙는다. unit 은 판 위 스택(힘·보너스·개방) */
+function Detail({ data, id, unit, form, onForm, actions, onClose }) {
+  const c = A.cardsOf(data).cards[id], st = stageOf(data, id), cur = form || (unit && unit.form) || 'light';
+  const raw = data.cards.find(x => x.name === id) || {};
+  return html`<div class="ln-detail" data-id=${id} role="dialog" aria-label=${c.name}>
+    <h4>${c.name}${c.rare ? html`<span class="ln-tag">${W('lane.rare')}</span>` : ''}</h4>
+    <div class="ln-forms">${C.FORMS.map(f => html`<button type="button" key=${f} class=${'ln-form' + (cur === f ? ' on' : '')} data-form=${f} aria-pressed=${cur === f} disabled=${!onForm} onClick=${() => onForm && onForm(f)}>
+      <span class="face"><${Thumb} file=${formArt(data, id, f, !!(unit && unit.open && cur === f))} /></span><b>${W('form.' + f)}</b><small>${W('lane.form.' + f + '.text')}</small></button>`)}</div>
+    <dl>
+      <dt>${W('lane.power')} · ${W('lane.speed')}</dt><dd>${c.power}${unit ? (unit.bonus ? ' + ' + unit.bonus : '') + (unit.open ? ' ×2' : '') : ''} · ${c.speed} <${TypeChips} data=${data} types=${c.types} /></dd>
+      ${st.total > 1 && html`<dt>${W('lane.line')}</dt><dd>${st.line.names.join(' → ')} (${W('lane.stage', { n: st.n, total: st.total })})</dd>`}
+      ${unit && unit.bonus ? html`<dt>${W('lane.detail.bonus', { n: unit.bonus })}</dt>` : ''}
+      ${unit && unit.open ? html`<dt>${W('lane.detail.open')}</dt>` : ''}
+      ${unit && unit.moved ? html`<dt>${W('lane.detail.moved')}</dt>` : ''}
+    </dl>
+    ${raw.text && html`<p class="lore">${raw.text}</p>`}
+    <div class="ln-detail-act">
+      ${(actions || []).map(a => html`<button type="button" key=${a.id} id=${a.id} class=${'ln-btn ' + (a.cls || 'primary')} disabled=${a.disabled} onClick=${a.onClick}>${a.label}</button>`)}
+      <button type="button" class="ln-btn" id="ln-close" onClick=${onClose}>${W('lane.close')}</button>
+    </div>
+  </div>`;
+}
+
+/* ── 첫 고르기 — 주 세대 ── */
+function Pick({ data, onPick }) {
+  const [gen, setGen] = useState(null);
+  return html`<section class="ln-screen ln-pick" data-screen="pick">
+    <p class="sec">${W('lane.pick.title')}</p><p class="note">${W('lane.pick.note')}</p>
+    <div class="ln-gens" role="group" aria-label=${W('lane.pick.title')}>${data.lane.champions.map(ch => { const can = C.canPickGen(data, ch.gen); return html`<button key=${ch.gen} type="button"
+      class=${'ln-gen' + (gen === ch.gen ? ' on' : '')} data-gen=${ch.gen} aria-pressed=${gen === ch.gen} disabled=${!can.ok} onClick=${() => setGen(ch.gen)}>
+      ${W('lane.gen', { n: ch.gen })}${can.ok ? html`<small>${can.n}</small>` : html`<span class="ln-need">${W('lane.locked', { n: can.need })}</span>`}</button>`; })}</div>
+    <button type="button" class="ln-btn primary" id="ln-pick-go" disabled=${gen === null} onClick=${() => onPick(gen)}>${W('lane.pick.go')}</button>
+  </section>`;
+}
+/* ── 로비 ── */
+function Lobby({ data, profile, act, setScreen, onChallenge, panel }) {
+  const v = A.validateDeck(data, profile), pool = C.pool(data).length;
+  return html`<section class="ln-screen ln-lobby" data-screen="lobby">
+    <div class="ln-head">
+      <span>${W('lane.lobby.main')} <b class="ln-main">${W('lane.gen', { n: profile.main })}</b></span>
+      <span class="ln-deck" data-ok=${v.ok ? 'true' : 'false'}><b>${W('lane.lobby.deck', { n: v.n, max: C.DECK })}</b> ${W(v.ok ? 'lane.lobby.deck.ok' : 'lane.lobby.deck.bad')}</span>
+      <span class="ln-coll">${W('lane.lobby.collection', { n: profile.owned.length, pool, all: data.cards.length })}</span>
+      <span class="ln-gold">${W('lane.gold', { n: profile.gold || 0 })}</span>
+    </div>
+    <div class="ln-tools">
+      <button type="button" class="ln-btn" id="ln-build" onClick=${() => setScreen('build')}>${W('lane.lobby.build')}</button>
+      <button type="button" class="ln-btn" id="ln-stats" onClick=${() => setScreen('stats')}>${W('lane.lobby.stats')}</button>
+      <button type="button" class="ln-btn" id="ln-shop" onClick=${() => setScreen('shop')}>${W('lane.lobby.shop')}</button>
+      <button type="button" class="ln-btn" id="ln-learn" onClick=${() => setScreen('learn')}>${W('lane.learn')}</button>
+    </div>
+    ${panel}
+    <p class="sec">${W('lane.lobby.level')}<span class="help">${W('lane.lv.note')}</span></p>
+    <div class="ln-lv" role="group" aria-label=${W('lane.lobby.level')}>${C.LEVELS.map(l => html`<button key=${l} type="button" data-lv=${l}
+      class=${profile.level === l ? 'on' : ''} aria-pressed=${profile.level === l} onClick=${() => act(p => { p.level = l; })}>${W('lane.lv.' + l)}</button>`)}</div>
+    ${C.conquered(data, profile) && html`<div class="ln-conquered">${W('lane.lobby.conquered')}</div>`}
+    <p class="sec">${W('lane.lobby.champions')}<span class="help">${W('lane.lobby.champions.note')}</span></p>
+    <div class="ln-champions">${data.lane.champions.map(ch => { const ready = A.championReady(data, ch.gen), portrait = A.championPortrait(data, ch.gen); return html`<button key=${ch.gen} type="button" class="ln-champion" data-gen=${ch.gen}
+      disabled=${!v.ok || !ready.ok} onClick=${() => onChallenge(ch.gen)}>
+      <span class="face"><${Thumb} file=${portrait && formArt(data, portrait, 'light')} /></span>
+      <span><b>${W('lane.champion', { n: ch.gen })}</b><small>${W('lane.gen', { n: ch.ally })}</small>
+        ${ready.ok ? html`<small>${W('lane.champion.wins', { n: C.winsOf(profile, ch.gen) })} · ${W('lane.champion.go')}</small>` : html`<span class="ln-need">${W('lane.locked', { n: ready.need })}</span>`}</span></button>`; })}</div>
+    ${!v.ok && html`<p class="note">${W('lane.need.deck')}</p>`}
+  </section>`;
+}
+/* ── 덱 짜기 ── */
+function Build({ data, profile, act, setScreen }) {
+  const D = A.cardsOf(data), v = A.validateDeck(data, profile), deck = C.deckOf(profile, 'lane');
+  const [view, setView] = useState('all'), [genf, setGenf] = useState('all'), [lineOnly, setLineOnly] = useState(false), [detail, setDetail] = useState(null);
+  const ids = useMemo(() => profile.owned.filter(x => D.cards[x] && C.inPool(data, x)).sort((a, b) => D.cards[a].no - D.cards[b].no), [profile.owned]);
+  const inDeck = id => deck.includes(id);
+  const shown = ids.filter(id => { const c = D.cards[id];
+    return (view === 'all' || (view === 'in') === inDeck(id)) && (genf === 'all' || (genf === 'main') === (c.gen === profile.main)) && (!lineOnly || C.lineOf(data, id).names.filter(x => profile.owned.includes(x)).length > 1); });
+  const rule = (key, text) => html`<span data-rule=${key} class=${v.problems.includes(key) ? 'bad' : ''}>${text}</span>`;
+  const chips = (label, attr, cur, set, list) => html`<div class="ln-chips" role="group" aria-label=${label}><i>${label}</i>${list.map(([k, text]) => html`<button key=${k} type="button" ...${{ [attr]: k }} class=${cur === k ? 'on' : ''} aria-pressed=${cur === k} onClick=${() => set(k)}>${text}</button>`)}</div>`;
+  const toggle = id => act(p => A.toggleDeck(data, p, id));
+  return html`<section class="ln-screen ln-build" data-screen="build">
+    <p class="sec">${W('lane.build')}<span class="help">${W('lane.build.note')}</span></p>
+    <div class="ln-main-pick" role="group" aria-label=${W('lane.lobby.main')}>${data.lane.champions.map(ch => html`<button key=${ch.gen} type="button" data-gen=${ch.gen}
+      class=${profile.main === ch.gen ? 'on' : ''} aria-pressed=${profile.main === ch.gen} onClick=${() => act(p => A.setMain(p, ch.gen))}>${W('lane.gen', { n: ch.gen })}</button>`)}</div>
+    <div class="ln-rule" data-ok=${v.ok ? 'true' : 'false'}>${rule('count', W('lane.build.rule.count', { n: v.n }))}${rule('main', W('lane.build.rule.main', { n: v.main }))}${rule('rare', W('lane.build.rule.rare', { n: v.rare }))}</div>
+    <p class="ln-why">${v.problems.map(k => W('lane.why.' + k)).join(' · ')}</p>
+    <div class="ln-build-act">
+      <button type="button" class="ln-btn primary" id="ln-build-done" onClick=${() => setScreen('lobby')}>${W('lane.build.done')}</button>
+      <button type="button" class="ln-btn" id="ln-autofill" title=${W('lane.build.autofill.note')} onClick=${() => act(p => A.autoFill(data, p))}>${W('lane.build.autofill')}</button>
+    </div>
+    ${chips(W('lane.build.view'), 'data-view', view, setView, [['all', W('lane.build.view.all')], ['in', W('lane.build.view.in')], ['out', W('lane.build.view.out')]])}
+    ${chips(W('lane.build.filter.gen'), 'data-genf', genf, setGenf, [['all', W('lane.build.view.all')], ['main', W('lane.build.filter.main')], ['other', W('lane.build.filter.other')]])}
+    ${chips(W('lane.build.filter.line'), 'data-linef', lineOnly ? 'on' : 'all', k => setLineOnly(k === 'on'), [['all', W('lane.build.view.all')], ['on', W('lane.build.filter.line.on')]])}
+    ${shown.length ? html`<div class="grid">${shown.map(id => html`<div key=${id} class="ln-pick-cell">
+      <${Card} data=${data} id=${id} cls=${inDeck(id) ? 'in' : ''} attrs=${{ 'aria-pressed': inDeck(id) }} onClick=${() => setDetail(id)} />
+      <button type="button" class=${'ln-toggle' + (inDeck(id) ? ' in' : '')} data-id=${id} onClick=${() => toggle(id)}>${W(inDeck(id) ? 'lane.build.remove' : 'lane.build.add')}</button></div>`)}</div>`
+      : html`<p class="ln-empty">${W('ui.empty')}</p>`}
+    ${detail && html`<${Detail} data=${data} id=${detail} onClose=${() => setDetail(null)}
+      actions=${[{ id: 'ln-detail-act', label: W(inDeck(detail) ? 'lane.build.remove' : 'lane.build.add'), cls: inDeck(detail) ? '' : 'primary', onClick: () => { toggle(detail); setDetail(null); } }]} />`}
+  </section>`;
+}
+
 function App() {
   const loaded = useData();
+  const [saved] = useState(load);
+  const [profile, setProfile] = useState(saved.profile), [match, setMatch] = useState(saved.match);
+  const [screen, setScreen] = useState('lobby');   /* 'lobby' | 'build' | 'stats' | 'shop' | 'learn' — 판이 있으면 판이 앞선다 */
+  const data = loaded && loaded.data;
+  const cleaned = useRef(false);
+  if (data && !cleaned.current) {
+    cleaned.current = true;
+    const r = sanitise(data, profile, match);
+    if (r.changed) { save(r.profile, r.match); setProfile(r.profile); setMatch(r.match); }
+  }
   if (!loaded) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.loading')}</p></section><//>`;
   if (loaded.error) return html`<${Shell}><section class="ln-screen"><p class="note">${W('ui.error', { message: loaded.error })}</p></section><//>`;
-  return html`<${Shell}><section class="ln-screen" data-screen="pick"><p class="note">${W('lane.pick.title')}</p></section><//>`;
+  /* 프로필을 고치는 손 — 사본을 고치고 저장 */
+  const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
+  const onPick = gen => { const p = C.newProfile(data, gen, seed()); save(p, null); setProfile(p); };
+  const onChallenge = gen => { const m = A.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
+  const which = !profile ? 'pick' : match ? 'match' : screen;
+  return html`<${Shell}>
+    ${which === 'pick' ? html`<${Pick} data=${data} onPick=${onPick} />`
+    : which === 'match' ? html`<section class="ln-screen" data-screen="match"><p class="note">${W('lane.turn.me')}</p></section>`
+    : which === 'build' ? html`<${Build} data=${data} profile=${profile} act=${act} setScreen=${setScreen} />`
+    : html`<${Lobby} data=${data} profile=${profile} act=${act} setScreen=${setScreen} onChallenge=${onChallenge} panel=${null} />`}
+  <//>`;
 }
 render(html`<${App} />`, document.getElementById('app'));
 window.AtelierFresh.watch();
