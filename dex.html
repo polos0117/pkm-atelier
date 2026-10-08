@@ -97,6 +97,22 @@ body {color:var(--text);font-size:15px}
 .big {position:relative;width:100%;aspect-ratio:2/3;max-height:46dvh;overflow:hidden;
   background:var(--card2);border:1px solid var(--line);border-radius:12px}
 .big img {display:block;width:100%;height:100%;object-fit:contain}
+/* 큰 그림 넘기기 — 좌우 화살표·방향키·밀기로 이 카드의 그림을 차례로, 끝을 넘으면 앞·다음 카드로(myth 도감과 같은 손).
+   세로 굴림은 그대로(pan-y) */
+.big {touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.big img {-webkit-user-drag:none}
+.big-nav {position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 4px;pointer-events:none}
+.big-nav button {pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:1px solid #ffffff40;border-radius:999px;background:#0009;color:#fff;font:400 22px/1 inherit;cursor:pointer}
+.big-nav button:disabled {opacity:.2;cursor:default}
+.big-nav button.to-card {border-color:var(--gold);color:var(--gold)}
+.big-count {position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:999px;background:#000a;color:#fff;font:700 11px ui-monospace,monospace;pointer-events:none}
+/* 카드 넘기기 — 큰 그림 바로 아래 한 줄: ‹ 앞 카드 · 몇 / 전체 · 다음 카드 › */
+.card-nav {display:flex;align-items:center;gap:8px;margin-top:8px}
+.card-nav button {flex:1 1 0;min-width:0;min-height:44px;display:flex;align-items:center;gap:6px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--text);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.card-nav button span {min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .card-nav button b {flex:none;font-size:18px;font-weight:400}
+.card-nav #dex-card-next {justify-content:flex-end}
+.card-nav button:disabled {opacity:.35;cursor:default}
+.card-nav .card-count {flex:none;font:700 11px ui-monospace,monospace;color:var(--muted);white-space:nowrap}
 .legacy-overdrive {margin:16px 0;color:var(--muted);font-size:12px}
 .legacy-overdrive summary {cursor:pointer;padding:10px 0}
 .legacy-art {display:block;width:100%;max-height:46dvh;object-fit:contain}
@@ -127,7 +143,7 @@ body {color:var(--text);font-size:15px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=reset1"></script>
+<script src="lib/words.js?v=dexnav1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js"></script>
 <script src="lib/dex-filter.js?v=1"></script>
@@ -139,7 +155,7 @@ body {color:var(--text);font-size:15px}
    preact 가 진짜 태그를 하나 만들어 버린다 — 격자(.facts)에서 그 태그가 칸을
    차지해서 제목과 값이 세로로 겹쳐 붙었다. 따로 들여온다 */
 import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
-import { useState, useEffect, useMemo } from 'https://esm.sh/preact@10.24.3/hooks';
+import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
 const html = htm.bind(h);
@@ -268,7 +284,7 @@ function Facts({ card, group, label, onJump }) {
     </div>`}`;
 }
 
-function Detail({ card, entry, defs, styleName, group, label, selection, onClose, onJump }) {
+function Detail({ card, entry, defs, styleName, group, label, selection, nav, onGo, onClose, onJump }) {
   const want = wanted(defs, card);
   const keys = IMG.styleKeys(entry || {});
   if(FILTER.shots(entry,defs).some(s=>!s.style))keys.push('');
@@ -285,6 +301,44 @@ function Detail({ card, entry, defs, styleName, group, label, selection, onClose
   const acts = form ? IMG.formActs(bucket, form, V) : [];
   const casual = IMG.cuts(bucket, 'casual', V);
   const legacy = IMG.formOf(bucket, 'overdrive');
+  /* 넘기는 차례 — 이 화풍의 폼 초상(일반 셋 → 폭주 셋) → 폼마다 연출컷 → 일상컷 */
+  const shots = have.map(k => ({ file: IMG.formOf(bucket, k)[V], cut: 'portrait', form: k }))
+    .concat(have.flatMap(k => IMG.formActs(bucket, k, V).map((f, i) => ({ file: f, cut: 'action', form: k, index: i + 1 }))))
+    .concat(casual.map((f, i) => ({ file: f, cut: 'casual', index: i + 1 })));
+  const showFocus = !!focus && (focus.cut !== 'portrait' || !have.includes(focus.form));
+  const shownFile = showFocus ? focus.file : form ? IMG.formOf(bucket, form)[V] : null;
+  const at = shots.findIndex(x => x.file === shownFile);   /* -1 — 목록에서 고른 특별컷·옛 폭주처럼 차례 밖 */
+  const apply = n => { if (n.cut === 'portrait') { setForm(n.form); setFocus(null); } else { if (n.form) setForm(n.form); setFocus(n); } };
+  const prevCard = nav && nav.prev, nextCard = nav && nav.next;
+  const prevShot = at < 0 ? shots.length > 0 : at > 0, nextShot = at < 0 ? shots.length > 0 : at < shots.length - 1;
+  const canPrev = prevShot || !!prevCard, canNext = nextShot || !!nextCard;
+  /* 한 칸 — 그림 차례 안이면 그림, 끝을 넘으면 앞 카드(그 마지막 그림)·다음 카드(첫 그림)로 */
+  const move = d => { const i = at < 0 ? (d > 0 ? -1 : shots.length) : at, n = shots[i + d];
+    if (n) return apply(n);
+    if (d < 0 && prevCard) onGo(prevCard, 'last', '.big'); if (d > 0 && nextCard) onGo(nextCard, 'first', '.big'); };
+  /* 카드를 넘어 왔으면 그 끝 그림에서 시작하고, 누른 자리(큰 그림 또는 카드 줄)를 화면의 같은 높이에 둔다 —
+     새로 그려지며 맨 위로 튀면 휴대폰에서 누르던 단추가 화면 밖으로 밀린다 */
+  useLayoutEffect(() => {
+    if (selection?.at === 'last' && shots.length) apply(shots[shots.length - 1]);
+    const k = selection?.keep, sc = document.querySelector('.collection-scroll'), el = k && document.querySelector(k.sel);
+    if (sc && el) sc.scrollTop += el.getBoundingClientRect().top - k.y;
+  }, []);
+  /* 방향키 — 셀렉트 같은 입력칸에 있을 땐 그 칸 몫 */
+  const liveMove = useRef(); liveMove.current = move;
+  useEffect(() => {
+    const key = e => { if (e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('input, select, textarea'))) return;
+      if (e.key === 'ArrowLeft') liveMove.current(-1); if (e.key === 'ArrowRight') liveMove.current(1); };
+    addEventListener('keydown', key);
+    return () => removeEventListener('keydown', key);
+  }, []);
+  const swipe = useSwipe(d => liveMove.current(d));
+  const bigNav = (shots.length > 1 || prevCard || nextCard) && html`<div class="big-nav">
+      <button type="button" class=${'big-prev' + (!prevShot && prevCard ? ' to-card' : '')} disabled=${!canPrev} onClick=${() => move(-1)}
+        aria-label=${!prevShot && prevCard ? W('dex.card.prev') + ' · ' + prevCard.name : W('dex.shot.prev')}>‹</button>
+      <button type="button" class=${'big-next' + (!nextShot && nextCard ? ' to-card' : '')} disabled=${!canNext} onClick=${() => move(1)}
+        aria-label=${!nextShot && nextCard ? W('dex.card.next') + ' · ' + nextCard.name : W('dex.shot.next')}>›</button>
+    </div>`;
+  const bigCount = shots.length > 1 && at >= 0 && html`<span class="big-count" aria-live="polite">${at + 1} / ${shots.length}</span>`;
 
   /* 이름과 화풍만 고정한다. 여섯 칸이 화면의 굴림 자리를 밀어내지 않게 한다. */
   const head = html`
@@ -320,12 +374,19 @@ function Detail({ card, entry, defs, styleName, group, label, selection, onClose
 
     ${focus && (focus.cut !== 'portrait' || !have.includes(focus.form)) ? html`
       <p class="sec">${shotLabel(focus, defs)}<span>${W('dex.selected')}</span></p>
-      <div class="big"><${Pic} full file=${focus.file} alt=${card.name} /></div>
+      <div class="big" ...${swipe}><${Pic} full file=${focus.file} alt=${card.name} />${bigNav}${bigCount}</div>
     ` : form ? html`
       <p class="sec">${formName(defs, form)}<span>${(defs[baseForm(form)].layers || 0) + W('dex.layers')}</span></p>
-      <div class="big"><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></div>
+      <div class="big" ...${swipe}><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} />${bigNav}${bigCount}</div>
       <p class="note">${defs[form.endsWith('_overdrive') ? 'overdrive' : form].note}</p>
     ` : html`<p class="empty">${W('art.none')}</p>`}
+    ${nav && html`<div class="card-nav" role="group" aria-label=${W('dex.card.count', { n: nav.index + 1, total: nav.total })}>
+      <button type="button" id="dex-card-prev" disabled=${!prevCard} title=${prevCard ? prevCard.name : ''} aria-label=${W('dex.card.prev') + (prevCard ? ' · ' + prevCard.name : '')}
+        onClick=${() => onGo(prevCard, 'first', '.card-nav')}><b>‹</b><span>${prevCard ? prevCard.name : W('dex.card.prev')}</span></button>
+      <span class="card-count">${W('dex.card.count', { n: nav.index + 1, total: nav.total })}</span>
+      <button type="button" id="dex-card-next" disabled=${!nextCard} title=${nextCard ? nextCard.name : ''} aria-label=${W('dex.card.next') + (nextCard ? ' · ' + nextCard.name : '')}
+        onClick=${() => onGo(nextCard, 'first', '.card-nav')}><span>${nextCard ? nextCard.name : W('dex.card.next')}</span><b>›</b></button>
+    </div>`}
 
     <p class="sec">${W('kind.character')}</p>
     <${Facts} card=${card} group=${group} label=${label} onJump=${onJump} />
@@ -346,14 +407,48 @@ function Detail({ card, entry, defs, styleName, group, label, selection, onClose
   <//>`;
 }
 
+/* 밀어 넘기기 — 가로로 40px 넘게, 세로보다 확실히 많이 끌면 한 칸(손가락이 왼쪽으로 가면 다음).
+   10px 넘게 끈 손가락 뒤에 따라오는 click 은 삼킨다. 화살표 단추에서 시작한 건 단추 몫 (myth 도감과 같다) */
+function useSwipe(onMove) {
+  const live = useRef(); live.current = onMove;
+  const ate = useRef(0);
+  return {
+    onPointerDown: e => {
+      ate.current = 0;
+      if ((e.pointerType === 'mouse' && e.button !== 0) || e.target.closest('.big-nav button')) return;
+      const x = e.clientX, y = e.clientY, id = e.pointerId;
+      const up = u => { if (u.pointerId !== id) return; removeEventListener('pointerup', up); removeEventListener('pointercancel', up);
+        if (u.type !== 'pointerup') return;
+        const dx = u.clientX - x, dy = u.clientY - y;
+        if (Math.hypot(dx, dy) > 10) ate.current = Date.now();
+        if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) live.current(dx < 0 ? 1 : -1); };
+      addEventListener('pointerup', up); addEventListener('pointercancel', up);
+    },
+    onClickCapture: e => { if (Date.now() - ate.current < 500) { ate.current = 0; e.preventDefault(); e.stopPropagation(); } },
+    onDragStart: e => e.preventDefault(),
+  };
+}
+
 function shotLabel(shot, defs) {
   const form = shot.form === 'overdrive' ? W('dex.form.legacy') :
     shot.form && defs[baseForm(shot.form)] ? formName(defs, shot.form) : '';
   const cut = W('dex.cut.' + shot.cut);
   return [form, shot.index ? W('dex.cut.number', {cut, n:shot.index}) : cut].filter(Boolean).join(' · ');
 }
-function List({ st, filters, onFilter, onOpen, compact, onCompact }) {
+function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
   const f = FILTER.normalize(filters, st);
+  /* 상세에서 돌아오면 열기 전에 굴려 둔 자리로. 상세에서 다른 카드로 넘어갔으면 그 카드 칸이 보이게 한 번 더 민다 */
+  useLayoutEffect(() => {
+    const r = restore && restore.current, sc = document.querySelector('.collection-scroll');
+    if (!r || !sc) return;
+    restore.current = null;
+    sc.scrollTop = r.top;
+    if (!r.card || r.card === r.from) return;
+    const el = [...sc.querySelectorAll('.grid > .cell')].find(x => x.dataset.card === r.card);
+    if (!el) return;
+    const a = el.getBoundingClientRect(), b = sc.getBoundingClientRect();
+    if (a.top < b.top || a.bottom > b.bottom) sc.scrollTop += a.top - b.top - Math.max(0, (b.height - a.height) / 2);
+  }, []);
   const shown = useMemo(() => FILTER.select(st, filters), [st, filters]);
   const update = (key,value) => onFilter(FILTER.normalize({...f,[key]:value},st));
   const reset = () => onFilter(FILTER.defaults());
@@ -423,6 +518,30 @@ function App() {
     catch { return FILTER.defaults(); }
   });
   useEffect(() => { try {localStorage.setItem(FILTER_STORE,JSON.stringify(filters));} catch {} }, [filters]);
+  /* 목록 자리 — 열 때 굴린 값과 연 카드를 적어 두고, 닫을 때 List 가 그 자리로 돌아간다 */
+  const listTop = useRef(0), from = useRef(null), restore = useRef(null), openNow = useRef(null);
+  openNow.current = open;
+  /* 휴대폰 뒤로 가기 — 상세를 열 때 기록을 한 칸 쌓아 두고, 뒤로 가기(popstate)면 그 칸을 내리며 목록으로.
+     "목록으로" 단추도 같은 칸을 내린다(history.back). 그 popstate 는 이미 닫았으니 한 번 건너뛴다.
+     카드를 넘기거나 진화로 건너가도 칸은 하나 그대로 — 뒤로 가기 한 번이면 목록이다 */
+  const pushed = useRef(false), skipPop = useRef(false);
+  const shut = () => { restore.current = { top: listTop.current, card: openNow.current?.card?.name, from: from.current }; setOpen(null); };
+  const openShot = shot => {
+    const sc = document.querySelector('.collection-scroll');
+    listTop.current = sc ? sc.scrollTop : 0; from.current = shot.card.name;
+    setOpen(shot);
+    if (!pushed.current) { try { history.pushState({ dex: 'card' }, ''); pushed.current = true; skipPop.current = false; } catch {} }
+  };
+  const close = () => {
+    shut();
+    if (pushed.current) { pushed.current = false; skipPop.current = true; try { history.back(); } catch { skipPop.current = false; } }
+  };
+  const liveShut = useRef(); liveShut.current = shut;
+  useEffect(() => {
+    const pop = () => { if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } };
+    addEventListener('popstate', pop);
+    return () => removeEventListener('popstate', pop);
+  }, []);
 
   if (st.error) return html`<${Shell} head=${null}>
     <p class="empty">${W('ui.error', { message: st.error })}</p><//>`;
@@ -430,11 +549,23 @@ function App() {
     <p class="empty">${W('ui.loading')}</p><//>`;
 
   const card = st.cards.find(c => c.name === open?.card?.name);
-  if (card) return html`<${Detail} key=${card.name} card=${card} entry=${st.img[card.name] || null}
-    selection=${open} defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
-    onClose=${() => setOpen(null)}
-    onJump=${n => { const next=st.cards.find(c=>c.name===n); if(next)setOpen({card:next,style:open.style}); }} />`;
-  return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${setOpen} compact=${compact} onCompact=${()=>setCompact(v=>!v)} />`;
+  if (card) {
+    /* 카드 넘기기의 차례 — 지금 거른 목록의 차례에서 그림이 있는 카드만. 거른 목록에 없는 카드(진화로 건너온 것)면 번호 차례 전체 */
+    const hasArt = c => FILTER.shots(st.img[c.name], st.defs).length > 0;
+    const seen = new Set();
+    let ring = FILTER.select(st, filters).map(r => r.card).filter(c => !seen.has(c.name) && seen.add(c.name) && hasArt(c));
+    if (!ring.some(c => c.name === card.name)) ring = st.cards.filter(c => c.name === card.name || hasArt(c)).sort((a, b) => a.no - b.no);
+    const index = ring.findIndex(c => c.name === card.name);
+    const nav = index < 0 ? null : { index, total: ring.length, prev: ring[index - 1] || null, next: ring[index + 1] || null };
+    const go = (c, at, sel) => { const el = sel && document.querySelector(sel);
+      setOpen({ card: c, style: open.style, at, keep: el ? { sel, y: el.getBoundingClientRect().top } : null }); };
+    return html`<${Detail} key=${card.name} card=${card} entry=${st.img[card.name] || null}
+      selection=${open} nav=${nav} onGo=${go} defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
+      onClose=${close}
+      onJump=${n => { const next=st.cards.find(c=>c.name===n); if(next)setOpen({card:next,style:open.style}); }} />`;
+  }
+  return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${openShot} restore=${restore}
+    compact=${compact} onCompact=${()=>setCompact(v=>!v)} />`;
 }
 
 render(html`<${App} />`, document.getElementById('app'));

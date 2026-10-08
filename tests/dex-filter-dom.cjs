@@ -15,7 +15,7 @@ async function open(saved='',blocked=false){
  w.eval(read(preact+'/dist/preact.umd.js'));w.eval(read(preact+'/hooks/dist/hooks.umd.js'));
  w.eval(read(path.dirname(require.resolve('htm'))+'/htm.umd.js'));
  for(const f of ['workspace-theme','words','img','dex-filter'])w.eval(read('lib/'+f+'.js'));
- const imports='const {h,render,Fragment}=window.preact; const {useState,useEffect,useMemo,useRef}=window.preactHooks; const htm=window.htm;';
+ const imports='const {h,render,Fragment}=window.preact; const {useState,useEffect,useMemo,useRef,useLayoutEffect}=window.preactHooks; const htm=window.htm;';
  const strip=s=>s.replace(/^import .*;\n/gm,'').replace(/^export /gm,'');
  w.eval('(function(){'+imports+strip(read('lib/workspace-ui.js'))+'window.TestHeader=WorkspaceHeader;})();');
  const src=read('dex.html').match(/<script type="module">([\s\S]*?)<\/script>/)[1];
