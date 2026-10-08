@@ -213,6 +213,18 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert.equal(await r.locator('.ln-rule-card').count(), 4, '규칙 넷');
     await r.locator('#ln-rules-close').tap(); await r.waitForSelector('.ln-rules', { state: 'detached' });
     await tappable(r, '.ln-tools .ln-btn'); await noOverflow(r);
+    /* 처음부터 — 묻고, 취소하면 그대로, 지우면 저장이 비고 주 세대 고르기로(그림이 늘기 전 프로필을 새 풀로 다시 나누려고) */
+    await r.locator('#ln-reset').tap(); await r.waitForSelector('.ln-reset');
+    await tappable(r, '#ln-reset-go, #ln-reset-close'); await noOverflow(r);
+    await r.locator('#ln-reset-close').tap(); await r.waitForSelector('.ln-reset', { state: 'detached' });
+    assert(await r.evaluate(k => !!localStorage.getItem(k), KEY), '취소하면 저장은 그대로');
+    await r.locator('#ln-reset').tap(); await r.locator('#ln-reset-go').tap();
+    await r.waitForSelector('.ln-screen[data-screen="pick"]');
+    assert.equal(await r.evaluate(k => localStorage.getItem(k), KEY), null, '지우면 저장이 빈다');
+    await r.reload(); await r.waitForSelector('.ln-screen[data-screen="pick"]');
+    await r.locator('.ln-gen[data-gen="1"]').tap(); await r.locator('#ln-pick-go').tap(); await r.waitForSelector('.ln-screen[data-screen="lobby"]');
+    { const fresh = JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY));
+      assert(fresh.profile.owned.length === 25 && fresh.profile.gold === 0 && fresh.profile.stats.lane.games === 0, '다시 고르면 새 컬렉션 25·금 0·전적 0'); }
     assert.deepEqual(c2.errors, [], '결과·로비 오류 없음');
     await c2.close();
     /* ── 옛 저장 — deck 하나·stats 없음·모르는 이름 ── */
@@ -224,6 +236,6 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert(up.profile.decks.lane.length === 24 && up.profile.owned.includes(gone) && up.profile.stats.lane.games === 0 && up.profile.shop.stock.length === 6, '올린 꼴로 다시 저장 — 컬렉션엔 남긴다(그림이 돌아오면 쓰게)');
     assert.deepEqual(d.errors, [], '옛 저장 오류 없음');
     await d.close();
-    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 새로고침 · 옛 저장');
+    console.log('PASS 결투 화면: 첫 고르기 · 로비 · 덱 짜기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 처음부터 · 새로고침 · 옛 저장');
   } finally { await h.stop(); }
 })();

@@ -198,6 +198,18 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert(await r.locator('#gw-shop-reroll').isEnabled(), '10금이면 새로 깔 수 있다');
     await r.locator('#gw-shop-done').tap(); await r.waitForSelector('.gw-shop', { state: 'detached' });
     await tappable(r, '.gw-tools .gw-btn'); await noOverflow(r);
+    /* 처음부터 — 묻고, 취소하면 그대로, 지우면 저장이 비고 주 세대 고르기로(그림이 늘기 전 프로필을 새 풀로 다시 나누려고) */
+    await r.locator('#gw-reset').tap(); await r.waitForSelector('.gw-reset');
+    await tappable(r, '#gw-reset-go, #gw-reset-close'); await noOverflow(r);
+    await r.locator('#gw-reset-close').tap(); await r.waitForSelector('.gw-reset', { state: 'detached' });
+    assert(await r.evaluate(k => !!localStorage.getItem(k), KEY), '취소하면 저장은 그대로');
+    await r.locator('#gw-reset').tap(); await r.locator('#gw-reset-go').tap();
+    await r.waitForSelector('.gw-screen[data-screen="pick"]');
+    assert.equal(await r.evaluate(k => localStorage.getItem(k), KEY), null, '지우면 저장이 빈다');
+    await r.reload(); await r.waitForSelector('.gw-screen[data-screen="pick"]');
+    await r.locator('.gw-gen[data-gen="1"]').tap(); await r.locator('#gw-pick-go').tap(); await r.waitForSelector('.gw-screen[data-screen="lobby"]');
+    { const fresh = JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY));
+      assert(fresh.profile.owned.length === 25 && fresh.profile.gold === 0 && fresh.profile.stats.gwent.games === 0, '다시 고르면 새 컬렉션 25·금 0·전적 0'); }
     assert.deepEqual(c2.errors, [], '결과·로비 오류 없음');
     await c2.close();
     /* ── 옛 저장 — 진화 결투에서 만든 프로필(decks.gwent 없음) · 풀 밖 카드 · 일상컷 없는 날씨판 ── */
@@ -215,6 +227,6 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
       assert(/24\/25/.test(await s.locator('.gw-deck').textContent()) && (await s.locator('.gw-deck').getAttribute('data-ok')) === 'false', '풀 밖 카드의 날씨판은 덱에서 빠져 24/25: ' + await s.locator('.gw-deck').textContent());
       assert.deepEqual(e.errors, [], '오류 없음');
       await e.close(); }
-    console.log('PASS 폼 결투 화면: 첫 고르기 · 로비 · 덱 짜기(날씨판) · 배우기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 새로고침 · 옛 저장');
+    console.log('PASS 폼 결투 화면: 첫 고르기 · 로비 · 덱 짜기(날씨판) · 배우기 · 멀리건 · 대결 · 결과·보상 · 전적 · 상점 · 처음부터 · 새로고침 · 옛 저장');
   } finally { await h.stop(); }
 })();

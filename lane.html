@@ -41,6 +41,7 @@ body {color:var(--text);font-size:15px}
 .ln-deck[data-ok="false"] b {color:var(--signal,#c33)}
 .ln-gold {color:var(--gold,#c9a227)}
 .ln-tools {display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.ln-reset .note {margin:8px 0} .ln-reset-go {border-color:var(--warn);color:var(--warn);min-height:46px}
 .ln-lv {display:flex;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;margin:6px 0}
 .ln-lv button {flex:1;min-height:44px;background:var(--card);border:0;border-radius:6px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
 .ln-lv button.on {background:var(--accent-soft);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
@@ -220,7 +221,7 @@ body {color:var(--text);font-size:15px}
 @media (prefers-reduced-motion:reduce) {.ln-flipcard.flipped .ln-flipper {animation:none;transform:rotateY(180deg)} .ln-flipcard.flipped::before {animation:none;opacity:0}}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=gwent1"></script>
+<script src="lib/words.js?v=reset1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
 <script src="lib/collection.js?v=gwent1"></script>
@@ -366,6 +367,7 @@ function Lobby({ data, profile, act, setScreen, onChallenge, panel }) {
       <button type="button" class="ln-btn" id="ln-stats" onClick=${() => setScreen('stats')}>${W('lane.lobby.stats')}</button>
       <button type="button" class="ln-btn" id="ln-shop" onClick=${() => setScreen('shop')}>${W('lane.lobby.shop')}</button>
       <button type="button" class="ln-btn" id="ln-learn" onClick=${() => setScreen('learn')}>${W('lane.learn')}</button>
+      <button type="button" class="ln-btn" id="ln-reset" onClick=${() => setScreen('reset')}>${W('lane.reset')}</button>
     </div>
     ${panel}
     <p class="sec">${W('lane.lobby.level')}<span class="help">${W('lane.lv.note')}</span></p>
@@ -595,6 +597,15 @@ function Result({ data, st, onLobby, onAgain, onFlip }) {
   </section>`;
 }
 /* ── 전적 ── */
+/* 처음부터 — 두 결투가 같이 쓰는 저장(pkm_duel_v1)을 통째로 지우고 주 세대 고르기로. 컬렉션은 고를 때의 풀로 나뉘므로
+   그림이 늘기 전에 만든 프로필은 이것으로 새 풀에서 다시 나눈다. 누르면 바로 지우지 않고 한 번 더 묻는다 */
+function Reset({ onReset, onClose }) {
+  return html`<section class="ln-stats ln-reset" aria-label=${W('lane.reset')}>
+    <div class="ln-stats-head"><h3>${W('lane.reset')}</h3><button type="button" class="ln-btn" id="ln-reset-close" onClick=${onClose}>${W('lane.cancel')}</button></div>
+    <p class="note">${W('lane.reset.note')}</p>
+    <button type="button" class="ln-btn ln-reset-go" id="ln-reset-go" onClick=${onReset}>${W('lane.reset.go')}</button>
+  </section>`;
+}
 function Stats({ data, profile, onClose }) {
   const D = A.cardsOf(data), v = A.statsView(data, profile), L = v.line;
   const cell = e => e.games ? W('lane.stats.cell', { win: e.win, games: e.games }) : W('lane.stats.none');
@@ -675,6 +686,7 @@ function App() {
   /* 프로필을 고치는 손 — 사본을 고치고 저장 */
   const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
   const onPick = gen => { const p = C.newProfile(data, gen, seed()); save(p, null); setProfile(p); };
+  const onReset = () => { try { localStorage.removeItem(STORE); } catch {} setMatch(null); setProfile(null); setScreen('lobby'); };
   const onChallenge = gen => { const m = A.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
   const onFlip = i => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); if (!A.pickReward(data, p, m, i).ok) return; save(p, m); setProfile(p); setMatch(m); };
   const finish = () => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); A.finishRewards(data, p, m); return p; };
@@ -682,6 +694,7 @@ function App() {
   const onAgain = () => { const p = finish(); const m = A.newMatch(data, p, match.champion, match.level, seed()); save(p, m); setProfile(p); setMatch(m); };
   const panel = screen === 'stats' ? html`<${Stats} data=${data} profile=${profile} onClose=${() => setScreen('lobby')} />`
     : screen === 'shop' ? html`<${Shop} data=${data} profile=${profile} act=${act} onClose=${() => setScreen('lobby')} />`
+    : screen === 'reset' ? html`<${Reset} onReset=${onReset} onClose=${() => setScreen('lobby')} />`
     : screen === 'learn' ? html`<${Rules} onClose=${() => setScreen('lobby')} onGuideAgain=${() => { act(p => { p.tutorial = false; }); setScreen('lobby'); }} />` : null;
   const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
   return html`<${Shell}>

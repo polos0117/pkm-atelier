@@ -41,6 +41,7 @@ body {color:var(--text);font-size:15px}
 .gw-deck[data-ok="false"] b {color:var(--signal,#c33)}
 .gw-gold {color:var(--gold,#c9a227)}
 .gw-tools {display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.gw-reset .note {margin:8px 0} .gw-reset-go {border-color:var(--warn);color:var(--warn);min-height:46px}
 .gw-lv {display:flex;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;margin:6px 0}
 .gw-lv button {flex:1;min-height:44px;background:var(--card);border:0;border-radius:6px;color:var(--muted);font:inherit;font-weight:700;font-size:12px;cursor:pointer}
 .gw-lv button.on {background:var(--accent-soft);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
@@ -222,7 +223,7 @@ body {color:var(--text);font-size:15px}
 @media (prefers-reduced-motion:reduce) {.gw-unit.flip,.gw-unit.hit,.gw-target {animation:none} .gw-unit.burst::after {display:none}}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=gwent1"></script>
+<script src="lib/words.js?v=reset1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js"></script>
 <script src="lib/collection.js?v=gwent1"></script>
@@ -369,6 +370,7 @@ function Lobby({ data, profile, act, setScreen, onChallenge, panel }) {
       <button type="button" class="gw-btn" id="gw-stats" onClick=${() => setScreen('stats')}>${W('lane.lobby.stats')}</button>
       <button type="button" class="gw-btn" id="gw-shop" onClick=${() => setScreen('shop')}>${W('lane.lobby.shop')}</button>
       <button type="button" class="gw-btn" id="gw-learn" onClick=${() => setScreen('learn')}>${W('lane.learn')}</button>
+      <button type="button" class="gw-btn" id="gw-reset" onClick=${() => setScreen('reset')}>${W('lane.reset')}</button>
     </div>
     ${panel}
     <p class="sec">${W('lane.lobby.level')}<span class="help">${W('gwent.lv.note')}</span></p>
@@ -565,6 +567,15 @@ function Result({ data, st, onLobby, onAgain, onFlip }) {
   </section>`;
 }
 /* ── 전적 ── */
+/* 처음부터 — 두 결투가 같이 쓰는 저장(pkm_duel_v1)을 통째로 지우고 주 세대 고르기로. 컬렉션은 고를 때의 풀로 나뉘므로
+   그림이 늘기 전에 만든 프로필은 이것으로 새 풀에서 다시 나눈다. 누르면 바로 지우지 않고 한 번 더 묻는다 */
+function Reset({ onReset, onClose }) {
+  return html`<section class="gw-stats gw-reset" aria-label=${W('lane.reset')}>
+    <div class="gw-stats-head"><h3>${W('lane.reset')}</h3><button type="button" class="gw-btn" id="gw-reset-close" onClick=${onClose}>${W('lane.cancel')}</button></div>
+    <p class="note">${W('lane.reset.note')}</p>
+    <button type="button" class="gw-btn gw-reset-go" id="gw-reset-go" onClick=${onReset}>${W('lane.reset.go')}</button>
+  </section>`;
+}
 function Stats({ data, profile, onClose }) {
   const D = G.cardsOf(data), v = G.statsView(data, profile), L = v.line;
   const cell = e => e.games ? W('lane.stats.cell', { win: e.win, games: e.games }) : W('lane.stats.none');
@@ -645,6 +656,7 @@ function App() {
   const act = fn => { const next = JSON.parse(JSON.stringify(profile)); fn(next); save(next, match); setProfile(next); };
   /* 첫 고르기 — 진화 결투와 같은 프로필을 만들고 폼 결투 덱은 가진 카드 그대로 */
   const onPick = gen => { const p = C.newProfile(data, gen, seed()); C.setDeck(p, 'gwent', p.owned.slice()); save(p, null); setProfile(p); };
+  const onReset = () => { try { localStorage.removeItem(STORE); } catch {} setMatch(null); setProfile(null); setScreen('lobby'); };
   const onChallenge = gen => { const m = G.newMatch(data, profile, gen, profile.level, seed()); save(profile, m); setMatch(m); };
   const onFlip = i => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); if (!G.pickReward(data, p, m, i).ok) return; save(p, m); setProfile(p); setMatch(m); };
   const finish = () => { const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match)); G.finishRewards(data, p, m); return p; };
@@ -652,6 +664,7 @@ function App() {
   const onAgain = () => { const p = finish(); const m = G.newMatch(data, p, match.champion, match.level, seed()); save(p, m); setProfile(p); setMatch(m); };
   const panel = screen === 'stats' ? html`<${Stats} data=${data} profile=${profile} onClose=${() => setScreen('lobby')} />`
     : screen === 'shop' ? html`<${Shop} data=${data} profile=${profile} act=${act} onClose=${() => setScreen('lobby')} />`
+    : screen === 'reset' ? html`<${Reset} onReset=${onReset} onClose=${() => setScreen('lobby')} />`
     : screen === 'learn' ? html`<${Rules} onClose=${() => setScreen('lobby')} onGuideAgain=${() => { act(p => { p.tutorialGwent = false; }); setScreen('lobby'); }} />` : null;
   const which = !profile ? 'pick' : match && match.phase === 'mulligan' ? 'mulligan' : match && match.phase === 'play' ? 'match' : match ? 'result' : screen;
   return html`<${Shell}>
