@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-12 · claude · 실패하던 검사 셋 — 그림이 늘어 낡은 가정, 장갑 줄의 skin 오탐
+
+- tests/gwent-sim.cjs — "꼬부기는 일상컷 없음"·"1세대 챔피언은 잠김"을 박아 두었는데 그림이 올라와 둘 다 바뀌었다. 일상컷 있는/없는 카드를 img.json 에서 골라 보고, 챔피언 그림 문턱은 세대마다 진짜 풀의 수(자기 17·이웃 8)로 맞는지, 아직 잠긴 챔피언이 있는지로
+- tests/lane-sim.cjs — "진짜 풀에선 1세대를 못 고른다"·"1세대 챔피언은 잠김"이 같은 이유로 깨졌다. 세대 고르기 문턱(17)·챔피언 문턱을 세대마다 수로 보고, 모자란 세대·챔피언이 있는지로
+- lib/prompt-spec.js — 손 줄의 장갑 "full-finger and skin-tight" 가 피부색 명사 검사("…-skin")에 걸렸다(실제 피부색이 실린 게 아니다). 뜻이 같은 "close-fitting" 으로 바꿔 tests/source-appearance.cjs 의 검사는 그대로 둔다. prompt.html 꼬리표 ?v=face3
+
 ## 2026-10-12 · claude · 생성기 기본 화풍을 glossy_promo 로
 
 - lib/prompt-spec.js — DEFAULT_STYLE 을 cinematic_semi_real → glossy_promo. IMAGE_RULES·얼굴 설계표는 기본을 글로시 프로모 키아트로 적는데 생성기는 처음 열면 세미리얼 시네마틱이었다. 저장된 화풍이 있는 카드는 그대로

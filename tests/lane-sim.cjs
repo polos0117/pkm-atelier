@@ -24,7 +24,12 @@ for (const c of data.cards) ok(C.lineOf(data, c.name).names.includes(c.name), c.
 
 /* ── 프로필 ── */
 ok(C.canPickGen(data, 1).ok && C.canPickGen(data, 1).need === 0, '세대 1 고를 수 있다');
-ok(!C.canPickGen(real, 1).ok && C.canPickGen(real, 1).need > 0, '진짜 풀에선 모자란다 — n장 더');
+/* 진짜 풀 — 세대마다 그림이 다 갖춰진 비전설 수로 문턱을 본다. 그림이 올라오면 열리는 세대가 늘어나므로 수를 박지 않는다 */
+for (const g of [...new Set(data.cards.map(c => c.gen))]) {
+  const n = C.genCards(real, g, false).length, r = C.canPickGen(real, g);
+  ok(r.n === n && r.ok === (n >= 17) && r.need === Math.max(0, 17 - n), g + '세대 문턱: ' + JSON.stringify(r));
+}
+ok(data.cards.some(c => !C.inPool(real, c.name)) && [...new Set(data.cards.map(c => c.gen))].some(g => !C.canPickGen(real, g).ok && C.canPickGen(real, g).need > 0), '진짜 풀에선 모자란 세대가 있다 — n장 더');
 const p = C.newProfile(data, 1, 7);
 ok(p.owned.length === 25 && C.deckOf(p, 'lane').length === 25, '시작 컬렉션 25 = 시작 덱');
 ok(p.owned.filter(x => by[x].gen === 1).length === 17 && p.owned.every(x => !by[x].rare), '주 세대 17 · 비전설');
@@ -144,7 +149,10 @@ ok(C.conquered(data, p), '아홉을 다 이기면 정복');
 /* ── 챔피언 ── */
 {
   ok(A.championOf(data, 1).ally === 2 && A.championOf(data, 9).ally === 8 && A.championOf(data, 10) === null, '챔피언·이웃');
-  ok(A.championReady(data, 1).ok && !A.championReady(real, 1).ok && A.championReady(real, 1).need > 0, '그림 문턱 — 진짜 풀에선 n장 더');
+  ok(A.championReady(data, 1).ok, '풀(allowAll)에선 1세대 챔피언이 열린다');
+  for (const ch of data.lane.champions) { const r = A.championReady(real, ch.gen), own = C.genCards(real, ch.gen, false).length, ally = C.genCards(real, ch.ally, false).length;
+    ok(r.ok === (own >= 17 && ally >= 8) && r.need === Math.max(0, 17 - own) + Math.max(0, 8 - ally), ch.gen + '세대 챔피언 그림 문턱: ' + JSON.stringify(r)); }
+  ok(data.lane.champions.some(ch => !A.championReady(real, ch.gen).ok && A.championReady(real, ch.gen).need > 0), '그림 문턱 — 진짜 풀에선 아직 잠긴 챔피언이 있다');
   ok(A.championPortrait(data, 1) === '뮤츠' && C.inPool(data, A.championPortrait(data, 5)), '초상은 그 세대 종족값 최고');
   const D = A.cardsOf(data);
   for (const lv of C.LEVELS) for (const g of [1, 5, 9]) {

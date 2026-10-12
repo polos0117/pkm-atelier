@@ -22,11 +22,15 @@ const by = C.byName(data);
   ok(D.cards['단단지'].power.heavy === 15 && D.cards['해피너스'].power.mobility === 6, '천장 15 · 고기동은 속도만: ' + D.cards['단단지'].power.heavy + ',' + D.cards['해피너스'].power.mobility);
   ok(D.cards['이상해풀'].line === '이상해씨' && D.cards['쥬피썬더'].line === '이브이' && D.cards['뮤츠'].line === '뮤츠', '계통 뿌리');
   ok(D.cards['뮤츠'].rare && !D.cards['피카츄'].rare, '전설');
-  ok(D.cards['꼬부기'].casual && G.cardsOf(real).cards['꼬부기'].casual === false && G.cardsOf(real).cards['피카츄'].casual === true, 'allowAll 이면 일상컷 있는 셈, 진짜 자료에선 등록된 것만(피카츄 있음·꼬부기 없음)');
+  /* 진짜 자료의 일상컷 유무는 그림이 올라올 때마다 바뀐다 — 이름을 박지 않고 img.json 에서 고른다 */
+  const hasCasual = n => Object.values((data.img[n] || {}).byStyle || {}).some(b => { const c = b.casual; return Array.isArray(c) ? c.length : c && ((c.f && c.f.length) || (c.m && c.m.length)); });
+  const withCasual = data.cards.find(c => hasCasual(c.name)), without = data.cards.find(c => !hasCasual(c.name));
+  ok(withCasual && without && D.cards[without.name].casual && G.cardsOf(real).cards[without.name].casual === false && G.cardsOf(real).cards[withCasual.name].casual === true,
+    'allowAll 이면 일상컷 있는 셈, 진짜 자료에선 등록된 것만(' + (withCasual && withCasual.name) + ' 있음·' + (without && without.name) + ' 없음)');
   ok(G.isWeather('피카츄|w') && !G.isWeather('피카츄') && G.baseName('피카츄|w') === '피카츄' && G.baseName('피카츄') === '피카츄', '날씨판 id');
   const w = G.cardOf(data, '피카츄|w');
   ok(w && w.weather && w.name === '피카츄' && w.id === '피카츄|w' && w.gen === 1 && !w.rare && w.types.length === 0 && G.best(w) === 0, '날씨판 카드');
-  ok(G.cardOf(data, '피카츄') === D.cards['피카츄'] && G.cardOf(data, '없는카드') === null && G.cardOf(data, '없는카드|w') === null && G.cardOf(real, '꼬부기|w') === null && G.cardOf(real, '피카츄|w').weather, '카드 찾기 — 일상컷이 없으면 날씨판도 없다');
+  ok(G.cardOf(data, '피카츄') === D.cards['피카츄'] && G.cardOf(data, '없는카드') === null && G.cardOf(data, '없는카드|w') === null && G.cardOf(real, without.name + '|w') === null && G.cardOf(real, withCasual.name + '|w').weather, '카드 찾기 — 일상컷이 없으면 날씨판도 없다');
   ok(G.best(D.cards['피카츄']) === 9 && G.best(D.cards['뮤츠']) === 13, '가장 센 폼');
   ok(G.weatherOf(data, 0) === 'hail' && G.weatherOf(data, 1) === 'sand' && G.weatherOf(data, 2) === 'rain', '줄마다 날씨');
   const dat2 = { ...data, gwent: { ...data.gwent, overrides: { '잉어킹': { light: 9 } } } }; delete dat2.__gwent;
@@ -57,12 +61,18 @@ const by = C.byName(data);
   { const q = C.newProfile(data, 1, 3); q.decks.gwent = []; const f = G.autoFill(data, q); ok(f.ok && q.decks.gwent.length === 25 && q.decks.gwent.every(x => !G.isWeather(x)), '빈 덱은 가진 카드로 25 — 날씨판은 자동으로 안 넣는다'); }
   { const q = C.newProfile(data, 1, 3); q.owned = q.owned.slice(0, 20); q.decks.gwent = q.owned.slice(); const f = G.autoFill(data, q); ok(!f.ok && G.validateDeck(data, q).problems.join() === 'count', '카드가 20장뿐이면 못 채운다 — 죽지 않고 count'); }
   { /* 진짜 자료 — 일상컷이 없는 카드의 날씨판은 안 가진 것과 같다 */
-    const q = C.newProfile(data, 1, 3); q.decks.gwent = q.owned.slice(0, 24).concat([q.owned[0] + '|w']);
-    ok(!G.canUse(real, q, q.owned[0] + '|w') && G.validateDeck(real, q).problems.includes('owned'), '일상컷 없는 카드의 날씨판은 owned'); }
+    const q = C.newProfile(data, 1, 3), bare = data.cards.find(c => !G.cardsOf(real).cards[c.name].casual).name;
+    if (!q.owned.includes(bare)) q.owned.push(bare);
+    q.decks.gwent = q.owned.filter(x => x !== bare).slice(0, 24).concat([bare + '|w']);
+    ok(!G.canUse(real, q, bare + '|w') && G.validateDeck(real, q).problems.includes('owned'), '일상컷 없는 카드(' + bare + ')의 날씨판은 owned'); }
 }
 /* ── 챔피언 ── */
 {
-  ok(G.championOf(data, 1).ally === 2 && G.championOf(data, 10) === null && G.championReady(data, 1).ok && !G.championReady(real, 1).ok, '챔피언·이웃·그림 문턱');
+  ok(G.championOf(data, 1).ally === 2 && G.championOf(data, 10) === null && G.championReady(data, 1).ok, '챔피언·이웃');
+  /* 그림 문턱 — 진짜 풀의 세대별 수로 본다. 그림이 올라올수록 열리는 챔피언이 늘므로 세대를 박지 않는다 */
+  for (const ch of data.lane.champions) { const r = G.championReady(real, ch.gen), own = C.genCards(real, ch.gen, false).length, ally = C.genCards(real, ch.ally, false).length;
+    ok(r.ok === (own >= 17 && ally >= 8) && r.need === Math.max(0, 17 - own) + Math.max(0, 8 - ally), ch.gen + '세대 챔피언 그림 문턱: ' + JSON.stringify(r)); }
+  ok(data.lane.champions.some(ch => !G.championReady(real, ch.gen).ok && G.championReady(real, ch.gen).need > 0), '그림 문턱 — 진짜 풀에선 아직 잠긴 챔피언이 있다');
   ok(G.championPortrait(data, 1) === '뮤츠', '초상은 그 세대 종족값 최고');
   for (const lv of C.LEVELS) for (const g of [1, 5, 9]) {
     const d1 = G.championDeck(data, { rngState: 1 }, g, lv), d2 = G.championDeck(data, { rngState: 1 }, g, lv);
