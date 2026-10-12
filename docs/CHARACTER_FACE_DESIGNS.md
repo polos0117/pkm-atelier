@@ -19,7 +19,7 @@
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
 - 직접 쓴 설계 614종, 원작 단서 규칙으로 고른 것 411종 · 겹침을 풀며 옮긴 종 854
-- 그림이 이미 있는 종(①이 정본) 179
+- 그림이 이미 있는 종(①이 정본) 199
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -2713,7 +2713,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 129 · 잉어킹 (Magikarp)
 
-계열 기준: 잉어킹 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 잉어킹 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2735,7 +2735,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 130 · 갸라도스 (Gyarados)
 
-계열 기준: 잉어킹 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 잉어킹 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2755,7 +2755,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 131 · 라프라스 (Lapras)
 
-계열 기준: 라프라스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 라프라스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2777,7 +2777,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 
 ### 132 · 메타몽 (Ditto)
 
-계열 기준: 메타몽 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 메타몽 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2799,7 +2799,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 133 · 이브이 (Eevee)
 
-계열 기준: 이브이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 이브이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2819,7 +2819,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 134 · 샤미드 (Vaporeon)
 
-계열 기준: 이브이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 이브이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2841,7 +2841,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 135 · 쥬피썬더 (Jolteon)
 
-계열 기준: 이브이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 이브이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2863,7 +2863,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 136 · 부스터 (Flareon)
 
-계열 기준: 이브이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 이브이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2885,7 +2885,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 137 · 폴리곤 (Porygon)
 
-계열 기준: 폴리곤 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 폴리곤 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2907,7 +2907,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 138 · 암나이트 (Omanyte)
 
-계열 기준: 암나이트 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 암나이트 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2929,7 +2929,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, short
 
 ### 139 · 암스타 (Omastar)
 
-계열 기준: 암나이트 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 암나이트 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2951,7 +2951,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 140 · 투구 (Kabuto)
 
-계열 기준: 투구 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 투구 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4309,7 +4309,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 203 · 키링키 (Girafarig)
 
-계열 기준: 키링키 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 키링키 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4331,7 +4331,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 204 · 피콘 (Pineco)
 
-계열 기준: 피콘 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 피콘 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4351,7 +4351,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 205 · 쏘콘 (Forretress)
 
-계열 기준: 피콘 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 피콘 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4373,7 +4373,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 206 · 노고치 (Dunsparce)
 
-계열 기준: 노고치 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 노고치 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4395,7 +4395,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 207 · 글라이거 (Gligar)
 
-계열 기준: 글라이거 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 글라이거 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4415,7 +4415,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 208 · 강철톤 (Steelix)
 
-계열 기준: 롱스톤 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 롱스톤 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4437,7 +4437,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 209 · 블루 (Snubbull)
 
-계열 기준: 블루 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 블루 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4459,7 +4459,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 210 · 그랑블루 (Granbull)
 
-계열 기준: 블루 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 블루 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|

@@ -3459,7 +3459,7 @@
 "en":"Magikarp",
 "line":"잉어킹",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -3485,7 +3485,7 @@
 "en":"Gyarados",
 "line":"잉어킹",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -3512,7 +3512,7 @@
 "en":"Lapras",
 "line":"라프라스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -3540,7 +3540,7 @@
 "en":"Ditto",
 "line":"메타몽",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -3569,7 +3569,7 @@
 "en":"Eevee",
 "line":"이브이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -3595,7 +3595,7 @@
 "en":"Vaporeon",
 "line":"이브이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -3622,7 +3622,7 @@
 "en":"Jolteon",
 "line":"이브이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -3647,7 +3647,7 @@
 "en":"Flareon",
 "line":"이브이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -3672,7 +3672,7 @@
 "en":"Porygon",
 "line":"폴리곤",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -3701,7 +3701,7 @@
 "en":"Omanyte",
 "line":"암나이트",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"short",
@@ -3729,7 +3729,7 @@
 "en":"Omastar",
 "line":"암나이트",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -3756,7 +3756,7 @@
 "en":"Kabuto",
 "line":"투구",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -5448,7 +5448,7 @@
 "en":"Girafarig",
 "line":"키링키",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -5478,7 +5478,7 @@
 "en":"Pineco",
 "line":"피콘",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -5507,7 +5507,7 @@
 "en":"Forretress",
 "line":"피콘",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -5533,7 +5533,7 @@
 "en":"Dunsparce",
 "line":"노고치",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -5563,7 +5563,7 @@
 "en":"Gligar",
 "line":"글라이거",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -5590,7 +5590,7 @@
 "en":"Steelix",
 "line":"롱스톤",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -5620,7 +5620,7 @@
 "en":"Snubbull",
 "line":"블루",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -5647,7 +5647,7 @@
 "en":"Granbull",
 "line":"블루",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
