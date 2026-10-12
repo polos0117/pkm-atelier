@@ -66,3 +66,8 @@ button,input,select,textarea{font:inherit}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:900px){.studio-grid{grid-template-columns:1fr}.studio-source{position:static}.studio-source .source-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}.studio-preview{grid-template-columns:repeat(4,minmax(0,1fr))}.studio-preview a:first-child{grid-column:auto}}
 @media(max-width:480px){.studio-grid-fields,.studio-source .source-fields{grid-template-columns:1fr}.studio-card,.studio-source{padding:13px}.studio-tabs{gap:4px}.studio-tabs button{padding:8px 5px}.studio-output{height:280px}.studio-preview{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* 종별 얼굴 설계 — 끄기 칸과 고른 값 목록. 직접 고른 항목은 흐리게 */
+.studio-check{display:flex;align-items:center;gap:8px;min-height:44px;font-size:13px}
+.studio-check input{width:20px;height:20px}
+#face-design-list li.overridden{opacity:.55;text-decoration:line-through}

@@ -69,11 +69,15 @@ skin" 같은 피부색 명사는 프롬프트에 싣지 않는다(SUBJECT 가 "H
 비율로 해석하며, 무작위 조합이나 도감 번호 순환 배정을 쓰지 않는다. 머리색·장식·표정만 다른
 것을 얼굴 차별화로 보지 않는다. 원작이 아기·유체여도 인물은 20대 성인 여성이다.
 
-신규 경장 생성 전 [1,025종 얼굴 설계표](CHARACTER_FACE_DESIGNS.md)의 해당 항목과 원작 외형을
-대조하고, 선택 이유와 최종 얼굴 문장을 기록한다. 실제 생성기 외형 선택을 먼저 적용한 뒤
-신규 경장용 문장을 추가 지시로 보완한다. 이 자료는 창작 제안이고 생성 엔진에 자동 주입되지
-않는다. 같은 계열 및 최근 캐릭터 3명과 실제 얼굴을 비교하고, 차이가 부족하면 원작 단서에
-맞춰 윤곽·눈·코와 입 가운데 최소 세 항목을 조정한다.
+자료는 `data/face-design.json` 이고 [1,025종 얼굴 설계표](CHARACTER_FACE_DESIGNS.md)는 그것을 그린 것이다.
+생성기는 새 인물(경장 ①)에만 WEAR·HEAD 뒤, FORM 앞에 한 줄을 싣는다:
+`FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw;
+open rounded eyes, small size, level outer corners, average spacing; fine soft arches; rounded soft tip nose; small mouth.`
+값은 얼굴 항목 열하나(얼굴형·길이·폭·턱·눈매·눈 크기·눈꼬리·눈 간격·눈썹·코·입술)의 열쇠 그대로다. 눈 간격·눈썹은
+이번에 생성기 얼굴 항목에 새로 넣었다. 직접 고른 얼굴 항목은 FACE 줄에서 빠지고 IDENTITY 가 쥔다(두 벌 지시 없음).
+"종별 얼굴 설계" 칸에서 끌 수 있고, 무작위 변경은 켜 둔 동안 얼굴 항목을 건드리지 않는다. 얼굴 줄 몫으로 새 인물
+앵커 예산을 440낱말로 본다(`tests/face-design.cjs`, 1025종 최대 431). 그래도 그림이 실제로 구별되는지는 생성 뒤
+같은 계열·최근 캐릭터 3명과 나란히 보고 확인한다.
 
 이미 확정한 경장 ①은 표보다 우선한다. 이어가기·개방·일상에 저장된 얼굴 설계를 다시 싣지
 않으며, 원래대로 ① 또는 해당 닫힌 폼을 첨부해 인물을 유지한다. 표정·시선은 바뀔 수 있지만

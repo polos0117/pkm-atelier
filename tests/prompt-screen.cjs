@@ -18,6 +18,18 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.equal(await p.locator('#mode-portrait').count(),0,'the sheet mode is gone');
   assert((await text()).startsWith('INPUT: text only'));
   assert((await text()).includes('lightning-shaped tail becomes'),'source data is worn as costume');
+  /* 종별 얼굴 설계 — 새 인물에만 FACE 줄, 끄면 빠지고, 무작위 변경은 얼굴 항목을 건드리지 않는다 */
+  await p.waitForSelector('#face-design-list');
+  assert.equal(await p.locator('#face-design-list li').count(),11,'얼굴 항목 열하나');
+  assert((await text()).includes("FACE (her own structure"),'새 인물 프롬프트에 FACE 줄');
+  await p.locator('#face-design-on').click();await settled();
+  assert(!(await text()).includes('FACE ('),'끄면 FACE 줄이 빠진다');
+  assert.equal(await p.locator('#face-design-list').count(),0);
+  await p.locator('#face-design-on').click();await settled();
+  assert((await text()).includes('FACE ('),'다시 켜면 돌아온다');
+  await p.locator('#randomize').click();await settled();
+  assert((await text()).includes('FACE (')&&!/\n(face shape|jaw & chin|eyebrows|lips): /.test(await text()),'무작위 변경이 얼굴 항목을 채우지 않았다');
+  await p.locator('#appearance-settings button:has-text("'+await p.evaluate(()=>window.W('prompt.reset'))+'")').click();await settled();
   // The normal copy action includes the creation call instructions without a manual prefix.
   await p.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
    writeText:async t=>{window.__copied=t}}}));
@@ -41,6 +53,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await p.locator('#identity-mode').selectOption('reference');await settled();
   assert.equal(await p.locator('#appearance-settings').count(),0);
   assert.equal(await p.locator('#source-wear').count(),0);
+  assert(!(await text()).includes('FACE ('),'이어가기에는 FACE 줄이 없다');
   assert(!(await text()).includes('body type: athletic'),'reference must not emit creation parameters');
   assert((await text()).startsWith('INPUT: the attached image is the approved character'));
   assert(!(await text()).includes('omit referenced_image_paths'));
