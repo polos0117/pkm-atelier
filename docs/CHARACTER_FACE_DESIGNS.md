@@ -19,7 +19,7 @@
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
 - 직접 쓴 설계 614종, 원작 단서 규칙으로 고른 것 411종 · 겹침을 풀며 옮긴 종 854
-- 그림이 이미 있는 종(①이 정본) 199
+- 그림이 이미 있는 종(①이 정본) 211
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -2973,7 +2973,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 141 · 투구푸스 (Kabutops)
 
-계열 기준: 투구 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 투구 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -2995,7 +2995,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 
 ### 142 · 프테라 (Aerodactyl)
 
-계열 기준: 프테라 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 프테라 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -3015,7 +3015,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 143 · 잠만보 (Snorlax)
 
-계열 기준: 먹고자 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 먹고자 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -3037,7 +3037,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 144 · 프리져 (Articuno)
 
-계열 기준: 프리져 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 프리져 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -3059,7 +3059,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 145 · 썬더 (Zapdos)
 
-계열 기준: 썬더 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 썬더 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -3081,7 +3081,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 146 · 파이어 (Moltres)
 
-계열 기준: 파이어 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 파이어 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -3163,7 +3163,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 150 · 뮤츠 (Mewtwo)
 
-계열 기준: 뮤츠 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 뮤츠 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4481,7 +4481,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 211 · 침바루 (Qwilfish)
 
-계열 기준: 침바루 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 침바루 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4501,7 +4501,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 212 · 핫삼 (Scizor)
 
-계열 기준: 스라크 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 스라크 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5357,7 +5357,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 252 · 나무지기 (Treecko)
 
-계열 기준: 나무지기 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 나무지기 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5377,7 +5377,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 253 · 나무돌이 (Grovyle)
 
-계열 기준: 나무지기 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 나무지기 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5397,7 +5397,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 254 · 나무킹 (Sceptile)
 
-계열 기준: 나무지기 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 나무지기 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|

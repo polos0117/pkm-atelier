@@ -3781,7 +3781,7 @@
 "en":"Kabutops",
 "line":"투구",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -3806,7 +3806,7 @@
 "en":"Aerodactyl",
 "line":"프테라",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -3833,7 +3833,7 @@
 "en":"Snorlax",
 "line":"먹고자",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -3858,7 +3858,7 @@
 "en":"Articuno",
 "line":"프리져",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -3885,7 +3885,7 @@
 "en":"Zapdos",
 "line":"썬더",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -3912,7 +3912,7 @@
 "en":"Moltres",
 "line":"파이어",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -4023,7 +4023,7 @@
 "en":"Mewtwo",
 "line":"뮤츠",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -5672,7 +5672,7 @@
 "en":"Qwilfish",
 "line":"침바루",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -5702,7 +5702,7 @@
 "en":"Scizor",
 "line":"스라크",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -6784,7 +6784,7 @@
 "en":"Treecko",
 "line":"나무지기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6809,7 +6809,7 @@
 "en":"Grovyle",
 "line":"나무지기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6832,7 +6832,7 @@
 "en":"Sceptile",
 "line":"나무지기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
