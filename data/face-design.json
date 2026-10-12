@@ -3942,7 +3942,7 @@
 "en":"Dratini",
 "line":"미뇽",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -3967,7 +3967,7 @@
 "en":"Dragonair",
 "line":"미뇽",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -3995,7 +3995,7 @@
 "en":"Dragonite",
 "line":"미뇽",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -4050,7 +4050,7 @@
 "en":"Mew",
 "line":"뮤",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -5731,7 +5731,7 @@
 "en":"Shuckle",
 "line":"단단지",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
