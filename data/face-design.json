@@ -5942,7 +5942,7 @@
 "en":"Piloswine",
 "line":"꾸꾸리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -5970,7 +5970,7 @@
 "en":"Corsola",
 "line":"코산호",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -5997,7 +5997,7 @@
 "en":"Remoraid",
 "line":"총어",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7016,7 +7016,7 @@
 "en":"Poochyena",
 "line":"포챠나",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7044,7 +7044,7 @@
 "en":"Mightyena",
 "line":"포챠나",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -7069,8 +7069,8 @@
 "name":"지그제구리",
 "en":"Zigzagoon",
 "line":"지그제구리",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7084,7 +7084,7 @@
 "nose character":"balanced nose",
 "lips":"medium lips"
 },
-"why":"",
+"why":"너구리의 부드러운 체적은 균형 잡힌 타원 윤곽과 둥근 턱으로, 작은 검은 눈 가면의 압축된 대비는 가까운 가는 눈과 굵고 낮은 눈썹으로 해석한다. 사람의 균형 잡힌 코와 중간 두께 입술을 유지해 동물 주둥이를 복제하지 않는다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운"
 },

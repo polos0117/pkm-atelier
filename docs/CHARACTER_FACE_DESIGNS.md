@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 614종, 원작 단서 규칙으로 고른 것 411종 · 겹침을 풀며 옮긴 종 854
-- 그림이 이미 있는 종(①이 정본) 229
+- 직접 쓴 설계 615종, 원작 단서 규칙으로 고른 것 410종 · 겹침을 풀며 옮긴 종 854
+- 그림이 이미 있는 종(①이 정본) 235
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -4695,7 +4695,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 221 · 메꾸리 (Piloswine)
 
-계열 기준: 꾸꾸리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 꾸꾸리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4717,7 +4717,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 222 · 코산호 (Corsola)
 
-계열 기준: 코산호 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 코산호 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4739,7 +4739,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 223 · 총어 (Remoraid)
 
-계열 기준: 총어 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 총어 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5549,7 +5549,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 261 · 포챠나 (Poochyena)
 
-계열 기준: 포챠나 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 포챠나 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5571,7 +5571,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 262 · 그라에나 (Mightyena)
 
-계열 기준: 포챠나 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 포챠나 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5593,7 +5593,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 263 · 지그제구리 (Zigzagoon)
 
-계열 기준: 지그제구리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 지그제구리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5602,6 +5602,8 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
 | 입 | 보통 |
+
+**이유:** 너구리의 부드러운 체적은 균형 잡힌 타원 윤곽과 둥근 턱으로, 작은 검은 눈 가면의 압축된 대비는 가까운 가는 눈과 굵고 낮은 눈썹으로 해석한다. 사람의 균형 잡힌 코와 중간 두께 입술을 유지해 동물 주둥이를 복제하지 않는다.
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
 
