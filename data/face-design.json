@@ -6938,7 +6938,7 @@
 "en":"Mudkip",
 "line":"물짱이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
