@@ -1,0 +1,322 @@
+{
+  "date": "2026-10-13",
+  "status": "registered and thumbnails confirmed on remote main",
+  "requested": 27,
+  "completed": 27,
+  "image_repository": "polos0117/pkm-atelier-img-2",
+  "data_repository": "polos0117/pkm-atelier",
+  "confirmed_data_commit": "110685d50012e96a7a58355a7e12cbcf59fbfa5c",
+  "workflow_evidence": {
+    "octillery_thumbnail_run": 38372862251,
+    "octillery_register_run": 38372896726,
+    "delibird_thumbnail_run": 38375182537,
+    "delibird_register_run": 38375215381,
+    "mantine_thumbnail_run": 38377602257,
+    "mantine_register_run": 38377635777
+  },
+  "generation": "Built-in image_gen; each UI-produced prompt was checked against local engine output; full original prompts and input settings are in the character records. All ordinary follow-ups use approved light; overdrive uses its closed form plus optional light.",
+  "review": {
+    "faces": [
+      "총어",
+      "코산호",
+      "대짱이",
+      "대포무노",
+      "딜리버드",
+      "만타인"
+    ],
+    "recent_casual_images": [
+      "총어 casual1–3",
+      "코산호 casual1–3",
+      "대짱이 casual1–3"
+    ],
+    "batch_casual_images": [
+      "대포무노 casual1–3",
+      "딜리버드 casual1–3",
+      "만타인 casual1–3"
+    ],
+    "result": "Visually distinct locations, activities, garment silhouettes and framing; identity retained; no extra character, creature companion, weapon or text. Closed/open poses and scale retained. Both complete hands reviewed.",
+    "corrections": [
+      "딜리버드 casual3: removed tiny letter-like marks from table trim",
+      "만타인 casual3: moved clipped left hand inward without zooming or shrinking subject"
+    ],
+    "axes": {
+      "overall_intensity": "strong",
+      "skin_exposure": "bold"
+    }
+  },
+  "characters": [
+    {
+      "name": "대포무노",
+      "number": 224,
+      "image_commit": "4dcc8ddfa239747370ff88863e0e9860200a4c35",
+      "thumb_commit": "a09e31e3f50929278340edde7e09d3f4d3333030",
+      "style": "glossy_promo",
+      "gender": "f",
+      "approved_light": {
+        "slot": "light",
+        "filename": "대포무노_light_glossy_promo_f.webp",
+        "sha256": "ddf955430cb873f5dca12c293d34e31738d10e3e37193fb5812bc68f9872870f",
+        "git_blob": "140d2908052c9fdb5e1f9c0a40b4965e54719bcd",
+        "reference": null,
+        "source_sha256": "d33ac49bc29eacc364e4fef1b40fd9820f55037458bf490ebd92a0c3bbb6a45d"
+      },
+      "prompt_records": "https://github.com/polos0117/pkm-atelier-img-2/tree/main/records/octillery-20261013",
+      "images": [
+        {
+          "slot": "casual1",
+          "filename": "대포무노_glossy_promo_f_casual1.webp",
+          "sha256": "b445669daecace2b3fbd12bf054076125de3fefdeb3762fea14afa5e3b2b8a66",
+          "git_blob": "44ec0b952acb055ec81907a8a0621aee33c791f9",
+          "reference": "light",
+          "source_sha256": "792cb6ad44e9237f2d48428fe544d23cd85ad67bad48e0429399b2afc69f05f9"
+        },
+        {
+          "slot": "casual2",
+          "filename": "대포무노_glossy_promo_f_casual2.webp",
+          "sha256": "2846604475cda0d33ac44f3db4b78f12067f7fd2d82e359ea2c786bf1f7f6c8d",
+          "git_blob": "738e2deb5580180cc23da399d62a63b0203e3dd3",
+          "reference": "light",
+          "source_sha256": "9f3f8af57a3c66612f4b9b5aa4f2904ed2e2d7cd0572834c6944657b9d0d879e"
+        },
+        {
+          "slot": "casual3",
+          "filename": "대포무노_glossy_promo_f_casual3.webp",
+          "sha256": "032a221a702972f318d10de449d9463cbc0ad830f40d1f274cfd1c1eb73451d4",
+          "git_blob": "5f1590ff1394d6a90d5c6aeee9a33bfc85a48ef6",
+          "reference": "light",
+          "source_sha256": "998e4a7318cb150a9a0584294451c029c7413bf30c5ad7750cb3891eba2fa820"
+        },
+        {
+          "slot": "heavy",
+          "filename": "대포무노_heavy_glossy_promo_f.webp",
+          "sha256": "5c046964d1d7bfc8cbde47752962b5757207b471c3c10d0270206d988e727af2",
+          "git_blob": "5676b880a6211421392337ee693a8f4fd9beeef7",
+          "reference": "light",
+          "source_sha256": "21e4f1d80f0bcf8b9155b96ef02907f0d9ed1c43437cd1ed5983f91d42f19e96"
+        },
+        {
+          "slot": "heavy_overdrive",
+          "filename": "대포무노_heavy_overdrive_glossy_promo_f.webp",
+          "sha256": "4ca7b17705fc99a048dc687266da10aed69863106223197a523d89c66a31086f",
+          "git_blob": "7328eeaa3e5717831997bfe33880697938ead5e4",
+          "reference": "heavy",
+          "source_sha256": "6d0d32fd3167a0b1969c73bb03adfed1939421b83e30dbc9aa526d6c7734451d"
+        },
+        {
+          "slot": "light",
+          "filename": "대포무노_light_glossy_promo_f.webp",
+          "sha256": "ddf955430cb873f5dca12c293d34e31738d10e3e37193fb5812bc68f9872870f",
+          "git_blob": "140d2908052c9fdb5e1f9c0a40b4965e54719bcd",
+          "reference": null,
+          "source_sha256": "d33ac49bc29eacc364e4fef1b40fd9820f55037458bf490ebd92a0c3bbb6a45d"
+        },
+        {
+          "slot": "light_overdrive",
+          "filename": "대포무노_light_overdrive_glossy_promo_f.webp",
+          "sha256": "068f702eec4eb653a91f90d710966cd1a032a422d0c5c74f9417ec2916b13994",
+          "git_blob": "dc0a29d759c27ea289212a50a215bba58cfaf912",
+          "reference": "light",
+          "source_sha256": "8b3f61a76cd5d72f05f9fd37a300bca1fe696e253ab1708f5a356093350773d7"
+        },
+        {
+          "slot": "mobility",
+          "filename": "대포무노_mobility_glossy_promo_f.webp",
+          "sha256": "38be13bbd9f318d7dd35e8ab8188eeb30a219c3b1cc046ce048020caeb6b92eb",
+          "git_blob": "dcfd7f482bb41adeb5dac749c6b002a5de4e5b1e",
+          "reference": "light",
+          "source_sha256": "03bb616aff0f8011269e8452a56d4d49e13da78efbc0159f50a995bf1e3a63ef"
+        },
+        {
+          "slot": "mobility_overdrive",
+          "filename": "대포무노_mobility_overdrive_glossy_promo_f.webp",
+          "sha256": "1caf4e4c701d93a0bc6260a0ecec97588875c925ceec16bbc7a710d1e6696831",
+          "git_blob": "c35f1fa6702ea109a60aa269cfd741f09987a598",
+          "reference": "mobility",
+          "source_sha256": "d4af852dc1fb253938102fc4732af6279fe44ddff014a378f3b5215ebc7c45bc"
+        }
+      ]
+    },
+    {
+      "name": "딜리버드",
+      "number": 225,
+      "image_commit": "3120696d805a6ad5a698f6d2d8b19635d9bbc3df",
+      "thumb_commit": "075ee36e4f92f6740aee2cac68ca372a8a5acc29",
+      "style": "glossy_promo",
+      "gender": "f",
+      "approved_light": {
+        "slot": "light",
+        "filename": "딜리버드_light_glossy_promo_f.webp",
+        "sha256": "4b4291f17b89d58cd2f018be05cdaf4b4242a158e536fe523ac94f53324e92b8",
+        "git_blob": "9b5574e44cc563d3ec7dd1e24106af9143490d46",
+        "reference": null,
+        "source_sha256": "2bd64649ed8dc3961d2ad97964e828d909fa32e2d89532628880c7b5f034e50b"
+      },
+      "prompt_records": "https://github.com/polos0117/pkm-atelier-img-2/tree/main/records/delibird-20261013",
+      "images": [
+        {
+          "slot": "casual1",
+          "filename": "딜리버드_glossy_promo_f_casual1.webp",
+          "sha256": "e8d009b145cf640ab60bc0cbc5f40a3630cb5f6c3566106b5b0bf23a14f3113f",
+          "git_blob": "1356f792a473b75cbb6fce7592e47dd6b0d89bb5",
+          "reference": "light",
+          "source_sha256": "6d9c0af6454ec965ba9ba31cac58c104a66d0c1935caba00b1011bf7bd86ef4c"
+        },
+        {
+          "slot": "casual2",
+          "filename": "딜리버드_glossy_promo_f_casual2.webp",
+          "sha256": "217c1a3a3d6ad3f5eae4fd7253df6c0a050372561ce4651ac63f09770421690e",
+          "git_blob": "3b19ff09b9beb1df943c209edd97ec8f63ad9bd7",
+          "reference": "light",
+          "source_sha256": "0b2dc1feec12d46cbb5ce2a382085071edd48ed7107b11313c79ab79f28775e4"
+        },
+        {
+          "slot": "casual3",
+          "filename": "딜리버드_glossy_promo_f_casual3.webp",
+          "sha256": "3993e007a72794589d7eb33cf0309fbb62b0c9d5c0bd1be49f1071bece4e6848",
+          "git_blob": "8b85ecbaa556c7af859aceab2e2c1abef31fd4ad",
+          "reference": "light",
+          "source_sha256": "93e6e6549922c76a33c506be7df9c1cd6ab9bdcc8dc4189aa31d83874d1c3ac2"
+        },
+        {
+          "slot": "heavy",
+          "filename": "딜리버드_heavy_glossy_promo_f.webp",
+          "sha256": "ff6e08527c746901610e3615c9703daa38febade34735294672256098e8eee59",
+          "git_blob": "dbf018eaa9619ae5ab7e807ec0120b21b8f1e63b",
+          "reference": "light",
+          "source_sha256": "e41a8ab92718b25f85e30f639c6f4ec90e2e7e681ace5518f35a7e9d0120e9ca"
+        },
+        {
+          "slot": "heavy_overdrive",
+          "filename": "딜리버드_heavy_overdrive_glossy_promo_f.webp",
+          "sha256": "c222dc9b7c5d7ad5f50ba50463c29656fb12decce78f2aa3ca4e9a4dc64e8594",
+          "git_blob": "9799fb03907cf470b2a3f21c62896b677eea95e6",
+          "reference": "heavy",
+          "source_sha256": "05218af274205102c0d4e0799f97435412f18319793997d1f27b782843b3e8d0"
+        },
+        {
+          "slot": "light",
+          "filename": "딜리버드_light_glossy_promo_f.webp",
+          "sha256": "4b4291f17b89d58cd2f018be05cdaf4b4242a158e536fe523ac94f53324e92b8",
+          "git_blob": "9b5574e44cc563d3ec7dd1e24106af9143490d46",
+          "reference": null,
+          "source_sha256": "2bd64649ed8dc3961d2ad97964e828d909fa32e2d89532628880c7b5f034e50b"
+        },
+        {
+          "slot": "light_overdrive",
+          "filename": "딜리버드_light_overdrive_glossy_promo_f.webp",
+          "sha256": "f348a5fe4183a3864f2721c9771c37003e6900d13aca4284856138ca8e4dc8c6",
+          "git_blob": "6bc2fe85af50efe60fddd9cfae34994b0a111704",
+          "reference": "light",
+          "source_sha256": "8850f2015f0ff17fb372de088affb8295120a68210161b698c34420d3b5b6445"
+        },
+        {
+          "slot": "mobility",
+          "filename": "딜리버드_mobility_glossy_promo_f.webp",
+          "sha256": "d43bb404118fc8189c442e51f62c26f6f7b1161e52580dd88238446fd96cb346",
+          "git_blob": "ffb817c286535eee2bc7439285a1a94796b5b58b",
+          "reference": "light",
+          "source_sha256": "bf3f62513af1a9b0af319335d74434521526cbea4efc8158158f93d0fa480871"
+        },
+        {
+          "slot": "mobility_overdrive",
+          "filename": "딜리버드_mobility_overdrive_glossy_promo_f.webp",
+          "sha256": "86c8c355f7648d109a4d3f8eebd8c4ba75bd6aae0b2c361f2aa33287b55f1791",
+          "git_blob": "9c27638cc6c25b5c460c6277fedd5eab24ff56fb",
+          "reference": "mobility",
+          "source_sha256": "5eb156f93cb9a22a8e313e5dfee8a3e39b2253dbec0ff39996e37e580ffa3082"
+        }
+      ]
+    },
+    {
+      "name": "만타인",
+      "number": 226,
+      "image_commit": "583d418533605fc257c21a9f8df8ac777cf918a5",
+      "thumb_commit": "34babe68351cbc4d66363fcabd99d7b28cc454b5",
+      "style": "glossy_promo",
+      "gender": "f",
+      "approved_light": {
+        "slot": "light",
+        "filename": "만타인_light_glossy_promo_f.webp",
+        "sha256": "18914eaa7bfce996fcb93a9c09004d001bd16f13db4071ef3a5d20ccf1f727f7",
+        "git_blob": "403ad767c6940a8424b05d05e86dc1b0ac3df16b",
+        "reference": null,
+        "source_sha256": "1d9d38b2ec5d719c258d1ec3716645c25537032771791a56af1a2464f4b14bad"
+      },
+      "prompt_records": "https://github.com/polos0117/pkm-atelier-img-2/tree/main/records/mantine-20261013",
+      "images": [
+        {
+          "slot": "casual1",
+          "filename": "만타인_glossy_promo_f_casual1.webp",
+          "sha256": "c9cb47fb2e98063c52561c38486b29fe0897a2fccd80882469493377f5c17f2a",
+          "git_blob": "8d67136903d980b6aad3303e6929bbfc5a2c9b0f",
+          "reference": "light",
+          "source_sha256": "9ae8ad4fb892e81d427c8bc5f6fd2c1f35523c3c0c93581f28ccb2a40115bc27"
+        },
+        {
+          "slot": "casual2",
+          "filename": "만타인_glossy_promo_f_casual2.webp",
+          "sha256": "ccbe11aae7ab6825c5c6bb70f68b4c0b202c3a76393a5977962073e68be4c02d",
+          "git_blob": "72a8ee42078bc21ba80b750679fcd5dcaaeaef37",
+          "reference": "light",
+          "source_sha256": "cf2e65d7a0f008b891aa4da5fd5708bc798509464168b6c64814e592a94f0054"
+        },
+        {
+          "slot": "casual3",
+          "filename": "만타인_glossy_promo_f_casual3.webp",
+          "sha256": "6d7f52f0f932bbddd71ce27d74f69f21fab3f0f2fdb802e0118c758315b30907",
+          "git_blob": "fce46ac49339d3abddfd302a83350bd0f61f68b2",
+          "reference": "light",
+          "source_sha256": "e7df49b62e9dc7bc3ff25a0b4b0d2ae27a833cd9bdc05167401129b42b7bf909"
+        },
+        {
+          "slot": "heavy",
+          "filename": "만타인_heavy_glossy_promo_f.webp",
+          "sha256": "188e4b0f9b56f63ff11d327d36a3b4c2b03c9eb7df92fc989f203c8b5d40f516",
+          "git_blob": "73142b9b0429003e30f45ac8024782d2593a9956",
+          "reference": "light",
+          "source_sha256": "856ff206450150711a612c7036047d9d3e2bc841534142167ac5fbf0de0c8e5b"
+        },
+        {
+          "slot": "heavy_overdrive",
+          "filename": "만타인_heavy_overdrive_glossy_promo_f.webp",
+          "sha256": "9ec70af50d9391366fce60da3ee7a08847d69f3082a563efaf113bd0524e7163",
+          "git_blob": "8637e7a85fc9486ddc873013a5832a49bc06a6dc",
+          "reference": "heavy",
+          "source_sha256": "c8c26e33c501af89cd0e104dacbb35725d670f17ae07ef19fbebf994df10f73b"
+        },
+        {
+          "slot": "light",
+          "filename": "만타인_light_glossy_promo_f.webp",
+          "sha256": "18914eaa7bfce996fcb93a9c09004d001bd16f13db4071ef3a5d20ccf1f727f7",
+          "git_blob": "403ad767c6940a8424b05d05e86dc1b0ac3df16b",
+          "reference": null,
+          "source_sha256": "1d9d38b2ec5d719c258d1ec3716645c25537032771791a56af1a2464f4b14bad"
+        },
+        {
+          "slot": "light_overdrive",
+          "filename": "만타인_light_overdrive_glossy_promo_f.webp",
+          "sha256": "2152307d3a8022cc581560a649d347d8ffe1deb174cd53d4e34bc1866c4a1798",
+          "git_blob": "6427b1e48573e9ae66097edb097533c44c95cae8",
+          "reference": "light",
+          "source_sha256": "13f15975708ef93a5ea30decec8d564981448c3bd7e64cf825430697c4852351"
+        },
+        {
+          "slot": "mobility",
+          "filename": "만타인_mobility_glossy_promo_f.webp",
+          "sha256": "9e55555b742606ebc9a231cfb1ee9fa4d28cc6b3262498c8717c3224d6cfb417",
+          "git_blob": "102edeec74916c0f522fe96c40d3e53b634da1b8",
+          "reference": "light",
+          "source_sha256": "f72ac194aedfdbeaeebbd55205cca39404f544aaf9512d4194f67cb61737f088"
+        },
+        {
+          "slot": "mobility_overdrive",
+          "filename": "만타인_mobility_overdrive_glossy_promo_f.webp",
+          "sha256": "ce6343933a65d852dd981308dba60a9678312d3e89cdb004f56c4bef28e3d4a2",
+          "git_blob": "83b26bdb1a8e44a9271941a05d0d94946b6c2392",
+          "reference": "mobility",
+          "source_sha256": "1ed4394d4179c9a13c636eba39f9e05ac4c6719697b6f00cc5efee28e78c4185"
+        }
+      ]
+    }
+  ]
+}
