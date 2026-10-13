@@ -43,8 +43,16 @@ import roster
 
 # 초상 파일이 사는 곳. 예전에는 저장소 최상위였는데 GitHub 의 파일 목록 API 가
 # 1000개에서 잘려서, 그 앞에서 새 그림이 조용히 안 보이게 된다. img.json 에는
-# 폴더 없이 파일 이름만 적는다 — 경로는 화면 쪽 IMG_BASE 한 곳이 붙인다.
+# 폴더 없이 파일 이름만 적는다 — 주소는 화면 쪽 lib/img.js 가 붙인다(where 로 저장소를 고른다).
 IMG_DIR = "img"
+# 그림 저장소는 여럿이다(2026-10-13). 한 Pages 사이트는 1 GB 까지라 첫 저장소가 차서 새 그림은
+# 다음 저장소에 올린다. 0 번이 IMG_DIR, 그 뒤가 EXTRA_DIRS 차례 — lib/img.js 의 BASES 와 같은 차례다
+# (tests/img-shards.cjs 가 맞춰 본다). 워크플로는 각 저장소의 img/ 를 이 이름으로 잇는다.
+# 어느 파일이 몇 번 저장소에 있는지는 img.json 의 where 에 적는다(0 번은 적지 않는다 — 옛 주소 그대로).
+# 새 그림은 "열린 저장소" 에만 받는다: 체크아웃에 있는 저장소 가운데 번호가 가장 큰 것.
+# 닫힌 저장소에는 이미 있는 이름의 교체만 받는다 — 새 이름이 오면 등록 전체를 멈춘다.
+SHARDS = ["pkm-atelier-img", "pkm-atelier-img-2"]
+EXTRA_DIRS = ["img-2"]
 
 PAT = re.compile(r"^(.+?)_(m|f|casual(\d+)|extra(\d+)|action(\d+))\.webp$", re.I)
 # 툴킷 화풍 견본. 카드 초상이 아니다
@@ -170,12 +178,36 @@ def main():
     idx = card_index()
     styles = roster.styles()
     forms = roster.forms()
-    disk = {f for f in os.listdir(IMG_DIR) if f.lower().endswith(".webp")}
+    owner, unknown, missing = {}, [], []
+    for i, d in enumerate([IMG_DIR] + list(EXTRA_DIRS)):
+        if not os.path.isdir(d):
+            if i == 0:
+                raise SystemExit("그림 자리 %s 가 없다" % d)
+            missing.append(SHARDS[i] if i < len(SHARDS) else d)
+            continue
+        for f in os.listdir(d):
+            if not f.lower().endswith(".webp"):
+                continue
+            if f in owner:
+                unknown.append((f, "두 그림 저장소(%s·%s)에 같은 이름이 있다 — 한쪽만 둔다" % (SHARDS[owner[f]], SHARDS[i])))
+                continue
+            owner[f] = i
+    # 못 받은 저장소에 적힌 그림이 있으면 --prune 이 그것을 다 지운다. 아직 아무것도 안 올린 저장소(만들기 전 포함)면 잃을 것이 없다
+    held = sorted({SHARDS[i] for i in (doc.get("where") or {}).values()
+                   if isinstance(i, int) and 0 < i < len(SHARDS) and SHARDS[i] in missing})
+    if held and a.prune:
+        raise SystemExit("그림 저장소 %s 를 못 받았다 — 그 저장소 그림이 다 지워지므로 --prune 하지 않는다" % ", ".join(held))
+    open_at = max([0] + [i + 1 for i, d in enumerate(EXTRA_DIRS) if os.path.isdir(d)])
+    disk = set(owner)
     listed = listed_files(img)
 
-    added, unknown = [], []
+    added = []
     for f in sorted(disk - listed):
         if SKIP.match(f):
+            continue
+        if owner[f] < open_at:
+            unknown.append((f, "닫힌 그림 저장소 %s 에 새 그림 — 새 그림은 %s 에 올린다(이미 있는 이름의 교체만 닫힌 저장소에 둔다)"
+                            % (SHARDS[owner[f]], SHARDS[open_at])))
             continue
         m = PAT.match(f)
         if not m:
@@ -278,6 +310,15 @@ def main():
             del v["byStyle"]
 
     tidy(img, styles)
+    # 저장소 자리 — 0 번이 아닌 것만. 못 받은 저장소의 그림·파일이 없어진 그림은 --prune 전에는 자리를 남긴다
+    # (지우면 주소가 0 번으로 돌아가 404 가 된다). 등록 안 하는 화풍 견본(style-)도 적는다 — 생성기가 그린다
+    where = {f: i for f, i in owner.items() if i > 0}
+    if not a.prune:
+        for f, i in (doc.get("where") or {}).items():
+            if f not in owner and isinstance(i, int) and 0 < i < len(SHARDS):
+                where[f] = i
+    if where or "where" in doc:
+        doc["where"] = dict(sorted(where.items()))
     doc["img"] = dict(sorted(img.items()))
     doc["count"] = len(img)
     if not a.check and not unknown:
@@ -285,6 +326,9 @@ def main():
 
     print("[%s] data/img.json · 카드 %d · 파일 %d"
           % ("검증 실패·저장 안 함" if unknown else ("대조" if a.check else "완료"), len(img), len(listed_files(img))))
+    print("  그림 저장소: " + " · ".join("%s %d" % (SHARDS[i], sum(1 for v in owner.values() if v == i))
+                                        for i in range(len(SHARDS)) if i == 0 or i <= len(EXTRA_DIRS))
+          + " · 새 그림은 %s" % SHARDS[open_at] + (" · 못 받은 저장소 " + ", ".join(missing) if missing else ""))
     print("  등록 후보 %d%s" % (len(added), " — 오류로 저장 안 함" if unknown else ""))
     for card, f in added[:20]:
         print("     %-24s %s" % (card, f))
@@ -297,12 +341,14 @@ def main():
         print("  등록 못 한 파일 %d" % len(unknown))
         for f, why in unknown:
             print("     %-40s %s" % (f, why))
-    odd = roster.art_size()
+    odd = roster.art_size([IMG_DIR] + [d for d in EXTRA_DIRS if os.path.isdir(d)])
     if odd:
         print("  새로 들어왔는데 %d×%d 이 아닌 그림 %d"
               % (roster.ART_SIZE[0], roster.ART_SIZE[1], len(odd)))
         for name, w, h in odd[:10]:
             print("     %-40s %d×%d" % (name, w, h))
+    if missing and os.environ.get("GITHUB_ACTIONS"):
+        print("::warning::그림 저장소 %s 를 못 받았다 — 그쪽 자리는 그대로 두고, 새 그림은 %s 로 받는다" % (", ".join(missing), SHARDS[open_at]))
     annotate(added, ghosts, unknown, a.prune and not a.check and not unknown, odd)
     if unknown:
         raise SystemExit(1)

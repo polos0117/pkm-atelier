@@ -70,7 +70,11 @@ async function start() {
          디스크에서 바로 읽는다 */
       const figure = origin === 'https://polos0117.github.io' &&
         new URL(url).pathname.match(/^\/atelier\/assets\/figures\/([^/]+\.png)$/);
+      /* 둘째 그림 저장소부터는 체크아웃의 img-N/ 으로(첫 저장소는 img/ 그대로) */
+      const shard = !figure && origin === 'https://polos0117.github.io' &&
+        new URL(url).pathname.match(/^\/pkm-atelier-img-(\d+)\/img\/(.+)$/);
       const local = figure ? [null, 'img/figure-previews/' + figure[1]] :
+        shard ? [null, 'img-' + shard[1] + '/' + shard[2]] :
         origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
       if (local) {
         const rel = decodeURIComponent(local[1]);

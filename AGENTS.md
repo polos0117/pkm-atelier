@@ -35,10 +35,14 @@
 
 ### 2. 그림은 이 저장소에 두지 않는다
 
-`pkm-atelier-img` 저장소에 올리고 Pages 를 켠다. 그쪽이 1 GB 를 따로 받는다.
-`lib/img.js` 의 `BASE` 한 줄이 그 주소를 가리킨다.
+그림 저장소에 올리고 Pages 를 켠다. Pages 사이트 하나는 1 GB 까지라 저장소가 여럿이다
+(2026-10-13) — `pkm-atelier-img`(0 번, 닫힘: 교체만) · `pkm-atelier-img-2`(1 번, 열림: 새 그림).
+등록기가 0 번이 아닌 파일의 저장소 번호를 `data/img.json` 의 `where` 에 적고, `lib/img.js` 의
+`BASES[번호]` 가 주소를 만든다. 0 번은 적지 않으니 옛 주소는 안 바뀐다. 저장소를 더하거나 고칠 때는
+`BASES`·`tools/register-images.py` 의 `SHARDS`·`EXTRA_DIRS`·등록 워크플로·`.gitignore` 를 같이
+고친다 — `node tests/img-shards.cjs` 가 맞춰 본다. 자세한 것은 IMAGE_RULES.md 4절.
 
-`img/` 는 `.gitignore` 에 있다. 브라우저 검사를 돌릴 때만 쓰는 임시 자리다 —
+`img/`·`img-2/` 는 `.gitignore` 에 있다. 브라우저 검사를 돌릴 때만 쓰는 임시 자리다 —
 `tests/browser-harness.cjs` 가 배포 주소를 이 폴더로 돌려준다. 여기 둔 파일은
 올라가지 않으므로, 실제로 화면에 띄우려면 그림 저장소에 같은 이름으로 올려야 한다.
 
@@ -101,6 +105,8 @@ Preact 가 그리는 `#app` 이 사이에 끼면 키도 같이 물려줘야 한�
 node tests/words.cjs             # 낱말이 코드에 박히지 않았나
 node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
+node tests/img-shards.cjs        # 그림 저장소 여럿 — 옛 주소 그대로 · where · 저장소 차례
+python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장소 · 같은 이름 · 못 받은 저장소
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
@@ -125,7 +131,8 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 # 1) 그림 — 배포 주소를 여기로 돌려 준다 (img/ 는 .gitignore 라 체크아웃에 없다)
 mkdir -p img/figure-previews
 cp <atelier>/assets/figures/*.png img/figure-previews/    # 체형·머리 미리보기 65장
-#    카드 그림은 pkm-atelier-img 에서 img/ 로 내려받는다
+#    카드 그림은 pkm-atelier-img 의 img/ 를 img/ 로, pkm-atelier-img-2 의 img/ 를 img-2/ 로
+#    (옆에 받아 ln -s ../pkm-atelier-img/img img · ln -s ../pkm-atelier-img-2/img img-2 가 쉽다)
 
 # 2) CDN — esm.sh 가 막힌 곳에서만
 ESM_DIR=<preact·htm 이 든 node_modules>

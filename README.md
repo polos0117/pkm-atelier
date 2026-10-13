@@ -16,7 +16,9 @@ tools/       그림 등록 · 썸네일
 tests/       검사
 ```
 
-그림은 이 저장소에 두지 않는다 — `pkm-atelier-img` 저장소에 올리고 Pages 를 켠다.
+그림은 이 저장소에 두지 않는다 — 그림 저장소에 올리고 Pages 를 켠다. 새 그림은 `pkm-atelier-img-2`,
+`pkm-atelier-img` 는 Pages 1 GB 를 채워 닫았다(이미 있는 그림의 교체만). 주소는 `data/img.json` 의
+`where` 와 `lib/img.js` 의 `BASES` 가 고른다.
 이미지를 만들고 등록하는 규칙은 [IMAGE_RULES.md](IMAGE_RULES.md) 에 있다.
 
 ```bash

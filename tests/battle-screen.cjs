@@ -85,8 +85,15 @@ const { start, FOLD } = require('./browser-harness.cjs');
     const src = async () => decodeURIComponent(await p.locator('.bt-actor[data-name="피카츄"] img.bt-pic').getAttribute('src'));
     const form0 = await p.locator('.bt-actor[data-name="피카츄"]').getAttribute('data-form');
     assert((await src()).includes('피카츄_' + form0 + '_'), await src());
-    assert.equal(await p.locator('.bt-actor[data-name="리자몽"] .bt-pic.none').count(), 1, '그림 없는 카드는 자리만');
-    assert.equal(await p.locator('.bt-actor[data-name="리자몽"] img').count(), 0);
+    /* 기본 여섯은 그림이 하나씩 채워진다(리자몽도 채워졌다) — 자료에서 아직 없는 카드를 골라 보고, 다 찼으면 모두 그림이 서는지 본다 */
+    const art = require('../data/img.json').img;
+    const bare = names.find(n => !art[n]);
+    if (bare) {
+      assert.equal(await p.locator(`.bt-actor[data-name="${bare}"] .bt-pic.none`).count(), 1, '그림 없는 카드는 자리만: ' + bare);
+      assert.equal(await p.locator(`.bt-actor[data-name="${bare}"] img`).count(), 0);
+    } else {
+      assert.equal(await p.locator('.bt-pic.none').count(), 0, '여섯 다 그림이 있으면 빈 자리가 없다');
+    }
     const other = ['light', 'heavy', 'mobility'].find(f => f !== form0);
     const pikaCmd = p.locator('.bt-cmd[data-name="피카츄"]');
     if (!(await pikaCmd.locator(`button[data-cmd="${other}"]`).isDisabled())) {

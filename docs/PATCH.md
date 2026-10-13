@@ -10,6 +10,20 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-13 · claude · 그림 저장소 나누기 — 새 그림은 pkm-atelier-img-2, 옛 주소 그대로
+- lib/img.js — 그림 주소를 저장소 목록(BASES)에서 고른다. img.json 의 where 에 적힌 파일만 다음 저장소로 가고 나머지(옛 그림 전부)는 첫 저장소 주소가 한 글자도 안 바뀐다. 첫 저장소의 Pages 사이트가 1 GB 를 넘었다(약 1.18 GB).
+- lib/prompt-ui.js — img.json 을 직접 읽는 생성기 화면도 setShards 로 저장소 자리를 맞춘다.
+- tools/register-images.py — 그림 저장소 여럿을 읽어 where 를 적는다. 새 이름은 열린 저장소(번호가 가장 큰 것)에만 받고, 닫힌 저장소의 새 이름·두 저장소의 같은 이름은 등록 전체를 멈춘다. 둘째부터의 저장소를 못 받으면 자리를 지키고 경고만, 그 저장소에 적힌 그림이 있으면 --prune 을 거부한다.
+- tools/roster.py — 그림 크기 검사가 여러 자리를 보고, 자리 이름을 실제 경로로 잇는다(전에는 "img" 를 박아 두었다).
+- .github/workflows/register-images.yml — 둘째 저장소를 img-2 로 받는다(아직 없거나 못 받아도 등록은 돈다). 검사에 img-shards·register-images 를 더했다.
+- tests/img-shards.cjs — 옛 주소 2,099개가 그대로인지, where 만 옮기는지(썸네일·되돌림 포함), BASES·SHARDS·워크플로·.gitignore 차례가 같은지 본다.
+- tests/register-images.py — 저장소 여럿: where 적기·다시 돌려도 같음·닫힌 저장소·교체·같은 이름·못 받은 저장소·--prune. 차례마다 자료를 새로 읽게 했다(실패한 차례의 고침이 다음으로 새지 않게).
+- tests/browser-harness.cjs — 둘째 저장소 주소를 체크아웃의 img-2/ 로 돌린다.
+- tests/battle-screen.cjs — "그림 없는 카드" 를 리자몽으로 박아 둬서 리자몽 그림이 등록되자 실패했다. 기본 여섯 가운데 그림이 없는 카드를 자료에서 고른다.
+- .gitignore — img·img-2 를 링크로 이어도 올라가지 않게(끝 / 를 뺐다).
+- *.html — img.js·prompt-ui.js 캐시 표를 shards1 로.
+- IMAGE_RULES.md · AGENTS.md · README.md — 어느 저장소에 올리나(새 그림은 열린 저장소, 교체만 제자리), 새 그림 WebP 품질 85·method 6(옛 그림은 다시 인코딩하지 않는다), 다음 저장소 더하는 법.
+
 ## 2026-10-13 · gpt · 포챠나·그라에나·지그제구리 27장 등록과 얼굴 정본
 - data/face-design.json — 3종의 글로시 프로모 경장 정본을 표시하고 최신 도감의 등록 상태와 동기화했다. 지그제구리의 부드러운 체적과 작은 눈 가면을 사람 얼굴 구조로 해석한 이유를 보완했으며 모든 기존 얼굴 선택값을 유지했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 같은 자료에서 얼굴 설계 이유와 정본 안내를 다시 그렸다. 각 캐릭터의 일반 3폼·폼별 개방 3장·일상 3장, 실제 생성기 선택값·제출 프롬프트·교정 기록을 캐릭터별 이미지 커밋에 저장하고 자동 도감 등록을 확인했다.

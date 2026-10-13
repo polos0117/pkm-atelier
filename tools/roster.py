@@ -79,21 +79,22 @@ def _webp_size(rel):
     return None
 
 
-def art_size():
-    """[(이름, 가로, 세로)…] — img/ 안에서 ART_SIZE 가 아닌 그림.
+def art_size(dirs=("img",)):
+    """[(이름, 가로, 세로)…] — 그림 자리(img/, img-2/ …) 안에서 ART_SIZE 가 아닌 그림.
 
     폼 초상은 나란히 놓고 견주는 자리라 크기가 같아야 한다. 하나만 달라도
     고르개에서 그 칸만 커 보인다. 다만 연출컷·일상컷은 일부러 다른 꼴로
     뽑을 수 있으므로 여기서 서지는 않고 적어 내기만 한다."""
     root = os.path.dirname(DIR)
-    d = os.path.join(root, "img")
-    if not os.path.isdir(d):
-        return []
     bad = []
-    for n in sorted(os.listdir(d)):
-        if not n.lower().endswith(".webp"):
+    for rel in dirs:
+        d = rel if os.path.isabs(rel) else os.path.join(root, rel)
+        if not os.path.isdir(d):
             continue
-        sz = _webp_size(os.path.join("img", n))
-        if sz and sz != ART_SIZE:
-            bad.append((n, sz[0], sz[1]))
+        for n in sorted(os.listdir(d)):
+            if not n.lower().endswith(".webp"):
+                continue
+            sz = _webp_size(os.path.join(d, n))   # 그 자리의 경로로 — 예전엔 img/ 로 박혀 있었다
+            if sz and sz != ART_SIZE:
+                bad.append((n, sz[0], sz[1]))
     return bad
