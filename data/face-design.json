@@ -6964,7 +6964,7 @@
 "en":"Marshtomp",
 "line":"물짱이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6990,7 +6990,7 @@
 "en":"Swampert",
 "line":"물짱이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
