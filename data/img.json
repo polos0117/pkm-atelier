@@ -1,7 +1,7 @@
 {
  "version": 1,
  "note": "그림 등록부. 여기 적힌 것만 화면에 뜬다 — 파일이 저장소에 있어도 등록 전에는 없는 것으로 본다. tools/register-images.py 가 이름 규칙과 중복을 검사한 뒤에만 적는다. 이름 차례는 <카드>_<폼>_<화풍>_<성별>[_컷N].webp 이고 뒤에서부터 벗긴다. 폼 초상과 action 은 byForm 안에, 일상컷(casual)은 폼을 타지 않으므로 byForm 밖에 둔다. action 은 있는 폼에만 있다 — 모든 폼에 강제하면 캐릭터 하나에 필요한 그림이 바로 두 배가 된다. 성별은 지금 f 만 쓰지만 이름에는 반드시 적는다(나중에 m 을 더해도 옛 파일의 뜻이 안 바뀌게).",
- "count": 238,
+ "count": 239,
  "img": {
   "가디": {"byStyle": {"glossy_promo": {"casual": {"f": ["가디_glossy_promo_f_casual1.webp", "가디_glossy_promo_f_casual2.webp", "가디_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "가디_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "가디_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "가디_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "가디_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "가디_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "가디_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "강챙이": {"byStyle": {"glossy_promo": {"casual": {"f": ["강챙이_glossy_promo_f_casual1.webp", "강챙이_glossy_promo_f_casual2.webp", "강챙이_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "강챙이_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "강챙이_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "강챙이_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "강챙이_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "강챙이_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "강챙이_mobility_overdrive_glossy_promo_f.webp"}}}}},
@@ -104,6 +104,7 @@
   "모다피": {"byStyle": {"glossy_promo": {"casual": {"f": ["모다피_glossy_promo_f_casual1.webp", "모다피_glossy_promo_f_casual2.webp", "모다피_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "모다피_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "모다피_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "모다피_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "모다피_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "모다피_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "모다피_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "모래두지": {"byStyle": {"glossy_promo": {"casual": {"f": ["모래두지_glossy_promo_f_casual1.webp", "모래두지_glossy_promo_f_casual2.webp", "모래두지_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "모래두지_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "모래두지_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "모래두지_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "모래두지_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "모래두지_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "모래두지_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "무우마": {"byStyle": {"glossy_promo": {"casual": {"f": ["무우마_glossy_promo_f_casual1.webp", "무우마_glossy_promo_f_casual2.webp", "무우마_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "무우마_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "무우마_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "무우마_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "무우마_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "무우마_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "무우마_mobility_overdrive_glossy_promo_f.webp"}}}}},
+  "무장조": {"byStyle": {"glossy_promo": {"casual": {"f": ["무장조_glossy_promo_f_casual1.webp", "무장조_glossy_promo_f_casual2.webp", "무장조_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "무장조_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "무장조_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "무장조_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "무장조_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "무장조_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "무장조_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "물짱이": {"byStyle": {"glossy_promo": {"casual": {"f": ["물짱이_glossy_promo_f_casual1.webp", "물짱이_glossy_promo_f_casual2.webp", "물짱이_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "물짱이_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "물짱이_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "물짱이_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "물짱이_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "물짱이_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "물짱이_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "뮤": {"byStyle": {"glossy_promo": {"casual": {"f": ["뮤_glossy_promo_f_casual1.webp", "뮤_glossy_promo_f_casual2.webp", "뮤_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "뮤_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "뮤_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "뮤_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "뮤_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "뮤_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "뮤_mobility_overdrive_glossy_promo_f.webp"}}}}},
   "뮤츠": {"byStyle": {"glossy_promo": {"casual": {"f": ["뮤츠_glossy_promo_f_casual1.webp", "뮤츠_glossy_promo_f_casual2.webp", "뮤츠_glossy_promo_f_casual3.webp"]}, "byForm": {"heavy": {"f": "뮤츠_heavy_glossy_promo_f.webp"}, "heavy_overdrive": {"f": "뮤츠_heavy_overdrive_glossy_promo_f.webp"}, "light": {"f": "뮤츠_light_glossy_promo_f.webp"}, "light_overdrive": {"f": "뮤츠_light_overdrive_glossy_promo_f.webp"}, "mobility": {"f": "뮤츠_mobility_glossy_promo_f.webp"}, "mobility_overdrive": {"f": "뮤츠_mobility_overdrive_glossy_promo_f.webp"}}}}},
@@ -269,6 +270,15 @@
   "만타인_light_glossy_promo_f.webp": 1,
   "만타인_light_overdrive_glossy_promo_f.webp": 1,
   "만타인_mobility_glossy_promo_f.webp": 1,
-  "만타인_mobility_overdrive_glossy_promo_f.webp": 1
+  "만타인_mobility_overdrive_glossy_promo_f.webp": 1,
+  "무장조_glossy_promo_f_casual1.webp": 1,
+  "무장조_glossy_promo_f_casual2.webp": 1,
+  "무장조_glossy_promo_f_casual3.webp": 1,
+  "무장조_heavy_glossy_promo_f.webp": 1,
+  "무장조_heavy_overdrive_glossy_promo_f.webp": 1,
+  "무장조_light_glossy_promo_f.webp": 1,
+  "무장조_light_overdrive_glossy_promo_f.webp": 1,
+  "무장조_mobility_glossy_promo_f.webp": 1,
+  "무장조_mobility_overdrive_glossy_promo_f.webp": 1
  }
 }
