@@ -7475,7 +7475,7 @@
 "en":"Wingull",
 "line":"갈모매",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -10440,7 +10440,7 @@
 "en":"Grotle",
 "line":"모부기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
