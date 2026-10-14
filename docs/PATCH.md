@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-14 · gpt · 도토링·잎새코·다탱구 27장 등록 완료
+- data/face-design.json — 확정한 세 인물의 얼굴 설계를 유지하고 신규 등록 상태를 도감 등록부와 동기화했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 등록 표시를 정본 자료에서 다시 그려 생성기와 설계표를 맞췄다.
+- 그림 저장소 records/seedot-20261014 · records/nuzleaf-20261014 · records/shiftry-20261014 — 각 9장의 실제 생성기 선택값·제출 원문·해시·손과 일상 다양성 검수 및 수정 기록을 보존했다.
+
 ## 2026-10-14 · gpt · 도토링 계열 얼굴 설계 보완
 - data/face-design.json — 도토리 체적·잎과 가면·긴 코와 흰 갈기에서 도토링·잎새코·다탱구의 윤곽과 이목구비를 각각 설계하고 근거를 기록했다. build가 요구하는 기존 등록 표시도 현재 img.json과 동기화했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 생성기 정본 자료에서 설계표를 다시 그려 실제 FACE 문장과 맞췄다.

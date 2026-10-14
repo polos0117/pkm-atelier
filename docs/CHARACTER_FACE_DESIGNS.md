@@ -19,7 +19,7 @@
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
 - 직접 쓴 설계 618종, 원작 단서 규칙으로 고른 것 407종 · 겹침을 풀며 옮긴 종 854
-- 그림이 이미 있는 종(①이 정본) 269
+- 그림이 이미 있는 종(①이 정본) 275
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -5293,7 +5293,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 249 · 루기아 (Lugia)
 
-계열 기준: 루기아 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 루기아 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5313,7 +5313,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 250 · 칠색조 (Ho-Oh)
 
-계열 기준: 칠색조 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 칠색조 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5333,7 +5333,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 251 · 세레비 (Celebi)
 
-계열 기준: 세레비 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 세레비 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5783,7 +5783,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 273 · 도토링 (Seedot)
 
-계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5805,7 +5805,7 @@ FACE (her own structure, not the style's default face): compact face, short leng
 
 ### 274 · 잎새코 (Nuzleaf)
 
-계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5825,7 +5825,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 275 · 다탱구 (Shiftry)
 
-계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|

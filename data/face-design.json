@@ -6701,7 +6701,7 @@
 "en":"Lugia",
 "line":"루기아",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6731,7 +6731,7 @@
 "en":"Ho-Oh",
 "line":"칠색조",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6756,7 +6756,7 @@
 "en":"Celebi",
 "line":"세레비",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -7342,7 +7342,7 @@
 "en":"Seedot",
 "line":"도토링",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -7368,7 +7368,7 @@
 "en":"Nuzleaf",
 "line":"도토링",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7391,7 +7391,7 @@
 "en":"Shiftry",
 "line":"도토링",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
