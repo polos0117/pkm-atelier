@@ -6025,7 +6025,7 @@
 "en":"Octillery",
 "line":"총어",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -6052,7 +6052,7 @@
 "en":"Delibird",
 "line":"딜리버드",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6077,7 +6077,7 @@
 "en":"Mantine",
 "line":"타만타",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6105,7 +6105,7 @@
 "en":"Skarmory",
 "line":"무장조",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -6135,7 +6135,7 @@
 "en":"Houndour",
 "line":"델빌",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6163,7 +6163,7 @@
 "en":"Houndoom",
 "line":"델빌",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6193,7 +6193,7 @@
 "en":"Kingdra",
 "line":"쏘드라",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6223,7 +6223,7 @@
 "en":"Phanpy",
 "line":"코코리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -6248,7 +6248,7 @@
 "en":"Donphan",
 "line":"코코리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6273,7 +6273,7 @@
 "en":"Porygon2",
 "line":"폴리곤",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6303,7 +6303,7 @@
 "en":"Stantler",
 "line":"노라키",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6328,7 +6328,7 @@
 "en":"Smeargle",
 "line":"루브도",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6357,7 +6357,7 @@
 "en":"Tyrogue",
 "line":"배루키",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -6383,7 +6383,7 @@
 "en":"Hitmontop",
 "line":"배루키",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6410,7 +6410,7 @@
 "en":"Smoochum",
 "line":"뽀뽀라",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -6433,7 +6433,7 @@
 "en":"Elekid",
 "line":"에레키드",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -6461,7 +6461,7 @@
 "en":"Magby",
 "line":"마그비",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -6486,7 +6486,7 @@
 "en":"Miltank",
 "line":"밀탱크",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -6512,7 +6512,7 @@
 "en":"Blissey",
 "line":"핑복",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6535,7 +6535,7 @@
 "en":"Raikou",
 "line":"라이코",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -6560,7 +6560,7 @@
 "en":"Entei",
 "line":"앤테이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -6588,7 +6588,7 @@
 "en":"Suicune",
 "line":"스이쿤",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -6614,7 +6614,7 @@
 "en":"Larvitar",
 "line":"애버라스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -6644,7 +6644,7 @@
 "en":"Pupitar",
 "line":"애버라스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -6672,7 +6672,7 @@
 "en":"Tyranitar",
 "line":"애버라스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -7093,7 +7093,7 @@
 "en":"Linoone",
 "line":"지그제구리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -7123,7 +7123,7 @@
 "en":"Wurmple",
 "line":"개무소",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -7153,7 +7153,7 @@
 "en":"Silcoon",
 "line":"개무소",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -7183,7 +7183,7 @@
 "en":"Beautifly",
 "line":"개무소",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -7209,7 +7209,7 @@
 "en":"Cascoon",
 "line":"개무소",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -7236,7 +7236,7 @@
 "en":"Dustox",
 "line":"개무소",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -7266,7 +7266,7 @@
 "en":"Lotad",
 "line":"연꽃몬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7293,7 +7293,7 @@
 "en":"Lombre",
 "line":"연꽃몬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7316,7 +7316,7 @@
 "en":"Ludicolo",
 "line":"연꽃몬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7341,26 +7341,25 @@
 "name":"도토링",
 "en":"Seedot",
 "line":"도토링",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
-"face shape":"sharp",
-"face length":"balanced",
-"face width":"medium",
-"jaw & chin":"narrow tapered chin",
+"face shape":"compact",
+"face length":"short",
+"face width":"wide",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"large",
 "eye size":"large",
 "eye tilt":"level outer corners",
-"eye spacing":"close-set eyes",
-"eyebrows":"fine soft arches",
+"eye spacing":"wide-set eyes",
+"eyebrows":"short rounded brows",
 "nose character":"small delicate nose",
-"lips":"thin lips"
+"lips":"small mouth"
 },
-"why":"",
+"why":"도토리의 짧고 둥근 체적과 큰 검은 눈을 짧고 넓은 윤곽·큰 눈으로 옮기고, 작은 코와 입으로 소박한 숲의 인상을 남긴다.",
 "cues":[
 "‘large black eyes’ → 눈매 큰 눈",
-"‘large black eyes’ → 눈 크기 큰 눈",
-"몸 형태 legs → 눈 간격 눈 사이가 가까운"
+"‘large black eyes’ → 눈 크기 큰 눈"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 가늘고 완만한 곡선"
 },
@@ -7368,22 +7367,22 @@
 "name":"잎새코",
 "en":"Nuzleaf",
 "line":"도토링",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
-"face width":"medium",
-"jaw & chin":"soft rounded jaw",
-"eye shape":"narrow",
+"face width":"narrow",
+"jaw & chin":"narrow tapered chin",
+"eye shape":"almond",
 "eye size":"medium",
-"eye tilt":"level outer corners",
+"eye tilt":"upturned outer corners",
 "eye spacing":"average eye spacing",
-"eyebrows":"fine soft arches",
-"nose character":"balanced nose",
+"eyebrows":"thin straight brows",
+"nose character":"straight slender bridge",
 "lips":"thin lips"
 },
-"why":"",
+"why":"길고 얇은 팔과 한 장의 잎, 베이지 가면의 또렷한 면을 좁은 타원 윤곽과 기민한 아몬드 눈·가느다란 콧대로 옮긴다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 완만한 곡선"
 },
@@ -7391,23 +7390,24 @@
 "name":"다탱구",
 "en":"Shiftry",
 "line":"도토링",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
-"face shape":"oval",
-"face length":"balanced",
+"face shape":"elongated",
+"face length":"long",
 "face width":"medium",
-"jaw & chin":"soft rounded jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
 "eye spacing":"close-set eyes",
-"eyebrows":"straight medium brows",
+"eyebrows":"feathered full brows",
 "nose character":"prominent defined nose",
 "lips":"wide mouth"
 },
-"why":"",
+"why":"긴 뾰족한 코와 큰 입, 거친 흰 갈기를 긴 얼굴·각진 턱·또렷한 사람 코와 넓은 입·숱 있는 눈썹으로 해석한다. 코를 주둥이나 텐구 부리로 만들지 않는다.",
 "cues":[
+"‘shaggy white mane’ → 눈썹 숱 많고 결이 보이는",
 "‘long, pointed nose’ → 코 크고 또렷한 코",
 "‘large mouth’ → 입술 입이 넓은"
 ],

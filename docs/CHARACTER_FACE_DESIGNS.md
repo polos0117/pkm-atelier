@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 615종, 원작 단서 규칙으로 고른 것 410종 · 겹침을 풀며 옮긴 종 854
-- 그림이 이미 있는 종(①이 정본) 235
+- 직접 쓴 설계 618종, 원작 단서 규칙으로 고른 것 407종 · 겹침을 풀며 옮긴 종 854
+- 그림이 이미 있는 종(①이 정본) 269
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -4759,7 +4759,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 224 · 대포무노 (Octillery)
 
-계열 기준: 총어 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 총어 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4781,7 +4781,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 225 · 딜리버드 (Delibird)
 
-계열 기준: 딜리버드 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 딜리버드 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4801,7 +4801,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 226 · 만타인 (Mantine)
 
-계열 기준: 타만타 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 타만타 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4821,7 +4821,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 227 · 무장조 (Skarmory)
 
-계열 기준: 무장조 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 무장조 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4843,7 +4843,7 @@ FACE (her own structure, not the style's default face): angular face, long lengt
 
 ### 228 · 델빌 (Houndour)
 
-계열 기준: 델빌 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 델빌 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4865,7 +4865,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 229 · 헬가 (Houndoom)
 
-계열 기준: 델빌 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 델빌 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4885,7 +4885,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 230 · 킹드라 (Kingdra)
 
-계열 기준: 쏘드라 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 쏘드라 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4907,7 +4907,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 231 · 코코리 (Phanpy)
 
-계열 기준: 코코리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 코코리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4929,7 +4929,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 232 · 코리갑 (Donphan)
 
-계열 기준: 코코리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 코코리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4951,7 +4951,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 233 · 폴리곤2 (Porygon2)
 
-계열 기준: 폴리곤 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 폴리곤 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4973,7 +4973,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 234 · 노라키 (Stantler)
 
-계열 기준: 노라키 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 노라키 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -4995,7 +4995,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 235 · 루브도 (Smeargle)
 
-계열 기준: 루브도 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 루브도 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5015,7 +5015,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 236 · 배루키 (Tyrogue)
 
-계열 기준: 배루키 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 배루키 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5037,7 +5037,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 237 · 카포에라 (Hitmontop)
 
-계열 기준: 배루키 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 배루키 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5059,7 +5059,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 238 · 뽀뽀라 (Smoochum)
 
-계열 기준: 뽀뽀라 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 뽀뽀라 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5079,7 +5079,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 239 · 에레키드 (Elekid)
 
-계열 기준: 에레키드 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 에레키드 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5099,7 +5099,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 240 · 마그비 (Magby)
 
-계열 기준: 마그비 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 마그비 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5121,7 +5121,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 241 · 밀탱크 (Miltank)
 
-계열 기준: 밀탱크 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 밀탱크 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5143,7 +5143,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 242 · 해피너스 (Blissey)
 
-계열 기준: 핑복 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 핑복 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5163,7 +5163,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 243 · 라이코 (Raikou)
 
-계열 기준: 라이코 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 라이코 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5183,7 +5183,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 244 · 앤테이 (Entei)
 
-계열 기준: 앤테이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 앤테이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5205,7 +5205,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 245 · 스이쿤 (Suicune)
 
-계열 기준: 스이쿤 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 스이쿤 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5227,7 +5227,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 246 · 애버라스 (Larvitar)
 
-계열 기준: 애버라스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 애버라스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5249,7 +5249,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 247 · 데기라스 (Pupitar)
 
-계열 기준: 애버라스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 애버라스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5271,7 +5271,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 248 · 마기라스 (Tyranitar)
 
-계열 기준: 애버라스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 애버라스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5613,7 +5613,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 264 · 직구리 (Linoone)
 
-계열 기준: 지그제구리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 지그제구리 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5633,7 +5633,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 265 · 개무소 (Wurmple)
 
-계열 기준: 개무소 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 개무소 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5651,7 +5651,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 266 · 실쿤 (Silcoon)
 
-계열 기준: 개무소 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 개무소 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5669,7 +5669,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 267 · 뷰티플라이 (Beautifly)
 
-계열 기준: 개무소 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 개무소 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5689,7 +5689,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 268 · 카스쿤 (Cascoon)
 
-계열 기준: 개무소 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 개무소 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5709,7 +5709,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 ### 269 · 독케일 (Dustox)
 
-계열 기준: 개무소 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 개무소 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5729,7 +5729,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 270 · 연꽃몬 (Lotad)
 
-계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5747,7 +5747,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 271 · 로토스 (Lombre)
 
-계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5765,7 +5765,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 272 · 로파파 (Ludicolo)
 
-계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 연꽃몬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5783,60 +5783,66 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 273 · 도토링 (Seedot)
 
-계열 기준: 도토링 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
-| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 사이가 가까운 |
-| 눈썹 | 가늘고 완만한 곡선 |
+| 윤곽 | 짧고 응축된 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 짧고 둥근 |
 | 코 | 작고 여린 코 |
-| 입 | 얇은 입술 |
+| 입 | 입이 작은 |
 
-**원작 단서:** ‘large black eyes’ → 눈매 큰 눈 · ‘large black eyes’ → 눈 크기 큰 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운
+**이유:** 도토리의 짧고 둥근 체적과 큰 검은 눈을 짧고 넓은 윤곽·큰 눈으로 옮기고, 작은 코와 입으로 소박한 숲의 인상을 남긴다.
+
+**원작 단서:** ‘large black eyes’ → 눈매 큰 눈 · ‘large black eyes’ → 눈 크기 큰 눈
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 가늘고 완만한 곡선
 
 ```text
-FACE (her own structure, not the style's default face): sharp face, balanced length, medium width; narrow tapered chin; open rounded eyes, large size, level outer corners, close-set; fine soft arches; small delicate nose; thin lips.
+FACE (her own structure, not the style's default face): compact face, short length, wide width; soft rounded jaw; open rounded eyes, large size, level outer corners, wide-set; short rounded brows; small delicate nose; small mouth.
 ```
 
 ### 274 · 잎새코 (Nuzleaf)
 
-계열 기준: 도토링 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
-| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
-| 눈썹 | 가늘고 완만한 곡선 |
-| 코 | 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
+
+**이유:** 길고 얇은 팔과 한 장의 잎, 베이지 가면의 또렷한 면을 좁은 타원 윤곽과 기민한 아몬드 눈·가느다란 콧대로 옮긴다.
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 완만한 곡선
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; fine soft arches; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width; narrow tapered chin; almond eyes, medium size, upturned outer corners, average spacing; thin straight brows; straight slender bridge nose; thin lips.
 ```
 
 ### 275 · 다탱구 (Shiftry)
 
-계열 기준: 도토링 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 도토링 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
-| 눈썹 | 중간 두께의 직선 |
+| 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 
-**원작 단서:** ‘long, pointed nose’ → 코 크고 또렷한 코 · ‘large mouth’ → 입술 입이 넓은
+**이유:** 긴 뾰족한 코와 큰 입, 거친 흰 갈기를 긴 얼굴·각진 턱·또렷한 사람 코와 넓은 입·숱 있는 눈썹으로 해석한다. 코를 주둥이나 텐구 부리로 만들지 않는다.
+
+**원작 단서:** ‘shaggy white mane’ → 눈썹 숱 많고 결이 보이는 · ‘long, pointed nose’ → 코 크고 또렷한 코 · ‘large mouth’ → 입술 입이 넓은
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, close-set; straight medium brows; prominent defined nose; wide mouth.
+FACE (her own structure, not the style's default face): elongated face, long length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; feathered full brows; prominent defined nose; wide mouth.
 ```
 
 ### 276 · 테일로 (Taillow)
