@@ -8349,7 +8349,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 397 · 찌르버드 (Staravia)
 
-계열 기준: 찌르꼬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
+계열 기준: 찌르꼬 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8358,6 +8358,8 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
+
+**이유:** 검정·흰색의 대비와 영역을 지키는 찌르레기 인상을, 균형 잡힌 타원 윤곽·좁고 올라간 눈·곧은 중간 두께 눈썹으로 해석. 길고 가는 주황 부리는 사람의 곧고 가는 콧대와 얇은 입술로 옮겼다. 2026-10-15 경장 ①이 확정 정본이며 후속은 그 그림을 첨부한다.
 
 **원작 단서:** 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · ‘long, orange beak’ → 코 곧고 가는 콧대
 

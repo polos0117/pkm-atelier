@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-15 · gpt · 찌르버드 경장 정본 표시
+- data/face-design.json — 찌르버드 경장 ①의 원작 해석 근거와 정본 표시.
+- docs/CHARACTER_FACE_DESIGNS.md — 정본 표시를 자료에서 다시 그림.
+
 ## 2026-10-15 · gpt · 폭음룡 경장 정본과 아홉 장 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 폭음룡의 긴 윤곽·좁은 눈·뚜렷한 코와 아래 입술을 원작에서 해석하고 등록된 경장 ①을 정본으로 표시.
 - docs/image-batches/exploud-20261015.md — 그림·기록 커밋, 경장 해시와 아홉 장 검수·자동 등록 완료 기록.
