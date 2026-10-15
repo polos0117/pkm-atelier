@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-15 · gpt · 찌르호크 경장 정본 표시
+- data/face-design.json — 아홉 장 자동 등록을 확인한 찌르호크 경장 ①의 정본 표시와 원작 해석 근거.
+- docs/CHARACTER_FACE_DESIGNS.md — 찌르호크 정본 표시를 자료에서 다시 그림.
+
 ## 2026-10-15 · gpt · 찌르버드 경장 정본 표시
 - data/face-design.json — 찌르버드 경장 ①의 원작 해석 근거와 정본 표시.
 - docs/CHARACTER_FACE_DESIGNS.md — 정본 표시를 자료에서 다시 그림.

@@ -10697,8 +10697,8 @@
 "name":"찌르호크",
 "en":"Staraptor",
 "line":"찌르꼬",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -10712,7 +10712,7 @@
 "nose character":"balanced nose",
 "lips":"thin lips"
 },
-"why":"",
+"why":"붉은 끝의 검정 볏과 힘센 날개의 맹금 이미지를, 올라간 좁은 눈매와 가는 직선 눈썹·얇은 입으로 해석했다. 찌르버드와는 부드러운 둥근 턱·보통 높이의 사람 코·가는 눈썹을 구분점으로 삼았다. 2026-10-15 확정 경장 ①이 정본이며 후속은 그 그림을 첨부한다.",
 "cues":[
 "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리"
 ],
