@@ -70,6 +70,8 @@ GARMENTS = {
     "uniform": r"\buniform\b",
     "traditional": r"\b(hanbok|kimono|yukata|sari|ao dai|dirndl|hanfu)\b",
 }
+# 몸을 덮는 겉옷 — 피부 노출 bold 를 의상이 지워 버리지 않게 세 장 중 한 장까지
+COVERING = {"coat", "jacket", "cardigan", "sweater"}
 FILLER = [
     (r"no (outer|extra) (layer|jacket)", "덧옷이 없다는 채우기 문구"),
     (r"unlettered|unlabell?ed|no lettering|no text|no logo|no signs?\b|without (letters|text|labels?)", "글자 금지 문구(생성기가 이미 넣는다)"),
@@ -317,6 +319,9 @@ def check_plan(doc, plan, sp):
             same = sum(1 for c in cuts if any((c.get("axes") or {}) == (d.get("axes") or {}) for d in e["cuts"]))
             if same >= 2:
                 bad("세 축 값이 %s 의 컷과 같은 컷이 둘 이상" % e.get("card"))
+        cover = [c["cut"] for c in cuts if set(c.get("garments") or []) & COVERING]
+        if len(cover) > 1:
+            bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 세 장 중 한 장까지" % ("·".join(sorted(COVERING)), cover))
         motif = sum(bool(re.search(r"\b(tiny|small|one) [a-z -]*(charm|pendant|ring|earring|clasp|pin|brooch|bracelet|badge|clip|stud)", (c.get("outfit") or "").lower())) for c in cuts)
         if motif == 3:
             bad("세 장 모두 작은 원작 장신구 — 필요한 컷에만 넣는다")

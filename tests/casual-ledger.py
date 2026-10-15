@@ -50,6 +50,9 @@ fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")   
 fails(lambda c: c[0].update(scene="A plain unlettered lantern stall."), "글자")                          # 글자 금지 문구
 fails(lambda c: c[0].update(cat="hobbies_leisure", ex="hobby_music"), "바퀴")                      # 예시 적은 갈래는 한 바퀴
 
+# 덮는 겉옷은 한 장까지
+p = copy.deepcopy(good); p["characters"][0]["cuts"][0]["garments"] = ["dress", "coat"]; p["characters"][0]["cuts"][2]["garments"] = ["lingerie_set", "cardigan"]
+assert any("겉옷" in e for e in L.check_plan(doc, p, SP))
 # 시간대가 달라도 시각 차례로 줄 선다
 assert [e["card"] for e in L.live({"entries": [done("late", [], "2026-10-15T01:00:00+00:00"), done("early", [], "2026-10-15T09:30:00+09:00")]})] == ["early", "late"]
 # 한 바퀴: 예시가 적은 갈래는 덜 쓴 것부터 — 기록에 hobby_music 만 썼으니 hobby_music 은 바퀴에서 빠진다
@@ -99,4 +102,4 @@ with tempfile.TemporaryDirectory() as tmp:
     assert [e["status"] for e in out["entries"]] == ["done"], out["entries"]
     assert out["entries"][0]["cuts"][0]["garments"] == ["dress", "jacket"], out["entries"][0]["cuts"][0]
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
