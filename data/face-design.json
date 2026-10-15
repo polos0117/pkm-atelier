@@ -7500,7 +7500,7 @@
 "en":"Pelipper",
 "line":"갈모매",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7525,7 +7525,7 @@
 "en":"Ralts",
 "line":"랄토스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -7552,7 +7552,7 @@
 "en":"Kirlia",
 "line":"랄토스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7579,7 +7579,7 @@
 "en":"Gardevoir",
 "line":"랄토스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -7606,7 +7606,7 @@
 "en":"Surskit",
 "line":"비구술",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -7636,7 +7636,7 @@
 "en":"Masquerain",
 "line":"비구술",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -7663,7 +7663,7 @@
 "en":"Shroomish",
 "line":"버섯꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -7689,7 +7689,7 @@
 "en":"Breloom",
 "line":"버섯꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7716,7 +7716,7 @@
 "en":"Slakoth",
 "line":"게을로",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7741,7 +7741,7 @@
 "en":"Vigoroth",
 "line":"게을로",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -7764,7 +7764,7 @@
 "en":"Slaking",
 "line":"게을로",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7789,7 +7789,7 @@
 "en":"Nincada",
 "line":"토중몬",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7814,7 +7814,7 @@
 "en":"Ninjask",
 "line":"토중몬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -7840,7 +7840,7 @@
 "en":"Shedinja",
 "line":"토중몬",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -7867,7 +7867,7 @@
 "en":"Whismur",
 "line":"소곤룡",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -7896,33 +7896,33 @@
 "name":"노공룡",
 "en":"Loudred",
 "line":"소곤룡",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
-"face length":"balanced",
-"face width":"medium",
-"jaw & chin":"soft rounded jaw",
+"face length":"short",
+"face width":"wide",
+"jaw & chin":"square broad jaw",
 "eye shape":"large",
-"eye size":"large",
+"eye size":"medium",
 "eye tilt":"level outer corners",
-"eye spacing":"average eye spacing",
-"eyebrows":"fine soft arches",
-"nose character":"balanced nose",
-"lips":"medium lips"
+"eye spacing":"wide-set eyes",
+"eyebrows":"thick low brows",
+"nose character":"rounded soft tip",
+"lips":"wide mouth"
 },
-"why":"",
+"why":"각진 몸통과 원형 스피커 귀는 짧고 넓은 얼굴·단단한 턱과 대비되는 둥근 눈으로 해석한다. 넓은 입 윤곽은 넓은 사람 입술선, 짧은 코는 둥근 코끝으로 옮긴다.",
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통, 입술 윗입술이 활 모양인 → 보통"
+"adjusted":""
 },
 "295":{
 "name":"폭음룡",
 "en":"Exploud",
 "line":"소곤룡",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -10465,7 +10465,7 @@
 "en":"Torterra",
 "line":"모부기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -10492,7 +10492,7 @@
 "en":"Chimchar",
 "line":"불꽃숭이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -10517,7 +10517,7 @@
 "en":"Monferno",
 "line":"불꽃숭이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -10543,7 +10543,7 @@
 "en":"Infernape",
 "line":"불꽃숭이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -10568,7 +10568,7 @@
 "en":"Piplup",
 "line":"팽도리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -10595,7 +10595,7 @@
 "en":"Prinplup",
 "line":"팽도리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -10620,7 +10620,7 @@
 "en":"Empoleon",
 "line":"팽도리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -10647,7 +10647,7 @@
 "en":"Starly",
 "line":"찌르꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -10674,7 +10674,7 @@
 "en":"Staravia",
 "line":"찌르꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -12088,14 +12088,14 @@
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
 "eyebrows":"thick low brows",
-"nose character":"rounded soft tip",
+"nose character":"balanced nose",
 "lips":"wide mouth"
 },
 "why":"하마의 큰 주둥이와 둥근 귀를 넓은 하관 및 둥근 코끝으로 옮긴다.",
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 보통"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통"
 },
 "450":{
 "name":"하마돈",
@@ -14935,7 +14935,7 @@
 "eye spacing":"wide-set eyes",
 "eyebrows":"thick low brows",
 "nose character":"balanced nose",
-"lips":"wide mouth"
+"lips":"full lips"
 },
 "why":"불꽃 고릴라의 큰 체적을 넓은 하관과 굵고 낮은 눈썹으로 구분한다.",
 "cues":[
@@ -14943,9 +14943,10 @@
 "‘rounded red ape’ → 얼굴 폭 넓은 얼굴",
 "‘rounded red ape’ → 눈매 큰 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
-"‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은"
+"‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은",
+"‘rounded red ape’ → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형, 눈매 가늘고 날카로운 눈 → 큰 눈"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술"
 },
 "556":{
 "name":"마라카치",
@@ -24164,14 +24165,14 @@
 "eye spacing":"average eye spacing",
 "eyebrows":"thick low brows",
 "nose character":"balanced nose",
-"lips":"wide mouth"
+"lips":"medium lips"
 },
 "why":"권법 곰의 강한 체적과 뻗은 머리띠를 넓은 하관과 굵은 눈썹으로 구분한다.",
 "cues":[
 "악 타입 → 눈매 강하게 치켜올라간 눈",
 "격투 타입 → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 보통, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 보통"
 },
 "893":{
 "name":"자루도",

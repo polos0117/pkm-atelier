@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 621종, 원작 단서 규칙으로 고른 것 404종 · 겹침을 풀며 옮긴 종 851
-- 그림이 이미 있는 종(①이 정본) 280
+- 직접 쓴 설계 622종, 원작 단서 규칙으로 고른 것 403종 · 겹침을 풀며 옮긴 종 850
+- 그림이 이미 있는 종(①이 정본) 306
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -5907,7 +5907,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 
 ### 279 · 패리퍼 (Pelipper)
 
-계열 기준: 갈모매 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 갈모매 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5927,7 +5927,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 280 · 랄토스 (Ralts)
 
-계열 기준: 랄토스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 랄토스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5949,7 +5949,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 281 · 킬리아 (Kirlia)
 
-계열 기준: 랄토스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 랄토스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5971,7 +5971,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 282 · 가디안 (Gardevoir)
 
-계열 기준: 랄토스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 랄토스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -5993,7 +5993,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 283 · 비구술 (Surskit)
 
-계열 기준: 비구술 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 비구술 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6011,7 +6011,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 ### 284 · 비나방 (Masquerain)
 
-계열 기준: 비구술 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 비구술 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6033,7 +6033,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 285 · 버섯꼬 (Shroomish)
 
-계열 기준: 버섯꼬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 버섯꼬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6053,7 +6053,7 @@ FACE (her own structure, not the style's default face): oval face, short length,
 
 ### 286 · 버섯모 (Breloom)
 
-계열 기준: 버섯꼬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 버섯꼬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6073,7 +6073,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 287 · 게을로 (Slakoth)
 
-계열 기준: 게을로 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 게을로 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6095,7 +6095,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 288 · 발바로 (Vigoroth)
 
-계열 기준: 게을로 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 게을로 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6115,7 +6115,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 289 · 게을킹 (Slaking)
 
-계열 기준: 게을로 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 게을로 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6135,7 +6135,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 290 · 토중몬 (Nincada)
 
-계열 기준: 토중몬 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 토중몬 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6157,7 +6157,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 291 · 아이스크 (Ninjask)
 
-계열 기준: 토중몬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 토중몬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6177,7 +6177,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 292 · 껍질몬 (Shedinja)
 
-계열 기준: 토중몬 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 토중몬 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6199,7 +6199,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 ### 293 · 소곤룡 (Whismur)
 
-계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6219,27 +6219,27 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 ### 294 · 노공룡 (Loudred)
 
-계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 소곤룡 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
-| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
-| 눈썹 | 가늘고 완만한 곡선 |
-| 코 | 보통 |
-| 입 | 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 넓고 각진 사각 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 넓은 |
+
+**이유:** 각진 몸통과 원형 스피커 귀는 짧고 넓은 얼굴·단단한 턱과 대비되는 둥근 눈으로 해석한다. 넓은 입 윤곽은 넓은 사람 입술선, 짧은 코는 둥근 코끝으로 옮긴다.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통, 입술 윗입술이 활 모양인 → 보통
-
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, large size, level outer corners, average spacing; fine soft arches; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, short length, wide width; square broad jaw; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; rounded soft tip nose; wide mouth.
 ```
 
 ### 295 · 폭음룡 (Exploud)
 
-계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8175,7 +8175,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 389 · 토대부기 (Torterra)
 
-계열 기준: 모부기 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 모부기 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8197,7 +8197,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 390 · 불꽃숭이 (Chimchar)
 
-계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8219,7 +8219,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 ### 391 · 파이숭이 (Monferno)
 
-계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8241,7 +8241,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 392 · 초염몽 (Infernape)
 
-계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 불꽃숭이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8263,7 +8263,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 ### 393 · 팽도리 (Piplup)
 
-계열 기준: 팽도리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 팽도리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8285,7 +8285,7 @@ FACE (her own structure, not the style's default face): oval face, short length,
 
 ### 394 · 팽태자 (Prinplup)
 
-계열 기준: 팽도리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 팽도리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8307,7 +8307,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 395 · 엠페르트 (Empoleon)
 
-계열 기준: 팽도리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 팽도리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8329,7 +8329,7 @@ FACE (her own structure, not the style's default face): angular face, long lengt
 
 ### 396 · 찌르꼬 (Starly)
 
-계열 기준: 찌르꼬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 찌르꼬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -8349,7 +8349,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 397 · 찌르버드 (Staravia)
 
-계열 기준: 찌르꼬 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 찌르꼬 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -9396,17 +9396,17 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 보통 |
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
-| 코 | 코끝이 둥근 |
+| 코 | 보통 |
 | 입 | 입이 넓은 |
 
 **이유:** 하마의 큰 주둥이와 둥근 귀를 넓은 하관 및 둥근 코끝으로 옮긴다.
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, wide width; balanced jawline; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; rounded soft tip nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; balanced jawline; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; wide mouth.
 ```
 
 ### 450 · 하마돈 (Hippowdon)
@@ -11575,16 +11575,16 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
-| 입 | 입이 넓은 |
+| 입 | 도톰한 입술 |
 
 **이유:** 불꽃 고릴라의 큰 체적을 넓은 하관과 굵고 낮은 눈썹으로 구분한다.
 
-**원작 단서:** ‘rounded red ape’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘rounded red ape’ → 얼굴 폭 넓은 얼굴 · ‘rounded red ape’ → 눈매 큰 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은
+**원작 단서:** ‘rounded red ape’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘rounded red ape’ → 얼굴 폭 넓은 얼굴 · ‘rounded red ape’ → 눈매 큰 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은 · ‘rounded red ape’ → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형, 눈매 가늘고 날카로운 눈 → 큰 눈
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술
 
 ```text
-FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; wide mouth.
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; full lips.
 ```
 
 ### 556 · 마라카치 (Maractus)
@@ -18535,16 +18535,16 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
-| 입 | 입이 넓은 |
+| 입 | 보통 |
 
 **이유:** 권법 곰의 강한 체적과 뻗은 머리띠를 넓은 하관과 굵은 눈썹으로 구분한다.
 
 **원작 단서:** 악 타입 → 눈매 강하게 치켜올라간 눈 · 격투 타입 → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 보통, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, wide width; balanced jawline; sharp eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; balanced jawline; sharp eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; medium lips.
 ```
 
 ### 893 · 자루도 (Zarude)
