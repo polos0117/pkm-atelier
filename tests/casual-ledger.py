@@ -1,0 +1,102 @@
+"""일상컷 장부 — 기록 읽기, 예약, 계획 검사. python3 tests/casual-ledger.py
+   - build: casualN-ui.json 에서 선택값과 옷 종류를 읽고, 등록된 캐릭터의 reserved 는 done 으로 바뀐다
+   - check: IMAGE_RULES 3절의 장부 조건을 하나씩 어긴 계획이 그 이유로 걸린다. 지키는 계획은 통과한다
+   - reserve: 통과한 계획만 reserved 로 적고, 다음 세션의 check 가 그것을 비교 대상으로 본다"""
+import copy, importlib.util, io, json, contextlib, os, sys, tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location('ledger', ROOT / 'tools' / 'casual-ledger.py')
+L = importlib.util.module_from_spec(spec); spec.loader.exec_module(L)
+SP = L.spec()
+
+
+def cut(n, cat, ex, expr, pose, orient, frame, src, garments, act="balanced", **kw):
+    return {"cut": n, "cat": cat, "ex": ex, "expr": expr, "pose": pose, "orient": orient, "frame": frame, "lens": "natural50",
+            "axes": {"action_level": act, "source_influence": src, "separates_preference": "balanced"}, "garments": garments, **kw}
+
+
+def done(card, cuts, at):
+    return {"species": card, "card": card, "status": "done", "at": at, "cuts": cuts}
+
+
+# 앞선 다섯 명 — 필수 갈래는 모두 한 장, 1번 자리
+hist = [done("A%d" % i, [cut(1, "adult_roleplay", "retro_racer", "e1", "p1", "front", "full_body", "subtle", ["jacket", "shorts"]),
+                          cut(2, "everyday_basic", "pottery_class", "e2", "p2", "side", "waist_up", "balanced", ["blouse", "skirt"]),
+                          cut(3, "hobbies_leisure", "hobby_music", "e3", "p3", "front_3q", "three_quarter", "subtle", ["shirt", "trousers"])],
+             "2026-10-1%dT10:00:00+09:00" % i) for i in range(1, 6)]
+doc = {"entries": hist}
+
+good = {"session": "t", "characters": [{"card": "B", "species": "b-1", "cuts": [
+    cut(1, "festivals_contests", "fest_lantern", "x1", "q1", "low_angle", "environmental", "strong", ["dress"], act="mostly active"),
+    cut(2, "swimwear", "classic_bikini", "x2", "q2", "high_angle", "chest_up", "balanced", ["bikini"], act="mostly posed"),
+    cut(3, "lingerie", "lace_set", "x3", "q3", "rear_3q", "full_body", "subtle", ["lingerie_set"], act="mostly posed")]}]}
+assert "classic_bikini" in SP["ex"]["swimwear"] and "lace_set" in SP["ex"]["lingerie"] and "fest_lantern" in SP["ex"]["festivals_contests"]
+assert L.check_plan(doc, good, SP) == [], L.check_plan(doc, good, SP)
+
+
+def fails(mutate, why):
+    p = copy.deepcopy(good); mutate(p["characters"][0]["cuts"])
+    errs = L.check_plan(doc, p, SP)
+    assert any(why in e for e in errs), (why, errs)
+
+fails(lambda c: c[0].update(cat="hobbies_leisure", ex="hobby_music"), "이미 썼다")                       # 최근 10명 안 같은 예시
+fails(lambda c: c[0].update(orient="front", frame="full_body"), "짝")                                     # 구도 짝 겹침
+fails(lambda c: c[1].update(frame="detail"), "쓰지 않는")                                                 # 얼굴이 안 보이는 프레이밍
+fails(lambda c: c[2].update(cat="active", ex=SP["ex"]["active"][0]), "두 장")                        # 다섯 명에 한 번은 두 장
+fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURCE")                      # 세 장 같은 영향도
+fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만
+fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")                              # 채우기 문구
+fails(lambda c: c[0].update(scene="A plain unlettered lantern stall."), "글자")                          # 글자 금지 문구
+fails(lambda c: c[0].update(cat="hobbies_leisure", ex="hobby_music"), "바퀴")                      # 예시 적은 갈래는 한 바퀴
+
+# 시간대가 달라도 시각 차례로 줄 선다
+assert [e["card"] for e in L.live({"entries": [done("late", [], "2026-10-15T01:00:00+00:00"), done("early", [], "2026-10-15T09:30:00+09:00")]})] == ["early", "late"]
+# 한 바퀴: 예시가 적은 갈래는 덜 쓴 것부터 — 기록에 hobby_music 만 썼으니 hobby_music 은 바퀴에서 빠진다
+assert "hobby_music" not in L.small_cat_open(doc["entries"], "hobbies_leisure", SP["ex"]["hobbies_leisure"])
+# 필수 갈래 자리 — 바로 앞 캐릭터와 같은 자리면 걸린다
+p = copy.deepcopy(good); c = p["characters"][0]["cuts"]
+c[0].update(cat="adult_roleplay", ex="casino_dealer"); c[1].update(cat="festivals_contests", ex="fest_booth"); c[2].update(cat="travel_exploration", ex="travel_lakeside")
+assert any("자리" in e for e in L.check_plan(doc, p, SP))
+# 역할극을 행사장으로
+p = copy.deepcopy(good); p["characters"][0]["cuts"][1].update(cat="adult_roleplay", ex="casino_dealer", scene="At a themed costume event hall.")
+assert any("역할극" in e for e in L.check_plan(doc, p, SP))
+
+# 배치 안 두 캐릭터가 같은 예시·같은 구도 짝 — 동시 세션 문제를 계획 단계에서 막는다
+p = copy.deepcopy(good); twin = copy.deepcopy(p["characters"][0]); twin.update(card="C", species="c-1"); p["characters"].append(twin)
+errs = L.check_plan(doc, p, SP)
+assert any(e.startswith("C:") and "이미 썼다" in e for e in errs) and any(e.startswith("C:") and "짝" in e for e in errs), errs
+
+with tempfile.TemporaryDirectory() as tmp:
+    # reserve → 다른 세션의 같은 계획이 걸린다
+    led = os.path.join(tmp, "ledger.json"); json.dump(doc, open(led, "w"))
+    plan = os.path.join(tmp, "plan.json"); json.dump(good, open(plan, "w"))
+    a = type("A", (), {"ledger": led, "plan": plan, "repos": []})
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.check(a, write=True)
+    saved = json.load(open(led))
+    assert [e["status"] for e in saved["entries"]].count("reserved") == 1
+    other = copy.deepcopy(good); other["characters"][0].update(card="D", species="d-1")
+    errs = L.check_plan(saved, other, SP)
+    assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs), errs
+    # 오래된 예약은 버린다
+    mine = next(e for e in saved["entries"] if e["card"] == "B")
+    mine["at"] = "2020-01-01T00:00:00+09:00"
+    assert L.check_plan(saved, other, SP) == [], L.check_plan(saved, other, SP)
+
+    # build — 기록을 읽고, 등록된 캐릭터의 예약은 지운다
+    rec = Path(tmp) / "img2" / "records" / "b-1"; rec.mkdir(parents=True)
+    for c in good["characters"][0]["cuts"]:
+        sc = {k: c[k] for k in ("cat", "ex", "expr", "pose", "orient", "frame", "lens")}
+        sc.update(axes=c["axes"], outfit="A long linen sundress with a short denim jacket.")
+        json.dump({"storage": {"last": "B", "cards": {"B": {"scenes": {"casual": sc}}}}}, open(rec / ("casual%d-ui.json" % c["cut"]), "w"))
+    mine["at"] = L.now()
+    json.dump(saved, open(led, "w"))
+    b = type("B", (), {"ledger": led, "repos": [str(Path(tmp) / "img2")]})
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.build(b)
+    out = json.load(open(led))
+    assert [e["status"] for e in out["entries"]] == ["done"], out["entries"]
+    assert out["entries"][0]["cuts"][0]["garments"] == ["dress", "jacket"], out["entries"][0]["cuts"][0]
+
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 역할극 연출 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
