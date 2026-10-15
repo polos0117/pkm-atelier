@@ -30,9 +30,8 @@ REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pk
 LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "casual-ledger.json")
 
 REQUIRED = {"adult_roleplay", "swimwear", "lingerie"}
-# 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름),
-# partner_care(곁에 포켓몬이 있어야 하는데 일상컷은 한 명만 그린다)
-NOT_COUNTED = {"auto_random", "__custom__", "everyday", "partner_care"}
+# 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름)
+NOT_COUNTED = {"auto_random", "__custom__", "everyday"}
 BANNED_FRAME = {"face_close", "detail"}
 BANNED_ORIENT = {"back", "back_to_camera", "walking_away"}
 EX_WINDOW = 10          # 같은 장면 예시는 최근 10명 안에서 다시 쓰지 않는다
@@ -300,8 +299,8 @@ def check_plan(doc, plan, sp):
             for p, why in FILLER:
                 if re.search(p, ((c.get("outfit") or "") + " " + (c.get("scene") or "")).lower()):
                     bad("%s번: %s" % (n, why))
-            if c.get("cat") == "adult_roleplay" and re.search(r"themed|costume (event|booth|party|exhibition)|exhibition|booth", (c.get("scene") or "").lower()):
-                bad("%s번: 역할극을 테마 행사장·코스튬 부스로 연출했다 — 그 역할의 장면 자체로 쓴다" % n)
+        if sum(bool(re.search(r"\b(empty|deserted|quiet)\b", (c.get("scene") or "").lower())) for c in cuts) > 1:
+            bad("빈·조용한 장소는 세 장 중 한 장까지")
         if not any(c.get("orient") not in orients or c.get("frame") not in frames for c in cuts):
             bad("방향이나 프레이밍을 비교 대상이 안 쓴 값으로 고른 컷이 없다")
         if not any(g not in gar for c in cuts for g in (c.get("garments") or [])):

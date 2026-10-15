@@ -21,6 +21,14 @@ for(const [cat] of S.CATS){
  for(const row of rows.filter(r=>r[0]&&r[0]!=='__custom__'))
   assert(S.EX_NOTE[row[0]],'missing example description: '+row[0]);
 }
+// 파트너 돌봄만 동료 한 마리를 허락한다 — 다른 갈래는 그대로 한 명만
+{
+ const care=L.buildSingle({...base,cat:'partner_care',ex:'care_brushing'});
+ assert(care.includes(S.TEMPLATES?S.TEMPLATES.figureCompanion:'exactly one Pokémon companion')||care.includes('exactly one Pokémon companion'),'partner_care allows one companion');
+ assert(!care.includes('no creature beside her'),'partner_care must not forbid its own companion');
+ const other=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music'});
+ assert(other.includes('no creature beside her')&&!other.includes('Pokémon companion as the scene'),'other categories stay one figure');
+}
 // Keep existing saved job keys working, with the new setting and task instructions.
 for(const cat of ['occupation_basic','occupation_sensual']){
  for(const row of S.EXAMPLE_MAP[cat].filter(r=>r[0]&&r[0]!=='__custom__')){

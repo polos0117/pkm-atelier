@@ -58,9 +58,9 @@ assert "hobby_music" not in L.small_cat_open(doc["entries"], "hobbies_leisure", 
 p = copy.deepcopy(good); c = p["characters"][0]["cuts"]
 c[0].update(cat="adult_roleplay", ex="casino_dealer"); c[1].update(cat="festivals_contests", ex="fest_booth"); c[2].update(cat="travel_exploration", ex="travel_lakeside")
 assert any("자리" in e for e in L.check_plan(doc, p, SP))
-# 역할극을 행사장으로
-p = copy.deepcopy(good); p["characters"][0]["cuts"][1].update(cat="adult_roleplay", ex="casino_dealer", scene="At a themed costume event hall.")
-assert any("역할극" in e for e in L.check_plan(doc, p, SP))
+# 빈·조용한 장소는 한 장까지
+p = copy.deepcopy(good); [x.update(scene="An empty lantern street.") for x in p["characters"][0]["cuts"][:2]]
+assert any("빈·조용한" in e for e in L.check_plan(doc, p, SP))
 
 # 배치 안 두 캐릭터가 같은 예시·같은 구도 짝 — 동시 세션 문제를 계획 단계에서 막는다
 p = copy.deepcopy(good); twin = copy.deepcopy(p["characters"][0]); twin.update(card="C", species="c-1"); p["characters"].append(twin)
@@ -99,4 +99,4 @@ with tempfile.TemporaryDirectory() as tmp:
     assert [e["status"] for e in out["entries"]] == ["done"], out["entries"]
     assert out["entries"][0]["cuts"][0]["garments"] == ["dress", "jacket"], out["entries"][0]["cuts"][0]
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 역할극 연출 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
