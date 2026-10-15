@@ -7921,25 +7921,23 @@
 "name":"폭음룡",
 "en":"Exploud",
 "line":"소곤룡",
-"how":"draft",
+"how":"species",
 "registered":true,
 "face":{
-"face shape":"oval",
-"face length":"balanced",
+"face shape":"elongated",
+"face length":"long",
 "face width":"medium",
-"jaw & chin":"soft rounded jaw",
-"eye shape":"large",
-"eye size":"large",
-"eye tilt":"level outer corners",
+"jaw & chin":"angular defined jaw",
+"eye shape":"almond",
+"eye size":"small",
+"eye tilt":"upturned outer corners",
 "eye spacing":"average eye spacing",
-"eyebrows":"straight medium brows",
-"nose character":"small delicate nose",
-"lips":"bow-shaped upper lip"
+"eyebrows":"angled brows",
+"nose character":"prominent defined nose",
+"lips":"fuller lower lip"
 },
-"why":"",
-"cues":[
-"몸 형태 upright → 얼굴형 균형 잡힌 타원형"
-],
+"why":"길게 솟은 음향관과 큰 울림 체적은 긴 얼굴·뚜렷한 광대와 턱으로 해석한다. 좁은 눈 윤곽은 긴 아몬드 눈, 큰 발성기관은 도톰한 아래 입술로 옮겨 노공룡의 짧은 얼굴과 구분한다.",
+"cues":[],
 "adjusted":"같은 계열 노공룡와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선"
 },
 "296":{

@@ -18,7 +18,7 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 622종, 원작 단서 규칙으로 고른 것 403종 · 겹침을 풀며 옮긴 종 850
+- 직접 쓴 설계 623종, 원작 단서 규칙으로 고른 것 402종 · 겹침을 풀며 옮긴 종 850
 - 그림이 이미 있는 종(①이 정본) 306
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
@@ -6239,22 +6239,22 @@ FACE (her own structure, not the style's default face): oval face, short length,
 
 ### 295 · 폭음룡 (Exploud)
 
-계열 기준: 소곤룡 · 설계: 원작 단서 규칙 · **그림 있음 — ①이 정본**
+계열 기준: 소곤룡 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
-| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
-| 눈썹 | 중간 두께의 직선 |
-| 코 | 작고 여린 코 |
-| 입 | 윗입술이 활 모양인 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 아몬드형 눈 · 크기 작은 눈 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 아랫입술이 더 도톰한 |
 
-**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+**이유:** 길게 솟은 음향관과 큰 울림 체적은 긴 얼굴·뚜렷한 광대와 턱으로 해석한다. 좁은 눈 윤곽은 긴 아몬드 눈, 큰 발성기관은 도톰한 아래 입술로 옮겨 노공룡의 짧은 얼굴과 구분한다.
 
 **조정:** 같은 계열 노공룡와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; small delicate nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): elongated face, long length, medium width; angular defined jaw; almond eyes, small size, upturned outer corners, average spacing; angled brows; prominent defined nose; fuller lower lip.
 ```
 
 ### 296 · 마크탕 (Makuhita)
