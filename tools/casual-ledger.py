@@ -22,6 +22,11 @@ PLAN.json 꼴(배치 하나 — 같이 만드는 캐릭터 전부):
                 "axes": {"action_level": "...", "source_influence": "...", "separates_preference": "..."},
                 "garments": ["dress", ...], "scene": "(선택)", "outfit": "(선택)"}, ...]}]}
 
+빠진 컷 다시 채우기(안전 필터에 막혀 비었거나 넘어간 컷): 그 캐릭터에 "refill": true 를 주고, 이미 등록된
+컷에는 "kept": true 를 붙여 세 장을 다 적는다. 새로 만드는 컷만 예시·구도·옷·채우기 문구를 보고, 차례에 매인
+조건(필수 갈래 자리 돌리기·다섯 명에 두 장·덜 쓴 갈래·새 값)은 보지 않는다. 세 장 안의 조건(값이 서로 다름·필수 갈래
+한 장 이상·덮는 겉옷 한 장까지)은 그대로 본다.
+
 기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2 다(--repos 로 바꾼다)."""
 import argparse, datetime, json, os, re, subprocess, sys
 
@@ -185,7 +190,17 @@ def build(args):
     old = load(args.ledger)
     done = read_records(args.repos)
     cards = {e["card"] for e in done}
-    keep = [e for e in old.get("entries", []) if e.get("status") == "reserved" and fresh(e) and e.get("card") not in cards]
+    got = {(e["card"], c["cut"], c.get("cat"), c.get("ex")) for e in done for c in e["cuts"]}
+
+    def pending(e):
+        """등록되지 않은 예약 — 새 캐릭터이거나, 다시 채우는 컷이 아직 기록에 없다"""
+        if e.get("status") != "reserved" or not fresh(e):
+            return False
+        if e.get("card") not in cards:
+            return True
+        return bool(e.get("refill")) and any((e["card"], c["cut"], c.get("cat"), c.get("ex")) not in got
+                                             for c in e["cuts"] if not c.get("kept"))
+    keep = [e for e in old.get("entries", []) if pending(e)]
     save(args.ledger, {"entries": done + keep})
     print("장부: done %d · reserved %d → %s" % (len(done), len(keep), args.ledger))
 
@@ -265,6 +280,7 @@ def check_plan(doc, plan, sp):
         cmp_ = base[-CMP_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
         exw = base[-EX_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
         bad = lambda m: errs.append("%s: %s" % (who, m))
+        refill = bool(ch.get("refill"))
         if len(cuts) != 3:
             bad("일상컷은 세 장")
         for k in ("expr", "pose", "orient", "frame"):
@@ -273,10 +289,10 @@ def check_plan(doc, plan, sp):
         req = [c["cut"] for c in cuts if c.get("cat") in REQUIRED]
         if not req:
             bad("필수 갈래(adult_roleplay·swimwear·lingerie)가 없다")
-        if prev_req is not None and req and sorted(req) == sorted(prev_req):
+        if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]
-        if len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(c.get("cat") in REQUIRED for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
+        if not refill and len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(c.get("cat") in REQUIRED for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
             bad("앞 %d명이 모두 필수 갈래 한 장 — 이번에는 두 장" % (TWO_REQUIRED_EVERY - 1))
         used_ex = {(c.get("cat"), c.get("ex")) for e in exw for c in e["cuts"]}
         pairs = cut_pairs(cmp_)
@@ -285,6 +301,8 @@ def check_plan(doc, plan, sp):
         gar = {g for e in cmp_ for c in e["cuts"] for g in (c.get("garments") or [])}
         for c in cuts:
             n = c.get("cut")
+            if c.get("kept"):
+                continue
             if c.get("cat") in (None, "", "auto_random", "everyday") or not c.get("ex") or str(c.get("ex")).startswith("auto_"):
                 bad("%s번: 갈래·예시가 비었거나 자동·옛 이름이다" % n)
             if (c.get("cat"), c.get("ex")) in used_ex and c.get("ex") != "__custom__":
@@ -303,6 +321,11 @@ def check_plan(doc, plan, sp):
                     bad("%s번: %s" % (n, why))
         if sum(bool(re.search(r"\b(empty|deserted|quiet)\b", (c.get("scene") or "").lower())) for c in cuts) > 1:
             bad("빈·조용한 장소는 세 장 중 한 장까지")
+        if refill:
+            cover = [c["cut"] for c in cuts if set(c.get("garments") or []) & COVERING]
+            if len(cover) > 1:
+                bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 세 장 중 한 장까지" % ("·".join(sorted(COVERING)), cover))
+            continue
         if not any(c.get("orient") not in orients or c.get("frame") not in frames for c in cuts):
             bad("방향이나 프레이밍을 비교 대상이 안 쓴 값으로 고른 컷이 없다")
         if not any(g not in gar for c in cuts for g in (c.get("garments") or [])):
@@ -345,10 +368,13 @@ def check(args, write=False):
         names = {ch["card"] for ch in plan["characters"]}
         doc["entries"] = [e for e in doc["entries"] if not (e.get("status") == "reserved" and e.get("card") in names)]
         for ch in plan["characters"]:
-            doc["entries"].append({"species": ch.get("species"), "card": ch["card"], "status": "reserved",
-                                   "session": plan.get("session"), "at": now(),
-                                   "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex", "expr", "pose", "orient", "frame", "lens", "axes", "garments")}
-                                            for c in ch["cuts"]]})
+            e = {"species": ch.get("species"), "card": ch["card"], "status": "reserved",
+                 "session": plan.get("session"), "at": now(),
+                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex", "expr", "pose", "orient", "frame", "lens", "axes", "garments", "kept") if k != "kept" or c.get(k)}
+                          for c in ch["cuts"]]}
+            if ch.get("refill"):
+                e["refill"] = True
+            doc["entries"].append(e)
         save(args.ledger, doc)
         print("장부에 reserved 로 적었다 — 그림 저장소를 commit·push 한 뒤 생성한다")
 

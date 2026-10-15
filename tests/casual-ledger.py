@@ -70,6 +70,15 @@ p = copy.deepcopy(good); twin = copy.deepcopy(p["characters"][0]); twin.update(c
 errs = L.check_plan(doc, p, SP)
 assert any(e.startswith("C:") and "이미 썼다" in e for e in errs) and any(e.startswith("C:") and "짝" in e for e in errs), errs
 
+# 다시 채우기 — 등록된 두 장은 kept, 빈 한 장만 새로. 차례 조건은 안 보고 새 컷의 겹침은 본다
+refill = {"session": "r", "characters": [{"card": "A5", "species": "A5", "refill": True, "cuts": [
+    dict(hist[-1]["cuts"][0], kept=True), dict(hist[-1]["cuts"][1], kept=True),
+    cut(3, "festivals_contests", "fest_booth", "e9", "p9", "low_angle", "chest_up", "strong", ["dress"])]}]}
+assert L.check_plan(doc, refill, SP) == [], L.check_plan(doc, refill, SP)
+bad_refill = copy.deepcopy(refill); bad_refill["characters"][0]["cuts"][2].update(cat="hobbies_leisure", ex="hobby_music", orient="side", frame="waist_up")
+errs = L.check_plan(doc, bad_refill, SP)
+assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs) and not any("자리" in e or "두 장" in e for e in errs), errs
+
 with tempfile.TemporaryDirectory() as tmp:
     # reserve → 다른 세션의 같은 계획이 걸린다
     led = os.path.join(tmp, "ledger.json"); json.dump(doc, open(led, "w"))
@@ -100,6 +109,14 @@ with tempfile.TemporaryDirectory() as tmp:
         L.build(b)
     out = json.load(open(led))
     assert [e["status"] for e in out["entries"]] == ["done"], out["entries"]
+    # 등록된 캐릭터의 다시 채우기 예약은 그 컷이 기록에 오를 때까지 남는다
+    out["entries"].append({"card": "B", "species": "b-1", "status": "reserved", "refill": True, "at": L.now(),
+                           "cuts": [dict(c, kept=True) for c in good["characters"][0]["cuts"][:2]] +
+                                   [cut(3, "festivals_contests", "fest_booth", "e9", "p9", "low_angle", "chest_up", "strong", ["dress"])]})
+    json.dump(out, open(led, "w"))
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.build(b)
+    assert [e["status"] for e in json.load(open(led))["entries"]] == ["done", "reserved"]
     assert out["entries"][0]["cuts"][0]["garments"] == ["dress", "jacket"], out["entries"][0]["cuts"][0]
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done · 다시 채우기")
