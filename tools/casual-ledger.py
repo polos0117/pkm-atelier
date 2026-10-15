@@ -115,6 +115,13 @@ def added_at(repo, rel):
 
 
 def read_records(repos):
+    """기록에서 컷을 읽되, 그림 저장소 img/ 에 그 컷 그림이 실제로 있는 것만 센다 —
+    막혀서 비었거나 넘어간 컷의 설정은 기록에 남아 있어도 등록분이 아니다"""
+    imgs = set()
+    for repo in repos:
+        d = os.path.join(repo, "img")
+        if os.path.isdir(d):
+            imgs.update(os.listdir(d))
     entries = []
     for repo in repos:
         base = os.path.join(repo, "records")
@@ -132,8 +139,11 @@ def read_records(repos):
                 except (ValueError, OSError):
                     continue
                 card = st.get("last") or card
-                c = ((st.get("cards") or {}).get(st.get("last")) or {}).get("scenes", {}).get("casual")
+                cd = (st.get("cards") or {}).get(st.get("last")) or {}
+                c = cd.get("scenes", {}).get("casual")
                 if not c:
+                    continue
+                if imgs and not any(n.startswith(card + "_") and n.endswith("_f_casual%d.webp" % i) for n in imgs):
                     continue
                 ax = c.get("axes") or {}
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
@@ -187,6 +197,10 @@ def live(doc):
 
 
 def build(args):
+    gone = [r for r in args.repos if not os.path.isdir(os.path.join(r, "records"))]
+    if gone:
+        # 세션마다 받아 둔 저장소가 다르면 장부가 줄었다 늘었다 한다 — 다 받은 곳에서만 다시 만든다
+        raise SystemExit("그림 저장소가 없다: %s — pkm-atelier 옆에 둘 다 받은 뒤 build 한다" % ", ".join(gone))
     old = load(args.ledger)
     done = read_records(args.repos)
     cards = {e["card"] for e in done}

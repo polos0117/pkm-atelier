@@ -161,7 +161,8 @@
 
 **0. 배치로 계획하고 장부에 예약한 뒤 생성한다.** 2~3종을 같이 만들면 6~9컷을 생성 전에 한 표로 짠다.
 
-1. 그림 저장소(`pkm-atelier-img-2`)에 커밋 안 한 변경이 없는 상태에서 `git pull --rebase origin main` 을 하고,
+1. 그림 저장소 둘(`pkm-atelier-img`·`pkm-atelier-img-2`)을 `pkm-atelier` 옆에 받아 둔다(`build` 는 둘 다 읽는다 — 하나라도
+   없으면 멈춘다). `pkm-atelier-img-2` 에 커밋 안 한 변경이 없는 상태에서 `git pull --rebase origin main` 을 하고,
    `python3 tools/casual-ledger.py build` 로 장부를 최신 기록에 맞춘 뒤 `python3 tools/casual-ledger.py report` 로
    최근 예시·구도 짝·옷 종류·세 축·덜 쓴 갈래·필수 갈래 자리를 본다.
 2. 배치 전체 계획을 PLAN.json(꼴은 도구 머리말)으로 적어 `check` 를 통과시킨다.

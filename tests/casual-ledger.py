@@ -104,6 +104,9 @@ with tempfile.TemporaryDirectory() as tmp:
         json.dump({"storage": {"last": "B", "cards": {"B": {"scenes": {"casual": sc}}}}}, open(rec / ("casual%d-ui.json" % c["cut"]), "w"))
     mine["at"] = L.now()
     json.dump(saved, open(led, "w"))
+    (Path(tmp) / "img2" / "img").mkdir()
+    for n in (1, 2, 3):
+        (Path(tmp) / "img2" / "img" / ("B_glossy_promo_f_casual%d.webp" % n)).touch()
     b = type("B", (), {"ledger": led, "repos": [str(Path(tmp) / "img2")]})
     with contextlib.redirect_stdout(io.StringIO()):
         L.build(b)
@@ -118,5 +121,20 @@ with tempfile.TemporaryDirectory() as tmp:
         L.build(b)
     assert [e["status"] for e in json.load(open(led))["entries"]] == ["done", "reserved"]
     assert out["entries"][0]["cuts"][0]["garments"] == ["dress", "jacket"], out["entries"][0]["cuts"][0]
+    # 저장소 하나가 없으면 다시 만들지 않는다
+    try:
+        L.build(type("G", (), {"ledger": led, "repos": [str(Path(tmp) / "img2"), str(Path(tmp) / "nope")]}))
+        raise AssertionError("저장소가 없는데 build 했다")
+    except SystemExit as e:
+        assert "nope" in str(e)
+    # 그림이 없는 컷(막혀서 빈 컷)은 등록분으로 세지 않는다
+    (Path(tmp) / "img2" / "img" / "B_glossy_promo_f_casual3.webp").unlink()
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.build(b)
+    assert [c["cut"] for c in json.load(open(led))["entries"][0]["cuts"]] == [1, 2]
+    (Path(tmp) / "img2" / "img" / "B_glossy_promo_f_casual3.webp").touch()
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.build(b)
+    out = json.load(open(led))
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done · 다시 채우기")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
