@@ -40,6 +40,11 @@ for(const cat of ['occupation_basic','occupation_sensual']){
 }
 assert.match(L.exampleText('occupation_basic','orbital_logistics'),/Pokémon/);
 assert.equal(L.exampleText('__custom__','__custom__','Custom scene'),'Custom scene');
+// 일상컷은 첨부 그림의 폼 의상을 버리고 장면의 옷을 입는다(book-atelier 춘향전: 간호사 코스튬에 한복이 따라왔다)
+for(const cat of ['partner_care','hobbies_leisure']){
+ const t=L.buildSingle({...base,cat,ex:S.EXAMPLE_MAP[cat].find(r=>r[0]&&r[0]!=='__custom__')[0]});
+ assert(t.includes('WARDROBE: change her clothes completely')&&t.indexOf('WARDROBE:')<t.indexOf('SCENE (chosen)'),cat+' wardrobe line');
+}
 assert(S.POSE_OPTIONS.length>=35);
 for(const [key] of S.POSE_OPTIONS.filter(r=>r[0])){
  assert(S.POSE_GUIDES[key]?.[0],key+' description');
