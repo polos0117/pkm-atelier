@@ -40,6 +40,12 @@ for(const cat of ['occupation_basic','occupation_sensual']){
 }
 assert.match(L.exampleText('occupation_basic','orbital_logistics'),/Pokémon/);
 assert.equal(L.exampleText('__custom__','__custom__','Custom scene'),'Custom scene');
+// 예시마다 장면 문장 — 이름만 실리면 옷이 흐렸다(book-atelier 아오자이). 고른 전통이 계통을 이긴다
+for(const [cat,rows] of Object.entries(S.EXAMPLE_MAP)) for(const r of rows) if(r[0]&&r[0]!=='__custom__')
+ assert(r[5]||S.EXAMPLE_DETAIL[r[0]],cat+' · '+r[0]+' scene sentence missing (lib/prompt-spec.js EXAMPLE_DETAIL)');
+{const t=L.buildSingle({...base,cat:'traditional',ex:'aodai_daily'});
+ assert(t.includes('mandarin collar')&&t.includes('wins over her ethnicity'),'ao dai');}
+assert(!/book|Gundam/i.test(Object.values(S.EXAMPLE_DETAIL).join(' ').replace(/bookstore|a book or a drink|pulling a book/g,'')),'no book-atelier or Gundam words');
 // 일상컷은 첨부 그림의 폼 의상을 버리고 장면의 옷을 입는다(book-atelier 춘향전: 간호사 코스튬에 한복이 따라왔다)
 for(const cat of ['partner_care','hobbies_leisure']){
  const t=L.buildSingle({...base,cat,ex:S.EXAMPLE_MAP[cat].find(r=>r[0]&&r[0]!=='__custom__')[0]});

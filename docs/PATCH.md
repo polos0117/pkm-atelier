@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-18 · claude · 일상컷 예시 장면 문장 모두 채우기 · 고른 전통 의상이 이긴다
+- lib/prompt-spec.js — EXAMPLE_DETAIL: 장면 문장(6번째 칸)이 없어 영어 이름만 실리던 예시 136개에 옷차림 + 한 가지 동작을, 전통 의상은 짜임·여밈·실루엣을 적었다(book-atelier 와 같은 문장, 에디토리얼은 포켓몬 말로). 전통 의상 갈래 풀이를 "예시에 적힌 전통이 계통 설정·첨부 그림의 옷을 이긴다, 자동만 계통을 따른다" 로 — book-atelier 에서 아오자이를 골랐는데 책의 지역 옷이 나왔다.
+- lib/prompt-lifestyle.js — 예시에 장면 문장이 없으면 EXAMPLE_DETAIL 을 싣는다.
+- tests/prompt-casual.cjs — 모든 예시에 장면 문장, 아오자이 프롬프트, 풀이에 책·건담 말이 없는지.
+
 ## 2026-10-17 · claude · 일상컷 옷 갈아입히기
 - lib/prompt-spec.js · lib/prompt-anthro.js — 일상컷에 WARDROBE 줄: 옷을 통째로 바꾸고, 첨부 그림에서는 얼굴·머리·몸만(갑옷·옷·겹·허리띠·술·장신구·머리 장식·배경은 아니다), 장면 설정의 옷이 한눈에 읽히게. book-atelier 춘향전에서 간호사 코스튬을 골랐는데 첨부한 한복이 그대로 나왔다 — 같은 구조라 여기도 넣었다.
 - tests/prompt-casual.cjs — 일상컷에 WARDROBE 줄이 장면 앞에 있는지.
