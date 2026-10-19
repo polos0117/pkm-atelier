@@ -8154,7 +8154,7 @@
 "en":"Aron",
 "line":"가보리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -8184,7 +8184,7 @@
 "en":"Lairon",
 "line":"가보리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -8213,7 +8213,7 @@
 "en":"Aggron",
 "line":"가보리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -8242,7 +8242,7 @@
 "en":"Meditite",
 "line":"요가랑",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -8268,7 +8268,7 @@
 "en":"Medicham",
 "line":"요가랑",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -8290,13 +8290,13 @@
 "name":"썬더라이",
 "en":"Electrike",
 "line":"썬더라이",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
 "face width":"medium",
-"jaw & chin":"soft rounded jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -8305,7 +8305,7 @@
 "nose character":"balanced nose",
 "lips":"medium lips"
 },
-"why":"",
+"why":"번개형 무늬·뾰족한 볏의 직선을 각진 턱, 가늘고 수평인 눈과 곧은 눈썹으로 해석한다. 낮게 뻗는 머리의 폭은 넓은 눈 간격에 남기고, 코와 입은 사람의 비례를 유지한다.",
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
