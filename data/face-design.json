@@ -7945,7 +7945,7 @@
 "en":"Makuhita",
 "line":"마크탕",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -7970,7 +7970,7 @@
 "en":"Hariyama",
 "line":"마크탕",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -7999,9 +7999,9 @@
 "en":"Azurill",
 "line":"루리리",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
-"face shape":"softly rounded",
+"face shape":"heart-shaped",
 "face length":"short",
 "face width":"wide",
 "jaw & chin":"soft rounded jaw",
@@ -8010,36 +8010,37 @@
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
 "eyebrows":"fine soft arches",
-"nose character":"aquiline nose with convex bridge",
+"nose character":"rounded soft tip",
 "lips":"small mouth"
 },
-"why":"물방울과 둥근 귀의 원형 반복을 둥근 볼과 작은 눈으로 해석한다.",
+"why":"원형 귀와 물방울 같은 몸의 원형 반복을 짧고 넓은 얼굴·부드러운 볼과 턱으로, 작고 떨어진 검은 눈을 작고 넓게 떨어진 사람 눈으로 옮긴다. 콧대와 입은 짧고 부드럽게 하여 20대 성인 인물의 비율을 유지한다.",
 "cues":[
+"페어리 타입 → 얼굴형 이마가 넓고 턱이 가는 하트형",
 "키 0.2m → 얼굴 길이 짧은 얼굴",
 "페어리 타입 → 눈썹 가늘고 완만한 곡선"
 ],
-"adjusted":"같은 계열 마릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 작고 여린 코 → 콧대가 볼록한 매부리코"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 이마가 넓고 턱이 가는 하트형"
 },
 "299":{
 "name":"코코파스",
 "en":"Nosepass",
 "line":"코코파스",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"angular",
-"face length":"balanced",
-"face width":"medium",
+"face length":"long",
+"face width":"wide",
 "jaw & chin":"square broad jaw",
 "eye shape":"narrow",
-"eye size":"medium",
+"eye size":"small",
 "eye tilt":"level outer corners",
 "eye spacing":"average eye spacing",
 "eyebrows":"straight medium brows",
-"nose character":"straight slender bridge",
+"nose character":"prominent defined nose",
 "lips":"thin lips"
 },
-"why":"",
+"why":"각진 화산암 체적은 넓고 각진 턱과 뚜렷한 광대로, 가느다란 눈 틈은 작은 수평 눈매로 해석한다. 큰 삼각형 나침반 코는 또렷한 사람 콧대와 코끝으로 옮기고 원작의 붉은 삼각형은 흉갑에만 남긴다.",
 "cues":[
 "바위 타입 → 턱선 · 턱끝 넓고 각진 사각 턱"
 ],

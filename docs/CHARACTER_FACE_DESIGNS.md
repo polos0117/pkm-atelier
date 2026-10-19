@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 625종, 원작 단서 규칙으로 고른 것 400종 · 겹침을 풀며 옮긴 종 850
-- 그림이 이미 있는 종(①이 정본) 307
+- 직접 쓴 설계 626종, 원작 단서 규칙으로 고른 것 399종 · 겹침을 풀며 옮긴 종 850
+- 그림이 이미 있는 종(①이 정본) 311
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -6259,7 +6259,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 ### 296 · 마크탕 (Makuhita)
 
-계열 기준: 마크탕 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 마크탕 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6281,7 +6281,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 ### 297 · 하리뭉 (Hariyama)
 
-계열 기준: 마크탕 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 마크탕 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6303,44 +6303,46 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 298 · 루리리 (Azurill)
 
-계열 기준: 루리리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 루리리 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 완만한 곡선 |
-| 코 | 콧대가 볼록한 매부리코 |
+| 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 
-**이유:** 물방울과 둥근 귀의 원형 반복을 둥근 볼과 작은 눈으로 해석한다.
+**이유:** 원형 귀와 물방울 같은 몸의 원형 반복을 짧고 넓은 얼굴·부드러운 볼과 턱으로, 작고 떨어진 검은 눈을 작고 넓게 떨어진 사람 눈으로 옮긴다. 콧대와 입은 짧고 부드럽게 하여 20대 성인 인물의 비율을 유지한다.
 
-**원작 단서:** 키 0.2m → 얼굴 길이 짧은 얼굴 · 페어리 타입 → 눈썹 가늘고 완만한 곡선
+**원작 단서:** 페어리 타입 → 얼굴형 이마가 넓고 턱이 가는 하트형 · 키 0.2m → 얼굴 길이 짧은 얼굴 · 페어리 타입 → 눈썹 가늘고 완만한 곡선
 
-**조정:** 같은 계열 마릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 작고 여린 코 → 콧대가 볼록한 매부리코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 이마가 넓고 턱이 가는 하트형
 
 ```text
-FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, small size, level outer corners, wide-set; fine soft arches; aquiline nose with convex bridge; small mouth.
+FACE (her own structure, not the style's default face): heart-shaped face, short length, wide width; soft rounded jaw; open rounded eyes, small size, level outer corners, wide-set; fine soft arches; rounded soft tip nose; small mouth.
 ```
 
 ### 299 · 코코파스 (Nosepass)
 
-계열 기준: 코코파스 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 코코파스 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 넓고 각진 사각 턱 |
-| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 넓은 얼굴 · 넓고 각진 사각 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
-| 코 | 곧고 가는 콧대 |
+| 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
+
+**이유:** 각진 화산암 체적은 넓고 각진 턱과 뚜렷한 광대로, 가느다란 눈 틈은 작은 수평 눈매로 해석한다. 큰 삼각형 나침반 코는 또렷한 사람 콧대와 코끝으로 옮기고 원작의 붉은 삼각형은 흉갑에만 남긴다.
 
 **원작 단서:** 바위 타입 → 턱선 · 턱끝 넓고 각진 사각 턱
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 각지고 또렷한 턱 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): angular face, balanced length, medium width; square broad jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, long length, wide width; square broad jaw; narrow eyes, small size, level outer corners, average spacing; straight medium brows; prominent defined nose; thin lips.
 ```
 
 ### 300 · 에나비 (Skitty)
