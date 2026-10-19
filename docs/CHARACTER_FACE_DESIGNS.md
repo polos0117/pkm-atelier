@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 629종, 원작 단서 규칙으로 고른 것 396종 · 겹침을 풀며 옮긴 종 850
-- 그림이 이미 있는 종(①이 정본) 321
+- 직접 쓴 설계 630종, 원작 단서 규칙으로 고른 것 395종 · 겹침을 풀며 옮긴 종 850
+- 그림이 이미 있는 종(①이 정본) 323
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -6555,7 +6555,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 ### 310 · 썬더볼트 (Manectric)
 
-계열 기준: 썬더라이 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 썬더라이 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -6564,6 +6564,8 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 보통 |
 | 입 | 보통 |
+
+**이유:** 뾰족한 노란 갈기의 꺾이는 면을 각진 턱과 올라간 좁은 눈매로 해석한다. 전기 방전의 단단한 인상을 결이 보이는 눈썹과 균형 잡힌 콧대로 옮긴다.
 
 **원작 단서:** ‘spiky, yellow mane’ → 얼굴형 각지고 선명한 얼굴형 · ‘spiky, yellow mane’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘spiky, yellow mane’ → 눈매 가늘고 날카로운 눈 · ‘spiky, yellow mane’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘spiky, yellow mane’ → 눈썹 숱 많고 결이 보이는
 
@@ -6575,7 +6577,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 ### 311 · 플러시 (Plusle)
 
-계열 기준: 플러시 · 설계: 직접 쓴 설계 · 새 경장에 적용
+계열 기준: 플러시 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
@@ -9953,9 +9955,1803 @@ FACE (her own structure, not the style's default face): elongated face, long len
 
 계열 기준: 코코파스 · 설계: 원작 단서 규칙 · 새 경장에 적용
 
-| 
-... 94580 bytes omitted ...
-이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 넓고 각진 사각 턱 |
+| 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 굴곡 없이 곧은 |
+
+**원작 단서:** 강철 타입 → 얼굴형 각지고 선명한 얼굴형 · 바위 타입 → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘small round eyes’ → 눈매 큰 눈 · ‘small round eyes’ → 눈 크기 작은 눈 · ‘small round eyes’ → 눈꼬리 각도 수평 · 몸 형태 heads → 눈 간격 눈 사이가 가까운
+
+**조정:** 같은 계열 코코파스와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; square broad jaw; open rounded eyes, small size, level outer corners, close-set; straight medium brows; balanced nose; straight even lips.
+```
+
+### 477 · 야느와르몽 (Dusknoir)
+
+계열 기준: 해골몽 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 입이 넓은 |
+
+**이유:** 움켜쥐는 큰 몸과 높은 칼라의 수직선을 긴 얼굴와 낮은 눈꺼풀로 해석한다.
+
+**원작 단서:** 고스트 타입 → 눈매 살짝 처진 부드러운 눈
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; wide mouth.
+```
+
+### 478 · 눈여아 (Froslass)
+
+계열 기준: 눈꼬마 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 보통 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** 몸 형태 arms → 턱선 · 턱끝 보통
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 각지고 또렷한 턱 → 보통, 눈매 가늘고 날카로운 눈 → 아몬드형 눈
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; balanced jawline; almond eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
+```
+
+### 479 · 로토무 (Rotom)
+
+계열 기준: 로토무 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 짧은 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 넓은 |
+
+**이유:** 플라스마의 번쩍이는 예리함과 장난스러운 실루엣을 작은 턱과 열린 눈으로 해석한다.
+
+**원작 단서:** 몸 형태 ball → 얼굴 길이 짧은 얼굴 · 몸 형태 ball → 눈 크기 큰 눈
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): heart-shaped face, short length, medium width; narrow tapered chin; almond eyes, large size, level outer corners, close-set; angled brows; small delicate nose; wide mouth.
+```
+
+### 480 · 유크시 (Uxie)
+
+계열 기준: 유크시 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 작고 여린 코 |
+| 입 | 얇은 입술 |
+
+**이유:** 지식과 둥근 투구의 고요한 중심을 낮은 눈꺼풀과 정돈된 타원 얼굴로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 키 0.3m → 얼굴 길이 짧은 얼굴
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, medium width; soft rounded jaw; drooping eyes, medium size, downturned outer corners, close-set; straight medium brows; small delicate nose; thin lips.
+```
+
+### 481 · 엠라이트 (Mesprit)
+
+계열 기준: 엠라이트 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**이유:** 감정과 펼쳐진 머리 장식의 유연함을 작은 턱과 큰 사람 눈으로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 이마가 넓고 턱이 가는 하트형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; narrow tapered chin; open rounded eyes, large size, level outer corners, close-set; long arched brows; small delicate nose; bow-shaped upper lip.
+```
+
+### 482 · 아그놈 (Azelf)
+
+계열 기준: 아그놈 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 작고 여린 코 |
+| 입 | 얇은 입술 |
+
+**이유:** 의지와 원뿔형 머리의 뾰족한 선을 높은 광대와 집중된 긴 눈으로 해석한다.
+
+**원작 단서:** 에스퍼 타입 → 눈썹 가늘고 곧은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 가늘고 곧은
+
+```text
+FACE (her own structure, not the style's default face): sharp face, balanced length, medium width; narrow tapered chin; narrow eyes, medium size, level outer corners, average spacing; thin straight brows; small delicate nose; thin lips.
+```
+
+### 483 · 디아루가 (Dialga)
+
+계열 기준: 디아루가 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 얇은 입술 |
+
+**이유:** 강철 용의 긴 면과 시간의 정돈된 이미지를 각진 긴 얼굴로 해석한다.
+
+**원작 단서:** ‘chest plate’ → 얼굴형 각지고 선명한 얼굴형 · ‘chest plate’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘chest plate’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘chest plate’ → 입술 얇은 입술
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; straight medium brows; long nose with low tip; thin lips.
+```
+
+### 484 · 펄기아 (Palkia)
+
+계열 기준: 펄기아 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 보통 |
+| 입 | 입이 넓은 |
+
+**이유:** 공간 용의 큰 체적과 둥근 장갑을 넓은 하관과 깊은 눈매로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘round purple-striped plates’ → 얼굴 폭 넓은 얼굴 · ‘round purple-striped plates’ → 눈매 가늘고 날카로운 눈 · ‘round purple-striped plates’ → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 눈썹 굵고 눈 가까이 낮은 → 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): oval face, long length, wide width; wide heavy chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; wide mouth.
+```
+
+### 485 · 히드런 (Heatran)
+
+계열 기준: 히드런 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 넓고 각진 사각 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** 강철 타입 → 얼굴형 각지고 선명한 얼굴형 · 무게 430kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 각지고 또렷한 턱 → 넓고 각진 사각 턱, 눈매 가늘고 날카로운 눈 → 아몬드형 눈
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; square broad jaw; almond eyes, medium size, level outer corners, wide-set; straight medium brows; balanced nose; thin lips.
+```
+
+### 486 · 레지기가스 (Regigigas)
+
+계열 기준: 레지기가스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 보통 |
+| 입 | 아랫입술이 더 도톰한 |
+
+**이유:** 거대한 체적과 반복된 보석을 넓고 정돈된 얼굴로 해석한다. 일곱 눈은 사람의 두 눈으로 번역한다.
+
+**원작 단서:** 무게 420kg → 얼굴 폭 넓은 얼굴 · ‘seven black circular eyes’ → 눈꼬리 각도 수평
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 입이 넓은 → 아랫입술이 더 도톰한
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; narrow eyes, medium size, level outer corners, close-set; thick low brows; balanced nose; fuller lower lip.
+```
+
+### 487 · 기라티나 (Giratina)
+
+계열 기준: 기라티나 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 입이 넓은 |
+
+**이유:** 거꾸로 된 세계의 길고 분절된 용을 긴 얼굴과 날카로운 눈매로 해석한다.
+
+**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 얼굴 폭 좁은 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘two large horns’ → 눈매 가늘고 날카로운 눈 · ‘two large horns’ → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; narrow eyes, small size, level outer corners, close-set; angled brows; long nose with low tip; wide mouth.
+```
+
+### 488 · 크레세리아 (Cresselia)
+
+계열 기준: 크레세리아 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 크고 또렷한 코 |
+| 입 | 보통 |
+
+**이유:** 초승달과 길게 흐르는 곡선을 타원 얼굴과 완만한 긴 눈매로 옮긴다.
+
+**원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈 · ‘pointed, beak-like snout’ → 코 크고 또렷한 코
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; prominent defined nose; medium lips.
+```
+
+### 489 · 피오네 (Phione)
+
+계열 기준: 피오네 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 작은 |
+
+**이유:** 둥근 머리와 작은 해양 몸을 둥근 볼과 부드러운 타원 눈으로 해석한다.
+
+**원작 단서:** ‘round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round head’ → 얼굴 길이 짧은 얼굴 · ‘round head’ → 얼굴 폭 넓은 얼굴 · ‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘round head’ → 눈매 큰 눈 · ‘round head’ → 눈썹 짧고 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, downturned outer corners, average spacing; short rounded brows; small delicate nose; small mouth.
+```
+
+### 490 · 마나피 (Manaphy)
+
+계열 기준: 마나피 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 아랫입술이 더 도톰한 |
+
+**이유:** 긴 더듬이와 속눈썹 무늬를 넓은 상안면과 큰 선명한 사람 눈으로 구분한다.
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 윗입술이 활 모양인 → 아랫입술이 더 도톰한
+
+```text
+FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; narrow tapered chin; open rounded eyes, large size, level outer corners, wide-set; long arched brows; small delicate nose; fuller lower lip.
+```
+
+### 491 · 다크라이 (Darkrai)
+
+계열 기준: 다크라이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 얇은 입술 |
+
+**이유:** 어둠 속에 흐르는 머리와 악몽의 절제된 긴장을 긴 얼굴 및 낮은 눈꺼풀로 해석한다.
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; balanced jawline; drooping eyes, medium size, downturned outer corners, close-set; straight medium brows; balanced nose; thin lips.
+```
+
+### 492 · 쉐이미 (Shaymin)
+
+계열 기준: 쉐이미 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 짧고 응축된 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 보통 |
+| 입 | 입이 작은 |
+
+**이유:** 작은 풀뭉치의 둥근 핵심을 둥근 볼과 작고 부드러운 이목구비로 해석한다.
+
+**원작 단서:** 키 0.2m → 얼굴형 짧고 응축된 얼굴형 · 키 0.2m → 얼굴 길이 짧은 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형, 코 작고 여린 코 → 보통
+
+```text
+FACE (her own structure, not the style's default face): compact face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; fine soft arches; balanced nose; small mouth.
+```
+
+### 493 · 아르세우스 (Arceus)
+
+계열 기준: 아르세우스 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 콧대가 낮고 넓은 |
+| 입 | 얇은 입술 |
+
+**이유:** 고리의 대칭과 신성한 긴 실루엣을 정돈된 긴 얼굴과 고요한 눈매로 해석한다.
+
+**원작 단서:** 키 3.2m → 얼굴형 길고 세련된 얼굴형 · 키 3.2m → 얼굴 길이 긴 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 무게 320kg → 코 콧대가 낮고 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; almond eyes, medium size, downturned outer corners, wide-set; straight medium brows; broad low bridge nose; thin lips.
+```
+
+## 5세대 · 156종
+
+### 494 · 비크티니 (Victini)
+
+계열 기준: 비크티니 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 작고 여린 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**이유:** V형 머리와 승리의 생동감을 작은 턱과 열린 눈매로 해석한다.
+
+**원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈
+
+```text
+FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; narrow tapered chin; almond eyes, large size, level outer corners, average spacing; angled brows; small delicate nose; bow-shaped upper lip.
+```
+
+### 495 · 주리비얀 (Snivy)
+
+계열 기준: 주리비얀 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 얇은 입술 |
+
+**이유:** 풀뱀의 긴 선과 낮은 눈꺼풀을 길고 좁은 사람 얼굴로 옮긴다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+
+```text
+FACE (her own structure, not the style's default face): oval face, long length, narrow width; long chin with defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; long arched brows; straight slender bridge nose; thin lips.
+```
+
+### 496 · 샤비 (Servine)
+
+계열 기준: 주리비얀 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 얇은 입술 |
+
+**이유:** 부채처럼 펼친 잎과 가벼운 몸을 타원 얼굴과 올라간 긴 눈으로 구분한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; small delicate nose; thin lips.
+```
+
+### 497 · 샤로다 (Serperior)
+
+계열 기준: 주리비얀 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 얇은 입술 |
+
+**이유:** 왕 같은 긴 뱀 실루엣을 긴 중안부와 가늘고 긴 눈으로 해석한다.
+
+**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; balanced jawline; narrow eyes, small size, level outer corners, average spacing; long arched brows; long nose with low tip; thin lips.
+```
+
+### 498 · 뚜꾸리 (Tepig)
+
+계열 기준: 뚜꾸리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 코끝이 둥근 |
+| 입 | 보통 |
+
+**이유:** 작은 돼지의 둥근 주둥이를 둥근 코끝과 둥근 볼로 옮긴다.
+
+**원작 단서:** ‘oval eyes’ → 눈매 큰 눈 · ‘oval eyes’ → 눈꼬리 각도 수평 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; angled brows; rounded soft tip nose; medium lips.
+```
+
+### 499 · 차오꿀 (Pignite)
+
+계열 기준: 뚜꾸리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 넓은 |
+
+**이유:** 넓어진 격투 몸을 넓은 하관과 굵은 직선 눈썹으로 구분한다.
+
+**원작 단서:** ‘chubby body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘chubby body’ → 얼굴 폭 넓은 얼굴 · 격투 타입 → 눈썹 굵고 눈 가까이 낮은 · ‘chubby body’ → 코 코끝이 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; wide heavy chin; almond eyes, large size, level outer corners, average spacing; thick low brows; rounded soft tip nose; wide mouth.
+```
+
+### 500 · 염무왕 (Emboar)
+
+계열 기준: 뚜꾸리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 크고 또렷한 코 |
+| 입 | 입이 넓은 |
+
+**이유:** 큰 체적과 불꽃 수염의 위용을 단단한 넓은 턱과 낮은 눈썹으로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 무게 150kg → 얼굴 폭 넓은 얼굴 · ‘large bushy black eyebrows’ → 눈썹 굵고 눈 가까이 낮은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; narrow eyes, medium size, level outer corners, close-set; thick low brows; prominent defined nose; wide mouth.
+```
+
+### 501 · 수댕이 (Oshawott)
+
+계열 기준: 수댕이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 작은 |
+
+**이유:** 작은 수달의 둥근 얼굴과 조개를 둥근 볼과 짧은 코로 옮긴다.
+
+**원작 단서:** ‘spherical white head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘spherical white head’ → 얼굴 길이 짧은 얼굴 · ‘spherical white head’ → 얼굴 폭 넓은 얼굴 · ‘spherical white head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘spherical white head’ → 눈매 큰 눈 · ‘spherical white head’ → 코 코끝이 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; thin straight brows; rounded soft tip nose; small mouth.
+```
+
+### 502 · 쌍검자비 (Dewott)
+
+계열 기준: 수댕이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 작고 여린 코 |
+| 입 | 굴곡 없이 곧은 |
+
+**이유:** 쌍조개와 수행자의 정돈된 인상을 타원 얼굴과 집중 눈매로 구분한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; small delicate nose; straight even lips.
+```
+
+### 503 · 대검귀 (Samurott)
+
+계열 기준: 수댕이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 보통 |
+| 입 | 얇은 입술 |
+
+**이유:** 갑옷 수달의 긴 선과 무사의 인상을 긴 얼굴와 단단한 눈썹으로 해석한다.
+
+**원작 단서:** ‘spear-like horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘spear-like horn’ → 눈매 가늘고 날카로운 눈 · ‘spear-like horn’ → 눈썹 굵고 눈 가까이 낮은 · ‘spear-like horn’ → 입술 얇은 입술
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; thin lips.
+```
+
+### 504 · 보르쥐 (Patrat)
+
+계열 기준: 보르쥐 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 입이 넓은 |
+
+**이유:** 망보기와 큰 앞니의 특징을 열린 눈매 및 넓은 입 너비로 해석한다.
+
+**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, large size, level outer corners, wide-set; straight medium brows; balanced nose; wide mouth.
+```
+
+### 505 · 보르그 (Watchog)
+
+계열 기준: 보르쥐 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 아랫입술이 더 도톰한 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘small black pupils’ → 눈 크기 작은 눈
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 아랫입술이 더 도톰한
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, small size, level outer corners, average spacing; long arched brows; small delicate nose; fuller lower lip.
+```
+
+### 506 · 요테리 (Lillipup)
+
+계열 기준: 요테리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 짧고 응축된 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 보통 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 키 0.4m → 얼굴형 짧고 응축된 얼굴형 · 키 0.4m → 얼굴 길이 짧은 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형
+
+```text
+FACE (her own structure, not the style's default face): compact face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, downturned outer corners, wide-set; fine soft arches; balanced nose; full lips.
+```
+
+### 507 · 하데리어 (Herdier)
+
+계열 기준: 요테리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 보통 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** ‘long, cream fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long, cream fur’ → 얼굴 길이 긴 얼굴 · ‘long, cream fur’ → 얼굴 폭 좁은 얼굴 · ‘long, cream fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, cream fur’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 길고 바깥 아치가 선명한
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; almond eyes, medium size, level outer corners, wide-set; long arched brows; balanced nose; full lips.
+```
+
+### 508 · 바랜드 (Stoutland)
+
+계열 기준: 요테리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 도톰한 입술 |
+
+**조정:** 같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; full lips.
+```
+
+### 509 · 쌔비냥 (Purrloin)
+
+계열 기준: 쌔비냥 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 코끝이 둥근 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; angled brows; rounded soft tip nose; full lips.
+```
+
+### 510 · 레파르다스 (Liepard)
+
+계열 기준: 쌔비냥 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 코끝이 둥근 |
+| 입 | 도톰한 입술 |
+
+**조정:** 같은 계열 쌔비냥와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, close-set; fine soft arches; rounded soft tip nose; full lips.
+```
+
+### 511 · 야나프 (Pansage)
+
+계열 기준: 야나프 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선, 코 작고 여린 코 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; fine soft arches; prominent defined nose; bow-shaped upper lip.
+```
+
+### 512 · 야나키 (Simisage)
+
+계열 기준: 야나프 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 코끝이 둥근 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘shoulder tufts’ → 눈썹 숱 많고 결이 보이는
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; feathered full brows; rounded soft tip nose; full lips.
+```
+
+### 513 · 바오프 (Pansear)
+
+계열 기준: 바오프 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 넓은 |
+
+**이유:** 불꽃처럼 말린 머리털과 작은 원숭이의 생동감을 작은 턱과 열린 눈으로 해석한다.
+
+**원작 단서:** ‘whorled tuft’ → 눈썹 숱 많고 결이 보이는 · ‘tiny nose’ → 코 작고 여린 코
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는
+
+```text
+FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; narrow tapered chin; almond eyes, large size, level outer corners, average spacing; feathered full brows; small delicate nose; wide mouth.
+```
+
+### 514 · 바오키 (Simisear)
+
+계열 기준: 바오프 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 작고 여린 코 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘white, fluffy shoulder ruffs’ → 눈썹 숱 많고 결이 보이는 · ‘small black nose’ → 코 작고 여린 코
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; feathered full brows; small delicate nose; full lips.
+```
+
+### 515 · 앗차프 (Panpour)
+
+계열 기준: 앗차프 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 코끝이 둥근 |
+| 입 | 보통 |
+
+**이유:** 물결 같은 볏과 원숭이의 가벼운 곡선을 타원 얼굴와 완만한 눈으로 구분한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘puffy, wave-like crest’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘puffy, wave-like crest’ → 눈썹 짧고 둥근 · ‘puffy, wave-like crest’ → 코 코끝이 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, downturned outer corners, average spacing; short rounded brows; rounded soft tip nose; medium lips.
+```
+
+### 516 · 앗차키 (Simipour)
+
+계열 기준: 앗차프 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 작고 여린 코 |
+| 입 | 아랫입술이 더 도톰한 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘oval eyes’ → 눈매 큰 눈 · ‘oval eyes’ → 눈꼬리 각도 수평 · ‘several tufts’ → 눈썹 숱 많고 결이 보이는 · ‘small black nose’ → 코 작고 여린 코
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는, 입술 도톰한 입술 → 아랫입술이 더 도톰한
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; feathered full brows; small delicate nose; fuller lower lip.
+```
+
+### 517 · 몽나 (Munna)
+
+계열 기준: 몽나 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 작은 |
+
+**이유:** 둥근 꿈먹기 몸과 가는 주둥이를 둥근 볼과 낮은 눈꺼풀로 해석한다.
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; soft rounded jaw; drooping eyes, medium size, downturned outer corners, average spacing; fine soft arches; rounded soft tip nose; small mouth.
+```
+
+### 518 · 몽얌나 (Musharna)
+
+계열 기준: 몽나 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 도톰한 입술 |
+
+**이유:** 맥의 큰 몸과 꿈결의 흐르는 곡선을 넓은 볼과 도톰한 입술로 구분한다.
+
+**조정:** 같은 계열 몽나와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 코끝이 둥근 → 곧고 가는 콧대
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; drooping eyes, medium size, downturned outer corners, close-set; fine soft arches; straight slender bridge nose; full lips.
+```
+
+### 519 · 콩둘기 (Pidove)
+
+계열 기준: 콩둘기 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 입이 작은 |
+
+**원작 단서:** 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · ‘short, black beak’ → 코 크고 또렷한 코 · ‘short, black beak’ → 입술 입이 작은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 곧고 가는 콧대 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, upturned outer corners, average spacing; straight medium brows; prominent defined nose; small mouth.
+```
+
+### 520 · 유토브 (Tranquill)
+
+계열 기준: 콩둘기 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘black tuft’ → 눈썹 숱 많고 결이 보이는 · ‘yellow beak’ → 코 곧고 가는 콧대
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 숱 많고 결이 보이는
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, upturned outer corners, close-set; feathered full brows; straight slender bridge nose; thin lips.
+```
+
+### 521 · 켄호로우 (Unfezant)
+
+계열 기준: 콩둘기 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘heart-shaped patch’ → 얼굴형 이마가 넓고 턱이 가는 하트형 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+
+**조정:** 같은 계열 유토브와 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 보통
+
+```text
+FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, upturned outer corners, close-set; straight medium brows; balanced nose; thin lips.
+```
+
+### 522 · 줄뮤마 (Blitzle)
+
+계열 기준: 줄뮤마 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 얇은 입술 |
+
+**이유:** 작은 얼룩말의 번개 갈기를 긴 중안부와 열린 눈매로 해석한다.
+
+**원작 단서:** ‘spiky, white mane’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘spiky, white mane’ → 눈썹 바깥에서 꺾이는 사선 · ‘spiky, white mane’ → 입술 얇은 입술
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
+
+```text
+FACE (her own structure, not the style's default face): angular face, long length, narrow width; long chin with defined jaw; almond eyes, large size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
+```
+
+### 523 · 제브라이카 (Zebstrika)
+
+계열 기준: 줄뮤마 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 보통 |
+
+**이유:** 큰 얼룩말의 날카로운 갈기와 강한 체적을 긴 얼굴와 굵은 눈썹으로 구분한다.
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; long nose with low tip; medium lips.
+```
+
+### 524 · 단굴 (Roggenrola)
+
+계열 기준: 단굴 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘navy-blue faceted rock’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 legs → 얼굴 폭 좁은 얼굴 · ‘navy-blue faceted rock’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘navy-blue faceted rock’ → 눈매 강하게 치켜올라간 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운 · ‘navy-blue faceted rock’ → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, narrow width; angular defined jaw; sharp eyes, medium size, level outer corners, close-set; angled brows; prominent defined nose; thin lips.
+```
+
+### 525 · 암트르 (Boldore)
+
+계열 기준: 단굴 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 입이 작은 |
+
+**원작 단서:** 몸 형태 tentacles → 입술 입이 작은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; small mouth.
+```
+
+### 526 · 기가이어스 (Gigalith)
+
+계열 기준: 단굴 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 콧대가 낮고 넓은 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘blue quadrupedal rock body’ → 얼굴형 각지고 선명한 얼굴형 · 무게 260kg → 얼굴 폭 넓은 얼굴 · ‘blue quadrupedal rock body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘blue quadrupedal rock body’ → 눈매 가늘고 날카로운 눈 · 무게 260kg → 코 콧대가 낮고 넓은 · ‘blue quadrupedal rock body’ → 입술 얇은 입술
+
+**조정:** 같은 계열 암트르와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴, 눈썹 바깥에서 꺾이는 사선 → 중간 두께의 직선, 코 보통 → 콧대가 낮고 넓은
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; broad low bridge nose; thin lips.
+```
+
+### 527 · 또르박쥐 (Woobat)
+
+계열 기준: 또르박쥐 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 입이 작은 |
+
+**원작 단서:** 키 0.4m → 얼굴 길이 짧은 얼굴 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 에스퍼 타입 → 눈썹 가늘고 곧은 · 몸 형태 wings → 코 곧고 가는 콧대
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, large size, level outer corners, close-set; thin straight brows; straight slender bridge nose; small mouth.
+```
+
+### 528 · 맘박쥐 (Swoobat)
+
+계열 기준: 또르박쥐 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 입이 작은 |
+
+**원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 wings → 코 곧고 가는 콧대
+
+**조정:** 같은 계열 또르박쥐와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; almond eyes, large size, level outer corners, average spacing; fine soft arches; straight slender bridge nose; small mouth.
+```
+
+### 529 · 두더류 (Drilbur)
+
+계열 기준: 두더류 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 콧대가 낮고 넓은 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 땅 타입 → 코 콧대가 낮고 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 이마가 넓고 턱이 가는 하트형 → 균형 잡힌 타원형, 코 작고 여린 코 → 콧대가 낮고 넓은
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; narrow tapered chin; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; broad low bridge nose; thin lips.
+```
+
+### 530 · 몰드류 (Excadrill)
+
+계열 기준: 두더류 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 입이 넓은 |
+
+**이유:** 드릴 날과 땅밑을 파는 단단한 힘을 각진 하관과 작은 깊은 눈으로 해석한다.
+
+**원작 단서:** 강철 타입 → 얼굴형 각지고 선명한 얼굴형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; thick low brows; straight slender bridge nose; wide mouth.
+```
+
+### 531 · 다부니 (Audino)
+
+계열 기준: 다부니 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 코끝이 둥근 |
+| 입 | 도톰한 입술 |
+
+**이유:** 소리를 듣는 큰 귀와 부드러운 체적을 완만한 타원 얼굴와 둥근 코끝으로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘floppy ears’ → 눈꼬리 각도 처진 눈꼬리
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, downturned outer corners, average spacing; straight medium brows; rounded soft tip nose; full lips.
+```
+
+### 532 · 으랏차 (Timburr)
+
+계열 기준: 으랏차 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 코끝이 둥근 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** ‘bulbous protrusions’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘bulbous protrusions’ → 얼굴 폭 넓은 얼굴 · ‘bulbous protrusions’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘bulbous protrusions’ → 눈매 큰 눈 · ‘dark-gray oval-shaped eyes’ → 눈꼬리 각도 수평 · ‘bulbous protrusions’ → 눈썹 짧고 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; short rounded brows; rounded soft tip nose; bow-shaped upper lip.
+```
+
+### 533 · 토쇠골 (Gurdurr)
+
+계열 기준: 으랏차 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 넓고 각진 사각 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 코끝이 둥근 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** 격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘large, round dark-red nose’ → 코 코끝이 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; square broad jaw; almond eyes, medium size, level outer corners, average spacing; long arched brows; rounded soft tip nose; bow-shaped upper lip.
+```
+
+### 534 · 노보청 (Conkeldurr)
+
+계열 기준: 으랏차 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** ‘prominent brow’ → 눈썹 굵고 눈 가까이 낮은 · ‘large nose’ → 코 코끝이 둥근 · ‘wide mouth’ → 입술 입이 넓은
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; thick low brows; rounded soft tip nose; wide mouth.
+```
+
+### 535 · 동챙이 (Tympole)
+
+계열 기준: 동챙이 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘wide mouth’ → 턱선 · 턱끝 넓고 묵직한 턱끝 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘wide mouth’ → 입술 입이 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 묵직한 턱끝
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, wide-set; fine soft arches; small delicate nose; wide mouth.
+```
+
+### 536 · 두까비 (Palpitoad)
+
+계열 기준: 동챙이 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** ‘ovoid body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘ovoid body’ → 얼굴 길이 짧은 얼굴 · ‘ovoid body’ → 얼굴 폭 넓은 얼굴 · ‘ovoid body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘ovoid body’ → 눈매 큰 눈 · ‘ovoid body’ → 눈썹 짧고 둥근
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 작고 여린 코
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; short rounded brows; small delicate nose; wide mouth.
+```
+
+### 537 · 두빅굴 (Seismitoad)
+
+계열 기준: 동챙이 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 보통 |
+| 입 | 입이 넓은 |
+
+**조정:** 같은 계열 동챙이·두까비와 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통
+
+```text
+FACE (her own structure, not the style's default face): oval face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; fine soft arches; balanced nose; wide mouth.
+```
+
+### 538 · 던지미 (Throh)
+
+계열 기준: 던지미 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 코끝이 둥근 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round head’ → 얼굴 길이 짧은 얼굴 · ‘round head’ → 얼굴 폭 넓은 얼굴 · ‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘rocky skin’ → 눈매 가늘고 날카로운 눈 · ‘rocky skin’ → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; angled brows; rounded soft tip nose; thin lips.
+```
+
+### 539 · 타격귀 (Sawk)
+
+계열 기준: 타격귀 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘rocky skin’ → 얼굴형 각지고 선명한 얼굴형 · ‘rocky skin’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘rocky skin’ → 눈매 가늘고 날카로운 눈 · ‘rocky skin’ → 눈썹 굵고 눈 가까이 낮은 · ‘rocky skin’ → 코 곧고 가는 콧대 · ‘rocky skin’ → 입술 얇은 입술
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은, 코 보통 → 곧고 가는 콧대
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; straight slender bridge nose; thin lips.
+```
+
+### 540 · 두르보 (Sewaddle)
+
+계열 기준: 두르보 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 짧고 코끝이 들린 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** ‘large, spherical head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘large, spherical head’ → 얼굴 길이 짧은 얼굴 · ‘large, spherical head’ → 얼굴 폭 넓은 얼굴 · ‘large, spherical head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘large, spherical head’ → 눈썹 짧고 둥근 · ‘large, spherical head’ → 코 짧고 코끝이 들린
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 짧고 코끝이 들린
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; short rounded brows; short nose with upturned tip; bow-shaped upper lip.
+```
+
+### 541 · 두르쿤 (Swadloon)
+
+계열 기준: 두르보 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 보통 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 크고 또렷한 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** 몸 형태 arms → 턱선 · 턱끝 보통
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 코 작고 여린 코 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; balanced jawline; almond eyes, medium size, level outer corners, average spacing; long arched brows; prominent defined nose; bow-shaped upper lip.
+```
+
+### 542 · 모아머 (Leavanny)
+
+계열 기준: 두르보 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 작은 |
+
+**원작 단서:** ‘large, round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘large, round head’ → 얼굴 길이 짧은 얼굴 · ‘large, round head’ → 얼굴 폭 넓은 얼굴 · ‘large, round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘large, round head’ → 코 코끝이 둥근 · ‘large, round head’ → 입술 입이 작은
+
+**조정:** 같은 계열 두르보와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 짧고 둥근 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 입이 작은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; long arched brows; rounded soft tip nose; small mouth.
+```
+
+### 543 · 마디네 (Venipede)
+
+계열 기준: 마디네 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 작고 여린 코 |
+| 입 | 얇은 입술 |
+
+**이유:** 지네의 둥근 마디와 날카로운 뿔을 둥근 얼굴 안의 선명한 눈매로 해석한다.
+
+**원작 단서:** 키 0.4m → 얼굴 길이 짧은 얼굴 · 몸 형태 armor → 눈썹 굵고 눈 가까이 낮은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; small delicate nose; thin lips.
+```
+
+### 544 · 휠구 (Whirlipede)
+
+계열 기준: 마디네 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** 몸 형태 ball → 얼굴형 부드럽고 둥근 얼굴형 · 몸 형태 ball → 얼굴 길이 짧은 얼굴 · 몸 형태 ball → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 작은 눈 → 보통
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, narrow width; soft rounded jaw; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; straight slender bridge nose; thin lips.
+```
+
+### 545 · 펜드라 (Scolipede)
+
+계열 기준: 마디네 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 얇은 입술 |
+
+**이유:** 거대한 지네의 긴 몸과 뿔을 긴 윤곽과 날카로운 긴 눈으로 구분한다.
+
+**원작 단서:** 키 2.5m → 얼굴형 길고 세련된 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · 몸 형태 armor → 눈썹 굵고 눈 가까이 낮은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은
+
+```text
+FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; thick low brows; long nose with low tip; thin lips.
+```
+
+### 546 · 소미안 (Cottonee)
+
+계열 기준: 소미안 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** 몸 형태 ball → 얼굴형 부드럽고 둥근 얼굴형 · 몸 형태 ball → 얼굴 길이 짧은 얼굴 · 몸 형태 ball → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘orange, oval-shaped eyes’ → 눈매 큰 눈 · ‘orange, oval-shaped eyes’ → 눈꼬리 각도 수평 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 크고 또렷한 코, 입술 도톰한 입술 → 윗입술이 활 모양인
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; fine soft arches; prominent defined nose; bow-shaped upper lip.
+```
+
+### 547 · 엘풍 (Whimsicott)
+
+계열 기준: 소미안 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 코끝이 둥근 |
+| 입 | 굴곡 없이 곧은 |
+
+**원작 단서:** ‘large cotton-like mane’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘large cotton-like mane’ → 얼굴 길이 짧은 얼굴 · ‘large cotton-like mane’ → 얼굴 폭 넓은 얼굴 · ‘large cotton-like mane’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘large cotton-like mane’ → 눈매 큰 눈 · ‘orange oval eyes’ → 눈꼬리 각도 수평
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 굴곡 없이 곧은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; angled brows; rounded soft tip nose; straight even lips.
+```
+
+### 548 · 치릴리 (Petilil)
+
+계열 기준: 치릴리 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** 몸 형태 blob → 얼굴형 부드럽고 둥근 얼굴형 · 몸 형태 blob → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 blob → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; long arched brows; small delicate nose; bow-shaped upper lip.
+```
+
+### 549 · 드레디어 (Lilligant)
+
+계열 기준: 치릴리 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 길고 바깥 아치가 선명한 |
+| 코 | 작고 여린 코 |
+| 입 | 굴곡 없이 곧은 |
+
+**이유:** 큰 꽃과 드레스 같은 실루엣을 완만한 타원 얼굴과 곡선 입술로 해석한다.
+
+**원작 단서:** 몸 형태 blob → 턱선 · 턱끝 부드럽고 둥근 턱
+
+**조정:** 같은 계열 치릴리와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 굴곡 없이 곧은
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; small delicate nose; straight even lips.
+```
+
+### 550 · 배쓰나이 (Basculin)
+
+계열 기준: 배쓰나이 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 크고 또렷한 코 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘four spike-like protrusions’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘four spike-like protrusions’ → 눈썹 바깥에서 꺾이는 사선 · ‘four spike-like protrusions’ → 코 크고 또렷한 코
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; angled brows; prominent defined nose; full lips.
+```
+
+### 551 · 깜눈크 (Sandile)
+
+계열 기준: 깜눈크 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long snout’ → 코 길고 코끝이 내려온
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; narrow eyes, medium size, level outer corners, wide-set; thick low brows; long nose with low tip; wide mouth.
+```
+
+### 552 · 악비르 (Krokorok)
+
+계열 기준: 깜눈크 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 보통 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** ‘triangular spike’ → 얼굴형 각지고 선명한 얼굴형 · ‘triangular spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘triangular spike’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘triangular spike’ → 눈썹 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; balanced nose; wide mouth.
+```
+
+### 553 · 악비아르 (Krookodile)
+
+계열 기준: 깜눈크 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 각지고 또렷한 턱 |
+| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 길고 코끝이 내려온 |
+| 입 | 입이 넓은 |
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘five triangular spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘five triangular spikes’ → 눈매 강하게 치켜올라간 눈 · ‘five triangular spikes’ → 눈썹 바깥에서 꺾이는 사선 · ‘long snout’ → 코 길고 코끝이 내려온
+
+**조정:** 같은 계열 악비르와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 균형 잡힌 타원형, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; angular defined jaw; sharp eyes, medium size, level outer corners, average spacing; angled brows; long nose with low tip; wide mouth.
+```
+
+### 554 · 달막화 (Darumaka)
+
+계열 기준: 달막화 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 숱 많고 결이 보이는 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 넓은 |
+
+**이유:** 달마의 둥근 체적과 힘 있는 이목구비를 둥근 볼과 굵은 눈썹으로 해석한다.
+
+**원작 단서:** ‘curly yellow eyebrows’ → 눈썹 숱 많고 결이 보이는
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 숱 많고 결이 보이는
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, large size, level outer corners, average spacing; feathered full brows; rounded soft tip nose; wide mouth.
+```
+
+### 555 · 불비달마 (Darmanitan)
+
+계열 기준: 달막화 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 묵직한 턱끝 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 보통 |
+| 입 | 도톰한 입술 |
+
+**이유:** 불꽃 고릴라의 큰 체적을 넓은 하관과 굵고 낮은 눈썹으로 구분한다.
+
+**원작 단서:** ‘rounded red ape’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘rounded red ape’ → 얼굴 폭 넓은 얼굴 · ‘rounded red ape’ → 눈매 큰 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은 · ‘rounded red ape’ → 입술 도톰한 입술
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술
+
+```text
+FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; full lips.
+```
+
+### 556 · 마라카치 (Maractus)
+
+계열 기준: 마라카치 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 작고 여린 코 |
+| 입 | 윗입술이 활 모양인 |
+
+**원작 단서:** ‘yellow spike’ → 얼굴형 각지고 선명한 얼굴형 · ‘yellow spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘yellow spike’ → 눈썹 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; almond eyes, medium size, level outer corners, average spacing; angled brows; small delicate nose; bow-shaped upper lip.
+```
+
+### 557 · 돌살이 (Dwebble)
+
+계열 기준: 돌살이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 넓고 각진 사각 턱 |
+| 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 작고 여린 코 |
+| 입 | 입이 작은 |
+
+**이유:** 작은 돌집과 갑각류의 중심 몸을 작은 눈과 정돈된 타원 얼굴로 해석한다.
+
+**원작 단서:** 몸 형태 armor → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘dark, oval-shaped eyes’ → 눈매 큰 눈 · ‘dark, oval-shaped eyes’ → 눈꼬리 각도 수평
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; square broad jaw; open rounded eyes, small size, level outer corners, close-set; straight medium brows; small delicate nose; small mouth.
+```
+
+### 558 · 암팰리스 (Crustle)
+
+계열 기준: 돌살이 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 넓은 얼굴 · 넓고 각진 사각 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 굵고 눈 가까이 낮은 |
+| 코 | 콧대가 낮고 넓은 |
+| 입 | 입이 넓은 |
+
+**이유:** 거대한 바위집의 무게를 넓은 하관과 굵은 눈썹으로 구분한다.
+
+**원작 단서:** 무게 200kg → 얼굴 폭 넓은 얼굴 · 몸 형태 armor → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 armor → 눈썹 굵고 눈 가까이 낮은 · 무게 200kg → 코 콧대가 낮고 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 넓고 각진 사각 턱, 코 보통 → 콧대가 낮고 넓은
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, wide width; square broad jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; broad low bridge nose; wide mouth.
+```
+
+### 559 · 곤율랭 (Scraggy)
+
+계열 기준: 곤율랭 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
+| 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 작고 여린 코 |
+| 입 | 도톰한 입술 |
+
+**이유:** 느슨한 탈피 피부와 작은 도마뱀의 큰 입을 타원 윤곽과 도톰한 입술로 해석한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, large size, level outer corners, average spacing; angled brows; small delicate nose; full lips.
+```
+
+### 560 · 곤율거니 (Scrafty)
+
+계열 기준: 곤율랭 · 설계: 직접 쓴 설계 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 바깥에서 꺾이는 사선 |
+| 코 | 보통 |
+| 입 | 도톰한 입술 |
+
+**이유:** 늘어진 피부와 악당의 낮은 시선을 긴 윤곽과 낮은 눈꺼풀로 구분한다.
+
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+
+```text
+FACE (her own structure, not the style's default face): oval face, long length, narrow width; long chin with defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; angled brows; balanced nose; full lips.
+```
+
+### 561 · 심보러 (Sigilyph)
+
+계열 기준: 심보러 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 눈 | 가늘고 날카로운 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 얇은 입술 |
+
+**원작 단서:** ‘two small spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘two small spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two small spikes’ → 눈매 가늘고 날카로운 눈 · ‘two small spikes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 에스퍼 타입 → 눈썹 가늘고 곧은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 가늘고 곧은
+
+```text
+FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, upturned outer corners, close-set; thin straight brows; straight slender bridge nose; thin lips.
+```
+
+### 562 · 데스마스 (Yamask)
+
+계열 기준: 데스마스 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 보통 |
+| 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 작고 여린 코 |
+| 입 | 도톰한 입술 |
+
+**원작 단서:** 몸 형태 arms → 턱선 · 턱끝 보통
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈 크기 큰 눈 → 보통
+
+```text
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; balanced jawline; open rounded eyes, medium size, level outer corners, average spacing; fine soft arches; small delicate nose; full lips.
+```
+
+### 563 · 데스니칸 (Cofagrigus)
+
+계열 기준: 데스마스 · 설계: 원작 단서 규칙 · 새 경장에 적용
+
+| 묶음 | 설계 |
+|---|---|
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 작고 여린 코 |

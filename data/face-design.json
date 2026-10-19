@@ -8315,8 +8315,8 @@
 "name":"썬더볼트",
 "en":"Manectric",
 "line":"썬더라이",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -8330,7 +8330,7 @@
 "nose character":"balanced nose",
 "lips":"medium lips"
 },
-"why":"",
+"why":"뾰족한 노란 갈기의 꺾이는 면을 각진 턱과 올라간 좁은 눈매로 해석한다. 전기 방전의 단단한 인상을 결이 보이는 눈썹과 균형 잡힌 콧대로 옮긴다.",
 "cues":[
 "‘spiky, yellow mane’ → 얼굴형 각지고 선명한 얼굴형",
 "‘spiky, yellow mane’ → 턱선 · 턱끝 각지고 또렷한 턱",
@@ -8346,7 +8346,7 @@
 "en":"Plusle",
 "line":"플러시",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
