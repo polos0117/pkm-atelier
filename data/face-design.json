@@ -8051,7 +8051,7 @@
 "en":"Skitty",
 "line":"에나비",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -8077,7 +8077,7 @@
 "en":"Delcatty",
 "line":"에나비",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
