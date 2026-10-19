@@ -10724,7 +10724,7 @@
 "en":"Bidoof",
 "line":"비버니",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -10750,7 +10750,7 @@
 "en":"Bibarel",
 "line":"비버니",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -10802,7 +10802,7 @@
 "en":"Kricketune",
 "line":"귀뚤뚜기",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -10816,7 +10816,7 @@
 "nose character":"rounded soft tip",
 "lips":"thin lips"
 },
-"why":"",
+"why":"길게 늘어진 날개형 몸선은 길고 좁은 얼굴과 모아지는 턱으로, 검은 더듬이의 직선은 수평의 작은 눈과 곧은 눈썹으로 해석한다. 둥근 붉은 코의 단서는 사람의 부드러운 코끝에만 남기고, 얇은 입술로 귀뚤뚜기의 짧고 둥근 얼굴·작은 입과 구분한다.",
 "cues":[
 "몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘dark red, round nose’ → 코 코끝이 둥근"
