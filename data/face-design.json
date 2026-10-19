@@ -8465,7 +8465,7 @@
 "en":"Gulpin",
 "line":"꼴깍몬",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"short",
@@ -8493,7 +8493,7 @@
 "en":"Swalot",
 "line":"꼴깍몬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -8507,7 +8507,7 @@
 "nose character":"small delicate nose",
 "lips":"full lips"
 },
-"why":"",
+"why":"작은 붉은 구슬눈은 사람의 작고 수평으로 긴 눈으로, 유연하고 둥근 체적은 타원형 윤곽과 둥근 턱으로 해석한다. 꼴깍몬의 짧고 넓은 하트형 얼굴·치켜올라간 눈꼬리와 구분하며, 같은 계열의 도톰한 입술은 남긴다.",
 "cues":[
 "‘red, beady eyes’ → 눈매 가늘고 날카로운 눈",
 "‘red, beady eyes’ → 눈 크기 작은 눈"
