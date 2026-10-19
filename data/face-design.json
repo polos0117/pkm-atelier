@@ -8128,7 +8128,7 @@
 "en":"Mawile",
 "line":"입치트",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
