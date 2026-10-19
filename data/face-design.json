@@ -8519,7 +8519,7 @@
 "en":"Carvanha",
 "line":"샤프니아",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -8533,7 +8533,7 @@
 "nose character":"rounded soft tip",
 "lips":"full lips"
 },
-"why":"",
+"why":"원작의 구형 몸통과 강한 턱을 넓은 볼·둥근 턱과 코끝, 도톰한 사람 입술로 해석했다. 악 타입의 단호한 사선 눈썹을 남겨, 길고 좁은 샤크니아의 윤곽과 구분한다. 확정한 경장 ①이 이후 외형의 정본이다.",
 "cues":[
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
 "‘spherical body’ → 얼굴 폭 넓은 얼굴",
@@ -8549,7 +8549,7 @@
 "en":"Sharpedo",
 "line":"샤프니아",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -8563,7 +8563,7 @@
 "nose character":"long nose with low tip",
 "lips":"wide mouth"
 },
-"why":"",
+"why":"어뢰처럼 긴 상어 체적을 길고 좁은 얼굴·긴 턱과 코로, 큰 입을 넓은 사람 입으로 해석했다. 가늘고 긴 눈과 사선 눈썹을 남겨 샤프니아의 넓고 둥근 윤곽과 구분한다. 확정한 경장 ①이 이후 외형의 정본이다.",
 "cues":[
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
