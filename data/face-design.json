@@ -10776,7 +10776,7 @@
 "en":"Kricketot",
 "line":"귀뚤뚜기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
