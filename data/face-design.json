@@ -8050,7 +8050,7 @@
 "name":"에나비",
 "en":"Skitty",
 "line":"에나비",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
 "face shape":"softly rounded",
@@ -8062,10 +8062,10 @@
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
 "eyebrows":"fine soft arches",
-"nose character":"balanced nose",
+"nose character":"rounded soft tip",
 "lips":"full lips"
 },
-"why":"",
+"why":"분홍색의 짧고 둥근 체적과 slit-like eyes를 짧은 둥근 윤곽·작고 가는 수평 눈으로 해석한다. 크림색 초승달의 부드러운 곡선은 완만한 눈썹과 둥근 코끝으로 남긴다. 성인 얼굴 비율을 유지한다.",
 "cues":[
 "‘slit-like eyes’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
@@ -8076,22 +8076,22 @@
 "name":"델케티",
 "en":"Delcatty",
 "line":"에나비",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
-"face shape":"softly rounded",
-"face length":"short",
-"face width":"wide",
-"jaw & chin":"soft rounded jaw",
+"face shape":"oval",
+"face length":"balanced",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"large",
 "eye size":"medium",
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
 "eyebrows":"feathered full brows",
-"nose character":"balanced nose",
-"lips":"full lips"
+"nose character":"straight slender bridge",
+"lips":"bow-shaped upper lip"
 },
-"why":"",
+"why":"얇게 흐르는 꼬리와 뾰족한 수염 돌기에서 균형 길이의 타원 윤곽·가느다란 직선 콧대를 해석하고, 보라색 러프의 풍성한 결은 숱 있는 눈썹으로 남긴다. 에나비의 가는 눈과 달리 넓게 열린 성인 눈으로 구분한다.",
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘purple ruff-like collar’ → 눈썹 숱 많고 결이 보이는"
@@ -11273,11 +11273,11 @@
 "eye spacing":"average eye spacing",
 "eyebrows":"fine soft arches",
 "nose character":"rounded soft tip",
-"lips":"full lips"
+"lips":"fuller lower lip"
 },
 "why":"",
 "cues":[],
-"adjusted":"같은 계열 브이젤와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 아랫입술이 더 도톰한"
 },
 "420":{
 "name":"체리버",

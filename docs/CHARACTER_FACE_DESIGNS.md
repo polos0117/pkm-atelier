@@ -18,7 +18,7 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 626종, 원작 단서 규칙으로 고른 것 399종 · 겹침을 풀며 옮긴 종 850
+- 직접 쓴 설계 628종, 원작 단서 규칙으로 고른 것 397종 · 겹침을 풀며 옮긴 종 850
 - 그림이 이미 있는 종(①이 정본) 311
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
@@ -6347,40 +6347,44 @@ FACE (her own structure, not the style's default face): angular face, long lengt
 
 ### 300 · 에나비 (Skitty)
 
-계열 기준: 에나비 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 에나비 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
 | 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 보통 · 부드럽고 둥근 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 완만한 곡선 |
-| 코 | 보통 |
+| 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
+
+**이유:** 분홍색의 짧고 둥근 체적과 slit-like eyes를 짧은 둥근 윤곽·작고 가는 수평 눈으로 해석한다. 크림색 초승달의 부드러운 곡선은 완만한 눈썹과 둥근 코끝으로 남긴다. 성인 얼굴 비율을 유지한다.
 
 **원작 단서:** ‘slit-like eyes’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; narrow eyes, small size, level outer corners, wide-set; fine soft arches; balanced nose; full lips.
+FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; narrow eyes, small size, level outer corners, wide-set; fine soft arches; rounded soft tip nose; full lips.
 ```
 
 ### 301 · 델케티 (Delcatty)
 
-계열 기준: 에나비 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 에나비 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 숱 많고 결이 보이는 |
-| 코 | 보통 |
-| 입 | 도톰한 입술 |
+| 코 | 곧고 가는 콧대 |
+| 입 | 윗입술이 활 모양인 |
+
+**이유:** 얇게 흐르는 꼬리와 뾰족한 수염 돌기에서 균형 길이의 타원 윤곽·가느다란 직선 콧대를 해석하고, 보라색 러프의 풍성한 결은 숱 있는 눈썹으로 남긴다. 에나비의 가는 눈과 달리 넓게 열린 성인 눈으로 구분한다.
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘purple ruff-like collar’ → 눈썹 숱 많고 결이 보이는
 
 ```text
-FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; feathered full brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; narrow tapered chin; open rounded eyes, medium size, level outer corners, wide-set; feathered full brows; straight slender bridge nose; bow-shaped upper lip.
 ```
 
 ### 302 · 깜까미 (Sableye)
@@ -8803,12 +8807,12 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
-| 입 | 도톰한 입술 |
+| 입 | 아랫입술이 더 도톰한 |
 
-**조정:** 같은 계열 브이젤와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 아랫입술이 더 도톰한
 
 ```text
-FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; fine soft arches; rounded soft tip nose; full lips.
+FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; fine soft arches; rounded soft tip nose; fuller lower lip.
 ```
 
 ### 420 · 체리버 (Cherubi)
