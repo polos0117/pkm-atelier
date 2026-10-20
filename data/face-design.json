@@ -12449,39 +12449,36 @@
 "name":"고래왕",
 "en":"Wailord",
 "line":"고래왕자",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
-"face length":"balanced",
+"face length":"long",
 "face width":"medium",
-"jaw & chin":"soft rounded jaw",
-"eye shape":"large",
+"jaw & chin":"long chin with defined jaw",
+"eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
-"eyebrows":"fine soft arches",
-"nose character":"small delicate nose",
-"lips":"full lips"
+"eyebrows":"thin straight brows",
+"nose character":"broad low bridge",
+"lips":"straight even lips"
 },
-"why":"",
+"why":"긴 고래 체적과 작은 눈, 넓은 입의 대비를 긴 타원 얼굴, 길게 이어지는 턱선, 작고 넓게 떨어진 눈, 낮고 넓은 콧대와 수평 입술로 옮긴다. 고래왕자의 둥근 턱과 짧은 코와 구별하며 무늬는 의상에만 둔다.",
 "cues":[
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
+"키 14.5m → 얼굴 길이 긴 얼굴",
+"‘small beady eyes’ → 눈매 가늘고 날카로운 눈",
 "‘small beady eyes’ → 눈 크기 작은 눈",
-"몸 형태 fish → 눈 간격 눈 사이가 넓은"
+"몸 형태 fish → 눈 간격 눈 사이가 넓은",
+"무게 398kg → 코 콧대가 낮고 넓은"
 ],
 "adjusted":"",
-"hair":{
-"hairstyle":"wavy",
-"hair length":"very long",
-"bangs":"curtain bangs"
-},
-"hair_locked":false,
-"hair_why":"‘blue fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅 — 고래왕자에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘blue fins’ → 헤어스타일 웨이브 헤어",
-"키 14.5m → 머리 길이 매우 긴 머리"
-]
+"hair":{},
+"hair_locked":true,
+"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_cues":[],
+"hair_record":null
 },
 "322":{
 "name":"둔타",

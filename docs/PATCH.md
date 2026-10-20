@@ -18,6 +18,10 @@
 - tests/face-design.cjs · tests/prompt-engine.cjs · tests/prompt-screen.cjs — 머리 값·여성 값·길이 맞음·상한·계열 잇기·옆 번호·잠금=기록, HAIR 줄 유무(직접 고름·이어가기·일상), 문서=엔진, 예산 440.
 - AGENTS.md · IMAGE_RULES.md · docs/PROMPT_REWRITE.md — 설계가 머리도 싣는다는 한 줄씩.
 
+## 2026-10-21 · gpt · 고래왕 이미지 9장 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 긴 고래 체적·작은 눈을 해석한 얼굴과 경장 정본 표시를 기록.
+- docs/image-batches/wailord-20261021.md — 9장 생성·검수, 카드 글자 부분 수정과 동일 설정 수영컷 재시도를 기록.
+
 ## 2026-10-21 · gpt · 고래왕자 이미지 9장 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 둥근 고래 체적·수염판 입을 해석한 얼굴과 경장 정본 표시를 기록.
 - docs/image-batches/wailmer-20261021.md — 9장 생성·검수 기록과 이미지 저장소 커밋을 연결.
