@@ -141,11 +141,15 @@ body {color:var(--text);font-size:15px}
 .gal {display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
 .gal img {display:block;width:100%;border:1px solid var(--line);border-radius:8px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
+.hall-controls{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:16px 0}
+.hall-controls button{padding:9px 12px;min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:12px;cursor:pointer}
+.hall-controls button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=face1"></script>
+<script src="lib/words.js?v=capsule1"></script>
 <script src="lib/fresh.js"></script>
-<script src="lib/img.js?v=shards1"></script>
+<script src="lib/img.js?v=capsule1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
 <link rel="stylesheet" href="lib/gallery.css?v=1">
 </head>
@@ -291,6 +295,12 @@ function Facts({ card, group, label, onJump }) {
 
 function Detail({ card, entry, defs, styleName, group, label, selection, nav, onGo, onClose, onJump }) {
   const [zoom, setZoom] = useState(!!selection?.zoom);
+  const [hall,setHall]=useState(()=>IMG.hallPicks());
+  useEffect(()=>{const update=()=>setHall(IMG.hallPicks());
+    for(const e of ['atelier-appearance','atelier-hall','storage'])addEventListener(e,update);
+    return()=>{for(const e of ['atelier-appearance','atelier-hall','storage'])removeEventListener(e,update);};},[]);
+  const inHall=hall.includes(card.name),hallFull=!inHall&&hall.length>=IMG.HALL_MAX;
+
   const want = wanted(defs, card);
   const keys = IMG.styleKeys(entry || {});
   if(FILTER.shots(entry,defs).some(s=>!s.style))keys.push('');
@@ -331,7 +341,7 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
   }, []);
   /* 방향키 — 셀렉트 같은 입력칸에 있을 땐 그 칸 몫 */
   const liveMove = useRef(); liveMove.current = move;
-  useEffect(() => {
+  useLayoutEffect(() => {
     const key = e => { if (document.querySelector('.zoom-layer') || e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('input, select, textarea'))) return;
       if (e.key === 'ArrowLeft') liveMove.current(-1); if (e.key === 'ArrowRight') liveMove.current(1); };
     addEventListener('keydown', key);
@@ -380,6 +390,11 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
       ${keys.map(k => html`<button key=${k} class=${k === style ? 'on' : ''}
         onClick=${() => { setStyle(k); setForm(''); setFocus(null); }}>${styleName[k] || k || W('dex.style.unknown')}</button>`)}
     </div>`}
+    <div class="hall-controls">
+      <button type="button" id="dex-hall" aria-pressed=${inHall} disabled=${hallFull} title=${W('dex.hall.note')}
+        onClick=${()=>IMG.toggleHall(card.name)}>${W(inHall?'dex.hall.remove':hallFull?'dex.hall.full':'dex.hall.add')}</button>
+      <span class="hall-n" aria-live="polite">${W('dex.hall.count',{n:hall.length,max:IMG.HALL_MAX})}</span>
+    </div>
     <p class="sec">${W('dex.compare')}<span>${prog.ok ? '' : W('art.form.left', { n: prog.left.length })}</span></p>
     <div class="fstrip" role="group" aria-label=${W('dex.compare')}>
       ${want.map(k => {
@@ -575,6 +590,16 @@ function App() {
     addEventListener('popstate', pop);
     return () => removeEventListener('popstate', pop);
   }, []);
+
+  const linked=useRef(false);
+  useEffect(()=>{
+    if(!st.cards||linked.current)return;linked.current=true;
+    const url=new URL(location.href),name=url.searchParams.get('mech'),card=st.cards.find(c=>c.name===name);
+    if(card){const original=url.href;url.searchParams.delete('mech');
+      try{history.replaceState(history.state,'',url);}catch{}
+      openShot({card});try{history.replaceState({dex:'card'},'',original);}catch{}
+    }
+  },[st.cards]);
 
   if (st.error) return html`<${Shell} head=${null}>
     <p class="empty">${W('ui.error', { message: st.error })}</p><//>`;

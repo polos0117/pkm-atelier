@@ -144,6 +144,7 @@ ESM_DIR=<preact·htm 이 든 node_modules>
 `ESM_DIR` 에 preact·htm 이 든 `node_modules` 경로를 준다.
 
 ```bash
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/home-screen.cjs     # 캡슐 진열 — 여섯 크기·열기·폭주·진열·도감 바로 열기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-nav.cjs       # 도감 넘기기 — 목록 자리·그림·카드 넘기기·뒤로 가기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs

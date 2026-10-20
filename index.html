@@ -8,7 +8,9 @@
 <title>포켓몬 메카 연구소</title>
 <link rel="stylesheet" href="lib/workspace.css?v=gwent1">
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=face1"></script>
+<script src="lib/words.js?v=capsule1"></script>
+<script src="lib/img.js?v=capsule1"></script>
+<link rel="stylesheet" href="lib/capsule.css?v=1">
 <script src="lib/patch.js?v=1"></script>
 <script src="lib/fresh.js?v=4"></script>
 </head>
@@ -16,7 +18,7 @@
 <div class="wrap"><div id="app"></div></div>
 <script type="module">
 import {h,render} from 'https://esm.sh/preact@10.24.3';
-import {useState,useEffect} from 'https://esm.sh/preact@10.24.3/hooks';
+import {useState,useEffect,useMemo,useRef,useLayoutEffect} from 'https://esm.sh/preact@10.24.3/hooks';
 import {WorkspaceHeader,ThemeGallery} from './lib/workspace-ui.js?v=gwent1';
 const W=window.W;
 /* 패치 기록 — docs/PATCH.md 를 그대로 읽는다. 열 때 한 번만 받아 온다.
@@ -45,9 +47,92 @@ function Patch(){
         h('strong',null,e.title),
         !!e.items.length&&h('ul',null,e.items.map((x,j)=>h('li',{key:j},x)))))));
 }
+
+const IMG=window.AtelierImg;
+function BayPic({file,layer}) {
+  const [failed,setFailed]=useState(false), image=useRef();
+  if(!file||failed)return null;
+  return h('img',{ref:image,class:layer,src:IMG.thumbURL(file),alt:'',decoding:'async',
+    onError:e=>{const el=e.currentTarget;if(el.dataset.fallback){setFailed(true);return;}el.dataset.fallback='1';el.src=IMG.imgURL(file);}});
+}
+function TypeChips({card,group}) {
+  return h('span',{class:'capsule-types'},[card.element,card.element2].filter(Boolean).map(k=>
+    h('span',{key:k,style:{'--chip':group.color[k]}},group.name[k]||k)));
+}
+/* Connected components also cover branched evolution families. Shuffle once per load. */
+function randomResidents(cards,img) {
+  const parent=new Map(cards.map(c=>[c.name,c.name]));
+  const root=n=>{let r=n;while(parent.get(r)!==r)r=parent.get(r);return r;};
+  for(const c of cards)for(const n of [c.from,...(c.to||[])].filter(n=>parent.has(n)))parent.set(root(n),root(c.name));
+  const pool=cards.filter(c=>IMG.hallShotsOf(img[c.name]).file);
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const seen=new Set();return pool.filter(c=>{const r=root(c.name);if(seen.has(r))return false;seen.add(r);return true;}).slice(0,IMG.HALL_MAX);
+}
+function CapsuleBay(){
+  const [data,setData]=useState(null),[failed,setFailed]=useState(false),[revision,refresh]=useState(0);
+  const [selected,select]=useState(null),[overdrive,setOverdrive]=useState(false);
+  const bay=useRef(),opener=useRef(),title=useRef();
+  useEffect(()=>{let live=true;Promise.all([
+    fetch('data/card.json').then(r=>{if(!r.ok)throw Error();return r.json();}),
+    fetch('data/group.json').then(r=>{if(!r.ok)throw Error();return r.json();}),IMG.load()
+  ]).then(([doc,group,img])=>{if(live){const cards=Object.values(doc.cards).flat();setData({cards,group,img,random:randomResidents(cards,img)});}})
+    .catch(()=>{if(live)setFailed(true);});return()=>{live=false;};},[]);
+  useEffect(()=>{const update=()=>{refresh(v=>v+1);select(null);};
+    for(const e of ['atelier-appearance','atelier-hall','storage'])addEventListener(e,update);
+    return()=>{for(const e of ['atelier-appearance','atelier-hall','storage'])removeEventListener(e,update);};},[]);
+  const picks=useMemo(()=>IMG.hallPicks(),[revision]);
+  const residents=useMemo(()=>!data?[]:picks.length?picks.map(n=>data.cards.find(c=>c.name===n)).filter(Boolean):data.random,[data,picks]);
+  const close=(restore=true)=>{select(null);if(restore)opener.current?.focus({preventScroll:true});};
+  useEffect(()=>{if(!selected)return;const key=e=>{if(e.key==='Escape'){e.preventDefault();close();}};
+    const outside=e=>{if(!bay.current?.contains(e.target))close(false);};
+    addEventListener('keydown',key);addEventListener('pointerdown',outside);
+    return()=>{removeEventListener('keydown',key);removeEventListener('pointerdown',outside);};},[selected]);
+  useLayoutEffect(()=>{if(selected)title.current?.focus({preventScroll:true});},[selected]);
+  const current=selected&&residents.find(c=>c.name===selected),shots=current&&IMG.hallShotsOf(data.img[current.name]);
+  const no=c=>W('home.bay.no',{n:String(c.no).padStart(4,'0')});
+  return h('section',{ref:bay,class:'capsule-bay'+(overdrive?' is-overdrive':'')+(current?' has-open':''),'aria-label':W('home.bay'),
+    onClick:e=>{if(!e.target.closest('button,a,.capsule-info'))close(false);}},
+    h('div',{class:'bay-toolbar'},h('div',null,h('h2',null,W('home.bay')),h('span',{class:'bay-count'},picks.length?W('home.bay.picked',{n:residents.length}):W('home.bay.random'))),
+      h('button',{type:'button',class:'bay-overdrive','aria-pressed':overdrive,onClick:()=>setOverdrive(v=>!v)},h('i',{'aria-hidden':'true'}),W('home.bay.overdrive'))),
+    h('div',{class:'bay-layout'},
+      h('div',{class:'bay-wall'},
+        h('div',{class:'capsule-row',role:'group','aria-label':W('home.bay')},
+          residents.map((card,i)=>{const shot=IMG.hallShotsOf(data.img[card.name]),active=card.name===selected;
+            return h('button',{key:card.name,type:'button',class:'capsule'+(active?' is-open':''),'data-name':card.name,
+              'aria-expanded':active,'aria-controls':active?'capsule-info':undefined,'aria-label':no(card)+' · '+card.name,
+              style:{'--type':data.group.color[card.element]||'#60A1B8','--type2':data.group.color[card.element2||card.element]||'#60A1B8','--delay':(-i*.7)+'s'},
+              onClick:e=>{if(active){close();return;}opener.current=e.currentTarget;select(card.name);}},
+              h('span',{class:'capsule-cap','aria-hidden':'true'},h('i')),
+              h('span',{class:'capsule-tank'},
+                h('span',{class:'capsule-art'+(overdrive&&shot.overdrive?' show-overdrive':'')},
+                  h('span',{class:'capsule-empty'},W('home.bay.empty')),
+                  h(BayPic,{key:shot.file,file:shot.file,layer:'capsule-normal'}),
+                  shot.overdrive&&h(BayPic,{key:shot.overdrive,file:shot.overdrive,layer:'capsule-overdrive'})),
+                h('span',{class:'capsule-liquid','aria-hidden':'true'}),h('span',{class:'capsule-glass','aria-hidden':'true'}),
+                h('span',{class:'capsule-bubbles','aria-hidden':'true'},[0,1,2].map(n=>h('i',{key:n})))),
+              h('span',{class:'capsule-base'},h('small',null,no(card)),h('strong',null,card.name),h(TypeChips,{card,group:data.group})));
+          }),
+          !data&&h('p',{class:'bay-status',role:'status'},W(failed?'home.bay.fail':'ui.loading')),
+          data&&!residents.length&&h('p',{class:'bay-status'},W('home.bay.pick')))),
+      current&&h('section',{class:'capsule-info',id:'capsule-info','aria-labelledby':'capsule-title'},
+        h('div',{class:'bay-portrait'+(overdrive&&shots.overdrive?' show-overdrive':'')},
+          h('span',{class:'capsule-empty'},W('home.bay.empty')),
+          h(BayPic,{key:shots.file,file:shots.file,layer:'capsule-normal'}),
+          shots.overdrive&&h(BayPic,{key:shots.overdrive,file:shots.overdrive,layer:'capsule-overdrive'})),
+        h('div',{class:'bay-description'},h('small',null,no(current)),
+          h('h3',{ref:title,id:'capsule-title',tabIndex:-1},current.name),h('p',{class:'bay-genus'},current.genus),
+          h(TypeChips,{card:current,group:data.group}),h('p',{class:'bay-text'},current.text),
+          h('div',{class:'bay-doors'},
+            h('a',{href:'dex.html?mech='+encodeURIComponent(current.name)},W('home.bay.toDex')),
+            h('a',{href:'prompt.html?mech='+encodeURIComponent(current.name)},W('home.bay.toPrompt')),
+            h('button',{type:'button',onClick:()=>close()},W('home.bay.close')))))),
+    h('a',{class:'bay-hint',href:'dex.html'},W('home.bay.pick')));
+}
+
 function App(){
   return h('div',null,
     h(WorkspaceHeader,{page:'index'}),
+    h(CapsuleBay),
     h('div',{class:'lab-intro'},h('div',null,h('h2',null,W('home.title')),h('p',null,W('home.intro'))),
       h('span',{class:'lab-tag'},W('home.tag'))),
     h(Patch),
