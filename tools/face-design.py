@@ -510,7 +510,7 @@ def design_hair(cards, app, img, old, roots, H):
             if ev:
                 kind, path, raw, line = pick_record(ev)
                 vals = norm_hair(raw, H)
-                if any(e[3] for e in ev) and prev.get('hair') and not prev.get('hair_locked'):   # 생성기가 이 표의 HAIR 줄을 실어 만든 그림
+                if any(e[3] for e in ev) and prev.get('hair'):   # HAIR 줄로 확정한 값은 잠근 뒤 다시 build 해도 보존한다
                     vals = {**{k: v for k, v in prev['hair'].items() if k in HAIR_KEYS}, **vals}
                 rec = {'path': path, 'kind': kind, 'raw': raw}
             else:
