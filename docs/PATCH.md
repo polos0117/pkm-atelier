@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 폭타 9장 등록과 정본 표시
+- data/face-design.json — 폭타 경장 ①을 정본으로 표시하고 실제 생성기의 머리 설계 기록으로 잠갔다.
+- docs/CHARACTER_FACE_DESIGNS.md — 폭타의 정본 표시와 머리 기록을 자료에서 다시 그렸다.
+
 ## 2026-10-21 · gpt · 럭시오 경장 정본 등록
 - data/face-design.json — 럭시오의 경장 ①을 정본으로 표시하고 실제 생성기 HAIR 설계에 따른 머리를 잠갔다. 기존 인물의 얼굴 설계는 유지했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 정본 표시를 자료와 같은 표로 다시 렌더했다.
