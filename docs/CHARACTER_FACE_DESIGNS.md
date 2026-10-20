@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 631종, 원작 단서 규칙으로 고른 것 394종 · 겹침을 풀며 옮긴 종 850
-- 그림이 이미 있는 종(①이 정본) 335
+- 직접 쓴 설계 632종, 원작 단서 규칙으로 고른 것 393종 · 겹침을 풀며 옮긴 종 850
+- 그림이 이미 있는 종(①이 정본) 336
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -6767,22 +6767,24 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 
 ### 320 · 고래왕자 (Wailmer)
 
-계열 기준: 고래왕자 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 고래왕자 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 각지고 또렷한 턱 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 넓은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
-| 눈썹 | 바깥에서 꺾이는 사선 |
-| 코 | 작고 여린 코 |
-| 입 | 아랫입술이 더 도톰한 |
+| 눈썹 | 짧고 둥근 |
+| 코 | 코끝이 둥근 |
+| 입 | 입이 넓은 |
 
-**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘baleen plates’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘baleen plates’ → 눈썹 바깥에서 꺾이는 사선 · 몸 형태 fish → 입술 아랫입술이 더 도톰한
+**이유:** 도감의 둥근고래·공처럼 튀는 체적과 넓은 수염판 입을 짧고 넓은 얼굴, 둥근 턱, 수평으로 떨어진 눈과 넓은 사람 입으로 옮긴다. 작은 코끝과 둥근 눈썹은 둥근 체적의 곡선을 잇되 20대 성인 비율을 유지한다.
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 아랫입술이 더 도톰한
+**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; angled brows; small delicate nose; fuller lower lip.
+FACE (her own structure, not the style's default face): oval face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; short rounded brows; rounded soft tip nose; wide mouth.
 ```
 
 ### 321 · 고래왕 (Wailord)

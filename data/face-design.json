@@ -8576,30 +8576,27 @@
 "name":"고래왕자",
 "en":"Wailmer",
 "line":"고래왕자",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
-"face length":"balanced",
-"face width":"medium",
-"jaw & chin":"angular defined jaw",
+"face length":"short",
+"face width":"wide",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
-"eyebrows":"angled brows",
-"nose character":"small delicate nose",
-"lips":"fuller lower lip"
+"eyebrows":"short rounded brows",
+"nose character":"rounded soft tip",
+"lips":"wide mouth"
 },
-"why":"",
+"why":"도감의 둥근고래·공처럼 튀는 체적과 넓은 수염판 입을 짧고 넓은 얼굴, 둥근 턱, 수평으로 떨어진 눈과 넓은 사람 입으로 옮긴다. 작은 코끝과 둥근 눈썹은 둥근 체적의 곡선을 잇되 20대 성인 비율을 유지한다.",
 "cues":[
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
-"‘baleen plates’ → 턱선 · 턱끝 각지고 또렷한 턱",
-"몸 형태 fish → 눈 간격 눈 사이가 넓은",
-"‘baleen plates’ → 눈썹 바깥에서 꺾이는 사선",
-"몸 형태 fish → 입술 아랫입술이 더 도톰한"
+"몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 아랫입술이 더 도톰한"
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형"
 },
 "321":{
 "name":"고래왕",
