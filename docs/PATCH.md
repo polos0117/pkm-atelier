@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 렌트라·꼬몽울 9컷 등록과 정본 머리 보존
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 렌트라·꼬몽울의 경장 ①을 정본으로 표시하고 제출한 HAIR 설정을 잠갔다. 같은 시점에 자동 등록된 둔타·꼬링크와 고래왕의 기록도 현재 등록부·경장 기록에 맞춰 반영했다.
+- tools/face-design.py — HAIR 줄로 확정한 머리가 이미 잠긴 상태에서도 다시 build 할 때 유지되게 했다. 직접 고른 UI 값이 있으면 그 값이 우선하며, HAIR가 없는 옛 그림에는 설계를 새로 부여하지 않는다.
+- tests/face-design-hair-lock.py — 최초 잠금·두 번째 build의 머리 보존·HAIR가 없는 옛 기록의 미지정 상태를 검사한다. 수정 전 조건에서 두 번째 build 검사가 실패함을 확인했다.
+
+
 ## 2026-10-21 · gpt · 둔타 9장 등록과 정본 표시
 - data/face-design.json — 둔타 경장 ①을 정본으로 표시하고 실제 생성기의 머리 설계 기록으로 잠갔다.
 - docs/CHARACTER_FACE_DESIGNS.md — 둔타의 정본 표시와 머리 기록을 자료에서 다시 그렸다.
