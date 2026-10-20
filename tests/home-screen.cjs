@@ -61,6 +61,9 @@ const ready=p=>p.waitForSelector('.capsule',{timeout:6000});
     await first.click();await p.locator('.lab-intro h2').click();assert.equal(await p.locator('.capsule-info').count(),0,'outside click');
     assert(!p.url().includes('?'),'home opening is ephemeral');
     assert.deepEqual(await p.locator('.lab-links a').evaluateAll(es=>es.map(e=>e.getAttribute('href'))),['dex','prompt','battle','run','lane','gwent','survey'].map(k=>k+'.html'));
+    /* 층 안내 — 만드는 곳 둘은 칸, 시험장 다섯은 줄. 가짜 번호(A-01 / ARCHIVE)·화살표 없음 */
+    assert.equal(await p.locator('.lab-tools .lab-link').count(),2);assert.equal(await p.locator('.lab-arena .lab-row').count(),5);
+    assert(!/[A-D]-0\d|↗/.test(await p.locator('.lab-links').innerText()),'no fake codes or arrows on the home links');
     await p.emulateMedia({reducedMotion:'reduce'});
     assert.equal(await p.locator('.capsule-bubbles i').first().evaluate(e=>getComputedStyle(e).animationName),'none');
     assert.deepEqual(a.errors,[]);assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);

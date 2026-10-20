@@ -28,11 +28,24 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
    for(const [fg,bg] of [['text','bg'],['text','card'],['muted','bg'],['muted','card2'],['accent','accent-soft'],['on-accent','accent']])
     assert(contrast(colors[fg],colors[bg])>=4.5,key+' '+fg+'/'+bg+': '+contrast(colors[fg],colors[bg]));
    assert.equal(await p.locator('meta[name="theme-color"]').getAttribute('content'),colors.deck);
-   assert.equal(await p.locator('.crest-name').innerText(),await p.evaluate(k=>window.W('theme.'+k),key));
+   /* 캡슐 벽은 어느 테마에서나 어두운 흑연색 */
+   const wall=await p.locator('.bay-wall').evaluate(e=>getComputedStyle(e).backgroundColor);
+   const rgb=wall.match(/\d+/g).slice(0,3).map(Number);
+   assert(luminance('#'+rgb.map(n=>n.toString(16).padStart(2,'0')).join(''))<.03,key+' capsule wall stays dark: '+wall);
    backgrounds.add(colors.bg);
    marks.add(await p.locator('.workspace-title svg').innerHTML());
   }
   assert.equal(backgrounds.size,8);assert.equal(marks.size,8);
+  /* 머리말 오른쪽 상태줄 — 장식이 아니라 실제 수치(등록 종·그림 수·진열·마지막 패치일) */
+  const fs=require('node:fs'),img=JSON.parse(fs.readFileSync('data/img.json','utf8')).img;
+  const files=JSON.stringify(img).match(/\.webp"/gi).length,patch=fs.readFileSync('docs/PATCH.md','utf8').match(/\n## (\d{4})-(\d{2})-(\d{2})/);
+  await p.waitForSelector('.lab-status [data-status="patch"]');
+  const status=await p.locator('.lab-status div').evaluateAll(es=>Object.fromEntries(es.map(e=>[e.dataset.status,e.querySelector('dd').textContent])));
+  assert.equal(status.species,Object.keys(img).length.toLocaleString('ko-KR')+'종');
+  assert.equal(status.images,files.toLocaleString('ko-KR')+'장');
+  assert.equal(status.hall,(await p.evaluate(()=>window.AtelierImg.hallPicks().length))+' / 12');
+  assert.equal(status.patch,patch[2]+'.'+patch[3]);
+  assert.equal(await p.locator('.workspace-heading .eyebrow, .crest-signature').count(),0,'no decorative header layers');
   for(const [page,selector] of [['dex.html','.grid .cell'],['prompt.html','#prompt-output'],['battle.html','.bt-setup'],['run.html','.run-draft'],['lane.html','.ln-screen'],['gwent.html','.gw-screen'],['survey.html','.sv-start'],['index.html','.theme-card']]){
    await p.goto(harness.base+'/'+page);await p.waitForSelector(selector);
    const nav=await p.locator('.workspace-nav a').evaluateAll(es=>es.map(e=>({
@@ -72,6 +85,6 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   assert.deepEqual(a.errors,[]);
   assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
-  console.log('PASS theme screens: 8 palettes and motifs, AA text contrast, persisted navigation, unchanged prompts, 3 viewports');
+  console.log('PASS theme screens: 8 palettes and motifs, dark capsule wall, lab status line, AA text contrast, persisted navigation, unchanged prompts, 3 viewports');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

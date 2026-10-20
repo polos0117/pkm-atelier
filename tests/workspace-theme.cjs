@@ -38,7 +38,8 @@ assert.equal(new Set(shapes).size,8,'eight distinct motifs');
 assert(!/#[0-9a-f]{3,6}/i.test(marks),'motifs inherit palette colors');
 assert(!/지구연방|네오지온|소레스탈|철화단|모노아이|CREATIVE DECK/.test(ui));
 assert(!css.includes("content:'DAYLIGHT"),'theme labels are not CSS content');
-assert(ui.includes("W('workspace.signature')"));
+assert(ui.includes("W('lab.status')"),'the header carries the lab status line');
+assert(!/workspace\.signature|app\.code|app\.brand|crest-signature|eyebrow/.test(ui),'decorative header layers stay gone');
 assert(viewportEvents.has('resize'));assert(events.has('storage'));
 /* 글꼴 — 한글 고딕 하나를 실제로 불러온다(못 받아도 화면은 OS 고딕으로 선다). 명조·자간 준 고정폭 한글은 없다 */
 const pages=fs.readdirSync('.').filter(f=>f.endsWith('.html'));

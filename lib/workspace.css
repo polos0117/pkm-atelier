@@ -102,26 +102,27 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-title {align-self:stretch;min-height:44px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading .crest-mark {width:28px;height:28px;padding:3px;border-radius:9px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading h1 {font-size:15px;margin:0}
-  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading :is(.eyebrow,p) {display:none}
+  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading p {display:none}
 }
 .workspace-nav a[aria-current="page"] {color:var(--text);background:var(--accent-soft);box-shadow:inset 0 -2px var(--accent)}
 /* Reserve readable space for longer labels while keeping all six tabs on one row. */
 .workspace-nav a[href="index.html"] {flex-grow:1.25}
 .workspace-nav a[href="prompt.html"] {flex-grow:1.65}
 .theme-dot {width:7px;height:7px;flex:none;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px var(--accent-soft)}
-.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:136px;padding:12px 0 18px;position:relative}
+.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:112px;padding:12px 0 14px;position:relative}
 .workspace-title {display:flex;align-items:center;gap:14px;min-width:0;color:inherit;text-decoration:none}
 .workspace-title:hover .crest-mark {border-color:var(--accent)}
 .workspace-title>div {min-width:0}
 .crest-mark {width:60px;height:60px;padding:8px;flex:none;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);border-radius:20px}
-.eyebrow {font:700 10px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
-.eyebrow span {color:var(--muted);font-weight:400}
-.workspace-heading h1 {margin:3px 0 4px;font-size:clamp(24px,3.7vw,34px);line-height:1.2;letter-spacing:-.045em;font-weight:800;white-space:nowrap}
+.workspace-heading h1 {margin:0 0 4px;font-size:clamp(24px,3.7vw,34px);line-height:1.2;letter-spacing:-.045em;font-weight:800;white-space:nowrap}
 .workspace-heading p {margin:0;min-height:36px;color:var(--muted);font-size:12px;line-height:18px;word-break:keep-all}
-.crest-signature {display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:none;font:10px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
-.crest-name {color:var(--accent);font-weight:700;letter-spacing:.04em}
-.crest-signature i {width:100px;height:6px;border-radius:9px;background:linear-gradient(to right,var(--accent) 0 52%,var(--card) 52% 57%,var(--signal) 57% 82%,var(--card) 82% 87%,var(--gold) 87%)}
-.crest-signature b {font-size:8px;font-weight:500;letter-spacing:.18em}
+/* 연구소 상태줄 — 장식 대신 실제 수치(값은 tabular-nums). 좁으면(899px 이하) 두 줄로, 덮개에서는 숨긴다 */
+.lab-status {display:flex;flex:none;gap:4px 18px;margin:0;align-self:flex-end;padding-bottom:4px}
+.lab-status>div {display:flex;align-items:baseline;gap:6px}
+.lab-status dt {font-size:11px;color:var(--muted)}
+.lab-status dd {margin:0;font:600 13px var(--sans);color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
+.lab-status [data-status="patch"] dd {color:var(--accent)}
+@media (max-width:899px) { .lab-status {display:grid;grid-template-columns:auto auto;gap:2px 14px} }
 body {background-color:var(--bg);background-image:radial-gradient(var(--pattern) 1px,transparent 1px);background-size:18px 18px}
 [data-theme="midnight"] body {background-image:radial-gradient(circle at 85% 0,var(--pattern),transparent 45%),radial-gradient(var(--pattern) 1px,transparent 1px);background-size:auto,24px 24px}
 [data-theme="blossom"] body {background-image:radial-gradient(ellipse at 10% 0,var(--pattern),transparent 60%),radial-gradient(var(--pattern) 2px,transparent 2px);background-size:auto,28px 28px}
@@ -263,9 +264,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
   .crest-mark {width:44px;height:44px;padding:5px;border-radius:14px}
   .workspace-heading h1 {font-size:clamp(20px,5.7vw,25px)}
   .workspace-heading p {font-size:11px;line-height:16px;min-height:32px}
-  .workspace-heading .eyebrow {display:none}
-  .crest-signature {display:none}
-  .eyebrow {font-size:9px}
+  .lab-status {display:none}
   .dex-page header {padding:0 9px 10px;border-radius:10px}
   .dex-page .tab {flex:1;padding:10px 6px;white-space:nowrap;font-size:12px}
   .dex-page .tab b {font-size:10px;margin-left:3px}
@@ -289,7 +288,6 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
   .workspace-nav a {font-size:11px}
 }
 @media (prefers-reduced-motion:reduce) {*,*::before,*::after {scroll-behavior:auto!important;transition:none!important}}
-.workspace-heading::after {content:'';position:absolute;bottom:8px;left:0;width:66px;height:3px;border-radius:2px;background:linear-gradient(to right,var(--accent) 0 46%,transparent 46% 53%,var(--signal) 53% 79%,transparent 79% 86%,var(--gold) 86%)}
 .build-stamp {display:block;margin:10px 0 0;text-align:right;color:var(--muted);font:10px/1.5 var(--num);opacity:.8}
 @media (pointer:coarse) {
   .prompt-page .lab-lock {min-height:44px;padding-right:50px}
@@ -349,8 +347,6 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .lab-intro {margin:0 0 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
 .lab-intro h2 {font-size:clamp(23px,4vw,35px);letter-spacing:-.045em;line-height:1.3;margin:0 0 10px}
 .lab-intro p {max-width:580px;color:var(--muted);font-size:14px;line-height:1.8;margin:0}
-.lab-tag {display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:7px 12px;white-space:nowrap;color:var(--muted);font-size:11px}
-.lab-tag::before {content:'';width:7px;height:7px;border-radius:50%;background:var(--signal)}
 /* 패치 기록 — 집 화면에서만 열린다. 닫혀 있으면 자리를 차지하지 않는다 */
 .patch-open {display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:8px 13px;min-height:40px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--muted);font:inherit;font-size:12px;cursor:pointer}
 .patch-open:hover {color:var(--text);border-color:var(--accent)}
@@ -368,12 +364,19 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .patch-entry strong {display:block;margin:7px 0 6px;font-size:14px;letter-spacing:-.02em;font-weight:650}
 .patch-entry ul {margin:0;padding-left:17px;color:var(--muted);font-size:12.5px;line-height:1.75}
 @media (max-width:599px) { .patch-panel {padding:15px} .patch-list {max-height:60vh} }
-.lab-links {display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 36px}
-.lab-link {position:relative;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:20px;color:var(--text);text-decoration:none;box-shadow:var(--shadow)}
-.lab-link>small {display:block;color:var(--accent);font:700 11px var(--sans);font-variant-numeric:tabular-nums}
-.lab-link h3 {font-size:21px;letter-spacing:-.035em;margin:12px 0 7px}
-.lab-link p {font-size:13px;color:var(--muted);max-width:85%;line-height:1.7;margin:0}
-.lab-link .lab-arrow {position:absolute;right:22px;bottom:22px;width:34px;height:34px;display:grid;place-items:center;background:var(--accent-soft);border-radius:50%;color:var(--accent)}
+/* 층 안내 — 만드는 곳 두 칸(무게가 크다)과 시험장 다섯 줄(가볍다) */
+.lab-links {display:grid;gap:22px;margin:24px 0 36px}
+.lab-tools {display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lab-link {display:block;padding:20px 22px;background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;color:var(--text);text-decoration:none}
+.lab-link:hover {border-color:var(--accent)}
+.lab-link h3 {font-size:19px;letter-spacing:-.02em;margin:0 0 6px}
+.lab-link p {font-size:13px;color:var(--muted);max-width:52ch;line-height:1.7;margin:0;word-break:keep-all}
+.lab-arena h2 {margin:0 0 6px;font-size:13px;font-weight:700;color:var(--muted)}
+.lab-arena ul {margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.lab-row {display:grid;grid-template-columns:minmax(8.5em,max-content) minmax(0,1fr);gap:4px 20px;align-items:baseline;min-height:48px;padding:12px 4px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
+.lab-row strong {font-size:15px;font-weight:700}
+.lab-row span {font-size:12.5px;line-height:1.6;color:var(--muted);word-break:keep-all}
+.lab-row:hover strong {color:var(--accent)}
 .theme-gallery-head {display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-bottom:15px}
 .theme-gallery-head h2 {font-size:18px;margin:0}
 .theme-gallery-head p {font-size:12px;color:var(--muted);margin:0}
@@ -390,9 +393,9 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .theme-selected {position:absolute;right:14px;bottom:13px;color:var(--accent)}
 @media(max-width:850px) {.theme-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:599px) {
- .lab-intro{display:block}.lab-tag{margin-top:14px}
- .lab-links{grid-template-columns:1fr;gap:12px;margin:20px 0 28px}
- .lab-link{padding:20px}.theme-gallery-head{display:block}.theme-gallery-head p{margin-top:7px}
+ .lab-intro{display:block}
+ .lab-links{gap:18px;margin:20px 0 28px}.lab-tools{grid-template-columns:1fr;gap:10px}
+ .lab-link{padding:16px 18px}.lab-row{grid-template-columns:1fr;gap:2px}.theme-gallery-head{display:block}.theme-gallery-head p{margin-top:7px}
  .theme-gallery{gap:10px}.prompt-page .theme-card{padding:13px;min-height:163px}
 }
 

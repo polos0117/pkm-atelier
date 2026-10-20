@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="lib/workspace.css?v=sans1">
+<link rel="stylesheet" href="lib/workspace.css?v=status1">
 <style>
 /* 색·밀도 토막은 lib/workspace.css 한 곳에 있다. 여기는 뼈대만 —
    workspace.css 의 .dex-page 규칙이 이 뼈대에 살을 붙인다.
@@ -155,9 +155,9 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=sans1"></script>
+<script src="lib/words.js?v=status1"></script>
 <script src="lib/fresh.js"></script>
-<script src="lib/img.js?v=capsule1"></script>
+<script src="lib/img.js?v=status1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
 <link rel="stylesheet" href="lib/gallery.css?v=sans1">
 </head>
@@ -170,7 +170,7 @@ body {color:var(--text);font-size:15px}
 import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=shell1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
 import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;

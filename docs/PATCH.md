@@ -10,6 +10,16 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-20 · claude · 캡슐 둘레를 비웠다 — 머리말 상태줄, 층 안내, 늘 어두운 캡슐 벽
+
+- lib/workspace-ui.js · lib/workspace.css — 머리말이 장식 넷을 겹쳐 입었다(「POKÉMON × MECHA / PKM / 001」 눈썹, 오른쪽 테마 이름·삼색 막대·8px 「CREATURE DESIGN LAB」, 제목 밑 삼색 막대). 문양 + 제목 + 부제만 남기고, 오른쪽에 실제 수치 한 줄 — 등록 종 수·그림 수(data/img.json)·이 테마 진열 n / 12·마지막 패치 날짜(docs/PATCH.md 앞 4KB) — 을 둔다. 못 읽은 값은 칸째 뺀다. 덮개(599px 이하)에서는 숨긴다. 눈썹이 빠진 만큼 넓은 화면 머리말 높이 136→112px
+- lib/img.js — load() 가 한 화면 안에서 같은 주소를 한 번만 받는다(화면 몸통과 상태줄이 같이 부른다). 실패는 기억하지 않는다
+- index.html · lib/workspace.css · lib/capsule.css — 캡슐 아래 링크 일곱이 같은 둥근 카드에 「A-01 / ARCHIVE」 같은 가짜 번호(차례가 아니다)와 분홍 원 ↗ 를 달고 있었다(HOME_CAPSULE_PLAN 5절에서 온 것). 만드는 곳(도감·프롬프트) 두 칸과 「시험장」 다섯 줄로 나눠 무게를 달리하고, 번호·화살표·그림자를 뺐다. 「발견하고 · 만들고 · 기록하기」 꼬리표도 지웠다
+- lib/capsule.css — 캡슐 벽이 --bg 88% 섞임이라 밝은 테마에서 회색 안개처럼 보였다. 테마와 상관없이 흑연색(#16212a→#22323b)으로 고정하고 벽 위 글자·굴림막대도 벽에 맞췄다
+- lib/words.js — lab.status.* · home.links · home.arena 를 더하고, 링크 제목의 「기록실 · 」 같은 앞머리를 뗐다. 안 쓰는 app.code · app.brand · workspace.signature · home.*.code · home.tag 를 지웠다
+- *.html · lib/prompt-ui.js · lib/survey-ui.js — 꼬리표 ?v=status1
+- tests/theme-screen.cjs — 테마 여덟에서 캡슐 벽이 어둡다, 상태줄 값이 자료와 같다, 장식 층이 없다. tests/home-screen.cjs — 칸 둘·줄 다섯, 가짜 번호·화살표 없음. tests/workspace-theme.cjs — 상태줄이 있고 장식 낱말이 없다
+
 ## 2026-10-20 · claude · 글꼴 — 한글 고딕 하나를 실제로 불러오고, 명조·자간 준 고정폭 한글을 걷었다
 
 - *.html — 'Pretendard' 를 첫 글꼴로 적었지만 어디서도 불러오지 않아 OS 글꼴로 보였다. 화면 여덟 머리에서 Noto Sans KR(400–800, display=swap)을 Google Fonts 로 불러온다. preconnect 두 줄, 글꼴 css 는 media="print"→onload 로 첫 화면을 막지 않는다. 못 받으면(오프라인·검사) OS 고딕으로 그대로 선다
