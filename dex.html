@@ -64,6 +64,11 @@ body {color:var(--text);font-size:15px}
 .dex-filter-grid select {width:100%;min-width:0;min-height:40px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--text);padding:6px;font:inherit}
 .dex-filter-grid select:disabled {opacity:.5}
 .dex-page .grid .cell .face img {object-fit:contain}
+/* 칸이 천 장을 넘어도 화면 밖 칸은 그리지 않는다. 그리기 전 높이는 List 가 처음 보이는 칸을 재어
+   --cell-h(그림 없는 칸)·--cell-h-art(그림 칸)로 준다 — 어림이 틀리면 목록 자리 되돌리기가 어긋난다.
+   한 번 그린 칸은 auto 가 제 높이를 기억한다 */
+.dex-page .grid>.cell {content-visibility:auto;contain-intrinsic-size:auto 150px auto var(--cell-h,320px)}
+.dex-page .grid>.cell.has-art {contain-intrinsic-size:auto 150px auto var(--cell-h-art,360px)}
 @media(min-width:720px){.dex-filter-grid {grid-template-columns:repeat(5,minmax(0,1fr))}}
 .sw {display:flex;flex-wrap:wrap;gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px}
 .sw button {flex:1 1 auto;background:var(--card);border:0;border-radius:6px;color:var(--muted);
@@ -147,7 +152,7 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=capsule1"></script>
+<script src="lib/words.js?v=dexurl1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=capsule1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
@@ -167,6 +172,39 @@ import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;
 const FILTER_STORE = 'pkm_dex_filters_v1';
+/* 주소 — 거른 목록과 보던 카드를 링크로 남긴다. 기본값인 필터는 적지 않는다.
+   ?mech=<카드 이름> 이 상세, 나머지(q·style·gen·type·form·cut)가 필터다 */
+const URL_KEYS = Object.keys(FILTER.defaults());
+function urlFilters() {
+  const u = new URL(location.href);
+  if (!URL_KEYS.some(k => u.searchParams.has(k))) return null;
+  const raw = {};
+  for (const k of URL_KEYS) { const v = u.searchParams.get(k); if (v !== null) raw[k] = v; }
+  return FILTER.normalize(raw);
+}
+function dexHref(filters, mech) {
+  const u = new URL(location.href), d = FILTER.defaults();
+  for (const k of [...URL_KEYS, 'mech']) u.searchParams.delete(k);
+  if (mech) u.searchParams.set('mech', mech);
+  for (const k of URL_KEYS) if (filters[k] && filters[k] !== d[k]) u.searchParams.set(k, filters[k]);
+  return u.pathname + u.search + u.hash;
+}
+function setUrl(href, push) {
+  if (href === location.pathname + location.search + location.hash && !push) return;
+  try { history[push ? 'pushState' : 'replaceState'](push ? { dex: 'card' } : history.state, '', href); } catch {}
+}
+/* 그리기 전 칸 높이 — 그림 칸·빈 칸 하나씩 잠깐 그려 잰다(늘어나지 않게 align-self:start) */
+function measureCells(grid) {
+  if (!grid) return;
+  for (const [sel, name] of [['.cell.has-art', '--cell-h-art'], ['.cell:not(.has-art)', '--cell-h']]) {
+    const c = grid.querySelector(':scope > ' + sel);
+    if (!c) continue;
+    c.style.contentVisibility = 'visible'; c.style.alignSelf = 'start';
+    const hgt = c.getBoundingClientRect().height;
+    c.style.contentVisibility = ''; c.style.alignSelf = '';
+    if (hgt > 0) grid.style.setProperty(name, hgt.toFixed(1) + 'px');
+  }
+}
 
 /* 지금 만드는 것은 여성체뿐이다. 그래도 파일 이름에는 _f 를 적어 두므로,
    나중에 m 을 더해도 옛 파일의 뜻이 안 바뀐다. 완료 판정은 성별을 안 본다 */
@@ -480,9 +518,10 @@ function shotLabel(shot, defs) {
 }
 function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
   const f = FILTER.normalize(filters, st);
-  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false), gridRef = useRef();
   /* 상세에서 돌아오면 열기 전에 굴려 둔 자리로. 상세에서 다른 카드로 넘어갔으면 그 카드 칸이 보이게 한 번 더 민다 */
   useLayoutEffect(() => {
+    measureCells(gridRef.current);
     const r = restore && restore.current, sc = document.querySelector('.collection-scroll');
     if (!r || !sc) return;
     restore.current = null;
@@ -496,6 +535,18 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     if (a.top < b.top || a.bottom > b.bottom) sc.scrollTop += a.top - b.top - Math.max(0, (b.height - a.height) / 2);
   }, []);
   const shown = useMemo(() => FILTER.select(st, filters), [st, filters]);
+  /* 칸 높이 어림 — 폭(화면·작게 보기)이 바뀌거나 글꼴이 늦게 오면 다시 잰다 */
+  useLayoutEffect(() => {
+    const grid = gridRef.current;
+    measureCells(grid);
+    if (!grid || typeof ResizeObserver !== 'function') return;
+    const probe = grid.firstElementChild;
+    let w = probe.clientWidth;
+    const ro = new ResizeObserver(() => { if (probe.clientWidth !== w) { w = probe.clientWidth; measureCells(grid); } });
+    ro.observe(probe);
+    document.fonts && document.fonts.ready && document.fonts.ready.then(() => measureCells(grid));
+    return () => ro.disconnect();
+  }, [compact, shown.length > 0]);
   const update = (key,value) => onFilter(FILTER.normalize({...f,[key]:value},st));
   const reset = () => onFilter(FILTER.defaults());
   const generations = [...new Set(st.cards.map(c => c.gen))].sort((a,b)=>a-b);
@@ -508,7 +559,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
       ${options.map(([v,label])=>html`<option key=${v} value=${v}>${label}</option>`)}
     </select></label>`;
   const head = html`<div class="search-row">
-    <input type="search" value=${f.q} placeholder=${W('dex.filter.search')} aria-label=${W('dex.filter.search')}
+    <input type="search" name="q" autocomplete="off" enterkeyhint="search" spellcheck=${false} value=${f.q} placeholder=${W('dex.filter.search.hint')} aria-label=${W('dex.filter.search')}
       onInput=${e => update('q',e.currentTarget.value)} />
     <button class="dex-reset" id="dex-reset" onClick=${reset}>${W('dex.filter.reset')}</button>
   </div>`;
@@ -532,10 +583,10 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     </div>
     ${shown.length === 0
       ? html`<p class="empty">${W('dex.filter.empty')}</p>`
-      : html`<div class="grid">${shown.map((shot,i) => {
+      : html`<div class="grid" ref=${gridRef}>${shown.map((shot,i) => {
           const c=shot.card,entry=st.img[c.name],want=wanted(st.defs,c);
           const prog=IMG.formsDone(shot.style?IMG.styleMap(entry)[shot.style]:entry,want,V);
-          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class="cell"
+          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':'cell'}
             data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut}
             onClick=${() => onOpen(shot)}>
             <span class="face">${shot.file
@@ -561,44 +612,58 @@ function App() {
     try {localStorage.setItem('pkm_dex_compact_v1',String(compact));} catch {}
     return () => document.body.classList.remove('dex-compact');
   },[compact]);
+  /* 필터 — 주소에 있으면 주소가, 없으면 이 브라우저에 둔 것이. 바꾸면 둘 다 고친다(주소는 기록을 안 쌓는다) */
   const [filters,setFilters] = useState(() => {
+    const fromUrl = urlFilters();
+    if (fromUrl) return fromUrl;
     try { return FILTER.normalize(JSON.parse(localStorage.getItem(FILTER_STORE))); }
     catch { return FILTER.defaults(); }
   });
-  useEffect(() => { try {localStorage.setItem(FILTER_STORE,JSON.stringify(filters));} catch {} }, [filters]);
+  const firstMech = useRef(new URL(location.href).searchParams.get('mech'));
+  useEffect(() => {
+    try {localStorage.setItem(FILTER_STORE,JSON.stringify(filters));} catch {}
+    setUrl(dexHref(filters, openNow.current?.card?.name));
+  }, [filters]);
   /* 목록 자리 — 열 때 굴린 값과 연 카드를 적어 두고, 닫을 때 List 가 그 자리로 돌아간다 */
   const listTop = useRef(0), from = useRef(null), restore = useRef(null), openNow = useRef(null);
   openNow.current = open;
-  /* 휴대폰 뒤로 가기 — 상세를 열 때 기록을 한 칸 쌓아 두고, 뒤로 가기(popstate)면 그 칸을 내리며 목록으로.
+  /* 휴대폰 뒤로 가기 — 상세를 열 때 기록을 한 칸 쌓아 두고(주소에 ?mech=<이름>), 뒤로 가기(popstate)면 그 칸을 내리며 목록으로.
      "목록으로" 단추도 같은 칸을 내린다(history.back). 그 popstate 는 이미 닫았으니 한 번 건너뛴다.
-     카드를 넘기거나 진화로 건너가도 칸은 하나 그대로 — 뒤로 가기 한 번이면 목록이다 */
+     카드를 넘기거나 진화로 건너가도 칸은 하나 그대로 주소만 바뀐다 — 뒤로 가기 한 번이면 목록이다.
+     목록에서 앞으로 가기면 그 칸의 카드를 다시 연다 */
   const pushed = useRef(false), skipPop = useRef(false);
   const shut = () => { restore.current = { top: listTop.current, card: openNow.current?.card?.name, from: from.current }; setOpen(null); };
   const openShot = shot => {
     const sc = document.querySelector('.collection-scroll');
     listTop.current = sc ? sc.scrollTop : 0; from.current = shot.card.name;
     setOpen(shot);
-    if (!pushed.current) { try { history.pushState({ dex: 'card' }, ''); pushed.current = true; skipPop.current = false; } catch {} }
+    if (!pushed.current) { setUrl(dexHref(filters, shot.card.name), true); pushed.current = true; skipPop.current = false; }
   };
+  useEffect(() => { if (open && pushed.current) setUrl(dexHref(filters, open.card.name)); }, [open?.card?.name]);
   const close = () => {
     shut();
     if (pushed.current) { pushed.current = false; skipPop.current = true; try { history.back(); } catch { skipPop.current = false; } }
   };
   const liveShut = useRef(); liveShut.current = shut;
+  const liveForward = useRef(); liveForward.current = () => {
+    const name = new URL(location.href).searchParams.get('mech'), c = st.cards && st.cards.find(x => x.name === name);
+    if (!c || !history.state || history.state.dex !== 'card') return;
+    const sc = document.querySelector('.collection-scroll');
+    listTop.current = sc ? sc.scrollTop : 0; from.current = c.name; pushed.current = true; setOpen({ card: c });
+  };
   useEffect(() => {
-    const pop = () => { if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } };
+    const pop = () => { if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } else liveForward.current(); };
     addEventListener('popstate', pop);
     return () => removeEventListener('popstate', pop);
   }, []);
 
+  /* ?mech= 로 들어오면 — 이 칸은 목록 주소로 바꾸고, 그 위에 카드 칸을 쌓는다. 뒤로 가기면 같은 필터의 목록이다 */
   const linked=useRef(false);
   useEffect(()=>{
     if(!st.cards||linked.current)return;linked.current=true;
-    const url=new URL(location.href),name=url.searchParams.get('mech'),card=st.cards.find(c=>c.name===name);
-    if(card){const original=url.href;url.searchParams.delete('mech');
-      try{history.replaceState(history.state,'',url);}catch{}
-      openShot({card});try{history.replaceState({dex:'card'},'',original);}catch{}
-    }
+    const card=st.cards.find(c=>c.name===firstMech.current);
+    setUrl(dexHref(filters));
+    if(card)openShot({card});
   },[st.cards]);
 
   if (st.error) return html`<${Shell} head=${null}>

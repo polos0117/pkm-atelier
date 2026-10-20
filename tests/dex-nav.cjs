@@ -7,6 +7,7 @@ const top = p => p.evaluate(() => document.querySelector('.collection-scroll').s
 const name = p => p.$eval('.bar h2', e => e.textContent.trim());
 const count = p => p.$eval('.big-count', e => e.textContent.trim()).catch(() => '');
 const big = p => p.$eval('.big img', e => e.getAttribute('src'));
+const mech = p => new URL(p.url()).searchParams.get('mech');
 /* 손가락처럼 그 자리에서 누른다 — locator.click() 은 누르기 전에 칸을 화면 안으로 굴려서 "굴린 자리" 를 바꿔 버린다 */
 const tap = (p, card) => p.evaluate(n => [...document.querySelectorAll('.grid > .cell')].find(x => x.dataset.card === n).click(), card);
 /* 지금 화면 가운데쯤에 보이는 목록 칸 하나(그림이 있는 칸) */
@@ -24,6 +25,22 @@ async function visibleCell(p) {
     await p.waitForSelector('.grid > .cell');
     const len0 = await p.evaluate(() => history.length);
 
+    /* 0. 칸이 천 장이어도 화면 밖은 안 그린다 — content-visibility:auto, 그리기 전 높이는 잰 값이라 굴림 높이가 그대로다 */
+    await p.waitForTimeout(300);
+    const cv = await p.evaluate(() => {
+      const g = document.querySelector('.grid'), cs = [...g.children], sc = document.querySelector('.collection-scroll');
+      const before = sc.scrollHeight;
+      const drawn = cs.filter(c => c.querySelector('.cap').checkVisibility({ contentVisibilityAuto: true })).length;
+      cs.forEach(c => { c.style.contentVisibility = 'visible'; });
+      const real = sc.scrollHeight;
+      cs.forEach(c => { c.style.contentVisibility = ''; });
+      return { mode: getComputedStyle(cs[0]).contentVisibility, art: g.style.getPropertyValue('--cell-h-art'), drawn, n: cs.length, before, real };
+    });
+    assert.equal(cv.mode, 'auto', '목록 칸은 content-visibility:auto');
+    assert(/px$/.test(cv.art), '그림 칸 높이를 재어 둔다: ' + cv.art);
+    assert(cv.n > 100 && cv.drawn < cv.n / 4, '화면 밖 칸은 그리지 않는다: ' + cv.drawn + ' / ' + cv.n);
+    assert(Math.abs(cv.before - cv.real) <= 2, '어림 높이가 실제와 같다: ' + cv.before + ' / ' + cv.real);
+
     /* 1. 목록으로 — 열기 전에 굴려 둔 자리로 */
     await p.evaluate(() => { document.querySelector('.collection-scroll').scrollTop = 900; });
     await p.waitForTimeout(150);
@@ -33,10 +50,12 @@ async function visibleCell(p) {
     await tap(p, first);
     await p.waitForSelector('.bar h2');
     assert.equal(await name(p), first, '누른 카드가 열린다');
+    assert.equal(mech(p), first, '열면 주소에 ?mech=<이름>');
     assert.equal(await p.evaluate(() => history.length), len0 + 1, '상세를 열면 기록이 한 칸 쌓인다');
     await p.click('.back');
     await p.waitForSelector('.grid > .cell');
     assert(Math.abs(await top(p) - was) <= 2, '목록으로 단추 — 굴린 자리로 돌아온다: ' + await top(p) + ' / ' + was);
+    assert.equal(mech(p), null, '닫으면 주소에서 mech 가 빠진다');
 
     /* 2. 휴대폰 뒤로 가기 — 앞 화면이 아니라 목록으로, 자리도 그대로 */
     await tap(p, first);
@@ -89,6 +108,7 @@ async function visibleCell(p) {
     await p.click('#dex-card-next');
     const last = await name(p);
     assert.notEqual(last, seen, '다음 카드 단추');
+    assert.equal(mech(p), last, '카드를 넘기면 주소도 그 카드로');
     assert.equal(await p.evaluate(() => history.length), len0 + 1, '카드를 넘겨도 기록은 한 칸');
     await p.goBack();
     await p.waitForSelector('.grid > .cell');
@@ -100,9 +120,44 @@ async function visibleCell(p) {
     assert(shown, '돌아오면 마지막에 본 카드 칸이 화면에 있다');
     /* 목록에서 한 번 더 뒤로 가면 그때는 도감을 떠난다 — 남은 기록 칸이 없다 */
     assert.equal(await p.evaluate(() => history.length), len0 + 1, '기록 칸 수는 열 때 쌓은 그대로(앞으로 가기 자리)');
+    assert.equal(mech(p), null, '뒤로 가기면 주소도 목록');
+    /* 앞으로 가기 — 그 칸의 카드가 다시 열린다 */
+    await p.goForward();
+    await p.waitForFunction(n => document.querySelector('.bar h2')?.textContent.trim() === n, last);
+    await p.goBack();
+    await p.waitForSelector('.grid > .cell');
+
+    /* 6. 필터도 주소에 — 고르면 주소가 바뀌고(기록은 안 쌓임), 새로고침해도, 주소만 받아 와도 같은 목록이다 */
+    const genBtn = p.locator('.genre-strip button').nth(1);
+    const genLabel = (await genBtn.textContent()).trim();
+    await genBtn.click();
+    await p.waitForFunction(() => new URL(location.href).searchParams.has('gen'));
+    const gen = new URL(p.url()).searchParams.get('gen');
+    assert.equal(await p.evaluate(() => history.length), len0 + 1, '필터를 바꿔도 기록은 안 쌓인다');
+    const filtered = await p.locator('.grid > .cell').count();
+    await p.reload(); await p.waitForSelector('.grid > .cell');
+    assert.equal(await p.locator('.genre-strip button[aria-pressed="true"]').textContent(), genLabel, '새로고침해도 필터 그대로');
+    /* 상세를 연 채 새로고침하면 그 카드, 뒤로 가기면 같은 필터의 목록 */
+    const pickName = await p.locator('.grid > .cell').first().getAttribute('data-card');
+    await p.locator('.grid > .cell').first().click();
+    await p.waitForSelector('.bar h2');
+    assert.equal(mech(p), pickName); assert.equal(new URL(p.url()).searchParams.get('gen'), gen, '상세 주소에도 필터가 남는다');
+    await p.reload(); await p.waitForSelector('.bar h2');
+    assert.equal(await name(p), pickName, '새로고침해도 보던 카드');
+    await p.goBack(); await p.waitForSelector('.grid > .cell');
+    assert.equal(mech(p), null); assert.equal(new URL(p.url()).searchParams.get('gen'), gen);
+    assert.equal(await p.locator('.grid > .cell').count(), filtered, '뒤로 가면 같은 필터의 목록');
 
     assert.deepEqual(a.errors, [], '화면 오류 없음');
     await a.close();
-    console.log('PASS 도감 넘기기: 목록 자리 되돌리기 · 그림 넘기기(방향키·밀기) · 카드 넘기기 · 휴대폰 뒤로 가기');
+    /* 주소만 받은 새 브라우저 — 저장된 필터가 없어도 주소의 필터로 거른다 */
+    const b = await h.open('dex.html?gen=' + gen + '&q=' + encodeURIComponent(pickName), { viewport: FOLD.cover, mobile: true }), q = b.page;
+    await q.waitForSelector('.grid > .cell');
+    assert.equal(await q.locator('.search-row input').inputValue(), pickName, '주소의 검색어');
+    assert.equal(await q.locator('.genre-strip button[aria-pressed="true"]').textContent(), genLabel, '주소의 세대');
+    assert(await q.locator('.grid > .cell').evaluateAll((es, n) => es.length > 0 && es.every(e => e.dataset.card === n), pickName), '주소의 필터로 거른 목록');
+    assert.deepEqual(b.errors, [], '화면 오류 없음');
+    await b.close();
+    console.log('PASS 도감 넘기기: 목록 자리 되돌리기 · 그림 넘기기(방향키·밀기) · 카드 넘기기 · 휴대폰 뒤로 가기 · 주소(?mech=·필터·새로고침·앞으로 가기) · 화면 밖 칸 안 그리기');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });
