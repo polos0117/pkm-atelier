@@ -41,10 +41,33 @@ function same(actual,expected,label){
       assert(await p.evaluate(()=>document.body.scrollWidth<=innerWidth),'horizontal overflow');
       const scroll=p.locator(file==='dex.html'||file==='battle.html'||file==='run.html'||file==='lane.html'||file==='gwent.html'?'.collection-scroll':'.wrap');
       assert((await scroll.boundingBox()).height>100,file+' usable scroll viewport');
+      /* 문서 잠금은 마우스(pointer:fine)일 때만 — 휴대폰은 당겨서 새로고침이 살아 있고, 굴림 자리가 맨 위에서 더 당긴 몫을 넘긴다.
+         어느 쪽이든 문서는 구르지 않는다(굴러가는 자리는 하나) */
+      const lock=await p.evaluate(sel=>{const r=getComputedStyle(document.documentElement),sc=document.querySelector(sel);
+       return {fine:matchMedia('(pointer:fine)').matches,overflow:r.overflowY,over:r.overscrollBehaviorY,inner:getComputedStyle(sc).overscrollBehaviorY,
+        root:document.scrollingElement.scrollHeight-innerHeight,moved:(sc.scrollTop=40,sc.scrollTop),back:(sc.scrollTop=0,sc.scrollTop)};},
+       file==='dex.html'||file==='battle.html'||file==='run.html'||file==='lane.html'||file==='gwent.html'?'.collection-scroll':'.wrap');
+      assert.equal(lock.fine,!mobile,'검사 창의 포인터');
+      if(lock.fine) assert(lock.overflow==='hidden'&&lock.over==='none',file+' 마우스면 문서를 잠근다: '+JSON.stringify(lock));
+      else assert(lock.overflow!=='hidden'&&lock.over==='auto'&&lock.inner==='auto',file+' 휴대폰이면 문서를 안 잠근다: '+JSON.stringify(lock));
+      assert(lock.root<=1,file+' 문서는 구르지 않는다: '+lock.root);
+      if(file==='dex.html'||file==='prompt.html') assert(lock.moved>0,file+' 굴림 자리가 구른다');
       if(file==='dex.html'){
+       /* 도감은 굴리면 머리말을 접는다 — 항해는 그대로 보이고 위로만 온다. 맨 위로 돌아오면 처음 자리 */
+       const box=(await scroll.boundingBox()).height;
        await scroll.evaluate(e=>{e.scrollTop=300});
        await p.waitForSelector('main.dex-scrolled');
-       same(await geometry(p),reference,'dex scroll keeps navigation in place');
+       const g=await geometry(p),narrow=viewport.width<=599,nav='.workspace-nav';
+       assert(g[nav].visible&&Math.abs(g[nav].width-reference[nav].width)<=1&&Math.abs(g[nav].height-reference[nav].height)<=1,'dex scroll keeps the navigation row');
+       assert(g[nav].y<=reference[nav].y+1,'dex scroll never pushes navigation down');
+       if(reference['.workspace-heading'].visible){
+        if(narrow) assert(g['.workspace-heading'].visible&&g['.workspace-heading'].height<=48,'dex scroll leaves one title row on narrow screens');
+        else assert(!g['.workspace-heading'].visible,'dex scroll hides the heading');
+        assert((await scroll.boundingBox()).height>box+40,'dex scroll gives the list more room');
+       }
+       await scroll.evaluate(e=>{e.scrollTop=0});
+       await p.waitForFunction(()=>!document.querySelector('main.dex-scrolled'));
+       same(await geometry(p),reference,'dex back at top restores the header');
       }
      }
     }
@@ -57,6 +80,19 @@ function same(actual,expected,label){
     assert(titleShown||await p.locator('.workspace-nav a[href="index.html"]').isVisible(),viewport.width+' 집으로 가는 길이 하나는 있다');
     assert(await p.locator('.workspace-nav a[href="lane.html"]').isVisible()&&await p.locator('.workspace-nav a[href="gwent.html"]').isVisible()&&await p.locator('.workspace-nav a[href="survey.html"]').isVisible(),viewport.width+' 결투·폼 결투·탐사 탭이 보인다');
     for(const a of await p.locator('.workspace-nav a').all()) if(await a.isVisible()) assert(await a.evaluate(e=>e.scrollWidth<=e.clientWidth+1),viewport.width+' 탭 글자가 안 잘린다: '+await a.textContent());
+    /* 본문 건너뛰기 — 첫 Tab 에 보이고, 누르면 머리 다음 자리(도감은 검색 줄)로 초점이 간다. 항해에는 이름이 있다 */
+    if(!mobile){
+     await p.goto(h.base+'/dex.html');await p.waitForSelector('.grid .cell');
+     assert.equal(await p.locator('nav.workspace-nav').getAttribute('aria-label'),await p.evaluate(()=>W('ui.nav')));
+     await p.keyboard.press('Tab');
+     assert(await p.evaluate(()=>document.activeElement.classList.contains('skip-link')),'첫 Tab 은 본문 건너뛰기');
+     assert(await p.locator('.skip-link').evaluate(e=>getComputedStyle(e).clipPath==='none'&&e.getBoundingClientRect().width>40),'초점을 받으면 보인다');
+     await p.keyboard.press('Enter');
+     assert(await p.evaluate(()=>document.activeElement===document.querySelector('.workspace-header').nextElementSibling),'본문으로 초점이 옮겨 간다');
+     await p.keyboard.press('Tab');
+     assert(await p.evaluate(()=>document.activeElement.matches('.search-row input')),'다음 Tab 은 검색 칸');
+     assert(!p.url().includes('#'),'주소에 #content 가 안 남는다');
+    }
     /* 접기 — 제목이 숨고 항해(와 ⚙)만 남는다. 다음 화면에서도 접힌 채다. 펼치면 돌아온다 */
     await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
     const open=await geometry(p);
@@ -78,6 +114,6 @@ function same(actual,expected,label){
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
-  console.log('PASS header layout: 8 pages, 5 viewport sizes, both densities, stable navigation while scrolling');
+  console.log('PASS header layout: 8 pages, 5 viewport sizes, both densities, document lock only for fine pointers, skip link, dex heading folds while scrolling');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

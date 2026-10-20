@@ -11,7 +11,7 @@
   진화 결투(lane.html)와 같은 저장(localStorage 의 pkm_duel_v1)을 쓴다 — decks.gwent · stats.gwent · matches.gwent.
   설계: docs/superpowers/specs/2026-10-06-gwent-duel-design.md
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=gwent1">
+<link rel="stylesheet" href="lib/workspace.css?v=shell1">
 <style>
 :root {--row-h:108px}
 * {box-sizing:border-box}
@@ -223,7 +223,7 @@ body {color:var(--text);font-size:15px}
 @media (prefers-reduced-motion:reduce) {.gw-unit.flip,.gw-unit.hit,.gw-target {animation:none} .gw-unit.burst::after {display:none}}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=face1"></script>
+<script src="lib/words.js?v=shell1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js?v=shards1"></script>
 <script src="lib/collection.js?v=gwent1"></script>
@@ -235,7 +235,7 @@ body {color:var(--text);font-size:15px}
 import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo, useRef } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=shell1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, G = window.AtelierGwent;
 const STORE = 'pkm_duel_v1';

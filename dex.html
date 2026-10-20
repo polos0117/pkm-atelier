@@ -13,7 +13,7 @@
   화면은 data/img.json 에 적힌 것만 그린다. 그림 저장소에 파일이 있어도
   tools/register-images.py 를 거치기 전에는 없는 것으로 본다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=gwent1">
+<link rel="stylesheet" href="lib/workspace.css?v=shell1">
 <style>
 /* 색·밀도 토막은 lib/workspace.css 한 곳에 있다. 여기는 뼈대만 —
    workspace.css 의 .dex-page 규칙이 이 뼈대에 살을 붙인다.
@@ -152,7 +152,7 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=dexurl1"></script>
+<script src="lib/words.js?v=shell1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=capsule1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
@@ -167,7 +167,7 @@ body {color:var(--text);font-size:15px}
 import { h, render, Fragment } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=gwent1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=shell1';
 import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;
@@ -229,14 +229,15 @@ function Pic({ file, full, alt }) {
 /* 껍데기. lib/workspace.css 의 .dex-page 규칙이 화면을 100dvh 로 잠그고
    .collection-scroll 한 곳만 구르게 한다 — 그 자리를 안 쓰면 아래쪽이 통째로
    잘리고, 화면은 멀쩡해 보이는데 스크롤만 안 된다.
-   굴리면 main 에 dex-scrolled 가 붙어 검색 도구만 간결해진다. 상단 탭은 움직이지 않는다 */
+   굴리면 main 에 dex-scrolled 가 붙어 검색 도구가 간결해지고 머리말도 접힌다(.dex-fold — 휴대폰에서는 문양 + 제목 한 줄).
+   항해 탭은 남는다. 맨 위 근처로 돌아오면 펼친다 — 접고 펴는 사이를 두어 경계에서 깜빡이지 않게 한다 */
 function Shell({ head, children }) {
   const [scrolled, setScrolled] = useState(false);
-  return html`<main class=${scrolled ? 'dex-scrolled' : ''}>
+  return html`<main class=${'dex-fold' + (scrolled ? ' dex-scrolled' : '')}>
     <${WorkspaceHeader} page="dex" />
     <header>${head}</header>
     <div class="collection-scroll" tabindex="0"
-      onScroll=${e => { const on = e.currentTarget.scrollTop > 8; setScrolled(v => v === on ? v : on); }}>
+      onScroll=${e => { const t = e.currentTarget.scrollTop; setScrolled(v => t > 24 ? true : t < 4 ? false : v); }}>
       ${children}
     </div>
   </main>`;

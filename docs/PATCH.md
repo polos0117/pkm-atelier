@@ -10,6 +10,16 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-20 · claude · 휴대폰 손맛 — 당겨서 새로고침, 도감 머리말 접기, 44px 단추, 본문 건너뛰기
+
+- lib/workspace.css — 집·도감·스튜디오가 html 에 overflow:hidden·overscroll-behavior:none 을 모든 포인터에 걸어 휴대폰에서 당겨서 새로고침이 죽었다. 문서 잠금은 @media (pointer:fine) 안으로 옮기고, 휴대폰에서는 굴림 자리(.wrap·.collection-scroll)가 맨 위에서 더 당긴 몫을 문서로 넘긴다(overscroll-behavior-y:auto). 문서는 화면 높이 그대로라 구를 것이 없어 "굴러가는 자리는 하나" 는 그대로다
+- lib/workspace.css · dex.html — 도감에서 굴리면 탭·도구만 숨고 머리말이 남아 390 화면 위쪽 244px 를 먹었다. 굴리면(.dex-fold.dex-scrolled) 머리말을 접기 단추와 같은 모양으로 줄인다 — 넓은 화면은 숨기고, 덮개는 문양 + 제목 한 줄(연구소 링크). 맨 위 근처로 오면 펼친다(24px/4px 사이를 두어 경계에서 깜빡이지 않게)
+- lib/workspace.css — 덮개 항해 탭 폭을 글자만큼 먼저 주고 남는 것을 나눈다(flex-basis:auto). 똑같이 나누면 「폼결투」가 잘렸다. .figure-auto·.patch-close 도 44px
+- lib/prompt.css — 장면 칸의 무작위·잠금(36px), 외형 잠금 .param-lock(32px), 그림 고르기 머리 단추(36px)를 44px 로. 잠금 자리만큼 이름 칸 오른쪽을 띄운다
+- lib/workspace-ui.js · lib/words.js — 모든 화면이 링크 여덟·설정을 지나야 본문에 닿았다. 첫 Tab 에 보이는 「본문으로 건너뛰기」(머리 다음 자리로 초점을 옮긴다)와 항해 nav 의 aria-label(ui.skip · ui.nav)
+- *.html · lib/prompt-ui.js · lib/survey-ui.js — 껍데기 파일 꼬리표를 ?v=shell1 로 맞췄다(workspace.css·workspace-ui.js·words.js·prompt.css)
+- tests/header-layout.cjs — 포인터별 문서 잠금·문서는 안 구름·굴림 자리는 구름, 도감을 굴리면 머리말이 접히고 항해는 내려가지 않음·맨 위면 원래 자리, 본문 건너뛰기(첫 Tab·Enter 로 초점 이동). tests/prompt-screen.cjs — 단추 44px
+
 ## 2026-10-20 · claude · 도감 — 화면 밖 칸은 안 그리고, 보던 카드와 필터를 주소에
 
 - dex.html — 목록 칸 1,025개를 한꺼번에 그렸다. `.grid>.cell` 에 content-visibility:auto 를 주고, 그리기 전 높이(contain-intrinsic-size)는 그림 칸·빈 칸을 하나씩 재어 --cell-h-art·--cell-h 로 준다(폭이 바뀌거나 글꼴이 늦게 오면 다시 잰다). 어림이 실제와 같아 굴림 높이·목록 자리 되돌리기가 그대로다. 344 화면에서 처음 그리는 칸이 10개

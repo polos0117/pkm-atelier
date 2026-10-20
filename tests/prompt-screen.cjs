@@ -46,6 +46,12 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await settled();
   assert((await text()).includes('body type: athletic'));
   assert.equal(await p.locator('[data-figure-picker="body type"] [data-value="athletic"][aria-pressed="true"]').count(),1);
+  // 손가락 자리 — 장면 칸의 무작위·잠금, 외형 잠금, 그림 고르기 머리 단추는 44px 이상
+  await p.locator('#appearance-settings details').evaluateAll(es=>es.forEach(e=>e.open=true));
+  const small=await p.locator('.scene-choice-actions button, .param-lock, .figure-picker-head button').evaluateAll(es=>
+   es.filter(e=>e.offsetParent).map(e=>[e.className||e.textContent,Math.round(e.getBoundingClientRect().height),Math.round(e.getBoundingClientRect().width)]).filter(([,hh,ww])=>hh<44||ww<44));
+  assert(await p.locator('.param-lock').count()>0,'외형 잠금 단추가 있다');
+  assert.deepEqual(small,[],'44px 보다 작은 단추');
   // A locked field must survive randomization.
   await p.getByRole('button',{name:'무작위 변경 잠금 · 체형',exact:true}).click();
   await p.locator('#randomize').click();await settled();
@@ -128,6 +134,6 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);
   await corrupt.close();
-  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 14 styles, copy, saved settings, figures and 3 viewport sizes');
+  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 14 styles, copy, saved settings, figures, 44px controls and 3 viewport sizes');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});
