@@ -164,4 +164,17 @@ assert.equal(build('꼬부기',{outputMode:'portrait'}),sq);
 for(const bad of [{style:'nope'},{form:'nope'},{form:'overdrive',baseForm:'nope'},{outputMode:'nope'},{identityMode:'nope'}])
  assert.throws(()=>build('꼬부기',bad),JSON.stringify(bad));
 assert.throws(()=>P.buildPrompt({style:'glossy_promo'}),/Source creature/);
+/* 종별 머리 설계(data/face-design.json 의 hair) — 새 인물에만 FACE 뒤 HAIR 줄. 직접 고른 머리가 이기고, 이어가기·개방·일상엔 없다.
+   첨부한 그림이 인물을 쥐는 단계에서 설계 머리를 다시 실으면 확정한 그림과 싸운다 */
+const faces=JSON.parse(fs.readFileSync('data/face-design.json','utf8')).faces;
+const withHair=(name,extra)=>build(name,{faceDesign:faces[cards.find(x=>x.name===name).no],...extra});
+const shinx=faces[403].hair, hairLine='HAIR: '+shinx['hair length']+' '+shinx.hairstyle+', '+shinx.bangs+'.';
+const sh=withHair('꼬링크');
+assert(sh.includes('\n\n'+hairLine+'\n\n')&&sh.indexOf(hairLine)>sh.indexOf('FACE (')&&sh.indexOf(hairLine)<sh.indexOf('FORM —'),'HAIR after FACE, before FORM');
+assert(!build('꼬링크').includes('HAIR: '),'no design data, no HAIR line');
+assert(!withHair('꼬링크',{params:[['hairstyle','locs']]}).includes('\n\nHAIR: '),'explicit hairstyle wins');
+assert(withHair('꼬링크',{params:[['bangs','none']]}).includes('\n\nHAIR: '+shinx['hair length']+' '+shinx.hairstyle+'.\n\n'),'explicit bangs drop only bangs');
+for(const extra of [{identityMode:'reference',form:'heavy'},{form:'overdrive',baseForm:'light'},{faceDesignOn:false}])
+ assert(!withHair('꼬링크',extra).includes('HAIR: '),'HAIR leaked: '+JSON.stringify(extra));
+assert(!L.buildSingle(input('꼬링크',{faceDesign:faces[403],cat:'everyday_basic'})).includes('HAIR: '),'casual carries no HAIR line');
 console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix}`);

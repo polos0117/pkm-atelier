@@ -22,6 +22,8 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await p.waitForSelector('#face-design-list');
   assert.equal(await p.locator('#face-design-list li').count(),11,'얼굴 항목 열하나');
   assert((await text()).includes("FACE (her own structure"),'새 인물 프롬프트에 FACE 줄');
+  /* 피카츄는 확정 그림에 머리 기록이 없어(모델 기본) 표가 머리를 정하지 않는다 — HAIR 줄 없음 */
+  assert(!(await text()).includes('\n\nHAIR: ')&&await p.locator('#hair-design-list').count()===0,'기록 없는 확정 종에 HAIR 줄');
   await p.locator('#face-design-on').click();await settled();
   assert(!(await text()).includes('FACE ('),'끄면 FACE 줄이 빠진다');
   assert.equal(await p.locator('#face-design-list').count(),0);
@@ -130,6 +132,27 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.deepEqual(a.errors,[]);
   assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
+  /* 종별 머리 설계 — 새로 고른 종(꼬링크)은 FACE 뒤에 HAIR 줄. 무작위 변경은 설계된 머리를 채우지 않고,
+     헤어스타일을 직접 고르면 HAIR 줄이 빠지며, 이어가기에는 싣지 않는다 */
+  const shinx=JSON.parse(fs.readFileSync('data/face-design.json','utf8')).faces[403];
+  const hairText='HAIR: '+shinx.hair['hair length']+' '+shinx.hair.hairstyle+', '+shinx.hair.bangs+'.';
+  const b=await harness.open('prompt.html?mech='+encodeURIComponent('꼬링크'),{viewport:FOLD.inner,mobile:true});
+  const q=b.page,qtext=()=>q.locator('#prompt-output').inputValue();
+  await q.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('ANATOMY:'));
+  await q.waitForSelector('#hair-design-list');
+  assert.equal(await q.locator('#hair-design-list li').count(),3,'머리 항목 셋');
+  assert((await qtext()).includes('\n\n'+hairText+'\n\n'),'새 인물 프롬프트에 HAIR 줄');
+  assert((await qtext()).indexOf('FACE (')<(await qtext()).indexOf(hairText),'HAIR 는 FACE 뒤');
+  await q.locator('#randomize').click();await q.waitForTimeout(90);
+  assert((await qtext()).includes(hairText)&&!/\n(hairstyle|hair length|bangs): /.test(await qtext()),'무작위 변경이 설계된 머리를 채웠다');
+  await q.locator('#appearance-settings details').evaluateAll(es=>es.forEach(e=>e.open=true));
+  await q.locator('#param-hairstyle').selectOption('locs');await q.waitForTimeout(90);
+  assert(!(await qtext()).includes('\n\nHAIR: ')&&(await qtext()).includes('hairstyle: locs'),'고른 헤어스타일이 이긴다');
+  assert.equal(await q.locator('#hair-design-list li.overridden').count(),3,'설계 머리가 다 직접 고른 값에 밀린다');
+  await q.locator('#identity-mode').selectOption('reference');await q.waitForTimeout(90);
+  assert(!(await qtext()).includes('HAIR: '),'이어가기에 HAIR 줄');
+  assert.deepEqual(b.errors,[]);
+  await b.close();
   const corrupt=await harness.open('prompt.html',{store:['pkm_prompt_v2','not json']});
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);

@@ -57,8 +57,9 @@
 한 캐릭터 = 경장 ①(인물 기준) + 중장·고기동 + 폼별 개방 3 + 일상컷 3, 파일명, 두 저장소 순서,
 중단 복구가 거기 있다.
 
-신규 경장의 얼굴은 생성기가 `data/face-design.json` 의 그 종을 FACE 줄로 싣는다(표: `docs/CHARACTER_FACE_DESIGNS.md`,
-고치는 도구: `tools/face-design.py`). 무작위 배정 없이 원작 특징을 사람 얼굴로 옮기며, 기본 화풍은 `glossy_promo`다.
+신규 경장의 얼굴과 머리는 생성기가 `data/face-design.json` 의 그 종을 FACE 줄·HAIR 줄(헤어스타일·길이·앞머리)로 싣는다
+(표: `docs/CHARACTER_FACE_DESIGNS.md`, 고치는 도구: `tools/face-design.py`). 무작위 배정 없이 원작 특징을 사람 얼굴·머리로 옮기며,
+머리는 한 가지가 8%(보브 4%)를 넘지 않고 계열 안에서 이어진다. 경장 ①이 등록된 종의 머리는 그림 기록값으로 잠근다. 기본 화풍은 `glossy_promo`다.
 이미 확정한 경장 ①이 있으면 표보다 그 이미지가 우선이고 후속 생성에 외형 문장을 다시 싣지 않는다.
 
 앞선 저장소는 그림을 같이 두었다가 `.git` 이 323 MB 가 되었다. 그중 250 MB 가
@@ -155,7 +156,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/lane-screen.cjs     # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/gwent-screen.cjs    # 폼 결투 — 고르기·덱 짜기(날씨판)·대결·결과·전적·상점
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여덟의 머리가 같은 자리에
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
-node tests/face-design.cjs              # 종별 얼굴 설계 — 1025종 겹침 규칙·새 인물에만 FACE 줄·문서=엔진
+node tests/face-design.cjs              # 종별 얼굴·머리 설계 — 1025종 겹침 규칙·머리 분포와 계열 잇기·새 인물에만 FACE/HAIR 줄·문서=엔진
 python3 tools/face-design.py --check  # 같은 규칙을 도구 쪽에서
 NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·입는 법·머리 특징·개방·저장
 NODE_PATH=<같은 경로> node tests/source-appearance-dom.cjs                        # 자료 자동 채움·수동 보정·자료 실패

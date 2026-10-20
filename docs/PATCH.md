@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · claude · 종별 머리 설계 — 헤어스타일이 몇 가지로 몰리지 않게
+- tools/face-design.py — 얼굴 설계에 머리(헤어스타일·길이·앞머리)를 더했다. 원작 단서 표(HAIR_CUES: 긴 귀·꼬리→트윈테일·땋은 머리, 볏·갈기→울프컷·하이 포니테일, 불꽃→윈드스웹트, 물·지느러미→웨이브, 잎·꽃→반묶음·크라운 브레이드, 둥근 몸→곱슬·스페이스 번, 에스퍼·페어리→히메컷·시뇽·드릴 컬, 돌·강철→블런트·비대칭·언더컷, 고스트·악→한쪽 눈을 덮는 앞머리)로 고르고 분포(한 가지 8%·보브 4%)·진화 계열 잇기·옆 번호 다름을 build 와 --check 가 지킨다. 남성 전용 값은 쓰지 않는다. 경장 ①이 등록된 종은 그림 저장소 기록(*-ui.json·제출 프롬프트, 읽기만)의 값으로 잠근다(hair_locked) — 기록에 머리가 없으면 표가 정하지 않는다.
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 1025종 머리 값·이유·단서·조정과 HAIR 줄, 머리 규칙과 분포 절.
+- lib/prompt-spec.js · lib/prompt-anthro.js — HAIR_KEYS 와 `HAIR:` 줄. 새 인물(경장 ①)에만 FACE 바로 뒤에 싣고, 헤어스타일을 직접 고르면 줄 전체, 길이만 고르면 컷과 길이, 앞머리만 고르면 앞머리가 빠진다. 이어가기·개방·일상에는 없다.
+- lib/prompt-ui.js · lib/words.js — 설계 칸에 머리 세 항목과 이유를 보이고, 무작위 변경이 설계된 머리를 건드리지 않게.
+- tests/face-design.cjs · tests/prompt-engine.cjs · tests/prompt-screen.cjs — 머리 값·여성 값·길이 맞음·상한·계열 잇기·옆 번호·잠금=기록, HAIR 줄 유무(직접 고름·이어가기·일상), 문서=엔진, 예산 440.
+- AGENTS.md · IMAGE_RULES.md · docs/PROMPT_REWRITE.md — 설계가 머리도 싣는다는 한 줄씩.
+
 ## 2026-10-21 · gpt · 고래왕자 이미지 9장 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 둥근 고래 체적·수염판 입을 해석한 얼굴과 경장 정본 표시를 기록.
 - docs/image-batches/wailmer-20261021.md — 9장 생성·검수 기록과 이미지 저장소 커밋을 연결.
