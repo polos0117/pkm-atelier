@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 코터스 9장 등록과 경장 정본 표시
+- data/face-design.json — 코터스 경장 ①을 정본으로 표시하고 실제 제출한 HAIR 설계를 잠갔다. 현재 도감과 등록 표시를 동기화했다: 코터스, 로즈레이드.
+- docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 머리 기록을 자료에서 다시 그렸다.
+- docs/image-batches/torkoal-20261021.md — 9장 생성·검수와 이미지 저장소 커밋을 기록했다.
+
 ## 2026-10-21 · gpt · 폭타 9장 등록과 정본 표시
 - data/face-design.json — 폭타 경장 ①을 정본으로 표시하고 실제 생성기의 머리 설계 기록으로 잠갔다.
 - docs/CHARACTER_FACE_DESIGNS.md — 폭타의 정본 표시와 머리 기록을 자료에서 다시 그렸다.

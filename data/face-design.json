@@ -12573,7 +12573,7 @@
 "en":"Torkoal",
 "line":"코터스",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -12602,12 +12602,17 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"‘large, black, rock-like shell’·키 0.5m에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리",
+"hair_locked":true,
+"hair_why":"확정 경장 ①의 실제 제출 HAIR 줄을 보존: blunt cut, short, straight bangs",
 "hair_cues":[
 "‘large, black, rock-like shell’ → 헤어스타일 끝을 일자로 자른 컷",
 "키 0.5m → 머리 길이 짧은 머리"
-]
+],
+"hair_record":{
+"kind":"ui",
+"path":"pkm-atelier-img-2/records/torkoal-20261021/light-ui.json",
+"raw":{}
+}
 },
 "325":{
 "name":"피그점프",
@@ -15737,7 +15742,7 @@
 "en":"Roserade",
 "line":"꼬몽울",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
