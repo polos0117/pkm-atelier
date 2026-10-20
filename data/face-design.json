@@ -15741,7 +15741,7 @@
 "name":"로즈레이드",
 "en":"Roserade",
 "line":"꼬몽울",
-"how":"draft",
+"how":"species",
 "registered":true,
 "face":{
 "face shape":"oval",
@@ -15756,7 +15756,7 @@
 "nose character":"small delicate nose",
 "lips":"bow-shaped upper lip"
 },
-"why":"",
+"why":"잎 망토의 유려한 곡선과 가면을 이루는 매끈한 윤곽을 균형 잡힌 타원형·수평 아몬드 눈으로, 꽃잎의 정교한 굴곡을 작은 사람 코와 활 모양 윗입술로 해석한다. 로젤리아의 부드러운 턱·긴 아치 눈썹과 구분되는 보통 턱·가는 완만한 눈썹을 유지한다.",
 "cues":[],
 "adjusted":"같은 계열 로젤리아와 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 단정하게 말아 올린 시뇽 → 반묶음",
 "hair":{
@@ -15764,11 +15764,16 @@
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘leafy, green cape’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 로젤리아에서 이어 더 공들인 묶음",
+"hair_locked":true,
+"hair_why":"확정 경장 ①의 실제 제출 HAIR 줄을 보존: medium half-up, curtain bangs",
 "hair_cues":[
 "‘leafy, green cape’ → 헤어스타일 반묶음"
-]
+],
+"hair_record":{
+"kind":"ui",
+"path":"pkm-atelier-img-2/records/roserade-20261021/light-ui.json",
+"raw":{}
+}
 },
 "408":{
 "name":"두개도스",
