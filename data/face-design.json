@@ -12534,7 +12534,7 @@
 "en":"Camerupt",
 "line":"둔타",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -15624,7 +15624,7 @@
 "en":"Luxio",
 "line":"꼬링크",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
