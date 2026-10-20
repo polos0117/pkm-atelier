@@ -10,6 +10,15 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-20 · claude · 글꼴 — 한글 고딕 하나를 실제로 불러오고, 명조·자간 준 고정폭 한글을 걷었다
+
+- *.html — 'Pretendard' 를 첫 글꼴로 적었지만 어디서도 불러오지 않아 OS 글꼴로 보였다. 화면 여덟 머리에서 Noto Sans KR(400–800, display=swap)을 Google Fonts 로 불러온다. preconnect 두 줄, 글꼴 css 는 media="print"→onload 로 첫 화면을 막지 않는다. 못 받으면(오프라인·검사) OS 고딕으로 그대로 선다
+- lib/workspace.css — 글꼴 토막 --sans(Noto Sans KR 먼저)·--num(고정폭, 숫자에만). body 와 단추·입력칸이 --sans 를 쓴다. 불러오지 않는 Pretendard 는 뺐다. 장면 머리글 한글 자간도 뺐다
+- lib/gallery.css · dex.html · lib/words.js — 책 저장소에서 가져온 명조(--gallery-serif, Noto Serif KR — 이것도 불러온 적 없음)를 걷고 목록 머리·카드 이름·상세 제목·확대 보기 제목을 고딕 굵기로. 목록 위 「ATELIER / ILLUSTRATED ARCHIVE」 눈썹과 gallery.kicker 낱말을 지웠다
+- dex.html · lane.html · gwent.html · run.html · battle.html · lib/survey.css · lib/capsule.css · lib/workspace.css — 고정폭 글꼴에 자간을 준 한글 꼬리표(「주 세대를 고른다」·도감 칸 아랫줄·판 표시 등 90곳)를 고딕 + tabular-nums 로. 고정폭은 숫자만 남은 30곳(No.0004·종족값·힘·금·확대 쪽수·날짜)에만 --num 으로
+- tests/workspace-theme.cjs — 화면마다 글꼴 링크(display=swap·preconnect·첫 화면 안 막음), --sans 가 Noto Sans KR 먼저, 명조 없음, --sans 칸에 자간 없음, 고정폭은 --num 으로만
+- tests/dex-nav.cjs — 그리기 전 높이 어림의 허용을 0.1% 로. 글꼴이 바뀌어 이름이 두 줄로 접히는 칸 하나만큼(23px) 어긋났다
+
 ## 2026-10-20 · claude · 휴대폰 손맛 — 당겨서 새로고침, 도감 머리말 접기, 44px 단추, 본문 건너뛰기
 
 - lib/workspace.css — 집·도감·스튜디오가 html 에 overflow:hidden·overscroll-behavior:none 을 모든 포인터에 걸어 휴대폰에서 당겨서 새로고침이 죽었다. 문서 잠금은 @media (pointer:fine) 안으로 옮기고, 휴대폰에서는 굴림 자리(.wrap·.collection-scroll)가 맨 위에서 더 당긴 몫을 문서로 넘긴다(overscroll-behavior-y:auto). 문서는 화면 높이 그대로라 구를 것이 없어 "굴러가는 자리는 하나" 는 그대로다

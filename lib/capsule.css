@@ -3,7 +3,7 @@
 .bay-toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
 .bay-toolbar>div {display:flex;align-items:baseline;flex-wrap:wrap;gap:10px}
 .bay-toolbar h2 {font-size:16px;letter-spacing:-.03em;margin:0}
-.bay-count {font:11px ui-monospace,monospace;color:var(--muted)}
+.bay-count {font:11px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .bay-overdrive {display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 12px;color:var(--text);font:inherit;font-size:12px;cursor:pointer}
 .bay-overdrive i {width:7px;height:7px;border-radius:50%;background:var(--muted)}
 .bay-overdrive[aria-pressed=true] {background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
@@ -33,7 +33,7 @@
 .capsule-bubbles i:nth-child(2) {left:78%;width:6px;height:6px;animation-duration:12s;animation-delay:calc(var(--delay) - 4s)}
 .capsule-bubbles i:nth-child(3) {left:64%;animation-duration:15s;animation-delay:calc(var(--delay) - 8s)}
 .capsule-base {position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:76px;padding:10px 4px 8px;border:1px solid var(--line);border-top:3px solid color-mix(in srgb,var(--type) 45%,#73818b);border-radius:5px 5px 12px 12px;background:linear-gradient(105deg,var(--card2),var(--card) 45%,var(--card2));box-shadow:0 12px 12px -10px #000b;z-index:5}
-.capsule-base small {font:10px ui-monospace,monospace;letter-spacing:.08em;color:var(--muted)}
+.capsule-base small {font:10px var(--num);letter-spacing:.08em;color:var(--muted)}
 .capsule-base strong {font-size:14px;font-weight:700;overflow-wrap:anywhere}
 .capsule-types {display:flex;justify-content:center;flex-wrap:wrap;gap:4px}
 .capsule-types>span {display:inline-flex;align-items:center;gap:4px;padding:2px 5px;border:1px solid var(--line);border-radius:4px;background:var(--card);font-size:10px;color:var(--text);white-space:nowrap}
@@ -50,7 +50,7 @@
 .bay-portrait {position:relative;aspect-ratio:2/3;width:100%;background:var(--card2);border-radius:8px;overflow:hidden}
 .bay-portrait img {object-fit:contain}
 .bay-portrait .capsule-empty {color:var(--muted)}
-.bay-description>small {font:11px ui-monospace,monospace;color:var(--muted);letter-spacing:.12em}
+.bay-description>small {font:11px var(--num);color:var(--muted);letter-spacing:.12em}
 .bay-description h3 {font-size:28px;letter-spacing:-.04em;margin:6px 0}
 .bay-genus {font-size:12px;color:var(--muted);margin:0 0 12px}
 .bay-description .capsule-types {justify-content:flex-start}

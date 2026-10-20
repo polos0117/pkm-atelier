@@ -40,4 +40,28 @@ assert(!/지구연방|네오지온|소레스탈|철화단|모노아이|CREATIVE 
 assert(!css.includes("content:'DAYLIGHT"),'theme labels are not CSS content');
 assert(ui.includes("W('workspace.signature')"));
 assert(viewportEvents.has('resize'));assert(events.has('storage'));
-console.log('PASS: 8 Pokemon themes, persistent keys, palette previews, browser chrome and viewport sizing');
+/* 글꼴 — 한글 고딕 하나를 실제로 불러온다(못 받아도 화면은 OS 고딕으로 선다). 명조·자간 준 고정폭 한글은 없다 */
+const pages=fs.readdirSync('.').filter(f=>f.endsWith('.html'));
+assert(pages.length>=8);
+for(const f of pages){
+ const html=fs.readFileSync(f,'utf8');
+ assert(html.includes('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'),f+' preconnect');
+ const link=html.match(/<link rel="stylesheet" href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)"([^>]*)>/);
+ assert(link&&/family=Noto\+Sans\+KR/.test(link[1])&&/display=swap/.test(link[1]),f+' loads Noto Sans KR with display=swap');
+ assert(/media="print" onload="this\.media='all'"/.test(link[2]),f+' font stylesheet never blocks first paint');
+ assert(html.indexOf(link[0])<html.indexOf('lib/workspace.css'),f+' font link before the shell stylesheet');
+}
+assert(/--sans:'Noto Sans KR',/.test(css),'one Korean sans first in --sans');
+assert(/body \{[^}]*font:[^;}]*var\(--sans\)/.test(css),'body uses --sans');
+assert(!css.includes('Pretendard'),'no family that is never loaded');
+const sheets=[...pages,...fs.readdirSync('lib').filter(f=>f.endsWith('.css')).map(f=>'lib/'+f)];
+for(const f of sheets){
+ const text=fs.readFileSync(f,'utf8');
+ assert(!/Serif KR|Myungjo|Batang|gallery-serif/.test(text),f+' has no borrowed serif');
+ for(const m of text.matchAll(/([^{}]+)\{([^{}]*)\}/g)){
+  if(!/font:[^;}]*var\(--sans\)/.test(m[2]))continue;
+  assert(!/letter-spacing:\s*\.\d/.test(m[2]),f+' '+m[1].trim().split('\n').pop()+' — 한글 글자 칸에 자간');
+ }
+ if(f!=='lib/prompt.css')assert(!/ui-monospace,monospace/.test(text.replace(/--num:[^;]+;/,'')),f+' monospace only through --num');
+}
+console.log('PASS: 8 Pokemon themes, persistent keys, palette previews, browser chrome, viewport sizing and one loaded Korean sans');

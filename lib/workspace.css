@@ -3,6 +3,10 @@
   --void:var(--bg);--panel:var(--card);--rule:var(--line);
   --ink:var(--text);--dim:var(--muted);--plate:var(--accent);
   --ui-font:13px;--ui-small:12px;--ui-height:40px;--ui-pad:8px;--ui-gap:8px;--gap:12px;
+  /* 글꼴 — 한글 고딕 하나(Noto Sans KR, 각 화면 머리에서 Google Fonts 로 불러온다. 못 받으면 OS 고딕).
+     고정폭은 숫자(No.0004·종족값·힘·날짜)에만. 한글에는 자간을 주지 않는다 */
+  --sans:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --num:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
 }
 :root[data-theme="midnight"],[data-theme-preview="midnight"] {
   color-scheme:dark;
@@ -64,7 +68,8 @@
   --ui-font:15px;--ui-small:13px;--ui-height:46px;--ui-pad:12px;--ui-gap:10px;--gap:14px;
 }
 *,*::before,*::after {box-sizing:border-box}
-body {margin:0;font:15px/1.55 'Pretendard','Apple SD Gothic Neo','Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--text)}
+body {margin:0;font:15px/1.55 var(--sans);background:var(--bg);color:var(--text)}
+button,input,select,textarea {font-family:inherit}
 button,select,input,textarea,a,summary {-webkit-tap-highlight-color:transparent}
 button,select,summary {touch-action:manipulation}
 button,a,select,input,textarea,summary {scroll-margin-block:16px}
@@ -109,11 +114,11 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .workspace-title:hover .crest-mark {border-color:var(--accent)}
 .workspace-title>div {min-width:0}
 .crest-mark {width:60px;height:60px;padding:8px;flex:none;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);border-radius:20px}
-.eyebrow {font:700 10px/1.6 ui-monospace,monospace;letter-spacing:.16em;color:var(--accent)}
+.eyebrow {font:700 10px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .eyebrow span {color:var(--muted);font-weight:400}
 .workspace-heading h1 {margin:3px 0 4px;font-size:clamp(24px,3.7vw,34px);line-height:1.2;letter-spacing:-.045em;font-weight:800;white-space:nowrap}
 .workspace-heading p {margin:0;min-height:36px;color:var(--muted);font-size:12px;line-height:18px;word-break:keep-all}
-.crest-signature {display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:none;font:10px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}
+.crest-signature {display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:none;font:10px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .crest-name {color:var(--accent);font-weight:700;letter-spacing:.04em}
 .crest-signature i {width:100px;height:6px;border-radius:9px;background:linear-gradient(to right,var(--accent) 0 52%,var(--card) 52% 57%,var(--signal) 57% 82%,var(--card) 82% 87%,var(--gold) 87%)}
 .crest-signature b {font-size:8px;font-weight:500;letter-spacing:.18em}
@@ -143,7 +148,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .dex-page .view-tools {margin:18px 0 12px;gap:8px;flex-wrap:wrap}
 .dex-page .view-tools span {min-width:85px}
 .dex-page .view-tools button {min-height:40px;font-size:11px;border-radius:8px}
-.collection-count {color:var(--accent);font:700 12px ui-monospace,monospace;margin-left:8px;white-space:nowrap}
+.collection-count {color:var(--accent);font:700 12px var(--num);margin-left:8px;white-space:nowrap}
 .dex-page .grid {grid-template-columns:repeat(auto-fill,minmax(155px,1fr))}
 .dex-page.dex-compact .grid {grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
 .dex-page .cell {border:1px solid var(--rule);border-radius:11px;background:var(--card);box-shadow:0 3px 12px #0001;transition:transform .18s,border-color .18s}
@@ -168,8 +173,8 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .prompt-page .panel-head span {color:var(--muted);font-size:11px}
 .prompt-page .form-section {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding:16px 0}
 .studio-setup,.studio-editor {min-width:0}
-.section-caption {font-size:11px;font-weight:750;letter-spacing:.05em;color:var(--accent);margin:0 0 10px;display:flex;gap:9px;align-items:center}
-.section-caption b {font:10px ui-monospace,monospace;padding:3px 6px;border:1px solid var(--line);border-radius:4px}
+.section-caption {font-size:11px;font-weight:750;color:var(--accent);margin:0 0 10px;display:flex;gap:9px;align-items:center}
+.section-caption b {font:10px var(--sans);padding:3px 6px;border:1px solid var(--line);border-radius:4px;font-variant-numeric:tabular-nums}
 .prompt-page .field {padding:var(--ui-pad);background:var(--card);border-radius:10px}
 .prompt-page .field label,.prompt-page .param-card label {font-size:var(--ui-small);line-height:1.5}
 .prompt-page select,.prompt-page input[type="text"] {font-size:var(--ui-font);min-height:44px;background:var(--card);padding:10px;line-height:1.35}
@@ -180,7 +185,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .prompt-page .grp {margin:0 0 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
 .prompt-page .grp > summary {list-style:none;position:relative;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:54px;padding:14px 38px 14px 16px;background:var(--card2)}
 .prompt-page .grp > summary::-webkit-details-marker {display:none}
-.prompt-page .grp > summary::after {content:'+';position:absolute;right:16px;color:var(--accent);font:20px ui-monospace,monospace}
+.prompt-page .grp > summary::after {content:'+';position:absolute;right:16px;color:var(--accent);font:20px var(--sans);font-variant-numeric:tabular-nums}
 .prompt-page .grp[open] > summary::after {content:'−'}
 .prompt-page .grp > summary > span {font-size:14px;font-weight:750;flex:none}
 .prompt-page .grp > summary i {font-style:normal;font-size:11px;color:var(--muted);text-align:right}
@@ -233,7 +238,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .studio-selection > div {min-width:0}
 .studio-selection small {display:block;font-size:10px;color:var(--muted);letter-spacing:.08em}
 .studio-selection strong {display:block;font-size:15px;overflow-wrap:anywhere}
-.studio-selection .selection-count {margin-left:auto;white-space:nowrap;color:var(--accent);font:11px ui-monospace,monospace}
+.studio-selection .selection-count {margin-left:auto;white-space:nowrap;color:var(--accent);font:11px var(--sans);font-variant-numeric:tabular-nums}
 @media (hover:hover) {
   .workspace-nav a:hover,button:not(:disabled):hover {filter:brightness(1.12)}
   :is([data-theme="daylight"],[data-theme="blossom"],[data-theme="sand"]) button:not(:disabled):hover {filter:brightness(.96)}
@@ -285,7 +290,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 }
 @media (prefers-reduced-motion:reduce) {*,*::before,*::after {scroll-behavior:auto!important;transition:none!important}}
 .workspace-heading::after {content:'';position:absolute;bottom:8px;left:0;width:66px;height:3px;border-radius:2px;background:linear-gradient(to right,var(--accent) 0 46%,transparent 46% 53%,var(--signal) 53% 79%,transparent 79% 86%,var(--gold) 86%)}
-.build-stamp {display:block;margin:10px 0 0;text-align:right;color:var(--muted);font:10px/1.5 ui-monospace,monospace;opacity:.8}
+.build-stamp {display:block;margin:10px 0 0;text-align:right;color:var(--muted);font:10px/1.5 var(--num);opacity:.8}
 @media (pointer:coarse) {
   .prompt-page .lab-lock {min-height:44px;padding-right:50px}
   .prompt-page .lab-lock .lockbtn.mini {width:44px;height:44px;min-height:44px}
@@ -358,14 +363,14 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .patch-list {display:grid;gap:14px;max-height:52vh;overflow:auto;margin:0;padding:0;list-style:none}
 .patch-entry {padding:0 0 13px;border-bottom:1px solid var(--line)}
 .patch-entry:last-child {padding-bottom:0;border-bottom:0}
-.patch-when {display:flex;flex-wrap:wrap;align-items:center;gap:8px;font:700 11px ui-monospace,monospace;letter-spacing:.06em;color:var(--accent)}
+.patch-when {display:flex;flex-wrap:wrap;align-items:center;gap:8px;font:700 11px var(--num);letter-spacing:.06em;color:var(--accent)}
 .patch-who {padding:2px 8px;border-radius:99px;background:var(--accent-soft)}
 .patch-entry strong {display:block;margin:7px 0 6px;font-size:14px;letter-spacing:-.02em;font-weight:650}
 .patch-entry ul {margin:0;padding-left:17px;color:var(--muted);font-size:12.5px;line-height:1.75}
 @media (max-width:599px) { .patch-panel {padding:15px} .patch-list {max-height:60vh} }
 .lab-links {display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 36px}
 .lab-link {position:relative;padding:24px;background:var(--card);border:1px solid var(--line);border-radius:20px;color:var(--text);text-decoration:none;box-shadow:var(--shadow)}
-.lab-link>small {display:block;color:var(--accent);font:700 11px ui-monospace,monospace;letter-spacing:.12em}
+.lab-link>small {display:block;color:var(--accent);font:700 11px var(--sans);font-variant-numeric:tabular-nums}
 .lab-link h3 {font-size:21px;letter-spacing:-.035em;margin:12px 0 7px}
 .lab-link p {font-size:13px;color:var(--muted);max-width:85%;line-height:1.7;margin:0}
 .lab-link .lab-arrow {position:absolute;right:22px;bottom:22px;width:34px;height:34px;display:grid;place-items:center;background:var(--accent-soft);border-radius:50%;color:var(--accent)}

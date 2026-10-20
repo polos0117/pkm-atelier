@@ -13,7 +13,10 @@
   화면은 data/img.json 에 적힌 것만 그린다. 그림 저장소에 파일이 있어도
   tools/register-images.py 를 거치기 전에는 없는 것으로 본다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=shell1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="lib/workspace.css?v=sans1">
 <style>
 /* 색·밀도 토막은 lib/workspace.css 한 곳에 있다. 여기는 뼈대만 —
    workspace.css 의 .dex-page 규칙이 이 뼈대에 살을 붙인다.
@@ -44,9 +47,9 @@ body {color:var(--text);font-size:15px}
 .face {display:block;position:relative;width:100%;aspect-ratio:2/3;background:var(--card2);overflow:hidden}
 .face img {display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .ph {display:flex;align-items:center;justify-content:center;height:100%;padding:6px;
-  color:var(--muted);font:10px/1.4 ui-monospace,monospace;letter-spacing:.06em;text-align:center}
+  color:var(--muted);font:10px/1.4 var(--sans);text-align:center;font-variant-numeric:tabular-nums}
 .cap {display:block;font-weight:700;overflow-wrap:anywhere}
-.cap i {display:block;margin-top:3px;font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted)}
+.cap i {display:block;margin-top:3px;font:400 11px var(--sans);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
 .search-row {display:grid;grid-template-columns:minmax(0,1fr);}
 .search-row input {width:100%;background:var(--card);border:1px solid var(--line);
   color:var(--text);font:inherit;border-radius:8px;padding:9px 11px;min-width:0}
@@ -74,12 +77,12 @@ body {color:var(--text);font-size:15px}
 .sw button {flex:1 1 auto;background:var(--card);border:0;border-radius:6px;color:var(--muted);
   font:inherit;font-weight:700;font-size:12px;min-height:40px;padding:6px 10px}
 .sw button.on {background:var(--accent-soft);color:var(--text);box-shadow:inset 0 -2px var(--accent)}
-.sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.sec {margin:18px 0 8px;font:700 11px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .sec span {color:var(--muted);font-weight:400;letter-spacing:0;margin-left:8px}
 .note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
 .bar {display:flex;align-items:center;gap:10px;padding:12px 0 8px}
 .bar h2 {flex:1 1 auto;margin:0;font-size:19px;letter-spacing:-.02em;overflow-wrap:anywhere}
-.bar .n {flex:none;font:700 11px ui-monospace,monospace;color:var(--accent);white-space:nowrap}
+.bar .n {flex:none;font:700 11px var(--sans);color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
 .back {flex:none;min-height:40px;padding:8px 12px;background:var(--card2);color:var(--text);
   border:1px solid var(--line);border-radius:8px;font:inherit;font-size:12px;font-weight:700}
 /* 같은 열은 같은 장갑이다. 두 줄은 본문과 함께 굴려 작은 화면의 높이를 남긴다. */
@@ -93,7 +96,7 @@ body {color:var(--text);font-size:15px}
 .fcell.gap {opacity:.6;border-style:dashed}
 .fcell b {display:block;padding:7px 4px 2px;font-size:12px;line-height:1.3;overflow-wrap:anywhere}
 .fcell u {display:block;padding:0 4px 7px;text-decoration:none;
-  font:10px ui-monospace,monospace;letter-spacing:.12em;opacity:.8}
+  font:10px var(--sans);opacity:.8;font-variant-numeric:tabular-nums}
 /* 2:3 을 그대로 두면 한 장이 화면을 다 먹고 그 밑의 연출컷·일상컷이 저 아래로
    밀린다 (폴드 덮개에서 474px, 펼친 화면에서는 963px). 화면 높이의 절반 아래로
    묶고 contain 으로 담는다 — 그림은 안 잘리고 옆에 띠가 생긴다.
@@ -110,14 +113,14 @@ body {color:var(--text);font-size:15px}
 .big-nav button {pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:1px solid #ffffff40;border-radius:999px;background:#0009;color:#fff;font:400 22px/1 inherit;cursor:pointer}
 .big-nav button:disabled {opacity:.2;cursor:default}
 .big-nav button.to-card {border-color:var(--gold);color:var(--gold)}
-.big-count {position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:999px;background:#000a;color:#fff;font:700 11px ui-monospace,monospace;pointer-events:none}
+.big-count {position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:999px;background:#000a;color:#fff;font:700 11px var(--num);pointer-events:none}
 /* 카드 넘기기 — 큰 그림 바로 아래 한 줄: ‹ 앞 카드 · 몇 / 전체 · 다음 카드 › */
 .card-nav {display:flex;align-items:center;gap:8px;margin-top:8px}
 .card-nav button {flex:1 1 0;min-width:0;min-height:44px;display:flex;align-items:center;gap:6px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--card2);color:var(--text);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
 .card-nav button span {min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis} .card-nav button b {flex:none;font-size:18px;font-weight:400}
 .card-nav #dex-card-next {justify-content:flex-end}
 .card-nav button:disabled {opacity:.35;cursor:default}
-.card-nav .card-count {flex:none;font:700 11px ui-monospace,monospace;color:var(--muted);white-space:nowrap}
+.card-nav .card-count {flex:none;font:700 11px var(--num);color:var(--muted);white-space:nowrap}
 .legacy-overdrive {margin:16px 0;color:var(--muted);font-size:12px}
 .legacy-overdrive summary {cursor:pointer;padding:10px 0}
 .legacy-art {display:block;width:100%;max-height:46dvh;object-fit:contain}
@@ -134,15 +137,15 @@ body {color:var(--text);font-size:15px}
 .bars span {color:var(--muted);font-size:11px;white-space:nowrap}
 .bars i {display:block;height:7px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
 .bars i u {display:block;height:100%;background:var(--accent);text-decoration:none}
-.bars b {font:700 12px ui-monospace,monospace;text-align:right;min-width:3ch}
+.bars b {font:700 12px var(--num);text-align:right;min-width:3ch}
 .bars .sum {border-top:1px solid var(--line);padding-top:6px;margin-top:2px}
 /* 진화 — 이름을 눌러 그 카드로 건너간다 */
 .evo {display:flex;flex-wrap:wrap;gap:6px}
 .evo button {min-height:34px;padding:5px 10px;background:var(--card2);color:var(--accent);
   border:1px solid var(--line);border-radius:999px;font:inherit;font-size:12px}
 .tag {display:inline-block;margin-left:6px;padding:2px 7px;border-radius:999px;
-  background:var(--accent-soft);color:var(--accent);font:700 10px ui-monospace,monospace;
-  vertical-align:middle}
+  background:var(--accent-soft);color:var(--accent);font:700 10px var(--sans);
+  vertical-align:middle;font-variant-numeric:tabular-nums}
 .gal {display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
 .gal img {display:block;width:100%;border:1px solid var(--line);border-radius:8px}
 .empty {padding:36px 0;text-align:center;color:var(--muted);font-size:13px}
@@ -152,11 +155,11 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=shell1"></script>
+<script src="lib/words.js?v=sans1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=capsule1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
-<link rel="stylesheet" href="lib/gallery.css?v=1">
+<link rel="stylesheet" href="lib/gallery.css?v=sans1">
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -565,7 +568,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     <button class="dex-reset" id="dex-reset" onClick=${reset}>${W('dex.filter.reset')}</button>
   </div>`;
   return html`<${Shell} head=${head}>
-    <section class="gallery-intro"><div><p class="editorial-kicker">${W('gallery.kicker')}</p><h2>${W('gallery.title')}</h2></div><p>${W('gallery.note')}</p></section>
+    <section class="gallery-intro"><div><h2>${W('gallery.title')}</h2></div><p>${W('gallery.note')}</p></section>
     <div class="genre-strip" role="group" aria-label=${W('dex.filter.gen')}>${[all,...generations.map(n=>[String(n),W('card.gen',{n})])].map(([key,label])=>html`<button type="button" aria-pressed=${f.gen===key} onClick=${()=>update('gen',key)}>${label}</button>`)}</div>
     <details class="dex-filters" open=${filtersOpen} onToggle=${e=>setFiltersOpen(e.currentTarget.open)}>
       <summary>${W('dex.filter.title')}</summary>

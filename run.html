@@ -11,7 +11,10 @@
   체력은 다음 판으로 이어진다. 규칙은 lib/run.js (런) 와 lib/battle.js (한 판) 에만 있고,
   이 화면은 보여 주고 고르기만 한다. 진행은 localStorage 에 두어 새로고침해도 이어진다.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=shell1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="lib/workspace.css?v=sans1">
 <style>
 * {box-sizing:border-box}
 html,body {margin:0;padding:0}
@@ -23,8 +26,8 @@ body {color:var(--text);font-size:15px}
 
 /* 머리 — 어디까지 왔나, 새 런 */
 .run-head {display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 0 0}
-.run-head b {font:700 13px ui-monospace,monospace;letter-spacing:.06em}
-.run-head i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted)}
+.run-head b {font:700 13px var(--sans);font-variant-numeric:tabular-nums}
+.run-head i {font:400 11px var(--sans);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
 .run-head .run-steps {display:flex;gap:3px;margin-left:auto}
 .run-head .run-steps u {display:block;width:18px;height:6px;border-radius:3px;background:var(--card2);text-decoration:none}
 .run-head .run-steps u.won {background:#3a9a5a}
@@ -47,16 +50,16 @@ body {color:var(--text);font-size:15px}
 .run-card h3 {margin:0;font-size:15px;letter-spacing:-.02em;overflow-wrap:anywhere}
 .run-card .run-face {display:block;width:100%;aspect-ratio:3/2;object-fit:cover;object-position:center top;border-radius:8px;background:var(--card2)}
 .run-card .run-types {display:flex;flex-wrap:wrap;gap:4px}
-.run-card .run-types span {font:700 10px ui-monospace,monospace;letter-spacing:.06em;padding:2px 6px;border-radius:5px;color:#fff;background:var(--tc,#888)}
+.run-card .run-types span {font:700 10px var(--sans);padding:2px 6px;border-radius:5px;color:#fff;background:var(--tc,#888);font-variant-numeric:tabular-nums}
 .run-card .run-genus {font-size:11px;color:var(--muted)}
-.run-card .run-growth {font:700 11px ui-monospace,monospace;color:var(--accent)}
-.run-card .run-taken {font:700 11px ui-monospace,monospace;color:var(--muted)}
+.run-card .run-growth {font:700 11px var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
+.run-card .run-taken {font:700 11px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .run-card.down .run-face {filter:grayscale(1)}
 .run-rivals {margin:8px 0 0;padding:0;list-style:none;font-size:12px;line-height:1.7;color:var(--muted)}
-.run-card .run-stats {display:grid;grid-template-columns:auto 1fr;gap:3px 6px;font:10px ui-monospace,monospace;color:var(--muted);align-items:center}
+.run-card .run-stats {display:grid;grid-template-columns:auto 1fr;gap:3px 6px;font:10px var(--sans);color:var(--muted);align-items:center;font-variant-numeric:tabular-nums}
 .run-card .run-stats u {display:block;height:5px;border-radius:3px;background:var(--card2);overflow:hidden;text-decoration:none}
 .run-card .run-stats u i {display:block;height:100%;background:var(--accent)}
-.run-card .run-hp {display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font:11px ui-monospace,monospace;color:var(--muted)}
+.run-card .run-hp {display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;font:11px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .run-card .run-hp u {display:block;height:8px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
 .run-card .run-hp u i {display:block;height:100%;background:#3a9a5a}
 .run-card .run-hp.low u i {background:#d0522f}
@@ -69,9 +72,9 @@ body {color:var(--text);font-size:15px}
   background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
 .run-tools button.plain {background:var(--card)}
 .run-tools .run-result {flex:1 1 100%;font-weight:700;font-size:15px}
-.run-tools .run-turn {flex:1 1 auto;font:700 12px ui-monospace,monospace;letter-spacing:.06em;color:var(--accent)}
+.run-tools .run-turn {flex:1 1 auto;font:700 12px var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 @media (max-width:600px) { .run-tools .run-turn {flex:1 1 100%} }
-.run-vs {display:flex;align-items:center;justify-content:center;padding:8px 0;font:700 12px ui-monospace,monospace;letter-spacing:.12em;color:var(--muted)}
+.run-vs {display:flex;align-items:center;justify-content:center;padding:8px 0;font:700 12px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 
 /* 보상 — 둘 가운데 하나 */
 .run-rewards {display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -98,13 +101,13 @@ body {color:var(--text);font-size:15px}
 .run-end ol {margin:8px 0 0;padding-left:20px;font-size:13px;line-height:1.8;color:var(--muted)}
 .run-end ol li.win {color:var(--text)}
 
-.sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.sec {margin:18px 0 8px;font:700 11px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .sec span {color:var(--muted);font-weight:400;letter-spacing:0;margin-left:8px}
 .note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
 .empty {padding:24px 0;color:var(--muted);text-align:center}
 /* 전투 조각 (lib/battle-ui.js) 의 옷 — battle.html 과 같다 */
 .bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px}
-.bt-beat b {flex:1 1 auto;font:700 13px ui-monospace,monospace;letter-spacing:.06em}
+.bt-beat b {flex:1 1 auto;font:700 13px var(--sans);font-variant-numeric:tabular-nums}
 .bt-beat button {min-height:40px;min-width:44px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700}
 .bt-beat button:disabled {opacity:.4}
 .bt-field {display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -114,10 +117,10 @@ body {color:var(--text);font-size:15px}
 .bt-actor.forced {border-left-color:#c33}
 .bt-actor.down {opacity:.45}
 .bt-actor .bt-name {display:flex;justify-content:space-between;gap:6px;font-weight:700;font-size:13px;overflow-wrap:anywhere}
-.bt-actor .bt-name i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted);white-space:nowrap}
+.bt-actor .bt-name i {font:400 11px var(--sans);font-style:normal;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .bt-actor .bt-name i.open {color:var(--accent)}
 .bt-actor .bt-name i.forced {color:#c33}
-.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px ui-monospace,monospace;color:var(--muted)}
+.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .bt-gauge span:last-child {text-align:right}
 .bt-gauge u {display:block;height:7px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
 .bt-gauge u i {display:block;height:100%;background:var(--accent)}
@@ -126,7 +129,7 @@ body {color:var(--text);font-size:15px}
 .bt-actor {display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
 .bt-actor .bt-body {min-width:0}
 .bt-pic {display:block;width:76px;aspect-ratio:2/3;border-radius:7px;object-fit:cover;object-position:center top;background:var(--card2)}
-.bt-pic.none {display:grid;place-items:center;font:700 10px ui-monospace,monospace;color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px}
+.bt-pic.none {display:grid;place-items:center;font:700 10px var(--sans);color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px;font-variant-numeric:tabular-nums}
 .bt-actor.open .bt-pic {box-shadow:0 0 0 2px var(--accent)}
 .bt-actor.forced .bt-pic {box-shadow:0 0 0 2px #c33}
 .bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
@@ -146,7 +149,7 @@ body {color:var(--text);font-size:15px}
 .run-sticky.bottom {bottom:0;border-top:1px solid var(--line);padding-bottom:calc(8px + env(safe-area-inset-bottom))}
 .bt-beat {position:sticky;top:0;z-index:3;background:var(--bg,#faf9f3);margin:0 -2px;padding-left:2px;padding-right:2px;border-bottom:1px solid var(--line)}
 .run-rivals-box {margin:12px 0 0}
-.run-rivals-box summary {cursor:pointer;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent);list-style:none}
+.run-rivals-box summary {cursor:pointer;font:700 11px/1.6 var(--sans);color:var(--accent);list-style:none;font-variant-numeric:tabular-nums}
 .run-rivals-box summary::before {content:'▸ '}
 .run-rivals-box[open] summary::before {content:'▾ '}
 .run-nature .run-nature-pick {margin:0;font-size:12px;color:var(--muted);line-height:1.5;word-break:keep-all}
@@ -187,7 +190,7 @@ body {color:var(--text);font-size:15px}
 }
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=shell1"></script>
+<script src="lib/words.js?v=sans1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js?v=shards1"></script>
 <script src="lib/battle.js"></script>

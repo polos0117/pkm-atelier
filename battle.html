@@ -12,7 +12,10 @@
   docs/GAME_CONCEPT.md 의 "굴려 본 것" 이 tests/battle-sim.cjs 로 낸 숫자이고,
   이 화면은 같은 엔진의 얼굴이다 — 사람이 눈으로 한 판을 따라가는 자리.
 -->
-<link rel="stylesheet" href="lib/workspace.css?v=shell1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="lib/workspace.css?v=sans1">
 <style>
 * {box-sizing:border-box}
 html,body {margin:0;padding:0}
@@ -27,7 +30,7 @@ body {color:var(--text);font-size:15px}
 /* 세우는 자리 — 두 편이 나란히, 폴드 덮개(344)에서는 위아래로 */
 .bt-setup {display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:12px}
 .bt-side {border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--card);min-width:0}
-.bt-side h3 {margin:0 0 6px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.bt-side h3 {margin:0 0 6px;font:700 11px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .bt-side input,.bt-side select {width:100%;min-width:0;min-height:38px;margin-top:4px;background:var(--card2);
   border:1px solid var(--line);color:var(--text);font:inherit;font-size:13px;border-radius:8px;padding:6px 9px}
 .bt-side input.bad {border-color:#c33}
@@ -42,7 +45,7 @@ body {color:var(--text);font-size:15px}
 
 /* 판 — 박자 조종 + 두 편의 자리 + 그 박자의 사건 */
 .bt-beat {display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:14px 0 8px;position:sticky;top:0;z-index:3;background:var(--bg,#faf9f3);border-bottom:1px solid var(--line)}
-.bt-beat b {flex:1 1 auto;font:700 13px ui-monospace,monospace;letter-spacing:.06em}
+.bt-beat b {flex:1 1 auto;font:700 13px var(--sans);font-variant-numeric:tabular-nums}
 .bt-beat button {min-height:40px;min-width:44px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;
   background:var(--card);color:var(--text);font:inherit;font-size:12px;font-weight:700}
 .bt-beat button:disabled {opacity:.4}
@@ -53,10 +56,10 @@ body {color:var(--text);font-size:15px}
 .bt-actor.forced {border-left-color:#c33}
 .bt-actor.down {opacity:.45}
 .bt-actor .bt-name {display:flex;justify-content:space-between;gap:6px;font-weight:700;font-size:13px;overflow-wrap:anywhere}
-.bt-actor .bt-name i {font:400 11px ui-monospace,monospace;font-style:normal;color:var(--muted);white-space:nowrap}
+.bt-actor .bt-name i {font:400 11px var(--sans);font-style:normal;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .bt-actor .bt-name i.open {color:var(--accent)}
 .bt-actor .bt-name i.forced {color:#c33}
-.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px ui-monospace,monospace;color:var(--muted)}
+.bt-gauge {display:grid;grid-template-columns:38px 1fr 40px;align-items:center;gap:6px;margin-top:5px;font:11px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
 .bt-gauge span:last-child {text-align:right}
 .bt-gauge u {display:block;height:7px;border-radius:4px;background:var(--card2);overflow:hidden;text-decoration:none}
 .bt-gauge u i {display:block;height:100%;background:var(--accent)}
@@ -65,7 +68,7 @@ body {color:var(--text);font-size:15px}
 .bt-actor {display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
 .bt-actor .bt-body {min-width:0}
 .bt-pic {display:block;width:76px;aspect-ratio:2/3;border-radius:7px;object-fit:cover;object-position:center top;background:var(--card2)}
-.bt-pic.none {display:grid;place-items:center;font:700 10px ui-monospace,monospace;color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px}
+.bt-pic.none {display:grid;place-items:center;font:700 10px var(--sans);color:var(--muted);border:1px dashed var(--line);text-align:center;padding:2px;font-variant-numeric:tabular-nums}
 .bt-actor.open .bt-pic {box-shadow:0 0 0 2px var(--accent)}
 .bt-actor.forced .bt-pic {box-shadow:0 0 0 2px #c33}
 .bt-log {margin:14px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.7}
@@ -87,7 +90,7 @@ body {color:var(--text);font-size:15px}
 .bt-cmd label input {accent-color:var(--accent)}
 .bt-step {min-height:44px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;
   background:var(--accent-soft);color:var(--text);font:inherit;font-weight:700;font-size:14px}
-.sec {margin:18px 0 8px;font:700 11px/1.6 ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}
+.sec {margin:18px 0 8px;font:700 11px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
 .empty {padding:24px 0;color:var(--muted);text-align:center}
 @media (max-width:420px) {
@@ -95,7 +98,7 @@ body {color:var(--text);font-size:15px}
 }
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=shell1"></script>
+<script src="lib/words.js?v=sans1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js?v=shards1"></script>
 <script src="lib/battle.js"></script>
