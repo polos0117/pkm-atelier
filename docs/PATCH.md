@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-20 · claude · find-skills 스킬
+
+- .claude/skills/find-skills/SKILL.md — "이런 일 하는 스킬 있나" 를 물으면 공개 스킬 모음(skills.sh, `npx skills find`)에서 찾아 설치까지 돕는 스킬. vercel-labs/skills v1.7.4 의 것을 그대로(MIT)
+
 ## 2026-10-20 · gpt · 연구소 캡슐 진열과 도감 연결
 
 - index.html — 진화 가족이 겹치지 않는 무작위 진열·사용자 진열 우선, 캡슐 열기·정보판·도감/프롬프트 연결, 미리 읽은 오버드라이브 이미지 전환을 추가했다.
