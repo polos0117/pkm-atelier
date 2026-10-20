@@ -67,7 +67,7 @@ async function openCard(P, name) {
   await P.fill('.search-row input', name);
   await P.waitForFunction(n => {
     const caps = [...document.querySelectorAll('.grid .cell .cap')];
-    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+    return caps.length > 0 && caps.every(c => c.querySelector('strong')?.textContent.startsWith(n));
   }, name, { timeout: 5000 });
   await P.click('.grid .cell');
   await P.waitForSelector('.fstrip .fcell');
@@ -96,12 +96,12 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   await P.fill('.search-row input', NAME);
   await P.waitForFunction(n => {
     const caps = [...document.querySelectorAll('.grid .cell .cap')];
-    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+    return caps.length > 0 && caps.every(c => c.querySelector('strong')?.textContent.startsWith(n));
   }, NAME, { timeout: 5000 });
   const cells = await q(P, '.grid .cell .cap', els => els.map(e => e.textContent));
   ck('이름으로 검색하면 좁혀진다', cells.length > 0 && cells.length < all,
     cells.length + ' / ' + all);
-  ck('목록에 등록된 카드가 뜬다', cells.some(t => t.indexOf(NAME) === 0), cells.join(' | '));
+  ck('목록에 등록된 카드가 뜬다', cells.some(t => t.includes(NAME)), cells.join(' | '));
 
   const prog = W('art.form.done', { done: HAVE.length, all: WANT.length });
   ck('목록 진척은 성별을 안 본다 — 여성만 있어도 ' + prog,
@@ -294,7 +294,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
     const box = document.querySelector('.collection-scroll'), r = box.getBoundingClientRect();
     const vis = el => { const b = el.getBoundingClientRect();
       return Math.round(Math.min(b.bottom, r.bottom) - Math.max(b.top, r.top)); };
-    const last = box.lastElementChild, lb = last.getBoundingClientRect();
+    const last = box.querySelector('.reading-notes .bars') || box.lastElementChild, lb = last.getBoundingClientRect();
     return { tall: box.clientHeight,
       big: Math.round(document.querySelector('.big').getBoundingClientRect().height),
       lastSeen: vis(last), lastHigh: Math.round(lb.height),
@@ -323,7 +323,7 @@ const ck = (name, ok, got) => rows.push([name, !!ok, got === undefined ? '' : St
   await Q.fill('.search-row input', NAME);
   await Q.waitForFunction(n => {
     const caps = [...document.querySelectorAll('.grid .cell .cap')];
-    return caps.length > 0 && caps.every(c => c.textContent.indexOf(n) === 0);
+    return caps.length > 0 && caps.every(c => c.querySelector('strong')?.textContent.startsWith(n));
   }, NAME, { timeout: 5000 });
   const gapCap = await q(Q, '.grid .cell .cap', els => els.map(e => e.textContent));
   ck('빠진 폼이 진척에 그대로 보인다 — ' + gapProg,
