@@ -12474,21 +12474,11 @@
 "무게 398kg → 코 콧대가 낮고 넓은"
 ],
 "adjusted":"",
-"hair":{
-"hairstyle":"straight",
-"hair length":"long"
-},
+"hair":{},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/wailord-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
 "hair_cues":[],
-"hair_record":{
-"path":"pkm-atelier-img-2/records/wailord-20261021/light-ui.json",
-"kind":"ui",
-"raw":{
-"hairstyle":"straight",
-"hair length":"long"
-}
-}
+"hair_record":null
 },
 "322":{
 "name":"둔타",
@@ -15585,7 +15575,7 @@
 "en":"Shinx",
 "line":"꼬링크",
 "how":"species",
-"registered":true,
+"registered":false,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -15604,20 +15594,18 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘short tuft’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 한 갈래 땋은 머리",
 "hair":{
 "hairstyle":"braid",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":true,
-"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/shinx-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
-"hair_cues":[],
-"hair_record":{
-"path":"pkm-atelier-img-2/records/shinx-20261021/light-ui.json",
-"kind":"ui",
-"raw":{}
-}
+"hair_locked":false,
+"hair_why":"‘long tail’·‘yellow bands’에서 한 갈래 땋은 머리 · 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_cues":[
+"‘long tail’ → 헤어스타일 한 갈래 땋은 머리",
+"‘long tail’ → 머리 길이 긴 머리"
+]
 },
 "404":{
 "name":"럭시오",
@@ -15658,7 +15646,7 @@
 "en":"Luxray",
 "line":"꼬링크",
 "how":"species",
-"registered":true,
+"registered":false,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -15676,27 +15664,24 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 보통 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 층감이 강한 울프컷 → 머리를 둘러 땋은 왕관형",
 "hair":{
 "hairstyle":"crown braid",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":true,
-"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/luxray-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
-"hair_cues":[],
-"hair_record":{
-"path":"pkm-atelier-img-2/records/luxray-20261021/light-ui.json",
-"kind":"ui",
-"raw":{}
-}
+"hair_locked":false,
+"hair_why":"‘shaggy, black fur’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 럭시오에서 이어 같은 묶음",
+"hair_cues":[
+"‘shaggy, black fur’ → 앞머리 끝을 불규칙하게 친 앞머리"
+]
 },
 "406":{
 "name":"꼬몽울",
 "en":"Budew",
 "line":"꼬몽울",
 "how":"species",
-"registered":true,
+"registered":false,
 "face":{
 "face shape":"heart-shaped",
 "face length":"short",
@@ -15721,14 +15706,11 @@
 "hair length":"very short",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":true,
-"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/budew-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
-"hair_cues":[],
-"hair_record":{
-"path":"pkm-atelier-img-2/records/budew-20261021/light-ui.json",
-"kind":"ui",
-"raw":{}
-}
+"hair_locked":false,
+"hair_why":"키 0.2m에서 짧고 가벼운 픽시컷(짧은 컷) · 매우 짧은 머리 · 좌우 길이가 다른 앞머리",
+"hair_cues":[
+"키 0.2m → 헤어스타일 짧고 가벼운 픽시컷"
+]
 },
 "407":{
 "name":"로즈레이드",
