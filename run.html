@@ -33,6 +33,12 @@ body {color:var(--text);font-size:15px}
 .run-head button {min-height:40px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;
   background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:13px}
 
+/* 새 런 — 저장된 런을 지우기 전에 한 번 더 묻는다 */
+.run-confirm {display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0 0;padding:12px 14px;background:var(--accent-soft);border:1px solid var(--line);border-radius:10px}
+.run-confirm p {flex:1 1 100%;margin:0 0 2px;font-size:13px;line-height:1.5;word-break:keep-all}
+.run-confirm button {min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:13px}
+.run-confirm .run-new-go {border-color:var(--accent);color:var(--accent)}
+
 /* 카드 — 뽑기·로스터·상대에 같은 꼴 */
 .run-cards {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .run-card {position:relative;border:1px solid var(--line);border-top:3px solid var(--cc,var(--line));border-radius:12px;
@@ -181,7 +187,7 @@ body {color:var(--text);font-size:15px}
 }
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=face1"></script>
+<script src="lib/words.js?v=runnew1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/img.js?v=shards1"></script>
 <script src="lib/battle.js"></script>
@@ -409,9 +415,9 @@ function App() {
   const d = useData();
   const [st, setSt] = useState(null);
   useEffect(() => { if (d.cards && !st) { const s = load(); setSt(s && s.seats ? s : RUN.newRun(freshSeed(), d.cards)); } }, [d.cards]);
-  const [last, setLast] = useState(null);
+  const [last, setLast] = useState(null), [asking, setAsking] = useState(false);
   const go = next => { setSt(next); save(next); };
-  const restart = () => { setLast(null); go(RUN.newRun(freshSeed(), d.cards)); };
+  const restart = () => { setAsking(false); setLast(null); go(RUN.newRun(freshSeed(), d.cards)); };
 
   if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
   if (!d.cards || !st) return html`<${Shell} head=${null}><p class="empty">${W('ui.loading')}</p><//>`;
@@ -420,8 +426,13 @@ function App() {
     <b data-phase=${st.phase}>${st.phase === 'draft' ? W('run.draft.title', { n: st.round + 1, total: RUN.ROUNDS }) : st.phase === 'nature' ? W('run.nature.title') : W('run.stage', { n: st.stage, total: RUN.LENGTH })}</b>
     <i>${W('run.seed', { n: st.seed })}</i>
     <${Steps} st=${st} />
-    <button type="button" class="run-new" onClick=${restart}>${W('run.new')}</button>
-  </div>`;
+    <button type="button" class="run-new" aria-expanded=${asking} aria-controls="run-new-confirm" onClick=${() => setAsking(v => !v)}>${W('run.new')}</button>
+  </div>
+  ${asking && html`<div class="run-confirm" id="run-new-confirm" role="group" aria-label=${W('run.new.confirm')}>
+    <p>${W('run.new.confirm')}</p>
+    <button type="button" class="run-new-cancel" onClick=${() => setAsking(false)}>${W('run.new.cancel')}</button>
+    <button type="button" class="run-new-go" onClick=${restart}>${W('run.new.go')}</button>
+  </div>`}`;
 
   let body;
   if (st.phase === 'draft') body = html`<${Draft} d=${d} st=${st} onPick=${n => go(RUN.pick(st, n, d.cards))} onReroll=${() => go(RUN.reroll(st, d.cards))} />`;

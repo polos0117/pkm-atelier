@@ -63,6 +63,16 @@ const fixSeed = [function (seed) {
     /* 새로고침해도 이어진다 */
     await p.reload(); await p.waitForSelector('.run-foes .run-card');
     assert.deepEqual(await p.locator('.run-roster .run-card').evaluateAll(es => es.map(e => e.dataset.name)), picks, '저장이 안 됐다');
+    /* 머리의 새 런 — 누르면 바로 지우지 않고 묻는다. 계속하면 런이 그대로, 새로고침해도 그대로 */
+    assert.equal(await p.locator('.run-confirm').count(), 0);
+    await p.locator('.run-new').click();
+    await p.waitForSelector('.run-confirm');
+    assert.equal(await p.locator('.run-new').getAttribute('aria-expanded'), 'true');
+    assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'fight', '묻기만 했는데 런이 지워졌다');
+    await p.locator('.run-new-cancel').click();
+    assert.equal(await p.locator('.run-confirm').count(), 0);
+    await p.reload(); await p.waitForSelector('.run-foes .run-card');
+    assert.deepEqual(await p.locator('.run-roster .run-card').evaluateAll(es => es.map(e => e.dataset.name)), picks, '계속했는데 런이 바뀌었다');
 
     /* 1판은 직접 조종으로 — 조종 줄이 뜨고, 굴리면 박자가 간다. 그 뒤 끝까지 굴린다 */
     await p.locator('.run-manual').click();
@@ -127,6 +137,14 @@ const fixSeed = [function (seed) {
     assert.equal(await p.locator('.run-head b').getAttribute('data-phase'), 'draft');
     assert(!(await p.locator('.run-head i').textContent()).includes(String(SEED)) || true);
     assert.equal(await p.locator('.run-draft .run-card').count(), 12);
+    /* 한 장 집고 머리의 새 런 → 지우고 새 런 — 로스터가 비고 새로고침해도 빈 뽑기다 */
+    await p.locator('.run-draft .run-card:not(:has(.run-taken)) button').first().click();
+    await p.waitForFunction(() => document.querySelectorAll('.run-roster .run-card').length === 1);
+    await p.locator('.run-new').click();
+    await p.locator('.run-new-go').click();
+    await p.waitForFunction(() => !document.querySelector('.run-confirm') && document.querySelectorAll('.run-roster .run-card').length === 0);
+    await p.reload(); await p.waitForSelector('.run-draft .run-card');
+    assert.equal(await p.locator('.run-roster .run-card').count(), 0, '새 런이 저장되지 않았다');
 
     /* 세 화면 크기 */
     for (const viewport of [FOLD.cover, FOLD.inner, { width: 1280, height: 900 }]) {
@@ -137,6 +155,6 @@ const fixSeed = [function (seed) {
     }
     assert.deepEqual(a.errors, []);
     await a.close();
-    console.log('PASS 일곱 판: 공유 팩 12장 · 집힌 표시 · 보급 요청 · 성격 셋(맞는 것 미리, 저장) · 라이벌 여섯 · 직접 조종 한 판 · 맡기기는 오버라이드에서 멈춤 · 보상 · 끝 · 새 런 · 세 화면 크기');
+    console.log('PASS 일곱 판: 공유 팩 12장 · 집힌 표시 · 보급 요청 · 성격 셋(맞는 것 미리, 저장) · 라이벌 여섯 · 직접 조종 한 판 · 맡기기는 오버라이드에서 멈춤 · 보상 · 끝 · 새 런(묻고 지움) · 세 화면 크기');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exit(1); });

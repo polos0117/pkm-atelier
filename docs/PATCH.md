@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-20 · claude · 일곱 판 — 새 런은 한 번 묻고 지운다
+
+- run.html — 머리줄 「새 런」이 저장된 진행 중인 런을 확인 없이 바로 지웠다(결투의 처음부터 화면·탐사의 sv-confirm 에는 있는 단계). 누르면 아래에 묻는 줄이 펼쳐지고 「이어서 한다」·「지우고 새 런」 중 하나를 고른다. 끝 화면의 「다시 — 새 씨앗으로」는 런이 끝났으니 그대로 바로 간다
+- lib/words.js — run.new.confirm · run.new.cancel · run.new.go
+- tests/run-screen.cjs — 묻기만 하면 런이 그대로(새로고침해도), 계속하면 그대로, 지우면 로스터가 비고 저장된다
+
 ## 2026-10-20 · claude · 화면 다듬기 스킬 둘
 
 - .claude/skills/frontend-design/ — 화면을 새로 만들거나 손볼 때 흔한 기본값을 피하고 주제에 맞는 색·서체·배치를 정하게 하는 지침. anthropics/skills 의 것을 그대로(Apache 2.0, LICENSE.txt 같이)
