@@ -18,8 +18,8 @@
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 632종, 원작 단서 규칙으로 고른 것 393종 · 겹침을 풀며 옮긴 종 850
-- 그림이 이미 있는 종(①이 정본) 336
+- 직접 쓴 설계 633종, 원작 단서 규칙으로 고른 것 392종 · 겹침을 풀며 옮긴 종 850
+- 그림이 이미 있는 종(①이 정본) 337
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 
 ## 고치는 법
@@ -6789,20 +6789,22 @@ FACE (her own structure, not the style's default face): oval face, short length,
 
 ### 321 · 고래왕 (Wailord)
 
-계열 기준: 고래왕자 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 고래왕자 · 설계: 직접 쓴 설계 · **그림 있음 — ①이 정본**
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 부드럽고 둥근 턱 |
-| 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
-| 눈썹 | 가늘고 완만한 곡선 |
-| 코 | 작고 여린 코 |
-| 입 | 도톰한 입술 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
+| 눈썹 | 가늘고 곧은 |
+| 코 | 콧대가 낮고 넓은 |
+| 입 | 굴곡 없이 곧은 |
 
-**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘small beady eyes’ → 눈 크기 작은 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
+**이유:** 긴 고래 체적과 작은 눈, 넓은 입의 대비를 긴 타원 얼굴, 길게 이어지는 턱선, 작고 넓게 떨어진 눈, 낮고 넓은 콧대와 수평 입술로 옮긴다. 고래왕자의 둥근 턱과 짧은 코와 구별하며 무늬는 의상에만 둔다.
+
+**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 키 14.5m → 얼굴 길이 긴 얼굴 · ‘small beady eyes’ → 눈매 가늘고 날카로운 눈 · ‘small beady eyes’ → 눈 크기 작은 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 무게 398kg → 코 콧대가 낮고 넓은
 
 ```text
-FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, small size, level outer corners, wide-set; fine soft arches; small delicate nose; full lips.
+FACE (her own structure, not the style's default face): oval face, long length, medium width; long chin with defined jaw; narrow eyes, small size, level outer corners, wide-set; thin straight brows; broad low bridge nose; straight even lips.
 ```
 
 ### 322 · 둔타 (Numel)

@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 고래왕 이미지 9장 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 긴 고래 체적·작은 눈을 해석한 얼굴과 경장 정본 표시를 기록.
+- docs/image-batches/wailord-20261021.md — 9장 생성·검수, 카드 글자 부분 수정과 동일 설정 수영컷 재시도를 기록.
+
 ## 2026-10-21 · gpt · 고래왕자 이미지 9장 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 둥근 고래 체적·수염판 입을 해석한 얼굴과 경장 정본 표시를 기록.
 - docs/image-batches/wailmer-20261021.md — 9장 생성·검수 기록과 이미지 저장소 커밋을 연결.

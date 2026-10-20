@@ -8602,26 +8602,29 @@
 "name":"고래왕",
 "en":"Wailord",
 "line":"고래왕자",
-"how":"draft",
-"registered":false,
+"how":"species",
+"registered":true,
 "face":{
 "face shape":"oval",
-"face length":"balanced",
+"face length":"long",
 "face width":"medium",
-"jaw & chin":"soft rounded jaw",
-"eye shape":"large",
+"jaw & chin":"long chin with defined jaw",
+"eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
 "eye spacing":"wide-set eyes",
-"eyebrows":"fine soft arches",
-"nose character":"small delicate nose",
-"lips":"full lips"
+"eyebrows":"thin straight brows",
+"nose character":"broad low bridge",
+"lips":"straight even lips"
 },
-"why":"",
+"why":"긴 고래 체적과 작은 눈, 넓은 입의 대비를 긴 타원 얼굴, 길게 이어지는 턱선, 작고 넓게 떨어진 눈, 낮고 넓은 콧대와 수평 입술로 옮긴다. 고래왕자의 둥근 턱과 짧은 코와 구별하며 무늬는 의상에만 둔다.",
 "cues":[
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
+"키 14.5m → 얼굴 길이 긴 얼굴",
+"‘small beady eyes’ → 눈매 가늘고 날카로운 눈",
 "‘small beady eyes’ → 눈 크기 작은 눈",
-"몸 형태 fish → 눈 간격 눈 사이가 넓은"
+"몸 형태 fish → 눈 간격 눈 사이가 넓은",
+"무게 398kg → 코 콧대가 낮고 넓은"
 ],
 "adjusted":""
 },
