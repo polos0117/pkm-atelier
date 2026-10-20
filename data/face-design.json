@@ -12619,7 +12619,7 @@
 "en":"Spoink",
 "line":"피그점프",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -12646,11 +12646,16 @@
 "hair length":"medium",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 중간 길이 · 가운데를 가른 앞머리",
+"hair_locked":true,
+"hair_why":"확정 경장 ①의 실제 제출 HAIR 줄을 보존: chignon, medium, parted bangs",
 "hair_cues":[
 "에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽"
-]
+],
+"hair_record":{
+"kind":"ui",
+"path":"pkm-atelier-img-2/records/spoink-20261021/light-ui.json",
+"raw":{}
+}
 },
 "326":{
 "name":"피그킹",
