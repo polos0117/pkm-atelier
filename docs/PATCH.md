@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 브이젤 이미지 등록과 인물 정본
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 브이젤 경장 ①의 얼굴·머리를 정본으로 표시한다.
+- docs/image-batches/buizel-20261022.md — 9장과 예약·실제 제출·색상표 라벨 부분 수정·검수·등록 커밋을 연결한다.
+
 ## 2026-10-22 · gpt · 파치리스 이미지 9장 검수 기록
 - docs/image-batches/pachirisu-20261022.md — 경장 정본·실제 제출·해시·예약·검수·도감 등록 커밋을 연결한다.
 
