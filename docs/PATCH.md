@@ -10,6 +10,15 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 파비코 이미지 9장 등록·정본 기록
+- data/face-design.json — 파비코 경장 ①의 얼굴·짧은 페더컷을 잠갔다. 동시에 반영된 브이젤 작업의 정본 표시와 기존 설계는 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 집계를 도구로 갱신했다.
+- docs/image-batches/swablu-20261022.md — 이미지·장부·등록 커밋과 정본 해시·검수·커피 동작 보완을 기록했다.
+
+## 2026-10-22 · gpt · 얼굴 설계 자료 전송 손상 복구 기록
+- data/face-design.json — 이전 업로드 과정의 출력 길이 제한으로 손상된 파일을 정상본으로 복구했다. 분할 바이너리 전송 후 Git blob 해시 일치를 확인했다(a879034).
+- docs/CHARACTER_FACE_DESIGNS.md — 같은 전송 제한에 잘린 문서를 정상본으로 복구하고 자료와의 일치 검사를 다시 통과시켰다.
+
 ## 2026-10-22 · gpt · 브이젤 이미지 등록과 인물 정본
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 브이젤 경장 ①의 얼굴·머리를 정본으로 표시한다.
 - docs/image-batches/buizel-20261022.md — 9장과 예약·실제 제출·색상표 라벨 부분 수정·검수·등록 커밋을 연결한다.
