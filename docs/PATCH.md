@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 나메일 이미지 등록과 인물 정본
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 나메일 경장을 얼굴·머리 정본으로 표시한다.
+- docs/image-batches/mothim-20261021.md — 이미지 9장, 장부 예약과 제출·검수 기록을 연결한다.
+
 ## 2026-10-21 · gpt · 도롱마담 이미지 등록과 인물 정본
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 도롱마담 경장을 얼굴·머리 정본으로 표시한다.
 - docs/image-batches/wormadam-20261021.md — 이미지 9장, 장부 예약과 제출·검수 기록을 연결한다.
