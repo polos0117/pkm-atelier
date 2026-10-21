@@ -114,6 +114,8 @@ body {color:var(--text);font-size:15px}
 .big-nav button {pointer-events:auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;border:1px solid #ffffff40;border-radius:999px;background:#0009;color:#fff;font:400 22px/1 inherit;cursor:pointer}
 .big-nav button:disabled {opacity:.2;cursor:default}
 .big-nav button.to-card {border-color:var(--gold);color:var(--gold)}
+/* 움직임 — 오버드라이브 그림에만 타입 입자가 떠도는 층. 넘기기 단추 밑, 그림 위(lib/scene-motion.js 가 캔버스를 단다) */
+.dex-motion-layer {position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .big-count {position:absolute;right:8px;bottom:8px;padding:2px 8px;border-radius:999px;background:#000a;color:#fff;font:700 11px var(--num);pointer-events:none}
 /* 카드 넘기기 — 큰 그림 바로 아래 한 줄: ‹ 앞 카드 · 몇 / 전체 · 다음 카드 › */
 .card-nav {display:flex;align-items:center;gap:8px;margin-top:8px}
@@ -156,11 +158,13 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=recent1"></script>
+<script src="lib/words.js?v=motion1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=recent1"></script>
-<script src="lib/dex-filter.js?v=1"></script>
+<script src="lib/dex-filter.js?v=2"></script>
 <link rel="stylesheet" href="lib/gallery.css?v=recent1">
+<script src="lib/scene-motion.js?v=1"></script>
+<link rel="stylesheet" href="lib/scene-motion.css?v=1">
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -174,7 +178,7 @@ import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
 import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
-const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter;
+const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter, MOTION = window.AtelierMotion;
 const FILTER_STORE = 'pkm_dex_filters_v1';
 /* 주소 — 거른 목록과 보던 카드를 링크로 남긴다. 기본값인 필터는 적지 않는다.
    ?mech=<카드 이름> 이 상세, 나머지(q·style·gen·type·form·cut)가 필터다 */
@@ -442,6 +446,39 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
         aria-label=${!nextShot && nextCard ? W('dex.card.next') + ' · ' + nextCard.name : W('dex.shot.next')}>›</button>
     </div>`;
   const bigCount = shots.length > 1 && at >= 0 && html`<span class="big-count" aria-live="polite">${at + 1} / ${shots.length}</span>`;
+  /* 움직임(lib/scene-motion.js) — 큰 그림에 켄 번스. 같은 장갑의 폼 ↔ 그 오버드라이브는 열리기(오버드라이브로 갈 때만
+     그 종의 타입 입자가 터진다), 나머지 그림 바꾸기는 넘기기. 오버드라이브 그림에만 타입 입자가 옅게 떠돈다.
+     크게 보기는 살펴보는 자리라 켄 번스·입자 없음. 나가는 그림은 바뀌기 직전(그리는 때)에 주소와 변형을 떠 둔다 */
+  const bigRef = useRef(null), lastShown = useRef(null), outgoing = useRef(null);
+  const [motion, setMotion] = useState(() => !!MOTION && MOTION.enabled());
+  useEffect(() => MOTION ? MOTION.subscribe(setMotion) : undefined, []);
+  const motionLocked = !MOTION || MOTION.reduced();
+  const shownForm = showFocus ? focus.form || '' : form;
+  const ambient = !!shownFile && /_overdrive$/.test(shownForm) ? FILTER.particlesOf(card) : null;
+  if (MOTION && lastShown.current && lastShown.current.file !== shownFile && !outgoing.current) outgoing.current = MOTION.snapshot(bigRef.current);
+  useLayoutEffect(() => {
+    const prev = lastShown.current, snap = outgoing.current, img = bigRef.current && bigRef.current.querySelector('.zoom img');
+    const now = shownFile ? { file: shownFile, form: shownForm, cut: showFocus ? focus.cut : 'portrait', at } : null;
+    outgoing.current = null;
+    /* 앞 카드에서 넘어오면 처음 그림은 곧 마지막 그림으로 바뀐다 — 그 사이는 넘기기가 아니다 */
+    if (!prev && selection?.at === 'last' && shots.length && shots[shots.length - 1].file !== shownFile) return;
+    lastShown.current = now;
+    if (!MOTION || !now || !img) return;
+    const kenBurns = { el: img, seed: now.file };
+    if (!prev || !snap || prev.file === now.file) { MOTION.kenBurns(img, { seed: now.file }); return; }
+    MOTION.stop(img);
+    const ghost = MOTION.ghost(img, snap.src, { fit: 'contain', transform: snap.transform });
+    const pair = prev.cut === 'portrait' && now.cut === 'portrait' && prev.form !== now.form && baseForm(prev.form) === baseForm(now.form);
+    if (pair) MOTION.reveal(ghost, img, { kind: /_overdrive$/.test(now.form) ? FILTER.particlesOf(card) : null, removeFrom: true, key: 'dex-big', seed: now.file, kenBurns });
+    else MOTION.turn(ghost, img, { direction: prev.at >= 0 && now.at >= 0 && now.at < prev.at ? 'previous' : 'next', removeFrom: true, key: 'dex-big', kenBurns });
+  }, [shownFile]);
+  useEffect(() => {
+    const layer = bigRef.current && bigRef.current.querySelector('.dex-motion-layer');
+    if (!MOTION || !layer || !ambient || zoom) return;
+    const c = MOTION.particles(layer, ambient, { density: 0.5, max: 26, alpha: 0.75, seed: card.name });
+    return () => c.destroy();
+  }, [ambient, showFocus, zoom]);
+  useEffect(() => () => { if (!MOTION) return; MOTION.cancel('dex-big'); const img = bigRef.current && bigRef.current.querySelector('.zoom img'); if (img) MOTION.stop(img); }, []);
 
   /* 이름과 화풍만 고정한다. 여섯 칸이 화면의 굴림 자리를 밀어내지 않게 한다. */
   useLayoutEffect(() => { if (!selection?.zoom) document.getElementById("detail-title")?.focus({ preventScroll: true }); }, []);
@@ -458,10 +495,10 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     <div class="detail-spread"><section class="artwork-panel">
     ${focus && (focus.cut !== 'portrait' || !have.includes(focus.form)) ? html`
       <p class="sec">${shotLabel(focus, defs)}<span>${W('dex.selected')}</span></p>
-      <div class="big" ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${focus.file} alt=${card.name} /></button>${bigNav}${bigCount}</div>
+      <div class="big" ref=${bigRef} data-particles=${ambient || undefined} ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${focus.file} alt=${card.name} /></button><div class="dex-motion-layer" aria-hidden="true"></div>${bigNav}${bigCount}</div>
     ` : form ? html`
       <p class="sec">${formName(defs, form)}<span>${(defs[baseForm(form)].layers || 0) + W('dex.layers')}</span></p>
-      <div class="big" ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></button>${bigNav}${bigCount}</div>
+      <div class="big" ref=${bigRef} data-particles=${ambient || undefined} ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></button><div class="dex-motion-layer" aria-hidden="true"></div>${bigNav}${bigCount}</div>
       <p class="note">${defs[form.endsWith('_overdrive') ? 'overdrive' : form].note}</p>
     ` : html`<p class="empty">${W('art.none')}</p>`}
     ${nav && html`<div class="card-nav" role="group" aria-label=${W('dex.card.count', { n: nav.index + 1, total: nav.total })}>
@@ -481,6 +518,8 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
       <button type="button" id="dex-hall" aria-pressed=${inHall} disabled=${hallFull} title=${W('dex.hall.note')}
         onClick=${()=>IMG.toggleHall(card.name)}>${W(inHall?'dex.hall.remove':hallFull?'dex.hall.full':'dex.hall.add')}</button>
       <span class="hall-n" aria-live="polite">${W('dex.hall.count',{n:hall.length,max:IMG.HALL_MAX})}</span>
+      <button type="button" id="dex-motion" disabled=${motionLocked} title=${W(motionLocked ? 'motion.reduced' : 'motion.note')}
+        onClick=${() => MOTION.setEnabled(!motion)}>${W(motion ? 'motion.off' : 'motion.on')}</button>
     </div>
     <p class="sec">${W('dex.compare')}<span>${prog.ok ? '' : W('art.form.left', { n: prog.left.length })}</span></p>
     <div class="fstrip" role="group" aria-label=${W('dex.compare')}>

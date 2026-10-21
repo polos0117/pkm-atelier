@@ -149,6 +149,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/home-screen.cjs     # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-nav.cjs       # 도감 넘기기 — 목록 자리·그림·카드 넘기기·뒤로 가기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도감 최근 추가 띠·새 표시(지난 방문)·새 그림만 — 다섯 크기
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs  # 움직임 — 공용 모듈·도감 상세의 켄 번스·오버드라이브 열리기·타입 입자·스위치
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
