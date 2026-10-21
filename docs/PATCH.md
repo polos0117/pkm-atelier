@@ -10,6 +10,9 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 램펄드 그림 정본 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 램펄드 9장 등록에 맞춰 경장 ①을 얼굴·머리 정본으로 표시하고 실제 제출한 긴 울프컷·불규칙 앞머리를 잠갔다.
+
 ## 2026-10-21 · gpt · 얼루기 이미지 9장 정본 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 얼루기 경장 ①을 정본으로 표시하고 긴 땋은 머리 기록값을 잠갔다. 앞선 전송에서 잘린 큰 설계 파일 2개는 정상 원본으로 복구했으며 이후 업로드는 바이트 해시를 대조한다.
 - docs/image-batches/spinda-20261021.md — 캐릭터별 이미지 커밋과 생성·검수 기록 및 장부 완료 반영을 남겼다.
