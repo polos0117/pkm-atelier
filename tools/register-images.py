@@ -43,6 +43,10 @@ play.html과 dex.html은 검증된 data/img.json을 읽는다. GitHub 파일 목
     모든 파일이 마지막 커밋에 "더해진" 것으로 보여 날짜를 지어내게 되므로 메우지 않는다.
     워크플로는 그림 저장소를 얕게 받으므로 거기서는 새 파일에 오늘 날짜만 붙는다.
     날짜를 모르는 파일은 비워 둔다 — 화면은 그런 그림을 "최근 추가" 에 올리지 않는다.
+
+들어온 시각(added_at, 2026-10-22) — {"파일 이름": "YYYY-MM-DDTHH:MM:SSZ"}, 최근 30일 그림에만.
+    "최근 추가" 띠가 같은 날 안에서 늦게 들어온 것부터 보이게 한다(없으면 그날 안은 도감 번호 차례).
+    새로 등록한 파일은 지금 시각, 날짜는 있는데 시각이 없는 최근 파일은 온전한 이력에서 하루 안의 커밋 시각으로 메운다.
 """
 import argparse
 import datetime
@@ -179,11 +183,19 @@ def listed_files(img):
 
 
 DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+STAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+# 들어온 시각(added_at)은 최근 그림에만 둔다 — "최근 추가" 띠의 같은 날 차례에만 쓰고, 다 적으면 img.json 이 커진다
+STAMP_DAYS = 30
 
 
 def today():
     """UTC 날짜 — 워크플로(UTC)와 손으로 돌린 것이 같은 날을 적게. 도감의 7일 창도 UTC 로 센다."""
     return datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+
+
+def now():
+    """UTC 시각(초까지) — 들어온 시각(added_at)."""
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def git(top, *args):
@@ -212,54 +224,92 @@ def repo_of(d):
     return top, os.path.relpath(real, top).replace(os.sep, "/")
 
 
-def history_dates(top, sub):
-    """{파일 이름: 처음 더한 커밋 날짜}. 한 번의 git log 로 저장소 전체를 읽는다.
+def utc_stamp(iso):
+    """git 의 %cI(시간대 붙은 ISO) → UTC "YYYY-MM-DDTHH:MM:SSZ". 못 읽으면 None."""
+    try:
+        t = datetime.datetime.fromisoformat(iso.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if t.tzinfo is None:
+        return None
+    return t.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def history_added(top, sub):
+    """{파일 이름: (처음 더한 커밋 날짜, 그 커밋의 UTC 시각)}. 한 번의 git log 로 저장소 전체를 읽는다.
 
     파일마다 `git log --diff-filter=A --format=%cs -- img/<파일>` 의 마지막 줄과 같다 —
     --no-renames 로 이름 바꾸기도 "더하기" 로 본다(파일 하나만 짚을 때처럼). 하위 폴더(thumb/)는 뺀다."""
     out = git(top, "log", "--reverse", "--no-renames", "--diff-filter=A",
-              "--format=%x00%cs", "--name-only", "--", sub)
-    dates, day, pre = {}, None, ("" if sub in ("", ".") else sub + "/")
+              "--format=%x00%cs%x01%cI", "--name-only", "--", sub)
+    got, day, at, pre = {}, None, None, ("" if sub in ("", ".") else sub + "/")
     for line in (out or "").split("\n"):
         if line.startswith("\0"):
-            day = line[1:].strip()
+            day, _, iso = line[1:].partition("\x01")
+            day, at = day.strip(), utc_stamp(iso)
             continue
         if not line or not day or not line.startswith(pre):
             continue
         name = line[len(pre):]
         if "/" not in name and DAY.match(day):
-            dates.setdefault(name, day)
-    return dates
+            got.setdefault(name, (day, at))
+    return got
+
+
+def history_dates(top, sub):
+    """{파일 이름: 처음 더한 커밋 날짜}."""
+    return {f: v[0] for f, v in history_added(top, sub).items()}
 
 
 def stamp_dates(doc, listed, new_files, owner, dirs, history):
-    """added 를 고친다. 돌려주는 것은 (오늘 받은 수, 이력에서 메운 수, 날짜 없이 남은 수)."""
+    """added·added_at 을 고친다. 돌려주는 것은 (오늘 받은 수, 이력에서 메운 수, 날짜 없이 남은 수).
+
+    added_at({파일: "YYYY-MM-DDTHH:MM:SSZ"})은 최근 STAMP_DAYS 일 그림에만 — 한날 수백 장이 들어오면 도감의
+    "최근 추가" 띠가 날짜만으로는 도감 번호 차례가 되어 방금 들어온 그림이 24장 밖으로 밀렸다(2026-10-22).
+    새로 등록한 파일은 지금 시각, 시각이 없는 최근 파일은 온전한 이력이 있을 때 그 날짜와 하루 안의 커밋 시각으로 메운다."""
     old = doc.get("added") if isinstance(doc.get("added"), dict) else {}
     dates = {f: v for f, v in old.items() if isinstance(v, str) and DAY.match(v)}
+    old_at = doc.get("added_at") if isinstance(doc.get("added_at"), dict) else {}
+    times = {f: v for f, v in old_at.items() if isinstance(v, str) and STAMP.match(v)}
     fresh = 0
     for f in new_files:
         if f not in dates:
             dates[f] = today()
+            times[f] = now()
             fresh += 1
-    need = {}
+    cut = (datetime.date.fromisoformat(today()) - datetime.timedelta(days=STAMP_DAYS - 1)).isoformat()
+    need, untimed = {}, {}
     for f in listed:
-        if f not in dates and f in owner:
+        if f not in owner:
+            continue
+        if f not in dates:
             need.setdefault(owner[f], []).append(f)
+        elif dates[f] >= cut and f not in times:
+            untimed.setdefault(owner[f], []).append(f)
     filled = 0
-    for i, files in sorted(need.items()):
+    for i in sorted(set(need) | set(untimed)):
         where = history.get(SHARDS[i] if i < len(SHARDS) else None)
         # 그림 저장소마다 그림은 img/ 에 있다(이 저장소 쪽 이름 img-2 는 잇는 자리일 뿐)
         repo = (os.path.realpath(where), "img") if where else repo_of(dirs[i])
         if not repo:
             continue
-        got = history_dates(*repo)
-        for f in files:
+        got = history_added(*repo)
+        for f in need.get(i, []):
             if f in got:
-                dates[f] = got[f]
+                dates[f] = got[f][0]
                 filled += 1
+                if got[f][1] and dates[f] >= cut:
+                    times[f] = got[f][1]
+        for f in untimed.get(i, []):
+            # 적힌 날짜와 하루 안의 커밋일 때만 — 워크플로가 자정 넘어 등록하면 하루 어긋난다. 더 다르면 어느 쪽이 맞는지 모른다
+            if f in got and got[f][1] and abs((datetime.date.fromisoformat(got[f][1][:10]) - datetime.date.fromisoformat(dates[f])).days) <= 1:
+                times[f] = got[f][1]
     kept = {f: dates[f] for f in sorted(listed) if f in dates}
     if kept or "added" in doc:
         doc["added"] = kept
+    stamped = {f: times[f] for f in sorted(kept) if f in times and kept[f] >= cut}
+    if stamped or "added_at" in doc:
+        doc["added_at"] = stamped
     return fresh, filled, sum(1 for f in listed if f not in kept)
 
 

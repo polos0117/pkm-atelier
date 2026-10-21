@@ -157,4 +157,25 @@ with tempfile.TemporaryDirectory() as root, patch.object(reg, 'today', return_va
     assert reg.history_dates(str(shallow), 'img') and reg.repo_of(str(shallow / 'img')) is None
     code, *_ = run(got, str(a), str(b), ['--history', 'nope=' + str(repo)])
     assert code not in (0, None), code                                     # 모르는 저장소 이름은 막는다
-print('PASS image registration: 3 normal + 3 overdrive slots, independent action, legacy, repeat and invalid base · shards: where, open/closed, duplicate, missing repo, prune · added: today, kept, missing without history, git history, shallow ignored')
+# ── 들어온 시각(added_at, 2026-10-22) — 새 파일은 지금 · 최근 30일만 · 이력은 적힌 날짜와 하루 안의 커밋일 때만 ──
+with tempfile.TemporaryDirectory() as root, patch.object(reg, 'today', return_value='2026-10-21'), \
+     patch.object(reg, 'now', return_value='2026-10-21T09:30:00Z'):
+    a, b = Path(root) / 'img', Path(root) / 'img-2'
+    a.mkdir(); b.mkdir()
+    old = f'Pikachu_light_{style}_f.webp'; mid = f'Pikachu_heavy_{style}_f.webp'; new = f'Eevee_light_{style}_f.webp'
+    for f in (old, mid): (a / f).touch()
+    (b / new).touch()
+    doc = {'img': {'Pikachu': {'byStyle': {style: {'byForm': {'light': {'f': old}, 'heavy': {'f': mid}}}}}},
+           'added': {old: '2026-09-01', mid: '2026-10-02'}, 'added_at': {old: '2026-09-01T08:00:00Z', 'gone.webp': '2026-10-20T00:00:00Z'}}
+    code, write, out, _, got = run(doc, str(a), str(b))
+    assert code == 0 and got['added_at'] == {new: '2026-10-21T09:30:00Z'}, got['added_at']    # 새 파일은 지금 · 30일 넘은 것·없는 파일은 걷는다
+    repo = Path(root) / 'repo'; (repo / 'img').mkdir(parents=True)
+    sh(repo, 'init', '-q')
+    (repo / 'img' / old).touch(); sh(repo, 'add', '.'); sh(repo, 'commit', '-qm', '1', day='2026-09-01')
+    (repo / 'img' / mid).touch(); sh(repo, 'add', '.'); sh(repo, 'commit', '-qm', '2', day='2026-10-02')
+    code, write, out, _, got = run(got, str(repo / 'img'), str(b))
+    assert code == 0 and got['added_at'] == {mid: '2026-10-02T12:00:00Z', new: '2026-10-21T09:30:00Z'}, got['added_at']   # 최근 것만 이력의 시각으로
+    code, write, out, _, other = run({**got, 'added': {**got['added'], mid: '2026-10-05'}, 'added_at': {}}, str(repo / 'img'), str(b))
+    assert code == 0 and other['added_at'] == {}, other['added_at']                                 # 적힌 날짜와 커밋 날이 하루 넘게 다르면 메우지 않는다
+    assert reg.utc_stamp('2026-10-22T08:36:09+09:00') == '2026-10-21T23:36:09Z' and reg.utc_stamp('nope') is None
+print('PASS image registration: 3 normal + 3 overdrive slots, independent action, legacy, repeat and invalid base · shards: where, open/closed, duplicate, missing repo, prune · added: today, kept, missing without history, git history, shallow ignored · added_at: now, recent only, history within a day')

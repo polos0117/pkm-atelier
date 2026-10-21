@@ -34,7 +34,10 @@ for (const x of C) added[x.file] = D3;
 for (const x of D) added[x.file] = D10;
 const NEW = [A, B, C[0]];
 const SEEN = { mark: D3, known: C.slice(1).map(x => x.file) };
-const fixture = a => JSON.stringify({ ...DOC, added: a });
+/* 같은 날(사흘 전) 안에서 늦게 들어온 둘 — 도감 번호로는 24장 밖이지만 시각(added_at)이 있어 그날 맨 앞 */
+const LATE = [C[24], C[23]];
+const addedAt = { [C[23].file]: D3 + 'T08:00:00Z', [C[24].file]: D3 + 'T09:00:00Z' };
+const fixture = (a, t = addedAt) => JSON.stringify({ ...DOC, added: a, added_at: t });
 
 /* fetch 갈아 끼우기 + 지난 방문 심기(이 살림에서 한 번만 — 새 탭에서 다시 심지 않게 localStorage 로 막는다) */
 const INIT = ([body, seen]) => {
@@ -62,8 +65,8 @@ const sorted = a => [...a].sort();
     await p.waitForSelector('.recent-item');
     const s = await strip(p);
     assert.equal(s.length, 24, '띠는 24장까지: ' + s.length);
-    const want = [A, B].sort((x, y) => NO[x.card] - NO[y.card]).concat(C.slice(0, 22));
-    assert.deepEqual(s.map(x => x.file), want.map(x => x.file), '오늘 것 → 사흘 전, 같은 날은 번호 차례');
+    const want = [A, B].sort((x, y) => NO[x.card] - NO[y.card]).concat(LATE, C.slice(0, 20));
+    assert.deepEqual(s.map(x => x.file), want.map(x => x.file), '오늘 것 → 사흘 전, 같은 날은 늦게 들어온 시각부터, 시각이 없으면 번호 차례');
     assert(s.every(x => x.day >= FROM), '모두 최근 7일 안');
     assert(!s.some(x => D.some(d => d.file === x.file)), '열흘 전 그림은 띠에 없다');
     assert.equal(await p.$eval('.recent', e => e.compareDocumentPosition(document.querySelector('.grid')) & Node.DOCUMENT_POSITION_FOLLOWING ? 'before' : 'after'), 'before', '띠는 목록 위에');

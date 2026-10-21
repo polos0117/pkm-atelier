@@ -167,7 +167,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=motion1"></script>
 <script src="lib/fresh.js"></script>
-<script src="lib/img.js?v=recent1"></script>
+<script src="lib/img.js?v=recent2"></script>
 <script src="lib/dex-filter.js?v=2"></script>
 <link rel="stylesheet" href="lib/gallery.css?v=recent1">
 <script src="lib/scene-motion.js?v=1"></script>
@@ -237,7 +237,7 @@ function measureCells(grid) {
 }
 
 /* 최근 추가 · 새 그림 — 날짜는 img.json 의 added 에서 온다(등록기가 UTC 날짜로 적는다. 날짜 없는 그림은 어디에도 안 오른다).
-   띠는 UTC 로 최근 7일, 새로운 것부터 24장까지. 같은 날은 도감 번호 차례.
+   띠는 UTC 로 최근 7일, 새로운 것부터 24장까지. 같은 날은 들어온 시각(added_at)이 늦은 것부터, 시각이 없으면 도감 번호 차례.
    "새" 는 이 브라우저의 지난 방문 뒤에 들어온 그림이다. 방문 기록은 시계가 아니라 자료로 적는다 —
    떠날 때 그때 자료의 가장 늦은 날(mark)과 그날 그림(known)을 적어 두고, 다음 방문에는 mark 보다 늦거나
    mark 날인데 known 에 없는 그림을 "새" 로 본다. 등록기는 늘 오늘 날짜를 붙이므로 기기 시계·시간대가 틀려도 안 어긋난다.
@@ -271,9 +271,10 @@ function recentShots(st) {
   for (const card of st.cards) {
     const entry = st.img[card.name];
     if (!entry) continue;
-    for (const s of FILTER.shots(entry, st.defs)) { const day = IMG.addedOf(s.file); if (day && day >= from) out.push({ ...s, card, day }); }
+    for (const s of FILTER.shots(entry, st.defs)) { const day = IMG.addedOf(s.file); if (day && day >= from) out.push({ ...s, card, day, at: IMG.addedAtOf(s.file) || '' }); }
   }
-  out.sort((a, b) => a.day < b.day ? 1 : a.day > b.day ? -1 : a.card.no - b.card.no);
+  /* 새 날짜부터. 같은 날은 늦게 들어온 시각부터(added_at — 한날 수백 장이면 날짜만으로는 도감 번호 차례가 되어 방금 들어온 그림이 밀렸다), 시각이 같거나 없으면 도감 번호 차례 */
+  out.sort((a, b) => a.day < b.day ? 1 : a.day > b.day ? -1 : a.at < b.at ? 1 : a.at > b.at ? -1 : a.card.no - b.card.no);
   return out.slice(0, RECENT_MAX);
 }
 function NewBadge({ title }) {
