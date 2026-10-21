@@ -12,7 +12,7 @@
 
 ## 2026-10-22 · gpt · 미꾸리 9장 정본 확정
 - data/face-design.json — 미꾸리 경장 ①을 정본으로 표시하고 머리 기록을 잠갔다. 솔록 반영 때 발생한 1 MiB 전송 생략은 전체 1025종을 복구하여 정확한 Git blob 해시 대조(2148ed4)로 해결했다.
-- docs/CHARACTER_FACE_DESIGNS.md — 최신 다른 종의 설계를 보존하면서 정본 집계를 렌더했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 최신 다른 종의 설계를 보존하면서 정본 집계를 렌더했다. 전송 크기 제한으로 생략된 전체 문서를 복구하고 Git blob 해시로 일치를 확인했다.
 - docs/IMAGE_BATCH_BARBOACH_20261022.md — 9장 생성·검수·이미지 커밋과 경장 해시를 기록했다.
 
 ## 2026-10-22 · gpt · 솔록 9장 정본 확정
