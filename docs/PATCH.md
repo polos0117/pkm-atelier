@@ -10,6 +10,9 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 방패톱스 그림 정본 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 방패톱스 9장 등록에 맞춰 경장 ①을 얼굴·머리 정본으로 표시하고 실제 제출한 짧은 일자 컷·일자 앞머리를 잠갔다.
+
 ## 2026-10-21 · gpt · 램펄드 그림 정본 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 램펄드 9장 등록에 맞춰 경장 ①을 얼굴·머리 정본으로 표시하고 실제 제출한 긴 울프컷·불규칙 앞머리를 잠갔다.
 

@@ -15879,7 +15879,7 @@
    "en":"Shieldon",
    "line":"방패톱스",
    "how":"species",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"oval",
     "face length":"balanced",
@@ -15904,12 +15904,14 @@
     "hair length":"short",
     "bangs":"straight bangs"
    },
-   "hair_locked":false,
-   "hair_why":"바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리",
-   "hair_cues":[
-    "바위 타입 → 헤어스타일 끝을 일자로 자른 컷",
-    "키 0.5m → 머리 길이 짧은 머리"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/shieldon-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/shieldon-20261021/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "411":{
    "name":"바리톱스",
