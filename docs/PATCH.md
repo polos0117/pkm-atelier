@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 도롱충이 그림 정본 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 도롱충이 9장 등록에 맞춰 경장 ①을 정본으로 표시하고 실제 생성기 기록의 짧은 양갈래·가른 앞머리를 잠갔다.
+- docs/image-batches/burmy-20261021.md — 그림 커밋·썸네일·도감 등록과 일상 2번 글자 부분 수정 및 원본 보관 위치를 기록했다.
+
+## 2026-10-21 · gpt · 바리톱스 이미지와 얼굴 설계
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 바리톱스·도롱충이 얼굴 설계의 원작 해석 근거를 보완하고, 바리톱스 9장의 경장 인물 기준과 제출 기록을 연결한다.
+- docs/image-batches/bastiodon-20261021.md — 이미지 9장과 썸네일·도감 등록 성공 및 생성 기록 위치를 남긴다.
+
 ## 2026-10-21 · claude · 말풍선 — 줄에 놓인 카드가 도감 글을 한마디
 - lib/speech.js — 새 파일(원본은 지도 저장소 speech.js, 다섯 저장소에 같은 파일). 요소 위에 꼬리 달린 풍선 — 둘까지, 글 길이만큼, 움직임 줄이기면 애니메이션 없이. 화면 말 없음
 - lane.html — 놓거나 진화한 카드(내 것도 상대 것도)가 card.json 의 도감 글(text)을 스택 위 풍선으로

@@ -15917,8 +15917,8 @@
    "name":"바리톱스",
    "en":"Bastiodon",
    "line":"방패톱스",
-   "how":"draft",
-   "registered":false,
+   "how":"species",
+   "registered":true,
    "face":{
     "face shape":"angular",
     "face length":"balanced",
@@ -15932,7 +15932,7 @@
     "nose character":"straight slender bridge",
     "lips":"thin lips"
    },
-   "why":"",
+   "why":"사각 방패 머리·삼각 코·등의 세 가시를 각진 하관, 위로 뻗는 가는 눈매와 사선 눈썹, 곧은 콧대로 해석했다. 방패톱스의 넓은 타원 얼굴·낮은 눈썹·둥근 코끝과 구분되는 별개의 성인 인물이다.",
    "cues":[
     "‘three dark gray spikes’ → 얼굴형 각지고 선명한 얼굴형",
     "‘three dark gray spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
@@ -15947,18 +15947,21 @@
     "hair length":"long",
     "bangs":"straight bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘dark gray, square head’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 방패톱스에서 이어 같은 묶음",
-   "hair_cues":[
-    "‘dark gray, square head’ → 헤어스타일 끝을 일자로 자른 컷"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/bastiodon-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/bastiodon-20261021/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "412":{
    "name":"도롱충이",
    "en":"Burmy",
    "line":"도롱충이",
-   "how":"draft",
-   "registered":false,
+   "how":"species",
+   "registered":true,
    "face":{
     "face shape":"softly rounded",
     "face length":"balanced",
@@ -15972,7 +15975,7 @@
     "nose character":"prominent defined nose",
     "lips":"thin lips"
    },
-   "why":"",
+   "why":"둥근 검은 분절 몸은 부드러운 둥근 윤곽과 턱으로, 노란 눈은 수평의 가는 눈으로, 부리 같은 입의 돌출감은 또렷한 사람 코로 옮겼다. 말린 더듬이는 짧은 양갈래와 작은 말림 장식으로 해석하며 유아형 얼굴은 쓰지 않는다.",
    "cues":[
     "몸 형태 blob → 얼굴형 부드럽고 둥근 얼굴형",
     "몸 형태 blob → 턱선 · 턱끝 부드럽고 둥근 턱",
@@ -15984,12 +15987,14 @@
     "hair length":"short",
     "bangs":"parted bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘coiled antenna’·키 0.2m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 가운데를 가른 앞머리",
-   "hair_cues":[
-    "‘coiled antenna’ → 헤어스타일 트윈테일",
-    "키 0.2m → 머리 길이 짧은 머리"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/burmy-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/burmy-20261021/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "413":{
    "name":"도롱마담",
