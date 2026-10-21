@@ -16298,7 +16298,7 @@
    "en":"Cherubi",
    "line":"체리버",
    "how":"draft",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"softly rounded",
     "face length":"short",
@@ -19116,7 +19116,7 @@
    "en":"Snivy",
    "line":"주리비얀",
    "how":"species",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"oval",
     "face length":"long",
@@ -19134,17 +19134,20 @@
    "cues":[
     "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
    ],
-   "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 끝을 가볍게 친 페더컷",
+   "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
    "hair":{
     "hairstyle":"feathered",
     "hair length":"medium",
     "bangs":"side-swept bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘small wings’에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리",
-   "hair_cues":[
-    "‘small wings’ → 헤어스타일 끝을 가볍게 친 페더컷"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/snivy-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/snivy-20261022/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "496":{
    "name":"샤비",
