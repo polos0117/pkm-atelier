@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 도롱마담 이미지 등록과 인물 정본
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 도롱마담 경장을 얼굴·머리 정본으로 표시한다.
+- docs/image-batches/wormadam-20261021.md — 이미지 9장, 장부 예약과 제출·검수 기록을 연결한다.
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 이미 등록된 비브라바의 누락된 정본 표시도 실제 생성 기록으로 맞춘다.
+
 ## 2026-10-21 · claude · 도감 즐겨찾기 — 지금 보이는 그림을 하트로 담고, 공방 모음에서 모아 본다
 - lib/favorites.js — 공방 넷과 공방 모음(polos0117.github.io)이 같이 쓰는 즐겨찾기 모듈(판 v1). 원본은 공방 모음의 favorites.js, 글자 하나 다르지 않게 복사했다. 열쇠 atelier_favorites_v1(한 출처라 공방끼리 같은 목록), 약속은 그쪽 README 「즐겨찾기」절
 - dex.html — 상세의 진열 줄 앞에 하트 「즐겨찾기」(aria-pressed) — 카드가 아니라 큰 그림에 떠 있는 그 그림(폼·연출·일상)을 담는다. 담은 수 「즐겨찾기 n」 은 /favorites.html 로, 담았다·뺐다·저장이 막혔다는 알림(aria-live). ?mech=&pic= 로 오면 그 그림의 화풍·폼·컷으로 열고, 목록 주소에서는 pic 을 지운다

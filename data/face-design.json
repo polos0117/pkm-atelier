@@ -12781,7 +12781,7 @@
    "en":"Vibrava",
    "line":"톱치",
    "how":"species",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"elongated",
     "face length":"long",
@@ -12800,17 +12800,20 @@
     "몸 형태 bug-wings → 눈 크기 큰 눈",
     "‘two large white teeth’ → 입술 아랫입술이 더 도톰한"
    ],
-   "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 끝을 가볍게 친 페더컷 → 트윈테일",
+   "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
    "hair":{
     "hairstyle":"twin tail",
     "hair length":"long",
     "bangs":"side-swept bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘two yellow antennae’·몸 형태 bug-wings에서 트윈테일(묶은 꼬리) · 긴 머리 · 옆으로 넘긴 앞머리 — 톱치에서 이어 더 공들인 묶음",
-   "hair_cues":[
-    "‘two yellow antennae’ → 헤어스타일 트윈테일"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/vibrava-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/vibrava-20261021/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "330":{
    "name":"플라이곤",
@@ -16004,7 +16007,7 @@
    "en":"Wormadam",
    "line":"도롱충이",
    "how":"draft",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"oval",
     "face length":"balanced",
@@ -16032,12 +16035,14 @@
     "hair length":"long",
     "bangs":"parted bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘long antenna’에서 트윈테일(묶은 꼬리) · 긴 머리 · 가운데를 가른 앞머리 — 도롱충이에서 이어 같은 묶음",
-   "hair_cues":[
-    "‘long antenna’ → 헤어스타일 트윈테일",
-    "‘long antenna’ → 머리 길이 긴 머리"
-   ]
+   "hair_locked":true,
+   "hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-2/records/wormadam-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues":[],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/wormadam-20261021/light-ui.json",
+    "kind":"ui",
+    "raw":{}
+   }
   },
   "414":{
    "name":"나메일",
