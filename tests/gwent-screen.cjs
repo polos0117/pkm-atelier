@@ -121,6 +121,8 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert(/9/.test(await q2.locator('.gw-bar .gw-sumline b[data-side="me"]').textContent()), '막대에 내 합');
     /* 결속 — 이상해씨·이상해풀을 중장 줄에 */
     await q2.locator('.gw-hand .cell[data-id="이상해씨"]').tap(); await q2.locator('#gw-play').tap(); await q2.locator('.gw-target[data-kind="play"][data-lane="1"]').tap();
+    /* 말풍선 — 놓은 카드의 도감 글이 뜬다(앞 수의 풍선이 아직 남아 있을 수 있어 글로 찾는다) */
+    await q2.waitForFunction(t => [...document.querySelectorAll('.atelier-speech[data-who="me"]')].some(e => e.textContent === t), dataN.cards.find(c => c.name === '이상해씨').text, { timeout: 5000 }).catch(() => assert.fail('놓은 카드가 도감 글을 한다(말풍선): ' + '이상해씨'));
     await q2.waitForSelector('.gw-row[data-side="me"][data-lane="1"] .gw-unit[data-id="이상해씨"]'); await myTurn(q2);
     await q2.locator('.gw-hand .cell[data-id="이상해풀"]').tap(); await q2.locator('#gw-play').tap(); await q2.locator('.gw-target[data-kind="play"][data-lane="1"]').tap();
     await q2.waitForSelector('.gw-row[data-side="me"][data-lane="1"] .gw-unit[data-id="이상해풀"]');

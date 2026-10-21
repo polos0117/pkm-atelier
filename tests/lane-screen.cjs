@@ -112,6 +112,7 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     assert.equal(await q.locator('.ln-target[data-kind="place"]').count(), 3, '빈 줄 셋이 빛난다');
     await tappable(q, '.ln-target');
     await q.locator('.ln-target[data-kind="place"][data-lane="0"]').tap();
+    await q.waitForSelector('.atelier-speech[data-who="me"]'); assert((await q.locator('.atelier-speech[data-who="me"]').last().textContent()).length > 5, '놓은 카드가 도감 글을 한다(말풍선)');
     await q.waitForSelector('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack');
     assert.equal(await q.locator('.ln-lane[data-lane="0"] .ln-slot[data-side="me"] .ln-stack').getAttribute('data-form'), 'heavy', '중장으로 놓였다');
     assert.equal(await q.locator('.ln-hand .cell').count(), 7, '손패가 줄었다');

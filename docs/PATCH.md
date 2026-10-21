@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · claude · 말풍선 — 줄에 놓인 카드가 도감 글을 한마디
+- lib/speech.js — 새 파일(원본은 지도 저장소 speech.js, 다섯 저장소에 같은 파일). 요소 위에 꼬리 달린 풍선 — 둘까지, 글 길이만큼, 움직임 줄이기면 애니메이션 없이. 화면 말 없음
+- lane.html — 놓거나 진화한 카드(내 것도 상대 것도)가 card.json 의 도감 글(text)을 스택 위 풍선으로
+- gwent.html — 놓인 카드가 도감 글을 그 자리 위 풍선으로
+- tests/lane-screen.cjs · tests/gwent-screen.cjs — 놓은 뒤 풍선(앞 수의 풍선이 남아 있을 수 있어 글로 찾는다)
+
 ## 2026-10-21 · claude · 오늘 기록 — 네 놀이가 끝나면 공방 지도가 읽는 칸에 적는다
 - lib/today.js — 새 파일. 다섯 공방이 한 출처(polos0117.github.io)라 localStorage 를 같이 쓴다: 판이 끝나면 atelier_today_v1:pokemon 에 {d, n, w, daily, at, seen} 한 칸(bump), 다녀가면 seen(visit), 날짜 씨앗(seed), ?daily(isDaily). 모양의 약속은 지도 저장소 README 「오늘 기록」절, 다섯 저장소에 같은 파일
 - lib/survey-ui.js · survey.html — 작전 시작은 이미 오늘 날짜가 씨앗이라 그대로 오늘의 판: 끝나는 수에서 한 칸(목표 30을 넘기면 승, 오늘 날짜 씨앗이면 daily), 지도에서 ?daily 로 왔고 진행 중인 작전이 없으면 바로 시작, 열면 다녀간 자국

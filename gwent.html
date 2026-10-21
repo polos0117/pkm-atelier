@@ -229,6 +229,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/words.js?v=status1"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/today.js?v=1"></script>
+<script src="lib/speech.js?v=1"></script>
 <script src="lib/img.js?v=status1"></script>
 <script src="lib/collection.js?v=gwent1"></script>
 <script src="lib/gwent.js?v=1"></script>
@@ -243,6 +244,7 @@ import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, G = window.AtelierGwent;
 const T = window.AtelierToday, ROOM = 'pokemon'; T.visit(ROOM);   /* 오늘 기록 — 공방 지도의 방 열쇠(lib/today.js) */
+const SP = window.AtelierSpeech, textOf = (data, name) => { const c = Array.isArray(data.cards) ? data.cards.find(x => x.name === name) : null; return c && c.text; };   /* 말풍선 — 도감 글(card.json 의 text) */
 const STORE = 'pkm_duel_v1';
 
 function Shell({ children }) {
@@ -490,6 +492,13 @@ function Match({ data, profile, st, actMatch, act }) {
   const [mode, setMode] = useState(null), [banner, setBanner] = useState(null), [help, setHelp] = useState(false);
   const rounds = useRef(st.roundLog.length);
   useEffect(() => { if (st.roundLog.length > rounds.current) { setMode(null); setDetail(null); if (!reduced()) { setBanner(st.roundLog.length); const t = setTimeout(() => setBanner(null), 1400); rounds.current = st.roundLog.length; return () => clearTimeout(t); } } rounds.current = st.roundLog.length; }, [st.roundLog.length]);
+  /* 말풍선 — 줄에 놓인 카드가 제 도감 글을 한마디. 내 것도 상대 것도 */
+  useEffect(() => {
+    const l = st.last; if (!SP || !l || l.kind !== 'play' || !l.id) return;
+    const c = G.cardsOf(data).cards[l.id], text = c && textOf(data, c.name); if (!text) return;
+    const t = setTimeout(() => { const el = document.querySelector(`.gw-row[data-side="${l.who}"][data-lane="${l.lane}"] .gw-unit[data-i="${l.i}"]`) || document.querySelector(`.gw-row[data-side="${l.who}"][data-lane="${l.lane}"]`); if (el) SP.say(el, text, { who: l.who }); }, 80);
+    return () => clearTimeout(t);
+  }, [st.log.length]);
   /* 이번 수의 연출 — 새로 놓인 카드 flip, 맞은 카드 hit, 개방 burst */
   const fxOf = (side, lane, i) => { const l = st.last; if (!l) return null;
     if (l.kind === 'play' && l.who === side && l.lane === lane && l.i === i) return 'flip';
