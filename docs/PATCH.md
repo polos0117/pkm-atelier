@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 밤선인 이미지 9장 등록·정본 기록
+- data/face-design.json — 밤선인 경장 ①의 얼굴·머리를 정본으로 잠그고, 함께 자동 등록된 파치리스의 기존 경장 기록 상태도 동기화했다. 기존 얼굴 설계는 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 실제 기록값을 도구로 다시 그렸다.
+- docs/image-batches/cacturne-20261022.md — 이미지·장부·등록 커밋과 정본 해시·검수 근거를 남겼다.
+
 ## 2026-10-21 · gpt · 선인왕 이미지 등록과 인물 정본
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 선인왕 경장을 얼굴·머리 정본으로 표시하며 다른 종의 설계는 보존한다.
 - docs/image-batches/cacnea-20261021.md — 이미지 9장·예약·실제 제출·부분 수정·검수 기록을 연결한다.
