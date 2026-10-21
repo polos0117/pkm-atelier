@@ -34,10 +34,21 @@ play.html과 dex.html은 검증된 data/img.json을 읽는다. GitHub 파일 목
     python3 register-images.py            # data/img.json 에 없는 것을 더한다
     python3 register-images.py --check    # 쓰지 않고 무엇이 달라지는지만 본다
     python3 register-images.py --prune    # 파일이 사라진 항목도 지운다
+    python3 register-images.py --history pkm-atelier-img=../full-clone   # 날짜 메우기에 쓸 이력 자리
+
+들어온 날(added, 2026-10-21) — 도감의 "최근 추가" 띠와 "새" 표시가 읽는다.
+    {"파일 이름": "YYYY-MM-DD"}. 이 실행에서 새로 등록한 파일은 오늘 날짜를 받고,
+    이미 적힌 날짜는 건드리지 않는다. 날짜가 없는 등록 파일은 그 그림 저장소의 git 이력에서
+    파일을 처음 더한 커밋 날짜(%cs)로 한 번 메운다 — 이력이 온전할 때만. 얕은 받기(shallow)는
+    모든 파일이 마지막 커밋에 "더해진" 것으로 보여 날짜를 지어내게 되므로 메우지 않는다.
+    워크플로는 그림 저장소를 얕게 받으므로 거기서는 새 파일에 오늘 날짜만 붙는다.
+    날짜를 모르는 파일은 비워 둔다 — 화면은 그런 그림을 "최근 추가" 에 올리지 않는다.
 """
 import argparse
+import datetime
 import os
 import re
+import subprocess
 
 import roster
 
@@ -167,11 +178,104 @@ def listed_files(img):
     return out
 
 
+DAY = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def today():
+    """UTC 날짜 — 워크플로(UTC)와 손으로 돌린 것이 같은 날을 적게. 도감의 7일 창도 UTC 로 센다."""
+    return datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+
+
+def git(top, *args):
+    """git 을 불러 출력을 돌려준다. git 이 없거나 실패하면 None — 날짜는 못 메운 채로 둔다."""
+    try:
+        r = subprocess.run(["git", "-c", "core.quotepath=false", "-C", top] + list(args),
+                           capture_output=True, text=True, encoding="utf-8", timeout=300)
+    except (OSError, subprocess.SubprocessError):
+        return None
+    return r.stdout if r.returncode == 0 else None
+
+
+def repo_of(d):
+    """그림 자리 d 가 든 git 저장소 (꼭대기, 그 안의 상대 경로). 이력이 온전하지 않으면 None.
+
+    얕은 받기를 빼는 까닭: 그 첫 커밋이 모든 파일을 "더한" 것으로 보여서, 수천 장이
+    한날 들어온 것으로 적힌다 — 날짜를 지어내는 것과 같다."""
+    real = os.path.realpath(d)
+    out = git(real, "rev-parse", "--show-toplevel", "--is-shallow-repository")
+    if not out:
+        return None
+    lines = out.split("\n")
+    if len(lines) < 2 or lines[1].strip() != "false":
+        return None
+    top = lines[0].strip()
+    return top, os.path.relpath(real, top).replace(os.sep, "/")
+
+
+def history_dates(top, sub):
+    """{파일 이름: 처음 더한 커밋 날짜}. 한 번의 git log 로 저장소 전체를 읽는다.
+
+    파일마다 `git log --diff-filter=A --format=%cs -- img/<파일>` 의 마지막 줄과 같다 —
+    --no-renames 로 이름 바꾸기도 "더하기" 로 본다(파일 하나만 짚을 때처럼). 하위 폴더(thumb/)는 뺀다."""
+    out = git(top, "log", "--reverse", "--no-renames", "--diff-filter=A",
+              "--format=%x00%cs", "--name-only", "--", sub)
+    dates, day, pre = {}, None, ("" if sub in ("", ".") else sub + "/")
+    for line in (out or "").split("\n"):
+        if line.startswith("\0"):
+            day = line[1:].strip()
+            continue
+        if not line or not day or not line.startswith(pre):
+            continue
+        name = line[len(pre):]
+        if "/" not in name and DAY.match(day):
+            dates.setdefault(name, day)
+    return dates
+
+
+def stamp_dates(doc, listed, new_files, owner, dirs, history):
+    """added 를 고친다. 돌려주는 것은 (오늘 받은 수, 이력에서 메운 수, 날짜 없이 남은 수)."""
+    old = doc.get("added") if isinstance(doc.get("added"), dict) else {}
+    dates = {f: v for f, v in old.items() if isinstance(v, str) and DAY.match(v)}
+    fresh = 0
+    for f in new_files:
+        if f not in dates:
+            dates[f] = today()
+            fresh += 1
+    need = {}
+    for f in listed:
+        if f not in dates and f in owner:
+            need.setdefault(owner[f], []).append(f)
+    filled = 0
+    for i, files in sorted(need.items()):
+        where = history.get(SHARDS[i] if i < len(SHARDS) else None)
+        # 그림 저장소마다 그림은 img/ 에 있다(이 저장소 쪽 이름 img-2 는 잇는 자리일 뿐)
+        repo = (os.path.realpath(where), "img") if where else repo_of(dirs[i])
+        if not repo:
+            continue
+        got = history_dates(*repo)
+        for f in files:
+            if f in got:
+                dates[f] = got[f]
+                filled += 1
+    kept = {f: dates[f] for f in sorted(listed) if f in dates}
+    if kept or "added" in doc:
+        doc["added"] = kept
+    return fresh, filled, sum(1 for f in listed if f not in kept)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--prune", action="store_true", help="파일이 없어진 항목을 지운다")
+    ap.add_argument("--history", action="append", default=[], metavar="저장소=경로",
+                    help="들어온 날을 메울 때 이 그림 저장소는 이 경로의 온전한 clone 이력을 읽는다(--filter=blob:none 이면 충분)")
     a = ap.parse_args()
+    history = {}
+    for h in a.history:
+        k, _, v = h.partition("=")
+        if k not in SHARDS or not v or not os.path.isdir(v):
+            raise SystemExit("--history 는 <%s>=<clone 경로> 꼴이다: %s" % ("|".join(SHARDS), h))
+        history[k] = v
 
     doc = roster.read("img")
     img = doc["img"]
@@ -179,7 +283,8 @@ def main():
     styles = roster.styles()
     forms = roster.forms()
     owner, unknown, missing = {}, [], []
-    for i, d in enumerate([IMG_DIR] + list(EXTRA_DIRS)):
+    dirs = [IMG_DIR] + list(EXTRA_DIRS)
+    for i, d in enumerate(dirs):
         if not os.path.isdir(d):
             if i == 0:
                 raise SystemExit("그림 자리 %s 가 없다" % d)
@@ -321,6 +426,7 @@ def main():
         doc["where"] = dict(sorted(where.items()))
     doc["img"] = dict(sorted(img.items()))
     doc["count"] = len(img)
+    days = stamp_dates(doc, listed_files(img), [f for _, f in added], owner, dirs, history)
     if not a.check and not unknown:
         roster.write("img", doc)
 
@@ -330,6 +436,7 @@ def main():
                                         for i in range(len(SHARDS)) if i == 0 or i <= len(EXTRA_DIRS))
           + " · 새 그림은 %s" % SHARDS[open_at] + (" · 못 받은 저장소 " + ", ".join(missing) if missing else ""))
     print("  등록 후보 %d%s" % (len(added), " — 오류로 저장 안 함" if unknown else ""))
+    print("  들어온 날: 오늘 %d · 이력에서 메움 %d · 날짜 모름 %d" % days)
     for card, f in added[:20]:
         print("     %-24s %s" % (card, f))
     if ghosts:
