@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 비크티니 이미지 9장 등록·정본 기록
+- data/face-design.json — 비크티니 경장 ①을 정본으로 표시하고 실제 생성기 머리 설계를 잠갔다. 다른 종의 설계는 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 집계를 도구로 갱신했다.
+- docs/image-batches/victini-20261022.md — 이미지·예약·자동 등록 커밋, 정본 해시와 검수 기록을 연결한다.
+
 ## 2026-10-22 · gpt · 파비코 이미지 9장 등록·정본 기록
 - data/face-design.json — 파비코 경장 ①의 얼굴·짧은 페더컷을 잠갔다. 동시에 반영된 브이젤 작업의 정본 표시와 기존 설계는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 집계를 도구로 갱신했다.
