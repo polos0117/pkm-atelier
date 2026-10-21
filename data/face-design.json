@@ -13189,8 +13189,8 @@
    "name":"미꾸리",
    "en":"Barboach",
    "line":"미꾸리",
-   "how":"draft",
-   "registered":false,
+   "how":"source-designed",
+   "registered":true,
    "face":{
     "face shape":"oval",
     "face length":"balanced",
@@ -13204,7 +13204,7 @@
     "nose character":"broad low bridge",
     "lips":"fuller lower lip"
    },
-   "why":"",
+   "why":"작은 눈·둥근 물고기 체적·낮은 코를 사람의 작은 둥근 눈, 넓은 눈 간격, 부드러운 타원 턱과 낮은 콧대로 해석. 아랫입술의 도톰함으로 다른 인물과 구분하며 경장 ①을 정본으로 확정.",
    "cues":[
     "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
     "‘small eyes’ → 눈 크기 작은 눈",
@@ -13218,8 +13218,8 @@
     "hair length":"medium",
     "bangs":"choppy bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘two rounded, blue pectoral fins’·‘jagged black line’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+   "hair_locked":true,
+   "hair_why":"확정 경장 ①의 은청색 웨이브와 불규칙 앞머리를 유지. 후속 여덟 장은 경장 또는 해당 닫힌 폼을 첨부.",
    "hair_cues":[
     "‘two rounded, blue pectoral fins’ → 헤어스타일 웨이브 헤어",
     "‘jagged black line’ → 앞머리 끝을 불규칙하게 친 앞머리"
