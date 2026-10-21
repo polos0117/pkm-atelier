@@ -156,6 +156,13 @@ body {color:var(--text);font-size:15px}
 .hall-controls button{padding:9px 12px;min-height:44px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--text);font:inherit;font-size:12px;cursor:pointer}
 .hall-controls button[aria-pressed=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
+/* 즐겨찾기 — 진열 단추 앞의 하트(지금 보이는 그림 한 장), 담은 수는 공방 모음으로 가는 작은 링크 */
+.hall-controls .fav-heart span{font-size:15px;line-height:1;margin-right:5px}
+.hall-controls .fav-count{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--muted);font-size:12px;text-decoration:none;border-radius:8px}
+.hall-controls .fav-count:hover{color:var(--text)}
+.hall-controls button:focus-visible,.hall-controls .fav-count:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.fav-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;background:var(--text);color:var(--bg);font-size:13px;font-weight:700;text-align:center;pointer-events:none}
+.fav-toast:empty{display:none}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=motion1"></script>
@@ -165,6 +172,8 @@ body {color:var(--text);font-size:15px}
 <link rel="stylesheet" href="lib/gallery.css?v=recent1">
 <script src="lib/scene-motion.js?v=1"></script>
 <link rel="stylesheet" href="lib/scene-motion.css?v=1">
+<!-- 즐겨찾기 — lib/favorites.js(공방 넷과 공방 모음이 글자 하나 다르지 않게 나눠 쓴다) -->
+<script src="lib/favorites.js?v=1"></script>
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -178,7 +187,20 @@ import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
 import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
-const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter, MOTION = window.AtelierMotion;
+const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter, MOTION = window.AtelierMotion, FAV = window.AtelierFavorites;
+const FAV_HUB = '/favorites.html';
+/* 즐겨찾기 목록 — 다른 탭(공방 모음)에서 빼도 따라온다 */
+function useFavorites() {
+  const [list, setList] = useState(() => (FAV ? FAV.list() : []));
+  useEffect(() => (FAV ? FAV.onChange(setList) : undefined), []);
+  return list;
+}
+/* 잠깐 떴다 사라지는 알림. 자리는 늘 깔아 둔다 — 화면 읽기 프로그램은 새로 생긴 칸의 말을 놓치기 쉽다 */
+function useNote() {
+  const [msg, setMsg] = useState(''), t = useRef(0);
+  useEffect(() => () => clearTimeout(t.current), []);
+  return [msg, s => { setMsg(s); clearTimeout(t.current); t.current = setTimeout(() => setMsg(''), 2000); }];
+}
 const FILTER_STORE = 'pkm_dex_filters_v1';
 /* 주소 — 거른 목록과 보던 카드를 링크로 남긴다. 기본값인 필터는 적지 않는다.
    ?mech=<카드 이름> 이 상세, 나머지(q·style·gen·type·form·cut)가 필터다 */
@@ -192,7 +214,7 @@ function urlFilters() {
 }
 function dexHref(filters, mech) {
   const u = new URL(location.href), d = FILTER.defaults();
-  for (const k of [...URL_KEYS, 'mech']) u.searchParams.delete(k);
+  for (const k of [...URL_KEYS, 'mech', 'pic']) u.searchParams.delete(k);
   if (mech) u.searchParams.set('mech', mech);
   for (const k of URL_KEYS) if (filters[k] && filters[k] !== d[k]) u.searchParams.set(k, filters[k]);
   return u.pathname + u.search + u.hash;
@@ -479,6 +501,17 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     return () => c.destroy();
   }, [ambient, showFocus, zoom]);
   useEffect(() => () => { if (!MOTION) return; MOTION.cancel('dex-big'); const img = bigRef.current && bigRef.current.querySelector('.zoom img'); if (img) MOTION.stop(img); }, []);
+  /* 즐겨찾기 — 큰 그림에 떠 있는 바로 그 그림. link 에 ?mech=&pic= 를 적어 공방 모음에서 누르면 이 그림으로 다시 연다 */
+  const favs = useFavorites(), [favMsg, sayFav] = useNote();
+  const faved = !!shownFile && favs.some(x => x.a === 'pkm' && x.file === shownFile);
+  const toggleFav = () => {
+    if (!FAV || !shownFile) return;
+    const shot = showFocus ? focus : { file: shownFile, cut: 'portrait', form };
+    const q = new URLSearchParams(); q.set('mech', card.name); q.set('pic', shownFile);
+    const on = FAV.toggle({ a: 'pkm', key: card.name, file: shownFile, title: card.name, sub: shotLabel(shot, defs),
+      thumb: IMG.thumbURL(shownFile), full: IMG.imgURL(shownFile), link: new URL('dex.html', location.href).pathname + '?' + q.toString() });
+    sayFav(W(on ? 'dex.fav.added' : faved ? 'dex.fav.removed' : 'dex.fav.blocked'));
+  };
 
   /* 이름과 화풍만 고정한다. 여섯 칸이 화면의 굴림 자리를 밀어내지 않게 한다. */
   useLayoutEffect(() => { if (!selection?.zoom) document.getElementById("detail-title")?.focus({ preventScroll: true }); }, []);
@@ -515,12 +548,16 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
         onClick=${() => { setStyle(k); setForm(''); setFocus(null); }}>${styleName[k] || k || W('dex.style.unknown')}</button>`)}
     </div>`}
     <div class="hall-controls">
+      ${shownFile && html`<button type="button" class="fav-heart" id="dex-fav" aria-pressed=${faved} disabled=${!FAV} title=${W('dex.fav.note')}
+        onClick=${toggleFav}><span aria-hidden="true">${faved ? '\u2665' : '\u2661'}</span>${W('dex.fav')}</button>`}
       <button type="button" id="dex-hall" aria-pressed=${inHall} disabled=${hallFull} title=${W('dex.hall.note')}
         onClick=${()=>IMG.toggleHall(card.name)}>${W(inHall?'dex.hall.remove':hallFull?'dex.hall.full':'dex.hall.add')}</button>
       <span class="hall-n" aria-live="polite">${W('dex.hall.count',{n:hall.length,max:IMG.HALL_MAX})}</span>
       <button type="button" id="dex-motion" disabled=${motionLocked} title=${W(motionLocked ? 'motion.reduced' : 'motion.note')}
         onClick=${() => MOTION.setEnabled(!motion)}>${W(motion ? 'motion.off' : 'motion.on')}</button>
+      ${favs.length > 0 && html`<a class="fav-count" id="dex-fav-count" href=${FAV_HUB}>${W('dex.fav.count', { n: favs.length })}</a>`}
     </div>
+    <div class="fav-toast" role="status" aria-live="polite">${favMsg}</div>
     <p class="sec">${W('dex.compare')}<span>${prog.ok ? '' : W('art.form.left', { n: prog.left.length })}</span></p>
     <div class="fstrip" role="group" aria-label=${W('dex.compare')}>
       ${want.map(k => {
@@ -753,6 +790,8 @@ function App() {
     catch { return FILTER.defaults(); }
   });
   const firstMech = useRef(new URL(location.href).searchParams.get('mech'));
+  /* ?pic= — 즐겨찾기(공방 모음)에서 온 주소의 그림. 주소는 곧 목록 주소로 고쳐 쓰이므로 처음에 잡아 둔다 */
+  const firstPic = useRef(new URL(location.href).searchParams.get('pic'));
   useEffect(() => {
     try {localStorage.setItem(FILTER_STORE,JSON.stringify(filters));} catch {}
     setUrl(dexHref(filters, openNow.current?.card?.name));
@@ -795,8 +834,11 @@ function App() {
   useEffect(()=>{
     if(!st.cards||linked.current)return;linked.current=true;
     const card=st.cards.find(c=>c.name===firstMech.current);
+    /* ?pic= 가 있으면 그 그림의 화풍·폼·컷으로 연다 */
+    const pic=firstPic.current;
+    const shot=card&&pic&&FILTER.shots(st.img[card.name],st.defs).find(s=>s.file===pic);
     setUrl(dexHref(filters));
-    if(card)openShot({card});
+    if(card)openShot(shot?{...shot,card}:{card});
   },[st.cards]);
 
   if (st.error) return html`<${Shell} head=${null}>

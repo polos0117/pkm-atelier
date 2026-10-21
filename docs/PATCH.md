@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · claude · 도감 즐겨찾기 — 지금 보이는 그림을 하트로 담고, 공방 모음에서 모아 본다
+- lib/favorites.js — 공방 넷과 공방 모음(polos0117.github.io)이 같이 쓰는 즐겨찾기 모듈(판 v1). 원본은 공방 모음의 favorites.js, 글자 하나 다르지 않게 복사했다. 열쇠 atelier_favorites_v1(한 출처라 공방끼리 같은 목록), 약속은 그쪽 README 「즐겨찾기」절
+- dex.html — 상세의 진열 줄 앞에 하트 「즐겨찾기」(aria-pressed) — 카드가 아니라 큰 그림에 떠 있는 그 그림(폼·연출·일상)을 담는다. 담은 수 「즐겨찾기 n」 은 /favorites.html 로, 담았다·뺐다·저장이 막혔다는 알림(aria-live). ?mech=&pic= 로 오면 그 그림의 화풍·폼·컷으로 열고, 목록 주소에서는 pic 을 지운다
+- lib/words.js — dex.fav.* 낱말 여섯
+- tests/dex-favorites.cjs — 새 검사: 하트·저장된 칸의 모양·그림마다 따로·새로고침·link 로 열기·저장 막힘·다섯 크기 44px·넘침·초점, 공방 모음 원본과 같은 파일인가 · AGENTS.md — 공용 모듈 한 줄과 검사 목록
+
 ## 2026-10-21 · claude · 도감 상세에 움직임 — 켄 번스·오버드라이브 열리기·타입 입자
 
 - lib/scene-motion.js · lib/scene-motion.css — 공방 넷이 같이 쓰는 움직임 모듈(판 1)을 book-atelier 에서 글자 하나 바꾸지 않고 가져왔다. 고칠 때는 원본(book)에서 판을 올리고 다시 복사한다. 설명은 book-atelier docs/SCENE_MOTION.md

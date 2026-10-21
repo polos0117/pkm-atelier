@@ -121,6 +121,8 @@ node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·색
 node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견본 파일명이 맞나
 ```
 
+즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
+
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
 수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가
 아니라 보고다. 결과는 `docs/GAME_CONCEPT.md` 의 "굴려 본 것" 에 적는다.
@@ -150,6 +152,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-nav.cjs       # 도감 넘기기 — 목록 자리·그림·카드 넘기기·뒤로 가기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도감 최근 추가 띠·새 표시(지난 방문)·새 그림만 — 다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs  # 움직임 — 공용 모듈·도감 상세의 켄 번스·오버드라이브 열리기·타입 입자·스위치
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-favorites.cjs # 즐겨찾기 — 상세의 하트·저장된 칸·?pic= 로 열기·저장 막힘·다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
