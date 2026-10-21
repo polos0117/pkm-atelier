@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 피그킹 이미지 9장 정본 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 경장 ①을 얼굴·머리 정본으로 표시하고 기록값으로 머리를 잠갔다.
+- docs/image-batches/grumpig-20261021.md — 이미지 커밋과 실제 생성·검수 기록 위치를 남겼다.
+
 ## 2026-10-21 · gpt · 폭타 일상 1번 손 중복 수정
 - pkm-atelier-img-2/img/폭타_glossy_promo_f_casual1.webp — 거울 앞에서 머리를 만지는 컷의 목덜미 옆에 추가된 손을 부분 수정하고, 같은 파일명으로 교체했다. 원래 장면·인물·의상은 유지했다.
 - pkm-atelier-img-2/records/camerupt-20261021 — 수정 전후 해시·부분 수정 프롬프트·첨부 기준과 손 검수 결과를 기록했다.
@@ -721,3 +725,4 @@
   썸네일 워크플로가 보내는 repository_dispatch 로 깨어난다
 - pkm-atelier-img/.github/workflows/thumbs.yml — 썸네일을 만들고 코드 저장소를 깨운다
 - IMAGE_RULES.md — "올리면 자동이다" 절
+
