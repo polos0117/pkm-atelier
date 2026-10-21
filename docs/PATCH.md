@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 루나톤 이미지 9장 정본 확정
+- data/face-design.json — 루나톤 경장 ①의 등록 표시와 머리 정본 잠금을 반영했다. 큰 파일 전송 뒤 원본·원격 blob 해시를 대조해 전체 내용을 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 루나톤 정본 표시와 집계를 렌더하고 전송 중 잘린 문서를 정상 원본으로 복구했다.
+- docs/image-batches/lunatone-20261022.md — 이미지·예약·정본 해시·실제 검수·자동 등록을 기록했다.
+
 ## 2026-10-22 · gpt · 세비퍼 이미지 9장 정본 확정
 - data/face-design.json — 세비퍼 경장 ①을 정본으로 표시하고 종별 머리를 잠갔다. 동시 등록된 파비코리는 등록 표시만 동기화하고 다른 종의 설계는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 집계를 같은 자료에서 렌더했다.
@@ -866,5 +871,6 @@
   썸네일 워크플로가 보내는 repository_dispatch 로 깨어난다
 - pkm-atelier-img/.github/workflows/thumbs.yml — 썸네일을 만들고 코드 저장소를 깨운다
 - IMAGE_RULES.md — "올리면 자동이다" 절
+
 
 
