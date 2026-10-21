@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 선인왕 이미지 등록과 인물 정본
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 선인왕 경장을 얼굴·머리 정본으로 표시하며 다른 종의 설계는 보존한다.
+- docs/image-batches/cacnea-20261021.md — 이미지 9장·예약·실제 제출·부분 수정·검수 기록을 연결한다.
+
 ## 2026-10-21 · gpt · 플라이곤 이미지 등록과 인물 정본
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 플라이곤 경장을 얼굴·머리 정본으로 표시하며 다른 종의 설계는 보존한다.
 - docs/image-batches/flygon-20261021.md — 이미지 9장과 복구·예약·실제 제출·검수 기록을 연결한다.
