@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · gpt · 톱치 이미지 등록과 인물 정본
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 톱치 경장을 얼굴·머리 정본으로 표시한다.
+- docs/image-batches/trapinch-20261021.md — 이미지 9장, 장부 예약과 제출·검수 기록을 연결한다.
+
 ## 2026-10-21 · claude · 테마를 공방마다 따로
 
 - lib/workspace-theme.js — 다섯 공방이 한 주소(polos0117.github.io) 아래라 localStorage 를 같이 쓰는데, 건담·pkm·신화가 테마를 같은 열쇠 `atelier_theme_v1` 에 적어 한 공방에서 고르면 다른 공방 테마가 바뀌었다(건담은 이름이 달라 기본으로 되돌아갔다). 이 공방 열쇠 `pkm_theme_v1` 로. 처음 한 번만 옛 열쇠의 값이 이 공방 테마이면 옮겨 오고, 옛 열쇠는 지우지 않는다. 화면 밀도는 그대로 함께 쓴다
