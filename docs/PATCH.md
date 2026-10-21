@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-22 · gpt · 플로젤 이미지 9장 정본 확정
+- data/face-design.json — 플로젤 경장 ①의 기록값으로 머리를 잠가 후속 생성의 정본을 보존.
+- docs/CHARACTER_FACE_DESIGNS.md — 같은 자료의 정본·머리 잠금 표시를 렌더.
+- docs/image-batches/floatzel-20261022.md — 이미지 커밋·참조·검수·차단 후 대체 장면 기록.
+
 ## 2026-10-22 · gpt · 비크티니 이미지 9장 등록·정본 기록
 - data/face-design.json — 비크티니 경장 ①을 정본으로 표시하고 실제 생성기 머리 설계를 잠갔다. 다른 종의 설계는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 정본 표시와 집계를 도구로 갱신했다.
