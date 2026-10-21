@@ -68,7 +68,10 @@ async function visibleCell(p) {
     assert(Math.abs(await top(p) - was) <= 2, '뒤로 가기 — 굴린 자리로 돌아온다');
 
     /* 3. 큰 그림 넘기기 — 방향키로 이 카드의 그림을 차례로, 끝을 넘으면 다음 카드의 첫 그림 */
-    await p.evaluate(() => { document.querySelector('.collection-scroll').scrollTop = 0; });
+    /* 목록 첫 줄로 — 맨 위의 "최근 추가" 띠(최근 7일에 그림이 있을 때만 뜬다)가 첫 줄을 화면 밖으로 밀 수 있다 */
+    await p.evaluate(() => { const sc = document.querySelector('.collection-scroll'), g = document.querySelector('.grid');
+      sc.scrollTop = 0; sc.scrollTop = g.getBoundingClientRect().top - sc.getBoundingClientRect().top; });
+    await p.waitForTimeout(150);
     const one = await visibleCell(p);
     await tap(p, one);
     await p.waitForSelector('.big-nav');

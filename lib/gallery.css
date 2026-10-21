@@ -62,3 +62,18 @@ body.dex-page{background-image:none}
 .zoom-layer .zoom-body.actual{display:block;overflow:auto;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;padding:0;-webkit-overflow-scrolling:touch}
 .zoom-layer .zoom-body.actual>img{width:auto;height:auto;max-width:none;max-height:none;object-fit:none;margin:0 auto;cursor:auto}
 .zoom-layer .zoom-body.actual .zoom-nav{display:none}
+/* 최근 추가 — 목록 맨 위 가로 띠. 띠 안에서만 옆으로 구르고 화면의 세로 굴림은 .collection-scroll 하나 그대로(AGENTS 4).
+   안쪽 여백은 초점 테두리(2px + 3px 띄움)가 띠의 넘침 자르기에 안 잘리게 둔다 */
+.recent{padding:2px 0 6px;border-bottom:1px solid var(--line);margin-bottom:6px;min-width:0}
+.recent>.sec{margin:0 0 4px}
+.recent-strip{display:flex;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:6px 6px 10px;scroll-padding-inline:6px;scrollbar-width:thin}
+.recent-item{flex:none;display:block;width:84px;min-height:44px;padding:0;border:0;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;scroll-snap-align:start}
+.recent-item .face{border-radius:3px;background:var(--card2)}
+.recent-item .face img{object-fit:contain;object-position:center}
+.recent-item:hover .face{outline:1px solid var(--accent);outline-offset:2px}
+.recent-name{display:block;margin-top:7px;font-size:12px;font-weight:700;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.recent-item i{display:block;font:400 10px/1.5 var(--sans);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
+/* 새 — 지난 방문 뒤에 들어온 그림. 어느 테마에서나 읽히게 글자색·바탕색을 뒤집어 쓴다(세대 띠의 고른 단추와 같은 짝) */
+.new-badge{position:absolute;top:6px;left:6px;z-index:1;padding:1px 7px;border-radius:999px;background:var(--text);color:var(--bg);font:700 10px/1.6 var(--sans);pointer-events:none}
+.fcell .new-badge,.gal .new-badge{top:4px;left:4px}
+@media(max-width:599px){.recent-item{width:76px}.recent-strip{gap:10px}}

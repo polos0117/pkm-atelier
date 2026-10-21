@@ -112,4 +112,49 @@ with tempfile.TemporaryDirectory() as root:
     assert code == 0 and kept['where'].get(sample) == 1
     code, write, out, _, pruned = run(doc, str(a), str(b), ['--prune'])
     assert code == 0 and pruned['where'] == {new: 1}, pruned.get('where')
-print('PASS image registration: 3 normal + 3 overdrive slots, independent action, legacy, repeat and invalid base · shards: where, open/closed, duplicate, missing repo, prune')
+
+# ── 들어온 날(added, 2026-10-21) — 새 파일은 오늘 · 적힌 날짜는 그대로 · 이력이 없으면 비운다 · 온전한 이력만 메운다(얕은 받기는 안 믿는다) ──
+import os, subprocess
+def sh(cwd, *args, day=None):
+    env = dict(os.environ, GIT_AUTHOR_NAME='t', GIT_AUTHOR_EMAIL='t@t', GIT_COMMITTER_NAME='t', GIT_COMMITTER_EMAIL='t@t')
+    if day:
+        env.update(GIT_AUTHOR_DATE=day + 'T12:00:00+00:00', GIT_COMMITTER_DATE=day + 'T12:00:00+00:00')
+    subprocess.run(['git', *args], cwd=cwd, env=env, check=True, capture_output=True)
+
+with tempfile.TemporaryDirectory() as root, patch.object(reg, 'today', return_value='2026-10-21'):
+    a, b = Path(root) / 'img', Path(root) / 'img-2'
+    a.mkdir(); b.mkdir()
+    old = f'Pikachu_light_{style}_f.webp'; undated = f'Pikachu_heavy_{style}_f.webp'; new = f'Eevee_light_{style}_f.webp'
+    for f in (old, undated): (a / f).touch()
+    (b / new).touch()
+    doc = {'img': {'Pikachu': {'byStyle': {style: {'byForm': {'light': {'f': old}, 'heavy': {'f': undated}}}}}},
+           'added': {old: '2026-09-30', 'gone.webp': '2026-09-01'}}
+    code, write, out, _, got = run(doc, str(a), str(b))
+    assert code == 0 and write.called, out
+    # 새 파일은 오늘 · 있던 날짜는 그대로 · git 이 아닌 자리의 날짜 없는 파일은 비운다 · 등록부에 없는 파일의 날짜는 걷는다
+    assert got['added'] == {old: '2026-09-30', new: '2026-10-21'}, got['added']
+    assert '날짜 모름 1' in out, out
+    code, write, out, _, again = run(got, str(a), str(b))
+    assert code == 0 and again['added'] == got['added'], again['added']     # 다시 돌려도 날짜가 안 바뀐다
+
+    # 온전한 이력 — 파일을 처음 더한 커밋 날짜로 메운다. 있던 날짜(old)는 이력이 달라도 안 바꾼다
+    repo = Path(root) / 'repo'; (repo / 'img').mkdir(parents=True)
+    sh(repo, 'init', '-q')
+    (repo / 'img' / old).touch(); sh(repo, 'add', '.'); sh(repo, 'commit', '-qm', '1', day='2026-09-02')
+    (repo / 'img' / undated).touch(); sh(repo, 'add', '.'); sh(repo, 'commit', '-qm', '2', day='2026-10-02')
+    (repo / 'README').write_text('x'); sh(repo, 'add', '.'); sh(repo, 'commit', '-qm', '3', day='2026-10-05')
+    (repo / 'img' / undated).write_bytes(b'x'); sh(repo, 'commit', '-qam', '4', day='2026-10-06')   # 교체는 "더하기" 가 아니다
+    code, write, out, _, got = run(got, str(repo / 'img'), str(b))
+    assert code == 0 and got['added'] == {old: '2026-09-30', undated: '2026-10-02', new: '2026-10-21'}, got['added']
+    # --history 로 다른 자리의 clone 을 짚어도 같다
+    code, write, out, _, viaflag = run({**got, 'added': {}}, str(a), str(b), ['--history', 'pkm-atelier-img=' + str(repo)])
+    assert code == 0 and viaflag['added'] == {old: '2026-09-02', undated: '2026-10-02'}, viaflag['added']
+    # 얕은 받기 — 마지막 커밋이 모든 파일을 "더한" 것으로 보이므로(2026-10-06) 메우지 않는다
+    shallow = Path(root) / 'shallow'
+    sh(root, 'clone', '-q', '--depth', '1', repo.as_uri(), str(shallow))
+    code, write, out, _, kept = run({**got, 'added': {old: '2026-09-30'}}, str(shallow / 'img'), str(b))
+    assert code == 0 and kept['added'] == {old: '2026-09-30'}, kept['added']
+    assert reg.history_dates(str(shallow), 'img') and reg.repo_of(str(shallow / 'img')) is None
+    code, *_ = run(got, str(a), str(b), ['--history', 'nope=' + str(repo)])
+    assert code not in (0, None), code                                     # 모르는 저장소 이름은 막는다
+print('PASS image registration: 3 normal + 3 overdrive slots, independent action, legacy, repeat and invalid base · shards: where, open/closed, duplicate, missing repo, prune · added: today, kept, missing without history, git history, shallow ignored')

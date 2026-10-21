@@ -60,6 +60,7 @@ body {color:var(--text);font-size:15px}
 .dex-view-row .sec {margin:0;flex-wrap:wrap;min-width:0}
 .dex-view-row button {flex-shrink:0;min-height:44px}
 .dex-view-row button[aria-pressed="true"] {border-color:var(--accent);color:var(--accent)}
+.dex-view-tools {display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;flex-shrink:0}
 .dex-filters {margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:10px}
 .dex-filters summary {cursor:pointer;min-height:30px;font-weight:700;font-size:13px}
 .dex-filter-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
@@ -155,11 +156,11 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:disabled{opacity:.55;cursor:default}.hall-n{font-size:11px;color:var(--muted)}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=status1"></script>
+<script src="lib/words.js?v=recent1"></script>
 <script src="lib/fresh.js"></script>
-<script src="lib/img.js?v=status1"></script>
+<script src="lib/img.js?v=recent1"></script>
 <script src="lib/dex-filter.js?v=1"></script>
-<link rel="stylesheet" href="lib/gallery.css?v=sans1">
+<link rel="stylesheet" href="lib/gallery.css?v=recent1">
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -207,6 +208,50 @@ function measureCells(grid) {
     c.style.contentVisibility = ''; c.style.alignSelf = '';
     if (hgt > 0) grid.style.setProperty(name, hgt.toFixed(1) + 'px');
   }
+}
+
+/* 최근 추가 · 새 그림 — 날짜는 img.json 의 added 에서 온다(등록기가 UTC 날짜로 적는다. 날짜 없는 그림은 어디에도 안 오른다).
+   띠는 UTC 로 최근 7일, 새로운 것부터 24장까지. 같은 날은 도감 번호 차례.
+   "새" 는 이 브라우저의 지난 방문 뒤에 들어온 그림이다. 방문 기록은 시계가 아니라 자료로 적는다 —
+   떠날 때 그때 자료의 가장 늦은 날(mark)과 그날 그림(known)을 적어 두고, 다음 방문에는 mark 보다 늦거나
+   mark 날인데 known 에 없는 그림을 "새" 로 본다. 등록기는 늘 오늘 날짜를 붙이므로 기기 시계·시간대가 틀려도 안 어긋난다.
+   기준은 이 탭에서 처음 연 때 sessionStorage 에 잡아 두고 끝까지 쓴다 — 떠날 때(pagehide·숨김) 기록을 고쳐도
+   보는 동안 표시가 사라지지 않는다. 처음 온 브라우저는 기준이 없으니 아무것도 "새" 가 아니다 */
+const RECENT_DAYS = 7, RECENT_MAX = 24, DAY_MS = 864e5;
+const SEEN_STORE = 'pkm_dex_seen_v1', SINCE_SESSION = 'pkm_dex_since_v1';
+const isDay = d => typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d);
+function readStore(store, key) { try { return JSON.parse(store.getItem(key)); } catch { return null; } }
+function dataMark() {
+  const all = IMG.addedAll(); let mark = '';
+  for (const f in all) if (all[f] > mark) mark = all[f];
+  return { mark, known: Object.keys(all).filter(f => all[f] === mark).sort() };
+}
+function visitBaseline() {
+  let base = readStore(sessionStorage, SINCE_SESSION);
+  if (!base || typeof base !== 'object') {
+    const prev = readStore(localStorage, SEEN_STORE);
+    base = prev && isDay(prev.mark) ? { mark: prev.mark, known: Array.isArray(prev.known) ? prev.known : [] } : { mark: '' };
+    try { sessionStorage.setItem(SINCE_SESSION, JSON.stringify(base)); } catch {}
+  }
+  return isDay(base.mark) ? { mark: base.mark, known: new Set(Array.isArray(base.known) ? base.known : []) } : null;
+}
+function rememberVisit() {
+  const now = dataMark(), prev = readStore(localStorage, SEEN_STORE);
+  if (!now.mark || (prev && isDay(prev.mark) && prev.mark > now.mark)) return;   /* 날짜 없는 자료·캐시의 옛 자료로 기록을 뒤로 돌리지 않는다 */
+  try { localStorage.setItem(SEEN_STORE, JSON.stringify(now)); } catch {}
+}
+function recentShots(st) {
+  const from = new Date(Date.now() - (RECENT_DAYS - 1) * DAY_MS).toISOString().slice(0, 10), out = [];
+  for (const card of st.cards) {
+    const entry = st.img[card.name];
+    if (!entry) continue;
+    for (const s of FILTER.shots(entry, st.defs)) { const day = IMG.addedOf(s.file); if (day && day >= from) out.push({ ...s, card, day }); }
+  }
+  out.sort((a, b) => a.day < b.day ? 1 : a.day > b.day ? -1 : a.card.no - b.card.no);
+  return out.slice(0, RECENT_MAX);
+}
+function NewBadge({ title }) {
+  return html`<span class="new-badge" title=${title}>${W('dex.new.badge')}</span>`;
 }
 
 /* 지금 만드는 것은 여성체뿐이다. 그래도 파일 이름에는 _f 를 적어 두므로,
@@ -335,7 +380,7 @@ function Facts({ card, group, label, onJump }) {
     </div>`}`;
 }
 
-function Detail({ card, entry, defs, styleName, group, label, selection, nav, onGo, onClose, onJump }) {
+function Detail({ card, entry, defs, styleName, group, label, selection, nav, onGo, onClose, onJump, isNew }) {
   const [zoom, setZoom] = useState(!!selection?.zoom);
   const [hall,setHall]=useState(()=>IMG.hallPicks());
   useEffect(()=>{const update=()=>setHall(IMG.hallPicks());
@@ -448,7 +493,7 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
           onClick=${() => { setForm(k); setFocus(null); }}>
           <span class="face">${file
             ? html`<${Pic} file=${file} />`
-            : html`<span class="ph">${W('art.missing')}</span>`}</span>
+            : html`<span class="ph">${W('art.missing')}</span>`}${isNew(file) && html`<${NewBadge} title=${W('dex.new.file')} />`}</span>
           <b>${formName(defs, k)}</b>
           <u>${layers ? '▮'.repeat(layers) : '—'}</u>
         </button>`;
@@ -459,11 +504,11 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     <section class="other-art">
     ${acts.length > 0 && html`
       <p class="sec">${W('dex.action')}<span>${W('art.count', { n: acts.length })}</span></p>
-      <div class="gal form-actions">${acts.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'action',form,index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.action')} /></button>`)}</div>`}
+      <div class="gal form-actions">${acts.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'action',form,index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.action')} />${isNew(f) && html`<${NewBadge} title=${W('dex.new.file')} />`}</button>`)}</div>`}
 
     ${casual.length > 0 && html`
       <p class="sec">${W('dex.casual')}<span>${W('art.count', { n: casual.length })}</span></p>
-      <div class="gal">${casual.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'casual',index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.casual')} /></button>`)}</div>`}
+      <div class="gal">${casual.map((f,i) => html`<button key=${f} class="cell" onClick=${() => setFocus({file:f,cut:'casual',index:i+1})}><${Pic} file=${f} alt=${W('dex.cut.casual')} />${isNew(f) && html`<${NewBadge} title=${W('dex.new.file')} />`}</button>`)}</div>`}
 
     ${legacy && legacy[V] && html`<details class="legacy-overdrive">
       <summary>${W('dex.overdrive.legacy')}</summary>
@@ -524,7 +569,25 @@ function shotLabel(shot, defs) {
   const cut = W('dex.cut.' + shot.cut);
   return [form, shot.index ? W('dex.cut.number', {cut, n:shot.index}) : cut].filter(Boolean).join(' · ');
 }
-function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
+/* 최근 추가 띠 — 목록 맨 위. 띠 안에서만 옆으로 구른다(세로 굴림은 .collection-scroll 하나 그대로). 누르면 그 카드를 그 그림으로 연다 */
+function Recent({ st, isNew, onOpen }) {
+  const list = useMemo(() => recentShots(st), [st]);
+  if (!list.length) return null;
+  return html`<section class="recent" aria-labelledby="dex-recent-title">
+    <p class="sec" id="dex-recent-title">${W('dex.recent.title')}<span>${W('dex.recent.count', { days: RECENT_DAYS, n: list.length })}</span></p>
+    <div class="recent-strip" role="group" aria-labelledby="dex-recent-title">${list.map(s => {
+      const fresh = isNew(s.file);
+      return html`<button key=${s.file} type="button" class="recent-item" data-card=${s.card.name} data-file=${s.file} data-day=${s.day}
+        aria-label=${W('dex.recent.item', { name: s.card.name, shot: shotLabel(s, st.defs), date: s.day }) + (fresh ? ' · ' + W('dex.new.file') : '')}
+        onClick=${() => onOpen(s)}>
+        <span class="face"><${Pic} file=${s.file} />${fresh && html`<${NewBadge} />`}</span>
+        <span class="recent-name">${s.card.name}</span><i>${s.day.slice(5)}</i>
+      </button>`;
+    })}</div>
+  </section>`;
+}
+
+function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, select, rowNew, isNew, newCount, newOnly, onNewOnly }) {
   const f = FILTER.normalize(filters, st);
   const [filtersOpen, setFiltersOpen] = useState(false), gridRef = useRef();
   /* 상세에서 돌아오면 열기 전에 굴려 둔 자리로. 상세에서 다른 카드로 넘어갔으면 그 카드 칸이 보이게 한 번 더 민다 */
@@ -542,7 +605,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     const a = el.getBoundingClientRect(), b = sc.getBoundingClientRect();
     if (a.top < b.top || a.bottom > b.bottom) sc.scrollTop += a.top - b.top - Math.max(0, (b.height - a.height) / 2);
   }, []);
-  const shown = useMemo(() => FILTER.select(st, filters), [st, filters]);
+  const shown = useMemo(() => select(filters), [st, filters, newOnly]);
   /* 칸 높이 어림 — 폭(화면·작게 보기)이 바뀌거나 글꼴이 늦게 오면 다시 잰다 */
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -556,7 +619,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     return () => ro.disconnect();
   }, [compact, shown.length > 0]);
   const update = (key,value) => onFilter(FILTER.normalize({...f,[key]:value},st));
-  const reset = () => onFilter(FILTER.defaults());
+  const reset = () => { onFilter(FILTER.defaults()); onNewOnly(false); };
   const generations = [...new Set(st.cards.map(c => c.gen))].sort((a,b)=>a-b);
   const types = [...new Set(st.cards.flatMap(c => [c.element,c.element2]).filter(Boolean))];
   const typeOrder = st.group.order || types;
@@ -573,6 +636,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
   </div>`;
   return html`<${Shell} head=${head}>
     <section class="gallery-intro"><div><h2>${W('gallery.title')}</h2></div><p>${W('gallery.note')}</p></section>
+    <${Recent} st=${st} isNew=${isNew} onOpen=${onOpen} />
     <div class="genre-strip" role="group" aria-label=${W('dex.filter.gen')}>${[all,...generations.map(n=>[String(n),W('card.gen',{n})])].map(([key,label])=>html`<button type="button" aria-pressed=${f.gen===key} onClick=${()=>update('gen',key)}>${label}</button>`)}</div>
     <details class="dex-filters" open=${filtersOpen} onToggle=${e=>setFiltersOpen(e.currentTarget.open)}>
       <summary>${W('dex.filter.title')}</summary>
@@ -587,19 +651,22 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
     </details>
     <div class="dex-view-row"><p class="sec" role="status">${W('kind.character')}<span>${W('dex.filter.count',{
       cards:new Set(shown.map(r=>r.card.name)).size,images:shown.filter(r=>r.file).length})}</span></p>
-      <button class="dex-reset" id="dex-size" aria-pressed=${compact} onClick=${onCompact}>${W(compact?'dex.view.normal':'dex.view.small')}</button>
+      <div class="dex-view-tools">
+        ${(newCount > 0 || newOnly) && html`<button class="dex-reset" id="dex-new-only" aria-pressed=${newOnly} title=${W('dex.new.file')} onClick=${() => onNewOnly(!newOnly)}>${W('dex.new.only')}</button>`}
+        <button class="dex-reset" id="dex-size" aria-pressed=${compact} onClick=${onCompact}>${W(compact?'dex.view.normal':'dex.view.small')}</button>
+      </div>
     </div>
     ${shown.length === 0
       ? html`<p class="empty">${W('dex.filter.empty')}</p>`
       : html`<div class="grid" ref=${gridRef}>${shown.map((shot,i) => {
           const c=shot.card,entry=st.img[c.name],want=wanted(st.defs,c);
-          const prog=IMG.formsDone(shot.style?IMG.styleMap(entry)[shot.style]:entry,want,V);
+          const prog=IMG.formsDone(shot.style?IMG.styleMap(entry)[shot.style]:entry,want,V),fresh=rowNew(shot,f);
           return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':'cell'}
-            data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut}
+            data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut} data-new=${fresh?'1':undefined}
             onClick=${() => onOpen(shot)}>
             <span class="face">${shot.file
               ? html`<${Pic} file=${shot.file} alt=${c.name+' · '+shotLabel(shot,st.defs)} />`
-              : html`<span class="ph">${W('art.none')}</span>`}</span>
+              : html`<span class="ph">${W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}</span>
             <span class="cap"><span class="card-meta">${[c.element,c.element2].filter(Boolean).map(k=>st.group.name[k]||k).join(' · ')}<span>${String(c.no).padStart(4,'0')}</span></span><strong>${c.name}</strong>
               ${shot.file&&html`<i>${st.styleName[shot.style]||W('dex.style.unknown')}</i><i>${shotLabel(shot,st.defs)}</i>`}
               <i>${W('art.form.done',prog)}</i>
@@ -612,6 +679,25 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore }) {
 function App() {
   const st = useDex();
   const [open, setOpen] = useState(null);
+  /* 새 그림 — 기준은 이 탭에서 한 번 잡는다. 기록은 떠날 때(pagehide·화면 숨김) 고친다 */
+  const [since] = useState(visitBaseline);
+  const [newOnly, setNewOnly] = useState(false);
+  const isNew = file => { const d = IMG.addedOf(file); return !!(since && d && (d > since.mark || (d === since.mark && !since.known.has(file)))); };
+  const newCards = useMemo(() => {
+    const out = new Set();
+    if (st.cards && since) for (const c of st.cards) if (FILTER.shots(st.img[c.name], st.defs).some(s => isNew(s.file))) out.add(c.name);
+    return out;
+  }, [st.cards, since]);
+  const newCount = useMemo(() => since ? Object.keys(IMG.addedAll()).filter(isNew).length : 0, [st.cards, since]);
+  /* 대표 이미지 칸은 카드를 대신하므로 그 카드의 그림 하나라도 새것이면, 컷을 고른 칸은 그 그림이 새것이면 */
+  const rowNew = (shot, f) => f.cut === 'auto' ? newCards.has(shot.card.name) : isNew(shot.file);
+  const select = fl => { const f = FILTER.normalize(fl, st), rows = FILTER.select(st, fl); return newOnly ? rows.filter(r => rowNew(r, f)) : rows; };
+  useEffect(() => {
+    if (!st.cards) return;
+    const hide = () => { if (document.visibilityState === 'hidden') rememberVisit(); };
+    addEventListener('pagehide', rememberVisit); document.addEventListener('visibilitychange', hide);
+    return () => { removeEventListener('pagehide', rememberVisit); document.removeEventListener('visibilitychange', hide); };
+  }, [st.cards]);
   const [compact,setCompact] = useState(() => {
     try {return localStorage.getItem('pkm_dex_compact_v1') === 'true';} catch {return false;}
   });
@@ -684,7 +770,7 @@ function App() {
     /* 카드 넘기기의 차례 — 지금 거른 목록의 차례에서 그림이 있는 카드만. 거른 목록에 없는 카드(진화로 건너온 것)면 번호 차례 전체 */
     const hasArt = c => FILTER.shots(st.img[c.name], st.defs).length > 0;
     const seen = new Set();
-    let ring = FILTER.select(st, filters).map(r => r.card).filter(c => !seen.has(c.name) && seen.add(c.name) && hasArt(c));
+    let ring = select(filters).map(r => r.card).filter(c => !seen.has(c.name) && seen.add(c.name) && hasArt(c));
     if (!ring.some(c => c.name === card.name)) ring = st.cards.filter(c => c.name === card.name || hasArt(c)).sort((a, b) => a.no - b.no);
     const index = ring.findIndex(c => c.name === card.name);
     const nav = index < 0 ? null : { index, total: ring.length, prev: ring[index - 1] || null, next: ring[index + 1] || null };
@@ -692,11 +778,12 @@ function App() {
       setOpen({ card: c, style: open.style, at, zoom, keep: el ? { sel, y: el.getBoundingClientRect().top } : null }); };
     return html`<${Detail} key=${card.name} card=${card} entry=${st.img[card.name] || null}
       selection=${open} nav=${nav} onGo=${go} defs=${st.defs} styleName=${st.styleName} group=${st.group} label=${st.label}
-      onClose=${close}
+      onClose=${close} isNew=${isNew}
       onJump=${n => { const next=st.cards.find(c=>c.name===n); if(next)setOpen({card:next,style:open.style}); }} />`;
   }
   return html`<${List} st=${st} filters=${filters} onFilter=${setFilters} onOpen=${openShot} restore=${restore}
-    compact=${compact} onCompact=${()=>setCompact(v=>!v)} />`;
+    compact=${compact} onCompact=${()=>setCompact(v=>!v)} select=${select} rowNew=${rowNew} isNew=${isNew}
+    newCount=${newCount} newOnly=${newOnly} onNewOnly=${setNewOnly} />`;
 }
 
 render(html`<${App} />`, document.getElementById('app'));
