@@ -226,6 +226,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=status1"></script>
 <script src="lib/fresh.js?v=4"></script>
+<script src="lib/today.js?v=1"></script>
 <script src="lib/img.js?v=status1"></script>
 <script src="lib/collection.js?v=gwent1"></script>
 <script src="lib/lane.js?v=1"></script>
@@ -239,6 +240,7 @@ import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, A = window.AtelierLane;
+const T = window.AtelierToday, ROOM = 'pokemon'; T.visit(ROOM);   /* 오늘 기록 — 공방 지도의 방 열쇠(lib/today.js) */
 const STORE = 'pkm_duel_v1';
 
 function Shell({ children }) {
@@ -676,6 +678,7 @@ function App() {
     if (!data || !match || match.phase !== 'done' || match.rewarded) return;
     const p = JSON.parse(JSON.stringify(profile)), m = JSON.parse(JSON.stringify(match));
     A.settle(data, p, m); p.tutorial = true; save(p, m); setProfile(p); setMatch(m);
+    T.bump(ROOM, { won: !!(m.outcome && m.outcome.result === 'win') });   /* 오늘 기록 — 공방 지도가 읽는 칸 */
   }, [match, data]);
   if (data && !cleaned.current) {
     cleaned.current = true;

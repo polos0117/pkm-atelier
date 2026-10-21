@@ -64,6 +64,9 @@ async function layout(p,width){
     await p.reload();await phase(p,'finished');
     assert((await p.locator('.sv-finish').innerText()).includes(String(final.score)));
     assert.equal(await p.evaluate(()=>Number(localStorage.getItem('pkm_survey_best_v1'))),final.score);
+    /* 오늘 기록 — 공방 지도가 읽는 칸. 작전 시작은 오늘 날짜가 씨앗이라 오늘의 판, 목표를 넘겼으면 승 */
+    const today=await p.evaluate(()=>JSON.parse(localStorage.getItem('atelier_today_v1:pokemon')));
+    assert(today&&today.n>=1&&today.daily===true&&today.w===(final.score>=S.GOAL?1:0)&&today.seen>0,'today record: '+JSON.stringify(today));
     await p.locator('.sv-replay').click();await phase(p,'plan');
     assert.deepEqual((await read(p)).crew,initial.crew,'replay uses the same roster');
     assert.equal((await read(p)).score,0);

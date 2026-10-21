@@ -186,6 +186,8 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     const after = JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY));
     assert(after.profile.owned.length === 28 && after.profile.gold === 10 && after.profile.beaten[2].rookie === 1 && after.profile.stats.gwent.games === 1 && after.profile.stats.gwent.win === 1 && after.profile.stats.lane.games === 0, '컬렉션 +3 · 금 · 이긴 횟수 · 폼 결투 통계만');
     assert(after.matches.gwent && after.matches.gwent.rewarded, '정산은 한 번');
+    const today = JSON.parse(await r.evaluate(() => localStorage.getItem('atelier_today_v1:pokemon')));
+    assert(today && today.n >= 1 && today.w >= 1 && today.seen > 0, '오늘 기록(공방 지도가 읽는 칸) — 이긴 판: ' + JSON.stringify(today));
     await r.locator('#gw-result-lobby').tap(); await r.waitForSelector('.gw-screen[data-screen="lobby"]');
     assert.equal(JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY)).matches.gwent, null, '판을 비웠다');
     assert(/1승/.test(await r.locator('.gw-champion[data-gen="2"]').textContent()), '챔피언 카드에 1승');
