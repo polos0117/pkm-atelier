@@ -128,6 +128,9 @@ const fixSeed = [function (seed) {
     const lines = await p.locator('.run-end ol li').count();
     const won = phase === 'won';
     assert.equal(lines, won ? 7 : +(await p.locator('.run-head b').textContent()).match(/\d+/)[0], '판 기록 수');
+    /* 오늘 기록 — 공방 지도가 읽는 칸. 런이 끝나는 수에서 한 칸 */
+    const today = await p.evaluate(() => JSON.parse(localStorage.getItem('atelier_today_v1:pokemon')));
+    assert(today && today.n >= 1 && (won ? today.w >= 1 : true) && today.seen > 0, '오늘 기록: ' + JSON.stringify(today));
     assert.equal(await p.locator('.run-roster .run-card').count(), 3);
     assert(rewards >= 0);
     console.log('  오버라이드 물음: 터뜨림 ' + odFired + ' · 아낌 ' + odHeld);

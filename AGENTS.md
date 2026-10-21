@@ -152,7 +152,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
-ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰·오늘 기록
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/lane-screen.cjs     # 진화 결투 — 고르기·덱 짜기·대결·결과·전적·상점
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/gwent-screen.cjs    # 폼 결투 — 고르기·덱 짜기(날씨판)·대결·결과·전적·상점
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여덟의 머리가 같은 자리에

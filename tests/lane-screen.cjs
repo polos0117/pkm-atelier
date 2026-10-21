@@ -193,6 +193,8 @@ const noOverflow = async p => assert(await p.evaluate(() => document.documentEle
     const after = JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY));
     assert(after.profile.owned.length === 28 && after.profile.gold === 10 && after.profile.beaten[2].rookie === 1 && after.profile.stats.lane.games === 1 && after.profile.stats.lane.win === 1, '컬렉션 +3 · 금 · 이긴 횟수 · 통계');
     assert(after.matches.lane && after.matches.lane.rewarded, '정산은 한 번(저장에 rewarded)');
+    const today = JSON.parse(await r.evaluate(() => localStorage.getItem('atelier_today_v1:pokemon')));
+    assert(today && today.n >= 1 && today.w >= 1 && today.seen > 0, '오늘 기록(공방 지도가 읽는 칸) — 이긴 판: ' + JSON.stringify(today));
     /* 로비로 — 판이 비고, 전적·상점·배우기 */
     await r.locator('#ln-result-lobby').tap(); await r.waitForSelector('.ln-screen[data-screen="lobby"]');
     assert.equal(JSON.parse(await r.evaluate(k => localStorage.getItem(k), KEY)).matches.lane, null, '판을 비웠다');

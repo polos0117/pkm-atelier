@@ -22,6 +22,13 @@
 - tests/dex-nav.cjs — 3번(큰 그림 넘기기)이 맨 위로 굴린 뒤 보이는 칸을 찾았는데, 띠가 휴대폰에서 첫 줄을 화면 밖으로 민다. 목록 첫 줄로 굴려서 찾는다(띠가 없는 주에도 같다)
 - AGENTS.md — 검사 목록에 dex-recent 한 줄
 
+## 2026-10-21 · claude · 오늘 기록 — 네 놀이가 끝나면 공방 지도가 읽는 칸에 적는다
+- lib/today.js — 새 파일. 다섯 공방이 한 출처(polos0117.github.io)라 localStorage 를 같이 쓴다: 판이 끝나면 atelier_today_v1:pokemon 에 {d, n, w, daily, at, seen} 한 칸(bump), 다녀가면 seen(visit), 날짜 씨앗(seed), ?daily(isDaily). 모양의 약속은 지도 저장소 README 「오늘 기록」절, 다섯 저장소에 같은 파일
+- lib/survey-ui.js · survey.html — 작전 시작은 이미 오늘 날짜가 씨앗이라 그대로 오늘의 판: 끝나는 수에서 한 칸(목표 30을 넘기면 승, 오늘 날짜 씨앗이면 daily), 지도에서 ?daily 로 왔고 진행 중인 작전이 없으면 바로 시작, 열면 다녀간 자국
+- lane.html · gwent.html — 정산할 때 한 칸(이기면 승), 열면 다녀간 자국
+- run.html — 런이 won/lost 로 넘어가는 수에서 한 칸(전환일 때만 — 새로고침으로 두 번 안 적힌다), 열면 다녀간 자국
+- tests/survey-screen.cjs · run-screen.cjs · lane-screen.cjs · gwent-screen.cjs — 끝난 뒤 오늘 기록 칸(판 수·승·daily·다녀간 자국)
+
 ## 2026-10-21 · gpt · 방패톱스 그림 정본 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 방패톱스 9장 등록에 맞춰 경장 ①을 얼굴·머리 정본으로 표시하고 실제 제출한 짧은 일자 컷·일자 앞머리를 잠갔다.
 

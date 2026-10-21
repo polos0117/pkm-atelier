@@ -192,6 +192,7 @@ body {color:var(--text);font-size:15px}
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
 <script src="lib/words.js?v=status1"></script>
 <script src="lib/fresh.js?v=4"></script>
+<script src="lib/today.js?v=1"></script>
 <script src="lib/img.js?v=status1"></script>
 <script src="lib/battle.js"></script>
 <script src="lib/run.js"></script>
@@ -207,6 +208,7 @@ import { Play, setImages, picOf } from './lib/battle-ui.js';
 const html = htm.bind(h);
 const W = window.W, B = window.AtelierBattle, RUN = window.AtelierRun;
 const KEY = 'pkm_run_v1';
+const T = window.AtelierToday, ROOM = 'pokemon'; T.visit(ROOM);   /* 오늘 기록 — 공방 지도의 방 열쇠(lib/today.js) */
 
 function Shell({ head, children }) {
   const [scrolled, setScrolled] = useState(false);
@@ -419,7 +421,8 @@ function App() {
   const [st, setSt] = useState(null);
   useEffect(() => { if (d.cards && !st) { const s = load(); setSt(s && s.seats ? s : RUN.newRun(freshSeed(), d.cards)); } }, [d.cards]);
   const [last, setLast] = useState(null), [asking, setAsking] = useState(false);
-  const go = next => { setSt(next); save(next); };
+  /* 런이 끝나는 수에서 오늘 기록 한 칸 — 공방 지도가 읽는 칸. 전환일 때만이라 새로고침으로 두 번 적히지 않는다 */
+  const go = next => { if ((next.phase === 'won' || next.phase === 'lost') && st && st.phase !== next.phase) T.bump(ROOM, { won: next.phase === 'won' }); setSt(next); save(next); };
   const restart = () => { setAsking(false); setLast(null); go(RUN.newRun(freshSeed(), d.cards)); };
 
   if (d.error) return html`<${Shell} head=${null}><p class="empty">${W('ui.error', { message: d.error })}</p><//>`;
