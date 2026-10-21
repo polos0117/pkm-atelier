@@ -13009,18 +13009,23 @@
     "hair length":"long",
     "bangs":"side-swept bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘cloud-like wings’·‘fluffy, white feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파비코에서 이어 같은 묶음",
+   "hair_locked":true,
+   "hair_why":"확정 경장 ①의 HAIR 줄: long feathered, side-swept bangs. 이후 표보다 이 그림이 우선.",
    "hair_cues":[
     "‘cloud-like wings’ → 헤어스타일 끝을 가볍게 친 페더컷"
-   ]
+   ],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/altaria-20261022/light-prompt.txt",
+    "kind":"prompt",
+    "raw":{}
+   }
   },
   "335":{
    "name":"쟝고",
    "en":"Zangoose",
    "line":"쟝고",
    "how":"draft",
-   "registered":false,
+   "registered":true,
    "face":{
     "face shape":"softly rounded",
     "face length":"short",
@@ -13045,12 +13050,17 @@
     "hair length":"long",
     "bangs":"choppy bangs"
    },
-   "hair_locked":false,
-   "hair_why":"‘long ears’에서 트윈테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
+   "hair_locked":true,
+   "hair_why":"확정 경장 ①의 HAIR 줄: long twin tail, choppy bangs. 이후 표보다 이 그림이 우선.",
    "hair_cues":[
     "‘long ears’ → 헤어스타일 트윈테일",
     "‘long ears’ → 머리 길이 긴 머리"
-   ]
+   ],
+   "hair_record":{
+    "path":"pkm-atelier-img-2/records/zangoose-20261022/light-prompt.txt",
+    "kind":"prompt",
+    "raw":{}
+   }
   },
   "336":{
    "name":"세비퍼",
