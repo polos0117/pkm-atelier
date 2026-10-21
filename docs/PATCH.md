@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-21 · claude · 테마를 공방마다 따로
+
+- lib/workspace-theme.js — 다섯 공방이 한 주소(polos0117.github.io) 아래라 localStorage 를 같이 쓰는데, 건담·pkm·신화가 테마를 같은 열쇠 `atelier_theme_v1` 에 적어 한 공방에서 고르면 다른 공방 테마가 바뀌었다(건담은 이름이 달라 기본으로 되돌아갔다). 이 공방 열쇠 `pkm_theme_v1` 로. 처음 한 번만 옛 열쇠의 값이 이 공방 테마이면 옮겨 오고, 옛 열쇠는 지우지 않는다. 화면 밀도는 그대로 함께 쓴다
+- tests/workspace-theme.cjs — 새 열쇠, 옛 값 한 번 옮기기, 다른 공방 이름은 안 옮김, 여기서 바꿔도 옛 열쇠는 그대로 · tests/home-screen.cjs — 심는 열쇠
+
 ## 2026-10-21 · gpt · 도롱충이 그림 정본 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 도롱충이 9장 등록에 맞춰 경장 ①을 정본으로 표시하고 실제 생성기 기록의 짧은 양갈래·가른 앞머리를 잠갔다.
 - docs/image-batches/burmy-20261021.md — 그림 커밋·썸네일·도감 등록과 일상 2번 글자 부분 수정 및 원본 보관 위치를 기록했다.

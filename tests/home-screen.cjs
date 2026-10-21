@@ -9,7 +9,7 @@ const fixtures={img:{
  [species[2]]:{byStyle:{other:{byForm:{mobility:{f:'__home_broken.png'}}}}}
 }};
 function seed({picks,images}){
- localStorage.setItem('atelier_theme_v1','daylight');
+ localStorage.setItem('pkm_theme_v1','daylight');
  if(picks)localStorage.setItem('pkm_hall_v1',JSON.stringify(picks));
  if(images){const original=window.fetch;window.fetch=function(url,...args){return String(url).includes('data/img.json')?Promise.resolve(new Response(JSON.stringify(images),{headers:{'Content-Type':'application/json'}})):original.call(this,url,...args);};}
 }
