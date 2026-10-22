@@ -13350,7 +13350,7 @@
    "en": "Baltoy",
    "line": "오뚝군",
    "how": "species",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -13368,17 +13368,20 @@
    "cues": [
     "에스퍼 타입 → 눈썹 가늘고 곧은"
    ],
-   "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 짧고 가벼운 픽시컷 → 레트로 웨이브",
+   "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은",
    "hair": {
     "hairstyle": "finger waves",
     "hair length": "short",
     "bangs": "side-swept bangs"
    },
-   "hair_locked": false,
-   "hair_why": "키 0.5m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-   "hair_cues": [
-    "키 0.5m → 머리 길이 짧은 머리"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/baltoy-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/baltoy-20261022/light-prompt.txt",
+    "kind": "prompt",
+    "raw": {}
+   }
   },
   "344": {
    "name": "점토도리",

@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-22 · gpt · 오뚝군 이미지 9장 등록과 경장 정본 고정
+- data/face-design.json — 오뚝군 경장 등록 상태와 짧은 레트로 웨이브·옆 앞머리를 실제 제출 기록으로 잠갔다.
+- docs/CHARACTER_FACE_DESIGNS.md — 오뚝군 ①이 정본임을 생성 자료에서 다시 그렸다.
+
 ## 2026-10-22 · gpt · 가재장군 이미지 9장 등록과 경장 정본 고정
 - data/face-design.json — 가재장군 경장 등록 상태와 긴 울프컷·불규칙 앞머리를 실제 제출 기록으로 잠갔다.
 - docs/CHARACTER_FACE_DESIGNS.md — 가재장군 ①이 정본임을 생성 자료에서 다시 그렸다.
