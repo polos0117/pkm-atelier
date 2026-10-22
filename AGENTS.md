@@ -107,6 +107,7 @@ Preact 가 그리는 `#app` 이 사이에 끼면 키도 같이 물려줘야 한�
 node tests/words.cjs             # 낱말이 코드에 박히지 않았나
 node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
+node tests/sprite-actor-copy.cjs # 도트 재생기 — lib/sprite-actor.js·.css 가 공방 모음 원본과 같다
 node tests/img-shards.cjs        # 그림 저장소 여럿 — 옛 주소 그대로 · where · 저장소 차례
 python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장소 · 같은 이름 · 못 받은 저장소
 python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 세션별 예약(IMAGE_RULES 3절)
@@ -124,6 +125,8 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 ```
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
+
+도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 아직 이 공방에서 부르는 화면은 없다 — 도트 인물이 생기면 `data/sprites.json` 을 두고 화면이 `AtelierSprite.create` 로 세운다.
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
 수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가

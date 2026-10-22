@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-10-22 · claude · 도트 재생기 공용 모듈을 받아 둔다
+- lib/sprite-actor.js · lib/sprite-actor.css — 다섯 공방이 같이 쓰는 도트 인물 재생기(판 v1). 원본은 공방 모음(polos0117.github.io)의 sprite-actor.js·.css, 글자 하나 다르지 않게 복사했다. 아직 부르는 화면은 없다 — 도트 인물은 공방 모음의 도트 공방(dot.html)에서 만들고 data/sprites.json 을 두면 세운다
+- tests/sprite-actor-copy.cjs — 새 검사: 복사본이 원본과 같다 · AGENTS.md — 공용 모듈 한 줄과 검사 목록
+
 ## 2026-10-22 · gpt · 가재군 경장 정본 확정
 - data/face-design.json — 가재군의 경장 ①을 정본으로 표시하고 실제 제출 프롬프트의 머리 기록을 잠금.
 - docs/CHARACTER_FACE_DESIGNS.md — 가재군의 정본 표시를 자료에서 다시 렌더링.
