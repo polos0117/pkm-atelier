@@ -95,7 +95,8 @@ function planBatch(o, S, entries, look, cards, attempt) {
     if (refill && kept.length >= 3) throw new Error(card + ' 는 세 장이 다 있다');
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
-    const p = P.plan({ S, entries, card, batch, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
+    const p = P.plan({ S, entries: comparisonEntries, card, batch, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };

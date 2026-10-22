@@ -181,13 +181,14 @@ def read_records(repos):
                     continue
                 try:
                     with open(f, encoding="utf-8") as h:
-                        st = (json.load(h).get("storage") or {})
+                        record = json.load(h)
+                        st = record.get("storage") or {}
                 except (ValueError, OSError):
                     continue
-                card = st.get("last") or card
-                cd = (st.get("cards") or {}).get(st.get("last")) or {}
+                card = st.get("last") or record.get("card") or card
+                cd = (st.get("cards") or {}).get(card) or (st if "scenes" in st else {})
                 c = cd.get("scenes", {}).get("casual")
-                if not c:
+                if not c or not card:
                     continue
                 mine = [n for n in imgs if n.startswith(card + "_") and n.endswith("_f_casual%d.webp" % i)]
                 if imgs and not mine:

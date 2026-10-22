@@ -13,6 +13,12 @@
 
 
 
+## 2026-10-22 · gpt · 완료된 일상컷 예약 인식 복구
+- tools/casual-ledger.py — 카드별 storage와 최상위 card를 가진 기록도 읽어 완료된 예약이 비교 후보를 계속 차지하지 않게 했다.
+- tests/casual-ledger.py — 카드별 기록의 done 전환과 예약 제외를 재현 검사한다.
+- tools/casual-plan.cjs — 배치 자신의 이전 예약은 비교에서 빼 검사기와 동일한 대상으로 다시 계획한다.
+- tests/casual-plan.cjs — 실제 장부 검사 대상은 아직 등록되지 않은 종에서 골라 누적 등록에 따라 검사가 깨지지 않게 했다.
+
 ## 2026-10-22 · gpt · 둥실라이드 이미지 9장 등록과 정본 고정
 - data/face-design.json — 경장 ① 기록의 긴 곱슬·사이드뱅을 정본으로 잠갔다. 흔들풍손과 다른 얼굴·머리 설계 및 기존 1,025종 자료는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 둥실라이드의 경장 정본 표시를 생성 자료에서 다시 그렸다.

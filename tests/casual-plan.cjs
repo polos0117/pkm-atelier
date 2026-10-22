@@ -131,11 +131,26 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   n += 2;
 }
 
-/* ── 실제 장부(그림 저장소가 옆에 있으면) — 세 명 배치가 맞춰지는지 보고만 ── */
+/* Replanning must exclude both requested cards' previous reservations, as check_plan does. */
+{
+  const cli = require('../tools/casual-plan.cjs');
+  const o = cli.args(['뚜꾸리', '차오꿀', '--session', 'replan-test']);
+  const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character;
+  const first = cli.planBatch(o, S, entries, null, cards, 0);
+  const own = first.characters.map(ch => ({ ...ch, status: 'reserved', at: at(1) }));
+  const again = cli.planBatch(o, S, entries.concat(own), null, cards, 0);
+  assert.deepEqual(again, first, 'previous reservations from this batch must not change its comparisons');
+  n++;
+}
+
+/* ── 실제 장부(그림 저장소가 옆에 있으면) — 미등록 한 종이 현재 장부에서도 맞춰지는지 ── */
 {
   const img2 = path.join(ROOT, '..', 'pkm-atelier-img-2');
   if (fs.existsSync(path.join(img2, 'records'))) {
-    const out = cp.execFileSync('node', ['tools/casual-plan.cjs', '피카츄', '라이츄', '메깅', '--no-pull', '--seed', 'test'], { cwd: ROOT, encoding: 'utf8' });
+    const ledger = JSON.parse(cp.execFileSync('python3', ['tools/casual-ledger.py', 'view', '--fresh'], { cwd: ROOT, encoding: 'utf8' }));
+    const known = new Set(ledger.entries.map(e => e.card));
+    const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character.filter(c => !known.has(c.name)).slice(0, 1).map(c => c.name);
+    const out = cp.execFileSync('node', ['tools/casual-plan.cjs', ...cards, '--no-pull', '--seed', 'test'], { cwd: ROOT, encoding: 'utf8' });
     assert(out.includes('check 통과'), out);
     n++;
   } else console.log('(그림 저장소가 옆에 없어 실제 장부 시험은 건너뜀)');

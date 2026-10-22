@@ -148,4 +148,23 @@ with tempfile.TemporaryDirectory() as tmp:
         L.build(b)
     out = json.load(open(led))
 
+
+# Compact per-card UI captures must become done entries and retire reservations.
+with tempfile.TemporaryDirectory() as tmp:
+    repo = Path(tmp) / "images"
+    rec = repo / "records" / "compact-20261022"
+    rec.mkdir(parents=True)
+    (repo / "img").mkdir()
+    image = "Compact_glossy_promo_f_casual1.webp"
+    (repo / "img" / image).write_bytes(b"fixture")
+    scene = {**good["characters"][0]["cuts"][0], "outfit": "Linen dress"}
+    (rec / "casual1-ui.json").write_text(json.dumps({
+        "card": "Compact", "storage": {"scenes": {"casual": scene}}
+    }))
+    es = L.read_records([str(repo)])
+    assert len(es) == 1 and es[0]["card"] == "Compact", es
+    assert es[0]["cuts"][0]["garments"] == ["dress"]
+    reserved = {**es[0], "status": "reserved", "at": L.now()}
+    assert [e["status"] for e in L.live({"entries": es + [reserved]})] == ["done"]
+
 print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
