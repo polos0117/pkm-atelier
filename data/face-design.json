@@ -19574,7 +19574,7 @@
    "en": "Watchog",
    "line": "보르쥐",
    "how": "draft",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -19599,11 +19599,16 @@
     "hair length": "long",
     "bangs": "curtain bangs"
    },
-   "hair_locked": false,
+   "hair_locked": true,
    "hair_why": "노말 타입에서 포니테일(묶은 꼬리) · 긴 머리 · 커튼뱅 — 보르쥐에서 이어 같은 묶음",
    "hair_cues": [
     "노말 타입 → 헤어스타일 포니테일"
-   ]
+   ],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/watchog-20261022/light-ui.json",
+    "kind": "ui",
+    "raw": {}
+   }
   },
   "506": {
    "name": "요테리",
