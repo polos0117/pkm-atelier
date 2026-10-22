@@ -71,7 +71,7 @@ jobs:
             python3 tools/register-images.py
           fi
 
-      # 일상컷 생김새 색인(data/casual-look.json) — 새 그림이 들어왔을 때만. 일상컷 계획기가 생김새가 몰린 장면·구도·옷에 벌점을 준다.
+      # 일상컷 생김새 색인(data/casual-look.json) — 새 슬롯 또는 이미지 저장소의 교체 알림일 때. 일상컷 계획기가 생김새가 몰린 장면·구도·옷에 벌점을 준다.
       # Rust 가 실패해도 등록은 커밋한다(색인은 하루 늦어도 계획기가 돈다)
       - uses: actions/cache@v4
         with:
@@ -84,7 +84,7 @@ jobs:
       - name: 일상컷 생김새 색인
         continue-on-error: true
         run: |
-          if git diff --quiet -- data/img.json; then echo "새 그림 없음 — 색인 그대로"; exit 0; fi
+          if [ "$GITHUB_EVENT_NAME" != "repository_dispatch" ] && git diff --quiet -- data/img.json; then echo "새 그림 없음 — 색인 그대로"; exit 0; fi
           (cd rust && cargo build --release -p casual-look)
           ./rust/target/release/casual-look index
 
