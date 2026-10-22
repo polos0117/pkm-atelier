@@ -196,7 +196,7 @@ def check_assets(state, read):
     for run in state['runs']:
         for c in run['queue']:
             for item in list(c['slots'].values()) + c.get('attempt_history', []):
-                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception']:
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception', 'tool_failure']:
                     a = item.get(key)
                     if a and (not a['path'].startswith('records/automation/') or '..' in Path(a['path']).parts):
                         raise ValueError('invalid recovery artifact path')
@@ -328,6 +328,40 @@ def retry_intent(run, slot, prompt, ui, qa, approval, files):
     run['status'] = 'active'; c['status'] = 'working'
 
 
+
+def replan_rejected(run, slot, prompt, ui, failure, approval, files):
+    """One explicitly authorized new concept after a terminal no-output rejection."""
+    c = current(run); old = c['slots'].get(slot, {})
+    a = json.loads(Path(approval).read_text()); f = json.loads(Path(failure).read_text())
+    if (run['status'] != 'blocked' or c['status'] != 'blocked'
+            or old.get('status') != 'in_flight' or old.get('image') or c.get('external_pending')):
+        raise ValueError('requires blocked terminal no-output attempt with no external publication pending')
+    if any(x.get('slot') == slot for x in c.get('attempt_history', [])):
+        raise ValueError('one explicit replan only; no automated rejection loop')
+    if (f.get('terminal') is not True or f.get('output_files') != []
+            or f.get('code') != 'moderation_blocked' or not f.get('request_id')
+            or f.get('prompt_sha256') != old['prompt']['sha256']):
+        raise ValueError('terminal tool rejection bound to original prompt required')
+    if (a.get('card') != c['no'] or a.get('slot') != slot or a.get('max_new_attempts') != 1
+            or a.get('rejected_prompt_sha256') != old['prompt']['sha256']
+            or not a.get('user_approval') or not a.get('substantive_nonsexual_changes')):
+        raise ValueError('explicit scoped approval and substantive nonsexual replan required')
+    if (not Path(prompt).read_text().strip() or digest(Path(prompt).read_bytes()) == old['prompt']['sha256']
+            or not isinstance(json.loads(Path(ui).read_text()), dict)):
+        raise ValueError('new actual UI and changed prompt required')
+    prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
+    archived = dict(old, slot=slot, status='tool_rejected_no_output', rejection_reason=c['reason'])
+    archived['tool_failure'] = artifact(files, prefix, 'tool-failure.json', failure)
+    c.setdefault('attempt_history', []).append(archived)
+    prefix += '/attempts/2'
+    auth = artifact(files, prefix, 'approval.json', approval)
+    c['slots'][slot] = {'status': 'in_flight', 'attempt': 2, 'at': now(), 'prefix': prefix,
+        'approval': auth, 'prompt': artifact(files, prefix, 'prompt.txt', prompt),
+        'ui': artifact(files, prefix, 'ui.json', ui), 'references': dict(old['references'])}
+    c.setdefault('block_history', []).append({'reason': c['reason'], 'resolved_by': auth})
+    run['status'] = 'active'; c['status'] = 'working'
+
+
 def record(run, slot, image, files):
     from PIL import Image
     c = current(run)
@@ -433,7 +467,7 @@ def restore(state, read, target):
     for r in state['runs']:
         for c in r['queue']:
             for item in list(c['slots'].values()) + c.get('attempt_history', []):
-                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception']:
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception', 'tool_failure']:
                     a = item.get(key)
                     if not a:
                         continue
@@ -491,12 +525,12 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
+    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
     ap.add_argument('--card', type=int, help='required dex number for image/QA operations; prevents stale UI applying to a replacement')
-    for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint', 'approval']:
+    for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint', 'approval', 'failure']:
         ap.add_argument('--' + key)
     a = ap.parse_args()
     store = Store(a.repo); state = store.state(); files = {}
@@ -521,7 +555,7 @@ def main():
     if run:
         run = owned(state, a.owner)
     previous = current(run)['no'] if run and current(run) else None
-    if a.command in ('intent', 'record', 'adopt-pilot', 'retry-intent', 'accept-exception', 'review', 'prepublish', 'complete'):
+    if a.command in ('intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete'):
         if a.card is None or a.card != previous:
             raise ValueError('--card must match the current dex number; read next and prepare its actual UI')
     # record must always preserve the pending tool result BEFORE retiring its claim.
@@ -550,7 +584,7 @@ def main():
     elif not recorded:
         run = owned(state, a.owner)
         charge(state, [c['no'] for c in run['queue'] if c['status'] not in TERMINAL], now()[:10])
-        if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent', 'accept-exception'):
+        if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent', 'replan-rejected', 'accept-exception'):
             raise ValueError('run blocked; no generation until explicitly resolved')
         if a.command == 'intent':
             if not a.slot: raise ValueError('--slot required')
@@ -558,6 +592,9 @@ def main():
             intent(run, a.slot, a.prompt, a.ui, files)
         elif a.command == 'accept-exception':
             accept_exception(run, a.slot, a.approval, files)
+        elif a.command == 'replan-rejected':
+            guard_external(store, run, a.slot)
+            replan_rejected(run, a.slot, a.prompt, a.ui, a.failure, a.approval, files)
         elif a.command == 'retry-intent':
             guard_external(store, run, a.slot)
             retry_intent(run, a.slot, a.prompt, a.ui, a.qa, a.approval, files)
@@ -588,7 +625,7 @@ def main():
         assert_heads([first, code, store])
         commit = store.publish(state, files, 'Image runner: ' + operation)
     print(json.dumps({'commit': commit, 'operation': operation,
-                      'intent_recorded': operation in ('intent', 'retry-intent'),
+                      'intent_recorded': operation in ('intent', 'retry-intent', 'replan-rejected'),
                       'upload_base': commit if operation == 'prepublish' else None,
                       'next': next_step(run) if run else {'action': 'idle', 'reason': 'no daily capacity or eligible candidates'}}, ensure_ascii=False, indent=2))
 

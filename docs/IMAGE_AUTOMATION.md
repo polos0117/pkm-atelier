@@ -86,3 +86,9 @@ QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slo
 ## 특정 결과의 사용자 예외 승인
 
 사용자가 보존된 불합격 결과를 명시적으로 채택하면 `accept-exception --owner pkm-daily --card N --slot SLOT --approval FILE`을 쓴다. 승인 JSON은 card, slot, image_sha256, message_id, user_approval을 담는다. 관리기는 blocked/review 결과와 정확한 해시를 대조하고 별도 user-exception.json에 실패 사유와 qa_passed:false를 보존한다. accepted는 이 경우 사용자 채택을 뜻하며 QA 통과가 아니다. 일반 review 조건과 다른 슬롯 기준은 바뀌지 않는다. 에이전트는 실제 사용자 승인 없이 이 명령을 쓰지 않는다.
+
+## 결과 파일 없는 도구 거절 뒤 명시적 재계획
+
+`replan-rejected --card N --slot SLOT --prompt FILE --ui FILE --failure FILE --approval FILE`은 확정된 moderation_blocked 응답으로 파일이 반환되지 않은 blocked intent에만 쓴다. 진행 중이거나 결과가 불확실한 호출은 대상이 아니다. failure는 terminal:true, output_files:[], code, request_id, prompt_sha256을 기록한다. approval은 card, slot, rejected_prompt_sha256, max_new_attempts:1, user_approval, substantive_nonsexual_changes를 기록한다. 에이전트는 실제 승인과 실질적인 비성적 내용 변경을 확인해야 한다. 필터 통과 지점을 탐색하는 반복 기능이 아니다.
+
+기존 intent와 도구 거절은 attempt_history 및 tool-failure.json에 남고 새 시도는 attempts/2에 기록된다. 거절 기록도 restore에서 해시 검사한다. 같은 슬롯에는 한 번만 허용하며 재거절 시 block한다. 사용자 지시로 바꾼 강도·노출·의상·구도는 실제 UI와 별도 승인 기록에 남기고, 일반 계획·QA 검사를 완화하지 않는다.
