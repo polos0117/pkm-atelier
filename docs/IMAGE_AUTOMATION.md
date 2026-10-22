@@ -82,3 +82,7 @@ complete는 원격 img-2의 9장 바이트가 보존 원본의 규정 변환과 
 QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slot SLOT --prompt FILE --ui FILE --qa REJECTED_QA --approval APPROVAL`로 수정할 수 있다. approval JSON은 card, slot, rejected_sha256, max_corrections:1, 실제 user_approval을 담는다. 승인 자체를 관리기가 얻는 것은 아니므로 에이전트가 사용자 승인을 확인해야 한다. rejected QA는 accepted:false, image_sha256, reviewer, observations를 담는다.
 
 이 명령은 기존 결과를 attempt_history에 보존하고 새 제출을 attempts/2에 원자적으로 기록한다. intent_recorded:true일 때만 한 번 호출한다. record/review는 현재 시도를 가리키며 restore는 과거 시도와 승인도 복구한다. 같은 슬롯의 추가 수정은 거부한다. 다시 실패하면 block하며 자동 재시도하지 않는다. 기존 외부 결과 대조·하루 상한·일반 push 경합 보호는 그대로 적용된다.
+
+## 특정 결과의 사용자 예외 승인
+
+사용자가 보존된 불합격 결과를 명시적으로 채택하면 `accept-exception --owner pkm-daily --card N --slot SLOT --approval FILE`을 쓴다. 승인 JSON은 card, slot, image_sha256, message_id, user_approval을 담는다. 관리기는 blocked/review 결과와 정확한 해시를 대조하고 별도 user-exception.json에 실패 사유와 qa_passed:false를 보존한다. accepted는 이 경우 사용자 채택을 뜻하며 QA 통과가 아니다. 일반 review 조건과 다른 슬롯 기준은 바뀌지 않는다. 에이전트는 실제 사용자 승인 없이 이 명령을 쓰지 않는다.

@@ -196,7 +196,7 @@ def check_assets(state, read):
     for run in state['runs']:
         for c in run['queue']:
             for item in list(c['slots'].values()) + c.get('attempt_history', []):
-                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference']:
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception']:
                     a = item.get(key)
                     if a and (not a['path'].startswith('records/automation/') or '..' in Path(a['path']).parts):
                         raise ValueError('invalid recovery artifact path')
@@ -362,6 +362,24 @@ def review(run, slot, qa, files):
     item.update(status='accepted', qa=artifact(files, prefix, 'qa.json', qa))
 
 
+def accept_exception(run, slot, approval, files):
+    c = current(run); item = c['slots'].get(slot, {})
+    a = json.loads(Path(approval).read_text())
+    if run['status'] != 'blocked' or c['status'] != 'blocked' or item.get('status') != 'review':
+        raise ValueError('exception requires a blocked, preserved QA result')
+    if (a.get('card') != c['no'] or a.get('slot') != slot
+            or a.get('image_sha256') != item['image']['sha256']
+            or not a.get('message_id') or not a.get('user_approval')):
+        raise ValueError('explicit exception must identify card, slot, exact hash and user message')
+    prefix = item.get('prefix', 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot)
+    audit = dict(a, qa_passed=False, prior_block_reason=c['reason'], accepted_at=now())
+    data = encoded(audit); path = prefix + '/user-exception.json'; files[path] = data
+    item.update(status='accepted', acceptance_basis='user_exception', qa_passed=False,
+                exception={'path': path, 'sha256': digest(data)})
+    c.setdefault('block_history', []).append({'reason': c['reason'], 'resolved_by': item['exception']})
+    c['status'] = 'working'; run['status'] = 'active'
+
+
 def complete(run, state, images, code):
     from PIL import Image
     c = current(run)
@@ -415,7 +433,7 @@ def restore(state, read, target):
     for r in state['runs']:
         for c in r['queue']:
             for item in list(c['slots'].values()) + c.get('attempt_history', []):
-                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference']:
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception']:
                     a = item.get(key)
                     if not a:
                         continue
@@ -473,7 +491,7 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
+    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
@@ -503,7 +521,7 @@ def main():
     if run:
         run = owned(state, a.owner)
     previous = current(run)['no'] if run and current(run) else None
-    if a.command in ('intent', 'record', 'adopt-pilot', 'retry-intent', 'review', 'prepublish', 'complete'):
+    if a.command in ('intent', 'record', 'adopt-pilot', 'retry-intent', 'accept-exception', 'review', 'prepublish', 'complete'):
         if a.card is None or a.card != previous:
             raise ValueError('--card must match the current dex number; read next and prepare its actual UI')
     # record must always preserve the pending tool result BEFORE retiring its claim.
@@ -532,12 +550,14 @@ def main():
     elif not recorded:
         run = owned(state, a.owner)
         charge(state, [c['no'] for c in run['queue'] if c['status'] not in TERMINAL], now()[:10])
-        if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent'):
+        if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent', 'accept-exception'):
             raise ValueError('run blocked; no generation until explicitly resolved')
         if a.command == 'intent':
             if not a.slot: raise ValueError('--slot required')
             guard_external(store, run, a.slot)
             intent(run, a.slot, a.prompt, a.ui, files)
+        elif a.command == 'accept-exception':
+            accept_exception(run, a.slot, a.approval, files)
         elif a.command == 'retry-intent':
             guard_external(store, run, a.slot)
             retry_intent(run, a.slot, a.prompt, a.ui, a.qa, a.approval, files)

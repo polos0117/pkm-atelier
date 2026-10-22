@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-22 · gpt · 특정 불합격 결과의 사용자 예외 채택
+- tools/image-runner.py · 해시·승인 메시지로 묶은 예외 채택을 일반 QA와 분리하고 실패 관찰을 보존.
+- tests/image-runner-exception.py · 잘못된 해시와 중복 채택 거부, 예외 감사 기록 확인.
+- docs/IMAGE_AUTOMATION.md · 사용자 예외 승인 명령과 적용 범위 기록.
+
 ## 2026-10-22 · gpt · 승인된 이미지 수정 한 번의 이력 보존
 - tools/image-runner.py · 해시로 묶인 수정 승인과 불합격 시도를 보존하고 별도 경로로 한 번만 생성하도록 추가.
 - tests/image-runner-retry.py · 중복 호출·추가 재시도 거부와 기존 원본 및 승인 복구를 검사.
