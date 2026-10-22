@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-22 · gpt · 점토도리 일상컷 2 다리와 가구 겹침 수정
+- 그림 저장소 img/점토도리_glossy_promo_f_casual2.webp — 가구에 끊겨 보이던 왼쪽 다리를 고쳐 양쪽 다리가 자연스럽게 이어지도록 같은 파일을 교체했다. 얼굴·의상·장면은 유지했다.
+- 그림 저장소 records/claydol-20261022 — 수정 프롬프트·전후 해시·검수 결과를 추가하고 분류표와 체크포인트를 갱신했다(fadd87479852aba5beca305aef970ff3fb31dda5).
+
 ## 2026-10-22 · claude · 일상컷 생김새 문턱을 cargo 없이도
 - rust/casual-look/src/lib.rs — 셈(생김새·거리·색인 읽기·check 글)을 라이브러리로 뺐다. 명령줄 main.rs 는 파일·스레드·찍기만 — 색인이 전과 한 글자도 같다.
 - rust/casual-wasm/ — 같은 셈의 wasm(extern "C", 소스 셈을 안에 넣는다). tools/casual-look.wasm 으로 올렸다.
