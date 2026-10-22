@@ -217,8 +217,12 @@ function DotRow({ card }) {
   useEffect(() => {
     if (!SP || !box.current) return;
     let live = true, a = null;
-    SP.mount(box.current, card.name, { label: W('dex.dot.actor', { name: card.name }) }).then(x => { if (!live) { if (x) x.destroy(); return; } a = x; setOn(!!x); });
-    return () => { live = false; if (a) a.destroy(); setOn(false); };
+    /* 무대 높이 — 도트 한 칸은 실제 화소의 정수배라 화소 배율이 2.6(폴드)이면 1.14배로 커진다. 그 크기로 머리(걷기 오르내림 2칸 더)까지 들어가게 */
+    const tall = () => { if (a && box.current) box.current.style.minHeight = Math.ceil(10 + 128 * a.debug().unit + 4) + 'px'; };
+    const retall = () => requestAnimationFrame(tall);
+    SP.mount(box.current, card.name, { label: W('dex.dot.actor', { name: card.name }) }).then(x => { if (!live) { if (x) x.destroy(); return; } a = x; tall(); setOn(!!x); });
+    addEventListener('resize', retall);
+    return () => { live = false; if (a) a.destroy(); setOn(false); removeEventListener('resize', retall); };
   }, [card.name]);
   return html`<section class="dex-dot" hidden=${!on} data-card=${card.name} aria-labelledby="dex-dot-title">
     <p class="sec" id="dex-dot-title">${W('dex.dot.title')}<span>${W('dex.dot.note')}</span></p>

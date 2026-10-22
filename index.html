@@ -112,8 +112,11 @@ function CapsuleBay(){
       const L=live.current,el=bay.current?.querySelector('.capsule[data-name="'+CSS.escape(k)+'"]');
       if(el&&L.residents.some(c=>c.name===k)){L.opener.current=el;L.select(k);}else location.href='dex.html?mech='+encodeURIComponent(k);
     }});
-    walkers.current=F;F.ready().then(()=>setFloorOn(F.list().some(x=>!x.actor.failed)));
-    return()=>{F.destroy();walkers.current=null;setFloorOn(false);};
+    /* 띠 높이 — 도트 한 칸은 실제 화소의 정수배라 화소 배율이 2.6(폴드)이면 3화소 = 1.14배로 커진다. 그 크기로 머리(걷기 오르내림 2칸 더)까지 들어가게 */
+    const tall=()=>{if(!floor.current)return;const h=Math.max(0,...F.list().map(x=>{const d=SP.actorFor(sprites,x.key);return 20+((d?.foot?.[1]??126)+2)*x.actor.debug().unit+4;}));floor.current.style.minHeight=h?Math.ceil(h)+'px':'';};
+    const retall=()=>requestAnimationFrame(tall);
+    walkers.current=F;F.ready().then(()=>{tall();setFloorOn(F.list().some(x=>!x.actor.failed));});addEventListener('resize',retall);
+    return()=>{F.destroy();walkers.current=null;setFloorOn(false);removeEventListener('resize',retall);};
   },[sprites,data]);
   /* 캡슐을 열면 — 그 포켓몬의 도트가 있으면 유리가 걷히는 사이 캡슐에서 뛰쳐나와 화면 바닥을 거닌다. 닫으면 캡슐로 뛰어 들어간다 */
   useEffect(()=>{

@@ -119,6 +119,21 @@ const wait = ms => new Promise(ok => setTimeout(ok, ms));
     assert.deepEqual(s.errors, []);
     await s.close();
     n += 3;
-    console.log('PASS 도트 포켓몬: ' + n + '가지 · 연구소 바닥(좁으면 둘·넓으면 셋·누르면 캡슐 또는 도감) · 캡슐을 열면 뛰쳐나와 바닥을 거닌다(눌러도 캡슐은 그대로·닫으면 들어간다·도트 없으면 없음·하나만) · 동작 줄이기 · 자료 없음 · 도감 상세 무대 · 목록 「도트」 표');
+    /* ── 화소 배율이 정수가 아닌 화면 — 폴드(2.625: 도트 한 칸 3화소 = 1.14배) · 노트북 150%(1.5: 2화소 = 1.33배). 띠·무대가 그만큼 커져 머리가 안 잘린다 ── */
+    const headIn = (host, sel) => p.evaluate(([host, sel]) => { const f = document.querySelector(host).getBoundingClientRect(), as = [...document.querySelectorAll(sel)];
+      return as.length > 0 && as.every(a => { const u = a.sprite.debug().unit; return a.getBoundingClientRect().top - 2 * u >= f.top - 0.5 && a.getBoundingClientRect().bottom <= f.bottom + 0.5; }); }, [host, sel]);
+    for (const [dpr, vp, mobile] of [[2.625, { width: 344, height: 882 }, true], [2.625, { width: 690, height: 829 }, true], [1.5, { width: 1280, height: 800 }, false]]) {
+      s = await h.open('index.html', opt({ viewport: vp, mobile, dpr })); p = s.page;
+      await p.waitForSelector('.lab-floor:not([hidden]) .sprite-actor:not([hidden])', { timeout: 10000 });
+      assert(await headIn('.lab-floor', '.lab-floor .sprite-actor'), '연구소 바닥에서 머리가 잘린다 — 배율 ' + dpr + ' · 폭 ' + vp.width);
+      await s.close();
+      s = await h.open('dex.html?mech=' + encodeURIComponent('피카츄'), opt({ viewport: vp, mobile, dpr })); p = s.page;
+      await p.waitForSelector('.dex-dot:not([hidden]) .sprite-actor:not([hidden])', { timeout: 10000 });
+      assert(await headIn('.dex-dot-stage', '.dex-dot .sprite-actor'), '도감 무대에서 머리가 잘린다 — 배율 ' + dpr + ' · 폭 ' + vp.width);
+      await s.close();
+    }
+    n++;
+
+    console.log('PASS 도트 포켓몬: ' + n + '가지 · 연구소 바닥(좁으면 둘·넓으면 셋·누르면 캡슐 또는 도감) · 캡슐을 열면 뛰쳐나와 바닥을 거닌다(눌러도 캡슐은 그대로·닫으면 들어간다·도트 없으면 없음·하나만) · 동작 줄이기 · 자료 없음 · 도감 상세 무대 · 목록 「도트」 표 · 폴드·150% 화면에서 머리가 안 잘린다');
   } finally { temp.forEach(f => fs.rmSync(f, { force: true })); await h.stop(); fs.rmSync(art, { recursive: true, force: true }); }
 })().catch(e => { console.error(e); process.exit(1); });
