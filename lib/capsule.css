@@ -78,8 +78,8 @@
 }
 @media(prefers-reduced-motion:reduce){.capsule-bay *,.capsule-bay *::before,.capsule-bay *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 /* 연구소 바닥 — 도트 포켓몬(lib/sprite-actor.js)이 캡슐 벽 밑을 거닌다. 벽과 같은 흑연색, 도트가 없으면 [hidden] 으로 없다 */
-.lab-floor {position:relative;height:150px;margin-top:10px;overflow:hidden;border:1px solid #33464f;border-radius:16px;color-scheme:dark;
+/* 높이 156 = 발 자리 20 + 칸 128 − 발 밑 2 + 걷기 오르내림 2 + 여유 — 칸을 다 쓰는 인물(루기아)도 머리가 안 잘린다. 휴대폰도 같은 높이 */
+.lab-floor {position:relative;height:156px;margin-top:10px;overflow:hidden;border:1px solid #33464f;border-radius:16px;color-scheme:dark;
   background:linear-gradient(180deg,#16212a 0,#1d2b33 calc(100% - 34px),#2c3d44 calc(100% - 34px),#22323a 100%);box-shadow:inset 0 1px 0 #ffffff14}
 .lab-floor::after {content:'';position:absolute;left:0;right:0;bottom:33px;border-top:1px solid #aec7c34d;pointer-events:none}
 .lab-floor[hidden] {display:none}
-@media(max-width:599px){.lab-floor{height:132px}}

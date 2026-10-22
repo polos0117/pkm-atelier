@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-22 · claude · 연구소 도트 바닥에서 머리가 잘리던 것
+- lib/capsule.css — 연구소 바닥 높이 150(휴대폰 132) → 156 하나로. 칸(96×128)을 다 쓰는 루기아가 휴대폰에서 머리 14px 가 잘렸다. index.html 의 capsule.css ?v=dot2
+- tests/dot-screen.cjs — 좁은 화면·넓은 화면 모두 인물 칸 위(걷기 오르내림 2칸 더)가 바닥 띠 안에 드는지 본다
+
 ## 2026-10-22 · gpt · 릴링 9장 등록과 경장 정본 고정
 - data/face-design.json · 릴링의 등록 상태와 실제 경장 원문의 머리 기록을 고정.
 - docs/CHARACTER_FACE_DESIGNS.md · 등록된 경장 정본과 머리 잠금을 반영.

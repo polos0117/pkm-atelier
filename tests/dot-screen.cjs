@@ -41,6 +41,8 @@ const wait = ms => new Promise(ok => setTimeout(ok, ms));
     await p.waitForSelector('.lab-floor:not([hidden]) .sprite-actor:not([hidden])', { timeout: 10000 });
     assert.equal(await p.locator('.lab-floor .sprite-actor').count(), 2, '좁으면 둘');
     assert(await p.evaluate(() => { const w = document.querySelector('.capsule-bay .bay-wall').getBoundingClientRect(), f = document.querySelector('.lab-floor').getBoundingClientRect(); return f.top >= w.bottom - 1; }), '바닥은 캡슐 벽 밑');
+    /* 머리가 띠 위로 잘리지 않는다 — 칸(96×128, 발 126)을 다 쓰는 인물이 dy 로 2칸 올라가도 */
+    assert(await p.evaluate(() => { const f = document.querySelector('.lab-floor').getBoundingClientRect(); return [...document.querySelectorAll('.lab-floor .sprite-actor')].every(a => { const u = a.sprite.debug().unit; return a.getBoundingClientRect().top - 2 * u >= f.top - 0.5; }); }), '좁은 화면에서 머리가 잘린다');
     assert.match(await p.locator('.lab-floor .sprite-actor').first().getAttribute('aria-label'), /도트 — 눌러서 캡슐 열기/);
     await p.waitForFunction(() => [...document.querySelectorAll('.lab-floor .sprite-actor')].some(a => a.sprite.debug().state === 'walk'), null, { timeout: 10000 });
     n += 2;
@@ -72,6 +74,8 @@ const wait = ms => new Promise(ok => setTimeout(ok, ms));
     s = await h.open('index.html', opt({ viewport: { width: 1280, height: 900 }, mobile: false })); p = s.page;
     await p.waitForSelector('.lab-floor:not([hidden]) .sprite-actor:not([hidden])', { timeout: 10000 });
     await p.waitForFunction(() => document.querySelectorAll('.lab-floor .sprite-actor').length === 3);
+    /* 머리가 띠 위로 잘리지 않는다 — 칸(96×128, 발 126)을 다 쓰는 인물이 dy 로 2칸 올라가도 */
+    assert(await p.evaluate(() => { const f = document.querySelector('.lab-floor').getBoundingClientRect(); return [...document.querySelectorAll('.lab-floor .sprite-actor')].every(a => { const u = a.sprite.debug().unit; return a.getBoundingClientRect().top - 2 * u >= f.top - 0.5; }); }), '넓은 화면에서 머리가 잘린다');
     await p.locator('.lab-floor .sprite-actor[data-who="이상해씨"]').click({ force: true });
     await p.waitForSelector('.capsule[data-name="이상해씨"].is-open');
     await p.keyboard.press('Escape'); await wait(400);
