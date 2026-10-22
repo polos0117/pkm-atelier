@@ -13270,7 +13270,7 @@
    "en": "Corphish",
    "line": "가재군",
    "how": "species",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "softly rounded",
     "face length": "short",
@@ -13294,12 +13294,14 @@
     "hair length": "medium",
     "bangs": "choppy bangs"
    },
-   "hair_locked": false,
-   "hair_why": "‘three spikes’에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
-   "hair_cues": [
-    "‘three spikes’ → 헤어스타일 층감이 강한 울프컷",
-    "‘three spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/corphish-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/corphish-20261022/light-prompt.txt",
+    "kind": "prompt",
+    "raw": {}
+   }
   },
   "342": {
    "name": "가재장군",

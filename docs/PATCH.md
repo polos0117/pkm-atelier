@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-10-22 · gpt · 가재군 경장 정본 확정
+- data/face-design.json — 가재군의 경장 ①을 정본으로 표시하고 실제 제출 프롬프트의 머리 기록을 잠금.
+- docs/CHARACTER_FACE_DESIGNS.md — 가재군의 정본 표시를 자료에서 다시 렌더링.
+
 ## 2026-10-22 · gpt · 메깅 경장 정본 확정
 - data/face-design.json — 메깅의 등록 표시와 경장 ① 머리 기록 잠금을 반영. 후속 여덟 장은 정본 및 각 닫힌 폼에서 이어 생성.
 - docs/CHARACTER_FACE_DESIGNS.md — 메깅의 정본 표시를 자료에서 다시 렌더링.
