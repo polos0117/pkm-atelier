@@ -19394,7 +19394,7 @@
    "en": "Oshawott",
    "line": "수댕이",
    "how": "species",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "softly rounded",
     "face length": "short",
@@ -19423,7 +19423,7 @@
     "hair length": "short",
     "bangs": "curtain bangs"
    },
-   "hair_locked": false,
+   "hair_locked": true,
    "hair_why": "‘spherical white head’·키 0.5m에서 잔곱슬 / 아프로(웨이브·곱슬) · 짧은 머리 · 커튼뱅",
    "hair_cues": [
     "‘spherical white head’ → 헤어스타일 잔곱슬 / 아프로",
