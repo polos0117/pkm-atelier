@@ -48,7 +48,7 @@ async function start() {
   async function open(page, opt) {
     opt = opt || {};
     const ctx = await browser.newContext({ viewport: opt.viewport || FOLD.cover,
-      isMobile: !!opt.mobile, hasTouch: !!opt.mobile });
+      isMobile: !!opt.mobile, hasTouch: !!opt.mobile, ...(opt.reducedMotion ? { reducedMotion: opt.reducedMotion } : {}) });
     await ctx.route('**/*', async route => {
       const url = route.request().url(), origin = new URL(url).origin;
       if (origin === new URL(base).origin) return route.continue();
@@ -73,6 +73,13 @@ async function start() {
       /* 둘째 그림 저장소부터는 체크아웃의 img-N/ 으로(첫 저장소는 img/ 그대로) */
       const shard = !figure && origin === 'https://polos0117.github.io' &&
         new URL(url).pathname.match(/^\/pkm-atelier-img-(\d+)\/img\/(.+)$/);
+      /* 도트 그림(그림 저장소의 sprites/) — opt.imgRoot(검사가 만든 임시 자리)의 sprites/ 에서 */
+      const sprite = !figure && origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/^\/pkm-atelier-img(?:-\d+)?\/(sprites\/.+)$/);
+      if (sprite) {
+        const file = opt.imgRoot ? path.resolve(opt.imgRoot, decodeURIComponent(sprite[1])) : null;
+        if (!file || !file.startsWith(opt.imgRoot + path.sep) || !fs.existsSync(file)) return route.fulfill({ status: 404, body: 'no sprite' });
+        return route.fulfill({ status: 200, contentType: 'image/png', body: fs.readFileSync(file) });
+      }
       const local = figure ? [null, 'img/figure-previews/' + figure[1]] :
         shard ? [null, 'img-' + shard[1] + '/' + shard[2]] :
         origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
@@ -87,6 +94,11 @@ async function start() {
       }
       return route.abort();
     });
+    /* opt.files — 체크아웃의 파일 대신 줄 내용 {'data/sprites.json': 문자열|객체}. 나중에 건 길이 먼저 잡는다 */
+    for (const [rel, body] of Object.entries(opt.files || {}))
+      await ctx.route(u => new URL(u).origin === new URL(base).origin && new URL(u).pathname === '/' + rel,
+        r => r.fulfill({ status: 200, contentType: MIME[path.extname(rel)] || 'application/octet-stream',
+                         body: typeof body === 'string' ? body : JSON.stringify(body) }));
     /* 저장값 심기는 그 탭에서 한 번만 — 초기화 스크립트는 새로고침마다 다시 돌므로, 안 막으면 화면이 저장한 것을 덮어 "새로고침해도 이어진다" 를 못 본다 */
     if (opt.store) await ctx.addInitScript(([k, v]) => { try { if (!sessionStorage.getItem('__seeded')) { localStorage.setItem(k, v); sessionStorage.setItem('__seeded', '1'); } } catch (e) {} }, opt.store);
     /* init 은 함수 하나, 또는 [함수, 넘길 값] 이다. 넘길 값은 브라우저 쪽으로

@@ -126,7 +126,7 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
 
-도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 아직 이 공방에서 부르는 화면은 없다 — 도트 인물이 생기면 `data/sprites.json` 을 두고 화면이 `AtelierSprite.create` 로 세운다.
+도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 부르는 곳: 연구소(`index.html` — 캡슐 벽 밑 바닥 `.lab-floor`, 캡슐을 열면 그 포켓몬의 도트가 뛰쳐나와 화면을 거닌다)·도감(상세의 도트 줄, 목록 칸의 「도트」 표). 인물은 `data/sprites.json` 의 `actors` 에 도트 공방의 「인물 칸 복사」를 넣는다(card = 카드 이름), 그림은 `pkm-atelier-img-2` 의 `sprites/`.
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
 수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가
@@ -153,6 +153,7 @@ ESM_DIR=<preact·htm 이 든 node_modules>
 
 ```bash
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/home-screen.cjs     # 캡슐 진열 — 여섯 크기·열기·폭주·진열·도감 바로 열기
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dot-screen.cjs      # 도트 포켓몬 — 연구소 바닥·캡슐을 열면 뛰쳐나오기·도감 상세 무대·목록 「도트」 표(시험 자료)
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-nav.cjs       # 도감 넘기기 — 목록 자리·그림·카드 넘기기·뒤로 가기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도감 최근 추가 띠·새 표시(지난 방문)·새 그림만 — 다섯 크기

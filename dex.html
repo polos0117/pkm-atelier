@@ -163,9 +163,14 @@ body {color:var(--text);font-size:15px}
 .hall-controls button:focus-visible,.hall-controls .fav-count:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .fav-toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:90;max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;background:var(--text);color:var(--bg);font-size:13px;font-weight:700;text-align:center;pointer-events:none}
 .fav-toast:empty{display:none}
+/* 도트 — 상세의 작은 무대(바닥 위를 거닌다, 누르면 반응), 목록 칸의 「도트」 표(「새」는 왼쪽 위라 오른쪽 위) */
+.dex-dot{margin:14px 0 6px}.dex-dot[hidden]{display:none}
+.dex-dot-stage{position:relative;height:150px;overflow:hidden;border:1px solid var(--line);border-radius:12px;
+  background:linear-gradient(180deg,var(--card) 0,var(--card) 74%,color-mix(in srgb,var(--line) 70%,var(--card)) 74%,var(--card) 100%)}
+.dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=motion1"></script>
+<script src="lib/words.js?v=dot1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=recent2"></script>
 <script src="lib/dex-filter.js?v=2"></script>
@@ -174,6 +179,9 @@ body {color:var(--text);font-size:15px}
 <link rel="stylesheet" href="lib/scene-motion.css?v=1">
 <!-- 즐겨찾기 — lib/favorites.js(공방 넷과 공방 모음이 글자 하나 다르지 않게 나눠 쓴다) -->
 <script src="lib/favorites.js?v=1"></script>
+<!-- 도트 — lib/sprite-actor.js(공방 모음의 공용 재생기) · data/sprites.json. 도트가 있는 포켓몬은 목록 칸에 「도트」 표, 상세에 작은 무대 한 줄 -->
+<script src="lib/sprite-actor.js?v=1"></script>
+<link rel="stylesheet" href="lib/sprite-actor.css?v=1">
 </head>
 <body class="dex-page">
 <div id="app"></div>
@@ -196,6 +204,26 @@ function useFavorites() {
   return list;
 }
 /* 잠깐 떴다 사라지는 알림. 자리는 늘 깔아 둔다 — 화면 읽기 프로그램은 새로 생긴 칸의 말을 놓치기 쉽다 */
+/* 도트 자료 — 한 번만 받는다(목록 표). 상세의 무대는 AtelierSprite.mount 가 같은 자료로 */
+const SP = window.AtelierSprite;
+function useSprites() {
+  const [sp, setSp] = useState(null);
+  useEffect(() => { let live = true; SP && SP.load('data/sprites.json').then(d => { if (live && d && d.actors) setSp(d); }, () => {}); return () => { live = false; }; }, []);
+  return sp;
+}
+/* 도트 — 이 포켓몬의 도트가 있으면 작은 무대 한 줄(거닐고, 누르면 반응). 없거나 그림을 못 받으면 아무것도 없다 */
+function DotRow({ card }) {
+  const box = useRef(null), [on, setOn] = useState(false);
+  useEffect(() => {
+    if (!SP || !box.current) return;
+    let live = true, a = null;
+    SP.mount(box.current, card.name, { label: W('dex.dot.actor', { name: card.name }) }).then(x => { if (!live) { if (x) x.destroy(); return; } a = x; setOn(!!x); });
+    return () => { live = false; if (a) a.destroy(); setOn(false); };
+  }, [card.name]);
+  return html`<section class="dex-dot" hidden=${!on} data-card=${card.name} aria-labelledby="dex-dot-title">
+    <p class="sec" id="dex-dot-title">${W('dex.dot.title')}<span>${W('dex.dot.note')}</span></p>
+    <div class="dex-dot-stage" ref=${box}></div></section>`;
+}
 function useNote() {
   const [msg, setMsg] = useState(''), t = useRef(0);
   useEffect(() => () => clearTimeout(t.current), []);
@@ -559,6 +587,7 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
       ${favs.length > 0 && html`<a class="fav-count" id="dex-fav-count" href=${FAV_HUB}>${W('dex.fav.count', { n: favs.length })}</a>`}
     </div>
     <div class="fav-toast" role="status" aria-live="polite">${favMsg}</div>
+    <${DotRow} key=${card.name} card=${card} />
     <p class="sec">${W('dex.compare')}<span>${prog.ok ? '' : W('art.form.left', { n: prog.left.length })}</span></p>
     <div class="fstrip" role="group" aria-label=${W('dex.compare')}>
       ${want.map(k => {
@@ -665,6 +694,7 @@ function Recent({ st, isNew, onOpen }) {
 }
 
 function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, select, rowNew, isNew, newCount, newOnly, onNewOnly }) {
+  const sprites = useSprites();
   const f = FILTER.normalize(filters, st);
   const [filtersOpen, setFiltersOpen] = useState(false), gridRef = useRef();
   /* 상세에서 돌아오면 열기 전에 굴려 둔 자리로. 상세에서 다른 카드로 넘어갔으면 그 카드 칸이 보이게 한 번 더 민다 */
@@ -743,7 +773,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
             onClick=${() => onOpen(shot)}>
             <span class="face">${shot.file
               ? html`<${Pic} file=${shot.file} alt=${c.name+' · '+shotLabel(shot,st.defs)} />`
-              : html`<span class="ph">${W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}</span>
+              : html`<span class="ph">${W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}${SP && sprites && SP.actorFor(sprites, c.name) && html`<span class="dot-badge" title=${W('dex.dot.label')}>${W('dex.dot.badge')}</span>`}</span>
             <span class="cap"><span class="card-meta">${[c.element,c.element2].filter(Boolean).map(k=>st.group.name[k]||k).join(' · ')}<span>${String(c.no).padStart(4,'0')}</span></span><strong>${c.name}</strong>
               ${shot.file&&html`<i>${st.styleName[shot.style]||W('dex.style.unknown')}</i><i>${shotLabel(shot,st.defs)}</i>`}
               <i>${W('art.form.done',prog)}</i>

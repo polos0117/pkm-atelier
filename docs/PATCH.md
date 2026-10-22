@@ -12,6 +12,14 @@
 
 
 
+
+## 2026-10-22 · claude · 도트 포켓몬 — 연구소 바닥·캡슐을 열면 뛰쳐나오기·도감 상세
+- index.html — 연구소 바닥(캡슐 벽 밑 .lab-floor): 도트가 있는 포켓몬이 거닌다(좁으면 둘·넓으면 셋, 날마다 차례가 돈다), 누르면 진열된 포켓몬은 그 캡슐이 열리고 없으면 도감으로. 캡슐을 열면 그 포켓몬의 도트가 유리가 걷히는 사이 캡슐에서 튀어나와 화면 바닥을 거닌다(눌러도 캡슐은 그대로, 닫으면 캡슐로 뛰어 들어간다). 도트가 없으면 아무것도 없다 — 연구소는 그대로
+- dex.html — 상세의 도트 줄(작은 무대, 누르면 반응)·목록 칸의 「도트」 표(오른쪽 위)
+- data/sprites.json — 새 자료(인물은 아직 없다 — 도트 공방의 「인물 칸 복사」를 actors 에 넣는다, 그림은 pkm-atelier-img-2/sprites/)
+- lib/words.js — home.dot.* · dex.dot.*, lib/capsule.css — .lab-floor, lib/sprite-actor.js — 공방 모음 원본(mount 더함)
+- tests/dot-screen.cjs — 새 검사(시험 자료 셋, tests/fixtures/make-sprites.py 가 그린다) · tests/browser-harness.cjs — files·imgRoot(sprites/)·reducedMotion · AGENTS.md
+
 ## 2026-10-22 · claude · 도트 재생기 v2 를 받아 둔다
 - lib/sprite-actor.js · lib/sprite-actor.css — 공방 모음 원본 v2(floor·popOut·actorFor/forCard 더함) 그대로 복사. 아직 부르는 화면은 없다
 - tests/sprite-actor-copy.cjs — v2 의 내보내기 일곱

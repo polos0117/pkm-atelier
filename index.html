@@ -11,11 +11,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="lib/workspace.css?v=status1">
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=status1"></script>
+<script src="lib/words.js?v=dot1"></script>
 <script src="lib/img.js?v=status1"></script>
-<link rel="stylesheet" href="lib/capsule.css?v=status1">
+<link rel="stylesheet" href="lib/capsule.css?v=dot1">
 <script src="lib/patch.js?v=1"></script>
 <script src="lib/fresh.js?v=4"></script>
+<script src="lib/sprite-actor.js?v=1"></script>
+<link rel="stylesheet" href="lib/sprite-actor.css?v=1">
 </head>
 <body class="prompt-page lab-page">
 <div class="wrap"><div id="app"></div></div>
@@ -71,10 +73,18 @@ function randomResidents(cards,img) {
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   const seen=new Set();return pool.filter(c=>{const r=root(c.name);if(seen.has(r))return false;seen.add(r);return true;}).slice(0,IMG.HALL_MAX);
 }
+/* 도트 인물(data/sprites.json · lib/sprite-actor.js — 공방 모음의 공용 재생기). 자료가 없거나 인물이 없으면 null — 연구소는 그대로 */
+const SP=window.AtelierSprite;
+function useSprites(){
+  const [sp,setSp]=useState(null);
+  useEffect(()=>{let live=true;SP?.load('data/sprites.json').then(d=>{if(live&&d&&d.actors)setSp(d);},()=>{});return()=>{live=false;};},[]);
+  return sp;
+}
 function CapsuleBay(){
   const [data,setData]=useState(null),[failed,setFailed]=useState(false),[revision,refresh]=useState(0);
   const [selected,select]=useState(null),[overdrive,setOverdrive]=useState(false);
-  const bay=useRef(),opener=useRef(),title=useRef();
+  const bay=useRef(),opener=useRef(),title=useRef(),floor=useRef(),walkers=useRef(null),pop=useRef(null),live=useRef({});
+  const sprites=useSprites(),[floorOn,setFloorOn]=useState(false);
   useEffect(()=>{let live=true;Promise.all([
     fetch('data/card.json').then(r=>{if(!r.ok)throw Error();return r.json();}),
     fetch('data/group.json').then(r=>{if(!r.ok)throw Error();return r.json();}),IMG.load()
@@ -87,11 +97,35 @@ function CapsuleBay(){
   const residents=useMemo(()=>!data?[]:picks.length?picks.map(n=>data.cards.find(c=>c.name===n)).filter(Boolean):data.random,[data,picks]);
   const close=(restore=true)=>{select(null);if(restore)opener.current?.focus({preventScroll:true});};
   useEffect(()=>{if(!selected)return;const key=e=>{if(e.key==='Escape'){e.preventDefault();close();}};
-    const outside=e=>{if(!bay.current?.contains(e.target))close(false);};
+    const outside=e=>{if(!bay.current?.contains(e.target)&&!e.target.closest?.('.sprite-popout'))close(false);};   // 뛰쳐나온 도트를 눌러도 캡슐은 그대로
     addEventListener('keydown',key);addEventListener('pointerdown',outside);
     return()=>{removeEventListener('keydown',key);removeEventListener('pointerdown',outside);};},[selected]);
   useLayoutEffect(()=>{if(selected)title.current?.focus({preventScroll:true});},[selected]);
   const current=selected&&residents.find(c=>c.name===selected),shots=current&&IMG.hallShotsOf(data.img[current.name]);
+  live.current={residents,select,opener};
+  /* 연구소 바닥 — 도트가 있는 포켓몬이 캡슐 벽 밑을 거닌다(좁으면 둘·넓으면 셋, 날마다 차례가 돈다). 누르면 그 캡슐을 열고, 진열에 없으면 도감으로 */
+  useEffect(()=>{
+    if(!SP||!sprites||!data||!floor.current)return;
+    const names=new Set(data.cards.map(c=>c.name)),keys=Object.keys(sprites.actors).map(k=>SP.cardKey(k,sprites.actors[k])).filter(k=>names.has(k));
+    if(!keys.length)return;
+    const F=SP.floor(floor.current,sprites,{keys,floor:20,labelOf:k=>W('home.dot.actor',{name:k}),onSelect:k=>{
+      const L=live.current,el=bay.current?.querySelector('.capsule[data-name="'+CSS.escape(k)+'"]');
+      if(el&&L.residents.some(c=>c.name===k)){L.opener.current=el;L.select(k);}else location.href='dex.html?mech='+encodeURIComponent(k);
+    }});
+    walkers.current=F;F.ready().then(()=>setFloorOn(F.list().some(x=>!x.actor.failed)));
+    return()=>{F.destroy();walkers.current=null;setFloorOn(false);};
+  },[sprites,data]);
+  /* 캡슐을 열면 — 그 포켓몬의 도트가 있으면 유리가 걷히는 사이 캡슐에서 뛰쳐나와 화면 바닥을 거닌다. 닫으면 캡슐로 뛰어 들어간다 */
+  useEffect(()=>{
+    if(!SP||!sprites||!selected)return;
+    const def=SP.actorFor(sprites,selected);if(!def)return;
+    const t=setTimeout(()=>{
+      const from=bay.current?.querySelector('.capsule[data-name="'+CSS.escape(selected)+'"] .capsule-art');if(!from)return;
+      pop.current=SP.popOut(from,def,{base:def.base||sprites.base,label:W('home.dot.out',{name:selected}),scale:innerWidth<600?1:2,duration:650,seed:selected.length*31});
+      pop.current.layer.dataset.card=selected;
+    },matchMedia('(prefers-reduced-motion: reduce)').matches?0:360);
+    return()=>{clearTimeout(t);pop.current?.close(true,300);pop.current=null;};
+  },[selected,sprites]);
   const no=c=>W('home.bay.no',{n:String(c.no).padStart(4,'0')});
   return h('section',{ref:bay,class:'capsule-bay'+(overdrive?' is-overdrive':'')+(current?' has-open':''),'aria-label':W('home.bay'),
     onClick:e=>{if(!e.target.closest('button,a,.capsule-info'))close(false);}},
@@ -129,6 +163,7 @@ function CapsuleBay(){
             h('a',{href:'dex.html?mech='+encodeURIComponent(current.name)},W('home.bay.toDex')),
             h('a',{href:'prompt.html?mech='+encodeURIComponent(current.name)},W('home.bay.toPrompt')),
             h('button',{type:'button',onClick:()=>close()},W('home.bay.close')))))),
+    h('div',{class:'lab-floor',ref:floor,hidden:!floorOn,role:'group','aria-label':W('home.dot.floor')}),
     h('a',{class:'bay-hint',href:'dex.html'},W('home.bay.pick')));
 }
 
