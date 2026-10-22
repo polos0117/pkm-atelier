@@ -11,6 +11,17 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-10-22 · claude · 일상컷 계획기 — 고르기는 도구가, 생김새는 Rust 가 잰다
+- lib/casual-plan.js — 새 계획기. 장부(최근 예시·갈래 사용·필수 갈래 자리·비교 대상의 짝과 옷)를 읽어 세 컷의 갈래·예시·표정·포즈·방향·프레이밍·렌즈·세 축·옷 종류·드러내는 방식·장면 첫머리를 정한다. 같은 씨앗이면 같은 답, 배치 안에서는 앞사람의 새 값을 뺏지 않고, 피크닉에 도발 표정·한복에 달리기 같은 어긋난 짝은 표로 막는다. 세션이 손으로 고르던 것이 계속 같은 장면으로 몰렸다
+- tools/casual-plan.cjs — 명령줄. 그림 저장소를 당겨 장부를 새로 읽고, `casual-ledger.py check` 를 통과할 때까지 다시 고르고, `--reserve --push` 로 세션 예약까지 올린다. `--refill`·`--avoid`·`--keep` 으로 빈 컷·막힌 컷만 다시 정하고, 컷마다 생성기 주소를 낸다
+- tools/casual-ledger.py — 예약을 세션마다 따로 파일(records/casual-reservations/<세션>.json)에 둔다(한 장부에 같이 쓰다 push 가 엇갈려 남의 예약을 지웠다). 등록 차례를 img.json added_at → added → 폴더 날짜 → 온전한 git 이력으로 세고(얕은 clone 커밋 시각으로 차례가 뒤섞였다), `view` 명령을 더했다
+- rust/ — casual-look: 일상컷을 윤곽(HOG)·밝기 배치·색으로 재어 `index`(data/casual-look.json, 몰림)·`check`(올리기 전 문턱, 다른 캐릭터와 점수 215 미만이면 막음)·`pairs`. 문턱은 실제 1123컷을 눈으로 맞췄다. art-core 는 book-atelier 에서 옮겨 왔다. rust/README.md
+- data/casual-look.json — 첫 색인 1123컷. 가장 몰린 예시는 swimwear/shoreline_walk
+- lib/prompt-ui.js · prompt.html · lib/words.js — 생성기가 `?mech=<카드>&casual=<값>` 을 받아 일상컷으로 열고 값을 채워 모두 잠그며, 장면·의상 칸은 비우고 주소에서 지운다(새로고침이 손본 값을 덮지 않게). 모르는 값은 비우고 알린다. ?v=plan1
+- .github/workflows/register-images.yml — img.json 이 바뀌면 생김새 색인을 다시 짓는다(실패해도 등록은 막지 않는다)
+- IMAGE_RULES.md — 일상컷 순서: 계획기로 정하고 생성기 주소로 열기, 올리기 전 casual-look check, 막히면 --avoid·--keep
+- tests/casual-plan.cjs · tests/casual-plan-screen.cjs · tests/casual-ledger.py · AGENTS.md — 서른 명 차례로 check 통과, 배치·다시 채우기·피할 값·만든 컷 두기, 생성기 주소 왕복과 화면, 세션별 예약
+
 ## 2026-10-22 · claude · 도감 최근 추가 — 같은 날 안에서는 늦게 들어온 그림부터
 - dex.html — "최근 추가" 띠가 같은 날 그림을 도감 번호 차례로 세워, 10-21(UTC) 하루에 44종 396장이 들어오자 24칸이 번호 낮은 고래왕 쪽으로만 차고 방금 올린 샤로다·미꾸리·깝질무는 밀려 안 보였다. 같은 날 안은 들어온 시각(added_at)이 늦은 것부터, 시각이 같거나 없으면 도감 번호 차례. img.js ?v=recent2
 - lib/img.js — `added_at` 을 읽는 `addedAtOf`(날짜가 있는 파일만)

@@ -109,7 +109,9 @@ node tests/workspace-theme.cjs   # 테마 여덟 · 밀도 · 문장 · 결
 node tests/forms.cjs             # 폼 축 — 자료·등록기·img.js 가 같은 말을 하나
 node tests/img-shards.cjs        # 그림 저장소 여럿 — 옛 주소 그대로 · where · 저장소 차례
 python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장소 · 같은 이름 · 못 받은 저장소
-python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 예약(IMAGE_RULES 3절)
+python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 세션별 예약(IMAGE_RULES 3절)
+node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기 · 피할 값 · 생성기 주소
+(cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
@@ -154,6 +156,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs  # 움직임 — 공용 모듈·도감 상세의 켄 번스·오버드라이브 열리기·타입 입자·스위치
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-favorites.cjs # 즐겨찾기 — 상세의 하트·저장된 칸·?pic= 로 열기·저장 막힘·다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/casual-plan-screen.cjs  # 생성기 ← 계획기 주소 — 값 채우기·잠금·장면/의상 비우기·주소 지우기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/battle-screen.cjs   # 전투 시험장 — 세움·한 판·되감기·100판·직접 조종
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/run-screen.cjs      # 일곱 판 — 뽑기·저장·판·보상·끝·새 런
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/survey-screen.cjs   # 탐사 작전 — 배치·완주·이어하기·휴대폰·오늘 기록

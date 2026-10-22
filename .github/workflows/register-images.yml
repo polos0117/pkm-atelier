@@ -71,6 +71,23 @@ jobs:
             python3 tools/register-images.py
           fi
 
+      # 일상컷 생김새 색인(data/casual-look.json) — 새 그림이 들어왔을 때만. 일상컷 계획기가 생김새가 몰린 장면·구도·옷에 벌점을 준다.
+      # Rust 가 실패해도 등록은 커밋한다(색인은 하루 늦어도 계획기가 돈다)
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: casual-look-${{ runner.os }}-${{ hashFiles('rust/Cargo.lock', 'rust/**/*.rs', 'rust/**/Cargo.toml') }}
+          restore-keys: casual-look-${{ runner.os }}-
+      - name: 일상컷 생김새 색인
+        continue-on-error: true
+        run: |
+          if git diff --quiet -- data/img.json; then echo "새 그림 없음 — 색인 그대로"; exit 0; fi
+          (cd rust && cargo build --release -p casual-look)
+          ./rust/target/release/casual-look index
+
       # 자료·등록기·화면이 같은 말을 하는지 — 깨지면 커밋하지 않는다
       - name: 검사
         run: |
@@ -80,13 +97,13 @@ jobs:
 
       - name: 되커밋
         run: |
-          if git diff --quiet -- data/img.json; then
+          if git diff --quiet -- data/img.json data/casual-look.json; then
             echo "달라진 것 없음 — 커밋하지 않는다"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/img.json
+          git add data/img.json data/casual-look.json
           git commit -m "자동 등록: 그림 저장소의 새 그림을 data/img.json 에 [skip actions]"
           for i in 1 2 3; do
             git push && exit 0

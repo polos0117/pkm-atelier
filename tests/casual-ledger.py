@@ -87,14 +87,26 @@ with tempfile.TemporaryDirectory() as tmp:
     with contextlib.redirect_stdout(io.StringIO()):
         L.check(a, write=True)
     saved = json.load(open(led))
-    assert [e["status"] for e in saved["entries"]].count("reserved") == 1
+    # 예약은 장부가 아니라 세션별 파일에 — push 가 엇갈려도 남의 예약을 지우지 않는다
+    rfile = Path(tmp) / "casual-reservations" / "t.json"
+    assert rfile.exists() and [e["status"] for e in saved["entries"]].count("reserved") == 0
+    assert [e["card"] for e in L.live(saved, led) if e["status"] == "reserved"] == ["B"]
     other = copy.deepcopy(good); other["characters"][0].update(card="D", species="d-1")
-    errs = L.check_plan(saved, other, SP)
+    errs = L.check_plan(saved, other, SP, led)
     assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs), errs
+    # 다른 세션이 같은 시각에 예약해도 두 파일이 다 남는다
+    json.dump({**other, "session": "u"}, open(plan, "w")); a2 = type("A", (), {"ledger": led, "plan": plan, "repos": []})
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            L.check(a2, write=True)
+        raise AssertionError("겹치는 계획이 예약됐다")
+    except SystemExit:
+        pass
     # 오래된 예약은 버린다
-    mine = next(e for e in saved["entries"] if e["card"] == "B")
-    mine["at"] = "2020-01-01T00:00:00+09:00"
-    assert L.check_plan(saved, other, SP) == [], L.check_plan(saved, other, SP)
+    r = json.load(open(rfile)); r["characters"][0]["at"] = "2020-01-01T00:00:00+09:00"; json.dump(r, open(rfile, "w"))
+    assert L.check_plan(saved, other, SP, led) == [], L.check_plan(saved, other, SP, led)
+    mine = {**good["characters"][0], "status": "reserved", "at": L.now()}
+    saved["entries"].append(mine)   # 옛 장부 안의 예약(파일 이전)도 그대로 읽는다
 
     # build — 기록을 읽고, 등록된 캐릭터의 예약은 지운다
     rec = Path(tmp) / "img2" / "records" / "b-1"; rec.mkdir(parents=True)
@@ -102,7 +114,6 @@ with tempfile.TemporaryDirectory() as tmp:
         sc = {k: c[k] for k in ("cat", "ex", "expr", "pose", "orient", "frame", "lens")}
         sc.update(axes=c["axes"], outfit="A long linen sundress with a short denim jacket.")
         json.dump({"storage": {"last": "B", "cards": {"B": {"scenes": {"casual": sc}}}}}, open(rec / ("casual%d-ui.json" % c["cut"]), "w"))
-    mine["at"] = L.now()
     json.dump(saved, open(led, "w"))
     (Path(tmp) / "img2" / "img").mkdir()
     for n in (1, 2, 3):
@@ -137,4 +148,4 @@ with tempfile.TemporaryDirectory() as tmp:
         L.build(b)
     out = json.load(open(led))
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

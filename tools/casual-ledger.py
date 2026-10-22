@@ -4,15 +4,25 @@
 
 장부는 그림 저장소 하나에 둔다: pkm-atelier-img-2/records/casual-ledger.json
 (그림 저장소를 더 늘려도 장부는 여기 하나다). 한 칸이 캐릭터 하나, 상태는 둘이다.
-  done      그림 저장소 기록(records/<종>-<날짜>/casualN-ui.json)에서 읽어 온 등록분
-  reserved  생성 전에 세션이 먼저 적어 둔 계획. 등록되면 build 가 done 으로 바꾼다
+  done      그림 저장소 기록(records/<종>-<날짜>/casualN-ui.json)에서 읽어 온 등록분.
+            차례는 등록 시각으로 센다 — data/img.json 의 added_at → added 날짜 → 기록 폴더 날짜 →
+            git 이력(얕은 clone 이면 믿지 않는다)
+  reserved  생성 전에 세션이 먼저 적어 둔 계획. 세션마다 따로 records/casual-reservations/<세션>.json 에
+            둔다(한 파일에 같이 쓰면 push 가 엇갈려 남의 예약을 지웠다). 24시간이 지났거나 그 캐릭터가
+            등록되면 읽을 때 빠진다(장부 안에 남은 옛 reserved 칸도 읽기는 한다)
 
   python3 tools/casual-ledger.py build   — 기록을 다시 읽어 done 칸을 만든다(reserved 는 지킨다)
   python3 tools/casual-ledger.py report  — 계획에 쓸 요약(최근 예시·구도 짝·덜 쓴 갈래·옷 종류·필수 갈래 자리)
+  python3 tools/casual-ledger.py view [--fresh] — 장부 + 살아 있는 예약을 합친 JSON(계획기가 읽는다).
+                                                  --fresh 면 기록을 다시 읽어 done 을 새로 센다
   python3 tools/casual-ledger.py check  PLAN.json — 계획이 IMAGE_RULES 3절 "일상컷 장면 설정 순서" 의
                                                   장부 조건을 지키는지 본다. 어기면 1 로 끝난다
-  python3 tools/casual-ledger.py reserve PLAN.json — check 를 통과하면 장부에 reserved 로 적는다
-                                                  (그다음 그림 저장소를 commit·push 해야 다른 세션이 본다)
+  python3 tools/casual-ledger.py reserve PLAN.json — check 를 통과하면 세션 예약 파일에 적는다
+                                                  (그다음 그림 저장소를 commit·push 해야 다른 세션이 본다.
+                                                  보통은 node tools/casual-plan.cjs … --reserve --push 가 다 한다)
+
+계획은 손으로 짜지 않는다 — node tools/casual-plan.cjs <카드>… --session <이름> 이 장부·예약·생김새 색인
+(data/casual-look.json)을 읽어 정하고, 이 check 를 통과할 때까지 다시 고른다.
 
 PLAN.json 꼴(배치 하나 — 같이 만드는 캐릭터 전부):
   {"session": "아무 이름", "characters": [
@@ -33,6 +43,8 @@ import argparse, datetime, json, os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2")]
 LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "casual-ledger.json")
+# 예약은 세션마다 따로 파일(2026-10-22) — 한 장부 파일에 다들 쓰다 push 가 엇갈리면 남의 예약을 지웠다(밤선인·파치리스, 체리꼬·샤비)
+RESERVATIONS = "casual-reservations"
 
 REQUIRED = {"adult_roleplay", "swimwear", "lingerie"}
 # 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름)
@@ -104,14 +116,48 @@ def garments_of(text):
     return sorted(g for g, p in GARMENTS.items() if re.search(p, t))
 
 
-def added_at(repo, rel):
-    """기록 폴더가 처음 커밋된 시각. 커밋 전이면 지금"""
+def registered():
+    """data/img.json 의 들어온 시각·날짜 — 기록 폴더의 시각은 이것을 먼저 쓴다"""
     try:
-        out = subprocess.run(["git", "-C", repo, "log", "--diff-filter=A", "--format=%aI", "--", rel],
-                             capture_output=True, text=True).stdout.split()
-        return out[-1] if out else now()
+        with open(os.path.join(ROOT, "data", "img.json"), encoding="utf-8") as f:
+            d = json.load(f)
+    except (OSError, ValueError):
+        return {}, {}
+    return d.get("added_at") or {}, d.get("added") or {}
+
+
+REG = None
+
+
+def added_at(repo, rel, card=None, files=()):
+    """그 캐릭터 일상컷이 들어온 시각. 차례는 이것으로 센다.
+
+    1) data/img.json 의 added_at(등록기가 적는 UTC 시각, 최근 30일) 2) added 날짜 3) 폴더 이름의 날짜(<종>-YYYYMMDD)
+    4) 온전한 이력에서 기록 폴더를 처음 커밋한 시각. 얕은 받기(shallow)의 이력은 믿지 않는다 — 모든 파일이 마지막 커밋에
+    더해진 것으로 보여 128칸이 한 시각에 뭉쳤고, "최근 10명" 이 엉뚱한 옛 캐릭터가 되었다(2026-10-22 점검)."""
+    global REG
+    if REG is None:
+        REG = registered()
+    at, day = REG
+    got = sorted(at[f] for f in files if f in at)
+    if got:
+        return got[-1].replace("Z", "+00:00")
+    days = sorted(day[f] for f in files if f in day)
+    if days:
+        return days[-1] + "T12:00:00+00:00"
+    m = re.search(r"-(\d{4})(\d{2})(\d{2})$", os.path.basename(rel))
+    if m:
+        return "%s-%s-%sT12:00:00+00:00" % m.groups()
+    try:
+        shallow = subprocess.run(["git", "-C", repo, "rev-parse", "--is-shallow-repository"], capture_output=True, text=True).stdout.strip()
+        if shallow == "false":
+            out = subprocess.run(["git", "-C", repo, "log", "--diff-filter=A", "--format=%aI", "--", rel],
+                                 capture_output=True, text=True).stdout.split()
+            if out:
+                return out[-1]
     except OSError:
-        return now()
+        pass
+    return now()
 
 
 def read_records(repos):
@@ -128,7 +174,7 @@ def read_records(repos):
         if not os.path.isdir(base):
             continue
         for d in sorted(os.listdir(base)):
-            cuts, card = [], None
+            cuts, card, files = [], None, []
             for i in (1, 2, 3):
                 f = os.path.join(base, d, "casual%d-ui.json" % i)
                 if not os.path.exists(f):
@@ -143,8 +189,10 @@ def read_records(repos):
                 c = cd.get("scenes", {}).get("casual")
                 if not c:
                     continue
-                if imgs and not any(n.startswith(card + "_") and n.endswith("_f_casual%d.webp" % i) for n in imgs):
+                mine = [n for n in imgs if n.startswith(card + "_") and n.endswith("_f_casual%d.webp" % i)]
+                if imgs and not mine:
                     continue
+                files += mine
                 ax = c.get("axes") or {}
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
                                           ("cat", "ex", "expr", "pose", "orient", "frame", "lens")},
@@ -152,7 +200,7 @@ def read_records(repos):
                              "garments": garments_of(c.get("outfit"))})
             if cuts:
                 entries.append({"species": d, "card": card, "repo": os.path.basename(repo),
-                                "at": added_at(repo, os.path.join("records", d)), "status": "done", "cuts": cuts})
+                                "at": added_at(repo, os.path.join("records", d), card, files), "status": "done", "cuts": cuts})
     return entries
 
 
@@ -192,8 +240,47 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-def live(doc):
-    return sorted([e for e in doc["entries"] if fresh(e)], key=when)
+def reservations(ledger, stale=False):
+    """세션마다의 예약 파일(records/casual-reservations/<세션>.json) — 24시간 안의 것만(stale 이면 지난 것도)"""
+    d = os.path.join(os.path.dirname(ledger), RESERVATIONS)
+    out = []
+    if not os.path.isdir(d):
+        return out
+    for n in sorted(os.listdir(d)):
+        if not n.endswith(".json"):
+            continue
+        try:
+            with open(os.path.join(d, n), encoding="utf-8") as f:
+                r = json.load(f)
+        except (OSError, ValueError):
+            continue
+        for e in r.get("characters") or []:
+            e = {**e, "status": "reserved", "session": r.get("session") or n[:-5], "at": e.get("at") or r.get("at")}
+            if stale or fresh(e):
+                out.append(e)
+    return out
+
+
+def live(doc, ledger=None):
+    """장부의 칸 + 세션별 예약. 등록된 캐릭터(done)의 예약은 빼고(다시 채우기는 남긴다), 같은 캐릭터 예약은 늦은 것 하나만"""
+    es = [e for e in doc["entries"] if fresh(e)]
+    if ledger:
+        es += reservations(ledger)
+        # 계획기가 정한 드러내는 방식(expose)은 생성기 상태에 남지 않는다 — 같은 컷(번호·예시)의 예약에서 옮겨 온다
+        plans = {(r.get("card"), c.get("cut"), c.get("ex")): c.get("expose") for r in reservations(ledger, stale=True) for c in r.get("cuts") or [] if c.get("expose")}
+        for e in es:
+            if e.get("status") != "reserved":
+                for c in e["cuts"]:
+                    if not c.get("expose") and plans.get((e.get("card"), c.get("cut"), c.get("ex"))):
+                        c["expose"] = plans[(e.get("card"), c.get("cut"), c.get("ex"))]
+    done = {e["card"] for e in es if e.get("status") != "reserved"}
+    last = {}
+    for e in sorted(es, key=when):
+        if e.get("status") == "reserved":
+            if e.get("card") in done and not e.get("refill"):
+                continue
+            last[e.get("card")] = e
+    return sorted([e for e in es if e.get("status") != "reserved"] + list(last.values()), key=when)
 
 
 def build(args):
@@ -243,7 +330,7 @@ def low_cats(entries, cats):
 
 def report(args):
     doc, sp = load(args.ledger), spec()
-    es = live(doc)
+    es = live(doc, args.ledger)
     print("장부 %s — 칸 %d (reserved %d)" % (args.ledger, len(es), sum(e["status"] == "reserved" for e in es)))
     print("\n[최근 %d명 · 다시 쓰지 않는 장면 예시]" % EX_WINDOW)
     for e in es[-EX_WINDOW:]:
@@ -280,9 +367,9 @@ def small_cat_open(entries, cat, lst):
     return [x for x in lst if n[x] == m]
 
 
-def check_plan(doc, plan, sp):
+def check_plan(doc, plan, sp, ledger=None):
     errs = []
-    es = live(doc)
+    es = live(doc, ledger)
     batch = plan.get("characters") or []
     names = {ch.get("card") for ch in batch}
     base = [e for e in es if e.get("card") not in names]
@@ -371,7 +458,7 @@ def check(args, write=False):
     doc, sp = load(args.ledger), spec()
     with open(args.plan, encoding="utf-8") as f:
         plan = json.load(f)
-    errs = check_plan(doc, plan, sp)
+    errs = check_plan(doc, plan, sp, args.ledger)
     for e in errs:
         print("  ✗ " + e)
     if errs:
@@ -379,30 +466,51 @@ def check(args, write=False):
         sys.exit(1)
     print("계획 통과 — %d명" % len(plan.get("characters") or []))
     if write:
-        names = {ch["card"] for ch in plan["characters"]}
-        doc["entries"] = [e for e in doc["entries"] if not (e.get("status") == "reserved" and e.get("card") in names)]
+        session = re.sub(r"[^A-Za-z0-9._-]+", "-", str(plan.get("session") or "")).strip("-.")
+        if not session:
+            raise SystemExit("계획에 session 이름이 없다 — 예약 파일 이름이 된다")
+        d = os.path.join(os.path.dirname(args.ledger), RESERVATIONS)
+        os.makedirs(d, exist_ok=True)
+        path = os.path.join(d, session + ".json")
+        old = {}
+        if os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                old = {e["card"]: e for e in (json.load(f).get("characters") or []) if fresh({**e, "status": "reserved"})}
+        at = now()
         for ch in plan["characters"]:
-            e = {"species": ch.get("species"), "card": ch["card"], "status": "reserved",
-                 "session": plan.get("session"), "at": now(),
-                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex", "expr", "pose", "orient", "frame", "lens", "axes", "garments", "kept") if k != "kept" or c.get(k)}
+            e = {"species": ch.get("species"), "card": ch["card"], "at": at,
+                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex", "expr", "pose", "orient", "frame", "lens", "axes", "garments", "expose", "lead", "kept") if c.get(k) is not None and (k != "kept" or c.get(k))}
                           for c in ch["cuts"]]}
             if ch.get("refill"):
                 e["refill"] = True
-            doc["entries"].append(e)
-        save(args.ledger, doc)
-        print("장부에 reserved 로 적었다 — 그림 저장소를 commit·push 한 뒤 생성한다")
+            old[ch["card"]] = e
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump({"note": "일상컷 예약 — tools/casual-ledger.py reserve 가 쓴다. 세션 하나 = 파일 하나라 push 가 엇갈려도 남의 예약을 지우지 않는다. 24시간 지나면 읽지 않는다.",
+                       "session": plan.get("session"), "at": at, "characters": list(old.values())}, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+        print("예약 %s — 이 파일만 commit·push 한 뒤 생성한다" % os.path.relpath(path, os.path.dirname(os.path.dirname(args.ledger))))
+
+
+def view(args):
+    """계획기(tools/casual-plan.cjs)가 읽는 살아 있는 칸 — 장부 + 세션별 예약, 시각 차례. --fresh 면 기록에서 다시 읽는다(장부 파일은 안 쓴다)"""
+    doc = {"entries": read_records(args.repos)} if args.fresh else load(args.ledger)
+    if args.fresh:
+        doc["entries"] += [e for e in load(args.ledger).get("entries", []) if e.get("status") == "reserved"]
+    es = live(doc, args.ledger)
+    json.dump({"entries": es}, sys.stdout, ensure_ascii=False)
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "report", "check", "reserve"])
+    ap.add_argument("cmd", choices=["build", "report", "check", "reserve", "view"])
     ap.add_argument("plan", nargs="?")
     ap.add_argument("--ledger", default=LEDGER)
     ap.add_argument("--repos", nargs="+", default=REPOS)
+    ap.add_argument("--fresh", action="store_true", help="view: 장부 파일 대신 기록에서 다시 읽는다")
     a = ap.parse_args()
     if a.cmd in ("check", "reserve") and not a.plan:
         ap.error("PLAN.json 이 필요하다")
-    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True)}[a.cmd](a)
+    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True), "view": view}[a.cmd](a)
 
 
 if __name__ == "__main__":

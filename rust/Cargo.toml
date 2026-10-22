@@ -1,0 +1,15 @@
+# 일상컷 생김새 — casual-look 이 일상컷 그림의 구도·윤곽·색 배치를 재어 계획기(tools/casual-plan.cjs)와 올리기 전 문턱에 준다.
+# art-core 는 book-atelier rust/art-core 를 그대로 옮겨 온 것(고치면 양쪽을 맞춘다). 다시 짓기는 rust/README.md
+[workspace]
+resolver = "2"
+members = ["art-core", "casual-look"]
+
+[workspace.package]
+edition = "2021"
+version = "0.1.0"
+publish = false
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
