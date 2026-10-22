@@ -19356,7 +19356,7 @@
    "en": "Emboar",
    "line": "뚜꾸리",
    "how": "species",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -19382,7 +19382,7 @@
     "hair length": "long",
     "bangs": "side-swept bangs"
    },
-   "hair_locked": false,
+   "hair_locked": true,
    "hair_why": "‘burning flames’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 차오꿀에서 이어 같은 묶음",
    "hair_cues": [
     "‘burning flames’ → 헤어스타일 바람에 날린 듯한 스타일",

@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-22 · gpt · 염무왕 이미지 정본 등록
+- data/face-design.json — 염무왕 경장 ①을 정본으로 표시하고 관찰된 긴 바람결 머리·옆 앞머리를 잠갔다.
+- docs/CHARACTER_FACE_DESIGNS.md — 현재 정본 등록 상태로 다시 렌더링했다.
+- docs/image-batches/emboar-20261022.md — 폼·개방·일상 9장과 생성 기록 및 검수 결과를 연결했다.
+
 ## 2026-10-22 · gpt · 잘린 얼굴 설계 자료 복구
 - data/face-design.json — 생략 문자열로 손상된 382–673 구간을 정상 체크아웃에서 복구하고 최신 나머지 구간 및 뚜꾸리·차오꿀의 정본 등록 표시를 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 복구된 1,025종 자료에서 다시 렌더링했다.
