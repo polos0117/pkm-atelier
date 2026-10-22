@@ -19307,7 +19307,7 @@
     "bangs": "side-swept bangs"
    },
    "hair_locked": true,
-   "hair_why": "확정 경장 ① 관찰: 짧게 층을 낸 바람결 머리·옆으로 넘긴 앞머리. 갈색 바탕의 주황·노랑 끝색은 이미지 정본을 따른다.",
+   "hair_why": "불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
    "hair_cues": [
     "불꽃 타입 → 헤어스타일 바람에 날린 듯한 스타일",
     "키 0.5m → 머리 길이 짧은 머리"
@@ -19341,12 +19341,12 @@
    ],
    "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형",
    "hair": {
-    "hairstyle": "wavy",
-    "hair length": "long",
+    "hairstyle": "windswept",
+    "hair length": "medium",
     "bangs": "side-swept bangs"
    },
    "hair_locked": true,
-   "hair_why": "확정 경장 ① 관찰: 어깨 아래로 길게 흐르는 바람결 웨이브와 옆으로 넘긴 앞머리. 갈색 바탕의 붉은 주황 끝색은 이미지 정본을 따른다.",
+   "hair_why": "‘stronger flame’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 뚜꾸리에서 이어 같은 묶음",
    "hair_cues": [
     "‘stronger flame’ → 헤어스타일 바람에 날린 듯한 스타일"
    ]
@@ -19378,12 +19378,12 @@
    ],
    "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 바람에 날린 듯한 스타일",
    "hair": {
-    "hairstyle": "wavy",
-    "hair length": "very long",
+    "hairstyle": "windswept",
+    "hair length": "long",
     "bangs": "side-swept bangs"
    },
    "hair_locked": false,
-   "hair_why": "차오꿀 경장 ①의 긴 웨이브를 잇되, 아직 미등록인 염무왕의 더 큰 불꽃 갈기 인상은 한 단계 긴 웨이브로 구분한다.",
+   "hair_why": "‘burning flames’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 차오꿀에서 이어 같은 묶음",
    "hair_cues": [
     "‘burning flames’ → 헤어스타일 바람에 날린 듯한 스타일",
     "키 1.6m → 머리 길이 긴 머리"
