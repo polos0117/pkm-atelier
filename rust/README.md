@@ -23,6 +23,12 @@ cargo run --release -p casual-look -- pairs --top 20                 # 가장 �
 cargo test -p casual-look
 ```
 
+cargo 가 없는 곳(생성 세션 등)에서는 `check` 를 node 로 돌린다 — 같은 셈을 wasm 으로 묶어 올려 두었다(`tools/casual-look.wasm`).
+
+```bash
+node tools/casual-look.cjs check --card 피카츄 a.webp b.webp c.webp [--json]   # 글·끝 번호(0·1·2)가 명령줄과 같다
+```
+
 그림 저장소는 이 저장소 옆(`../pkm-atelier-img`, `../pkm-atelier-img-2`)에서 찾고, `thumb/` 이 있으면
 그쪽을 읽는다. 저장소 뿌리는 `PKM_ROOT` 로 바꾼다. 의존 상자를 못 받는 곳에서는 `--offline`.
 
@@ -51,3 +57,18 @@ cargo test -p casual-look
 ## art-core
 
 `art-core/` 는 book-atelier 의 `rust/art-core` 를 그대로 옮겨 온 것이다. 고치면 양쪽을 맞춘다.
+
+## wasm — cargo 없이 도는 문턱
+
+셈은 `casual-look/src/lib.rs` 한 곳이고, 명령줄(`src/main.rs` — 파일·스레드·찍기)과 `casual-wasm`(포인터·길이만 쓰는 `extern "C"`)이 같이 쓴다.
+`index`·`pairs` 는 명령줄만 — 색인은 등록 워크플로가 짓는다.
+
+`art-core`·`casual-look/src/lib.rs`·`casual-wasm` 을 고쳤으면 wasm 을 다시 지어 올린다. 안 그러면 `node tests/casual-look-wasm.cjs` 가
+"wasm 이 소스보다 묵었다" 로 막는다(wasm 안의 소스 셈 — `casual-wasm/build.rs`).
+
+```bash
+cd rust
+cargo build --profile wasm --target wasm32-unknown-unknown -p casual-wasm   # rustup target add wasm32-unknown-unknown
+cp target/wasm32-unknown-unknown/wasm/casual_wasm.wasm ../tools/casual-look.wasm
+cargo build --release -p casual-look && node ../tests/casual-look-wasm.cjs  # 명령줄이 지어져 있으면 글이 한 글자도 같은지까지 본다
+```

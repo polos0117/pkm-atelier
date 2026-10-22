@@ -113,6 +113,7 @@ python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장�
 python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 세션별 예약(IMAGE_RULES 3절)
 node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기 · 피할 값 · 생성기 주소
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
+node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)

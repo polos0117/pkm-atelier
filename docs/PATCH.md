@@ -13,6 +13,13 @@
 
 
 
+## 2026-10-22 · claude · 일상컷 생김새 문턱을 cargo 없이도
+- rust/casual-look/src/lib.rs — 셈(생김새·거리·색인 읽기·check 글)을 라이브러리로 뺐다. 명령줄 main.rs 는 파일·스레드·찍기만 — 색인이 전과 한 글자도 같다.
+- rust/casual-wasm/ — 같은 셈의 wasm(extern "C", 소스 셈을 안에 넣는다). tools/casual-look.wasm 으로 올렸다.
+- tools/casual-look.cjs — node 로 check. cargo 없는 생성 세션이 문턱을 건너뛰던 것을 막는다. 글·끝 번호가 명령줄과 같다(실제 일상컷 120장 대조).
+- IMAGE_RULES.md — 3절 6번: 문턱은 node tools/casual-look.cjs 로, "cargo 가 없으면 건너뛴다" 를 지웠다.
+- tests/casual-look-wasm.cjs · AGENTS.md · rust/README.md — wasm 이 소스보다 묵었나 · 세 장 겹침 · 못 읽는 그림 · 명령줄 대조. 다시 짓는 법.
+
 ## 2026-10-22 · gpt · 완료된 일상컷 예약 인식 복구
 - tools/casual-ledger.py — 카드별 storage와 최상위 card를 가진 기록도 읽어 완료된 예약이 비교 후보를 계속 차지하지 않게 했다.
 - tests/casual-ledger.py — 카드별 기록의 done 전환과 예약 제외를 재현 검사한다.
