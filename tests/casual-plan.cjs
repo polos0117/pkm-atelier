@@ -143,6 +143,27 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   n++;
 }
 
+/* ── 큰 갈래의 예시 — 장부 전체에서 쓴 횟수가 가장 적은 것 먼저. 오래전에 열두 번 쓴 예시는 최근 값이 0 에 가까워도 고르지 않는다 ── */
+{
+  const keys = S.EXAMPLE_MAP.adult_roleplay.filter(r => r[0] && r[0] !== '__custom__' && r[0].indexOf('auto_') !== 0 && r[4] !== 'm').map(r => r[0]);
+  assert(keys.length > 8, '큰 갈래');
+  const heavy = keys[0], once = keys[1], rest = keys.slice(2);
+  const cut = (k, cat = 'adult_roleplay', ex = k) => ({ cut: 1, cat, ex, orient: 'front', frame: 'full_body', garments: [] });
+  const hist = [];
+  for (let i = 0; i < 12; i++) hist.push([cut(heavy)]);               // 가장 오래전 — 열두 번
+  for (const k of rest) hist.push([cut(k)], [cut(k)]);               // 그다음 — 두 번씩
+  hist.push([cut(once)]);                                            // 10명 창 바로 밖 — 한 번
+  const recent = ['swimwear', 'lingerie'].flatMap(c => S.EXAMPLE_MAP[c].filter(r => r[0] && r[0].indexOf('auto_') !== 0 && r[4] !== 'm').slice(0, 5).map(r => [cut(r[0], c)]));
+  const ent = hist.concat(recent).map((cuts, i) => ({ card: 'H' + i, status: 'done', at: at(i), cuts }));
+  for (const seed of ['a', 'b', 'c', 'd']) {
+    const p = P.plan({ S, entries: ent, card: 'NEW', seed });
+    const ar = p.cuts.find(x => x.cat === 'adult_roleplay');
+    assert(ar, '앞 10명이 안 쓴 필수 갈래를 고른다 ' + seed);
+    assert.equal(ar.ex, once, '쓴 횟수가 가장 적은 예시(한 번) — 열두 번 쓴 ' + heavy + ' 이 아니다 · 씨앗 ' + seed);
+  }
+  n++;
+}
+
 /* ── 실제 장부(그림 저장소가 옆에 있으면) — 미등록 한 종이 현재 장부에서도 맞춰지는지 ── */
 {
   const img2 = path.join(ROOT, '..', 'pkm-atelier-img-2');
