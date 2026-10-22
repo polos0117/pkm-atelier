@@ -195,8 +195,8 @@ def reconcile_external(state, run, registry, images, code_head, read):
 def check_assets(state, read):
     for run in state['runs']:
         for c in run['queue']:
-            for item in c['slots'].values():
-                for key in ['prompt', 'ui', 'image', 'qa']:
+            for item in list(c['slots'].values()) + c.get('attempt_history', []):
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference']:
                     a = item.get(key)
                     if a and (not a['path'].startswith('records/automation/') or '..' in Path(a['path']).parts):
                         raise ValueError('invalid recovery artifact path')
@@ -298,6 +298,36 @@ def intent(run, slot, prompt, ui, files):
     c['status'] = 'working'
 
 
+def retry_intent(run, slot, prompt, ui, qa, approval, files):
+    """Consume one explicit, hash-bound approval; preserve the rejected attempt forever."""
+    c = current(run); old = c['slots'].get(slot, {})
+    auth = json.loads(Path(approval).read_text())
+    q = json.loads(Path(qa).read_text())
+    if run['status'] != 'blocked' or c['status'] != 'blocked' or old.get('status') != 'review':
+        raise ValueError('retry requires blocked QA result, never an in-flight call')
+    if any(x.get('slot') == slot for x in c.get('attempt_history', [])):
+        raise ValueError('one correction only; further retries are not supported')
+    if (auth.get('card') != c['no'] or auth.get('slot') != slot or auth.get('max_corrections') != 1
+            or auth.get('rejected_sha256') != old['image']['sha256'] or not auth.get('user_approval')):
+        raise ValueError('explicit one-shot approval bound to card, slot and rejected hash required')
+    if (q.get('accepted') is not False or q.get('image_sha256') != old['image']['sha256']
+            or not q.get('observations') or not q.get('reviewer')):
+        raise ValueError('rejected QA evidence required')
+    # Validate new UI before changing the current pointer. All changes publish atomically.
+    if not Path(prompt).read_text().strip() or not isinstance(json.loads(Path(ui).read_text()), dict):
+        raise ValueError('actual prompt and UI required')
+    prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
+    archived = dict(old, slot=slot, status='rejected', rejection_reason=c['reason'])
+    archived['qa'] = artifact(files, prefix, 'rejected-qa.json', qa)
+    c.setdefault('attempt_history', []).append(archived)
+    prefix += '/attempts/2'
+    c['slots'][slot] = {'status': 'in_flight', 'attempt': 2, 'at': now(),
+        'prefix': prefix, 'approval': artifact(files, prefix, 'approval.json', approval),
+        'prompt': artifact(files, prefix, 'prompt.txt', prompt), 'ui': artifact(files, prefix, 'ui.json', ui),
+        'references': dict(old['references']), 'correction_reference': old['image']}
+    run['status'] = 'active'; c['status'] = 'working'
+
+
 def record(run, slot, image, files):
     from PIL import Image
     c = current(run)
@@ -310,6 +340,7 @@ def record(run, slot, image, files):
             raise ValueError('expected decoded PNG/WebP 1024x1536; preserve rejected original locally')
         ext = '.png' if im.format == 'PNG' else '.webp'
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
+    prefix = item.get('prefix', prefix)
     item.update(status='review', image=artifact(files, prefix, 'original' + ext, image), received_at=now())
 
 
@@ -327,6 +358,7 @@ def review(run, slot, qa, files):
     if slot.startswith('casual') and not q.get('diversity_comparison'):
         raise ValueError('actual-image diversity QA required')
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
+    prefix = item.get('prefix', prefix)
     item.update(status='accepted', qa=artifact(files, prefix, 'qa.json', qa))
 
 
@@ -382,8 +414,8 @@ def restore(state, read, target):
     root = Path(target)
     for r in state['runs']:
         for c in r['queue']:
-            for item in c['slots'].values():
-                for key in ['prompt', 'ui', 'image', 'qa']:
+            for item in list(c['slots'].values()) + c.get('attempt_history', []):
+                for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference']:
                     a = item.get(key)
                     if not a:
                         continue
@@ -441,12 +473,12 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
+    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
     ap.add_argument('--card', type=int, help='required dex number for image/QA operations; prevents stale UI applying to a replacement')
-    for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint']:
+    for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint', 'approval']:
         ap.add_argument('--' + key)
     a = ap.parse_args()
     store = Store(a.repo); state = store.state(); files = {}
@@ -471,7 +503,7 @@ def main():
     if run:
         run = owned(state, a.owner)
     previous = current(run)['no'] if run and current(run) else None
-    if a.command in ('intent', 'record', 'adopt-pilot', 'review', 'prepublish', 'complete'):
+    if a.command in ('intent', 'record', 'adopt-pilot', 'retry-intent', 'review', 'prepublish', 'complete'):
         if a.card is None or a.card != previous:
             raise ValueError('--card must match the current dex number; read next and prepare its actual UI')
     # record must always preserve the pending tool result BEFORE retiring its claim.
@@ -500,12 +532,15 @@ def main():
     elif not recorded:
         run = owned(state, a.owner)
         charge(state, [c['no'] for c in run['queue'] if c['status'] not in TERMINAL], now()[:10])
-        if run['status'] == 'blocked' and a.command != 'resume':
+        if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent'):
             raise ValueError('run blocked; no generation until explicitly resolved')
         if a.command == 'intent':
             if not a.slot: raise ValueError('--slot required')
             guard_external(store, run, a.slot)
             intent(run, a.slot, a.prompt, a.ui, files)
+        elif a.command == 'retry-intent':
+            guard_external(store, run, a.slot)
+            retry_intent(run, a.slot, a.prompt, a.ui, a.qa, a.approval, files)
         elif a.command == 'adopt-pilot':
             pilot = json.loads(Path(a.pilot_checkpoint).read_text())
             if pilot.get('card') != current(run)['name'] or pilot.get('slot') != 'light' or pilot.get('sha256') != digest(Path(a.image).read_bytes()):
@@ -533,7 +568,7 @@ def main():
         assert_heads([first, code, store])
         commit = store.publish(state, files, 'Image runner: ' + operation)
     print(json.dumps({'commit': commit, 'operation': operation,
-                      'intent_recorded': operation == 'intent',
+                      'intent_recorded': operation in ('intent', 'retry-intent'),
                       'upload_base': commit if operation == 'prepublish' else None,
                       'next': next_step(run) if run else {'action': 'idle', 'reason': 'no daily capacity or eligible candidates'}}, ensure_ascii=False, indent=2))
 

@@ -76,3 +76,9 @@ complete는 원격 img-2의 9장 바이트가 보존 원본의 규정 변환과 
 ## 검증 범위
 
 한 장의 실제 UI→image_gen→로컬 PNG→재열기와 같은 환경의 턴 간 해시 검증은 성공했다. 코드 검사는 실제 bare Git에 대한 동시 push 거부, 하루 상한·다음 날 재개, 미완료/QA 게이트, 불변 원본·복구, 원격 이미지/도감 완료 대조를 포함한다. 예약 실행에서 image_gen·브라우저·이 파일시스템을 사용할 수 있는지는 별도 검증 대상이다. 예약 실행에서 도구가 없으면 상태만 보고하고 대체 API를 만들지 않는다. '하루 한 번 일정'과 '완전 무인 생성 검증 완료'는 같은 뜻이 아니다.
+
+## 명시적으로 승인된 한 번의 수정
+
+QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slot SLOT --prompt FILE --ui FILE --qa REJECTED_QA --approval APPROVAL`로 수정할 수 있다. approval JSON은 card, slot, rejected_sha256, max_corrections:1, 실제 user_approval을 담는다. 승인 자체를 관리기가 얻는 것은 아니므로 에이전트가 사용자 승인을 확인해야 한다. rejected QA는 accepted:false, image_sha256, reviewer, observations를 담는다.
+
+이 명령은 기존 결과를 attempt_history에 보존하고 새 제출을 attempts/2에 원자적으로 기록한다. intent_recorded:true일 때만 한 번 호출한다. record/review는 현재 시도를 가리키며 restore는 과거 시도와 승인도 복구한다. 같은 슬롯의 추가 수정은 거부한다. 다시 실패하면 block하며 자동 재시도하지 않는다. 기존 외부 결과 대조·하루 상한·일반 push 경합 보호는 그대로 적용된다.
