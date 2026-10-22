@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-22 · claude · 도트 띠 높이는 공용 재생기가 맞춘다
+- lib/sprite-actor.js — 공방 모음 원본 그대로(grow). index.html · dex.html 의 ?v=2
+- index.html · dex.html — 앞서 화면마다 넣은 높이 셈을 지우고 재생기의 grow 로(연구소 바닥은 grow:true, 도감 무대는 mount 기본). 폴드·150% 검사는 그대로 통과
+
 ## 2026-10-22 · gpt · 릴리요 등록 정본의 머리 기록 잠금
 - data/face-design.json — 등록된 릴리요 경장 원본과 실제 제출 HAIR 기록으로 긴 양갈래 땋은 머리·커튼뱅을 잠근다.
 - docs/CHARACTER_FACE_DESIGNS.md — 릴리요 등록·잠금 상태를 자료에서 다시 렌더한다.

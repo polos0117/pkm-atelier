@@ -180,7 +180,7 @@ body {color:var(--text);font-size:15px}
 <!-- 즐겨찾기 — lib/favorites.js(공방 넷과 공방 모음이 글자 하나 다르지 않게 나눠 쓴다) -->
 <script src="lib/favorites.js?v=1"></script>
 <!-- 도트 — lib/sprite-actor.js(공방 모음의 공용 재생기) · data/sprites.json. 도트가 있는 포켓몬은 목록 칸에 「도트」 표, 상세에 작은 무대 한 줄 -->
-<script src="lib/sprite-actor.js?v=1"></script>
+<script src="lib/sprite-actor.js?v=2"></script>
 <link rel="stylesheet" href="lib/sprite-actor.css?v=1">
 </head>
 <body class="dex-page">
@@ -217,12 +217,9 @@ function DotRow({ card }) {
   useEffect(() => {
     if (!SP || !box.current) return;
     let live = true, a = null;
-    /* 무대 높이 — 도트 한 칸은 실제 화소의 정수배라 화소 배율이 2.6(폴드)이면 1.14배로 커진다. 그 크기로 머리(걷기 오르내림 2칸 더)까지 들어가게 */
-    const tall = () => { if (a && box.current) box.current.style.minHeight = Math.ceil(10 + 128 * a.debug().unit + 4) + 'px'; };
-    const retall = () => requestAnimationFrame(tall);
-    SP.mount(box.current, card.name, { label: W('dex.dot.actor', { name: card.name }) }).then(x => { if (!live) { if (x) x.destroy(); return; } a = x; tall(); setOn(!!x); });
-    addEventListener('resize', retall);
-    return () => { live = false; if (a) a.destroy(); setOn(false); removeEventListener('resize', retall); };
+    /* mount 는 무대를 도트 크기만큼 늘린다(grow — 폴드처럼 화소 배율이 정수가 아니면 도트가 1.14배로 커져도 머리가 안 잘린다) */
+    SP.mount(box.current, card.name, { label: W('dex.dot.actor', { name: card.name }) }).then(x => { if (!live) { if (x) x.destroy(); return; } a = x; setOn(!!x); });
+    return () => { live = false; if (a) a.destroy(); setOn(false); };
   }, [card.name]);
   return html`<section class="dex-dot" hidden=${!on} data-card=${card.name} aria-labelledby="dex-dot-title">
     <p class="sec" id="dex-dot-title">${W('dex.dot.title')}<span>${W('dex.dot.note')}</span></p>

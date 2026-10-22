@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="lib/capsule.css?v=dot2">
 <script src="lib/patch.js?v=1"></script>
 <script src="lib/fresh.js?v=4"></script>
-<script src="lib/sprite-actor.js?v=1"></script>
+<script src="lib/sprite-actor.js?v=2"></script>
 <link rel="stylesheet" href="lib/sprite-actor.css?v=1">
 </head>
 <body class="prompt-page lab-page">
@@ -108,15 +108,13 @@ function CapsuleBay(){
     if(!SP||!sprites||!data||!floor.current)return;
     const names=new Set(data.cards.map(c=>c.name)),keys=Object.keys(sprites.actors).map(k=>SP.cardKey(k,sprites.actors[k])).filter(k=>names.has(k));
     if(!keys.length)return;
-    const F=SP.floor(floor.current,sprites,{keys,floor:20,labelOf:k=>W('home.dot.actor',{name:k}),onSelect:k=>{
+    /* grow — 도트 한 칸은 실제 화소의 정수배라 화소 배율이 2.6(폴드)이면 1.14배로 커진다. 띠가 그만큼 늘어 머리가 안 잘린다 */
+    const F=SP.floor(floor.current,sprites,{keys,floor:20,grow:true,labelOf:k=>W('home.dot.actor',{name:k}),onSelect:k=>{
       const L=live.current,el=bay.current?.querySelector('.capsule[data-name="'+CSS.escape(k)+'"]');
       if(el&&L.residents.some(c=>c.name===k)){L.opener.current=el;L.select(k);}else location.href='dex.html?mech='+encodeURIComponent(k);
     }});
-    /* 띠 높이 — 도트 한 칸은 실제 화소의 정수배라 화소 배율이 2.6(폴드)이면 3화소 = 1.14배로 커진다. 그 크기로 머리(걷기 오르내림 2칸 더)까지 들어가게 */
-    const tall=()=>{if(!floor.current)return;const h=Math.max(0,...F.list().map(x=>{const d=SP.actorFor(sprites,x.key);return 20+((d?.foot?.[1]??126)+2)*x.actor.debug().unit+4;}));floor.current.style.minHeight=h?Math.ceil(h)+'px':'';};
-    const retall=()=>requestAnimationFrame(tall);
-    walkers.current=F;F.ready().then(()=>{tall();setFloorOn(F.list().some(x=>!x.actor.failed));});addEventListener('resize',retall);
-    return()=>{F.destroy();walkers.current=null;setFloorOn(false);removeEventListener('resize',retall);};
+    walkers.current=F;F.ready().then(()=>setFloorOn(F.list().some(x=>!x.actor.failed)));
+    return()=>{F.destroy();walkers.current=null;setFloorOn(false);};
   },[sprites,data]);
   /* 캡슐을 열면 — 그 포켓몬의 도트가 있으면 유리가 걷히는 사이 캡슐에서 뛰쳐나와 화면 바닥을 거닌다. 닫으면 캡슐로 뛰어 들어간다 */
   useEffect(()=>{
