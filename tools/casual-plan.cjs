@@ -102,7 +102,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
 }
 function check(o, planFile) {
-  try { return { ok: true, out: ledgerPy(o, 'check', planFile) }; }
+  try { return { ok: true, out: ledgerPy(o, 'check', planFile, '--fresh') }; }
   catch (e) { return { ok: false, out: String(e.stdout || '') + String(e.stderr || '') }; }
 }
 function solve(o, S, cards) {
@@ -148,7 +148,7 @@ function reserve(o, S, cards) {
   const img2 = o.repos[1], rel = path.join('records', 'casual-reservations', o.session.replace(/[^A-Za-z0-9._-]+/g, '-').replace(/^[-.]+|[-.]+$/g, '') + '.json');
   for (let round = 0; round < 4; round++) {
     const res = solve(o, S, cards);
-    ledgerPy(o, 'reserve', res.file);
+    ledgerPy(o, 'reserve', res.file, '--fresh');
     if (!o.push) return res;
     git(img2, 'add', rel);
     git(img2, 'commit', '-q', '-m', 'Reserve casual plan ' + res.plan.characters.map(c => c.card).join(' ') + ' (' + o.session + ')');

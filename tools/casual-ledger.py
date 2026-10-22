@@ -455,8 +455,17 @@ def check_plan(doc, plan, sp, ledger=None):
     return errs
 
 
+def snapshot(args):
+    """One source for planning and validation; never rewrite the shared ledger."""
+    old = load(args.ledger)
+    if not getattr(args, "fresh", False):
+        return old
+    return {"entries": read_records(args.repos) +
+            [e for e in old.get("entries", []) if e.get("status") == "reserved"]}
+
+
 def check(args, write=False):
-    doc, sp = load(args.ledger), spec()
+    doc, sp = snapshot(args), spec()
     with open(args.plan, encoding="utf-8") as f:
         plan = json.load(f)
     errs = check_plan(doc, plan, sp, args.ledger)
@@ -494,9 +503,7 @@ def check(args, write=False):
 
 def view(args):
     """계획기(tools/casual-plan.cjs)가 읽는 살아 있는 칸 — 장부 + 세션별 예약, 시각 차례. --fresh 면 기록에서 다시 읽는다(장부 파일은 안 쓴다)"""
-    doc = {"entries": read_records(args.repos)} if args.fresh else load(args.ledger)
-    if args.fresh:
-        doc["entries"] += [e for e in load(args.ledger).get("entries", []) if e.get("status") == "reserved"]
+    doc = snapshot(args)
     es = live(doc, args.ledger)
     json.dump({"entries": es}, sys.stdout, ensure_ascii=False)
 
@@ -507,7 +514,7 @@ def main():
     ap.add_argument("plan", nargs="?")
     ap.add_argument("--ledger", default=LEDGER)
     ap.add_argument("--repos", nargs="+", default=REPOS)
-    ap.add_argument("--fresh", action="store_true", help="view: 장부 파일 대신 기록에서 다시 읽는다")
+    ap.add_argument("--fresh", action="store_true", help="view/check/reserve: 장부 파일 대신 기록에서 다시 읽는다")
     a = ap.parse_args()
     if a.cmd in ("check", "reserve") and not a.plan:
         ap.error("PLAN.json 이 필요하다")

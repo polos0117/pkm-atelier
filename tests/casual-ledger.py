@@ -167,4 +167,21 @@ with tempfile.TemporaryDirectory() as tmp:
     reserved = {**es[0], "status": "reserved", "at": L.now()}
     assert [e["status"] for e in L.live({"entries": es + [reserved]})] == ["done"]
 
+# Fresh check/reserve must use the same registered records as the planner.
+with tempfile.TemporaryDirectory() as tmp:
+    led = str(Path(tmp) / "ledger.json")
+    json.dump({"entries": [done("stale", good["characters"][0]["cuts"], "2026-01-01T00:00:00+00:00")]}, open(led, "w"))
+    orig = L.read_records
+    try:
+        L.read_records = lambda repos: hist
+        a = type("A", (), {"ledger": led, "repos": ["fixture"], "fresh": True})
+        assert L.snapshot(a)["entries"] == hist
+        assert L.check_plan(L.snapshot(a), good, SP) == []
+        # Legacy embedded reservations survive refreshing the registered records.
+        pending = {**good["characters"][0], "card": "pending", "status": "reserved", "at": L.now()}
+        json.dump({"entries": [pending]}, open(led, "w"))
+        assert pending in L.snapshot(a)["entries"]
+    finally:
+        L.read_records = orig
+
 print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

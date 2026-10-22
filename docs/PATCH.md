@@ -13,10 +13,20 @@
 
 
 
+## 2026-10-22 · gpt · 이미지 작업 잠금·하루 상한·복구와 장부 입력 통일
+- tools/image-runner.py — 원격 상태 하나로 최대 2종 순차 큐·전체 캐릭터 claim·호출 전후 기록·QA 게이트·해시 복구·등록 완료를 관리한다. 일반 push 충돌은 중단한다.
+- tests/image-runner.py — 동시 Git 쓰기 거부·일일 상한·재개·원본 보존·QA·등록 검증을 시험한다.
+- tools/casual-ledger.py — 최신 기록과 예약을 합치는 snapshot을 view/check/reserve가 공유한다.
+- tools/casual-plan.cjs — check/reserve에도 fresh를 넘겨 계획 단계와 같은 자료를 검사한다.
+- tests/casual-ledger.py — 오래된 장부 대신 최신 등록 기록을 검사하고 기존 예약은 유지하는 회귀 검사를 추가했다.
+- tests/casual-plan.cjs — 신규 종 통합 시험에서 UI 장부 없는 기존 등록종도 제외한다.
+- docs/IMAGE_AUTOMATION.md — 다음 실행 명령·중단 조건·복구·도구 가용성의 검증 한계를 적었다.
+
 ## 2026-10-22 · gpt · 염무왕 이미지 정본 등록
 - data/face-design.json — 염무왕 경장 ①을 정본으로 표시하고 관찰된 긴 바람결 머리·옆 앞머리를 잠갔다.
 - docs/CHARACTER_FACE_DESIGNS.md — 현재 정본 등록 상태로 다시 렌더링했다.
 - docs/image-batches/emboar-20261022.md — 폼·개방·일상 9장과 생성 기록 및 검수 결과를 연결했다.
+
 
 ## 2026-10-22 · gpt · 잘린 얼굴 설계 자료 복구
 - data/face-design.json — 생략 문자열로 손상된 382–673 구간을 정상 체크아웃에서 복구하고 최신 나머지 구간 및 뚜꾸리·차오꿀의 정본 등록 표시를 보존했다.
