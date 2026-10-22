@@ -13472,7 +13472,7 @@
    "en": "Cradily",
    "line": "릴링",
    "how": "species",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -13497,11 +13497,16 @@
     "hair length": "long",
     "bangs": "curtain bangs"
    },
-   "hair_locked": false,
-   "hair_why": "‘eight pink tentacles’에서 양갈래 땋은 머리 · 긴 머리 · 커튼뱅 — 릴링에서 이어 같은 묶음",
-   "hair_cues": [
-    "‘eight pink tentacles’ → 헤어스타일 양갈래 땋은 머리"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 경장 ① 실제 제출 HAIR 줄과 원본의 긴 양갈래 땋은 머리·커튼뱅을 보존한다.",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/cradily-20261022-automation/light-prompt.txt",
+    "kind": "prompt",
+    "raw": {
+     "HAIR": "long twin braids, curtain bangs"
+    }
+   }
   },
   "347": {
    "name": "아노딥스",
