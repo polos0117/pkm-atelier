@@ -13230,7 +13230,7 @@
    "en": "Whiscash",
    "line": "미꾸리",
    "how": "draft",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -16435,7 +16435,7 @@
    "en": "Gastrodon",
    "line": "깝질무",
    "how": "draft",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "softly rounded",
     "face length": "short",
@@ -16458,24 +16458,27 @@
     "‘round head’ → 눈썹 짧고 둥근",
     "‘round head’ → 코 코끝이 둥근"
    ],
-   "adjusted": "같은 계열 깝질무와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 로크스 / 드레드풍",
+   "adjusted": "같은 계열 깝질무와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
    "hair": {
     "hairstyle": "locs",
     "hair length": "long",
     "bangs": "curtain bangs"
    },
-   "hair_locked": false,
-   "hair_why": "‘large tentacles’에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 깝질무에서 이어 같은 묶음",
-   "hair_cues": [
-    "‘large tentacles’ → 헤어스타일 로크스 / 드레드풍"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/gastrodon-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/gastrodon-20261022/light-ui.json",
+    "kind": "ui",
+    "raw": {}
+   }
   },
   "424": {
    "name": "겟핸보숭",
    "en": "Ambipom",
    "line": "에이팜",
    "how": "draft",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "oval",
     "face length": "balanced",
@@ -16501,11 +16504,14 @@
     "hair length": "long",
     "bangs": "side-swept bangs"
    },
-   "hair_locked": false,
-   "hair_why": "‘split hair’(원작의 머리칼)에서 트윈테일(묶은 꼬리) · 긴 머리 · 옆으로 넘긴 앞머리",
-   "hair_cues": [
-    "‘split hair’(원작의 머리칼) → 헤어스타일 트윈테일"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/ambipom-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/ambipom-20261022/light-ui.json",
+    "kind": "ui",
+    "raw": {}
+   }
   },
   "425": {
    "name": "흔들풍손",
