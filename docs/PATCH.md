@@ -13,6 +13,13 @@
 
 
 
+## 2026-10-22 · gpt · 승인된 완료 슬롯 교체를 이력으로 보존
+- tools/image-runner.py — 이전 공개 해시와 승인을 대조해 완료 기록 뒤에 교체를 추가하고 현재 이미지 복구·읽기 전용 완료 검증에 반영한다.
+- tools/casual-ledger.py — 과거 UI는 유지하고 승인된 교체의 실제 UI를 현재 장부에 읽는다.
+- tests/image-runner-replacement.py — 이전 완료 불변·승인/공개 해시 경합·중복 거부·현재 이미지 검증을 확인한다.
+- tests/casual-ledger-replacement.py — 원래 기록을 고치지 않고 새 UI를 읽는 것을 확인한다.
+- docs/IMAGE_AUTOMATION.md — 완료 후 명시적 슬롯 교체와 verify-completed 사용 범위를 적는다.
+
 ## 2026-10-22 · claude · 도트 띠 높이는 공용 재생기가 맞춘다
 - lib/sprite-actor.js — 공방 모음 원본 그대로(grow). index.html · dex.html 의 ?v=2
 - index.html · dex.html — 앞서 화면마다 넣은 높이 셈을 지우고 재생기의 grow 로(연구소 바닥은 grow:true, 도감 무대는 mount 기본). 폴드·150% 검사는 그대로 통과

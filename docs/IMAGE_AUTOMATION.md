@@ -92,3 +92,7 @@ QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slo
 `replan-rejected --card N --slot SLOT --prompt FILE --ui FILE --failure FILE --approval FILE`은 확정된 moderation_blocked 응답으로 파일이 반환되지 않은 blocked intent에만 쓴다. 진행 중이거나 결과가 불확실한 호출은 대상이 아니다. failure는 terminal:true, output_files:[], code, request_id, prompt_sha256을 기록한다. approval은 card, slot, rejected_prompt_sha256, max_new_attempts:1, user_approval, substantive_nonsexual_changes를 기록한다. 에이전트는 실제 승인과 실질적인 비성적 내용 변경을 확인해야 한다. 필터 통과 지점을 탐색하는 반복 기능이 아니다.
 
 기존 intent와 도구 거절은 attempt_history 및 tool-failure.json에 남고 새 시도는 attempts/2에 기록된다. 거절 기록도 restore에서 해시 검사한다. 같은 슬롯에는 한 번만 허용하며 재거절 시 block한다. 사용자 지시로 바꾼 강도·노출·의상·구도는 실제 UI와 별도 승인 기록에 남기고, 일반 계획·QA 검사를 완화하지 않는다.
+
+## 완료 후 사용자가 지정한 공개 슬롯 교체
+
+명시적으로 승인된 완료 캐릭터 casual3 교체는 `append_completed_replacement`로 이전 공개 해시·승인·새 검수 원본을 대조한 후 `replacements`에 추가한다. 기존 slots, outputs, completed_at과 실패 시도는 과거 완료 기록으로 그대로 남는다. 공개 WebP와 상태 overlay는 같은 일반 push에 반영한다. 완료 상태를 재개하거나 새 캐릭터를 생성하지 않는다. `verify-completed`는 마지막 교체 원본을 우선하여 실제 공개 바이트·썸네일·도감 슬롯을 읽기 전용으로 검증한다. restore와 장부도 교체 원본·실제 UI를 반영하며 과거 기록을 삭제하지 않는다.

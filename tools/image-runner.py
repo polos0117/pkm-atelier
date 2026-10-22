@@ -3,6 +3,7 @@
 All mutable state and preserved assets live in img-2 records/automation/.
 A normal fast-forward push is the compare-and-swap; contention stops the caller.
 """
+import copy
 import argparse, datetime as dt, hashlib, io, json, os, re, subprocess, tempfile
 from pathlib import Path
 
@@ -195,7 +196,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
 def check_assets(state, read):
     for run in state['runs']:
         for c in run['queue']:
-            for item in list(c['slots'].values()) + c.get('attempt_history', []):
+            for item in list(c['slots'].values()) + c.get('attempt_history', []) + c.get('replacements', []):
                 for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception', 'tool_failure']:
                     a = item.get(key)
                     if a and (not a['path'].startswith('records/automation/') or '..' in Path(a['path']).parts):
@@ -414,6 +415,54 @@ def accept_exception(run, slot, approval, files):
     c['status'] = 'working'; run['status'] = 'active'
 
 
+def effective_slot(c, slot):
+    matches = [x for x in c.get('replacements', []) if x['slot'] == slot]
+    return matches[-1] if matches else c['slots'][slot]
+
+
+def append_completed_replacement(state, run_id, card, slot, item, approval, read):
+    """Append an authorized current-image overlay; original completion is immutable."""
+    run = next(r for r in state['runs'] if r['id'] == run_id)
+    c = next(c for c in run['queue'] if c['no'] == card)
+    if run['status'] != 'complete' or c['status'] != 'complete' or slot != 'casual3':
+        raise ValueError('replacement requires completed run/card and explicit casual3 scope')
+    old = effective_slot(c, slot)
+    old_hash = digest(webp(read(old['image']['path'])))
+    public = 'img/' + filename(c, slot)
+    if (approval.get('card') != card or approval.get('slot') != slot or not approval.get('user_approval')
+            or approval.get('old_public_sha256') != old_hash or digest(read(public)) != old_hash):
+        raise ValueError('replacement approval or current public bytes do not match')
+    qa = json.loads(read(item['qa']['path']))
+    if (qa.get('accepted') is not True or qa.get('image_sha256') != item['image']['sha256']
+            or not qa.get('observations') or not qa.get('diversity_comparison') or not qa.get('reviewer')):
+        raise ValueError('replacement requires actual accepted image and diversity QA')
+    if digest(read(item['image']['path'])) != item['image']['sha256']:
+        raise ValueError('replacement source hash mismatch')
+    entry = dict(item, slot=slot, status='accepted', replaced_at=now(),
+                 previous_public_sha256=old_hash,
+                 public_sha256=digest(webp(read(item['image']['path']))),
+                 original_completed_at=c['completed_at'])
+    c.setdefault('replacements', []).append(entry)
+    return public, webp(read(item['image']['path']))
+
+
+def verify_completed(state, images, code):
+    """Read-only verification of effective images, retaining historical completion."""
+    checked = []
+    for run in state['runs']:
+        for c in run['queue']:
+            if c['status'] != 'complete': continue
+            shadow = copy.deepcopy(state)
+            r = next(x for x in shadow['runs'] if x['id'] == run['id'])
+            cc = next(x for x in r['queue'] if x['no'] == c['no'])
+            cc['slots'] = {slot: effective_slot(c, slot) for slot in SLOTS}
+            cc['status'] = 'working'
+            r['queue'] = [cc]
+            complete(r, shadow, images, code)
+            checked.append(c['no'])
+    return checked
+
+
 def complete(run, state, images, code):
     from PIL import Image
     c = current(run)
@@ -466,7 +515,7 @@ def restore(state, read, target):
     root = Path(target)
     for r in state['runs']:
         for c in r['queue']:
-            for item in list(c['slots'].values()) + c.get('attempt_history', []):
+            for item in list(c['slots'].values()) + c.get('attempt_history', []) + c.get('replacements', []):
                 for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception', 'tool_failure']:
                     a = item.get(key)
                     if not a:
@@ -525,7 +574,7 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
+    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
@@ -540,6 +589,9 @@ def main():
             raise ValueError('--dir required')
         restore(state, store.read, a.dir)
         print('restored and hash verified; never regenerate missing local files before restore')
+        return
+    if a.command == 'verify-completed':
+        print(json.dumps({'verified_completed': verify_completed(state, store, Store(ROOT))}))
         return
     if a.command == 'status':
         r = active(state)

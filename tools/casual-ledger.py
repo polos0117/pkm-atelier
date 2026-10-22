@@ -38,6 +38,7 @@ PLAN.json 꼴(배치 하나 — 같이 만드는 캐릭터 전부):
 한 장 이상·덮는 겉옷 한 장까지)은 그대로 본다.
 
 기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2 다(--repos 로 바꾼다)."""
+from pathlib import Path
 import argparse, datetime, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -168,6 +169,21 @@ def read_records(repos):
         d = os.path.join(repo, "img")
         if os.path.isdir(d):
             imgs.update(os.listdir(d))
+    replacement_ui = {}
+    for repo in repos:
+        state_path = Path(repo) / 'records/automation/state.json'
+        if not state_path.exists():
+            continue
+        state = json.loads(state_path.read_text())
+        for run in state.get('runs', []):
+            for ch in run.get('queue', []):
+                for replacement in ch.get('replacements', []):
+                    slot = replacement.get('slot', '')
+                    if replacement.get('status') == 'accepted' and re.fullmatch(r'casual[1-3]', slot):
+                        relative = replacement['ui']['path']
+                        if not relative.startswith('records/automation/') or '..' in Path(relative).parts:
+                            raise ValueError('invalid replacement UI path')
+                        replacement_ui[(ch['name'], int(slot[-1]))] = Path(repo) / relative
     entries = []
     for repo in repos:
         base = os.path.join(repo, "records")
@@ -186,6 +202,9 @@ def read_records(repos):
                 except (ValueError, OSError):
                     continue
                 card = st.get("last") or record.get("card") or card
+                if (card, i) in replacement_ui:
+                    record = json.loads(replacement_ui[(card, i)].read_text())
+                    st = record.get("storage") or {}
                 cd = (st.get("cards") or {}).get(card) or (st if "scenes" in st else {})
                 c = cd.get("scenes", {}).get("casual")
                 if not c or not card:
