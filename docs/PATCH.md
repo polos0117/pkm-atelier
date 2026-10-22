@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-22 · gpt · 전송 중 잘린 정본 데이터와 설계표 복구
+- data/face-design.json — 큰 파일 전송에서 잘린 내용을 온전한 원본으로 복구하고 Git blob 해시를 대조한다.
+- docs/CHARACTER_FACE_DESIGNS.md — 설계표 전체를 복구하고 원격 바이트가 렌더 원본과 일치하는지 검증한다.
+
 ## 2026-10-22 · gpt · 보르쥐 이미지 9장 등록과 정본 잠금
 - data/face-design.json — 등록된 보르쥐 경장 ①의 실제 생성기 기록을 정본으로 표시하고 긴 포니테일·불규칙 앞머리 설계를 잠근다.
 - docs/CHARACTER_FACE_DESIGNS.md — 보르쥐의 등록·잠금 상태를 자료에서 다시 렌더한다.
