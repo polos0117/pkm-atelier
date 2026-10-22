@@ -13,6 +13,12 @@
 
 
 
+## 2026-10-22 · gpt · 예약 뒤 외부 게시를 보존하고 자동 건너뛰기
+- tools/image-runner.py — 두 이미지 저장소·도감을 대조해 외부 완성/부분 게시를 구분하고 자기 claim만 종료한다. 미착수 한도 반환·유한 큐 보충·in_flight 결과 보존·자기 게시 판별·업로드 전 snapshot 확인을 추가했다.
+- tests/image-runner-external.py — 외부 완성/부분 게시, 옛 저장소, 자기 결과, 생성 중 경합, 하루 상한, 실제 Git에서 오래된 intent와 업로드 기준 commit을 검사한다.
+- docs/IMAGE_AUTOMATION.md — 건너뛰기 상태와 --card·intent_recorded·prepublish/upload_base·등록 대기 절차를 설명한다.
+- AGENTS.md — 외부 게시 후 관리기를 통해 건너뛰고 진행 중 결과는 보존하도록 안내한다.
+
 ## 2026-10-22 · gpt · 이미지 작업 잠금·하루 상한·복구와 장부 입력 통일
 - AGENTS.md — 다른 세션도 전체 캐릭터 claim을 확인하고 interrupted 작업을 임의 인수하지 않도록 진입 지침을 연결했다.
 - tools/image-runner.py — 원격 상태 하나로 최대 2종 순차 큐·전체 캐릭터 claim·호출 전후 기록·QA 게이트·해시 복구·등록 완료를 관리한다. 일반 push 충돌은 중단한다.

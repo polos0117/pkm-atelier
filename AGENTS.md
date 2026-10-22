@@ -57,7 +57,7 @@
 한 캐릭터 = 경장 ①(인물 기준) + 중장·고기동 + 폼별 개방 3 + 일상컷 3, 파일명, 두 저장소 순서,
 중단 복구가 거기 있다.
 
-캐릭터 작업 전에는 그림 저장소 `pkm-atelier-img-2/records/automation/state.json`의 `claims`와 기존 기록·예약을 함께 확인한다. 다른 owner/run이 잡은 캐릭터는 시작하지 않는다. 일상 예약은 전체 캐릭터 잠금이 아니며, interrupted나 예약 만료만으로 남의 작업을 인수하지 않는다. 자동화 작업의 일일 상한·실제 생성 호출 전후 기록·복구 명령은 [docs/IMAGE_AUTOMATION.md](docs/IMAGE_AUTOMATION.md)에 있다. `in_flight`는 재생성 지시가 아니라 결과 확인 대기다.
+캐릭터 작업 전에는 그림 저장소 `pkm-atelier-img-2/records/automation/state.json`의 `claims`와 기존 기록·예약을 함께 확인한다. 다른 owner/run이 잡은 캐릭터는 시작하지 않는다. 일상 예약은 전체 캐릭터 잠금이 아니며, interrupted나 예약 만료만으로 남의 작업을 인수하지 않는다. 자동화 작업의 일일 상한·실제 생성 호출 전후 기록·복구 명령은 [docs/IMAGE_AUTOMATION.md](docs/IMAGE_AUTOMATION.md)에 있다. `in_flight`는 재생성 지시가 아니라 결과 확인 대기다. 자동화 예약 뒤 외부 이미지가 게시되면 관리기의 `next`/`prepublish`로 완성·부분 게시를 구분해 건너뛴다. 생성 중인 결과는 먼저 보존하고, 반환된 새 대상에 이전 프롬프트를 제출하지 않는다.
 
 
 신규 경장의 얼굴과 머리는 생성기가 `data/face-design.json` 의 그 종을 FACE 줄·HAIR 줄(헤어스타일·길이·앞머리)로 싣는다

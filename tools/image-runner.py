@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
 SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
+TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
 
 
 def now():
@@ -79,6 +80,8 @@ def owned(state, owner):
     if not r or r['owner'] != owner:
         raise ValueError('no active run owned by this owner; do not take over another run')
     for c in r['queue']:
+        if c['status'] in TERMINAL:
+            continue
         claim = state['claims'].get(str(c['no']), {})
         if claim.get('owner') != owner or claim.get('run') != r['id']:
             raise ValueError('character claim does not match run')
@@ -94,7 +97,99 @@ def charge(state, numbers, day):
 
 
 def current(run):
-    return next((c for c in run['queue'] if c['status'] != 'complete'), None)
+    return next((c for c in run['queue'] if c['status'] not in TERMINAL), None)
+
+
+def filename(card, slot):
+    return card['name'] + ('_' + slot if not slot.startswith('casual') else '') + '_' + card['style'] + '_f' + ('_' + slot if slot.startswith('casual') else '') + '.webp'
+
+
+def webp(original):
+    from PIL import Image
+    with Image.open(io.BytesIO(original)) as im:
+        if im.format == 'WEBP':
+            return original
+        buf = io.BytesIO(); im.save(buf, format='WEBP', quality=85, method=6)
+        return buf.getvalue()
+
+
+def registered_files(value):
+    if isinstance(value, str):
+        return {value} if value.endswith('.webp') else set()
+    children = value.values() if isinstance(value, dict) else value if isinstance(value, list) else []
+    return set().union(*(registered_files(v) for v in children))
+
+
+def externally_complete(card, registry, images):
+    for style, v in registry.get('img', {}).get(card['name'], {}).get('byStyle', {}).items():
+        names = [v.get('byForm', {}).get(s, {}).get('f') for s in SLOTS[:6]]
+        casual = v.get('casual', {}).get('f', [])
+        names += [next((f for f in casual if f.endswith('_f_casual' + str(n) + '.webp')), None) for n in (1, 2, 3)]
+        if not all(names):
+            continue
+        def exists(f):
+            shard = registry.get('where', {}).get(f, 0)
+            return shard in (0, 1) and all(p in images[shard].paths for p in ('img/' + f, 'img/thumb/' + f))
+        if all(exists(f) for f in names):
+            return True
+    return False
+
+
+def reconcile_external(state, run, registry, images, code_head, read):
+    """End only our claim. Unresolved tool calls keep their slot until record saves output."""
+    before = encoded(state)
+    for c in run['queue']:
+        if c['status'] in TERMINAL:
+            continue
+        own = {filename(c, s): digest(webp(read(v['image']['path']))) for s, v in c['slots'].items() if v.get('image')}
+        own = {f: c.get('publication', {}).get('files', {}).get('img/' + f, h) for f, h in own.items()}
+        published, foreign, ours = [], [], []
+        for shard, store in enumerate(images):
+            for p in sorted(store.paths):
+                if not re.fullmatch(r'img/[^/]+\.webp', p):
+                    continue
+                f = p[4:]
+                if not (f.startswith(c['name'] + '_') or f.startswith(c['name'].replace(' ', '_') + '_')):
+                    continue
+                h = digest(store.read(p))
+                item = {'file': f, 'shard': shard, 'sha256': h}
+                published.append(item)
+                if shard == 1 and own.get(f) == h:
+                    ours.append(f)
+                else:
+                    foreign.append(item)
+        registered = registered_files(registry.get('img', {}).get(c['name'], {}))
+        # Known own filenames with missing/stale registration remain reconciliation work,
+        # never an excuse to abandon our published outputs as somebody else's work.
+        foreign_registered = sorted(registered - set(own))
+        if not foreign and not foreign_registered:
+            c.pop('external_pending', None)
+            if ours:
+                c['own_publication'] = {'files': sorted(ours), 'status': 'verify_registration'}
+            continue
+        evidence = {'commits': {'code': code_head, 'img': images[0].base, 'img2': images[1].base},
+                    'published': published, 'foreign_files': foreign, 'registered_files': sorted(registered)}
+        if any(v.get('status') == 'in_flight' for v in c['slots'].values()):
+            c.setdefault('external_pending', evidence)
+            continue
+        status = 'completed_externally' if externally_complete(c, registry, images) else 'skipped_external_partial'
+        c.update(status=status, external_evidence=evidence, ended_at=now())
+        c.pop('external_pending', None)
+        claim = state['claims'].get(str(c['no']), {})
+        if claim.get('owner') == run['owner'] and claim.get('run') == run['id']:
+            claim.update(status=status, ended_at=now(), reason='external publication', evidence=evidence)
+        # An intent may already have called the generator. Never refund that character.
+        # Untouched claims, however, must not consume the capacity of their replacements.
+        if not c['slots']:
+            c['refunded_days'] = []
+            for day, used in state['daily'].items():
+                if c['no'] in used:
+                    used.remove(c['no']); c['refunded_days'].append(day)
+    if not current(run):
+        run['status'] = 'complete'
+    elif not any(c['status'] == 'blocked' for c in run['queue'] if c['status'] not in TERMINAL):
+        run['status'] = 'active'
+    return encoded(state) != before
 
 
 def check_assets(state, read):
@@ -122,7 +217,8 @@ def next_step(run):
                     'casual_session': 'image-runner-' + run['id'] + '-' + str(c['no'])}
         if item['status'] != 'accepted':
             return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': item['status'], 'evidence': item}
-    return {'card': c['name'], 'no': c['no'], 'action': 'publish_images_then_verify_registration'}
+    waiting = len(c.get('own_publication', {}).get('files', [])) == 9
+    return {'card': c['name'], 'no': c['no'], 'action': 'verify_registration' if waiting else 'publish_images_then_verify_registration'}
 
 
 def candidates(cards, registry, inventories, records, reservations, state):
@@ -154,12 +250,18 @@ def prepare(state, owner, available, blocked, day):
         r = owned(state, owner)
         if r['status'] == 'blocked':
             raise ValueError('run blocked; inspect evidence and resume explicitly')
-        charge(state, [c['no'] for c in r['queue'] if c['status'] != 'complete'], day)
+        charge(state, [c['no'] for c in r['queue'] if c['status'] not in TERMINAL], day)
+        capacity = 2 - len(state['daily'].get(day, []))
+        picked = [c for c in available if str(c['no']) not in state['claims']][:capacity]
+        charge(state, [c['no'] for c in picked], day)
+        for c in picked:
+            r['queue'].append({'no': c['no'], 'name': c['name'], 'style': 'glossy_promo', 'status': 'claimed', 'slots': {}})
+            state['claims'][str(c['no'])] = {'owner': owner, 'run': r['id'], 'status': 'held', 'at': now()}
         return r
     capacity = 2 - len(state['daily'].get(day, []))
-    picked = available[:capacity]
+    picked = [c for c in available if str(c['no']) not in state['claims']][:capacity]
     if not picked:
-        raise ValueError('no available daily capacity or unclaimed candidates')
+        return None
     charge(state, [c['no'] for c in picked], day)
     ident = day + '-' + str(len(state['runs']) + 1)
     r = {'id': ident, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
@@ -231,18 +333,13 @@ def review(run, slot, qa, files):
 def complete(run, state, images, code):
     from PIL import Image
     c = current(run)
-    if next_step(run)['action'] != 'publish_images_then_verify_registration':
+    if next_step(run)['action'] not in ('publish_images_then_verify_registration', 'verify_registration'):
         raise ValueError('all nine slots require accepted QA before completion')
     registry = json.loads(code.read('data/img.json'))
     entry = registry.get('img', {}).get(c['name'], {}).get('byStyle', {}).get(c['style'], {})
     outputs = {}
     for slot in SLOTS:
-        original = images.read(c['slots'][slot]['image']['path'])
-        with Image.open(io.BytesIO(original)) as im:
-            if im.format == 'WEBP':
-                expected = original
-            else:
-                buf = io.BytesIO(); im.save(buf, format='WEBP', quality=85, method=6); expected = buf.getvalue()
+        expected = webp(images.read(c['slots'][slot]['image']['path']))
         if slot.startswith('casual'):
             filename = c['name'] + '_' + c['style'] + '_f_' + slot + '.webp'
             registered = filename in entry.get('casual', {}).get('f', [])
@@ -261,6 +358,24 @@ def complete(run, state, images, code):
     state['claims'][str(c['no'])]['status'] = 'complete'
     if current(run) is None:
         run['status'] = 'complete'
+
+
+def prepare_publication(run, read):
+    if next_step(run)['action'] != 'publish_images_then_verify_registration':
+        raise ValueError('publication requires all nine accepted slots')
+    c = current(run)
+    files = {'img/' + filename(c, s): webp(read(c['slots'][s]['image']['path'])) for s in SLOTS}
+    c['publication'] = {'status': 'preflight_checked', 'at': now(),
+                        'files': {p: digest(data) for p, data in files.items()}}
+
+
+def assert_heads(stores):
+    # There is no cross-repository atomic transaction. Recheck other snapshots just
+    # before the img-2 fast-forward push, whose parent also protects all image writes.
+    for store in stores:
+        head = git(store.repo, 'ls-remote', 'origin', 'refs/heads/main').decode().split()[0]
+        if head != store.base:
+            raise RuntimeError('remote snapshot changed; rerun reconciliation before any generation or upload')
 
 
 def restore(state, read, target):
@@ -307,8 +422,6 @@ def remote_inputs(code, imgs):
 
 def guard_external(store, run, slot):
     c = current(run)
-    if any(p.startswith('img/' + c['name'] + '_') and p.endswith('.webp') for p in store.paths):
-        raise ValueError('images now exist remotely; reconcile before another generation')
     session = 'image-runner-' + run['id'] + '-' + str(c['no'])
     mine = None
     for p in store.paths:
@@ -328,10 +441,11 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'review', 'complete', 'block', 'resume', 'restore'])
+    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore'])
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
+    ap.add_argument('--card', type=int, help='required dex number for image/QA operations; prevents stale UI applying to a replacement')
     for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint']:
         ap.add_argument('--' + key)
     a = ap.parse_args()
@@ -343,22 +457,49 @@ def main():
         restore(state, store.read, a.dir)
         print('restored and hash verified; never regenerate missing local files before restore')
         return
-    if a.command in ('status', 'next'):
+    if a.command == 'status':
         r = active(state)
         print(json.dumps({'head': store.base, 'run': r, 'next': next_step(r) if r else 'prepare',
                           'external_holds': state['external_holds'], 'daily': state['daily']}, ensure_ascii=False, indent=2))
         return
-    if a.command == 'prepare':
-        code = Store(ROOT); first = Store(ROOT.parent / 'pkm-atelier-img')
-        data = remote_inputs(code, [first, store])
-        for c in data[0]:
-            if c['name'] in data[4]:
-                state['external_holds'][str(c['no'])] = {'card': c['name'], **data[4][c['name']]}
-        available, blocked = candidates(*data, state)
-        run = prepare(state, a.owner, available, blocked, now()[:10])
-    else:
+    before = encoded(state)
+    state['policy']['external_publication'] = 'skip_after_preserving_in_flight_result'
+    state['policy']['image_operations_require_card'] = True
+    code = Store(ROOT); first = Store(ROOT.parent / 'pkm-atelier-img')
+    data = remote_inputs(code, [first, store])
+    run = active(state)
+    if run:
         run = owned(state, a.owner)
-        charge(state, [c['no'] for c in run['queue'] if c['status'] != 'complete'], now()[:10])
+    previous = current(run)['no'] if run and current(run) else None
+    if a.command in ('intent', 'record', 'adopt-pilot', 'review', 'prepublish', 'complete'):
+        if a.card is None or a.card != previous:
+            raise ValueError('--card must match the current dex number; read next and prepare its actual UI')
+    # record must always preserve the pending tool result BEFORE retiring its claim.
+    recorded = a.command == 'record'
+    if recorded:
+        if not run: raise ValueError('no pending run')
+        record(run, a.slot, a.image, files)
+    read = lambda p: files[p] if p in files else store.read(p)
+    if run:
+        reconcile_external(state, run, data[1], [first, store], code.base, read)
+    for card in data[0]:
+        reservation = data[4].get(card['name'])
+        claim = state['claims'].get(str(card['no']))
+        own_session = 'image-runner-' + claim['run'] + '-' + str(card['no']) if claim else None
+        if reservation and reservation.get('session') != own_session:
+            state['external_holds'][str(card['no'])] = {'card': card['name'], **reservation}
+    available, blocked = candidates(*data, state)
+    state['blocked_candidates'].update(blocked)
+    after = current(run)['no'] if run and current(run) else None
+    switched = previous != after
+    operation = a.command
+    if a.command in ('prepare', 'next') or switched:
+        # Single finite candidate scan. Never apply an old card's UI/QA to a replacement.
+        run = prepare(state, a.owner, available, blocked, now()[:10])
+        operation = 'reconciled_external_skip' if switched else a.command
+    elif not recorded:
+        run = owned(state, a.owner)
+        charge(state, [c['no'] for c in run['queue'] if c['status'] not in TERMINAL], now()[:10])
         if run['status'] == 'blocked' and a.command != 'resume':
             raise ValueError('run blocked; no generation until explicitly resolved')
         if a.command == 'intent':
@@ -376,9 +517,9 @@ def main():
             item.update(imported_existing_result=True, actual_submitted_at=pilot.get('submitted_at'))
             prefix = 'records/automation/runs/' + run['id'] + '/' + str(current(run)['no']) + '/light'
             artifact(files, prefix, 'pilot-checkpoint.json', a.pilot_checkpoint)
-        elif a.command == 'record': record(run, a.slot, a.image, files)
         elif a.command == 'review': review(run, a.slot, a.qa, files)
-        elif a.command == 'complete': complete(run, state, store, Store(ROOT))
+        elif a.command == 'prepublish': prepare_publication(run, store.read)
+        elif a.command == 'complete': complete(run, state, store, code)
         elif a.command == 'block':
             if not a.reason: raise ValueError('--reason required')
             run['status'] = 'blocked'; current(run).update(status='blocked', reason=a.reason)
@@ -386,9 +527,15 @@ def main():
             if not a.reason: raise ValueError('resolution --reason required')
             if run['status'] != 'blocked': raise ValueError('not blocked')
             run['status'] = 'active'; current(run).update(status='working', resolution=a.reason)
-    run['updated_at'] = now()
-    commit = store.publish(state, files, 'Image runner: ' + a.command + ' ' + run['id'])
-    print(json.dumps({'commit': commit, 'next': next_step(run)}, ensure_ascii=False, indent=2))
+    commit = None
+    if encoded(state) != before or files:
+        if run: run['updated_at'] = now()
+        assert_heads([first, code, store])
+        commit = store.publish(state, files, 'Image runner: ' + operation)
+    print(json.dumps({'commit': commit, 'operation': operation,
+                      'intent_recorded': operation == 'intent',
+                      'upload_base': commit if operation == 'prepublish' else None,
+                      'next': next_step(run) if run else {'action': 'idle', 'reason': 'no daily capacity or eligible candidates'}}, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__':

@@ -17,7 +17,7 @@ python3 tools/image-runner.py next
 
 ## 실행 단위와 잠금
 
-정본 상태는 `pkm-atelier-img-2/records/automation/state.json` 하나다. UTC 날짜별 최대 2종을 원격 상태로 계산하며 다음 날짜에 미완료 run을 재개할 때도 미완료 캐릭터를 그날 상한에 포함한다. 실행 하나의 큐는 최대 2종이고 앞 캐릭터의 이미지·썸네일·도감 등록 확인 전에는 뒤 캐릭터에 들어갈 수 없다. 당일 더 이상 여유가 없으면 멈춘다.
+정본 상태는 `pkm-atelier-img-2/records/automation/state.json` 하나다. UTC 날짜별 최대 2종을 원격 상태로 계산하며 다음 날짜에 미완료 run을 재개할 때도 미완료 캐릭터를 그날 상한에 포함한다. 활성 큐와 그날 생성 대상으로 계산되는 캐릭터는 최대 2종이고(건너뛴 이력은 큐에 남는다), 앞 캐릭터의 이미지·썸네일·도감 등록 확인 전에는 뒤 캐릭터에 들어갈 수 없다. 당일 더 이상 여유가 없으면 멈춘다.
 
 claims는 캐릭터 전체에 대한 owner/run 잠금이다. 시간 경과만으로 만료/탈취하지 않는다. 이어롤·이어롭처럼 interrupted인 세션도 기존 예약 파일의 session/at/경로를 external_holds에 보존하고 자동 인수하지 않는다. 염무왕·수댕이 등 다른 세션도 같다. 기존 도감에 부분 등록됐지만 소유권이나 과거 UI가 불분명한 캐릭터는 blocked_candidates에 보류한다. legacy 기록을 꾸며내지 않는다. 이 관리기를 쓰지 않는 다른 작업자에게까지 강제되는 서버 잠금은 아니다. 다른 작업자도 생성 전 claims를 확인해야 한다.
 
@@ -29,14 +29,16 @@ claims는 캐릭터 전체에 대한 owner/run 잠금이다. 시간 경과만으
 
 ```sh
 # 먼저 원문/UI를 영속 기록. 성공한 intent 하나당 생성 호출 한 번만.
-python3 tools/image-runner.py intent --owner pkm-daily --slot heavy --prompt /path/prompt.txt --ui /path/ui.json
+python3 tools/image-runner.py intent --owner pkm-daily --card 345 --slot heavy --prompt /path/prompt.txt --ui /path/ui.json
 # 에이전트가 image_gen을 호출한다. 위 명령은 이미지를 만들지 않는다.
 # 도구가 실제로 반환한 파일 경로만 사용한다.
-python3 tools/image-runner.py record --owner pkm-daily --slot heavy --image /actual/result.png
-python3 tools/image-runner.py review --owner pkm-daily --slot heavy --qa /path/qa.json
+python3 tools/image-runner.py record --owner pkm-daily --card 345 --slot heavy --image /actual/result.png
+python3 tools/image-runner.py review --owner pkm-daily --card 345 --slot heavy --qa /path/qa.json
 ```
 
-①이 accepted가 되기 전에는 다음 slot의 intent를 기록할 수 없다. 중장·고기동·일상은 ① 해시를, 개방은 해당 폼의 해시를 references에 기록한다. 에이전트는 그 파일을 실제 첨부해야 하며 관리기가 첨부를 대신하거나 외부 호출 사실을 증명하지 않는다.
+①이 accepted가 되기 전에는 다음 slot의 intent를 기록할 수 없다. 중장·고기동·일상은 ① 해시를, 개방은 해당 폼의 해시를 references에 기록한다. 에이전트는 그 파일을 실제 첨부해야 하며 관리기가 첨부를 대신하거나 외부 호출 사실을 증명하지 않는다. `intent_recorded:true`와 대상 번호·slot을 확인한 호출만 생성한다. `reconciled_external_skip` 응답이면 기존 원문을 제출하지 말고 새 대상의 실제 UI부터 준비한다.
+
+`--card`는 현재 도감 번호와 일치해야 한다. 외부 작업 때문에 큐가 바뀌었을 때 이전 캐릭터의 원문·결과·QA가 새 캐릭터에 붙는 것을 막는다.
 
 QA JSON은 `reviewer`, `image_sha256`, 구체적인 `observations`, `accepted:true`를 담는다. 경장은 `face_reason`, 실제 비교한 `compared_characters` 3명 이상과 계열 확인을 기록한다. 일상컷은 `diversity_comparison`에 실제 그림 비교를 적는다. 설정값이 다르다는 이유만으로 통과시키지 않는다. 검수 불합격/도구 거절/불명확한 응답은 아래 block으로 중단한다. 이 최소 구현은 거절된 컷을 자동 재생성하거나 기존 시도를 덮어쓰지 않는다. 재시도 이력 관리 확장은 별도 검증 후 추가한다.
 
@@ -53,13 +55,23 @@ python3 tools/image-runner.py resume --reason '확인한 해결 내용'
 
 ## 업로드와 완료
 
-9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지와 종별 records는 한 캐릭터 단위 커밋으로 img-2/main에 올린다. `records/automation/` 아래 원본 PNG는 복구용이며 도감 이미지로 등록되지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
+9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지와 종별 records는 한 캐릭터 단위 커밋으로 img-2/main에 올린다. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. `records/automation/` 아래 원본 PNG는 복구용이며 도감 이미지로 등록되지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
 
 ```sh
-python3 tools/image-runner.py complete --owner pkm-daily
+python3 tools/image-runner.py complete --owner pkm-daily --card 345
 ```
 
 complete는 원격 img-2의 9장 바이트가 보존 원본의 규정 변환과 같은지, 썸네일이 있는지, 코드 main의 data/img.json 슬롯과 where=1이 맞는지 확인한 뒤 다음 캐릭터를 허용한다. Actions 로그의 경고까지 조회하는 기능은 없으므로 에이전트가 별도로 확인·보고해야 한다. 원격 반영 전에는 완료로 표시하지 않는다.
+
+## 외부 작업이 먼저 게시한 경우
+
+`prepare`·`next`·이미지 작업 명령과 업로드 직전 `prepublish`는 최신 두 이미지 저장소의 img/ 원본 및 코드 data/img.json을 함께 읽는다. 코드만 등록됐거나 이미지 일부만 게시됐으면 `skipped_external_partial`, 같은 화풍의 기본 9개 슬롯이 등록되고 해당 저장소의 원본·썸네일도 존재하면 `completed_externally`로 기록한다. 자기 claim만 종료 상태와 근거 commit·파일 해시를 남기며, 타 세션 예약·잠금·이미지는 수정하지 않는다. interrupted나 예약 만료를 소유권 양도로 보지 않는다.
+
+건너뛴 뒤에는 남은 하루 한도 안에서 다음 적격 캐릭터를 번호순으로 보충한다. 아직 intent도 없는 캐릭터는 예약된 한도를 반환한다. intent/결과가 있는 캐릭터는 그날 한도에 남기므로 외부 게시를 이용해 하루 2종 생성 상한을 넘길 수 없다. 후보 목록을 유한하게 한 번 검사하며 모두 제외되거나 한도가 소진되면 idle로 끝난다. `next`도 이제 필요한 대조·건너뛰기 상태를 일반 push할 수 있다. 읽기만 하려면 status를 쓴다.
+
+이미 `in_flight`이면 claim을 즉시 종료하지 않고 external_pending에 증거를 남긴다. 기존 생성 호출 결과를 찾고 record로 원본을 보존한 뒤 다시 대조한다. 재호출은 금지다. records/automation의 원본은 외부 게시로 세지 않는다. img/에 게시된 파일도 보존 원본의 규정 WebP 해시 또는 prepublish의 출력 해시와 일치하면 자기 결과로 인식한다. 자기 9장이 게시되고 등록이 기다려지는 상태는 verify_registration이며 외부 건너뛰기가 아니다.
+
+원격 snapshot은 상태 게시 직전에 다시 확인하며, img-2 일반 push의 부모 commit도 경합을 막는다. 서로 다른 저장소를 하나의 트랜잭션으로 잠그는 기능은 없으므로 검사 직후 다른 작업이 게시할 수 있다. 이 경우 생성 결과를 버리거나 재호출하지 말고 record로 보존한 뒤 다음 대조에 맡긴다. 업로드는 위 upload_base를 지켜 push 충돌을 재검사 신호로 처리한다.
 
 ## 검증 범위
 
