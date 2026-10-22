@@ -13308,7 +13308,7 @@
    "en": "Crawdaunt",
    "line": "가재군",
    "how": "draft",
-   "registered": false,
+   "registered": true,
    "face": {
     "face shape": "angular",
     "face length": "balanced",
@@ -13330,18 +13330,20 @@
     "‘circular eyes’ → 눈꼬리 각도 수평",
     "‘two spikes’ → 눈썹 바깥에서 꺾이는 사선"
    ],
-   "adjusted": "[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 층감이 강한 울프컷",
+   "adjusted": "",
    "hair": {
     "hairstyle": "wolf cut",
     "hair length": "long",
     "bangs": "choppy bangs"
    },
-   "hair_locked": false,
-   "hair_why": "‘two spikes’에서 층감이 강한 울프컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 가재군에서 이어 같은 묶음",
-   "hair_cues": [
-    "‘two spikes’ → 헤어스타일 층감이 강한 울프컷",
-    "‘two spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
-   ]
+   "hair_locked": true,
+   "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/crawdaunt-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+   "hair_cues": [],
+   "hair_record": {
+    "path": "pkm-atelier-img-2/records/crawdaunt-20261022/light-prompt.txt",
+    "kind": "prompt",
+    "raw": {}
+   }
   },
   "343": {
    "name": "오뚝군",
