@@ -103,6 +103,29 @@ class Anatomy(unittest.TestCase):
             self.assertTrue(url.startswith("https://storage.googleapis.com/mediapipe-models/") and "/1/" in url and url.endswith(name), kind)
             self.assertRegex(sha, r"^[0-9a-f]{64}$")
 
+    def test_unavailable_does_not_stop(self):
+        """모델을 못 받으면(네트워크가 403) 끝 코드 3 — 작업은 눈으로 세기로 잇는다(멈추지 않는다)"""
+        import io, contextlib, json, tempfile
+        d = tempfile.mkdtemp()
+        old_env = {k: os.environ.get(k) for k in ("PKM_ANATOMY_MODELS",)}
+        old_get = ac.urllib.request.urlretrieve
+        def blocked(url, path):
+            raise OSError("HTTP Error 403: Forbidden")
+        try:
+            os.environ["PKM_ANATOMY_MODELS"] = d; ac.urllib.request.urlretrieve = blocked
+            out, js = io.StringIO(), os.path.join(d, "r.json")
+            with contextlib.redirect_stdout(out):
+                code = ac.main(["그림.webp", "--json", js])
+            self.assertEqual(code, 3)
+            self.assertIn("403", out.getvalue()); self.assertIn("눈으로 센다", out.getvalue())
+            self.assertEqual(json.load(open(js))[0]["level"], "unavailable")
+            self.assertFalse([f for f in os.listdir(d) if f.endswith(".part")], "받다 만 파일을 남기지 않는다")
+        finally:
+            ac.urllib.request.urlretrieve = old_get
+            for k, v in old_env.items():
+                if v is None: os.environ.pop(k, None)
+                else: os.environ[k] = v
+
     def test_input_not_mutated(self):
         p, hs = body(), two_hands(); a, b = copy.deepcopy(p), copy.deepcopy(hs)
         ac.analyze(SIZE, p, hs)

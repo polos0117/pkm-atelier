@@ -15,7 +15,9 @@
                  왼쪽·오른쪽 같은 마디 길이가 크게 다름 · 팔꿈치·무릎이 접힐 수 없을 만큼 접힘
   note           몸이나 손을 못 찾음 — 가린 옷·각도 탓이 흔하다. 눈으로 본다
 
-끝 코드: suspect 가 있으면 1(--strict 면 check 도 1). 없으면 0.
+끝 코드: suspect 가 있으면 1(--strict 면 check 도 1). 없으면 0. 검사기를 못 돌리면 3 — 모델을 못 받았거나(네트워크가 storage.googleapis.com 을
+막으면 403) mediapipe·libEGL 이 없다. 그때 작업은 멈추지 않는다: 눈으로 세기만 하고 qa.json 의 anatomy.tool 에 "unavailable: <원인>" 을
+적는다(IMAGE_RULES 3절 끝). 모델을 다른 곳에 둔 사본이 있으면 PKM_ANATOMY_MODEL_URL=<주소 앞> 으로 받는다(sha256 은 그대로 맞춰 본다).
 모델은 처음 한 번 받아 PKM_ANATOMY_MODELS(기본 <tmp>/pkm-anatomy-models)에 둔다 — 저장소에 올리지 않는다. sha256 을 맞춰 본다.
 필요한 것: pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도). analyze() 는 모델 없이 점 목록만으로 돈다
 (tests/anatomy-check.py)."""
@@ -45,6 +47,10 @@ SYM = (0.6, 1 / 0.6)                               # 왼/오른 같은 마디 �
 FOLD = 15.0          # 팔꿈치·무릎 각도(도)가 이보다 작으면 접힐 수 없다
 
 
+class Unavailable(Exception):
+    """검사기를 못 돌린다 — 모델·mediapipe·그래픽 라이브러리가 없다. 끝 코드 3"""
+
+
 def model_dir():
     return os.environ.get("PKM_ANATOMY_MODELS") or os.path.join(tempfile.gettempdir(), "pkm-anatomy-models")
 
@@ -53,9 +59,17 @@ def model_path(kind):
     name, url, sha = MODELS[kind]
     d = model_dir(); os.makedirs(d, exist_ok=True)
     p = os.path.join(d, name)
+    base = os.environ.get("PKM_ANATOMY_MODEL_URL")
+    if base:
+        url = base.rstrip("/") + "/" + name
     if not os.path.exists(p):
         tmp = p + ".part"
-        urllib.request.urlretrieve(url, tmp)
+        try:
+            urllib.request.urlretrieve(url, tmp)
+        except Exception as e:   # 403(네트워크 정책)·끊김·없는 주소
+            if os.path.exists(tmp):
+                os.remove(tmp)
+            raise Unavailable("모델 %s 을 못 받았다(%s) — %s" % (name, e, url))
         os.replace(tmp, p)
     got = hashlib.sha256(open(p, "rb").read()).hexdigest()
     if got != sha:
@@ -173,14 +187,18 @@ def detect(paths):
     try:
         import mediapipe as mp
     except ImportError:
-        raise SystemExit("mediapipe 가 없다 — pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도)")
+        raise Unavailable("mediapipe 가 없다 — pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도)")
     V, B = mp.tasks.vision, mp.tasks.BaseOptions
     mk = lambda c: (V.PoseLandmarker.create_from_options(V.PoseLandmarkerOptions(base_options=B(model_asset_path=model_path("pose")), num_poses=3,
                                                                                 min_pose_detection_confidence=c, min_pose_presence_confidence=c)),
                     V.HandLandmarker.create_from_options(V.HandLandmarkerOptions(base_options=B(model_asset_path=model_path("hand")), num_hands=4,
                                                                                 min_hand_detection_confidence=c, min_hand_presence_confidence=c)))
-    with quiet():
-        first, second = mk(0.3), mk(0.1)
+    model_path("pose"); model_path("hand")   # 받기 실패는 Unavailable 로 — 모델을 띄우기 전에
+    try:
+        with quiet():
+            first, second = mk(0.3), mk(0.1)
+    except OSError as e:   # libEGL.so.1 같은 그래픽 라이브러리가 없다
+        raise Unavailable("모델을 못 띄웠다(%s) — 리눅스는 apt-get install libegl1 libgles2" % e)
     as_mp = lambda im: mp.Image(image_format=mp.ImageFormat.SRGB, data=np.asarray(im))
     try:
         for p in paths:
@@ -258,19 +276,27 @@ def main(argv):
         os.makedirs(ov, exist_ok=True)
     report, worst = [], "ok"
     order = ["ok", "note", "check", "suspect"]
-    for p, im, size, P, H in detect(args):
-        r = analyze(size, P, H)
-        r["file"] = p
-        report.append(r)
-        worst = max(worst, r["level"], key=order.index)
-        mark = {"ok": "·", "note": "?", "check": "!", "suspect": "✗"}[r["level"]]
-        print("%s %s — %s · 손 %d" % (mark, os.path.basename(p), r["level"], len(H)))
-        for f in r["flags"]:
-            print("     %s %s" % (f["level"], f["msg"]))
-        if ov:
-            o = os.path.join(ov, os.path.splitext(os.path.basename(p))[0] + "-anatomy.jpg")
-            overlay(im, size, P, H, r, o)
-            print("     뼈대 그림 " + o)
+    try:
+        for p, im, size, P, H in detect(args):
+            r = analyze(size, P, H)
+            r["file"] = p
+            report.append(r)
+            worst = max(worst, r["level"], key=order.index)
+            mark = {"ok": "·", "note": "?", "check": "!", "suspect": "✗"}[r["level"]]
+            print("%s %s — %s · 손 %d" % (mark, os.path.basename(p), r["level"], len(H)))
+            for f in r["flags"]:
+                print("     %s %s" % (f["level"], f["msg"]))
+            if ov:
+                o = os.path.join(ov, os.path.splitext(os.path.basename(p))[0] + "-anatomy.jpg")
+                overlay(im, size, P, H, r, o)
+                print("     뼈대 그림 " + o)
+    except Unavailable as e:
+        print("검사기를 못 돌렸다 — %s" % e)
+        print("멈추지 않는다: 그림마다 눈으로 센다(팔 둘·다리 둘·손가락 다섯·엄지 쪽·꺾이는 쪽 — IMAGE_RULES 3절 끝)")
+        print('qa.json 의 anatomy.tool 에 "unavailable: <원인>" 을 적는다. 검사기를 돌렸다고 적지 않는다')
+        if js:
+            json.dump([{"file": p, "level": "unavailable", "why": str(e)} for p in args], open(js, "w"), ensure_ascii=False, indent=1)
+        return 3
     if js:
         json.dump(report, open(js, "w"), ensure_ascii=False, indent=1)
     n = {k: sum(1 for r in report if r["level"] == k) for k in order}
