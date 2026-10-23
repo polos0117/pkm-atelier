@@ -19784,7 +19784,7 @@
       "en": "Liepard",
       "line": "쌔비냥",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "softly rounded",
         "face length": "balanced",
@@ -19798,27 +19798,29 @@
         "nose character": "rounded soft tip",
         "lips": "full lips"
       },
-      "why": "",
+      "why": "도감의 소리 없는 접근이라는 집중감과 분홍 마스크·가느다란 수염 장식선을 성인 여성의 부드러운 볼·입 윤곽 및 집중한 눈으로 해석. 원작 동물의 코나 수염을 인체에 복제하지 않음.",
       "cues": [],
-      "adjusted": "같은 계열 쌔비냥와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 단정하게 말아 올린 시뇽 → 한쪽만 밀고 나머지는 긴 머리",
+      "adjusted": "같은 계열 쌔비냥와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운",
       "hair": {
         "hairstyle": "side-shaved long hair",
         "hair length": "long",
         "bangs": "asymmetric bangs"
       },
-      "hair_locked": false,
-      "hair_why": "악 타입에서 한쪽만 밀고 나머지는 긴 머리(층 낸 컷) · 긴 머리 · 좌우 길이가 다른 앞머리 — 쌔비냥에서 이어 같은 묶음",
-      "hair_cues": [
-        "악 타입 → 헤어스타일 한쪽만 밀고 나머지는 긴 머리",
-        "악 타입 → 앞머리 좌우 길이가 다른 앞머리"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/liepard-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/liepard-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "511": {
       "name": "야나프",
       "en": "Pansage",
       "line": "야나프",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -19832,21 +19834,24 @@
         "nose character": "prominent defined nose",
         "lips": "bow-shaped upper lip"
       },
-      "why": "",
+      "why": "직립형 몸·작은 코·검은 눈과 동료에게 열매를 나누는 성격을 타원형 윤곽·온화한 눈매와 입술로 성인화. 먹을 수 있는 잎은 반묶음 머리 주변의 잎 장식과 장갑 판으로 해석.",
       "cues": [
         "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
       ],
-      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선, 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 트윈테일 → 반묶음",
+      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선, 코 작고 여린 코 → 크고 또렷한 코",
       "hair": {
         "hairstyle": "half-up",
         "hair length": "medium",
         "bangs": "curtain bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘edible leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅",
-      "hair_cues": [
-        "‘edible leaves’ → 헤어스타일 반묶음"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/pansage-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/pansage-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "512": {
       "name": "야나키",
