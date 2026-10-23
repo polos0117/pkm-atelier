@@ -13677,7 +13677,7 @@
       "en": "Castform",
       "line": "캐스퐁",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "softly rounded",
         "face length": "short",
@@ -13706,12 +13706,14 @@
         "hair length": "short",
         "bangs": "side-swept bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘gray cloud-like body’·‘large spherical head’·몸 형태 ball에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 옆으로 넘긴 앞머리",
-      "hair_cues": [
-        "‘gray cloud-like body’ → 헤어스타일 굵은 곱슬",
-        "키 0.3m → 머리 길이 짧은 머리"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/castform-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/castform-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "352": {
       "name": "켈리몬",
