@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-23 · gpt · 이미지 자동화 실행별 한도와 두 날짜 상한
+- tools/image-runner.py — 실행 ID별 1종과 한국·UTC 날짜별 12종을 분리하고 기존 claim·기록을 유지한다. 새 원본은 세션 안에 두며 img-3 업로드 기준 커밋을 반환한다.
+- tests/image-runner.py · tests/image-runner-external.py · tests/image-runner-limits.py — 반복 실행·외부 건너뛰기·두 자정·일일 상한·기록 이관을 검사한다.
+- docs/IMAGE_AUTOMATION.md — 2시간 실행의 동일 ID 재개 명령과 원본 유실 중단, 별도 사용자 검토 없는 AI QA 절차를 적었다.
+
 ## 2026-10-23 · gpt · 야나키·바오프 이미지 등록과 얼굴 설계 근거
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 야나키의 수풀 볏·어깨 털·눈썹을 해석한 얼굴 설계 근거를 확정했다. 후속 폼은 실제 경장 이미지를 기준으로 만든다.
 - tools/face-design.py — 셋째 그림 저장소의 실제 생성 기록도 읽어 등록한 캐릭터의 머리를 잠그도록 했다.

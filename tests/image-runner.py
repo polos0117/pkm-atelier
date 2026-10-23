@@ -22,13 +22,13 @@ with tempfile.TemporaryDirectory() as td:
     R.git(repo,'add','preserve.txt');R.git(repo,'commit','-m','initial');R.git(repo,'push','origin','main')
     store=R.Store(repo);state=store.state()
     cards=[{'no':345,'name':'릴링'},{'no':346,'name':'릴리요'},{'no':347,'name':'아노딥스'}]
-    q=R.prepare(state,'worker',cards,{},'2026-10-22')
-    assert len(q['queue'])==2
-    rejects(lambda:R.prepare(state,'other',cards,{},'2026-10-22'),'owner takeover')
-    rejects(lambda:R.charge(state,[347],'2026-10-22'),'third daily character')
+    q=R.prepare(state,'worker',cards,{},'2026-10-22','test-execution')
+    assert len(q['queue'])==1
+    rejects(lambda:R.prepare(state,'other',cards,{},'2026-10-22','test-execution'),'owner takeover')
+    rejects(lambda:R.charge(state,list(range(13)),'2026-10-22'),'third daily character')
     # Resume on another day charges the unfinished pair on that day too.
-    R.prepare(state,'worker',cards,{},'2026-10-23')
-    assert state['daily']['2026-10-23']==[345,346]
+    R.prepare(state,'worker',cards,{},'2026-10-23','test-execution')
+    assert state['daily']['2026-10-23']==[345]
     first=store.publish(state,{},'claims')
     assert R.git(repo,'show','origin/main:preserve.txt')==b'other worker'
     stale=R.Store(repo);fresh=R.Store(repo);latest=fresh.state();latest['marker']='new owner evidence'
@@ -66,6 +66,7 @@ with tempfile.TemporaryDirectory() as td:
     (t/'restored'/prompt_path).write_bytes(b'foreign work')
     rejects(lambda:R.restore(remote,store.read,t/'restored'),'restore overwrite')
     rejects(lambda:store.publish(remote,{prompt_path:b'changed'},'replace'),'remote artifact replacement')
+    rejects(lambda:store.publish(remote,{'records/automation/new.png':image.read_bytes()},'raw'),'raw upload forbidden')
     rejects(lambda:R.check_assets(remote,lambda p:b'lost'),'missing artifacts')
     # Another session (empty cache) cannot conjure the original; it must stop, not regenerate silently.
     keep=R.CACHE;R.CACHE=t/'other-session-cache'
@@ -102,5 +103,5 @@ with tempfile.TemporaryDirectory() as td:
     blobs[broken] = original
     R.complete(completed,state,image_store,code_store)
     assert completed['queue'][0]['status']=='complete'
-    assert R.next_step(completed)['no']==346
+    assert R.next_step(completed)['action']=='complete'
 print('PASS image runner: Git contention, immutable outputs, serial intent/QA, daily/resume quota, external holds, recovery hashes')

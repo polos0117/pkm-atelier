@@ -14,7 +14,7 @@ class Remote:
 def setup():
     state={'version':1,'policy':{'daily_max':2,'timezone':'UTC'},'daily':{},'runs':[],'claims':{},'blocked_candidates':{},'external_holds':{'428':{'session':'interrupted-other'}}}
     cards=[{'no':n,'name':name} for n,name in [(345,'릴링'),(346,'릴리요'),(347,'아노딥스'),(348,'아말도')]]
-    run=R.prepare(state,'worker',cards,{},'2026-10-22')
+    run=R.prepare(state,'worker',cards,{},'2026-10-22','test-execution')
     return state,run,cards
 
 
@@ -33,15 +33,14 @@ state,run,cards=setup();c=run['queue'][0];reg,files=registry_for(c,0)
 a,b=Remote('old-head',files),Remote('new-head')
 assert R.reconcile_external(state,run,reg,[a,b],'code-head',b.read)
 assert c['status']=='completed_externally'
-assert state['daily']['2026-10-22']==[346]
+assert state['daily']['2026-10-22']==[]
 assert state['claims']['345']['status']=='completed_externally'
 assert c['external_evidence']['commits']['code']=='code-head'
 assert state['external_holds']['428']['session']=='interrupted-other'
-R.prepare(state,'worker',cards[2:],{},'2026-10-22')
+run=R.prepare(state,'worker',cards[1:],{},'2026-10-22','test-execution')
 assert R.current(run)['no']==346
-assert [x['no'] for x in run['queue'] if x['status'] not in R.TERMINAL]==[346,347]
-# Repeated prepare does not append endlessly or exceed the budget.
-R.prepare(state,'worker',cards[2:],{},'2026-10-22');assert len(run['queue'])==3
+R.prepare(state,'worker',cards[1:],{},'2026-10-22','test-execution')
+assert len(run['queue'])==1
 
 # Partial/root-only and registry-only evidence are both explicit skips, never deletion.
 for mode in ('root','registry'):
@@ -70,8 +69,8 @@ with tempfile.TemporaryDirectory() as tmp:
     assert c['slots']['light']['image']['path'] not in artifacts and c['slots']['light']['image']['session_only']
     assert R.webp(R.image_bytes(c['slots']['light']['image'],source))
     assert 345 in state['daily']['2026-10-22']  # Generation cannot be refunded.
-    R.prepare(state,'worker',[{'no':347,'name':'아노딥스'}],{},'2026-10-22')
-    assert len(run['queue'])==2  # No third generating character.
+    R.prepare(state,'worker',[{'no':347,'name':'아노딥스'}],{},'2026-10-22','test-execution')
+    assert len(run['queue'])==1  # No third generating character.
 
 # Preserved originals are not publications. Own WebP bytes, including pending registration,
 # are recognized by the source hash; another slot's foreign bytes still trigger a skip.
@@ -100,7 +99,7 @@ state,run,_=setup();a=Remote('a');reg={'img':{}};files={}
 for c in run['queue']:
     r,fs=registry_for(c);reg['img'].update(r['img']);reg.setdefault('where',{}).update(r['where']);files.update(fs)
 b=Remote('b',files);R.reconcile_external(state,run,reg,[a,b],'code',b.read)
-assert R.prepare(state,'worker',[],{},'2026-10-22') is None
+assert R.prepare(state,'worker',[],{},'2026-10-22','test-execution') is None
 assert R.active(state) is None
 state,run,_=setup();c=run['queue'][0];reg,files=registry_for(c)
 state['claims']['345']={'owner':'someone-else','run':'other','status':'held'}
@@ -128,7 +127,7 @@ with tempfile.TemporaryDirectory() as tmp:
     third=repo('pkm-atelier-img-3',{'README.md':b'preserve'})   # open image repository (2026-10-23)
     oldroot,oldargv=R.ROOT,sys.argv
     def cli(*args):
-        sys.argv=['image-runner.py',*args,'--repo',str(second),'--owner','worker']
+        sys.argv=['image-runner.py',*args,'--repo',str(second),'--owner','worker','--execution-id','cli-test']
         out=io.StringIO()
         with contextlib.redirect_stdout(out):R.main()
         return json.loads(out.getvalue())
@@ -144,9 +143,12 @@ with tempfile.TemporaryDirectory() as tmp:
         assert response['intent_recorded'] is False and response['operation']=='reconciled_external_skip'
         assert response['next']['no']==346
         live=R.Store(second);st=live.state();run=R.active(st)
-        assert run['queue'][0]['status']=='skipped_external_partial'
-        assert run['queue'][1]['slots']=={} and R.current(run)['no']==346
-        assert st['daily'][R.now()[:10]]==[346,347]
+        assert st['runs'][0]['queue'][0]['status']=='skipped_external_partial'
+        assert run['queue'][0]['slots']=={} and R.current(run)['no']==346
+        assert st['daily'][R.now()[:10]]==[346]
+        for _ in range(3):
+            assert cli('next')['next']['no']==346
+        assert len(R.active(R.Store(second).state())['queue'])==1
         assert live.read('img/릴링_light_glossy_promo_f.webp')==b'external preserved'
         latest=R.Store(second);R.assert_heads([latest])
         latest.publish(latest.state(),{},'concurrent heartbeat')

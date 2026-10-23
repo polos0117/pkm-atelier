@@ -16,6 +16,10 @@ STATE = 'records/automation/state.json'
 SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
 TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
 IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3']   # data/img.json "where" order; last one is open
+DAILY_MAX = 12
+EXECUTION_MAX = 1
+KST = dt.timezone(dt.timedelta(hours=9))
+
 CACHE = Path(os.environ.get('PKM_IMAGE_CACHE') or Path(tempfile.gettempdir()) / 'pkm-image-runner')
 
 
@@ -47,7 +51,7 @@ class Store:
 
     def state(self):
         return json.loads(self.read(STATE)) if STATE in self.paths else {
-            'version': 1, 'policy': {'daily_max': 2, 'timezone': 'UTC'},
+            'version': 1, 'policy': {'daily_max': DAILY_MAX, 'execution_max': EXECUTION_MAX, 'timezone': 'Asia/Seoul', 'utc_daily_max': DAILY_MAX},
             'daily': {}, 'runs': [], 'claims': {}, 'blocked_candidates': {}, 'external_holds': {}}
 
     def publish(self, state, files, message):
@@ -55,6 +59,8 @@ class Store:
         for path, data in files.items():
             if not path.startswith('records/automation/') or '..' in Path(path).parts:
                 raise ValueError('invalid artifact path')
+            if Path(path).suffix.lower() in ('.png', '.jpg', '.jpeg') and path not in self.paths:
+                raise ValueError('raw originals must remain session-local')
             if path in self.paths and self.read(path) != data:
                 raise ValueError('refuse artifact replacement: ' + path)
         files = {**files, STATE: encoded(state)}
@@ -95,12 +101,47 @@ def owned(state, owner):
     return r
 
 
-def charge(state, numbers, day):
-    used = state['daily'].setdefault(day, [])
-    combined = sorted(set(used) | set(numbers))
-    if len(combined) > 2:
-        raise ValueError('daily maximum 2 characters reached (UTC)')
-    state['daily'][day] = combined
+def dates(at):
+    t = dt.datetime.fromisoformat(at)
+    if t.tzinfo is None:
+        t = t.replace(tzinfo=dt.timezone.utc)
+    return t.astimezone(dt.timezone.utc).date().isoformat(), t.astimezone(KST).date().isoformat()
+
+
+def migrate_policy(state):
+    state['policy'].update(daily_max=DAILY_MAX, utc_daily_max=DAILY_MAX,
+                           execution_max=EXECUTION_MAX, timezone='Asia/Seoul', cadence_hours=2)
+    if 'daily_kst' not in state:
+        state['daily_kst'] = {}
+        for run in state['runs']:
+            for c in run['queue']:
+                for item in list(c['slots'].values()) + c.get('attempt_history', []):
+                    if item.get('at'):
+                        day = dates(item['at'])[1]
+                        used = state['daily_kst'].setdefault(day, [])
+                        if c['no'] not in used: used.append(c['no'])
+    state.setdefault('executions', {})
+
+
+def charge(state, numbers, at):
+    migrate_policy(state)
+    utc, kst = dates(at)
+    updates = [(state['daily'], utc, 'UTC'), (state['daily_kst'], kst, 'Asia/Seoul')]
+    for ledger, day, zone in updates:
+        if len(set(ledger.get(day, [])) | set(numbers)) > DAILY_MAX:
+            raise ValueError('daily maximum 12 characters reached (' + zone + ')')
+    for ledger, day, _ in updates:
+        ledger[day] = sorted(set(ledger.get(day, [])) | set(numbers))
+
+
+def bind_execution(state, owner, ident, number):
+    if not ident: raise ValueError('--execution-id required; reuse the same ID throughout one scheduled invocation')
+    migrate_policy(state)
+    e = state['executions'].setdefault(ident, {'owner': owner, 'at': now(), 'characters': []})
+    if e['owner'] != owner: raise ValueError('execution owner mismatch')
+    if number not in e['characters']:
+        if len(e['characters']) >= EXECUTION_MAX: raise ValueError('execution maximum 1 character reached')
+        e['characters'].append(number)
 
 
 def current(run):
@@ -216,9 +257,11 @@ def reconcile_external(state, run, registry, images, code_head, read):
         # Untouched claims, however, must not consume the capacity of their replacements.
         if not c['slots']:
             c['refunded_days'] = []
-            for day, used in state['daily'].items():
+            for day, used in list(state['daily'].items()) + list(state.get('daily_kst', {}).items()):
                 if c['no'] in used:
                     used.remove(c['no']); c['refunded_days'].append(day)
+            for e in state.get('executions', {}).values():
+                if c['no'] in e['characters']: e['characters'].remove(c['no'])
     if not current(run):
         run['status'] = 'complete'
     elif not any(c['status'] == 'blocked' for c in run['queue'] if c['status'] not in TERMINAL):
@@ -279,32 +322,34 @@ def candidates(cards, registry, inventories, records, reservations, state):
     return out, blocked
 
 
-def prepare(state, owner, available, blocked, day):
-    r = active(state)
+def prepare(state, owner, available, blocked, at, execution_id=None):
+    if not execution_id: raise ValueError('--execution-id required')
+    migrate_policy(state)
     state['blocked_candidates'].update(blocked)
+    r = active(state)
     if r:
         r = owned(state, owner)
         if r['status'] == 'blocked':
             raise ValueError('run blocked; inspect evidence and resume explicitly')
-        charge(state, [c['no'] for c in r['queue'] if c['status'] not in TERMINAL], day)
-        capacity = 2 - len(state['daily'].get(day, []))
-        picked = [c for c in available if str(c['no']) not in state['claims']][:capacity]
-        charge(state, [c['no'] for c in picked], day)
-        for c in picked:
-            r['queue'].append({'no': c['no'], 'name': c['name'], 'style': 'glossy_promo', 'status': 'claimed', 'slots': {}})
-            state['claims'][str(c['no'])] = {'owner': owner, 'run': r['id'], 'status': 'held', 'at': now()}
-        return r
-    capacity = 2 - len(state['daily'].get(day, []))
-    picked = [c for c in available if str(c['no']) not in state['claims']][:capacity]
-    if not picked:
+        c = current(r)
+        bind_execution(state, owner, execution_id, c['no'])
+        charge(state, [c['no']], at)
+        return r  # Never refill an active queue.
+    e = state['executions'].get(execution_id, {})
+    if e.get('owner', owner) != owner: raise ValueError('execution owner mismatch')
+    if len(e.get('characters', [])) >= EXECUTION_MAX: return None
+    utc, kst = dates(at)
+    if len(state['daily'].get(utc, [])) >= DAILY_MAX or len(state['daily_kst'].get(kst, [])) >= DAILY_MAX:
         return None
-    charge(state, [c['no'] for c in picked], day)
-    ident = day + '-' + str(len(state['runs']) + 1)
-    r = {'id': ident, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
-        {'no': c['no'], 'name': c['name'], 'style': 'glossy_promo', 'status': 'claimed', 'slots': {}} for c in picked]}
+    picked = next((c for c in available if str(c['no']) not in state['claims']), None)
+    if not picked: return None
+    bind_execution(state, owner, execution_id, picked['no'])
+    charge(state, [picked['no']], at)
+    ident = utc + '-' + str(len(state['runs']) + 1)
+    r = {'id': ident, 'execution_id': execution_id, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
+        {'no': picked['no'], 'name': picked['name'], 'style': 'glossy_promo', 'status': 'claimed', 'slots': {}}]}
     state['runs'].append(r)
-    for c in r['queue']:
-        state['claims'][str(c['no'])] = {'owner': owner, 'run': ident, 'status': 'held', 'at': now()}
+    state['claims'][str(picked['no'])] = {'owner': owner, 'run': ident, 'status': 'held', 'at': now()}
     return r
 
 
@@ -614,7 +659,8 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
+    ap.add_argument('command', choices=['migrate-policy', 'status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
+    ap.add_argument('--execution-id', default=os.environ.get('PKM_EXECUTION_ID'))
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
     ap.add_argument('--slot', choices=SLOTS)
@@ -628,7 +674,7 @@ def main():
         if not a.dir:
             raise ValueError('--dir required')
         restore(state, store.read, a.dir)
-        print('restored and hash verified; never regenerate missing local files before restore')
+        print('committed artifacts restored and hash verified; session_only originals require the existing local cache, otherwise STOP and report')
         return
     if a.command == 'verify-completed':
         print(json.dumps({'verified_completed': verify_completed(state, [Store(ROOT.parent / IMAGE_REPOS[0]), store, Store(ROOT.parent / IMAGE_REPOS[2])], Store(ROOT))}))
@@ -636,9 +682,16 @@ def main():
     if a.command == 'status':
         r = active(state)
         print(json.dumps({'head': store.base, 'run': r, 'next': next_step(r) if r else 'prepare',
-                          'external_holds': state['external_holds'], 'daily': state['daily']}, ensure_ascii=False, indent=2))
+                          'external_holds': state['external_holds'], 'policy': state['policy'], 'daily': state['daily'],
+                          'daily_kst': state.get('daily_kst', {}), 'executions': state.get('executions', {})}, ensure_ascii=False, indent=2))
         return
     before = encoded(state)
+    migrate_policy(state)
+    if a.command == 'migrate-policy':
+        commit = store.publish(state, {}, 'Image runner: 12 daily / 1 per execution policy') if encoded(state) != before else None
+        print(json.dumps({'commit': commit, 'policy': state['policy']}))
+        return
+    if not a.execution_id: raise ValueError('--execution-id or PKM_EXECUTION_ID required')
     state['policy']['external_publication'] = 'skip_after_preserving_in_flight_result'
     state['policy']['image_operations_require_card'] = True
     code = Store(ROOT); first = Store(ROOT.parent / IMAGE_REPOS[0])
@@ -674,11 +727,16 @@ def main():
     operation = a.command
     if a.command in ('prepare', 'next') or switched:
         # Single finite candidate scan. Never apply an old card's UI/QA to a replacement.
-        run = prepare(state, a.owner, available, blocked, now()[:10])
+        run = prepare(state, a.owner, available, blocked, now(), a.execution_id)
         operation = 'reconciled_external_skip' if switched else a.command
     elif not recorded:
         run = owned(state, a.owner)
-        charge(state, [c['no'] for c in run['queue'] if c['status'] not in TERMINAL], now()[:10])
+        bind_execution(state, a.owner, a.execution_id, current(run)['no'])
+        if a.command in ('intent', 'retry-intent', 'replan-rejected', 'adopt-pilot'):
+            charge(state, [current(run)['no']], now())
+            # Actual reference bytes must exist before recording any new tool intent.
+            for item in current(run)['slots'].values():
+                if item.get('image'): image_bytes(item['image'], store.read)
         if run['status'] == 'blocked' and a.command not in ('resume', 'retry-intent', 'replan-rejected', 'accept-exception'):
             raise ValueError('run blocked; no generation until explicitly resolved')
         if a.command == 'intent':
@@ -721,7 +779,7 @@ def main():
         commit = store.publish(state, files, 'Image runner: ' + operation)
     print(json.dumps({'commit': commit, 'operation': operation,
                       'intent_recorded': operation in ('intent', 'retry-intent', 'replan-rejected'),
-                      'upload_base': commit if operation == 'prepublish' else None,
+                      'upload_base': third.base if operation == 'prepublish' else None,
                       'next': next_step(run) if run else {'action': 'idle', 'reason': 'no daily capacity or eligible candidates'}}, ensure_ascii=False, indent=2))
 
 
