@@ -13758,7 +13758,7 @@
       "en": "Shuppet",
       "line": "어둠대신",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "balanced",
@@ -13787,19 +13787,21 @@
         "hair length": "medium",
         "bangs": "long side bangs covering one eye"
       },
-      "hair_locked": false,
-      "hair_why": "몸 형태 ball에서 양쪽 동그란 번(올림머리) · 중간 길이 · 한쪽 눈을 덮는 긴 사이드뱅",
-      "hair_cues": [
-        "몸 형태 ball → 헤어스타일 양쪽 동그란 번",
-        "고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/shuppet-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/shuppet-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "354": {
       "name": "다크펫",
       "en": "Banette",
       "line": "어둠대신",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "balanced",
@@ -13820,18 +13822,20 @@
         "‘three short spikes’ → 눈꼬리 각도 올라간 눈꼬리",
         "‘three short spikes’ → 눈썹 바깥에서 꺾이는 사선"
       ],
-      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 이마가 넓고 턱이 가는 하트형 → 각지고 선명한 얼굴형 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 트윈테일 → 흐트러진 번",
+      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 이마가 넓고 턱이 가는 하트형 → 각지고 선명한 얼굴형",
       "hair": {
         "hairstyle": "messy bun",
         "hair length": "long",
         "bangs": "long side bangs covering one eye"
       },
-      "hair_locked": false,
-      "hair_why": "‘long zigzagging ribbon’·고스트 타입에서 흐트러진 번(올림머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 어둠대신에서 이어 같은 묶음",
-      "hair_cues": [
-        "‘long zigzagging ribbon’ → 머리 길이 긴 머리",
-        "고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/banette-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/banette-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "355": {
       "name": "해골몽",
