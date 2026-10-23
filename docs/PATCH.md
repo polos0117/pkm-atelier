@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-23 · gpt · 야나키·바오프 이미지 등록과 얼굴 설계 근거
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 야나키의 수풀 볏·어깨 털·눈썹을 해석한 얼굴 설계 근거를 확정했다. 후속 폼은 실제 경장 이미지를 기준으로 만든다.
+- tools/face-design.py — 셋째 그림 저장소의 실제 생성 기록도 읽어 등록한 캐릭터의 머리를 잠그도록 했다.
+- data/img.json — 야나키·바오프 각 9장을 셋째 그림 저장소에서 자동 등록했다. 생성 프롬프트·선택값·검수 기록은 해당 그림 저장소에 보존했다.
+
 ## 2026-10-23 · claude · 그림 저장소3(pkm-atelier-img-3) 열기 · 원본 PNG 는 세션 안에만
 - tools/register-images.py · lib/img.js · .github/workflows/register-images.yml · .gitignore — 셋째 그림 저장소 pkm-atelier-img-3(where 2)를 열린 저장소로. img-2 는 사이트 약 960MB(1GB 한도)라 닫는다
 - tools/image-runner.py — 생성 원본 PNG 를 그림 저장소 records/ 에 올리지 않고 세션 임시 자리(PKM_IMAGE_CACHE)에만, 기록에는 sha256(+webp_sha256, session_only)만. 공개 그림 대조는 WebP 해시로, 새 그림은 img-3 에. 이미 올라간 원본(img-2 records/)은 그대로 읽는다

@@ -19876,8 +19876,8 @@
       "name": "야나키",
       "en": "Simisage",
       "line": "야나프",
-      "how": "draft",
-      "registered": false,
+      "how": "species",
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "short",
@@ -19891,7 +19891,7 @@
         "nose character": "rounded soft tip",
         "lips": "full lips"
       },
-      "why": "",
+      "why": "곧게 선 수풀 볏과 풍성한 어깨 털의 체적을 넓고 짧은 타원 윤곽과 둥근 턱으로, 흰 눈썹의 뚜렷한 존재감을 결이 풍성한 눈썹으로 해석한다. 야나프 계열의 친근한 눈을 이어가되 도톰한 입술과 넓은 얼굴로 성숙한 인상을 구분한다.",
       "cues": [
         "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
         "‘shoulder tufts’ → 눈썹 숱 많고 결이 보이는"
@@ -19902,18 +19902,21 @@
         "hair length": "long",
         "bangs": "curtain bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘bitter leaves’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 야나프에서 이어 같은 묶음",
-      "hair_cues": [
-        "‘bitter leaves’ → 헤어스타일 반묶음"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-3/records/simisage-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-3/records/simisage-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "513": {
       "name": "바오프",
       "en": "Pansear",
       "line": "바오프",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -19932,18 +19935,20 @@
         "‘whorled tuft’ → 눈썹 숱 많고 결이 보이는",
         "‘tiny nose’ → 코 작고 여린 코"
       ],
-      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 트윈테일 → 포니테일",
+      "adjusted": "다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는",
       "hair": {
         "hairstyle": "ponytail",
         "hair length": "long",
         "bangs": "choppy bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘long tail’·‘large ears’에서 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
-      "hair_cues": [
-        "‘long tail’ → 헤어스타일 포니테일",
-        "‘long tail’ → 머리 길이 긴 머리"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pansear-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-3/records/pansear-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "514": {
       "name": "바오키",
