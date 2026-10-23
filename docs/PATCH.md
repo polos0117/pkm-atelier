@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-23 · gpt · 치렁 8장 부분 등록과 정본 잠금
+- data/face-design.json — 치렁 경장 기록의 머리를 정본으로 잠그고 등록 상태 반영.
+- docs/CHARACTER_FACE_DESIGNS.md — 치렁의 정본·등록 정보를 자료에서 다시 그림.
+- docs/image-batches/chimecho-20261023.md — 8장 반영 결과와 일상1 도구 거절·미생성 상태를 기록.
+
 ## 2026-10-23 · gpt · 트로피우스 9장 등록과 정본 잠금
 - data/face-design.json — 트로피우스 경장 기록의 머리를 정본으로 잠그고, 이미 등록된 해골몽·미라몽의 등록 표시만 현재 도감에 맞춤.
 - docs/CHARACTER_FACE_DESIGNS.md — 얼굴 설계 자료의 정본·등록 상태를 다시 그림.
