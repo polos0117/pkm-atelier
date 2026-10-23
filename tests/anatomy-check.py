@@ -126,6 +126,30 @@ class Anatomy(unittest.TestCase):
                 if v is None: os.environ.pop(k, None)
                 else: os.environ[k] = v
 
+    def test_mirror_when_official_blocked(self):
+        """공식 자리가 403 이면 GitHub 사본을 받는다 — sha256 이 다른 파일은 버리고 다음 자리로"""
+        import hashlib, tempfile
+        d = tempfile.mkdtemp(); good = b"model-bytes"; sha = hashlib.sha256(good).hexdigest()
+        tried = []
+        def fake(url, path):
+            tried.append(url)
+            if "storage.googleapis.com" in url:
+                raise OSError("HTTP Error 403: Forbidden")
+            open(path, "wb").write(b"tampered" if "raw.githubusercontent.com" in url else good)
+        old_models, old_get, old_env = dict(ac.MODELS), ac.urllib.request.urlretrieve, os.environ.get("PKM_ANATOMY_MODELS")
+        try:
+            ac.MODELS["pose"] = ("x.task", "https://storage.googleapis.com/mediapipe-models/x/1/x.task", sha)
+            ac.urllib.request.urlretrieve = fake; os.environ["PKM_ANATOMY_MODELS"] = d
+            p = ac.model_path("pose")
+            self.assertEqual(open(p, "rb").read(), good)
+            self.assertEqual([u.split("/")[2] for u in tried], ["storage.googleapis.com", "raw.githubusercontent.com", "github.com"])
+            self.assertTrue(all(u.endswith("/x.task") for u in tried[1:]) and all("anatomy-models" in u for u in tried[1:]))
+            self.assertFalse([f for f in os.listdir(d) if f.endswith(".part")])
+        finally:
+            ac.MODELS.clear(); ac.MODELS.update(old_models); ac.urllib.request.urlretrieve = old_get
+            if old_env is None: os.environ.pop("PKM_ANATOMY_MODELS", None)
+            else: os.environ["PKM_ANATOMY_MODELS"] = old_env
+
     def test_input_not_mutated(self):
         p, hs = body(), two_hands(); a, b = copy.deepcopy(p), copy.deepcopy(hs)
         ac.analyze(SIZE, p, hs)

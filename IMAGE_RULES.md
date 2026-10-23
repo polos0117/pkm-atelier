@@ -458,8 +458,9 @@ AI 그림이 가장 자주 틀리는 곳이다 — 떨어진 셋째 손(2026-10-
    `apt-get install libegl1 libgles2` 도. 모델은 처음 한 번 받아 세션 임시 자리에 둔다 — 올리지 않는다). 자세 추정으로 손이
    팔 끝에 붙었나, 손의 왼·오른이 그 팔과 맞나(엄지가 반대쪽인 뒤집힌 손), 아래팔/위팔·정강이/허벅지 길이 비가 사람 범위 안인가,
    왼·오른 같은 마디가 비슷한가, 팔꿈치·무릎이 접힐 수 없게 접혔나를 본다.
-   - **검사기를 못 돌려도 멈추지 않는다** — 끝 코드 3(모델을 못 받음: 작업 환경 네트워크가 `storage.googleapis.com` 을 막으면 403 ·
-     mediapipe·libEGL 이 없음)이면 2의 눈으로 세기만 하고 `anatomy.tool` 에 `"unavailable: <원인>"` 을 적고 잇는다. 검사기를 돌렸다고
+   - 모델은 공식 자리(`storage.googleapis.com`)가 막히면 GitHub 사본(`pkm-atelier` 의 고아 브랜치 `anatomy-models` — Pages 밖,
+     `raw.githubusercontent.com`·`github.com/…/raw/`)에서 받는다. 어느 쪽이든 sha256 을 맞춘다. mediapipe 는 PyPI(`pypi.org`·`files.pythonhosted.org`)에서.
+   - **검사기를 못 돌려도 멈추지 않는다** — 끝 코드 3(모델을 공식·사본 모두에서 못 받음 · mediapipe·libEGL 이 없음)이면 2의 눈으로 세기만 하고 `anatomy.tool` 에 `"unavailable: <원인>"` 을 적고 잇는다. 검사기를 돌렸다고
      적지 않는다. 다음에 돌릴 수 있게 하려면 그 환경의 네트워크 정책에 `storage.googleapis.com` 을 더하거나, 모델 사본을 둔 곳을
      `PKM_ANATOMY_MODEL_URL` 로 준다(sha256 은 그대로 맞춰 본다). (2026-10-24 — 예약 작업이 403 에서 생성 전에 멈췄다)
    - 모델이 늘 팔 둘·다리 둘·손가락 다섯을 가정해서 **셋째 팔·여섯째 손가락을 직접 세지 못한다**. 실사로 배운 모델이라 갑옷·망토·

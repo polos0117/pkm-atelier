@@ -17,7 +17,8 @@
 
 끝 코드: suspect 가 있으면 1(--strict 면 check 도 1). 없으면 0. 검사기를 못 돌리면 3 — 모델을 못 받았거나(네트워크가 storage.googleapis.com 을
 막으면 403) mediapipe·libEGL 이 없다. 그때 작업은 멈추지 않는다: 눈으로 세기만 하고 qa.json 의 anatomy.tool 에 "unavailable: <원인>" 을
-적는다(IMAGE_RULES 3절 끝). 모델을 다른 곳에 둔 사본이 있으면 PKM_ANATOMY_MODEL_URL=<주소 앞> 으로 받는다(sha256 은 그대로 맞춰 본다).
+적는다(IMAGE_RULES 3절 끝). 모델은 공식 자리 → GitHub 사본(pkm-atelier 의 anatomy-models 브랜치) 차례로 받는다. 다른 사본이 있으면
+PKM_ANATOMY_MODEL_URL=<주소 앞> 이 맨 먼저다(sha256 은 어느 쪽이든 맞춰 본다).
 모델은 처음 한 번 받아 PKM_ANATOMY_MODELS(기본 <tmp>/pkm-anatomy-models)에 둔다 — 저장소에 올리지 않는다. sha256 을 맞춰 본다.
 필요한 것: pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도). analyze() 는 모델 없이 점 목록만으로 돈다
 (tests/anatomy-check.py)."""
@@ -31,6 +32,9 @@ MODELS = {
              "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
              "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1"),
 }
+# 공식 자리가 막힌 환경(403)용 사본 — pkm-atelier 의 고아 브랜치 anatomy-models(Pages 밖). 공식 → 사본 차례로, 어느 쪽이든 sha256 을 맞춘다
+MIRRORS = ["https://raw.githubusercontent.com/polos0117/pkm-atelier/anatomy-models/",
+           "https://github.com/polos0117/pkm-atelier/raw/anatomy-models/"]
 # 자세 점 번호(MediaPipe) — 왼·오른은 그림 속 인물 기준
 SH, EL, WR, HIP, KN, AN = {"L": 11, "R": 12}, {"L": 13, "R": 14}, {"L": 15, "R": 16}, {"L": 23, "R": 24}, {"L": 25, "R": 26}, {"L": 27, "R": 28}
 SIDE = {"L": "왼", "R": "오른"}
@@ -60,17 +64,21 @@ def model_path(kind):
     d = model_dir(); os.makedirs(d, exist_ok=True)
     p = os.path.join(d, name)
     base = os.environ.get("PKM_ANATOMY_MODEL_URL")
-    if base:
-        url = base.rstrip("/") + "/" + name
+    urls = ([base.rstrip("/") + "/" + name] if base else []) + [url] + [m + name for m in MIRRORS]
     if not os.path.exists(p):
-        tmp = p + ".part"
-        try:
-            urllib.request.urlretrieve(url, tmp)
-        except Exception as e:   # 403(네트워크 정책)·끊김·없는 주소
+        tmp, why = p + ".part", []
+        for u in urls:
+            try:
+                urllib.request.urlretrieve(u, tmp)
+                if hashlib.sha256(open(tmp, "rb").read()).hexdigest() == sha:
+                    os.replace(tmp, p); break
+                why.append("%s: sha256 이 다르다" % u)
+            except Exception as e:   # 403(네트워크 정책)·끊김·없는 주소
+                why.append("%s: %s" % (u, e))
             if os.path.exists(tmp):
                 os.remove(tmp)
-            raise Unavailable("모델 %s 을 못 받았다(%s) — %s" % (name, e, url))
-        os.replace(tmp, p)
+        else:
+            raise Unavailable("모델 %s 을 못 받았다 — %s" % (name, " · ".join(why)))
     got = hashlib.sha256(open(p, "rb").read()).hexdigest()
     if got != sha:
         raise SystemExit("모델 %s 의 sha256 이 다르다(%s) — 지우고 다시 받는다: %s" % (name, got[:12], p))

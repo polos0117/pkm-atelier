@@ -13,6 +13,12 @@
 
 
 
+## 2026-10-24 · claude · 팔·다리·손 검사기 모델의 GitHub 사본
+- anatomy-models 브랜치(고아, Pages 밖) — MediaPipe 자세·손 모델 float16/1 을 바꾸지 않고 옮겼다(sha256 같음, Apache 2.0). storage.googleapis.com 이 막힌 GPT 쪽 작업 환경용. 릴리스 첨부는 이 세션에 권한이 없어 브랜치로 했다
+- tools/anatomy-check.py — 모델을 PKM_ANATOMY_MODEL_URL → 공식 자리 → raw.githubusercontent.com → github.com/…/raw/ 차례로 받고, sha256 이 다른 파일은 버리고 다음 자리로
+- IMAGE_RULES.md — 3절 끝 「팔·다리·손 점검」에 사본 자리와 PyPI
+- tests/anatomy-check.py — 공식이 403 이면 사본 차례·바뀐 파일 버리기
+
 ## 2026-10-24 · claude · 팔·다리·손 검사기를 못 돌려도 멈추지 않게
 - tools/anatomy-check.py — 모델을 못 받거나(작업 환경이 storage.googleapis.com 을 막아 403) mediapipe·libEGL 이 없으면 끝 코드 3 과 "눈으로 세기로 잇는다" 안내, --json 에 unavailable. 받다 만 파일은 지운다. PKM_ANATOMY_MODEL_URL 로 모델 사본 자리를 바꿀 수 있다(sha256 은 그대로)
 - IMAGE_RULES.md — 3절 끝 「팔·다리·손 점검」·9절: 검사기를 못 돌리면 멈추지 않고 눈으로 세기 + anatomy.tool 에 unavailable. 예약 작업 하나가 403 에서 생성 전에 멈춘 것(생성·업로드 0건)
