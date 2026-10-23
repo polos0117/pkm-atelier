@@ -13,6 +13,9 @@
 
 
 
+## 2026-10-24 · gpt · 랑딸랑 이미지 9장 등록
+- docs/image-batches/chingling-20261024.md — 이미지·썸네일·도감 등록과 검수 근거를 기록했다.
+
 ## 2026-10-23 · gpt · 치렁 8장 부분 등록과 정본 잠금
 - data/face-design.json — 치렁 경장 기록의 머리를 정본으로 잠그고 등록 상태 반영.
 - docs/CHARACTER_FACE_DESIGNS.md — 치렁의 정본·등록 정보를 자료에서 다시 그림.
