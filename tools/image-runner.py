@@ -85,7 +85,7 @@ class Store:
 
 
 def active(state):
-    return next((r for r in reversed(state['runs']) if r['status'] != 'complete'), None)
+    return next((r for r in reversed(state['runs']) if r['status'] not in ('complete', 'deferred')), None)
 
 
 def owned(state, owner):
@@ -281,6 +281,21 @@ def check_assets(state, read):
                         continue   # original kept in its session only — nothing committed to verify
                     if a and digest(read(a['path'])) != a['sha256']:
                         raise ValueError('missing/corrupt recovery artifact: ' + a['path'])
+
+
+def defer_run(state, owner, reason, read):
+    r = owned(state, owner)
+    if not reason: raise ValueError('explicit deferral reason required')
+    for c in r['queue']:
+        for item in c['slots'].values():
+            if item.get('status') == 'in_flight':
+                if not item.get('tool_failure'): raise ValueError('unresolved in_flight; reconcile before deferral')
+                f = json.loads(read(item['tool_failure']['path']))
+                if f.get('terminal') is not True or f.get('output_files') != [] or f.get('code') != 'moderation_blocked':
+                    raise ValueError('only confirmed terminal safety refusal may be deferred')
+    r.update(status='deferred', deferred_at=now(), defer_reason=reason)
+    # Preserve character state, claims, slot histories and daily ledgers verbatim.
+    return r
 
 
 def next_step(run):
@@ -659,7 +674,7 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['migrate-policy', 'status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
+    ap.add_argument('command', choices=['defer-run', 'migrate-policy', 'status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
     ap.add_argument('--execution-id', default=os.environ.get('PKM_EXECUTION_ID'))
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
@@ -725,7 +740,10 @@ def main():
     after = current(run)['no'] if run and current(run) else None
     switched = previous != after
     operation = a.command
-    if a.command in ('prepare', 'next') or switched:
+    if a.command == 'defer-run':
+        if a.card != previous: raise ValueError('--card must match deferred character')
+        defer_run(state, a.owner, a.reason, read)
+    elif a.command in ('prepare', 'next') or switched:
         # Single finite candidate scan. Never apply an old card's UI/QA to a replacement.
         run = prepare(state, a.owner, available, blocked, now(), a.execution_id)
         operation = 'reconciled_external_skip' if switched else a.command

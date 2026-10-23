@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-23 · gpt · 미완료 자동화 실행 보류
+- tools/image-runner.py · tests/image-runner-defer.py — 확정 안전 거절 실행만 claim·슬롯·한도를 보존해 보류하고 다음 예약 후보를 허용한다. 불확실한 호출과 다른 소유자는 거부한다.
+- docs/IMAGE_AUTOMATION.md — 보류 명령과 독립 슬롯 진행 범위를 기록했다.
+
 ## 2026-10-23 · gpt · 앗차키·몽나 정본 확정
 - data/face-design.json — 각 9장 생성·검수 후 경장 ①을 정본으로 표시하고, 실제 그림과 생성기 HAIR 줄에 맞춘 머리 기록을 잠갔다.
 - docs/CHARACTER_FACE_DESIGNS.md — 두 종의 정본 표시와 머리 잠금·근거 기록을 반영했다.

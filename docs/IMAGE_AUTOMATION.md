@@ -119,3 +119,7 @@ QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slo
 ## 정책 변경만 반영
 
 `python3 tools/image-runner.py migrate-policy`는 큐를 만들거나 생성하지 않고 img-2 상태의 정책과 날짜 장부만 이관한다. 일정은 부모가 별도로 2시간 간격으로 설정한다. 실행 명령은 위 환경변수 설정 후 `restore`, `prepare --owner pkm-daily`, `next --owner pkm-daily` 순서다. 이후 이미지 명령에는 반드시 `--card N`을 적는다. QA/도구 차단은 기록하고 알리며 무제한 재시도나 필터 탐색을 하지 않는다.
+
+## 명시적 미완료 보류
+
+`defer-run --owner pkm-daily --card N --reason TEXT`는 현재 실행을 deferred로 보류하며 캐릭터의 blocked 상태·claim·실패 슬롯·날짜 장부를 그대로 보존한다. 결과 불명확 in_flight는 보류할 수 없다. 파일 없는 확정 moderation_blocked만 근거를 읽어 허용한다. 다음 예약은 새 실행 ID로 다음 적격 캐릭터를 선택하며 보류 캐릭터 claim을 탈취하지 않는다. 개별 안전 거절은 재시도하지 않고, 승인된 정본으로 가능한 독립 슬롯만 별도 명시적 intent 기록으로 진행한다. 전체 도구 오류·권한·상한·원격 충돌은 계속 중단 사유다.
