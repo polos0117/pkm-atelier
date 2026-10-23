@@ -51,16 +51,26 @@ with tempfile.TemporaryDirectory() as td:
     qa.write_text(json.dumps({'accepted':True,'image_sha256':sha,'reviewer':'agent','observations':'visible','face_reason':'source based','compared_characters':['a','b','c']}))
     R.review(q,'light',qa,files);R.intent(q,'heavy',prompt,ui,files)
     assert q['queue'][0]['slots']['heavy']['references']=={'light':sha}
-    # Preservation includes immutable bytes and restoration into a fresh directory.
+    # Preservation: immutable text artifacts are committed and restorable; originals are session-only —
+    # never committed (Pages size), only their sha256 and WebP sha256 are recorded.
     store=R.Store(repo);store.publish(state,files,'checkpoint')
     store=R.Store(repo);remote=store.state();R.check_assets(remote,store.read)
+    light=remote['runs'][0]['queue'][0]['slots']['light']
+    assert light['image']['session_only'] and light['image']['path'] not in store.paths
+    assert light['image']['webp_sha256']==R.digest(R.webp(image.read_bytes()))
+    assert R.digest(R.image_bytes(light['image'],store.read))==sha, 'original from this session cache'
     R.restore(remote,store.read,t/'restored')
-    image_path=remote['runs'][0]['queue'][0]['slots']['light']['image']['path']
-    assert R.digest((t/'restored'/image_path).read_bytes())==sha
-    (t/'restored'/image_path).write_bytes(b'foreign work')
+    assert not (t/'restored'/light['image']['path']).exists()
+    prompt_path=light['prompt']['path']
+    assert (t/'restored'/prompt_path).read_bytes()==prompt.read_bytes()
+    (t/'restored'/prompt_path).write_bytes(b'foreign work')
     rejects(lambda:R.restore(remote,store.read,t/'restored'),'restore overwrite')
-    rejects(lambda:store.publish(remote,{image_path:b'changed'},'replace'),'remote image replacement')
+    rejects(lambda:store.publish(remote,{prompt_path:b'changed'},'replace'),'remote artifact replacement')
     rejects(lambda:R.check_assets(remote,lambda p:b'lost'),'missing artifacts')
+    # Another session (empty cache) cannot conjure the original; it must stop, not regenerate silently.
+    keep=R.CACHE;R.CACHE=t/'other-session-cache'
+    rejects(lambda:R.image_bytes(light['image'],store.read),'original outside its session')
+    R.CACHE=keep
     rejects(lambda:R.complete(q,state,store,store),'early complete')
     # Legacy, existing unregistered images, external reservations and claims are excluded.
     reg={'img':{'릴링':{'byStyle':{'glossy_promo':{'casual':{'f':['old.webp']}}}}}}

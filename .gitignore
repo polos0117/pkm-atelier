@@ -2,10 +2,12 @@
 __pycache__/
 .cache/
 
-# 그림은 pkm-atelier-img·pkm-atelier-img-2 저장소에 둔다.
-# 여기 img/·img-2/ 는 화면 검사용 임시 자리다(폴더든 그림 저장소로 잇는 링크든) — 올리지 않는다.
+# 그림은 pkm-atelier-img·pkm-atelier-img-2·pkm-atelier-img-3 저장소에 둔다.
+# 여기 img/·img-2/·img-3/ 은 화면 검사용 임시 자리다(폴더든 그림 저장소로 잇는 링크든) — 올리지 않는다.
 /img
 /img-2
+/img-3
 /img-repo
 /img-repo-2
+/img-repo-3
 /rust/target

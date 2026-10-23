@@ -55,23 +55,31 @@ python3 tools/image-runner.py resume --reason '확인한 해결 내용'
 
 ## 업로드와 완료
 
-9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지와 종별 records는 한 캐릭터 단위 커밋으로 img-2/main에 올린다. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. `records/automation/` 아래 원본 PNG는 복구용이며 도감 이미지로 등록되지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
+9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지(img/)와 종별 records는 한 캐릭터 단위 커밋으로 **열린 저장소 img-3/main**에 올린다 — 생성 원본 PNG 없이(아래 "원본은 세션 안에만"). 상태(`records/automation/state.json`)는 그대로 img-2. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. `records/automation/` 아래 원본 PNG는 복구용이며 도감 이미지로 등록되지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
 
 ```sh
 python3 tools/image-runner.py complete --owner pkm-daily --card 345
 ```
 
-complete는 원격 img-2의 9장 바이트가 보존 원본의 규정 변환과 같은지, 썸네일이 있는지, 코드 main의 data/img.json 슬롯과 where=1이 맞는지 확인한 뒤 다음 캐릭터를 허용한다. Actions 로그의 경고까지 조회하는 기능은 없으므로 에이전트가 별도로 확인·보고해야 한다. 원격 반영 전에는 완료로 표시하지 않는다.
+complete는 where 가 가리키는 저장소(새 run 은 img-3 = where 2, 10-22 run 은 img-2 = where 1)의 9장 바이트가 record 때 적은 WebP sha256(옛 run 은 보존 원본의 규정 변환)과 같은지, 썸네일이 있는지, 코드 main의 data/img.json 슬롯과 where가 맞는지 확인한 뒤 다음 캐릭터를 허용한다. Actions 로그의 경고까지 조회하는 기능은 없으므로 에이전트가 별도로 확인·보고해야 한다. 원격 반영 전에는 완료로 표시하지 않는다.
 
 ## 외부 작업이 먼저 게시한 경우
 
-`prepare`·`next`·이미지 작업 명령과 업로드 직전 `prepublish`는 최신 두 이미지 저장소의 img/ 원본 및 코드 data/img.json을 함께 읽는다. 코드만 등록됐거나 이미지 일부만 게시됐으면 `skipped_external_partial`, 같은 화풍의 기본 9개 슬롯이 등록되고 해당 저장소의 원본·썸네일도 존재하면 `completed_externally`로 기록한다. 자기 claim만 종료 상태와 근거 commit·파일 해시를 남기며, 타 세션 예약·잠금·이미지는 수정하지 않는다. interrupted나 예약 만료를 소유권 양도로 보지 않는다.
+`prepare`·`next`·이미지 작업 명령과 업로드 직전 `prepublish`는 최신 세 이미지 저장소(img·img-2·img-3)의 img/ 원본 및 코드 data/img.json을 함께 읽는다. 코드만 등록됐거나 이미지 일부만 게시됐으면 `skipped_external_partial`, 같은 화풍의 기본 9개 슬롯이 등록되고 해당 저장소의 원본·썸네일도 존재하면 `completed_externally`로 기록한다. 자기 claim만 종료 상태와 근거 commit·파일 해시를 남기며, 타 세션 예약·잠금·이미지는 수정하지 않는다. interrupted나 예약 만료를 소유권 양도로 보지 않는다.
 
 건너뛴 뒤에는 남은 하루 한도 안에서 다음 적격 캐릭터를 번호순으로 보충한다. 아직 intent도 없는 캐릭터는 예약된 한도를 반환한다. intent/결과가 있는 캐릭터는 그날 한도에 남기므로 외부 게시를 이용해 하루 2종 생성 상한을 넘길 수 없다. 후보 목록을 유한하게 한 번 검사하며 모두 제외되거나 한도가 소진되면 idle로 끝난다. `next`도 이제 필요한 대조·건너뛰기 상태를 일반 push할 수 있다. 읽기만 하려면 status를 쓴다.
 
-이미 `in_flight`이면 claim을 즉시 종료하지 않고 external_pending에 증거를 남긴다. 기존 생성 호출 결과를 찾고 record로 원본을 보존한 뒤 다시 대조한다. 재호출은 금지다. records/automation의 원본은 외부 게시로 세지 않는다. img/에 게시된 파일도 보존 원본의 규정 WebP 해시 또는 prepublish의 출력 해시와 일치하면 자기 결과로 인식한다. 자기 9장이 게시되고 등록이 기다려지는 상태는 verify_registration이며 외부 건너뛰기가 아니다.
+이미 `in_flight`이면 claim을 즉시 종료하지 않고 external_pending에 증거를 남긴다. 기존 생성 호출 결과를 찾고 record로 원본의 해시를 남긴 뒤(원본은 세션 캐시) 다시 대조한다. 재호출은 금지다. records/automation의 원본은 외부 게시로 세지 않는다. img/에 게시된 파일도 record 때 적은 WebP 해시(옛 run 은 보존 원본의 규정 WebP 해시) 또는 prepublish의 출력 해시와 일치하면 자기 결과로 인식한다. 자기 9장이 게시되고 등록이 기다려지는 상태는 verify_registration이며 외부 건너뛰기가 아니다.
 
 원격 snapshot은 상태 게시 직전에 다시 확인하며, img-2 일반 push의 부모 commit도 경합을 막는다. 서로 다른 저장소를 하나의 트랜잭션으로 잠그는 기능은 없으므로 검사 직후 다른 작업이 게시할 수 있다. 이 경우 생성 결과를 버리거나 재호출하지 말고 record로 보존한 뒤 다음 대조에 맡긴다. 업로드는 위 upload_base를 지켜 push 충돌을 재검사 신호로 처리한다.
+
+## 원본은 세션 안에만 (2026-10-23)
+
+`record`는 결과 원본을 커밋하지 않는다. 바이트는 세션 캐시(`PKM_IMAGE_CACHE`, 기본 `<tmp>/pkm-image-runner/<sha256>.<ext>`)에만 두고,
+상태에는 `{"path", "sha256", "session_only": true, "webp_sha256"}`만 적는다 — img-2 가 기록 폴더의 원본 PNG(312 MB)로 Pages 1 GB 에 닿았다.
+`check_assets`·`restore`는 session_only 원본을 건너뛴다(커밋된 것이 없다). `prepublish`·`complete`·외부 게시 대조는 `webp_sha256`을 쓰므로 원본이 없어도 된다.
+원본 바이트가 필요한 것(WebP 만들기, 교체의 원본 대조)은 그 세션에서만 된다 — 다른 세션에서는 "original not in this session" 으로 멈춘다.
+그때는 다시 생성하지 말고 멈춘 까닭을 보고한다(재생성은 명시 승인으로만). 10-22 run 처럼 원본이 이미 커밋된 항목은 예전처럼 img-2 에서 읽는다.
 
 ## 검증 범위
 

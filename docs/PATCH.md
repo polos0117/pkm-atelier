@@ -13,6 +13,14 @@
 
 
 
+## 2026-10-23 · claude · 그림 저장소3(pkm-atelier-img-3) 열기 · 원본 PNG 는 세션 안에만
+- tools/register-images.py · lib/img.js · .github/workflows/register-images.yml · .gitignore — 셋째 그림 저장소 pkm-atelier-img-3(where 2)를 열린 저장소로. img-2 는 사이트 약 960MB(1GB 한도)라 닫는다
+- tools/image-runner.py — 생성 원본 PNG 를 그림 저장소 records/ 에 올리지 않고 세션 임시 자리(PKM_IMAGE_CACHE)에만, 기록에는 sha256(+webp_sha256, session_only)만. 공개 그림 대조는 WebP 해시로, 새 그림은 img-3 에. 이미 올라간 원본(img-2 records/)은 그대로 읽는다
+- tools/casual-ledger.py · tools/casual-plan.cjs — 그림 저장소 셋을 읽는다(장부·예약·러너 상태는 img-2 에 그대로)
+- data/sprites.json — 새 도트 인물은 img-3 sprites/ 에, 인물 칸에 제 base
+- IMAGE_RULES.md · docs/IMAGE_AUTOMATION.md · AGENTS.md · README.md · rust/README.md — 저장소 표·올리는 곳·「원본 PNG 는 세션 안에만」 절
+- tests/image-runner*.py — 세션 원본·img-3 대조
+
 ## 2026-10-23 · gpt · 나옹마·몬냥이 이미지 정본과 일상컷 교체
 - data/face-design.json — 두 종의 경장 정본 표시와 생성 기록의 머리 값을 잠그고 얼굴 해석 근거를 남겼다.
 - docs/CHARACTER_FACE_DESIGNS.md — 두 종의 정본·머리 잠금과 해석 근거를 자료에서 다시 그렸다.

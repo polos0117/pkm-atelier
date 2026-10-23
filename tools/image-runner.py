@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Bounded image-work coordinator. No image API, scheduler, force-push or deletion.
-All mutable state and preserved assets live in img-2 records/automation/.
+All mutable state and preserved text assets (prompt, UI, QA, approvals) live in img-2 records/automation/.
+Generated originals are NOT committed (2026-10-23): they stay in this session's cache (PKM_IMAGE_CACHE,
+default <tmp>/pkm-image-runner/<sha256>.<ext>) and the record keeps only their sha256 and the sha256 of
+their WebP conversion. Older records whose originals were committed still read them from img-2.
+New images are published to the open image repository (img-3); img and img-2 are closed (replacements only).
 A normal fast-forward push is the compare-and-swap; contention stops the caller.
 """
 import copy
@@ -11,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
 SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
 TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
+IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3']   # data/img.json "where" order; last one is open
+CACHE = Path(os.environ.get('PKM_IMAGE_CACHE') or Path(tempfile.gettempdir()) / 'pkm-image-runner')
 
 
 def now():
@@ -114,6 +120,33 @@ def webp(original):
         return buf.getvalue()
 
 
+def keep_original(prefix, label, path):
+    """Session-only original: cache the bytes locally, commit only hashes (no PNG in the Pages repository)."""
+    b = Path(path).read_bytes(); h = digest(b)
+    CACHE.mkdir(parents=True, exist_ok=True)
+    local = CACHE / (h + Path(label).suffix)
+    if not local.exists():
+        local.write_bytes(b)
+    return {'path': prefix + '/' + label, 'sha256': h, 'session_only': True, 'webp_sha256': digest(webp(b))}
+
+
+def image_bytes(a, read):
+    """Original bytes: committed legacy artifact, or this session's cache for session-only originals."""
+    if not a.get('session_only'):
+        return read(a['path'])
+    for local in CACHE.glob(a['sha256'] + '.*'):
+        b = local.read_bytes()
+        if digest(b) == a['sha256']:
+            return b
+    raise ValueError('original not in this session (session_only, sha256 ' + a['sha256'][:12] + '); '
+                     'originals are never committed - regenerate under an explicit approval')
+
+
+def public_hash(a, read):
+    """sha256 of the WebP that must be published for this original."""
+    return a['webp_sha256'] if a.get('webp_sha256') else digest(webp(image_bytes(a, read)))
+
+
 def registered_files(value):
     if isinstance(value, str):
         return {value} if value.endswith('.webp') else set()
@@ -130,7 +163,7 @@ def externally_complete(card, registry, images):
             continue
         def exists(f):
             shard = registry.get('where', {}).get(f, 0)
-            return shard in (0, 1) and all(p in images[shard].paths for p in ('img/' + f, 'img/thumb/' + f))
+            return shard < len(images) and all(p in images[shard].paths for p in ('img/' + f, 'img/thumb/' + f))
         if all(exists(f) for f in names):
             return True
     return False
@@ -142,7 +175,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
     for c in run['queue']:
         if c['status'] in TERMINAL:
             continue
-        own = {filename(c, s): digest(webp(read(v['image']['path']))) for s, v in c['slots'].items() if v.get('image')}
+        own = {filename(c, s): public_hash(v['image'], read) for s, v in c['slots'].items() if v.get('image')}
         own = {f: c.get('publication', {}).get('files', {}).get('img/' + f, h) for f, h in own.items()}
         published, foreign, ours = [], [], []
         for shard, store in enumerate(images):
@@ -155,7 +188,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
                 h = digest(store.read(p))
                 item = {'file': f, 'shard': shard, 'sha256': h}
                 published.append(item)
-                if shard == 1 and own.get(f) == h:
+                if shard >= 1 and own.get(f) == h:   # img-2 (earlier runs) or img-3 (open) — never the closed first shard
                     ours.append(f)
                 else:
                     foreign.append(item)
@@ -168,7 +201,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
             if ours:
                 c['own_publication'] = {'files': sorted(ours), 'status': 'verify_registration'}
             continue
-        evidence = {'commits': {'code': code_head, 'img': images[0].base, 'img2': images[1].base},
+        evidence = {'commits': {'code': code_head, **{('img' + (str(i + 1) if i else '')): s.base for i, s in enumerate(images)}},
                     'published': published, 'foreign_files': foreign, 'registered_files': sorted(registered)}
         if any(v.get('status') == 'in_flight' for v in c['slots'].values()):
             c.setdefault('external_pending', evidence)
@@ -201,6 +234,8 @@ def check_assets(state, read):
                     a = item.get(key)
                     if a and (not a['path'].startswith('records/automation/') or '..' in Path(a['path']).parts):
                         raise ValueError('invalid recovery artifact path')
+                    if a and a.get('session_only'):
+                        continue   # original kept in its session only — nothing committed to verify
                     if a and digest(read(a['path'])) != a['sha256']:
                         raise ValueError('missing/corrupt recovery artifact: ' + a['path'])
 
@@ -376,7 +411,7 @@ def record(run, slot, image, files):
         ext = '.png' if im.format == 'PNG' else '.webp'
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
     prefix = item.get('prefix', prefix)
-    item.update(status='review', image=artifact(files, prefix, 'original' + ext, image), received_at=now())
+    item.update(status='review', image=keep_original(prefix, 'original' + ext, image), received_at=now())
 
 
 def review(run, slot, qa, files):
@@ -427,7 +462,7 @@ def append_completed_replacement(state, run_id, card, slot, item, approval, read
     if run['status'] != 'complete' or c['status'] != 'complete' or slot != 'casual3':
         raise ValueError('replacement requires completed run/card and explicit casual3 scope')
     old = effective_slot(c, slot)
-    old_hash = digest(webp(read(old['image']['path'])))
+    old_hash = public_hash(old['image'], read)
     public = 'img/' + filename(c, slot)
     if (approval.get('card') != card or approval.get('slot') != slot or not approval.get('user_approval')
             or approval.get('old_public_sha256') != old_hash or digest(read(public)) != old_hash):
@@ -436,14 +471,15 @@ def append_completed_replacement(state, run_id, card, slot, item, approval, read
     if (qa.get('accepted') is not True or qa.get('image_sha256') != item['image']['sha256']
             or not qa.get('observations') or not qa.get('diversity_comparison') or not qa.get('reviewer')):
         raise ValueError('replacement requires actual accepted image and diversity QA')
-    if digest(read(item['image']['path'])) != item['image']['sha256']:
+    source = image_bytes(item['image'], read)
+    if digest(source) != item['image']['sha256']:
         raise ValueError('replacement source hash mismatch')
     entry = dict(item, slot=slot, status='accepted', replaced_at=now(),
                  previous_public_sha256=old_hash,
-                 public_sha256=digest(webp(read(item['image']['path']))),
+                 public_sha256=digest(webp(source)),
                  original_completed_at=c['completed_at'])
     c.setdefault('replacements', []).append(entry)
-    return public, webp(read(item['image']['path']))
+    return public, webp(source)
 
 
 def verify_completed(state, images, code):
@@ -463,8 +499,11 @@ def verify_completed(state, images, code):
     return checked
 
 
-def complete(run, state, images, code):
+def complete(run, state, images, code, read=None):
+    """images: one store (legacy single shard) or the shard stores in IMAGE_REPOS order; read: records (img-2)."""
     from PIL import Image
+    shards = images if isinstance(images, (list, tuple)) else None
+    read = read or (shards[1].read if shards else images.read)
     c = current(run)
     if next_step(run)['action'] not in ('publish_images_then_verify_registration', 'verify_registration'):
         raise ValueError('all nine slots require accepted QA before completion')
@@ -472,22 +511,24 @@ def complete(run, state, images, code):
     entry = registry.get('img', {}).get(c['name'], {}).get('byStyle', {}).get(c['style'], {})
     outputs = {}
     for slot in SLOTS:
-        expected = webp(images.read(c['slots'][slot]['image']['path']))
+        expected = public_hash(c['slots'][slot]['image'], read)
         if slot.startswith('casual'):
             filename = c['name'] + '_' + c['style'] + '_f_' + slot + '.webp'
             registered = filename in entry.get('casual', {}).get('f', [])
         else:
             filename = c['name'] + '_' + slot + '_' + c['style'] + '_f.webp'
             registered = entry.get('byForm', {}).get(slot, {}).get('f') == filename
-        if not registered or registry.get('where', {}).get(filename) != 1:
+        shard = registry.get('where', {}).get(filename, 0)
+        if not registered or shard < 1 or (shards and shard >= len(shards)):
             raise ValueError('registration pending: ' + filename)
-        if digest(images.read('img/' + filename)) != digest(expected):
+        pub = shards[shard] if shards else images
+        if digest(pub.read('img/' + filename)) != expected:
             raise ValueError('published bytes differ from preserved source conversion: ' + filename)
-        with Image.open(io.BytesIO(images.read('img/thumb/' + filename))) as thumb:
+        with Image.open(io.BytesIO(pub.read('img/thumb/' + filename))) as thumb:
             thumb.load()
             if max(thumb.size) != 512: raise ValueError('thumbnail invalid')
-        outputs[slot] = {'file': filename, 'sha256': digest(expected)}
-    c.update(status='complete', outputs=outputs, image_commit=images.base, registration_commit=code.base, completed_at=now())
+        outputs[slot] = {'file': filename, 'sha256': expected, 'shard': shard}
+    c.update(status='complete', outputs=outputs, image_commit=pub.base, registration_commit=code.base, completed_at=now())
     state['claims'][str(c['no'])]['status'] = 'complete'
     if current(run) is None:
         run['status'] = 'complete'
@@ -497,9 +538,8 @@ def prepare_publication(run, read):
     if next_step(run)['action'] != 'publish_images_then_verify_registration':
         raise ValueError('publication requires all nine accepted slots')
     c = current(run)
-    files = {'img/' + filename(c, s): webp(read(c['slots'][s]['image']['path'])) for s in SLOTS}
-    c['publication'] = {'status': 'preflight_checked', 'at': now(),
-                        'files': {p: digest(data) for p, data in files.items()}}
+    c['publication'] = {'status': 'preflight_checked', 'at': now(), 'repository': IMAGE_REPOS[-1],
+                        'files': {'img/' + filename(c, s): public_hash(c['slots'][s]['image'], read) for s in SLOTS}}
 
 
 def assert_heads(stores):
@@ -518,8 +558,8 @@ def restore(state, read, target):
             for item in list(c['slots'].values()) + c.get('attempt_history', []) + c.get('replacements', []):
                 for key in ['prompt', 'ui', 'image', 'qa', 'approval', 'correction_reference', 'exception', 'tool_failure']:
                     a = item.get(key)
-                    if not a:
-                        continue
+                    if not a or a.get('session_only'):
+                        continue   # session-only originals were never committed — nothing to restore
                     data = read(a['path'])
                     if digest(data) != a['sha256']:
                         raise ValueError('remote artifact hash mismatch')
@@ -591,7 +631,7 @@ def main():
         print('restored and hash verified; never regenerate missing local files before restore')
         return
     if a.command == 'verify-completed':
-        print(json.dumps({'verified_completed': verify_completed(state, store, Store(ROOT))}))
+        print(json.dumps({'verified_completed': verify_completed(state, [Store(ROOT.parent / IMAGE_REPOS[0]), store, Store(ROOT.parent / IMAGE_REPOS[2])], Store(ROOT))}))
         return
     if a.command == 'status':
         r = active(state)
@@ -601,8 +641,11 @@ def main():
     before = encoded(state)
     state['policy']['external_publication'] = 'skip_after_preserving_in_flight_result'
     state['policy']['image_operations_require_card'] = True
-    code = Store(ROOT); first = Store(ROOT.parent / 'pkm-atelier-img')
-    data = remote_inputs(code, [first, store])
+    code = Store(ROOT); first = Store(ROOT.parent / IMAGE_REPOS[0])
+    if not (ROOT.parent / IMAGE_REPOS[2]).is_dir():
+        raise ValueError(IMAGE_REPOS[2] + ' must be cloned next to pkm-atelier (open image repository)')
+    third = Store(ROOT.parent / IMAGE_REPOS[2]); shards = [first, store, third]
+    data = remote_inputs(code, shards)
     run = active(state)
     if run:
         run = owned(state, a.owner)
@@ -617,7 +660,7 @@ def main():
         record(run, a.slot, a.image, files)
     read = lambda p: files[p] if p in files else store.read(p)
     if run:
-        reconcile_external(state, run, data[1], [first, store], code.base, read)
+        reconcile_external(state, run, data[1], shards, code.base, read)
     for card in data[0]:
         reservation = data[4].get(card['name'])
         claim = state['claims'].get(str(card['no']))
@@ -663,7 +706,7 @@ def main():
             artifact(files, prefix, 'pilot-checkpoint.json', a.pilot_checkpoint)
         elif a.command == 'review': review(run, a.slot, a.qa, files)
         elif a.command == 'prepublish': prepare_publication(run, store.read)
-        elif a.command == 'complete': complete(run, state, store, code)
+        elif a.command == 'complete': complete(run, state, shards, code, read)
         elif a.command == 'block':
             if not a.reason: raise ValueError('--reason required')
             run['status'] = 'blocked'; current(run).update(status='blocked', reason=a.reason)
@@ -674,7 +717,7 @@ def main():
     commit = None
     if encoded(state) != before or files:
         if run: run['updated_at'] = now()
-        assert_heads([first, code, store])
+        assert_heads([first, code, third, store])
         commit = store.publish(state, files, 'Image runner: ' + operation)
     print(json.dumps({'commit': commit, 'operation': operation,
                       'intent_recorded': operation in ('intent', 'retry-intent', 'replan-rejected'),

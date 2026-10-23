@@ -37,12 +37,13 @@ PLAN.json 꼴(배치 하나 — 같이 만드는 캐릭터 전부):
 조건(필수 갈래 자리 돌리기·다섯 명에 두 장·덜 쓴 갈래·새 값)은 보지 않는다. 세 장 안의 조건(값이 서로 다름·필수 갈래
 한 장 이상·덮는 겉옷 한 장까지)은 그대로 본다.
 
-기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2 다(--repos 로 바꾼다)."""
+기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3 이다(--repos 로 바꾼다).
+장부·예약은 그대로 둘째 저장소에 — 새 그림의 기록은 셋째 저장소에 쌓인다."""
 from pathlib import Path
 import argparse, datetime, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2")]
+REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3")]
 LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "casual-ledger.json")
 # 예약은 세션마다 따로 파일(2026-10-22) — 한 장부 파일에 다들 쓰다 push 가 엇갈리면 남의 예약을 지웠다(밤선인·파치리스, 체리꼬·샤비)
 RESERVATIONS = "casual-reservations"
@@ -307,7 +308,7 @@ def build(args):
     gone = [r for r in args.repos if not os.path.isdir(os.path.join(r, "records"))]
     if gone:
         # 세션마다 받아 둔 저장소가 다르면 장부가 줄었다 늘었다 한다 — 다 받은 곳에서만 다시 만든다
-        raise SystemExit("그림 저장소가 없다: %s — pkm-atelier 옆에 둘 다 받은 뒤 build 한다" % ", ".join(gone))
+        raise SystemExit("그림 저장소가 없다: %s — pkm-atelier 옆에 셋 다 받은 뒤 build 한다" % ", ".join(gone))
     old = load(args.ledger)
     done = read_records(args.repos)
     cards = {e["card"] for e in done}

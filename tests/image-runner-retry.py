@@ -1,4 +1,4 @@
-"""One hash-bound correction preserves original artifacts and rejects duplicate calls."""
+"""One hash-bound correction preserves text artifacts and original hashes (originals stay in the session) and rejects duplicate calls."""
 import importlib.util, tempfile, json, copy
 from pathlib import Path
 from PIL import Image
@@ -29,6 +29,9 @@ with tempfile.TemporaryDirectory() as tmp:
     assert '/attempts/2/' in c['slots']['light']['image']['path']
     run['status']='blocked';c.update(status='blocked',reason='second QA failure');rejects(retry)
     state={'runs':[run]};r.check_assets(state,files.__getitem__);r.restore(state,files.__getitem__,t/'restore')
-    assert (t/'restore'/old['image']['path']).exists()
-    broken=dict(files);broken[old['image']['path']]=b'bad';rejects(lambda:r.check_assets(state,broken.__getitem__))
+    # Originals are session-only: hashes recorded, bytes never committed or restored; text artifacts are.
+    assert old['image']['session_only'] and old['image']['path'] not in files and not (t/'restore'/old['image']['path']).exists()
+    assert r.digest(r.image_bytes(old['image'],files.__getitem__))==old['image']['sha256']
+    assert (t/'restore'/old['prompt']['path']).exists()
+    broken=dict(files);broken[old['prompt']['path']]=b'bad';rejects(lambda:r.check_assets(state,broken.__getitem__))
 print('PASS one correction, immutable history, duplicate guard, hash-bound approval, restore all attempts')

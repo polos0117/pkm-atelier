@@ -66,7 +66,9 @@ with tempfile.TemporaryDirectory() as tmp:
     source=lambda path: artifacts[path] if path in artifacts else b.read(path)
     R.reconcile_external(state,run,{},[a,b],'code',source)
     assert c['status']=='skipped_external_partial'
-    assert c['slots']['light']['image']['path'] in artifacts
+    # The original stays in the session cache; only its hashes are recorded (no PNG committed).
+    assert c['slots']['light']['image']['path'] not in artifacts and c['slots']['light']['image']['session_only']
+    assert R.webp(R.image_bytes(c['slots']['light']['image'],source))
     assert 345 in state['daily']['2026-10-22']  # Generation cannot be refunded.
     R.prepare(state,'worker',[{'no':347,'name':'아노딥스'}],{},'2026-10-22')
     assert len(run['queue'])==2  # No third generating character.
@@ -123,6 +125,7 @@ with tempfile.TemporaryDirectory() as tmp:
     code=repo('code',{'data/card.json':R.encoded({'cards':{'character':[{'no':n,'name':name} for n,name in [(345,'릴링'),(346,'릴리요'),(347,'아노딥스')]]}}),'data/img.json':R.encoded({'img':{}})})
     first=repo('pkm-atelier-img',{'README.md':b'preserve'})
     second=repo('pkm-atelier-img-2',{'README.md':b'preserve'})
+    third=repo('pkm-atelier-img-3',{'README.md':b'preserve'})   # open image repository (2026-10-23)
     oldroot,oldargv=R.ROOT,sys.argv
     def cli(*args):
         sys.argv=['image-runner.py',*args,'--repo',str(second),'--owner','worker']

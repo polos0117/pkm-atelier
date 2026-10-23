@@ -1,5 +1,5 @@
 {
- "_": "도트 인물 — 약속은 공방 모음(polos0117.github.io) README 「도트 재생기」. 인물마다 card(카드 이름 = 도감 ?mech=) · cell · foot · scale · flip · facing · states(still · idle · walk · react). 인물 칸은 공방 모음의 도트 공방(dot.html) 「인물 칸 복사」 그대로 넣는다. 그림은 그림 저장소 pkm-atelier-img-2 의 sprites/<이름>/ (img/ 밖 — 등록기·썸네일이 읽지 않는다). 연구소 바닥·캡슐을 열면 뛰쳐나오기·도감 상세의 도트 줄이 이것을 읽는다.",
+ "_": "도트 인물 — 약속은 공방 모음(polos0117.github.io) README 「도트 재생기」. 인물마다 card(카드 이름 = 도감 ?mech=) · cell · foot · scale · flip · facing · states(still · idle · walk · react). 인물 칸은 공방 모음의 도트 공방(dot.html) 「인물 칸 복사」 그대로 넣는다. 그림은 그림 저장소의 sprites/<이름>/ (img/ 밖 — 등록기·썸네일이 읽지 않는다). 아래 base 는 앞선 인물(루기아)의 pkm-atelier-img-2, 새 인물은 열린 pkm-atelier-img-3 에 올리고 인물 칸에 제 base(도트 공방이 넣어 준다). 연구소 바닥·캡슐을 열면 뛰쳐나오기·도감 상세의 도트 줄이 이것을 읽는다.",
  "base": "https://polos0117.github.io/pkm-atelier-img-2/sprites/",
  "actors": {
   "lugia": {

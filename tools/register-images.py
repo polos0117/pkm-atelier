@@ -66,8 +66,8 @@ IMG_DIR = "img"
 # 어느 파일이 몇 번 저장소에 있는지는 img.json 의 where 에 적는다(0 번은 적지 않는다 — 옛 주소 그대로).
 # 새 그림은 "열린 저장소" 에만 받는다: 체크아웃에 있는 저장소 가운데 번호가 가장 큰 것.
 # 닫힌 저장소에는 이미 있는 이름의 교체만 받는다 — 새 이름이 오면 등록 전체를 멈춘다.
-SHARDS = ["pkm-atelier-img", "pkm-atelier-img-2"]
-EXTRA_DIRS = ["img-2"]
+SHARDS = ["pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3"]
+EXTRA_DIRS = ["img-2", "img-3"]
 
 PAT = re.compile(r"^(.+?)_(m|f|casual(\d+)|extra(\d+)|action(\d+))\.webp$", re.I)
 # 툴킷 화풍 견본. 카드 초상이 아니다

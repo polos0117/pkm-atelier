@@ -37,13 +37,14 @@
 ### 2. 그림은 이 저장소에 두지 않는다
 
 그림 저장소에 올리고 Pages 를 켠다. Pages 사이트 하나는 1 GB 까지라 저장소가 여럿이다
-(2026-10-13) — `pkm-atelier-img`(0 번, 닫힘: 교체만) · `pkm-atelier-img-2`(1 번, 열림: 새 그림).
+(2026-10-13) — `pkm-atelier-img`(0 번, 닫힘: 교체만) · `pkm-atelier-img-2`(1 번, 닫힘 2026-10-23: 교체만 · 장부·예약·자동화 상태는 여기)
+· `pkm-atelier-img-3`(2 번, 열림: 새 그림·새 기록·새 도트). 생성 원본 PNG 는 어느 그림 저장소에도 올리지 않는다 — 기록에는 sha256 만(IMAGE_RULES.md "원본 PNG").
 등록기가 0 번이 아닌 파일의 저장소 번호를 `data/img.json` 의 `where` 에 적고, `lib/img.js` 의
 `BASES[번호]` 가 주소를 만든다. 0 번은 적지 않으니 옛 주소는 안 바뀐다. 저장소를 더하거나 고칠 때는
 `BASES`·`tools/register-images.py` 의 `SHARDS`·`EXTRA_DIRS`·등록 워크플로·`.gitignore` 를 같이
 고친다 — `node tests/img-shards.cjs` 가 맞춰 본다. 자세한 것은 IMAGE_RULES.md 4절.
 
-`img/`·`img-2/` 는 `.gitignore` 에 있다. 브라우저 검사를 돌릴 때만 쓰는 임시 자리다 —
+`img/`·`img-2/`·`img-3/` 은 `.gitignore` 에 있다. 브라우저 검사를 돌릴 때만 쓰는 임시 자리다 —
 `tests/browser-harness.cjs` 가 배포 주소를 이 폴더로 돌려준다. 여기 둔 파일은
 올라가지 않으므로, 실제로 화면에 띄우려면 그림 저장소에 같은 이름으로 올려야 한다.
 
@@ -130,7 +131,7 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
 
-도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 부르는 곳: 연구소(`index.html` — 캡슐 벽 밑 바닥 `.lab-floor`, 캡슐을 열면 그 포켓몬의 도트가 뛰쳐나와 화면을 거닌다)·도감(상세의 도트 줄, 목록 칸의 「도트」 표). 인물은 `data/sprites.json` 의 `actors` 에 도트 공방의 「인물 칸 복사」를 넣는다(card = 카드 이름), 그림은 `pkm-atelier-img-2` 의 `sprites/`.
+도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 부르는 곳: 연구소(`index.html` — 캡슐 벽 밑 바닥 `.lab-floor`, 캡슐을 열면 그 포켓몬의 도트가 뛰쳐나와 화면을 거닌다)·도감(상세의 도트 줄, 목록 칸의 「도트」 표). 인물은 `data/sprites.json` 의 `actors` 에 도트 공방의 「인물 칸 복사」를 넣는다(card = 카드 이름), 그림은 열린 `pkm-atelier-img-3` 의 `sprites/`(인물 칸에 `base` — 루기아처럼 앞선 인물은 `pkm-atelier-img-2`, 자료 전체의 `base`).
 
 `battle-sim` 은 검사이면서 실험실이다. `--quick` 은 규칙 29가지만 본다. 빼고 돌리면
 수천 판을 굴려 퇴화 전략·과열 눈덩이·박자 수 민감도를 표로 찍는다 — 그건 실패가
@@ -145,8 +146,8 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 # 1) 그림 — 배포 주소를 여기로 돌려 준다 (img/ 는 .gitignore 라 체크아웃에 없다)
 mkdir -p img/figure-previews
 cp <atelier>/assets/figures/*.png img/figure-previews/    # 체형·머리 미리보기 65장
-#    카드 그림은 pkm-atelier-img 의 img/ 를 img/ 로, pkm-atelier-img-2 의 img/ 를 img-2/ 로
-#    (옆에 받아 ln -s ../pkm-atelier-img/img img · ln -s ../pkm-atelier-img-2/img img-2 가 쉽다)
+#    카드 그림은 pkm-atelier-img 의 img/ 를 img/ 로, pkm-atelier-img-2 의 img/ 를 img-2/ 로, pkm-atelier-img-3 의 img/ 를 img-3/ 으로
+#    (옆에 받아 ln -s ../pkm-atelier-img/img img · ln -s ../pkm-atelier-img-2/img img-2 · ln -s ../pkm-atelier-img-3/img img-3 이 쉽다)
 
 # 2) CDN — esm.sh 가 막힌 곳에서만
 ESM_DIR=<preact·htm 이 든 node_modules>
