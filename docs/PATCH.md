@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-23 · gpt · 켈리몬 이미지 정본 등록
+- data/face-design.json — 경장 정본이 등록된 켈리몬의 얼굴 표시와 긴 포니테일을 생성 기록으로 고정했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 켈리몬의 정본·머리 잠금 표시를 자료에서 다시 그렸다.
+
 ## 2026-10-23 · gpt · 캐스퐁 이미지 정본 등록
 - data/face-design.json — 경장 정본이 등록된 캐스퐁의 얼굴 표시와 짧은 곱슬머리를 생성 기록으로 고정했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 캐스퐁의 정본·머리 잠금 표시를 자료에서 다시 그렸다.
