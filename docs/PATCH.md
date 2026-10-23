@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 스컹뿡 이미지 9장과 두 정본의 머리 고정
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 랑딸랑·스컹뿡의 확정 경장 HAIR 값을 잠그고 원작 기반 얼굴 선택 이유와 기존 등록 상태를 동기화했다.
+- docs/image-batches/stunky-20261024.md — 9장·썸네일·도감 등록과 마지막 컷의 공개 행사 장면 재계획을 기록했다.
+
 ## 2026-10-24 · gpt · 랑딸랑 이미지 9장 등록
 - docs/image-batches/chingling-20261024.md — 이미지·썸네일·도감 등록과 검수 근거를 기록했다.
 
