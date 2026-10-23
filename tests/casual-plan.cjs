@@ -47,6 +47,9 @@ for (let i = 0; i < 30; i++) {
     assert(x.cat && x.ex && x.expr && x.pose && x.orient && x.frame && x.lens, '빈 값 없이: ' + JSON.stringify(x));
     assert.equal(x.axes.overall_intensity, 'strong'); assert.equal(x.axes.skin_exposure, 'bold'); assert.equal(x.aspect, '2:3');
     assert(x.garments.length && x.garments.every(g => P.GARMENTS[g]), '정한 옷 종류: ' + x.garments);
+    const row = S.EXAMPLE_MAP[x.cat].find(r => r[0] === x.ex);
+    const requiredGarments = P.garmentsOf((row[1] || '') + ' ' + (row[5] || S.EXAMPLE_DETAIL[x.ex] || ''));
+    assert(requiredGarments.every(g => x.garments.includes(g)), '제출 예시가 정한 옷을 계획도 따른다: ' + x.cat + '/' + x.ex);
     assert(x.expose.length === 2 && x.expose[0] !== x.expose[1] && x.expose.every(e => P.EXPOSE.includes(e)), '드러내는 방식 둘');
     assert(P.LEAD.includes(x.lead));
   }

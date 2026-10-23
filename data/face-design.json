@@ -16806,7 +16806,7 @@
       "en": "Glameow",
       "line": "나옹마",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -16820,7 +16820,7 @@
         "nose character": "small delicate nose",
         "lips": "thin lips"
       },
-      "why": "",
+      "why": "작은 검은 코와 날렵한 고양이 인상을 작은 사람 코·들린 눈꼬리·넓은 눈 간격으로 옮기고, 용수철 꼬리를 짧은 곱슬머리와 나선형 허리 자락으로 반영.",
       "cues": [
         "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
         "‘small black nose’ → 코 작고 여린 코"
@@ -16831,19 +16831,21 @@
         "hair length": "short",
         "bangs": "curtain bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘long, curled, spring-shaped tail’·키 0.5m에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 커튼뱅",
-      "hair_cues": [
-        "‘long, curled, spring-shaped tail’ → 헤어스타일 굵은 곱슬",
-        "키 0.5m → 머리 길이 짧은 머리"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/glameow-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/glameow-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "432": {
       "name": "몬냥이",
       "en": "Purugly",
       "line": "나옹마",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -16857,17 +16859,22 @@
         "nose character": "balanced nose",
         "lips": "thin lips"
       },
-      "why": "",
+      "why": "초승달형 머리의 양쪽으로 벌어지는 선을 커튼뱅과 긴 링렛 컬로 옮김. 나옹마의 작은 코와 넓은 눈 간격에 비해 보통 길이의 코와 표준 눈 간격, 더 좁은 턱끝으로 별도의 성인 인물을 구분. 흰 털과 지그재그 무늬는 은색 머리와 흰 회색 장갑에 반영.",
       "cues": [],
-      "adjusted": "같은 계열 나옹마와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 좌우 길이가 다른 비대칭컷 → 세로로 말린 드릴 컬",
+      "adjusted": "같은 계열 나옹마와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
       "hair": {
         "hairstyle": "ringlet curls",
         "hair length": "long",
         "bangs": "curtain bangs"
       },
-      "hair_locked": false,
-      "hair_why": "원작 단서가 적어 분포가 빈 쪽에서 세로로 말린 드릴 컬(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 나옹마에서 이어 같은 묶음",
-      "hair_cues": []
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-2/records/purugly-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-2/records/purugly-20261023/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "433": {
       "name": "랑딸랑",
