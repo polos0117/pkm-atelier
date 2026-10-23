@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-23 · gpt · 바오키·앗차프 18장 정본 등록
+- data/face-design.json — 바오키의 얼굴 해석 근거를 보완하고 두 캐릭터의 경장 ①을 정본으로 표시하며 생성 기록의 머리 값을 잠갔다.
+- docs/CHARACTER_FACE_DESIGNS.md — 두 캐릭터의 정본·머리 잠금 표시와 바오키 설계 근거를 다시 그렸다.
+- data/img.json — 셋째 그림 저장소의 두 캐릭터 각 9장과 썸네일 자동 등록을 확인했다(7bb93b1). 이미지 커밋은 바오키 06367ac, 앗차프 00219e1이며, 앗차프 중장 개방의 빈 WebP 변환본은 정상 원본에서 다시 변환해 1a27d6d로 복구했다.
+
 ## 2026-10-23 · gpt · 이미지 자동화 실행별 한도와 두 날짜 상한
 - tools/image-runner.py — 실행 ID별 1종과 한국·UTC 날짜별 12종을 분리하고 기존 claim·기록을 유지한다. 새 원본은 세션 안에 두며 img-3 업로드 기준 커밋을 반환한다.
 - tests/image-runner.py · tests/image-runner-external.py · tests/image-runner-limits.py — 반복 실행·외부 건너뛰기·두 자정·일일 상한·기록 이관을 검사한다.
