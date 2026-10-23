@@ -295,10 +295,16 @@ def live(doc, ledger=None):
                     if not c.get("expose") and plans.get((e.get("card"), c.get("cut"), c.get("ex"))):
                         c["expose"] = plans[(e.get("card"), c.get("cut"), c.get("ex"))]
     done = {e["card"] for e in es if e.get("status") != "reserved"}
+    completed_cuts = {(e["card"], c.get("cut"), c.get("cat"), c.get("ex"))
+                      for e in es if e.get("status") != "reserved" for c in e["cuts"]}
     last = {}
     for e in sorted(es, key=when):
         if e.get("status") == "reserved":
             if e.get("card") in done and not e.get("refill"):
+                continue
+            if e.get("refill") and e.get("cuts") and all(
+                    (e.get("card"), c.get("cut"), c.get("cat"), c.get("ex")) in completed_cuts
+                    for c in e["cuts"]):
                 continue
             last[e.get("card")] = e
     return sorted([e for e in es if e.get("status") != "reserved"] + list(last.values()), key=when)

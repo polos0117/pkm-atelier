@@ -123,6 +123,13 @@ with tempfile.TemporaryDirectory() as tmp:
         L.build(b)
     out = json.load(open(led))
     assert [e["status"] for e in out["entries"]] == ["done"], out["entries"]
+    # 이미 같은 번호·갈래·예시로 게시된 refill 예약은 live 비교에서 중복 계산하지 않는다.
+    completed_refill = {"card": "B", "status": "reserved", "refill": True, "at": L.now(),
+                        "cuts": copy.deepcopy(out["entries"][0]["cuts"])}
+    assert [e["status"] for e in L.live({"entries": out["entries"] + [completed_refill]})] == ["done"]
+    pending_refill = copy.deepcopy(completed_refill)
+    pending_refill["cuts"][-1]["ex"] = "not_yet_published"
+    assert [e["status"] for e in L.live({"entries": out["entries"] + [pending_refill]})] == ["done", "reserved"]
     # 등록된 캐릭터의 다시 채우기 예약은 그 컷이 기록에 오를 때까지 남는다
     out["entries"].append({"card": "B", "species": "b-1", "status": "reserved", "refill": True, "at": L.now(),
                            "cuts": [dict(c, kept=True) for c in good["characters"][0]["cuts"][:2]] +

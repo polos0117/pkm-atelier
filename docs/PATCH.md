@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-23 · gpt · 완료된 일상 다시 채우기 예약 중복 제외
+- tools/casual-ledger.py — 게시된 번호·갈래·예시가 모두 일치하는 refill 예약을 비교에서 제외해 완료 컷이 구도 후보를 중복 점유하지 않게 했다. 예약 파일은 보존한다.
+- tests/casual-ledger.py — 완료 예약 제외와 미게시 예시 예약 보존을 확인한다.
+
 ## 2026-10-23 · gpt · 미완료 자동화 실행 보류
 - tools/image-runner.py · tests/image-runner-defer.py — 확정 안전 거절 실행만 claim·슬롯·한도를 보존해 보류하고 다음 예약 후보를 허용한다. 불확실한 호출과 다른 소유자는 거부한다.
 - docs/IMAGE_AUTOMATION.md — 보류 명령과 독립 슬롯 진행 범위를 기록했다.
