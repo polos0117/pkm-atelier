@@ -298,6 +298,28 @@ def defer_run(state, owner, reason, read):
     return r
 
 
+def reopen_deferred(state, owner, card, reason, approval):
+    """보류(deferred)한 실행을 명시적 승인으로 다시 연다 — 결과 파일 없이 안전 거절된 슬롯을 replan-rejected 로 다시 계획하려고.
+    다른 실행이 돌고 있으면 열지 않는다(한 번에 한 실행). 캐릭터는 blocked 그대로 — 다음은 replan-rejected 뿐이다(2026-10-24 진주몽·헌테일·분홍장이)"""
+    if not reason: raise ValueError('explicit reopen reason required')
+    if active(state): raise ValueError('another run is active; finish or defer it before reopening a deferred run')
+    a = json.loads(Path(approval).read_text()) if approval else {}
+    if a.get('card') != card or not a.get('user_approval'):
+        raise ValueError('explicit user approval for this card required (approval JSON: card, user_approval)')
+    runs = [r for r in state['runs'] if r['status'] == 'deferred' and r['owner'] == owner and current(r) and current(r)['no'] == card]
+    if len(runs) != 1: raise ValueError('exactly one deferred run of this owner for --card required')
+    r = runs[0]; c = current(r)
+    claim = state['claims'].get(str(card), {})
+    if claim.get('owner') != owner or claim.get('run') != r['id']:
+        raise ValueError('character claim does not match deferred run')
+    if c['status'] != 'blocked' or not any(s.get('status') == 'rejected' and s.get('tool_failure') and not s.get('image') for s in c['slots'].values()):
+        raise ValueError('deferred run has no terminal no-output rejected slot to replan')
+    r.setdefault('reopen_history', []).append({'at': now(), 'reason': reason, 'deferred_at': r.get('deferred_at'),
+                                               'defer_reason': r.get('defer_reason'), 'user_approval': a['user_approval']})
+    r['status'] = 'blocked'
+    return r
+
+
 def next_step(run):
     c = current(run)
     if c is None:
@@ -309,6 +331,9 @@ def next_step(run):
         if not item:
             return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': 'prepare_ui_then_intent',
                     'casual_session': 'image-runner-' + run['id'] + '-' + str(c['no'])}
+        if item['status'] == 'blocked_dependency' and c['slots'].get(item.get('depends_on'), {}).get('status') == 'accepted':
+            return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': 'prepare_ui_then_intent',
+                    'casual_session': 'image-runner-' + run['id'] + '-' + str(c['no']), 'was': item}   # 기다리던 참조가 생겼다
         if item['status'] != 'accepted':
             return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': item['status'], 'evidence': item}
     waiting = len(c.get('own_publication', {}).get('files', [])) == 9
@@ -388,6 +413,8 @@ def intent(run, slot, prompt, ui, files):
         if c['slots'].get(ref, {}).get('status') != 'accepted':
             raise ValueError('reference not accepted')
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
+    if c['slots'].get(slot, {}).get('status') == 'blocked_dependency':
+        c.setdefault('block_history', []).append(dict(c['slots'][slot], slot=slot, resolved_at=now()))
     c['slots'][slot] = {'status': 'in_flight', 'at': now(), 'prompt': artifact(files, prefix, 'prompt.txt', prompt),
                         'ui': artifact(files, prefix, 'ui.json', ui),
                         'references': {ref: c['slots'][ref]['image']['sha256'] for ref in refs}}
@@ -430,7 +457,7 @@ def replan_rejected(run, slot, prompt, ui, failure, approval, files):
     c = current(run); old = c['slots'].get(slot, {})
     a = json.loads(Path(approval).read_text()); f = json.loads(Path(failure).read_text())
     if (run['status'] != 'blocked' or c['status'] != 'blocked'
-            or old.get('status') != 'in_flight' or old.get('image') or c.get('external_pending')):
+            or old.get('status') not in ('in_flight', 'rejected') or old.get('image') or c.get('external_pending')):
         raise ValueError('requires blocked terminal no-output attempt with no external publication pending')
     if any(x.get('slot') == slot for x in c.get('attempt_history', [])):
         raise ValueError('one explicit replan only; no automated rejection loop')
@@ -674,7 +701,7 @@ def guard_external(store, run, slot):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('command', choices=['defer-run', 'migrate-policy', 'status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
+    ap.add_argument('command', choices=['defer-run', 'reopen-deferred', 'migrate-policy', 'status', 'prepare', 'next', 'intent', 'record', 'adopt-pilot', 'retry-intent', 'replan-rejected', 'accept-exception', 'review', 'prepublish', 'complete', 'block', 'resume', 'restore', 'verify-completed'])
     ap.add_argument('--execution-id', default=os.environ.get('PKM_EXECUTION_ID'))
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
@@ -714,6 +741,9 @@ def main():
         raise ValueError(IMAGE_REPOS[2] + ' must be cloned next to pkm-atelier (open image repository)')
     third = Store(ROOT.parent / IMAGE_REPOS[2]); shards = [first, store, third]
     data = remote_inputs(code, shards)
+    if a.command == 'reopen-deferred':
+        if a.card is None: raise ValueError('--card required')
+        reopen_deferred(state, a.owner, a.card, a.reason, a.approval)
     run = active(state)
     if run:
         run = owned(state, a.owner)
@@ -743,6 +773,8 @@ def main():
     if a.command == 'defer-run':
         if a.card != previous: raise ValueError('--card must match deferred character')
         defer_run(state, a.owner, a.reason, read)
+    elif a.command == 'reopen-deferred':
+        bind_execution(state, a.owner, a.execution_id, a.card)   # 오늘 몫(일일 상한)은 replan-rejected 가 센다
     elif a.command in ('prepare', 'next') or switched:
         # Single finite candidate scan. Never apply an old card's UI/QA to a replacement.
         run = prepare(state, a.owner, available, blocked, now(), a.execution_id)

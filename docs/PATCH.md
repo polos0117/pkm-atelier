@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-24 · claude · 보류한 실행을 다시 열어 막힌 슬롯을 재계획
+- tools/image-runner.py — `reopen-deferred --card N --reason --approval`: 보류(deferred)한 실행을 카드 승인으로 다시 연다(다른 실행이 돌면 거부, 주인·claim 대조, 결과 파일 없는 rejected 슬롯이 있어야). `replan-rejected` 는 보류가 남긴 `rejected` 슬롯도 받는다. `blocked_dependency` 슬롯(고기동 개방)은 참조가 accepted 되면 다음 차례로 열리고 기다린 기록은 block_history 에. 진주몽·헌테일·분홍장이 세 실행이 deferred 라 재계획 명령이 받을 활성 실행이 없어 작업 세션이 생성 전에 멈췄다
+- docs/IMAGE_AUTOMATION.md — 「보류한 실행을 다시 열어 재계획」
+- tests/image-runner-reopen.py — 다른 실행 중 거부·까닭·카드 승인·주인·한 번만 재계획·기다리던 개방 슬롯
+
 ## 2026-10-24 · gpt · 사랑동이·아공이 기준 이미지 확정
 - data/face-design.json — 사랑동이·아공이의 경장 등록 상태와 머리 기록을 잠가 이후 이미지가 ①을 기준으로 이어지게 함.
 - docs/CHARACTER_FACE_DESIGNS.md — 같은 두 캐릭터의 정본·기록 경로와 집계를 생성기로 갱신.

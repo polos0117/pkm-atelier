@@ -112,6 +112,14 @@ QA로 blocked된 보존 결과만 `retry-intent --owner pkm-daily --card N --slo
 
 기존 intent와 도구 거절은 attempt_history 및 tool-failure.json에 남고 새 시도는 attempts/2에 기록된다. 거절 기록도 restore에서 해시 검사한다. 같은 슬롯에는 한 번만 허용하며 재거절 시 block한다. 사용자 지시로 바꾼 강도·노출·의상·구도는 실제 UI와 별도 승인 기록에 남기고, 일반 계획·QA 검사를 완화하지 않는다.
 
+## 보류한 실행을 다시 열어 재계획 (2026-10-24)
+
+`defer-run` 으로 보류한 실행은 활성 실행이 아니라 `replan-rejected` 가 받지 못한다. 먼저 `reopen-deferred --owner pkm-daily --card N --reason TEXT --approval FILE` 로 다시 연다.
+approval JSON 은 card, user_approval 를 담는다. 다른 실행이 돌고 있으면(active) 열지 않는다 — 그 실행을 끝내거나 보류한 뒤 연다. 한 번에 한 실행이다.
+다시 연 실행은 `blocked` 이고 캐릭터도 blocked 그대로라, 다음 수는 `replan-rejected` 뿐이다. 보류 때의 까닭·시각과 다시 연 승인은 `reopen_history` 에 남는다.
+`replan-rejected` 는 보류가 남긴 `rejected` 슬롯(결과 파일 없음 + tool_failure)도 받는다. 그 슬롯을 참조로 기다리던 슬롯(`blocked_dependency`, 예: 고기동 → 고기동 개방)은 참조가 accepted 되면 다음 차례(`prepare_ui_then_intent`)로 열린다. 기다리던 기록은 `block_history` 에 남는다.
+한 캐릭터를 다 채우면 `complete` 로 끝내고, 다음 보류 캐릭터를 다시 연다.
+
 ## 완료 후 사용자가 지정한 공개 슬롯 교체
 
 명시적으로 승인된 완료 캐릭터 casual3 교체는 `append_completed_replacement`로 이전 공개 해시·승인·새 검수 원본을 대조한 후 `replacements`에 추가한다. 기존 slots, outputs, completed_at과 실패 시도는 과거 완료 기록으로 그대로 남는다. 공개 WebP와 상태 overlay는 같은 일반 push에 반영한다. 완료 상태를 재개하거나 새 캐릭터를 생성하지 않는다. `verify-completed`는 마지막 교체 원본을 우선하여 실제 공개 바이트·썸네일·도감 슬롯을 읽기 전용으로 검증한다. restore와 장부도 교체 원본·실제 UI를 반영하며 과거 기록을 삭제하지 않는다.
