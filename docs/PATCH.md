@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-24 · claude · 일상컷 얼굴이 ①의 각도를 따라 하던 것
+- lib/prompt-spec.js · lib/prompt-anthro.js — 일상컷 프롬프트에 ANGLE 줄(book-atelier 와 같은 말): 첨부한 ①은 누구인지만 정하고, 고개 각도·기울기·시선·화면 속 얼굴 크기·카메라 높이·자르기는 따르지 않는다 — 장면 설정대로 돌리고 그 각도에서 자연스럽게, 생김새는 그대로. 폼·개방에는 없다. prompt.html 의 두 스크립트 ?v=angle1
+- IMAGE_RULES.md — 3절 ⑦⑧⑨ 일상컷
+- tests/prompt-action.cjs — 일상컷에만 ANGLE 줄
+
 ## 2026-10-24 · gpt · 몽얌나·콩둘기 아홉 장씩 등록과 정본 고정
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 몽얌나·콩둘기의 경장 머리와 실제 제출 원문 기록을 잠금. 콩둘기의 원작 단서 해석을 보완하고 도감과 어긋난 분홍장이 등록 표시를 현재 상태에 맞춤.
 - docs/image-batches/musharna-20261024.md · docs/image-batches/pidove-20261024.md — 이미지 커밋·QA와 썸네일·도감 등록 결과 기록.

@@ -40,6 +40,7 @@ for(const form of ['light','heavy','mobility'])for(const identityMode of ['creat
  assert(!plain.includes(S.PROMPT_LINES.sceneRule),'no priority line without choices');
  const casual=P.buildPrompt({...input,outputMode:'casual'});
  assert(!casual.includes('Action category:')&&!casual.includes(S.PROMPT_LINES.sceneRule));
+ assert(casual.includes(S.PROMPT_LINES.casualPose)&&!t.includes(S.PROMPT_LINES.casualPose),'casual alone frees the head angle from the attached image');
 }
 // 개방은 첨부한 그림의 구도를 그대로 — 액션 연출이 새지 않는다
 const open=P.buildPrompt({...base,form:'overdrive',baseForm:'heavy',action,pose:'low_guard'});
