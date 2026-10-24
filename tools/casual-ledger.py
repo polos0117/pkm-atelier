@@ -194,18 +194,28 @@ def read_records(repos):
             cuts, card, files = [], None, []
             for i in (1, 2, 3):
                 f = os.path.join(base, d, "casual%d-ui.json" % i)
+                # 다시 채운 컷 — 막힌 앞 시도의 casualN-ui.json 이 남아 있어도 등록된 그림을 만든 상태는 casualN-refill-ui.json 이다
+                # (2026-10-24 미라몽·치렁·마자: 막힌 장면이 등록분으로 읽혀 다시 채우기 예약이 안 풀리고 비교 대상이 늘어 계획기가 멈췄다)
+                refill = os.path.join(base, d, "casual%d-refill-ui.json" % i)
+                if os.path.exists(refill):
+                    f = refill
                 if not os.path.exists(f):
+                    c = imported_cut(os.path.join(base, d), i)   # 사용자가 준 그림만 있고 생성기 상태가 없는 컷
+                    mine = [n for n in imgs if c and n.startswith(c["card"] + "_") and n.endswith("_f_casual%d.webp" % i)]
+                    if c and (mine or not imgs):
+                        card = card or c["card"]; files += mine
+                        cuts.append({k: v for k, v in c.items() if k != "card"})
                     continue
                 try:
                     with open(f, encoding="utf-8") as h:
                         record = json.load(h)
-                        st = record.get("storage") or {}
+                        st = storage_of(record)
                 except (ValueError, OSError):
                     continue
                 card = st.get("last") or record.get("card") or card
                 if (card, i) in replacement_ui:
                     record = json.loads(replacement_ui[(card, i)].read_text())
-                    st = record.get("storage") or {}
+                    st = storage_of(record)
                 cd = (st.get("cards") or {}).get(card) or (st if "scenes" in st else {})
                 c = cd.get("scenes", {}).get("casual")
                 if not c or not card:
@@ -223,6 +233,53 @@ def read_records(repos):
                 entries.append({"species": d, "card": card, "repo": os.path.basename(repo),
                                 "at": added_at(repo, os.path.join("records", d), card, files), "status": "done", "cuts": cuts})
     return entries
+
+
+def imported_cut(d, i):
+    """casualN-import.json(사용자가 준 그림을 그 컷 자리에 올린 기록)만 있고 casualN-ui.json 이 없으면 — 그 폴더의 계획(plan-v2.json · plan.json)에서
+    그 컷의 선택값을 읽는다. 기록이 계획과 맞는다고 적은 것(plan_match)만 — 맞춰 보지 않은 그림을 계획대로 셈하지 않는다(2026-10-24 해골몽 2번)"""
+    p = os.path.join(d, "casual%d-import.json" % i)
+    if not os.path.exists(p):
+        return None
+    try:
+        with open(p, encoding="utf-8") as h:
+            imp = json.load(h)
+    except (ValueError, OSError):
+        return None
+    if not imp.get("plan_match"):
+        return None
+    card = re.match(r"(.+?)_", (imp.get("output") or {}).get("file") or "")
+    for name in ("plan-v2.json", "plan.json"):
+        q = os.path.join(d, name)
+        if not os.path.exists(q):
+            continue
+        try:
+            with open(q, encoding="utf-8") as h:
+                plan = json.load(h)
+        except (ValueError, OSError):
+            continue
+        for ch in plan.get("characters") or []:
+            if card and ch.get("card") != card.group(1):
+                continue
+            for c in ch.get("cuts") or []:
+                if c.get("cut") == i:
+                    ax = c.get("axes") or {}
+                    return {"card": ch.get("card"), "cut": i, **{k: c.get(k) or None for k in ("cat", "ex", "expr", "pose", "orient", "frame", "lens")},
+                            "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
+                            "garments": sorted(c.get("garments") or [])}
+    return None
+
+
+def storage_of(record):
+    """생성기 상태 — 보통은 storage 가 곧 상태({last, cards}). 브라우저 localStorage 를 통째로 적은 기록은
+    {"pkm_prompt_v2": "<상태 JSON 글>"} 꼴이라 풀어 읽는다(다시 채우기 기록 casualN-refill-ui.json)"""
+    st = record.get("storage") or {}
+    if "cards" not in st and "scenes" not in st and isinstance(st.get("pkm_prompt_v2"), str):
+        try:
+            st = json.loads(st["pkm_prompt_v2"])
+        except ValueError:
+            st = {}
+    return st
 
 
 def load(path):

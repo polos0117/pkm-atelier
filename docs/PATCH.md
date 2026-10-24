@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-24 · claude · 일상컷 계획기가 짝을 못 찾고 멈추던 것
+- tools/casual-ledger.py — 다시 채운 컷은 막힌 앞 시도의 casualN-ui.json 대신 casualN-refill-ui.json 을 읽는다(브라우저 localStorage 를 통째로 적은 꼴도 푼다). 생성기 상태 없이 사용자가 준 그림만 올린 컷(casualN-import.json 에 plan_match)은 그 폴더 계획(plan-v2.json·plan.json)의 그 컷 값으로 센다. 미라몽·치렁·마자의 막힌 장면이 등록분으로 읽혀 다시 채우기 예약 셋이 안 풀렸고(비교 대상 +9컷), 해골몽 2번은 아예 안 셌다
+- lib/casual-plan.js — 비교 대상이 허용된 방향·프레이밍을 다 써 "새 값" 짝이 없으면 TypeError 로 죽던 것: 새 값 → 배치가 잡은 값 → 겹치는 짝 차례로 풀어 계획을 낸다(why.relaxed, 장부 check 가 어긋난 것을 말하고 씨앗을 바꿔 다시 정한다). 세 축이 겹칠 때 자기 자신을 끝없이 다시 부르던 것은 스무 번에서 멈춘다. 실제 장부로 3명 배치 400번 — 고치기 전 절반 실패, 고친 뒤 0
+- tests/casual-ledger.py · tests/casual-plan.cjs — 다시 채운 기록·사용자 그림 기록 읽기, 붐비는 장부의 3명 배치(고치기 전 코드는 이 검사에서 죽는다)
+
 ## 2026-10-24 · claude · 팔·다리·손 검사기 — 그래픽 라이브러리 없는 환경에서도
 - tools/anatomy-check.py — libGLESv2·libEGL·libGL 이 없어 mediapipe 를 못 읽으면 끝 코드 3 과 함께 GL 없이 도는 설치 줄(NO_GL: mediapipe 0.10.14 + headless OpenCV)을 알려 준다. 0.10.14 는 GL 라이브러리를 휠 안에 갖고 있다 — 시스템 GL 라이브러리를 다 치운 자리에서 등록된 그림 61장이 최신 판과 같은 등급, 늘어난 팔(야나프 일상 2 교체 전)도 같게 걸린다
 - IMAGE_RULES.md — 3절 끝 「팔·다리·손 점검」에 GL 없는 환경(GPT 쪽)의 설치 줄

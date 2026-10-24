@@ -191,4 +191,24 @@ with tempfile.TemporaryDirectory() as tmp:
     finally:
         L.read_records = orig
 
+# 다시 채운 컷·사용자가 준 컷 — 막힌 앞 시도의 casualN-ui.json 대신 casualN-refill-ui.json(localStorage 통째 꼴도), import.json 은 계획에서
+# (2026-10-24 미라몽·치렁·마자: 막힌 장면이 등록분으로 읽혀 다시 채우기 예약이 안 풀리고, 비교 대상이 늘어 계획기가 멈췄다)
+with tempfile.TemporaryDirectory() as tmp:
+    repo = Path(tmp) / "img3"; rec = repo / "records" / "e-1"; rec.mkdir(parents=True); (repo / "img").mkdir()
+    def state(card, sc):
+        return {"last": card, "cards": {card: {"scenes": {"casual": sc}}}}
+    sc = lambda cat, ex: {"cat": cat, "ex": ex, "expr": "e", "pose": "p", "orient": "side", "frame": "waist_up", "lens": "natural50", "axes": {}, "outfit": "A linen dress."}
+    json.dump({"storage": state("E", sc("swimwear", "classic_bikini"))}, open(rec / "casual1-ui.json", "w"))
+    json.dump({"storage": state("E", sc("lingerie", "garter_set"))}, open(rec / "casual2-ui.json", "w"))                      # 막힌 앞 시도
+    json.dump({"storage": {"pkm_prompt_v2": json.dumps(state("E", sc("everyday_sensual", "morning_stretch")))}}, open(rec / "casual2-refill-ui.json", "w"))
+    json.dump({"plan_match": "계획 3번과 맞는다", "output": {"file": "E_glossy_promo_f_casual3.webp"}}, open(rec / "casual3-import.json", "w"))
+    json.dump({"characters": [{"card": "E", "cuts": [cut(3, "hobbies_leisure", "hobby_craft", "e3", "p3", "front", "full_body", "strong", ["vest", "trousers"])]}]}, open(rec / "plan-v2.json", "w"))
+    for n in (1, 2, 3):
+        (repo / "img" / ("E_glossy_promo_f_casual%d.webp" % n)).touch()
+    got = L.read_records([str(repo)])
+    assert [(c["cut"], c["cat"], c["ex"]) for c in got[0]["cuts"]] == [(1, "swimwear", "classic_bikini"), (2, "everyday_sensual", "morning_stretch"), (3, "hobbies_leisure", "hobby_craft")], got
+    assert got[0]["cuts"][2]["garments"] == ["trousers", "vest"]
+    imp = json.load(open(rec / "casual3-import.json")); imp.pop("plan_match"); json.dump(imp, open(rec / "casual3-import.json", "w"))
+    assert [c["cut"] for c in L.read_records([str(repo)])[0]["cuts"]] == [1, 2], "계획과 맞춰 보지 않은 그림은 계획대로 셈하지 않는다"
+
 print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

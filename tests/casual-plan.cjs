@@ -181,5 +181,25 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
     n++;
   } else console.log('(그림 저장소가 옆에 없어 실제 장부 시험은 건너뜀)');
 }
+/* 붐비는 장부 — 비교 대상이 허용된 방향·프레이밍을 다 썼고, 같은 배치 앞 캐릭터가 남은 새 값을 잡아도 계획기는 죽지 않는다
+   (2026-10-24 안 풀린 다시 채우기 예약 셋 때문에 배치 둘째 캐릭터마다 "짝을 못 찾음" 으로 멈췄다). 못 지킨 조건은 why.relaxed 에 남고 check 가 말한다 */
+{
+  const ORS = S.ORIENTATION_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v) && !['back', 'back_to_camera', 'walking_away'].includes(v));
+  const FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v) && !['face_close', 'detail'].includes(v));
+  const crowded = [];
+  for (let i = 0; i < 8; i++) crowded.push({ card: 'Z' + i, status: i >= 2 ? 'reserved' : 'done', at: at(400 + i), cuts: [1, 2, 3].map(k => {
+    const j = i * 3 + k - 1;
+    return { cut: k, cat: 'everyday_basic', ex: 'x' + j, expr: 'calm', pose: 'standing_formal', orient: ORS[j % ORS.length], frame: FRS[j % FRS.length], lens: 'natural50', axes: {}, garments: ['dress'] };
+  }) });
+  let batch = [], relaxed = 0;
+  for (const card of ['Y1', 'Y2', 'Y3']) {
+    const p = P.plan({ S, entries: entries.concat(crowded), card, batch, seed: 'crowded|' + card });
+    assert.equal(p.cuts.length, 3, card + ' 계획이 나온다');
+    assert(p.cuts.every(x => x.orient && x.frame && x.pose && x.ex), card + ' 컷마다 값이 있다');
+    relaxed += (p.why.relaxed || []).length;
+    batch.push({ card, cuts: p.cuts, claims: p.claims });
+  }
+  n++;
+}
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log('PASS 일상컷 계획기: ' + n + '가지 · 서른 명 차례로 check 통과(다시 정한 횟수 ' + tries + ') · 10명 안 예시 겹침 없음 · 갈래 ' + catsUsed.size + '개 · 배치 · 다시 채우기 · 피할 값 · 만든 컷 두기 · 생성기 주소 · 옷 종류 말');
