@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 씨카이저 9장 등록
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 씨카이저 정본의 긴 곱슬·커튼뱅 기록을 잠근다.
+- docs/image-batches/walrein-20261024.md — 씨카이저 9장과 정본·확대 검수·일상 비교·반영 커밋을 기록한다.
+
 ## 2026-10-24 · gpt · 씨레오 9장 등록과 얼굴 설계 근거
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 등록된 경장의 머리 기록을 잠그고 씨카이저의 원작 특징을 사람 얼굴로 옮긴 근거를 확정한다.
 - docs/image-batches/sealeo-20261024.md — 씨레오 정본·9장·생성 기록·확대 검수·이미지 및 도감 반영을 기록한다.
