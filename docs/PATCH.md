@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 동탁군 아홉 장 등록과 정본 고정
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 동탁군 원작 단서의 얼굴 해석을 보완하고 실제 경장 머리를 잠금. 이미 등록된 진주몽·헌테일의 등록·머리 잠금 표시도 현재 도감과 맞춤.
+- docs/image-batches/bronzong-20261024.md — 이미지 커밋·부분 수정·검수와 도감 등록 결과 기록.
+
 ## 2026-10-24 · gpt · 씨카이저 9장 등록
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 씨카이저 정본의 긴 곱슬·커튼뱅 기록을 잠근다.
 - docs/image-batches/walrein-20261024.md — 씨카이저 9장과 정본·확대 검수·일상 비교·반영 커밋을 기록한다.
