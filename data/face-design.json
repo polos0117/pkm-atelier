@@ -17118,7 +17118,7 @@
       "en": "Bonsly",
       "line": "꼬지지",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -17143,11 +17143,18 @@
         "hair length": "short",
         "bangs": "straight bangs"
       },
-      "hair_locked": false,
-      "hair_why": "키 0.5m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 일자 앞머리",
+      "hair_locked": true,
+      "hair_why": "확정 경장 ①의 실제 HAIR 줄 short twin tail, straight bangs를 유지한다. 이후에는 경장 이미지를 따른다.",
       "hair_cues": [
         "키 0.5m → 머리 길이 짧은 머리"
-      ]
+      ],
+      "hair_record": {
+        "kind": "prompt",
+        "path": "pkm-atelier-img-3/records/bonsly-20261024/light-prompt.txt",
+        "raw": {
+          "HAIR": "short twin tail, straight bangs."
+        }
+      }
     },
     "439": {
       "name": "흉내내",

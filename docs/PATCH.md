@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 꼬지지 아홉 장 등록과 정본 고정
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 꼬지지의 등록 표시와 실제 경장 머리를 고정해 후속 인물 기준을 보존.
+- docs/image-batches/bonsly-20261024.md — 이미지 커밋·차단 뒤 다른 장면 재계획·검수 기록.
+
 ## 2026-10-24 · gpt · 동탁군 아홉 장 등록과 정본 고정
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 동탁군 원작 단서의 얼굴 해석을 보완하고 실제 경장 머리를 잠금. 이미 등록된 진주몽·헌테일의 등록·머리 잠금 표시도 현재 도감과 맞춤.
 - docs/image-batches/bronzong-20261024.md — 이미지 커밋·부분 수정·검수와 도감 등록 결과 기록.
