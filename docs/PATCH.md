@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-25 · gpt · 유토브 인물 기준 확정
+- data/face-design.json — 유토브의 원작 근거와 경장 기록을 고정하고 현재 도감의 등록 표시를 맞췄다. 다른 종의 얼굴·머리 설계는 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 자료에서 다시 그린 설계표.
+
 ## 2026-10-24 · claude · 일상컷 예약 push 상시 승인
 - AGENTS.md — 계획기 `--reserve --push` 가 예약 파일(`pkm-atelier-img-2/records/casual-reservations/<세션>.json`)을 올리는 것은 저장소 주인이 미리 승인한 표준 절차라고 적었다. gpt 쪽 자동 승인 검토가 이 push 를 "기존 승인보다 넓은 콘텐츠 공개"로 보고 막아 일상컷 생성이 멈췄다. 범위는 예약 파일 하나 — 그림·다른 경로·강제 push·삭제는 들지 않는다
 

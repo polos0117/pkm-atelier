@@ -14394,7 +14394,7 @@
       "en": "Relicanth",
       "line": "시라칸",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -14508,7 +14508,7 @@
       "en": "Shelgon",
       "line": "아공이",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -14545,7 +14545,7 @@
       "en": "Salamence",
       "line": "아공이",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "balanced",
@@ -14582,7 +14582,7 @@
       "en": "Beldum",
       "line": "메탕",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "softly rounded",
         "face length": "short",
@@ -14660,7 +14660,7 @@
       "en": "Metagross",
       "line": "메탕",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -17169,7 +17169,7 @@
       "en": "Mime Jr.",
       "line": "흉내내",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -17206,7 +17206,7 @@
       "en": "Happiny",
       "line": "핑복",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "softly rounded",
         "face length": "balanced",
@@ -17241,7 +17241,7 @@
       "en": "Chatot",
       "line": "페라페",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -17277,7 +17277,7 @@
       "en": "Spiritomb",
       "line": "화강돌",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -17315,7 +17315,7 @@
       "en": "Gible",
       "line": "딥상어동",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "long",
@@ -17354,7 +17354,7 @@
       "en": "Gabite",
       "line": "딥상어동",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "elongated",
         "face length": "long",
@@ -17390,7 +17390,7 @@
       "en": "Garchomp",
       "line": "딥상어동",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "balanced",
@@ -17432,7 +17432,7 @@
       "en": "Munchlax",
       "line": "먹고자",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "softly rounded",
         "face length": "short",
@@ -17472,7 +17472,7 @@
       "en": "Riolu",
       "line": "리오르",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -20267,8 +20267,8 @@
       "name": "유토브",
       "en": "Tranquill",
       "line": "콩둘기",
-      "how": "draft",
-      "registered": false,
+      "how": "species",
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -20282,7 +20282,7 @@
         "nose character": "straight slender bridge",
         "lips": "thin lips"
       },
-      "why": "",
+      "why": "들비둘기의 날렵한 날개 선을 가늘고 올라간 눈꼬리로, 검은 털 다발을 결이 드러나는 눈썹으로, 노란 부리의 중심선을 사람의 곧고 가는 콧대로 해석했다. 콩둘기 계열의 부드러운 턱은 잇되 눈 간격과 코·입을 구분한다.",
       "cues": [
         "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
         "몸 형태 wings → 눈 간격 눈 사이가 가까운",
@@ -20295,11 +20295,14 @@
         "hair length": "medium",
         "bangs": "side-swept bangs"
       },
-      "hair_locked": false,
-      "hair_why": "‘light gray, black-tipped wings’·‘black tuft’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 콩둘기에서 이어 같은 묶음",
-      "hair_cues": [
-        "‘light gray, black-tipped wings’ → 헤어스타일 끝을 가볍게 친 페더컷"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tranquill-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-3/records/tranquill-20261025/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "521": {
       "name": "켄호로우",
