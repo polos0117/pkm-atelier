@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 사랑동이·아공이 기준 이미지 확정
+- data/face-design.json — 사랑동이·아공이의 경장 등록 상태와 머리 기록을 잠가 이후 이미지가 ①을 기준으로 이어지게 함.
+- docs/CHARACTER_FACE_DESIGNS.md — 같은 두 캐릭터의 정본·기록 경로와 집계를 생성기로 갱신.
+
 ## 2026-10-24 · claude · 다시 채우기 둘을 한 배치로 정하면 못 맞추던 것
 - lib/casual-plan.js · tools/casual-plan.cjs — 같은 배치에서 뒤에 정할 다시 채우기 캐릭터의 등록된 컷(fixed)을 앞 캐릭터 계획의 비교 대상에 넣는다. 장부 check 는 배치 안을 서로 견주는데 계획기는 앞 캐릭터만 봐서, 헌테일 1번이 분홍장이의 등록된 1번 짝(leaning_back, chest_up)을 골라 40번 다 걸렸다. 다시 채우기는 "새 방향·프레이밍" 조건도 안 본다(check 와 같게)
 - tests/casual-plan.cjs — 뒤 캐릭터의 등록된 컷과 짝이 겹치지 않는다
