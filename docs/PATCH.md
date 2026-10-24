@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · gpt · 몽얌나·콩둘기 아홉 장씩 등록과 정본 고정
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 몽얌나·콩둘기의 경장 머리와 실제 제출 원문 기록을 잠금. 콩둘기의 원작 단서 해석을 보완하고 도감과 어긋난 분홍장이 등록 표시를 현재 상태에 맞춤.
+- docs/image-batches/musharna-20261024.md · docs/image-batches/pidove-20261024.md — 이미지 커밋·QA와 썸네일·도감 등록 결과 기록.
+
 ## 2026-10-24 · gpt · 꼬지지 아홉 장 등록과 정본 고정
 - data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — 꼬지지의 등록 표시와 실제 경장 머리를 고정해 후속 인물 기준을 보존.
 - docs/image-batches/bonsly-20261024.md — 이미지 커밋·차단 뒤 다른 장면 재계획·검수 기록.

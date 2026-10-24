@@ -14359,7 +14359,7 @@
       "en": "Gorebyss",
       "line": "진주몽",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "long",
@@ -20175,7 +20175,7 @@
       "en": "Musharna",
       "line": "몽나",
       "how": "species",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -20197,18 +20197,25 @@
         "hair length": "long",
         "bangs": "parted bangs"
       },
-      "hair_locked": false,
+      "hair_locked": true,
       "hair_why": "에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 긴 머리 · 가운데를 가른 앞머리 — 몽나에서 이어 같은 묶음",
       "hair_cues": [
         "에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽"
-      ]
+      ],
+      "hair_record": {
+        "kind": "prompt",
+        "path": "pkm-atelier-img-3/records/musharna-20261024/light-prompt.txt",
+        "raw": {
+          "HAIR": "long chignon, parted bangs."
+        }
+      }
     },
     "519": {
       "name": "콩둘기",
       "en": "Pidove",
       "line": "콩둘기",
-      "how": "draft",
-      "registered": false,
+      "how": "species",
+      "registered": true,
       "face": {
         "face shape": "oval",
         "face length": "balanced",
@@ -20222,7 +20229,7 @@
         "nose character": "prominent defined nose",
         "lips": "small mouth"
       },
-      "why": "",
+      "why": "작은 비둘기의 타원형 머리와 착실한 인상을 부드러운 턱으로, 짧고 검은 부리의 또렷한 중심선을 사람의 선명한 코와 작은 입으로 해석한다. 날개의 뻗는 선은 가늘고 올라간 눈꼬리와 짧은 페더컷으로 옮긴다.",
       "cues": [
         "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
         "‘short, black beak’ → 코 크고 또렷한 코",
@@ -20234,12 +20241,19 @@
         "hair length": "short",
         "bangs": "side-swept bangs"
       },
-      "hair_locked": false,
+      "hair_locked": true,
       "hair_why": "‘black wings’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
       "hair_cues": [
         "‘black wings’ → 헤어스타일 끝을 가볍게 친 페더컷",
         "키 0.3m → 머리 길이 짧은 머리"
-      ]
+      ],
+      "hair_record": {
+        "kind": "prompt",
+        "path": "pkm-atelier-img-3/records/pidove-20261024/light-prompt.txt",
+        "raw": {
+          "HAIR": "short feathered, side-swept bangs."
+        }
+      }
     },
     "520": {
       "name": "유토브",
