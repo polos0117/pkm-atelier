@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-24 · claude · 다시 채우기 둘을 한 배치로 정하면 못 맞추던 것
+- lib/casual-plan.js · tools/casual-plan.cjs — 같은 배치에서 뒤에 정할 다시 채우기 캐릭터의 등록된 컷(fixed)을 앞 캐릭터 계획의 비교 대상에 넣는다. 장부 check 는 배치 안을 서로 견주는데 계획기는 앞 캐릭터만 봐서, 헌테일 1번이 분홍장이의 등록된 1번 짝(leaning_back, chest_up)을 골라 40번 다 걸렸다. 다시 채우기는 "새 방향·프레이밍" 조건도 안 본다(check 와 같게)
+- tests/casual-plan.cjs — 뒤 캐릭터의 등록된 컷과 짝이 겹치지 않는다
+
 ## 2026-10-24 · claude · 일상컷 얼굴이 ①의 각도를 따라 하던 것
 - lib/prompt-spec.js · lib/prompt-anthro.js — 일상컷 프롬프트에 ANGLE 줄(book-atelier 와 같은 말): 첨부한 ①은 누구인지만 정하고, 고개 각도·기울기·시선·화면 속 얼굴 크기·카메라 높이·자르기는 따르지 않는다 — 장면 설정대로 돌리고 그 각도에서 자연스럽게, 생김새는 그대로. 폼·개방에는 없다. prompt.html 의 두 스크립트 ?v=angle1
 - IMAGE_RULES.md — 3절 ⑦⑧⑨ 일상컷

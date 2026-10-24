@@ -201,5 +201,17 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   }
   n++;
 }
+/* 같은 배치에서 뒤에 정할 다시 채우기 캐릭터의 등록된 컷(fixed) — 그 컷의 짝·예시와 겹치게 정하지 않는다(장부 check 는 배치 안을 서로 견준다) */
+{
+  const ORS = S.ORIENTATION_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v)), FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v));
+  const fixedCuts = [];
+  for (let i = 0; i < 12; i++) fixedCuts.push({ cut: 1 + (i % 3), cat: 'everyday_basic', ex: 'f' + i, orient: ORS[i % ORS.length], frame: FRS[(i * 7) % FRS.length], garments: ['dress'], axes: {} });
+  for (let s = 0; s < 20; s++) {
+    const p = P.plan({ S, entries, card: 'W', batch: [], fixed: [{ card: 'V', cuts: fixedCuts }], seed: 'fixed|' + s });
+    const pairs = new Set(fixedCuts.map(c => c.orient + '|' + c.frame));
+    if (!(p.why.relaxed || []).length) assert(p.cuts.every(c => !pairs.has(c.orient + '|' + c.frame)), '뒤 캐릭터의 등록된 컷과 짝이 겹친다: ' + s);
+  }
+  n++;
+}
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log('PASS 일상컷 계획기: ' + n + '가지 · 서른 명 차례로 check 통과(다시 정한 횟수 ' + tries + ') · 10명 안 예시 겹침 없음 · 갈래 ' + catsUsed.size + '개 · 배치 · 다시 채우기 · 피할 값 · 만든 컷 두기 · 생성기 주소 · 옷 종류 말');

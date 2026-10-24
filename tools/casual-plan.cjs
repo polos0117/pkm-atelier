@@ -96,7 +96,12 @@ function planBatch(o, S, entries, look, cards, attempt) {
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
     const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
-    const p = P.plan({ S, entries: comparisonEntries, card, batch, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    /* 뒤에 정할 다시 채우기 캐릭터의 등록된 컷 — 지금 정하는 컷이 그것과 겹치면 안 된다 */
+    const fixed = o.cards.slice(o.cards.indexOf(card) + 1).filter(c => o.refill.includes(c)).map(c => {
+      const m = entries.filter(e => e.card === c && e.status !== 'reserved').pop();
+      return m ? { card: c, cuts: m.cuts } : null;
+    }).filter(Boolean);
+    const p = P.plan({ S, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
