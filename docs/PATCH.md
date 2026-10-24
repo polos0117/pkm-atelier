@@ -13,6 +13,9 @@
 
 
 
+## 2026-10-24 · claude · 일상컷 예약 push 상시 승인
+- AGENTS.md — 계획기 `--reserve --push` 가 예약 파일(`pkm-atelier-img-2/records/casual-reservations/<세션>.json`)을 올리는 것은 저장소 주인이 미리 승인한 표준 절차라고 적었다. gpt 쪽 자동 승인 검토가 이 push 를 "기존 승인보다 넓은 콘텐츠 공개"로 보고 막아 일상컷 생성이 멈췄다. 범위는 예약 파일 하나 — 그림·다른 경로·강제 push·삭제는 들지 않는다
+
 ## 2026-10-24 · claude · 보류한 실행을 다시 열어 막힌 슬롯을 재계획
 - tools/image-runner.py — `reopen-deferred --card N --reason --approval`: 보류(deferred)한 실행을 카드 승인으로 다시 연다(다른 실행이 돌면 거부, 주인·claim 대조, 결과 파일 없는 rejected 슬롯이 있어야). `replan-rejected` 는 보류가 남긴 `rejected` 슬롯도 받는다. `blocked_dependency` 슬롯(고기동 개방)은 참조가 accepted 되면 다음 차례로 열리고 기다린 기록은 block_history 에. 진주몽·헌테일·분홍장이 세 실행이 deferred 라 재계획 명령이 받을 활성 실행이 없어 작업 세션이 생성 전에 멈췄다
 - docs/IMAGE_AUTOMATION.md — 「보류한 실행을 다시 열어 재계획」

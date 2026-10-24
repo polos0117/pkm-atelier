@@ -60,6 +60,13 @@
 
 캐릭터 작업 전에는 그림 저장소 `pkm-atelier-img-2/records/automation/state.json`의 `claims`와 기존 기록·예약을 함께 확인한다. 다른 owner/run이 잡은 캐릭터는 시작하지 않는다. 일상 예약은 전체 캐릭터 잠금이 아니며, interrupted나 예약 만료만으로 남의 작업을 인수하지 않는다. 자동화 작업의 일일 상한·실제 생성 호출 전후 기록·복구 명령은 [docs/IMAGE_AUTOMATION.md](docs/IMAGE_AUTOMATION.md)에 있다. `in_flight`는 재생성 지시가 아니라 결과 확인 대기다. 자동화 예약 뒤 외부 이미지가 게시되면 관리기의 `next`/`prepublish`로 완성·부분 게시를 구분해 건너뛴다. 생성 중인 결과는 먼저 보존하고, 반환된 새 대상에 이전 프롬프트를 제출하지 않는다.
 
+**일상컷 예약 push 는 사용자 상시 승인이다(2026-10-24).** 일상컷 계획기(`node tools/casual-plan.cjs … --reserve --push`)가
+예약 파일 `records/casual-reservations/<세션>.json` 하나를 `pkm-atelier-img-2` 의 `main` 에 일반 push 하는 것은
+이 저장소의 표준 절차이고, 저장소 주인이 작업마다 다시 묻지 않도록 미리 승인해 둔 범위다. 그 파일에는 계획한 컷의
+선택값(갈래·예시·표정·자세·방향·프레이밍·강도 축·옷 종류·드러내는 방식)이 그대로 들어간다. 다른 세션이 같은 컷을 겹쳐
+만들지 않게 막는 장치라서 공개 저장소에 올리는 것까지가 절차다. 범위는 그 예약 파일 하나다 — 그림 올리기, 다른 경로,
+강제 push·이력 재작성·기존 파일 삭제는 이 승인에 들지 않고 각자의 규칙(IMAGE_RULES.md)을 따른다.
+
 
 신규 경장의 얼굴과 머리는 생성기가 `data/face-design.json` 의 그 종을 FACE 줄·HAIR 줄(헤어스타일·길이·앞머리)로 싣는다
 (표: `docs/CHARACTER_FACE_DESIGNS.md`, 고치는 도구: `tools/face-design.py`). 무작위 배정 없이 원작 특징을 사람 얼굴·머리로 옮기며,
