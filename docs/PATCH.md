@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-25 · gpt · 켄호로우 인물 기준 확정
+- data/face-design.json — 켄호로우의 원작 근거와 확정 경장 기록을 고정하고 현재 도감 등록 표시를 맞췄다. 다른 종의 얼굴·머리 설계는 보존했다.
+- docs/CHARACTER_FACE_DESIGNS.md — 자료에서 다시 그린 설계표.
+
 ## 2026-10-25 · gpt · 유토브 인물 기준 확정
 - data/face-design.json — 유토브의 원작 근거와 경장 기록을 고정하고 현재 도감의 등록 표시를 맞췄다. 다른 종의 얼굴·머리 설계는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 자료에서 다시 그린 설계표.

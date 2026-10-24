@@ -14622,7 +14622,7 @@
       "en": "Metang",
       "line": "메탕",
       "how": "draft",
-      "registered": false,
+      "registered": true,
       "face": {
         "face shape": "angular",
         "face length": "balanced",
@@ -20308,8 +20308,8 @@
       "name": "켄호로우",
       "en": "Unfezant",
       "line": "콩둘기",
-      "how": "draft",
-      "registered": false,
+      "how": "species",
+      "registered": true,
       "face": {
         "face shape": "heart-shaped",
         "face length": "balanced",
@@ -20323,7 +20323,7 @@
         "nose character": "balanced nose",
         "lips": "thin lips"
       },
-      "why": "",
+      "why": "가슴의 하트형 무늬를 넓은 이마와 좁아지는 턱의 사람 얼굴로, 날개 선을 가늘고 올라간 눈매로 해석했다. 유토브보다 긴 페더컷과 곧은 눈썹, 균형 잡힌 코를 써서 자부심 강한 최종 진화 인상을 구분한다.",
       "cues": [
         "‘heart-shaped patch’ → 얼굴형 이마가 넓고 턱이 가는 하트형",
         "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
@@ -20335,11 +20335,14 @@
         "hair length": "long",
         "bangs": "side-swept bangs"
       },
-      "hair_locked": false,
-      "hair_why": "몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 유토브에서 이어 같은 묶음",
-      "hair_cues": [
-        "몸 형태 wings → 헤어스타일 끝을 가볍게 친 페더컷"
-      ]
+      "hair_locked": true,
+      "hair_why": "확정한 ① 그림의 기록값(pkm-atelier-img-3/records/unfezant-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+      "hair_cues": [],
+      "hair_record": {
+        "path": "pkm-atelier-img-3/records/unfezant-20261025/light-ui.json",
+        "kind": "ui",
+        "raw": {}
+      }
     },
     "522": {
       "name": "줄뮤마",
