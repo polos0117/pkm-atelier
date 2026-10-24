@@ -13,6 +13,11 @@
 
 
 
+## 2026-10-24 · claude · 팔·다리·손 검사기 — 그래픽 라이브러리 없는 환경에서도
+- tools/anatomy-check.py — libGLESv2·libEGL·libGL 이 없어 mediapipe 를 못 읽으면 끝 코드 3 과 함께 GL 없이 도는 설치 줄(NO_GL: mediapipe 0.10.14 + headless OpenCV)을 알려 준다. 0.10.14 는 GL 라이브러리를 휠 안에 갖고 있다 — 시스템 GL 라이브러리를 다 치운 자리에서 등록된 그림 61장이 최신 판과 같은 등급, 늘어난 팔(야나프 일상 2 교체 전)도 같게 걸린다
+- IMAGE_RULES.md — 3절 끝 「팔·다리·손 점검」에 GL 없는 환경(GPT 쪽)의 설치 줄
+- tests/anatomy-check.py — GL 라이브러리가 없을 때 끝 코드 3·안내 줄
+
 ## 2026-10-24 · claude · 팔·다리·손 검사기 모델의 GitHub 사본
 - anatomy-models 브랜치(고아, Pages 밖) — MediaPipe 자세·손 모델 float16/1 을 바꾸지 않고 옮겼다(sha256 같음, Apache 2.0). storage.googleapis.com 이 막힌 GPT 쪽 작업 환경용. 릴리스 첨부는 이 세션에 권한이 없어 브랜치로 했다
 - tools/anatomy-check.py — 모델을 PKM_ANATOMY_MODEL_URL → 공식 자리 → raw.githubusercontent.com → github.com/…/raw/ 차례로 받고, sha256 이 다른 파일은 버리고 다음 자리로

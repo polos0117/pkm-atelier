@@ -150,6 +150,25 @@ class Anatomy(unittest.TestCase):
             if old_env is None: os.environ.pop("PKM_ANATOMY_MODELS", None)
             else: os.environ["PKM_ANATOMY_MODELS"] = old_env
 
+    def test_no_gl_hint(self):
+        """그래픽 라이브러리가 없어 mediapipe 를 못 읽으면 끝 코드 3 과 GL 없이 도는 설치 줄을 알려 준다"""
+        import builtins, io, contextlib
+        real = builtins.__import__
+        def fake(name, *a, **k):
+            if name == "mediapipe" or name.startswith("mediapipe."):
+                raise ImportError("libGLESv2.so.2: cannot open shared object file: No such file or directory")
+            return real(name, *a, **k)
+        out = io.StringIO()
+        try:
+            builtins.__import__ = fake
+            with contextlib.redirect_stdout(out):
+                code = ac.main(["그림.webp"])
+        finally:
+            builtins.__import__ = real
+        self.assertEqual(code, 3)
+        self.assertIn("libGLESv2.so.2", out.getvalue()); self.assertIn(ac.NO_GL, out.getvalue())
+        self.assertIn("mediapipe==0.10.14", ac.NO_GL); self.assertIn("headless", ac.NO_GL)
+
     def test_input_not_mutated(self):
         p, hs = body(), two_hands(); a, b = copy.deepcopy(p), copy.deepcopy(hs)
         ac.analyze(SIZE, p, hs)

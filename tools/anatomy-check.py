@@ -20,7 +20,9 @@
 적는다(IMAGE_RULES 3절 끝). 모델은 공식 자리 → GitHub 사본(pkm-atelier 의 anatomy-models 브랜치) 차례로 받는다. 다른 사본이 있으면
 PKM_ANATOMY_MODEL_URL=<주소 앞> 이 맨 먼저다(sha256 은 어느 쪽이든 맞춰 본다).
 모델은 처음 한 번 받아 PKM_ANATOMY_MODELS(기본 <tmp>/pkm-anatomy-models)에 둔다 — 저장소에 올리지 않는다. sha256 을 맞춰 본다.
-필요한 것: pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도). analyze() 는 모델 없이 점 목록만으로 돈다
+필요한 것: pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도). 그래픽 라이브러리(libEGL·libGLESv2·libGL)를 깔 수 없는
+환경이면 NO_GL 줄대로 — mediapipe 0.10.14 는 그 라이브러리를 휠 안에 갖고 있고, OpenCV 는 headless 판이 libGL 을 안 찾는다(파이썬 3.9~3.12.
+2026-10-24 시스템 GL 라이브러리를 다 치운 자리에서 등록된 그림 61장이 1.1.1 과 같은 결과). analyze() 는 모델 없이 점 목록만으로 돈다
 (tests/anatomy-check.py)."""
 import hashlib, json, math, os, sys, tempfile, urllib.request
 
@@ -49,6 +51,9 @@ HAND_SCORE = 0.8     # 왼·오른 판정을 믿는 손 점수
 RATIO = {"arm": (0.3, 1.6), "leg": (0.6, 2.4)}    # 아래/위 길이 비 — 등록된 그림 236장의 1~99% 바깥(애니 그림은 정강이가 길다)
 SYM = (0.6, 1 / 0.6)                               # 왼/오른 같은 마디 길이 비
 FOLD = 15.0          # 팔꿈치·무릎 각도(도)가 이보다 작으면 접힐 수 없다
+
+
+NO_GL = 'pip install "mediapipe==0.10.14" opencv-contrib-python-headless && pip uninstall -y opencv-contrib-python opencv-python'
 
 
 class Unavailable(Exception):
@@ -194,8 +199,10 @@ def detect(paths):
     os.environ.setdefault("GLOG_minloglevel", "2"); os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")   # 모델의 내부 경고 줄을 숨긴다
     try:
         import mediapipe as mp
-    except ImportError:
-        raise Unavailable("mediapipe 가 없다 — pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도)")
+    except ImportError as e:
+        if "lib" in str(e) and ".so" in str(e):   # libGL.so.1(OpenCV) · libGLESv2.so.2 · libEGL.so.1 — 그래픽 라이브러리가 없다
+            raise Unavailable("mediapipe 를 못 읽었다(%s) — apt-get install libegl1 libgles2 libgl1 이 안 되면: %s" % (e, NO_GL))
+        raise Unavailable("mediapipe 가 없다(%s) — pip install mediapipe (리눅스는 apt-get install libegl1 libgles2 도. 못 깔면: %s)" % (e, NO_GL))
     V, B = mp.tasks.vision, mp.tasks.BaseOptions
     mk = lambda c: (V.PoseLandmarker.create_from_options(V.PoseLandmarkerOptions(base_options=B(model_asset_path=model_path("pose")), num_poses=3,
                                                                                 min_pose_detection_confidence=c, min_pose_presence_confidence=c)),
@@ -206,7 +213,7 @@ def detect(paths):
         with quiet():
             first, second = mk(0.3), mk(0.1)
     except OSError as e:   # libEGL.so.1 같은 그래픽 라이브러리가 없다
-        raise Unavailable("모델을 못 띄웠다(%s) — 리눅스는 apt-get install libegl1 libgles2" % e)
+        raise Unavailable("모델을 못 띄웠다(%s) — 리눅스는 apt-get install libegl1 libgles2, 못 깔면: %s" % (e, NO_GL))
     as_mp = lambda im: mp.Image(image_format=mp.ImageFormat.SRGB, data=np.asarray(im))
     try:
         for p in paths:

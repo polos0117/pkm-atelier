@@ -460,6 +460,10 @@ AI 그림이 가장 자주 틀리는 곳이다 — 떨어진 셋째 손(2026-10-
    왼·오른 같은 마디가 비슷한가, 팔꿈치·무릎이 접힐 수 없게 접혔나를 본다.
    - 모델은 공식 자리(`storage.googleapis.com`)가 막히면 GitHub 사본(`pkm-atelier` 의 고아 브랜치 `anatomy-models` — Pages 밖,
      `raw.githubusercontent.com`·`github.com/…/raw/`)에서 받는다. 어느 쪽이든 sha256 을 맞춘다. mediapipe 는 PyPI(`pypi.org`·`files.pythonhosted.org`)에서.
+   - 그래픽 라이브러리(`libEGL.so.1`·`libGLESv2.so.2`·`libGL.so.1`)가 없고 깔 수도 없는 환경(GPT 쪽 작업 환경)은
+     `pip install "mediapipe==0.10.14" opencv-contrib-python-headless && pip uninstall -y opencv-contrib-python opencv-python` —
+     0.10.14 는 그 라이브러리를 휠 안에 갖고 있고 headless OpenCV 는 libGL 을 안 찾는다(파이썬 3.9~3.12). 결과는 최신 판과 같다
+     (2026-10-24 시스템 GL 라이브러리를 다 치운 자리에서 61장 같은 등급). 검사기가 못 읽으면 이 줄을 그대로 알려 준다.
    - **검사기를 못 돌려도 멈추지 않는다** — 끝 코드 3(모델을 공식·사본 모두에서 못 받음 · mediapipe·libEGL 이 없음)이면 2의 눈으로 세기만 하고 `anatomy.tool` 에 `"unavailable: <원인>"` 을 적고 잇는다. 검사기를 돌렸다고
      적지 않는다. 다음에 돌릴 수 있게 하려면 그 환경의 네트워크 정책에 `storage.googleapis.com` 을 더하거나, 모델 사본을 둔 곳을
      `PKM_ANATOMY_MODEL_URL` 로 준다(sha256 은 그대로 맞춰 본다). (2026-10-24 — 예약 작업이 403 에서 생성 전에 멈췄다)
