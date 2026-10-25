@@ -177,4 +177,11 @@ assert(withHair('꼬링크',{params:[['bangs','none']]}).includes('\n\nHAIR: '+s
 for(const extra of [{identityMode:'reference',form:'heavy'},{form:'overdrive',baseForm:'light'},{faceDesignOn:false}])
  assert(!withHair('꼬링크',extra).includes('HAIR: '),'HAIR leaked: '+JSON.stringify(extra));
 assert(!L.buildSingle(input('꼬링크',{faceDesign:faces[403],cat:'everyday_basic'})).includes('HAIR: '),'casual carries no HAIR line');
-console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix}`);
+/* 뒤돌아보기 — 등이 카메라를 보는 각도·돌아보는 자세에만 LOOK-BACK 줄(2026-10-25 도치보구·푸호꼬: 등 위에 정면 얼굴) */
+for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'over_shoulder'},{pose:'turning_back'}]){
+  const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',...extra}));
+  assert(t.includes('LOOK-BACK: ')&&/quarter turn/.test(t),'look-back line for '+JSON.stringify(extra));
+}
+for(const extra of [{orient:'front_3q'},{orient:'side'},{pose:'walking'},{}]) assert(!L.buildSingle(input('꼬부기',{cat:'everyday_basic',...extra})).includes('LOOK-BACK: '),'no look-back line for '+JSON.stringify(extra));
+assert(!build('꼬부기',{orient:'rear_3q'}).includes('LOOK-BACK: '),'action cuts carry no look-back line');
+console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix} · 뒤돌아보기 줄`);
