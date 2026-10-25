@@ -680,6 +680,19 @@ def remote_inputs(code, imgs):
     return cards, registry, inventory, records, reserved
 
 
+_LEDGER = None
+
+
+def ledger_tool():
+    """tools/casual-ledger.py — 예약 도장 셈을 한 곳에 둔다(한 번만 싣는다)"""
+    global _LEDGER
+    if _LEDGER is None:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('casual_ledger', Path(__file__).resolve().with_name('casual-ledger.py'))
+        _LEDGER = importlib.util.module_from_spec(spec); spec.loader.exec_module(_LEDGER)
+    return _LEDGER
+
+
 def guard_external(store, run, slot):
     c = current(run)
     session = 'image-runner-' + run['id'] + '-' + str(c['no'])
@@ -697,6 +710,10 @@ def guard_external(store, run, slot):
         when = dt.datetime.fromisoformat(mine['at'])
         if when.tzinfo is None or (dt.datetime.now(dt.timezone.utc) - when).total_seconds() >= 24 * 3600:
             raise ValueError('own casual reservation expired; replan/revalidate before generation')
+        # 도장 — reserve(check 통과) 가 적은 그대로인가. 손으로 쓰거나 고친 예약은 남과 같은 장면을 받아도 막을 것이 없었다(2026-10-25 히포포타스·레지스틸)
+        why = ledger_tool().stamp_problem(mine.get('session'), next(ch for ch in mine['characters'] if ch['card'] == c['name']))
+        if why:
+            raise ValueError('casual reservation was not written by the planner (' + why + '); replan with tools/casual-plan.cjs --reserve --push')
 
 
 def main():

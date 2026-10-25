@@ -165,4 +165,21 @@ with tempfile.TemporaryDirectory() as tmp:
         c['own_publication']={'files':[R.filename(c,slot) for slot in R.SLOTS]}
         assert R.next_step(run)['action']=='verify_registration'
     finally:R.ROOT=oldroot;sys.argv=oldargv
-print('PASS command race: stale intent skips without reading old UI; replacement quota; snapshot change; prepublication manifest')
+# 일상컷 intent 앞 — 자기 예약이라도 계획기(reserve)가 적은 그대로가 아니면 멈춘다(2026-10-25 히포포타스)
+L = R.ledger_tool(); L.STAMP_SINCE = '2026-01-01T00:00:00+00:00'   # 도입 전 예약 봐주기는 따로 본다(시계에 매이지 않게)
+state,run,_=setup();c=R.current(run);session='image-runner-'+run['id']+'-'+str(c['no'])
+at=dt_now=__import__('datetime').datetime.now(__import__('datetime').timezone.utc).replace(microsecond=0).isoformat()
+entry={'species':'x-1','card':c['name'],'at':at,'cuts':[{'cut':1,'cat':'swimwear','ex':'pool_float'}]}
+entry['stamp']=L.stamp_of(session,entry)
+good={'session':session,'at':at,'characters':[entry]}
+R.guard_external(Remote('r',{'records/casual-reservations/'+session+'.json':json.dumps(good)}),run,'casual1')
+bad=copy.deepcopy(good);bad['characters'][0]['cuts'][0]['ex']='rooftop_infinity_pool'
+try:
+    R.guard_external(Remote('r',{'records/casual-reservations/'+session+'.json':json.dumps(bad)}),run,'casual1');raise AssertionError('hand-edited reservation accepted')
+except ValueError as e: assert 'not written by the planner' in str(e)
+bad['characters'][0].pop('stamp')
+try:
+    R.guard_external(Remote('r',{'records/casual-reservations/'+session+'.json':json.dumps(bad)}),run,'casual1');raise AssertionError('unstamped reservation accepted')
+except ValueError as e: assert 'not written by the planner' in str(e)
+R.guard_external(Remote('r',{'records/casual-reservations/'+session+'.json':json.dumps(bad)}),run,'light')   # 폼 컷은 일상 예약을 안 본다
+print('PASS command race: stale intent skips without reading old UI; replacement quota; snapshot change; prepublication manifest; casual reservation stamp')

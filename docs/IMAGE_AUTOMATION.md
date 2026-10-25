@@ -53,7 +53,7 @@ python3 tools/image-runner.py review --owner pkm-daily --card 345 --slot heavy -
 
 QA JSON은 `reviewer`, `image_sha256`, 구체적인 `observations`, `accepted:true`를 담는다. 경장은 `face_reason`, 실제 비교한 `compared_characters` 3명 이상과 계열 확인을 기록한다. 일상컷은 `diversity_comparison`에 실제 그림 비교를 적는다. 설정값이 다르다는 이유만으로 통과시키지 않는다. 검수 불합격/도구 거절/불명확한 응답은 아래 block으로 중단한다. 이 최소 구현은 거절된 컷을 자동 재생성하거나 기존 시도를 덮어쓰지 않는다. 명시적 재시도와 예외 채택은 아래의 제한된 승인 경로만 사용한다.
 
-일상컷 전에는 `next`의 `casual_session`으로 기존 계획기를 실행해 check·예약·일반 push한다. `intent`는 해당 캐릭터의 다른 세션 예약이 있으면 멈추고, 자기 일상 예약의 존재와 24시간 유효성을 확인한다.
+일상컷 전에는 `next`의 `casual_session`으로 기존 계획기를 실행해 check·예약·일반 push한다. `intent`는 해당 캐릭터의 다른 세션 예약이 있으면 멈추고, 자기 일상 예약의 존재와 24시간 유효성, 그리고 도장(`stamp` — reserve 가 check 를 통과시킨 그대로인지, `casual-ledger.py verify` 와 같은 셈)을 확인한다. 예약 파일을 손으로 고쳤으면 멈추고 계획기로 다시 정하라고 알린다(2026-10-25).
 
 ```sh
 node tools/casual-plan.cjs 릴링 --session <next의-casual_session> --reserve --push --out /path/plan.json

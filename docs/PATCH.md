@@ -13,6 +13,12 @@
 
 
 
+## 2026-10-25 · claude · 일상컷 예약에 도장 — 손으로 고친 예약이 남과 같은 장면을 받던 것
+- tools/casual-ledger.py — `reserve` 가 캐릭터마다 도장(`stamp`: 세션·캐릭터·시각·컷·다시 채우기의 sha256)을 적는다. 새 명령 `verify [--session S] [--card C]` — 도장이 없거나 안 맞는 예약 칸을 찾아 1 로 끝난다. 도입 전(`STAMP_SINCE`) 예약은 따지지 않는다. 히포포타스(25일 05:04·05:06 KST, 계획기를 거치지 않고 적고 손으로 고친 예약)가 바로 앞 레지스틸과 같은 장면 예시 둘(late_snack·rooftop_infinity_pool)·같은 (방향, 프레이밍) 짝 셋을 받았다 — 그때 장부로 되살려 check 하면 8건, 아무것도 막지 않았다
+- tools/image-runner.py — `intent` 앞 `guard_external` 이 자기 일상 예약의 도장도 본다(`casual-ledger.py` 의 셈을 그대로 불러 쓴다)
+- IMAGE_RULES.md 3절 0 · docs/IMAGE_AUTOMATION.md · AGENTS.md — 생성 직전 `verify`, 예약 파일은 손으로 쓰거나 고치지 않는다
+- tests/casual-ledger.py · tests/image-runner-external.py — 도장 찍기·맞음·고친 칸·도장 없음·도입 전 예약, 관리기가 고친 예약에서 멈춘다
+
 ## 2026-10-25 · gpt · 켄호로우 인물 기준 확정
 - data/face-design.json — 켄호로우의 원작 근거와 확정 경장 기록을 고정하고 현재 도감 등록 표시를 맞췄다. 다른 종의 얼굴·머리 설계는 보존했다.
 - docs/CHARACTER_FACE_DESIGNS.md — 자료에서 다시 그린 설계표.

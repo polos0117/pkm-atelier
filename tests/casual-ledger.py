@@ -79,6 +79,7 @@ bad_refill = copy.deepcopy(refill); bad_refill["characters"][0]["cuts"][2].updat
 errs = L.check_plan(doc, bad_refill, SP)
 assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs) and not any("자리" in e or "두 장" in e for e in errs), errs
 
+L.STAMP_SINCE = "2026-01-01T00:00:00+00:00"   # 도입 전 예약 봐주기는 아래에서 따로 본다(시계에 매이지 않게)
 with tempfile.TemporaryDirectory() as tmp:
     # reserve → 다른 세션의 같은 계획이 걸린다
     led = os.path.join(tmp, "ledger.json"); json.dump(doc, open(led, "w"))
@@ -102,6 +103,24 @@ with tempfile.TemporaryDirectory() as tmp:
         raise AssertionError("겹치는 계획이 예약됐다")
     except SystemExit:
         pass
+    # 도장 — reserve 가 적은 칸엔 도장이 있고, 고치거나 손으로 쓴 칸은 verify 가 1 로 끝난다(2026-10-25 히포포타스)
+    r = json.load(open(rfile)); e0 = r["characters"][0]
+    assert e0.get("stamp") and L.stamp_problem(r["session"], e0) is None, e0
+    va = type("V", (), {"ledger": led, "session": "t", "card": None})
+    with contextlib.redirect_stdout(io.StringIO()):
+        L.verify(va)
+    hand = copy.deepcopy(r); hand["characters"][0]["cuts"][1]["ex"] = "late_snack"; json.dump(hand, open(rfile, "w"))
+    assert "고친" in L.stamp_problem("t", hand["characters"][0])
+    try:
+        with contextlib.redirect_stdout(io.StringIO()):
+            L.verify(va)
+        raise AssertionError("손으로 고친 예약을 통과시켰다")
+    except SystemExit as x:
+        assert x.code == 1
+    nostamp = {k: v for k, v in hand["characters"][0].items() if k != "stamp"}
+    assert "없다" in L.stamp_problem("t", nostamp)
+    assert L.stamp_problem("t", {**nostamp, "at": "2025-12-31T23:00:00+00:00"}) is None, "도입 전 예약은 따지지 않는다"
+    json.dump(r, open(rfile, "w"))
     # 오래된 예약은 버린다
     r = json.load(open(rfile)); r["characters"][0]["at"] = "2020-01-01T00:00:00+09:00"; json.dump(r, open(rfile, "w"))
     assert L.check_plan(saved, other, SP, led) == [], L.check_plan(saved, other, SP, led)
@@ -211,4 +230,4 @@ with tempfile.TemporaryDirectory() as tmp:
     imp = json.load(open(rec / "casual3-import.json")); imp.pop("plan_match"); json.dump(imp, open(rec / "casual3-import.json", "w"))
     assert [c["cut"] for c in L.read_records([str(repo)])[0]["cuts"]] == [1, 2], "계획과 맞춰 보지 않은 그림은 계획대로 셈하지 않는다"
 
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
+print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

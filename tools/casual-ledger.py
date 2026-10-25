@@ -20,6 +20,12 @@
   python3 tools/casual-ledger.py reserve PLAN.json — check 를 통과하면 세션 예약 파일에 적는다
                                                   (그다음 그림 저장소를 commit·push 해야 다른 세션이 본다.
                                                   보통은 node tools/casual-plan.cjs … --reserve --push 가 다 한다)
+  python3 tools/casual-ledger.py verify [--session S] [--card C] — 예약이 reserve 가 적은 그대로인가(도장).
+                                                  손으로 쓰거나 고친 예약이면 1 로 끝난다 — 생성 전에 본다
+
+예약 파일은 손으로 쓰거나 고치지 않는다 — reserve 가 캐릭터마다 도장(stamp: 그 칸의 sha256)을 같이 적는다.
+check 를 안 거친 예약은 도장이 없거나 안 맞는다(2026-10-25 히포포타스: 계획을 손으로 고쳐 레지스틸과 같은 장면 둘·
+같은 구도 셋을 받았고, 아무것도 막지 않았다). 바꿀 것이 있으면 계획기 --avoid·--keep 으로 다시 정한다.
 
 계획은 손으로 짜지 않는다 — node tools/casual-plan.cjs <카드>… --session <이름> 이 장부·예약·생김새 색인
 (data/casual-look.json)을 읽어 정하고, 이 check 를 통과할 때까지 다시 고른다.
@@ -57,6 +63,8 @@ EX_WINDOW = 10          # 같은 장면 예시는 최근 10명 안에서 다시 
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
 CAT_WINDOW = 10         # 덜 쓴 갈래는 최근 10명으로 센다
 CAT_LOW = 5             # 그중 사용 횟수 하위 5개(같은 횟수는 함께)
+# 도장 — 이 시각 전의 예약은 도장이 없어도 읽는다(도입 전에 적은 것)
+STAMP_SINCE = "2026-10-25T02:55:00+00:00"
 SMALL_CAT = 8           # 예시가 이 수 이하인 갈래는 한 바퀴를 다 돌기 전까지 같은 예시를 다시 쓰지 않는다
 TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장
 RESERVE_HOURS = 24      # 이보다 오래된 reserved 는 끝난 것으로 보지 않고 버린다
@@ -318,6 +326,59 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
+def stamp_of(session, e):
+    """예약 칸 하나의 도장 — reserve 가 check 를 통과시킨 그대로인지(세션·캐릭터·시각·컷·다시 채우기)"""
+    import hashlib
+    body = {"session": session, "card": e.get("card"), "species": e.get("species"), "at": e.get("at"),
+            "refill": bool(e.get("refill")), "cuts": e.get("cuts") or []}
+    return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def stamp_problem(session, e):
+    """도장이 맞으면 None, 아니면 까닭. 도입 전(STAMP_SINCE 앞)의 예약은 따지지 않는다"""
+    try:
+        if datetime.datetime.fromisoformat(str(e.get("at"))) < datetime.datetime.fromisoformat(STAMP_SINCE):
+            return None
+    except ValueError:
+        return "예약 시각을 읽을 수 없다"
+    if not e.get("stamp"):
+        return "도장이 없다 — reserve 를 거치지 않고 적은 예약"
+    if e["stamp"] != stamp_of(session, e):
+        return "도장이 안 맞는다 — reserve 뒤에 손으로 고친 예약"
+    return None
+
+
+def verify(args):
+    """예약 파일이 reserve 가 적은 그대로인가 — 손으로 쓰거나 고친 칸을 찾는다. --session·--card 로 좁힌다"""
+    d = os.path.join(os.path.dirname(args.ledger), RESERVATIONS)
+    bad = n = 0
+    for name in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if not name.endswith(".json"):
+            continue
+        with open(os.path.join(d, name), encoding="utf-8") as f:
+            r = json.load(f)
+        session = r.get("session") or name[:-5]
+        if args.session and session != args.session:
+            continue
+        for e in r.get("characters") or []:
+            if args.card and e.get("card") != args.card:
+                continue
+            if not args.session and not args.card and not fresh({**e, "status": "reserved", "at": e.get("at") or r.get("at")}):
+                continue
+            n += 1
+            why = stamp_problem(session, e)
+            if why:
+                bad += 1
+                print("  ✗ %s · %s: %s" % (name, e.get("card"), why))
+    if bad:
+        print("예약 %d칸 가운데 %d칸이 reserve 가 적은 것과 다르다 — 계획기로 다시 정한다(node tools/casual-plan.cjs … --reserve --push)" % (n, bad))
+        sys.exit(1)
+    if not n and (args.session or args.card):
+        print("그런 예약이 없다")
+        sys.exit(1)
+    print("예약 %d칸 — 도장 맞음" % n)
+
+
 def reservations(ledger, stale=False):
     """세션마다의 예약 파일(records/casual-reservations/<세션>.json) — 24시간 안의 것만(stale 이면 지난 것도)"""
     d = os.path.join(os.path.dirname(ledger), RESERVATIONS)
@@ -576,9 +637,10 @@ def check(args, write=False):
                           for c in ch["cuts"]]}
             if ch.get("refill"):
                 e["refill"] = True
+            e["stamp"] = stamp_of(plan.get("session"), e)
             old[ch["card"]] = e
         with open(path, "w", encoding="utf-8") as f:
-            json.dump({"note": "일상컷 예약 — tools/casual-ledger.py reserve 가 쓴다. 세션 하나 = 파일 하나라 push 가 엇갈려도 남의 예약을 지우지 않는다. 24시간 지나면 읽지 않는다.",
+            json.dump({"note": "일상컷 예약 — tools/casual-ledger.py reserve 가 쓴다. 손으로 쓰거나 고치지 않는다(캐릭터마다 도장 stamp — 고치면 verify·관리기가 막는다). 세션 하나 = 파일 하나라 push 가 엇갈려도 남의 예약을 지우지 않는다. 24시간 지나면 읽지 않는다.",
                        "session": plan.get("session"), "at": at, "characters": list(old.values())}, f, ensure_ascii=False, indent=1)
             f.write("\n")
         print("예약 %s — 이 파일만 commit·push 한 뒤 생성한다" % os.path.relpath(path, os.path.dirname(os.path.dirname(args.ledger))))
@@ -593,15 +655,17 @@ def view(args):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "report", "check", "reserve", "view"])
+    ap.add_argument("cmd", choices=["build", "report", "check", "reserve", "view", "verify"])
     ap.add_argument("plan", nargs="?")
     ap.add_argument("--ledger", default=LEDGER)
     ap.add_argument("--repos", nargs="+", default=REPOS)
     ap.add_argument("--fresh", action="store_true", help="view/check/reserve: 장부 파일 대신 기록에서 다시 읽는다")
+    ap.add_argument("--session", help="verify: 이 세션의 예약만")
+    ap.add_argument("--card", help="verify: 이 캐릭터의 예약만")
     a = ap.parse_args()
     if a.cmd in ("check", "reserve") and not a.plan:
         ap.error("PLAN.json 이 필요하다")
-    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True), "view": view}[a.cmd](a)
+    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True), "view": view, "verify": verify}[a.cmd](a)
 
 
 if __name__ == "__main__":
