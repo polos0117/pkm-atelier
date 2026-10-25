@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-25 · claude · 일상컷 계획기가 레쿠쟈를 40번 다 못 정하던 것 — 예시가 정한 겉옷
+- lib/casual-plan.js — 예시 문구가 옷을 정하는 예시(관측소의 코트·출근 열차의 재킷 …)는 4의 옷 고르기를 안 거쳐 "덮는 겉옷은 세 장 중 한 장까지" 를 피해 갔다. 예시 고르기는 씨앗보다 쓴 횟수가 먼저라, 갈래가 같게 잡히면 같은 두 예시가 뽑혀 40번 모두 check 에 걸렸다(wildcard/observatory_night + everyday_basic/commute_train). 이제 겉옷을 정하는 예시는 한 장까지만 고르고(남은 예시가 그것뿐이면 그대로 둔다), 4의 갈래 옷 고르기도 예시가 정한 겉옷을 차례와 상관없이 먼저 센다
+- tests/casual-plan.cjs — 겉옷을 정하는 예시만 남은 장부에서 60번 정해도 덮는 겉옷은 한 장까지(고치기 전 코드는 이 검사에서 걸린다)
+
 ## 2026-10-25 · claude · 일상컷 예약에 도장 — 손으로 고친 예약이 남과 같은 장면을 받던 것
 - tools/casual-ledger.py — `reserve` 가 캐릭터마다 도장(`stamp`: 세션·캐릭터·시각·컷·다시 채우기의 sha256)을 적는다. 새 명령 `verify [--session S] [--card C]` — 도장이 없거나 안 맞는 예약 칸을 찾아 1 로 끝난다. 도입 전(`STAMP_SINCE`) 예약은 따지지 않는다. 히포포타스(25일 05:04·05:06 KST, 계획기를 거치지 않고 적고 손으로 고친 예약)가 바로 앞 레지스틸과 같은 장면 예시 둘(late_snack·rooftop_infinity_pool)·같은 (방향, 프레이밍) 짝 셋을 받았다 — 그때 장부로 되살려 check 하면 8건, 아무것도 막지 않았다
 - tools/image-runner.py — `intent` 앞 `guard_external` 이 자기 일상 예약의 도장도 본다(`casual-ledger.py` 의 셈을 그대로 불러 쓴다)

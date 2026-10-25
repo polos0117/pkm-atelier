@@ -167,6 +167,25 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   n++;
 }
 
+/* ── 덮는 겉옷은 세 장 중 한 장까지 — 예시 문구가 옷을 정하는 예시(관측소의 코트·출근 열차의 재킷)도 센다.
+   안 세면 같은 두 예시가 뽑힐 때마다 씨앗을 바꿔도 check 에 걸려 40번 다 실패했다(2026-10-25 레쿠쟈) ── */
+{
+  const COV = ['coat', 'jacket', 'cardigan', 'sweater'];
+  const pin = { wildcard: 'observatory_night', everyday_basic: 'commute_train' };
+  assert(Object.entries(pin).every(([c, x]) => S.EXAMPLE_MAP[c].some(r => r[0] === x)), '시험에 쓰는 두 예시가 생성기에 있다');
+  /* 다른 예시는 다 쓴 장부 — 두 갈래가 잡히면 겉옷을 정하는 그 예시만 남는다 */
+  const used = Object.entries(pin).flatMap(([c, x]) => S.EXAMPLE_MAP[c].filter(r => r[0] && r[0] !== x && r[0] !== '__custom__' && r[0].indexOf('auto_') !== 0).map(r => ({ cut: 1, cat: c, ex: r[0], orient: 'front', frame: 'full_body', garments: [] })));
+  const ent = used.map((c, i) => ({ card: 'U' + i, status: 'done', at: at(i), cuts: [c] }));
+  let both = 0;
+  for (let s = 0; s < 60; s++) {
+    const p = P.plan({ S, entries: ent, card: 'NEW', seed: 'cover' + s });
+    const cats = p.cuts.map(c => c.cat);
+    if (cats.includes('wildcard') && cats.includes('everyday_basic')) both++;
+    assert(p.cuts.filter(c => (c.garments || []).some(g => COV.includes(g))).length <= 1, '덮는 겉옷 두 장: ' + JSON.stringify(p.cuts.map(c => [c.cat, c.ex, c.garments])));
+  }
+  n++;
+}
+
 /* ── 실제 장부(그림 저장소가 옆에 있으면) — 미등록 한 종이 현재 장부에서도 맞춰지는지 ── */
 {
   const img2 = path.join(ROOT, '..', 'pkm-atelier-img-2');
