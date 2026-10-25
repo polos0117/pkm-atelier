@@ -13,6 +13,9 @@
 
 
 
+## 2026-10-25 · claude · 뒤돌아보기 — 뒷태(back) 각도도
+- lib/prompt-spec.js — `LOOK_BACK` 에 뒷태(back)를 더하고 그 문장에도 "얼굴이 보이면 어깨 너머로 4분의 1까지, 옆얼굴" 을 적었다(책·신화·건담 공방과 같은 표). tests/prompt-engine.cjs 도 뒷태를 본다
+
 ## 2026-10-25 · claude · 뒤돌아보는 일상컷 — 등 위에 정면 얼굴이 붙던 것
 - lib/prompt-spec.js — 등이 카메라를 보는 각도 셋(rear_3q·three_quarter_back·over_shoulder)과 돌아보는 자세(turning_back)의 문장에 한계를 적었다 — 고개는 어깨 너머로 4분의 1까지, 얼굴은 옆얼굴이나 3/4. 새 줄 `casualLookBack`(LOOK-BACK:) — 턱은 가까운 어깨 위, 먼 쪽 눈·볼은 조금 가려져도 되고, 목 옆선이 돌아간 것을 보이고, 어깨선은 머리 뒤로 이어지며, 카메라 쪽으로 오는 것은 얼굴 전체가 아니라 눈. `LOOK_BACK` 표가 그 각도·자세를 정한다
 - lib/prompt-anthro.js — 일상컷에서 그 각도나 자세를 골랐을 때만 ANGLE 줄 다음에 LOOK-BACK 줄을 싣는다. 각도 문장이 "몸은 뒤로, 고개만 돌린다" 뿐이라 첨부 그림의 정면 얼굴과 카메라를 보는 표정이 이겨, 등과 날개뼈가 보이는데 얼굴은 정면인 그림이 되풀이됐다(도치보구 3·푸호꼬 1·3). 생성기 prompt.html 의 두 파일 ?v=lookback1

@@ -178,7 +178,7 @@ for(const extra of [{identityMode:'reference',form:'heavy'},{form:'overdrive',ba
  assert(!withHair('꼬링크',extra).includes('HAIR: '),'HAIR leaked: '+JSON.stringify(extra));
 assert(!L.buildSingle(input('꼬링크',{faceDesign:faces[403],cat:'everyday_basic'})).includes('HAIR: '),'casual carries no HAIR line');
 /* 뒤돌아보기 — 등이 카메라를 보는 각도·돌아보는 자세에만 LOOK-BACK 줄(2026-10-25 도치보구·푸호꼬: 등 위에 정면 얼굴) */
-for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'over_shoulder'},{pose:'turning_back'}]){
+for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'over_shoulder'},{orient:'back'},{pose:'turning_back'}]){
   const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',...extra}));
   assert(t.includes('LOOK-BACK: ')&&/quarter turn/.test(t),'look-back line for '+JSON.stringify(extra));
 }
