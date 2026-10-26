@@ -93,7 +93,8 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
 /* ── 피할 값 — 막힌 예시를 다시 고르지 않는다 ── */
 {
   const first = P.plan({ S, entries, card: 'Y', seed: 'v' }), x = first.cuts[1];
-  const again = P.plan({ S, entries, card: 'Y', seed: 'v', avoid: [{ cut: 2, field: 'ex', value: x.ex }] });
+  /* 씨앗을 바꿔 다시 정하는 명령줄과 같은 길로 — 세 컷 예시가 모두 옷을 정하면 한 번에는 새 옷 종류를 못 챙길 수 있다 */
+  const r = batchPlan(entries, ['Y'], 'avoid', { Y: { avoid: [{ cut: 2, field: 'ex', value: x.ex }] } }), again = r.plan.characters[0];
   assert.notEqual(again.cuts[1].ex, x.ex, '막힌 예시는 다시 안 나온다');
   assert.equal(check(entries, { session: 't', characters: [{ card: 'Y', species: 'Y', cuts: again.cuts }] }), '');
   n++;
