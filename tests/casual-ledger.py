@@ -23,7 +23,7 @@ def done(card, cuts, at):
 # 앞선 다섯 명 — 필수 갈래는 모두 한 장, 1번 자리
 hist = [done("A%d" % i, [cut(1, "adult_roleplay", "retro_racer", "e1", "p1", "front", "full_body", "subtle", ["jacket", "shorts"]),
                           cut(2, "everyday_basic", "pottery_class", "e2", "p2", "side", "waist_up", "balanced", ["blouse", "skirt"]),
-                          cut(3, "hobbies_leisure", "hobby_music", "e3", "p3", "front_3q", "three_quarter", "subtle", ["shirt", "trousers"])],
+                          cut(3, "partner_care", "care_walk", "e3", "p3", "front_3q", "three_quarter", "subtle", ["shirt", "trousers"])],
              "2026-10-1%dT10:00:00+09:00" % i) for i in range(1, 6)]
 doc = {"entries": hist}
 
@@ -40,7 +40,7 @@ def fails(mutate, why):
     errs = L.check_plan(doc, p, SP)
     assert any(why in e for e in errs), (why, errs)
 
-fails(lambda c: c[0].update(cat="hobbies_leisure", ex="hobby_music"), "이미 썼다")                       # 최근 10명 안 같은 예시
+fails(lambda c: c[0].update(cat="partner_care", ex="care_walk"), "이미 썼다")                       # 최근 10명 안 같은 예시
 fails(lambda c: c[0].update(orient="front", frame="full_body"), "짝")                                     # 구도 짝 겹침
 fails(lambda c: c[1].update(frame="detail"), "쓰지 않는")                                                 # 얼굴이 안 보이는 프레이밍
 fails(lambda c: c[2].update(cat="active", ex=SP["ex"]["active"][0]), "두 장")                        # 다섯 명에 한 번은 두 장
@@ -48,15 +48,15 @@ fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURC
 fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만
 fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")                              # 채우기 문구
 fails(lambda c: c[0].update(scene="A plain unlettered lantern stall."), "글자")                          # 글자 금지 문구
-fails(lambda c: c[0].update(cat="hobbies_leisure", ex="hobby_music"), "바퀴")                      # 예시 적은 갈래는 한 바퀴
+fails(lambda c: c[0].update(cat="partner_care", ex="care_walk"), "바퀴")                          # 예시 적은 갈래는 한 바퀴(취미는 2026-10-26 열두 개가 됐다)
 
 # 덮는 겉옷은 한 장까지
 p = copy.deepcopy(good); p["characters"][0]["cuts"][0]["garments"] = ["dress", "coat"]; p["characters"][0]["cuts"][2]["garments"] = ["lingerie_set", "cardigan"]
 assert any("겉옷" in e for e in L.check_plan(doc, p, SP))
 # 시간대가 달라도 시각 차례로 줄 선다
 assert [e["card"] for e in L.live({"entries": [done("late", [], "2026-10-15T01:00:00+00:00"), done("early", [], "2026-10-15T09:30:00+09:00")]})] == ["early", "late"]
-# 한 바퀴: 예시가 적은 갈래는 덜 쓴 것부터 — 기록에 hobby_music 만 썼으니 hobby_music 은 바퀴에서 빠진다
-assert "hobby_music" not in L.small_cat_open(doc["entries"], "hobbies_leisure", SP["ex"]["hobbies_leisure"])
+# 한 바퀴: 예시가 적은 갈래는 덜 쓴 것부터 — 기록에 care_walk 만 썼으니 care_walk 은 바퀴에서 빠진다
+assert "care_walk" not in L.small_cat_open(doc["entries"], "partner_care", SP["ex"]["partner_care"])
 # 필수 갈래 자리 — 바로 앞 캐릭터와 같은 자리면 걸린다
 p = copy.deepcopy(good); c = p["characters"][0]["cuts"]
 c[0].update(cat="adult_roleplay", ex="casino_dealer"); c[1].update(cat="festivals_contests", ex="fest_booth"); c[2].update(cat="travel_exploration", ex="travel_lakeside")
@@ -75,7 +75,7 @@ refill = {"session": "r", "characters": [{"card": "A5", "species": "A5", "refill
     dict(hist[-1]["cuts"][0], kept=True), dict(hist[-1]["cuts"][1], kept=True),
     cut(3, "festivals_contests", "fest_booth", "e9", "p9", "low_angle", "chest_up", "strong", ["dress"])]}]}
 assert L.check_plan(doc, refill, SP) == [], L.check_plan(doc, refill, SP)
-bad_refill = copy.deepcopy(refill); bad_refill["characters"][0]["cuts"][2].update(cat="hobbies_leisure", ex="hobby_music", orient="side", frame="waist_up")
+bad_refill = copy.deepcopy(refill); bad_refill["characters"][0]["cuts"][2].update(cat="partner_care", ex="care_walk", orient="side", frame="waist_up")
 errs = L.check_plan(doc, bad_refill, SP)
 assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs) and not any("자리" in e or "두 장" in e for e in errs), errs
 
