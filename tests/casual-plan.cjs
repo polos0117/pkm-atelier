@@ -232,5 +232,33 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   }
   n++;
 }
+/* 예시의 주 활동과 부딪히는 자세·방향(2026-10-26 재생성 기록) — 걸렸던 짝은 안 나오고, 계획기가 낸 컷은 늘 맞는 짝이다 */
+{
+  const bad = [
+    ['festivals_contests', 'clapping from a pokémon tournament spectator seat, with a small pennant resting on a bag.', ['hands_in_hair', 'on_tiptoe', 'standing_relaxed'], ['looking_down']],
+    ['food_berries', 'pouring warm berry tea into a cup at a small kitchen table with a teapot and sliced fruit.', ['preparing_food', 'holding_cup'], []],
+    ['travel_exploration', 'waiting on a rural station bench with a travel bag, holding a snack and checking a route card.', ['cross_legged', 'sitting_floor', 'walking'], []],
+    ['homewear', 'late at night in the kitchen in oversized tee and shorts, pouring a drink or making a snack', ['offering_food', 'gentle_pat'], []],
+    ['travel_exploration', 'looking through binoculars from a hilltop lookout, with a folded habitat map in a side pocket.', ['walking', 'sitting_floor'], ['looking_down']],
+    ['travel_exploration', 'folding a camping blanket beside a small tent and a neatly arranged cooking kit at a quiet campsite.', ['on_tiptoe', 'arms_crossed', 'stretching'], ['reaching_up']],
+    ['hobbies_leisure', 'sketching habitat plants and pokémon tracks in a notebook on a park bench.', ['on_tiptoe', 'watering', 'squatting', 'standing_formal'], []]
+  ];
+  for (const [cat, text, poses, orients] of bad) {
+    for (const p of poses) assert.equal(P.poseFits(p, text, cat), false, p + ' 가 「' + text.slice(0, 40) + '」 에 붙는다');
+    for (const o of orients) assert.equal(P.orientFits(o, text), false, o + ' 가 「' + text.slice(0, 40) + '」 에 붙는다');
+    assert(P.poseFits('mid_action', text, cat), '「선택한 활동 진행 중」 은 늘 된다');
+  }
+  assert(P.poseFits('offering_food', 'offering a berry treat to her companion', 'partner_care'), '파트너 돌봄에선 건네기가 된다');
+  const exText = (cat, ex) => { const r = (S.EXAMPLE_MAP[cat] || []).find(r => r[0] === ex); return r ? ((r[1] || '') + ' ' + (r[5] || (S.EXAMPLE_DETAIL || {})[ex] || '')).toLowerCase() : ''; };
+  for (let s = 0; s < 30; s++) {
+    const p = P.plan({ S, entries, card: 'Z' + s, batch: [], seed: 'fit|' + s });
+    for (const c of p.cuts) {
+      const t = exText(c.cat, c.ex);
+      assert(P.poseFits(c.pose, t, c.cat), c.ex + ' 에 ' + c.pose + ' 가 붙었다');
+      assert(P.orientFits(c.orient, t), c.ex + ' 에 ' + c.orient + ' 가 붙었다');
+    }
+  }
+  n++;
+}
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log('PASS 일상컷 계획기: ' + n + '가지 · 서른 명 차례로 check 통과(다시 정한 횟수 ' + tries + ') · 10명 안 예시 겹침 없음 · 갈래 ' + catsUsed.size + '개 · 배치 · 다시 채우기 · 피할 값 · 만든 컷 두기 · 생성기 주소 · 옷 종류 말');

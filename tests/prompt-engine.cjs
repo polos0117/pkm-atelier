@@ -184,4 +184,7 @@ for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'ov
 }
 for(const extra of [{orient:'front_3q'},{orient:'side'},{pose:'walking'},{}]) assert(!L.buildSingle(input('꼬부기',{cat:'everyday_basic',...extra})).includes('LOOK-BACK: '),'no look-back line for '+JSON.stringify(extra));
 assert(!build('꼬부기',{orient:'rear_3q'}).includes('LOOK-BACK: '),'action cuts carry no look-back line');
+/* 일상컷의 돌기 방향에는 갑옷용 "장비가 부착 부위를 따른다" 를 싣지 않는다(2026-10-26) */
+{ const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',orient:'turning_midmotion'}));
+  assert(t.includes('Orientation: mid-turn body motion, with her clothing and hair following the turn')&&!/body mounts/.test(t),'casual turning_midmotion line'); }
 console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix} · 뒤돌아보기 줄`);
