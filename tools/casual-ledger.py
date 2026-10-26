@@ -54,7 +54,7 @@ LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "ca
 # 예약은 세션마다 따로 파일(2026-10-22) — 한 장부 파일에 다들 쓰다 push 가 엇갈리면 남의 예약을 지웠다(밤선인·파치리스, 체리꼬·샤비)
 RESERVATIONS = "casual-reservations"
 
-REQUIRED = {"adult_roleplay", "swimwear", "lingerie"}
+REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 레트로 글래머 2026-10-26
 # 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름)
 NOT_COUNTED = {"auto_random", "__custom__", "everyday"}
 BANNED_FRAME = {"face_close", "detail"}
@@ -534,7 +534,7 @@ def check_plan(doc, plan, sp, ledger=None):
                 bad("세 장의 %s 가 서로 달라야 한다" % k)
         req = [c["cut"] for c in cuts if c.get("cat") in REQUIRED]
         if not req:
-            bad("필수 갈래(adult_roleplay·swimwear·lingerie)가 없다")
+            bad("필수 갈래(adult_roleplay·swimwear·lingerie·retro_glamour)가 없다")
         if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]
