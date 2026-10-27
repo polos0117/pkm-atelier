@@ -221,6 +221,22 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   }
   n++;
 }
+/* 한 번도 안 쓴 예시가 남은 갈래에 가산점(2026-10-27) — 필수 아닌 갈래가 최근 10명에 다 안 나왔고(모두 덜 쓴 갈래) 예시는 옛날에 다 썼는데
+   취미 갈래에만 안 쓴 예시 하나가 남았으면, 필수 아닌 자리 하나는 취미 갈래가 된다 */
+{
+  const REQ = P.REQUIRED, CATS = S.CATS.map(r => r[0]).filter(k => !['auto_random', '__custom__', 'everyday'].includes(k) && !REQ.includes(k));
+  const exs = k => (S.EXAMPLE_MAP[k] || []).filter(r => r[0] && r[0] !== '__custom__' && !r[0].startsWith('auto_') && r[4] !== 'm').map(r => r[0]);
+  const cut = (k, x, i) => ({ cut: i % 3 + 1, cat: k, ex: x, expr: 'calm', pose: 'standing_formal', orient: 'front', frame: 'full_body', lens: 'natural50', axes: {}, garments: ['dress'] });
+  const old = CATS.flatMap(k => (k === 'hobbies_leisure' ? exs(k).slice(0, -1) : exs(k)).map(x => [k, x]));
+  const es = [];
+  for (let i = 0; i < old.length; i += 3) es.push({ card: 'O' + i, status: 'done', at: at(i), cuts: old.slice(i, i + 3).map(([k, x], j) => cut(k, x, j)) });
+  for (let i = 0; i < 10; i++) es.push({ card: 'R' + i, status: 'done', at: at(1000 + i), cuts: [0, 1, 2].map(j => cut(REQ[(i + j) % REQ.length], exs(REQ[(i + j) % REQ.length])[i], j)) });
+  for (const seed of ['f1', 'f2', 'f3']) {
+    const p = P.plan({ S, entries: es, card: 'F', batch: [], seed });
+    assert(p.cuts.some(x => x.cat === 'hobbies_leisure' && x.ex === exs('hobbies_leisure').slice(-1)[0]), seed + ' 안 쓴 예시가 남은 갈래 ' + JSON.stringify(p.cuts.map(x => x.cat + '/' + x.ex)));
+  }
+  n++;
+}
 /* 같은 배치에서 뒤에 정할 다시 채우기 캐릭터의 등록된 컷(fixed) — 그 컷의 짝·예시와 겹치게 정하지 않는다(장부 check 는 배치 안을 서로 견준다) */
 {
   const ORS = S.ORIENTATION_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v)), FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v));
