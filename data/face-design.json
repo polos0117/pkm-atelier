@@ -19,17 +19,6 @@
 ],
 "cap":0.08,
 "bobCap":0.04,
-"rareCap":0.006,
-"rare":[
-"buzz cut",
-"crew cut",
-"fade",
-"man bun",
-"mullet",
-"shaggy",
-"side part",
-"swept back"
-],
 "lengths":[
 "very short",
 "short",
@@ -188,37 +177,36 @@
 "long",
 "very long"
 ],
-"buzz cut":[
-"very short"
-],
-"crew cut":[
-"very short"
-],
-"fade":[
-"very short",
-"short"
-],
-"side part":[
-"short",
-"medium"
-],
-"swept back":[
-"short",
-"medium",
-"long"
-],
 "shaggy":[
 "short",
 "medium",
 "long"
 ],
-"mullet":[
+"afro":[
 "short",
 "medium"
 ],
-"man bun":[
+"afro puffs":[
 "medium",
 "long"
+],
+"box braids":[
+"long",
+"very long"
+],
+"cornrows":[
+"short",
+"medium",
+"long"
+],
+"fishtail braid":[
+"long",
+"very long"
+],
+"beach waves":[
+"medium",
+"long",
+"very long"
 ]
 },
 "bangs":{
@@ -230,31 +218,6 @@
 ],
 "wet-look slick":[
 "none"
-],
-"buzz cut":[
-"none"
-],
-"crew cut":[
-"none"
-],
-"fade":[
-"none",
-"side-swept bangs"
-],
-"swept back":[
-"none"
-],
-"side part":[
-"none",
-"side-swept bangs",
-"long side bangs",
-"parted bangs"
-],
-"man bun":[
-"none",
-"side-swept bangs",
-"parted bangs",
-"curtain bangs"
 ],
 "finger waves":[
 "none",
@@ -282,6 +245,19 @@
 "straight bangs",
 "asymmetric bangs",
 "parted bangs"
+],
+"cornrows":[
+"none"
+],
+"afro":[
+"none",
+"curtain bangs",
+"choppy bangs"
+],
+"afro puffs":[
+"none",
+"curtain bangs",
+"straight bangs"
 ]
 },
 "family":{
@@ -289,19 +265,14 @@
 "pixie cut",
 "bob",
 "undercut",
-"finger waves",
-"buzz cut",
-"crew cut",
-"fade",
-"side part"
+"finger waves"
 ],
 "sleek":[
 "straight",
 "hime cut",
 "blunt cut",
 "slicked back",
-"wet-look slick",
-"swept back"
+"wet-look slick"
 ],
 "layer":[
 "layered",
@@ -310,15 +281,16 @@
 "windswept",
 "asymmetric cut",
 "side-shaved long hair",
-"shaggy",
-"mullet"
+"shaggy"
 ],
 "curl":[
 "wavy",
 "curly",
 "tight curls",
 "ringlet curls",
-"locs"
+"locs",
+"afro",
+"beach waves"
 ],
 "tail":[
 "ponytail",
@@ -330,7 +302,10 @@
 "braid":[
 "braid",
 "twin braids",
-"crown braid"
+"crown braid",
+"box braids",
+"cornrows",
+"fishtail braid"
 ],
 "bun":[
 "chignon",
@@ -338,11 +313,10 @@
 "top knot",
 "low bun",
 "space buns",
-"man bun"
+"afro puffs"
 ]
 },
 "familyLocked":{
-"shaggy":"layer",
 "swept back":"sleek",
 "side part":"crop",
 "mullet":"layer",
@@ -390,10 +364,6 @@
 "blunt cut":0,
 "straight":0,
 "undercut":0,
-"buzz cut":0,
-"crew cut":0,
-"fade":0,
-"side part":0,
 "layered":1,
 "feathered":1,
 "wavy":1,
@@ -407,10 +377,10 @@
 "wolf cut":1,
 "tight curls":1,
 "low bun":1,
-"swept back":1,
 "shaggy":1,
-"mullet":1,
-"man bun":1,
+"beach waves":1,
+"afro":1,
+"cornrows":1,
 "high ponytail":2,
 "side ponytail":2,
 "twin tail":2,
@@ -421,11 +391,14 @@
 "finger waves":2,
 "locs":2,
 "space buns":2,
+"afro puffs":2,
+"fishtail braid":2,
 "twin braids":3,
 "crown braid":3,
 "chignon":3,
 "ringlet curls":3,
-"hime cut":3
+"hime cut":3,
+"box braids":3
 }
 }
 },
@@ -21915,16 +21888,16 @@
 "‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은",
 "‘rounded red ape’ → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 바람에 날린 듯한 스타일 → 굵은 곱슬",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"curly",
-"hair length":"long",
-"bangs":"side-swept bangs"
+"hairstyle":"afro",
+"hair length":"medium",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘rounded red ape’에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 옆으로 넘긴 앞머리 — 달막화에서 이어 같은 묶음",
+"hair_why":"‘rounded red ape’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 달막화에서 이어 같은 묶음",
 "hair_cues":[
-"‘rounded red ape’ → 헤어스타일 굵은 곱슬"
+"‘rounded red ape’ → 헤어스타일 둥글게 부풀린 아프로"
 ]
 },
 "556":{
@@ -22449,16 +22422,16 @@
 "‘round, lumpy body’ → 코 코끝이 둥근",
 "‘round, lumpy body’ → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 굵은 곱슬 → 젖은 듯 넘긴 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 젖은 듯 넘긴 스타일 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"wet-look slick",
+"hairstyle":"afro puffs",
 "hair length":"long",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음 — 깨봉이에서 이어 같은 묶음",
+"hair_why":"‘round, lumpy body’·키 1.9m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 앞머리 없음 — 깨봉이에서 이어 더 공들인 묶음",
 "hair_cues":[
-"독 타입 → 헤어스타일 젖은 듯 넘긴 스타일",
+"‘round, lumpy body’ → 헤어스타일 양쪽 아프로 퍼프",
 "키 1.9m → 머리 길이 긴 머리"
 ]
 },
@@ -22522,16 +22495,17 @@
 "‘pointed snout’ → 얼굴 길이 긴 얼굴",
 "악 타입 → 눈매 강하게 치켜올라간 눈"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷",
 "hair":{
-"hairstyle":"mullet",
-"hair length":"medium",
+"hairstyle":"shaggy",
+"hair length":"long",
 "bangs":"asymmetric bangs"
 },
 "hair_locked":false,
-"hair_why":"‘large, red, voluminous mane’·‘black ruff’·악 타입에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 좌우 길이가 다른 앞머리 — 조로아에서 이어 같은 묶음",
+"hair_why":"‘large, red, voluminous mane’·‘black ruff’·키 1.6m에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 좌우 길이가 다른 앞머리 — 조로아에서 이어 같은 묶음",
 "hair_cues":[
-"‘large, red, voluminous mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷",
+"‘large, red, voluminous mane’ → 헤어스타일 덥수룩하게 흐트러진 컷",
+"키 1.6m → 머리 길이 긴 머리",
 "악 타입 → 앞머리 좌우 길이가 다른 앞머리"
 ]
 },
@@ -22817,16 +22791,16 @@
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "‘large, round head’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 작고 여린 코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 작고 여린 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"curly",
+"hairstyle":"afro puffs",
 "hair length":"long",
-"bangs":"parted bangs"
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘large, round head’에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 가운데를 가른 앞머리 — 듀란에서 이어 같은 묶음",
+"hair_why":"‘large, round head’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리 — 듀란에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘large, round head’ → 헤어스타일 굵은 곱슬"
+"‘large, round head’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "580":{
@@ -22853,16 +22827,16 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘two tufts forming a V’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 숱 많고 결이 보이는",
 "hair":{
-"hairstyle":"swept back",
+"hairstyle":"feathered",
 "hair length":"short",
-"bangs":"none"
+"bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘two tufts forming a V’·키 0.5m에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 짧은 머리 · 앞머리 없음",
+"hair_why":"‘two tufts forming a V’·‘darker-blue feathery underside’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
 "hair_cues":[
-"‘two tufts forming a V’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일",
+"‘two tufts forming a V’ → 헤어스타일 끝을 가볍게 친 페더컷",
 "키 0.5m → 머리 길이 짧은 머리"
 ]
 },
@@ -22901,7 +22875,7 @@
 "bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 꼬지보리에서 이어 더 공들인 묶음",
+"hair_why":"몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 꼬지보리에서 이어 같은 묶음",
 "hair_cues":[
 "몸 형태 wings → 헤어스타일 끝을 가볍게 친 페더컷"
 ]
@@ -23302,16 +23276,16 @@
 "‘invisible poison spikes’ → 눈매 가늘고 날카로운 눈",
 "‘invisible poison spikes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 머리를 둘러 땋은 왕관형 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"crown braid",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘crown-like tuft’·‘triangular crown’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘five tentacle-like appendages’·‘invisible poison spikes’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘crown-like tuft’ → 헤어스타일 머리를 둘러 땋은 왕관형",
+"‘five tentacle-like appendages’ → 헤어스타일 가는 박스 브레이드",
 "‘invisible poison spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -23339,16 +23313,16 @@
 "‘red heart-shaped marking’ → 얼굴형 이마가 넓고 턱이 가는 하트형",
 "‘red heart-shaped marking’ → 입술 윗입술이 활 모양인"
 ],
-"adjusted":"같은 계열 탱그릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 윗입술이 활 모양인 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 로크스 / 드레드풍 → 머리를 둘러 땋은 왕관형",
+"adjusted":"같은 계열 탱그릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 머리를 둘러 땋은 왕관형 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"crown braid",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"long side bangs covering one eye"
 },
 "hair_locked":false,
-"hair_why":"‘short white crown’·키 2.2m에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 탱그릴에서 이어 같은 묶음",
+"hair_why":"‘five tentacles’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 탱그릴에서 이어 같은 묶음",
 "hair_cues":[
-"‘short white crown’ → 헤어스타일 머리를 둘러 땋은 왕관형",
+"‘five tentacles’ → 헤어스타일 가는 박스 브레이드",
 "키 2.2m → 머리 길이 긴 머리",
 "고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
 ]
@@ -23379,16 +23353,16 @@
 "‘round eyes’ → 눈꼬리 각도 수평",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘ventral fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅",
+"hair_why":"‘ventral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
 "hair_cues":[
-"‘ventral fins’ → 헤어스타일 웨이브 헤어"
+"‘ventral fins’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "595":{
@@ -23494,15 +23468,18 @@
 "몸 형태 ball → 눈 간격 눈 사이가 넓은",
 "‘big spikes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"asymmetric cut",
+"hair length":"medium",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘big spikes’·‘metallic body’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_cues":[
+"‘big spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
+"‘big spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
+]
 },
 "598":{
 "name":"너트령",
@@ -23532,16 +23509,16 @@
 "‘green spike’ → 코 크고 또렷한 코",
 "‘green spike’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"같은 계열 철시드와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 좌우 길이가 다른 비대칭컷",
+"adjusted":"같은 계열 철시드와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"asymmetric cut",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘green spike’·‘metallic body’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 철시드에서 이어 더 공들인 묶음",
+"hair_why":"‘vine-like, long green appendages’·‘green spike’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 철시드에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘green spike’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
+"‘vine-like, long green appendages’ → 헤어스타일 가는 박스 브레이드",
 "‘green spike’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -23566,15 +23543,18 @@
 },
 "why":"작은 톱니바퀴의 원형 중심과 정렬을 둥근 얼굴와 대칭적인 두 눈으로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"short",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘two interlocked gears’·‘six light-gray teeth per gear’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리",
+"hair_cues":[
+"‘two interlocked gears’ → 헤어스타일 끝을 일자로 자른 컷",
+"키 0.3m → 머리 길이 짧은 머리"
+]
 },
 "600":{
 "name":"기기어르",
@@ -23606,7 +23586,7 @@
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘three interlocking gray gears’·‘six teeth on smaller gears’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 기어르에서 이어 더 공들인 묶음",
+"hair_why":"‘three interlocking gray gears’·‘six teeth on smaller gears’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 기어르에서 이어 같은 묶음",
 "hair_cues":[
 "‘three interlocking gray gears’ → 헤어스타일 끝을 일자로 자른 컷"
 ]
@@ -23941,17 +23921,16 @@
 "‘striped, round head’ → 눈썹 짧고 둥근",
 "‘small, black spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근",
+"adjusted":"같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"windswept",
+"hairstyle":"cornrows",
 "hair length":"long",
-"bangs":"long side bangs covering one eye"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘tall, purple flame’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 램프라에서 이어 같은 묶음",
+"hair_why":"‘large vertical stripes’·‘striped, round head’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 램프라에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘tall, purple flame’ → 헤어스타일 바람에 날린 듯한 스타일",
-"고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
+"‘large vertical stripes’ → 헤어스타일 두피에 붙여 땋은 콘로"
 ]
 },
 "610":{
@@ -24276,16 +24255,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "땅 타입 → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 콧대가 낮고 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"wavy",
-"hair length":"medium",
+"hairstyle":"fishtail braid",
+"hair length":"very long",
 "bangs":"long side bangs"
 },
 "hair_locked":false,
-"hair_why":"‘two small, flimsy fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 긴 사이드뱅",
+"hair_why":"‘two small, flimsy fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 긴 사이드뱅",
 "hair_cues":[
-"‘two small, flimsy fins’ → 헤어스타일 웨이브 헤어"
+"‘two small, flimsy fins’ → 헤어스타일 한쪽으로 넘긴 피시테일"
 ]
 },
 "619":{
@@ -24309,16 +24288,16 @@
 },
 "why":"작은 무술가의 가벼운 선을 작은 턱과 집중된 수평 눈으로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"top knot",
+"hairstyle":"cornrows",
 "hair length":"medium",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 앞머리 없음",
+"hair_why":"‘small red band’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"격투 타입 → 헤어스타일 정수리에 묶어 올린 번"
+"‘small red band’ → 헤어스타일 두피에 붙여 땋은 콘로"
 ]
 },
 "620":{
@@ -24349,7 +24328,7 @@
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음 — 비조푸에서 이어 같은 묶음",
+"hair_why":"격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음 — 비조푸에서 이어 더 공들인 묶음",
 "hair_cues":[
 "격투 타입 → 헤어스타일 정수리에 묶어 올린 번"
 ]
@@ -24731,7 +24710,7 @@
 "bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘shaggy darker brown wings’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 벌차이에서 이어 같은 묶음",
+"hair_why":"‘shaggy darker brown wings’·‘tan ruff’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 벌차이에서 이어 같은 묶음",
 "hair_cues":[
 "‘shaggy darker brown wings’ → 헤어스타일 덥수룩하게 흐트러진 컷"
 ]
@@ -24757,15 +24736,17 @@
 },
 "why":"개미핥기의 긴 주둥이와 관형 입을 긴 콧대와 중앙이 도톰한 입술로 해석한다.",
 "cues":[],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"twin braids",
+"hairstyle":"cornrows",
 "hair length":"medium",
-"bangs":"side-swept bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 양갈래 땋은 머리 · 중간 길이 · 옆으로 넘긴 앞머리",
-"hair_cues":[]
+"hair_why":"‘yellow stripes’·‘are raised, dented bands’에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음",
+"hair_cues":[
+"‘yellow stripes’ → 헤어스타일 두피에 붙여 땋은 콘로"
+]
 },
 "632":{
 "name":"아이앤트",
@@ -25024,16 +25005,16 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "강철 타입 → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"asymmetric cut",
+"hairstyle":"cornrows",
 "hair length":"long",
-"bangs":"long side bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘shoulder blades’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 긴 사이드뱅",
+"hair_why":"‘black bands’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음",
 "hair_cues":[
-"‘shoulder blades’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
+"‘black bands’ → 헤어스타일 두피에 붙여 땋은 콘로",
 "키 2.1m → 머리 길이 긴 머리"
 ]
 },
@@ -25065,16 +25046,16 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘two brown, axe-like horns’ → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코",
 "hair":{
-"hairstyle":"man bun",
-"hair length":"long",
+"hairstyle":"high ponytail",
+"hair length":"very long",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"키 1.9m에서 뒤로 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음",
+"hair_why":"‘two brown, axe-like horns’·격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 앞머리 없음",
 "hair_cues":[
-"키 1.9m → 머리 길이 긴 머리"
+"‘two brown, axe-like horns’ → 헤어스타일 높이 묶은 포니테일"
 ]
 },
 "640":{
@@ -25229,17 +25210,16 @@
 "‘long and slender neck’ → 눈매 아몬드형 눈",
 "‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"braid",
-"hair length":"very long",
-"bangs":"side-swept bangs"
+"hairstyle":"cornrows",
+"hair length":"long",
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘neck rings’·‘two large bands’·드래곤 타입에서 한 갈래 땋은 머리 · 매우 긴 머리 · 옆으로 넘긴 앞머리",
+"hair_why":"‘neck rings’·‘two large bands’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음",
 "hair_cues":[
-"‘neck rings’ → 헤어스타일 한 갈래 땋은 머리",
-"키 3.2m → 머리 길이 매우 긴 머리"
+"‘neck rings’ → 헤어스타일 두피에 붙여 땋은 콘로"
 ]
 },
 "644":{
@@ -25269,18 +25249,16 @@
 "‘small wing-spike’ → 눈썹 바깥에서 꺾이는 사선",
 "‘small wing-spike’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 짧고 코끝이 들린",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 넘긴 스타일",
 "hair":{
-"hairstyle":"high ponytail",
-"hair length":"very long",
-"bangs":"choppy bangs"
+"hairstyle":"slicked back",
+"hair length":"long",
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘thundercloud-like crest’·‘small horn-like protrusion’·드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘thundercloud-like crest’에서 뒤로 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음",
 "hair_cues":[
-"‘thundercloud-like crest’ → 헤어스타일 높이 묶은 포니테일",
-"키 2.9m → 머리 길이 매우 긴 머리",
-"‘small wing-spike’ → 앞머리 끝을 불규칙하게 친 앞머리"
+"‘thundercloud-like crest’ → 헤어스타일 뒤로 넘긴 스타일"
 ]
 },
 "645":{
@@ -25390,16 +25368,16 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘fluffy, light blue fur’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 층을 살린 레이어드",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"layered",
-"hair length":"long",
-"bangs":"side-swept bangs"
+"hairstyle":"afro",
+"hair length":"medium",
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘large, feathery red mane’에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리",
+"hair_why":"‘large, feathery red mane’·‘fluffy, light blue fur’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"‘large, feathery red mane’ → 헤어스타일 층을 살린 레이어드"
+"‘large, feathery red mane’ → 헤어스타일 둥글게 부풀린 아프로"
 ]
 },
 "648":{
@@ -25425,15 +25403,17 @@
 "cues":[
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 곧은 생머리 → 가르마를 탄 단정한 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
-"hairstyle":"side part",
-"hair length":"medium",
+"hairstyle":"straight",
+"hair length":"very long",
 "bangs":"parted bangs"
 },
 "hair_locked":false,
-"hair_why":"‘forehead jewel’에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리",
+"hair_why":"‘flowing hair with musical-bar streaks’(원작의 머리칼)·‘forehead jewel’·에스퍼 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 가운데를 가른 앞머리",
 "hair_cues":[
+"‘flowing hair with musical-bar streaks’(원작의 머리칼) → 헤어스타일 곧은 생머리",
+"‘flowing hair with musical-bar streaks’(원작의 머리칼) → 머리 길이 매우 긴 머리",
 "‘forehead jewel’ → 앞머리 가운데를 가른 앞머리"
 ]
 },
@@ -25463,15 +25443,17 @@
 "‘purple segmented metal body’ → 눈매 가늘고 날카로운 눈",
 "‘purple segmented metal body’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 눈썹 바깥에서 꺾이는 사선 → 중간 두께의 직선, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 눈썹 바깥에서 꺾이는 사선 → 중간 두께의 직선, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
+"hairstyle":"cornrows",
+"hair length":"medium",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘purple segmented metal body’·‘gray shoulder circles and abdomen band’에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음",
+"hair_cues":[
+"‘purple segmented metal body’ → 헤어스타일 두피에 붙여 땋은 콘로"
+]
 },
 "650":{
 "name":"도치마론",
@@ -26365,9 +26347,9 @@
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘shaggy, dark brown fur’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘leafy green mane’·‘shaggy, dark brown fur’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘shaggy, dark brown fur’ → 헤어스타일 덥수룩하게 흐트러진 컷",
+"‘leafy green mane’ → 헤어스타일 덥수룩하게 흐트러진 컷",
 "‘shaggy, dark brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -26397,16 +26379,16 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘black horns’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 층을 살린 레이어드",
+"adjusted":"같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 덥수룩하게 흐트러진 컷",
 "hair":{
-"hairstyle":"layered",
+"hairstyle":"shaggy",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘thick, green leafy mane’·‘shaggy, brown fur’·키 1.7m에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 메이클에서 이어 같은 묶음",
+"hair_why":"‘thick, green leafy mane’·‘shaggy, brown fur’·키 1.7m에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 메이클에서 이어 같은 묶음",
 "hair_cues":[
-"‘thick, green leafy mane’ → 헤어스타일 층을 살린 레이어드",
+"‘thick, green leafy mane’ → 헤어스타일 덥수룩하게 흐트러진 컷",
 "키 1.7m → 머리 길이 긴 머리",
 "‘shaggy, brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
@@ -26789,16 +26771,16 @@
 "‘fluffy purple fur’ → 눈썹 가늘고 완만한 곡선",
 "‘fluffy purple fur’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"curly",
+"hairstyle":"afro puffs",
 "hair length":"medium",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘fluffy purple fur’에서 굵은 곱슬(웨이브·곱슬) · 중간 길이 · 일자 앞머리 — 슈쁘에서 이어 같은 묶음",
+"hair_why":"‘fluffy purple fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 슈쁘에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘fluffy purple fur’ → 헤어스타일 굵은 곱슬"
+"‘fluffy purple fur’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "684":{
@@ -26870,16 +26852,16 @@
 "‘fluffy pink fur’ → 눈매 큰 눈",
 "‘fluffy pink fur’ → 눈썹 가늘고 완만한 곡선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 보통 → 큰 눈, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 세로로 말린 드릴 컬",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 보통 → 큰 눈, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"ringlet curls",
+"hairstyle":"afro puffs",
 "hair length":"medium",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"페어리 타입에서 세로로 말린 드릴 컬(웨이브·곱슬) · 중간 길이 · 일자 앞머리 — 나룸퍼프에서 이어 같은 묶음",
+"hair_why":"‘fluffy pink fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 나룸퍼프에서 이어 더 공들인 묶음",
 "hair_cues":[
-"페어리 타입 → 헤어스타일 세로로 말린 드릴 컬"
+"‘fluffy pink fur’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "686":{
@@ -26948,16 +26930,16 @@
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "몸 형태 blob → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 로크스 / 드레드풍",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"locs",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"long side bangs"
 },
 "hair_locked":false,
-"hair_why":"‘long tentacle’에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 긴 사이드뱅 — 오케이징에서 이어 같은 묶음",
+"hair_why":"‘long tentacle’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 오케이징에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘long tentacle’ → 헤어스타일 로크스 / 드레드풍"
+"‘long tentacle’ → 헤어스타일 가는 박스 브레이드"
 ]
 },
 "688":{
@@ -27060,17 +27042,16 @@
 "‘blunt spike’ → 눈썹 바깥에서 꺾이는 사선",
 "몸 형태 blob → 입술 도톰한 입술"
 ],
-"adjusted":"",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 젖은 듯 넘긴 스타일",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"wet-look slick",
 "hair length":"medium",
-"bangs":"choppy bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘rounded, light blue fin’·‘blunt spike’·물 타입에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘rounded, light blue fin’·독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"‘rounded, light blue fin’ → 헤어스타일 웨이브 헤어",
-"‘blunt spike’ → 앞머리 끝을 불규칙하게 친 앞머리"
+"‘rounded, light blue fin’ → 헤어스타일 젖은 듯 넘긴 스타일"
 ]
 },
 "691":{
@@ -27294,16 +27275,16 @@
 "‘two orange spikes’ → 눈썹 굵고 눈 가까이 낮은",
 "‘blunt snout’ → 코 짧고 코끝이 들린"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 코끝이 둥근 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 코끝이 둥근 → 짧고 코끝이 들린",
 "hair":{
-"hairstyle":"mullet",
+"hairstyle":"wolf cut",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘spiky ruff’·‘two orange spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘two orange spikes’·‘spiky ruff’·드래곤 타입에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘spiky ruff’ → 헤어스타일 앞은 짧고 뒤만 긴 컷",
+"‘two orange spikes’ → 헤어스타일 층감이 강한 울프컷",
 "‘two orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -27334,16 +27315,18 @@
 "‘two orange spikes’ → 눈썹 굵고 눈 가까이 낮은",
 "‘two orange spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 얇은 입술",
 "hair":{
-"hairstyle":"mullet",
-"hair length":"medium",
-"bangs":"side-swept bangs"
+"hairstyle":"feathered",
+"hair length":"long",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘feathery white ruff’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 티고라스에서 이어 같은 묶음",
+"hair_why":"‘feathery white ruff’·‘white, primitive feathers’에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 티고라스에서 이어 같은 묶음",
 "hair_cues":[
-"‘feathery white ruff’ → 헤어스타일 앞은 짧고 뒤만 긴 컷"
+"‘feathery white ruff’ → 헤어스타일 끝을 가볍게 친 페더컷",
+"‘long tail’ → 머리 길이 긴 머리",
+"‘two orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
 "698":{
@@ -27492,15 +27475,17 @@
 "‘three rectangular, tassel-like feathers’ → 눈매 가늘고 날카로운 눈",
 "‘three rectangular, tassel-like feathers’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"feathered",
+"hair length":"medium",
+"bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘feathery tail’·‘three rectangular, tassel-like feathers’·비행 타입에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리",
+"hair_cues":[
+"‘feathery tail’ → 헤어스타일 끝을 가볍게 친 페더컷"
+]
 },
 "702":{
 "name":"데덴네",
@@ -27730,17 +27715,16 @@
 "‘spherical head’ → 눈매 큰 눈",
 "‘spherical head’ → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"curly",
-"hair length":"short",
+"hairstyle":"afro puffs",
+"hair length":"medium",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘spherical head’·몸 형태 ball에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 일자 앞머리",
+"hair_why":"‘spherical head’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리",
 "hair_cues":[
-"‘spherical head’ → 헤어스타일 굵은 곱슬",
-"키 0.2m → 머리 길이 짧은 머리"
+"‘spherical head’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "708":{
@@ -27801,16 +27785,16 @@
 "몸 형태 tentacles → 얼굴형 이마가 넓고 턱이 가는 하트형",
 "몸 형태 tentacles → 입술 입이 작은"
 ],
-"adjusted":"같은 계열 나목령와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선",
+"adjusted":"같은 계열 나목령와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"half-up",
+"hairstyle":"fishtail braid",
 "hair length":"long",
 "bangs":"long side bangs"
 },
 "hair_locked":false,
-"hair_why":"‘green leaves’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 긴 사이드뱅 — 나목령에서 이어 같은 묶음",
+"hair_why":"‘wavy, horn-like branch’에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 나목령에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘green leaves’ → 헤어스타일 반묶음"
+"‘wavy, horn-like branch’ → 헤어스타일 한쪽으로 넘긴 피시테일"
 ]
 },
 "710":{
@@ -28036,16 +28020,16 @@
 "‘fluffy mane’ → 눈매 큰 눈",
 "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리"
 ],
-"adjusted":"같은 계열 음뱃와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리, 눈썹 바깥에서 꺾이는 사선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"같은 계열 음뱃와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리, 눈썹 바깥에서 꺾이는 사선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"mullet",
+"hairstyle":"afro",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘fluffy mane’·‘two spines’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 음뱃에서 이어 같은 묶음",
+"hair_why":"‘fluffy mane’·‘two spines’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 음뱃에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘fluffy mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷",
+"‘fluffy mane’ → 헤어스타일 둥글게 부풀린 아프로",
 "‘two spines’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -29222,17 +29206,16 @@
 "‘large watery blue eyes’ → 눈 크기 큰 눈",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 레트로 웨이브 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"finger waves",
-"hair length":"short",
+"hairstyle":"beach waves",
+"hair length":"very long",
 "bangs":"long side bangs"
 },
 "hair_locked":false,
-"hair_why":"‘rounded dorsal fin’·키 0.2m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅",
+"hair_why":"‘rounded dorsal fin’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 긴 사이드뱅",
 "hair_cues":[
-"‘rounded dorsal fin’ → 헤어스타일 레트로 웨이브",
-"키 0.2m → 머리 길이 짧은 머리"
+"‘rounded dorsal fin’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "747":{
@@ -29556,16 +29539,16 @@
 "‘thin, stem-like body’ → 눈썹 길고 바깥 아치가 선명한",
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
-"adjusted":"",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"braid",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘thin white stem’·‘thin, stem-like body’에서 한 갈래 땋은 머리 · 긴 머리 · 일자 앞머리",
+"hair_why":"‘thin white stem’·‘thin, stem-like body’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 일자 앞머리",
 "hair_cues":[
-"‘thin white stem’ → 헤어스타일 한 갈래 땋은 머리",
+"‘thin white stem’ → 헤어스타일 가는 박스 브레이드",
 "‘largest mushroom’ → 앞머리 일자 앞머리"
 ]
 },
@@ -29743,16 +29726,16 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "격투 타입 → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 높이 묶은 포니테일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"high ponytail",
+"hairstyle":"cornrows",
 "hair length":"long",
-"bangs":"side-swept bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 옆으로 넘긴 앞머리 — 포곰곰에서 이어 같은 묶음",
+"hair_why":"‘white band’·‘dark pink rings’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 포곰곰에서 이어 더 공들인 묶음",
 "hair_cues":[
-"격투 타입 → 헤어스타일 높이 묶은 포니테일",
+"‘white band’ → 헤어스타일 두피에 붙여 땋은 콘로",
 "키 2.1m → 머리 길이 긴 머리"
 ]
 },
@@ -29887,17 +29870,16 @@
 "‘long, fluffy green crest’ → 눈매 아몬드형 눈",
 "몸 형태 ball → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 좁은 얼굴, 눈매 큰 눈 → 아몬드형 눈",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 좁은 얼굴, 눈매 큰 눈 → 아몬드형 눈 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"curly",
-"hair length":"short",
+"hairstyle":"afro puffs",
+"hair length":"long",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘long, fluffy green crest’·몸 형태 ball에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 일자 앞머리",
+"hair_why":"‘long, fluffy green crest’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리",
 "hair_cues":[
-"‘long, fluffy green crest’ → 헤어스타일 굵은 곱슬",
-"키 0.1m → 머리 길이 짧은 머리"
+"‘long, fluffy green crest’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "765":{
@@ -29923,15 +29905,17 @@
 "cues":[
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 단정하게 말아 올린 시뇽 → 가르마를 탄 단정한 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 가늘고 곧은",
 "hair":{
-"hairstyle":"side part",
+"hairstyle":"chignon",
 "hair length":"medium",
 "bangs":"parted bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리",
-"hair_cues":[]
+"hair_why":"에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 중간 길이 · 가운데를 가른 앞머리",
+"hair_cues":[
+"에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽"
+]
 },
 "766":{
 "name":"내던숭이",
@@ -30463,16 +30447,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘pectoral fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅",
+"hair_why":"‘pectoral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
 "hair_cues":[
-"‘pectoral fins’ → 헤어스타일 웨이브 헤어"
+"‘pectoral fins’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "780":{
@@ -30704,17 +30688,17 @@
 "‘round, yellow structures’ → 코 코끝이 둥근",
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"ringlet curls",
-"hair length":"very long",
-"bangs":"choppy bangs"
+"hairstyle":"afro puffs",
+"hair length":"long",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘bird mask’·‘one short spine’·페어리 타입에서 세로로 말린 드릴 컬(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘round, yellow structures’·키 1.8m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리",
 "hair_cues":[
-"‘bird mask’ → 헤어스타일 세로로 말린 드릴 컬",
-"‘one short spine’ → 앞머리 끝을 불규칙하게 친 앞머리"
+"‘round, yellow structures’ → 헤어스타일 양쪽 아프로 퍼프",
+"키 1.8m → 머리 길이 긴 머리"
 ]
 },
 "786":{
@@ -31009,16 +30993,16 @@
 },
 "why":"반투명 종과 긴 촉수의 흐름을 긴 얼굴와 큰 맑은 눈으로 해석한다.",
 "cues":[],
-"adjusted":"",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"locs",
+"hairstyle":"box braids",
 "hair length":"very long",
 "bangs":"parted bangs"
 },
 "hair_locked":false,
-"hair_why":"‘four shorter tentacles’·‘long hair’(원작의 머리칼)·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 매우 긴 머리 · 가운데를 가른 앞머리",
+"hair_why":"‘four shorter tentacles’·‘long hair’(원작의 머리칼)·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 매우 긴 머리 · 가운데를 가른 앞머리",
 "hair_cues":[
-"‘four shorter tentacles’ → 헤어스타일 로크스 / 드레드풍",
+"‘four shorter tentacles’ → 헤어스타일 가는 박스 브레이드",
 "‘long hair’(원작의 머리칼) → 머리 길이 매우 긴 머리"
 ]
 },
@@ -31365,15 +31349,18 @@
 "‘two curled horns’ → 눈썹 굵고 눈 가까이 낮은",
 "‘two curled horns’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 뒤로 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은",
 "hair":{
-"hairstyle":"man bun",
+"hairstyle":"top knot",
 "hair length":"medium",
-"bangs":"none"
+"bangs":"long side bangs covering one eye"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 뒤로 묶어 올린 번(올림머리) · 중간 길이 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘two curled horns’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 한쪽 눈을 덮는 긴 사이드뱅",
+"hair_cues":[
+"‘two curled horns’ → 헤어스타일 정수리에 묶어 올린 번",
+"고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
+]
 },
 "803":{
 "name":"베베놈",
@@ -32028,16 +32015,16 @@
 "‘tan and brown plump body’ → 눈썹 짧고 둥근",
 "‘tan and brown plump body’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 잔곱슬 / 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 잔곱슬 / 아프로 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"tight curls",
+"hairstyle":"afro",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘tan and brown plump body’에서 잔곱슬 / 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 탐리스에서 이어 같은 묶음",
+"hair_why":"‘tan and brown plump body’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 탐리스에서 이어 같은 묶음",
 "hair_cues":[
-"‘tan and brown plump body’ → 헤어스타일 잔곱슬 / 아프로"
+"‘tan and brown plump body’ → 헤어스타일 둥글게 부풀린 아프로"
 ]
 },
 "821":{
@@ -32102,16 +32089,16 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘gray beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱",
 "hair":{
-"hairstyle":"swept back",
+"hairstyle":"feathered",
 "hair length":"medium",
-"bangs":"none"
+"bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘mask-like crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음 — 파라꼬에서 이어 더 공들인 묶음",
+"hair_why":"‘breast feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 파라꼬에서 이어 같은 묶음",
 "hair_cues":[
-"‘mask-like crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일"
+"‘breast feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
 ]
 },
 "823":{
@@ -32149,7 +32136,7 @@
 "bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘scapular feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파크로우에서 이어 더 공들인 묶음",
+"hair_why":"‘scapular feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파크로우에서 이어 같은 묶음",
 "hair_cues":[
 "‘scapular feathers’ → 헤어스타일 끝을 가볍게 친 페더컷",
 "키 2.2m → 머리 길이 긴 머리"
@@ -33293,16 +33280,16 @@
 "격투 타입 → 눈썹 굵고 눈 가까이 낮은",
 "몸 형태 tentacles → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 입이 넓은 → 입이 작은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 입이 넓은 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"locs",
+"hairstyle":"box braids",
 "hair length":"long",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘eight blue tentacles’·‘one tentacle wrapped around waist’·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 앞머리 없음 — 때때무노에서 이어 같은 묶음",
+"hair_why":"‘eight blue tentacles’·‘one tentacle wrapped around waist’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 앞머리 없음 — 때때무노에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘eight blue tentacles’ → 헤어스타일 로크스 / 드레드풍",
+"‘eight blue tentacles’ → 헤어스타일 가는 박스 브레이드",
 "키 1.6m → 머리 길이 긴 머리"
 ]
 },
@@ -33949,15 +33936,18 @@
 "‘six black spherical troopers’ → 눈썹 짧고 둥근",
 "‘paired horned shield plates’ → 코 크고 또렷한 코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근, 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근, 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"top knot",
+"hair length":"long",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘red horn and crest’·‘gold helmet-like shell’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 일자 앞머리",
+"hair_cues":[
+"‘red horn and crest’ → 헤어스타일 정수리에 묶어 올린 번",
+"‘gold helmet-like shell’ → 앞머리 일자 앞머리"
+]
 },
 "871":{
 "name":"찌르성게",
@@ -34106,15 +34096,17 @@
 "몸 형태 legs → 눈 간격 눈 사이가 가까운",
 "‘gray, rectangular body’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 코 보통 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 코 보통 → 콧대가 낮고 넓은",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"long",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘gray, rectangular body’·‘smaller rectangular stones’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리",
+"hair_cues":[
+"‘gray, rectangular body’ → 헤어스타일 끝을 일자로 자른 컷"
+]
 },
 "875":{
 "name":"빙큐보",
@@ -34179,16 +34171,16 @@
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "‘white round face’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 가르마를 탄 단정한 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"side part",
+"hairstyle":"afro",
 "hair length":"medium",
-"bangs":"parted bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘upward-curved spiral horns’에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리",
+"hair_why":"‘white round face’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"‘upward-curved spiral horns’ → 앞머리 가운데를 가른 앞머리"
+"‘white round face’ → 헤어스타일 둥글게 부풀린 아프로"
 ]
 },
 "877":{
@@ -34445,16 +34437,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "‘round blue head’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 콧대가 낮고 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"very long",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘white fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅",
+"hair_why":"‘white fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅",
 "hair_cues":[
-"‘white fins’ → 헤어스타일 웨이브 헤어"
+"‘white fins’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "884":{
@@ -35055,15 +35047,18 @@
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 아몬드형 눈, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 단정하게 말아 올린 시뇽 → 가르마를 탄 단정한 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 아몬드형 눈, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 단정하게 말아 올린 시뇽",
 "hair":{
-"hairstyle":"side part",
-"hair length":"medium",
+"hairstyle":"chignon",
+"hair length":"long",
 "bangs":"parted bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리",
-"hair_cues":[]
+"hair_why":"에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 긴 머리 · 가운데를 가른 앞머리",
+"hair_cues":[
+"에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽",
+"키 1.8m → 머리 길이 긴 머리"
+]
 },
 "900":{
 "name":"사마자르",
@@ -35170,16 +35165,16 @@
 "키 3m → 얼굴 길이 긴 얼굴",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"fishtail braid",
 "hair length":"very long",
 "bangs":"long side bangs covering one eye"
 },
 "hair_locked":false,
-"hair_why":"‘white pectoral fins’·‘smoke-like facial barbels’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 배쓰나이에서 이어 같은 묶음",
+"hair_why":"‘white pectoral fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 배쓰나이에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘white pectoral fins’ → 헤어스타일 웨이브 헤어",
+"‘white pectoral fins’ → 헤어스타일 한쪽으로 넘긴 피시테일",
 "키 3m → 머리 길이 매우 긴 머리",
 "고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
 ]
@@ -35544,16 +35539,16 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘yellow beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘teal coif with white wave marking’·‘teal webbed feet’·물 타입에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅",
+"hair_why":"‘teal coif with white wave marking’·‘teal webbed feet’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
 "hair_cues":[
-"‘teal coif with white wave marking’ → 헤어스타일 웨이브 헤어"
+"‘teal coif with white wave marking’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "913":{
@@ -35996,17 +35991,17 @@
 "몸 형태 heads → 눈 간격 눈 사이가 가까운",
 "‘spherical head’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 입술 입이 작은 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 양쪽 동그란 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 입술 입이 작은 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양쪽 동그란 번 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"space buns",
-"hair length":"long",
+"hairstyle":"afro",
+"hair length":"short",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 커튼뱅",
+"hair_why":"‘spherical head’·키 0.3m에서 둥글게 부풀린 아프로(웨이브·곱슬) · 짧은 머리 · 커튼뱅",
 "hair_cues":[
-"‘spherical head’ → 헤어스타일 양쪽 동그란 번",
-"‘long tail’ → 머리 길이 긴 머리"
+"‘spherical head’ → 헤어스타일 둥글게 부풀린 아프로",
+"키 0.3m → 머리 길이 짧은 머리"
 ]
 },
 "925":{
@@ -36044,7 +36039,7 @@
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 일자 앞머리 — 두리쥐에서 이어 같은 묶음",
+"hair_why":"‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 일자 앞머리 — 두리쥐에서 이어 더 공들인 묶음",
 "hair_cues":[
 "‘spherical head’ → 헤어스타일 양쪽 동그란 번",
 "‘long tail’ → 머리 길이 긴 머리"
@@ -36154,16 +36149,16 @@
 "몸 형태 legs → 눈 간격 눈 사이가 가까운",
 "‘round green body’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"half-up",
+"hairstyle":"afro",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘few leaves’·‘jagged mouth’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘round green body’·‘jagged mouth’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘few leaves’ → 헤어스타일 반묶음",
+"‘round green body’ → 헤어스타일 둥글게 부풀린 아프로",
 "‘jagged mouth’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -36197,7 +36192,7 @@
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘several leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 미니브에서 이어 같은 묶음",
+"hair_why":"‘several leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 미니브에서 이어 더 공들인 묶음",
 "hair_cues":[
 "‘several leaves’ → 헤어스타일 반묶음"
 ]
@@ -36261,16 +36256,16 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘rounded yellow beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
-"hairstyle":"swept back",
+"hairstyle":"feathered",
 "hair length":"medium",
-"bangs":"none"
+"bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘lumpy, pompadour-like black crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음",
+"hair_why":"‘white feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리",
 "hair_cues":[
-"‘lumpy, pompadour-like black crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일"
+"‘white feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
 ]
 },
 "932":{
@@ -36299,15 +36294,18 @@
 "몸 형태 ball → 턱선 · 턱끝 부드럽고 둥근 턱",
 "몸 형태 ball → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"short",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘white salt cube’·‘rock salt’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리",
+"hair_cues":[
+"‘white salt cube’ → 헤어스타일 끝을 일자로 자른 컷",
+"키 0.4m → 머리 길이 짧은 머리"
+]
 },
 "933":{
 "name":"스태솔트",
@@ -36339,7 +36337,7 @@
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘rugged, dark brown rock’·‘brown cuboid stone’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 베베솔트에서 이어 더 공들인 묶음",
+"hair_why":"‘rugged, dark brown rock’·‘brown cuboid stone’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 베베솔트에서 이어 같은 묶음",
 "hair_cues":[
 "‘rugged, dark brown rock’ → 헤어스타일 끝을 일자로 자른 컷"
 ]
@@ -37428,16 +37426,16 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘long neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 뒤로 넘긴 볼륨 있는 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번",
 "hair":{
-"hairstyle":"swept back",
+"hairstyle":"top knot",
 "hair length":"medium",
-"bangs":"none"
+"bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘small fan-like crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음",
+"hair_why":"‘small fan-like crest’에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 옆으로 넘긴 앞머리",
 "hair_cues":[
-"‘small fan-like crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일"
+"‘small fan-like crest’ → 헤어스타일 정수리에 묶어 올린 번"
 ]
 },
 "963":{
@@ -37465,16 +37463,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "‘short snout’ → 코 짧고 코끝이 들린"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘dorsal fin’·‘pale bluish white wave patterns’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅",
+"hair_why":"‘dorsal fin’·‘pale bluish white wave patterns’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
 "hair_cues":[
-"‘dorsal fin’ → 헤어스타일 웨이브 헤어"
+"‘dorsal fin’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "964":{
@@ -37502,16 +37500,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "몸 형태 fish → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한",
+"adjusted":"같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"beach waves",
 "hair length":"long",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘white flank waves’·‘split tailfin with water ring’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 같은 묶음",
+"hair_why":"‘white flank waves’·‘split tailfin with water ring’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 같은 묶음",
 "hair_cues":[
-"‘white flank waves’ → 헤어스타일 웨이브 헤어"
+"‘white flank waves’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "965":{
@@ -37542,15 +37540,17 @@
 "몸 형태 legs → 눈 간격 눈 사이가 가까운",
 "‘metal engine-shaped body’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 코 보통 → 곧고 가는 콧대, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 코 보통 → 곧고 가는 콧대, 입술 얇은 입술 → 굴곡 없이 곧은",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"medium",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘metal engine-shaped body’·‘four black upper-block stripes’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리",
+"hair_cues":[
+"‘metal engine-shaped body’ → 헤어스타일 끝을 일자로 자른 컷"
+]
 },
 "966":{
 "name":"부르르룸",
@@ -37587,7 +37587,7 @@
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘metallic body’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 부르롱에서 이어 더 공들인 묶음",
+"hair_why":"‘metallic body’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 부르롱에서 이어 같은 묶음",
 "hair_cues":[
 "‘metallic body’ → 헤어스타일 끝을 일자로 자른 컷",
 "키 1.8m → 머리 길이 긴 머리"
@@ -37660,16 +37660,16 @@
 "‘six-segmented metal body’ → 눈썹 바깥에서 꺾이는 사선",
 "‘six-segmented metal body’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 강하게 치켜올라간 눈",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 강하게 치켜올라간 눈 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드",
 "hair":{
-"hairstyle":"braid",
+"hairstyle":"box braids",
 "hair length":"very long",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"‘parapodia-like tendrils’·‘six-segmented metal body’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 일자 앞머리",
+"hair_why":"‘parapodia-like tendrils’·몸 형태 squiggle에서 가는 박스 브레이드(땋은 머리) · 매우 긴 머리 · 일자 앞머리",
 "hair_cues":[
-"‘parapodia-like tendrils’ → 헤어스타일 한 갈래 땋은 머리",
+"‘parapodia-like tendrils’ → 헤어스타일 가는 박스 브레이드",
 "몸 형태 squiggle → 머리 길이 매우 긴 머리"
 ]
 },
@@ -37965,16 +37965,16 @@
 "‘diamond-shaped spikes’ → 눈썹 바깥에서 꺾이는 사선",
 "‘diamond-shaped spikes’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대, 입술 도톰한 입술 → 얇은 입술",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"wavy",
+"hairstyle":"fishtail braid",
 "hair length":"very long",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘translucent, bright magenta fins’·‘diamond-shaped spikes’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘translucent, bright magenta fins’·‘diamond-shaped spikes’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘translucent, bright magenta fins’ → 헤어스타일 웨이브 헤어",
+"‘translucent, bright magenta fins’ → 헤어스타일 한쪽으로 넘긴 피시테일",
 "키 2.5m → 머리 길이 매우 긴 머리",
 "‘diamond-shaped spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
@@ -38006,16 +38006,16 @@
 "무게 220kg → 코 콧대가 낮고 넓은",
 "몸 형태 fish → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 코 작고 여린 코 → 콧대가 낮고 넓은, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 코 작고 여린 코 → 콧대가 낮고 넓은, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 레트로 웨이브 → 느슨한 해변 웨이브",
 "hair":{
-"hairstyle":"finger waves",
+"hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"long side bangs"
 },
 "hair_locked":false,
-"hair_why":"‘pectoral fins’·‘three gills’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅",
+"hair_why":"‘pectoral fins’·‘three gills’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 긴 사이드뱅",
 "hair_cues":[
-"‘pectoral fins’ → 헤어스타일 레트로 웨이브"
+"‘pectoral fins’ → 헤어스타일 느슨한 해변 웨이브"
 ]
 },
 "978":{
@@ -38042,16 +38042,16 @@
 "몸 형태 fish → 얼굴형 균형 잡힌 타원형",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 젖은 듯 넘긴 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 젖은 듯 넘긴 스타일 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"wet-look slick",
+"hairstyle":"fishtail braid",
 "hair length":"long",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘long pectoral fins and split tailfin’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음",
+"hair_why":"‘long pectoral fins and split tailfin’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 앞머리 없음",
 "hair_cues":[
-"‘long pectoral fins and split tailfin’ → 헤어스타일 젖은 듯 넘긴 스타일"
+"‘long pectoral fins and split tailfin’ → 헤어스타일 한쪽으로 넘긴 피시테일"
 ]
 },
 "979":{
@@ -38203,17 +38203,16 @@
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
 "hair":{
-"hairstyle":"braid",
-"hair length":"very long",
-"bangs":"side-swept bangs"
+"hairstyle":"cornrows",
+"hair length":"long",
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘blue underside and blue and cream stripes’·‘first body segment’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 옆으로 넘긴 앞머리 — 노고치에서 이어 같은 묶음",
+"hair_why":"‘blue underside and blue and cream stripes’·‘first body segment’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 노고치에서 이어 같은 묶음",
 "hair_cues":[
-"‘blue underside and blue and cream stripes’ → 헤어스타일 한 갈래 땋은 머리",
-"몸 형태 squiggle → 머리 길이 매우 긴 머리"
+"‘blue underside and blue and cream stripes’ → 헤어스타일 두피에 붙여 땋은 콘로"
 ]
 },
 "983":{
@@ -38280,15 +38279,19 @@
 "‘pinkish-red spikes’ → 눈매 가늘고 날카로운 눈",
 "‘pinkish-red spikes’ → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"asymmetric cut",
+"hair length":"long",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘pinkish-red spikes’·‘dark purple plates’·키 2.2m에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_cues":[
+"‘pinkish-red spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
+"키 2.2m → 머리 길이 긴 머리",
+"‘pinkish-red spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
+]
 },
 "985":{
 "name":"우렁찬꼬리",
@@ -38318,16 +38321,16 @@
 "‘spherical body’ → 눈매 큰 눈",
 "‘spherical body’ → 눈썹 가늘고 완만한 곡선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 입이 넓은 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 히메컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 입이 넓은 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 히메컷 → 양쪽 아프로 퍼프",
 "hair":{
-"hairstyle":"hime cut",
-"hair length":"very long",
+"hairstyle":"afro puffs",
+"hair length":"medium",
 "bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"에스퍼 타입에서 히메컷(곧은 결) · 매우 긴 머리 · 일자 앞머리",
+"hair_why":"‘spherical body’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리",
 "hair_cues":[
-"에스퍼 타입 → 헤어스타일 히메컷"
+"‘spherical body’ → 헤어스타일 양쪽 아프로 퍼프"
 ]
 },
 "986":{
@@ -38435,15 +38438,19 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘red spiny horn-like structure’ → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱",
 "hair":{
-"hairstyle":"man bun",
-"hair length":"long",
-"bangs":"none"
+"hairstyle":"high ponytail",
+"hair length":"very long",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 뒤로 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘red spiny horn-like structure’·격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리",
+"hair_cues":[
+"‘red spiny horn-like structure’ → 헤어스타일 높이 묶은 포니테일",
+"키 3.2m → 머리 길이 매우 긴 머리",
+"‘red spiny horn-like structure’ → 앞머리 끝을 불규칙하게 친 앞머리"
+]
 },
 "989":{
 "name":"모래털가죽",
@@ -38512,15 +38519,17 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘spherical gray metallic body’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴, 눈썹 중간 두께의 직선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴, 눈썹 중간 두께의 직선 → 짧고 둥근",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"medium",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘spherical gray metallic body’·‘metal plate’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리",
+"hair_cues":[
+"‘spherical gray metallic body’ → 헤어스타일 끝을 일자로 자른 컷"
+]
 },
 "991":{
 "name":"무쇠보따리",
@@ -38580,15 +38589,18 @@
 },
 "why":"기계 격투자의 길고 단단한 선을 긴 얼굴와 수평적인 눈매로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 옆을 그라데이션으로 짧게 친 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
 "hair":{
-"hairstyle":"fade",
-"hair length":"very short",
+"hairstyle":"top knot",
+"hair length":"long",
 "bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 옆을 그라데이션으로 짧게 친 컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘head crest’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음",
+"hair_cues":[
+"‘head crest’ → 헤어스타일 정수리에 묶어 올린 번",
+"키 1.8m → 머리 길이 긴 머리"
+]
 },
 "993":{
 "name":"무쇠머리",
@@ -39036,17 +39048,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"windswept",
-"hair length":"short",
+"hairstyle":"fishtail braid",
+"hair length":"very long",
 "bangs":"side-swept bangs"
 },
 "hair_locked":false,
-"hair_why":"‘red-yellow flame fish silhouette’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
+"hair_why":"몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 옆으로 넘긴 앞머리",
 "hair_cues":[
-"‘red-yellow flame fish silhouette’ → 헤어스타일 바람에 날린 듯한 스타일",
-"키 0.4m → 머리 길이 짧은 머리"
+"몸 형태 fish → 헤어스타일 한쪽으로 넘긴 피시테일"
 ]
 },
 "1005":{
@@ -39232,16 +39243,16 @@
 "‘blue horn’ → 눈꼬리 각도 올라간 눈꼬리",
 "‘blue horn’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형",
 "hair":{
-"hairstyle":"mullet",
-"hair length":"medium",
+"hairstyle":"wolf cut",
+"hair length":"long",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘thick, large purple mane’·‘eight blue spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘thick, large purple mane’·‘large, hexagonal, cerulean blue crest’·드래곤 타입에서 층감이 강한 울프컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘thick, large purple mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷",
+"‘thick, large purple mane’ → 헤어스타일 층감이 강한 울프컷",
 "‘eight blue spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -39694,16 +39705,16 @@
 "‘three blue triangle spikes’ → 눈꼬리 각도 올라간 눈꼬리",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 앞은 짧고 뒤만 긴 컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로",
 "hair":{
-"hairstyle":"mullet",
+"hairstyle":"afro",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"‘circle mane’·‘three blue triangle spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_why":"‘dull purple rain clouds’·‘circle mane’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
 "hair_cues":[
-"‘circle mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷",
+"‘dull purple rain clouds’ → 헤어스타일 둥글게 부풀린 아프로",
 "‘three blue triangle spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
 ]
 },
@@ -39733,15 +39744,18 @@
 "‘two brown, rotatable, axe-like horns’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 짧고 단정한 크루컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술",
 "hair":{
-"hairstyle":"crew cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"asymmetric cut",
+"hair length":"medium",
+"bangs":"choppy bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘two brown, rotatable, axe-like horns’·‘several short spikes’에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
+"hair_cues":[
+"‘two brown, rotatable, axe-like horns’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
+"‘several short spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
+]
 },
 "1023":{
 "name":"무쇠감투",
@@ -39771,15 +39785,18 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘two yellow metal horns’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 좌우 길이가 다른 비대칭컷 → 끝을 일자로 자른 컷",
 "hair":{
-"hairstyle":"buzz cut",
-"hair length":"very short",
-"bangs":"none"
+"hairstyle":"blunt cut",
+"hair length":"long",
+"bangs":"straight bangs"
 },
 "hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음",
-"hair_cues":[]
+"hair_why":"‘two yellow metal horns’·‘yellow metal protrusions’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리",
+"hair_cues":[
+"‘two yellow metal horns’ → 헤어스타일 끝을 일자로 자른 컷",
+"키 1.6m → 머리 길이 긴 머리"
+]
 },
 "1024":{
 "name":"테라파고스",

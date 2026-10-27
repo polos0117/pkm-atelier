@@ -96,8 +96,7 @@ for (const c of cards) {
   if (h.hairstyle) { count[h.hairstyle] = (count[h.hairstyle] || 0) + 1; if (f.hair_locked) lockedCount[h.hairstyle] = (lockedCount[h.hairstyle] || 0) + 1; }
   if (f.hair_locked) { locked++; if (h.hairstyle) lockedWith++; continue; }
   assert.deepEqual(Object.keys(h).sort(), [...HK].sort(), c.name + ' 머리 항목 셋');
-  /* 남성 표시 헤어스타일은 드문 몫(rare)으로만 — 2026-10-27 전에는 아예 안 썼다 */
-  for (const k of HK) assert(!male(k).includes(h[k]) || (k === 'hairstyle' && HR.rare.includes(h[k])), c.name + ' 남성 전용 머리 ' + h[k]);
+  for (const k of HK) assert(!male(k).includes(h[k]), c.name + ' 남성 전용 머리 ' + h[k]);
   assert(HR.length[h.hairstyle].includes(h['hair length']), c.name + ' ' + h.hairstyle + ' 에 맞지 않는 길이 ' + h['hair length']);
   if (h.hairstyle === 'pixie cut') assert(['very short', 'short'].includes(h['hair length']), c.name + ' 픽시는 짧게');
   if (h.hairstyle === 'bob') assert.equal(h['hair length'], 'short', c.name + ' 보브는 짧은 머리');
@@ -105,13 +104,13 @@ for (const c of cards) {
   if (h.hairstyle === 'hime cut') assert.equal(h.bangs, 'straight bangs', c.name + ' 히메컷은 일자 앞머리');
   if (HR.bangs[h.hairstyle]) assert(HR.bangs[h.hairstyle].includes(h.bangs), c.name + ' ' + h.hairstyle + ' 에 맞지 않는 앞머리');
 }
-const N = cards.length, cap = s => Math.max(Math.floor((s === 'bob' ? HR.bobCap : HR.rare.includes(s) ? HR.rareCap : HR.cap) * N), lockedCount[s] || 0);
+const N = cards.length, cap = s => Math.max(Math.floor((s === 'bob' ? HR.bobCap : HR.cap) * N), lockedCount[s] || 0);
 assert(HR.cap <= 0.08 && HR.bobCap <= 0.04, '상한 8% · 보브 4%');
 for (const [s, k] of Object.entries(count)) assert(k <= cap(s), '헤어스타일 ' + s + ' ' + k + '종 — 상한 ' + cap(s));
 assert(Object.keys(count).length >= 30, '헤어스타일이 몇 가지로 몰렸다: ' + Object.keys(count).length);
-/* 생성기의 헤어스타일은 드문 것까지 모두 한 번 이상 배정된다(2026-10-27) */
-assert(HR.rare.length === male('hairstyle').length && HR.rareCap <= 0.01, '드문 머리 몫');
-for (const v of hopt.hairstyle) assert(count[v] > 0, '배정되지 않은 헤어스타일 ' + v);
+/* 여성 헤어스타일은 새로 더한 것(아프로·브레이드 …)까지 모두 배정된다 — 적게 쓰인 머리 채우기(2026-10-27) */
+for (const v of hopt.hairstyle) if (!male('hairstyle').includes(v)) assert(count[v] > 0, '배정되지 않은 여성 헤어스타일 ' + v);
+for (const v of ['afro', 'afro puffs', 'box braids', 'cornrows', 'fishtail braid', 'beach waves', 'shaggy']) assert(hopt.hairstyle.includes(v) && !male('hairstyle').includes(v), '여성 머리 ' + v);
 const hairOf = n => F[byName[n].no];
 for (const c of cards) if (c.from && byName[c.from] && !(hairOf(c.from).hair_locked && F[c.no].hair_locked))
   assert(edgeOk(hairOf(c.from).hair, F[c.no].hair), '계열 잇기: ' + c.from + ' ' + triple(hairOf(c.from).hair) + ' → ' + c.name + ' ' + triple(F[c.no].hair));

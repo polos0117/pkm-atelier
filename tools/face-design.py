@@ -164,12 +164,9 @@ KEEP_W = 4.0                               # 이 json 의 이전 값 — 다시 
 HAIR_KEYS = ['hairstyle', 'hair length', 'bangs']
 LENGTHS = ['very short', 'short', 'medium', 'long', 'very long']
 HAIR_CAP, BOB_CAP = 0.08, 0.04            # 한 헤어스타일이 1,025종에서 차지할 수 있는 몫 · 보브는 따로 더 낮게
-# 드문 헤어스타일 — 생성기가 남성 쪽으로 표시한(ONLY) 머리. 여성 인물에도 어울리는 종이 있어 적은 몫(0.6% = 6종)까지 배정한다(2026-10-27, 사용자).
-# 전에는 아예 빼서 생성기에 있는데 한 번도 배정되지 않았다
-RARE_CAP = 0.006
-RARE_MIN, RARE_PULL = .7, 12.0  # 드문 머리는 그 단서 점수가 이만큼 넘는 종에만 — 미리 고른 자리만, 앞서 정한 머리(항목마다 +2.5, 셋이면 7.5)와 단서 차이를 넘게 당긴다
-RARE_LEN = {'buzz cut': ['very short'], 'crew cut': ['very short'], 'fade': ['very short', 'short'], 'side part': ['short', 'medium'],
-            'swept back': ['short', 'medium', 'long'], 'shaggy': ['short', 'medium', 'long'], 'mullet': ['short', 'medium'], 'man bun': ['medium', 'long']}
+# 적게 쓰인 헤어스타일 채우기(2026-10-27) — 앞서 정한 머리를 지키는 가산점(항목마다 +2.5) 때문에 새로 더한 머리(아프로·브레이드 …)가
+# 한 번도 안 나왔다. FILL_MIN 종에 못 미치는 헤어스타일은 원작 단서가 FILL_SCORE 넘는 종 가운데 가장 잘 맞는 종을 미리 골라 FILL_PULL 만큼 당긴다
+FILL_MIN, FILL_SCORE, FILL_PULL = 8, .7, 12.0
 # 헤어스타일마다 맞는 길이(HAIR_LENGTH_LIMITS 와 같은 뜻 — 픽시·보브는 짧게, 한쪽 민 긴 머리는 길게)
 HAIR_LEN = {
     'pixie cut': ['very short', 'short'], 'bob': ['short'], 'undercut': ['short', 'medium'], 'finger waves': ['short', 'medium'],
@@ -183,33 +180,34 @@ HAIR_LEN = {
     'hime cut': ['long', 'very long'], 'side-shaved long hair': ['long', 'very long'],
     'chignon': ['medium', 'long'], 'messy bun': ['medium', 'long'], 'top knot': ['medium', 'long'], 'low bun': ['medium', 'long'],
     'space buns': ['medium', 'long'], 'crown braid': ['long', 'very long'],
+    # 2026-10-27 — 아프로·브레이드 계열과 섀기(생성기에서 여성 머리로도 쓴다)
+    'shaggy': ['short', 'medium', 'long'], 'afro': ['short', 'medium'], 'afro puffs': ['medium', 'long'], 'box braids': ['long', 'very long'],
+    'cornrows': ['short', 'medium', 'long'], 'fishtail braid': ['long', 'very long'], 'beach waves': ['medium', 'long', 'very long'],
 }
-HAIR_LEN.update(RARE_LEN)
 # 계열을 잇는 묶음 — 진화하며 같은 묶음 안에 있거나, 이어지는 묶음으로 더 길고 공들인 쪽으로 간다
-FAMILY = {'crop': ['pixie cut', 'bob', 'undercut', 'finger waves', 'buzz cut', 'crew cut', 'fade', 'side part'],
-          'sleek': ['straight', 'hime cut', 'blunt cut', 'slicked back', 'wet-look slick', 'swept back'],
-          'layer': ['layered', 'feathered', 'wolf cut', 'windswept', 'asymmetric cut', 'side-shaved long hair', 'shaggy', 'mullet'],
-          'curl': ['wavy', 'curly', 'tight curls', 'ringlet curls', 'locs'],
+FAMILY = {'crop': ['pixie cut', 'bob', 'undercut', 'finger waves'],
+          'sleek': ['straight', 'hime cut', 'blunt cut', 'slicked back', 'wet-look slick'],
+          'layer': ['layered', 'feathered', 'wolf cut', 'windswept', 'asymmetric cut', 'side-shaved long hair', 'shaggy'],
+          'curl': ['wavy', 'curly', 'tight curls', 'ringlet curls', 'locs', 'afro', 'beach waves'],
           'tail': ['ponytail', 'high ponytail', 'side ponytail', 'twin tail', 'half-up'],
-          'braid': ['braid', 'twin braids', 'crown braid'],
-          'bun': ['chignon', 'messy bun', 'top knot', 'low bun', 'space buns', 'man bun']}
+          'braid': ['braid', 'twin braids', 'crown braid', 'box braids', 'cornrows', 'fishtail braid'],
+          'bun': ['chignon', 'messy bun', 'top knot', 'low bun', 'space buns', 'afro puffs']}
 FAM_OF = {s: f for f, ss in FAMILY.items() for s in ss}
 FAM_KO = {'crop': '짧은 컷', 'sleek': '곧은 결', 'layer': '층 낸 컷', 'curl': '웨이브·곱슬', 'tail': '묶은 꼬리', 'braid': '땋은 머리', 'bun': '올림머리'}
 GROW = {'crop': {'sleek', 'layer', 'curl', 'tail'}, 'sleek': {'tail', 'braid', 'bun', 'layer'}, 'layer': {'tail', 'curl', 'sleek', 'braid'},
         'curl': {'tail', 'bun', 'braid'}, 'tail': {'braid', 'bun'}, 'braid': {'bun'}, 'bun': set()}
-ELAB = {s: 0 for s in ('pixie cut', 'bob', 'blunt cut', 'straight', 'undercut', 'buzz cut', 'crew cut', 'fade', 'side part')}
+ELAB = {s: 0 for s in ('pixie cut', 'bob', 'blunt cut', 'straight', 'undercut')}
 ELAB.update({s: 1 for s in ('layered', 'feathered', 'wavy', 'ponytail', 'asymmetric cut', 'slicked back', 'wet-look slick', 'curly',
-                            'half-up', 'windswept', 'wolf cut', 'tight curls', 'low bun', 'swept back', 'shaggy', 'mullet', 'man bun')})
+                            'half-up', 'windswept', 'wolf cut', 'tight curls', 'low bun', 'shaggy', 'beach waves', 'afro', 'cornrows')})
 ELAB.update({s: 2 for s in ('high ponytail', 'side ponytail', 'twin tail', 'braid', 'side-shaved long hair', 'messy bun', 'top knot',
-                            'finger waves', 'locs', 'space buns')})
-ELAB.update({s: 3 for s in ('twin braids', 'crown braid', 'chignon', 'ringlet curls', 'hime cut')})
+                            'finger waves', 'locs', 'space buns', 'afro puffs', 'fishtail braid')})
+ELAB.update({s: 3 for s in ('twin braids', 'crown braid', 'chignon', 'ringlet curls', 'hime cut', 'box braids')})
 BANGS_OK = {'hime cut': ['straight bangs'], 'slicked back': ['none'], 'wet-look slick': ['none'],
-            'buzz cut': ['none'], 'crew cut': ['none'], 'fade': ['none', 'side-swept bangs'], 'swept back': ['none'],
-            'side part': ['none', 'side-swept bangs', 'long side bangs', 'parted bangs'], 'man bun': ['none', 'side-swept bangs', 'parted bangs', 'curtain bangs'],
             'finger waves': ['none', 'side-swept bangs', 'long side bangs'],
             'undercut': ['none', 'side-swept bangs', 'long side bangs', 'long side bangs covering one eye', 'asymmetric bangs', 'choppy bangs'],
             'side-shaved long hair': ['side-swept bangs', 'long side bangs', 'long side bangs covering one eye', 'asymmetric bangs'],
-            'pixie cut': ['none', 'side-swept bangs', 'choppy bangs', 'straight bangs', 'asymmetric bangs', 'parted bangs']}
+            'pixie cut': ['none', 'side-swept bangs', 'choppy bangs', 'straight bangs', 'asymmetric bangs', 'parted bangs'],
+            'cornrows': ['none'], 'afro': ['none', 'curtain bangs', 'choppy bangs'], 'afro puffs': ['none', 'curtain bangs', 'straight bangs']}
 BANGS_BASE = {'straight bangs': .3, 'side-swept bangs': .3, 'curtain bangs': .3, 'parted bangs': .2, 'none': .2, 'long side bangs': .2,
               'choppy bangs': .2, 'asymmetric bangs': .1, 'long side bangs covering one eye': 0.0}
 LEN_BASE = {'very short': 0.0, 'short': .3, 'medium': .4, 'long': .4, 'very long': .2}
@@ -230,36 +228,36 @@ HAIR_CUES = [
     (r'\b(fluffy|bushy|puffy|fan-like)\b[^,;]*\btails?\b', '복슬한 꼬리', {HS: {'curly': 1.0, 'ponytail': .4, 'messy bun': .4}}, False),
     (r'\btail\b', '꼬리', {HS: {'ponytail': .5, 'high ponytail': .3}}, False),
     (r'\b(crest|crests|plume|plumes|wisp|head feathers?)\b', '볏·머리 깃',
-     {HS: {'top knot': 1.2, 'high ponytail': 1.2, 'slicked back': .8, 'wolf cut': .6, 'swept back': .6}, HB: {'side-swept bangs': .5}}, False),
-    (r'\b(mane|ruff|ruffs)\b', '갈기·목털', {HS: {'wolf cut': 1.8, 'layered': 1.0, 'curly': .6, 'feathered': .6, 'mullet': .6, 'shaggy': .5}, HL: {'long': .3}}, False),
+     {HS: {'top knot': 1.2, 'high ponytail': 1.2, 'slicked back': .8, 'wolf cut': .6}, HB: {'side-swept bangs': .5}}, False),
+    (r'\b(mane|ruff|ruffs)\b', '갈기·목털', {HS: {'wolf cut': 1.8, 'layered': 1.0, 'curly': .6, 'feathered': .6, 'shaggy': .8, 'afro': .6}, HL: {'long': .3}}, False),
     (r'\b(tuft|tufts|tufty|cowlick)\b', '털 다발', {HS: {'wolf cut': .8, 'messy bun': .8, 'feathered': .6}, HB: {'choppy bangs': .5}}, False),
     (r'\b(spike|spikes|spiky|spiked|spiny|spines?|quills?|jagged)\b', '가시·삐죽한 선',
      {HS: {'wolf cut': 1.0, 'asymmetric cut': .8, 'windswept': .5}, HB: {'choppy bangs': 1.2}}, False),
-    (r'\b(horn|horns|horn-like|tusk|tusks)\b', '뿔', {HS: {'top knot': .8, 'high ponytail': .6, 'slicked back': .5, 'man bun': .4}, HB: {'parted bangs': .6, 'none': .4}}, False),
+    (r'\b(horn|horns|horn-like|tusk|tusks)\b', '뿔', {HS: {'top knot': .8, 'high ponytail': .6, 'slicked back': .5}, HB: {'parted bangs': .6, 'none': .4}}, False),
     (r'\b(flame|flames|fire|fiery|blaze|blazing|ember|embers|burning)\b', '불꽃',
      {HS: {'windswept': 2.2, 'wolf cut': .8, 'high ponytail': .6}, HB: {'side-swept bangs': .5}}, False),
     (r'\b(fins?|fin-like|wave|waves|wavy|flowing|water|bubbles?|gills?|webbed|flippers?|flipper-like|droplets?)\b', '지느러미·물결',
-     {HS: {'wavy': 1.4, 'finger waves': .8, 'straight': .6, 'wet-look slick': .6}, HB: {'curtain bangs': .4, 'long side bangs': .4}}, False),
+     {HS: {'wavy': 1.4, 'finger waves': .8, 'straight': .6, 'wet-look slick': .6, 'beach waves': 1.0, 'fishtail braid': .6}, HB: {'curtain bangs': .4, 'long side bangs': .4}}, False),
     (r'\b(flower|flowers|petal|petals|blossom|blossoms|bloom|bud|buds|corolla)\b', '꽃·꽃잎',
      {HS: {'crown braid': 1.8, 'half-up': 1.0, 'ringlet curls': .4}, HB: {'curtain bangs': .4}}, False),
     (r'\b(leaf|leaves|leafy|leaf-like|frond|fronds|moss)\b', '잎', {HS: {'half-up': 1.3, 'layered': .6, 'messy bun': .6}}, False),
     (r'\b(vine|vines|stem|stems|stalk|stalks|stem-like|branch|branches|twig|twigs|tendril|tendrils)\b', '덩굴·줄기',
-     {HS: {'braid': 1.4, 'twin braids': .8, 'locs': .4}, HL: {'long': .4}}, False),
+     {HS: {'braid': 1.4, 'twin braids': .8, 'locs': .4, 'box braids': .8, 'fishtail braid': .6}, HL: {'long': .4}}, False),
     (r'\b(bulb|seed|seeds|sprout|acorn|pod|nut)\b', '알뿌리·씨앗', {HS: {'messy bun': 1.2, 'top knot': .6}}, False),
     (r'\b(mushroom|mushrooms|cap|caps|helmet|dome|dome-shaped)\b', '버섯 갓·둥근 덮개', {HS: {'bob': 1.5, 'blunt cut': 1.0, 'finger waves': .4}, HB: {'straight bangs': .8}}, False),
     (r'\b(round|rounded|roundish|spherical|ball|orb|ovoid|plump|chubby|fluffy|puffy|fuzzy|cotton|cotton-like|pillow|bulbous|puff|soft|woolly|wool|fleece|egg-shaped)\b',
-     '둥글고 폭신한 몸', {HS: {'curly': 1.3, 'space buns': 1.2, 'tight curls': 1.0, 'messy bun': .4}, HB: {'straight bangs': .4}}, True),
-    (r'\b(cloud|clouds|cloud-like|smoke|gas|mist|fog|vapor)\b', '구름·연기', {HS: {'curly': .8, 'wavy': .6, 'windswept': .6}}, False),
+     '둥글고 폭신한 몸', {HS: {'curly': 1.3, 'space buns': 1.2, 'tight curls': 1.0, 'messy bun': .4, 'afro': 1.2, 'afro puffs': .8}, HB: {'straight bangs': .4}}, True),
+    (r'\b(cloud|clouds|cloud-like|smoke|gas|mist|fog|vapor)\b', '구름·연기', {HS: {'curly': .8, 'wavy': .6, 'windswept': .6, 'afro': .8}}, False),
     (r'\b(mask|mask-like|masquerade|gown|dress|skirt|veil|cape|cloak|robe|elegant|graceful|regal|tiara|jewel|jewels|gem|gems|pearl|pearls)\b',
      '가면·드레스·보석', {HS: {'chignon': 1.2, 'hime cut': 1.0, 'ringlet curls': .8, 'crown braid': .5}}, False),
     (r'\b(crown|crown-like|crowned)\b', '왕관', {HS: {'crown braid': 1.5, 'chignon': .6}}, False),
     (r'\b(rock|rocks|rocky|stone|stones|boulder|metal|metallic|steel|iron|plate|plates|armor|armored|block|blocky|cube|square|rectangular|geometric|hexagonal|polyhedral|gear|gears|magnet|magnets|bolt|bolts|screw|faceted)\b',
-     '돌·강철 판', {HS: {'blunt cut': 1.4, 'asymmetric cut': 1.0, 'undercut': 1.0, 'side-shaved long hair': .8, 'buzz cut': .4, 'crew cut': .4}, HB: {'straight bangs': .5, 'none': .4}}, False),
-    (r'\b(tentacle|tentacles)\b', '촉수', {HS: {'locs': 1.6, 'ringlet curls': 1.0, 'twin braids': .8}, HL: {'long': .5}}, False),
+     '돌·강철 판', {HS: {'blunt cut': 1.4, 'asymmetric cut': 1.0, 'undercut': 1.0, 'side-shaved long hair': .8}, HB: {'straight bangs': .5, 'none': .4}}, False),
+    (r'\b(tentacle|tentacles)\b', '촉수', {HS: {'locs': 1.6, 'ringlet curls': 1.0, 'twin braids': .8, 'box braids': 1.4}, HL: {'long': .5}}, False),
     (r'\b(feather|feathers|feathered|feathery|plumage|wing|wings|wing-like)\b', '깃털·날개',
      {HS: {'feathered': 1.6, 'layered': .8, 'windswept': .6}, HB: {'side-swept bangs': .5}}, False),
     (r'\b(stripe|stripes|striped|band|bands|ring|rings|segment|segments|segmented)\b', '줄무늬·마디',
-     {HS: {'braid': .7, 'twin braids': .5, 'finger waves': .5}}, False),
+     {HS: {'braid': .7, 'twin braids': .5, 'finger waves': .5, 'cornrows': 1.0, 'box braids': .5}}, False),
     (r'\b(curl|curls|curled|curly|curling|swirl|swirly|swirled|whorled|spiral|spirals|coil|coiled|coiling)\b', '말린 선',
      {HS: {'ringlet curls': 1.2, 'curly': 1.0, 'finger waves': .6}}, False),
     (r'\b(lightning|lightning-shaped|zigzag|zigzagging|zigzags|electric|spark|sparks|thunder\w*)\b', '번개',
@@ -284,32 +282,32 @@ HAIR_PART = [(r'\b(long|flowing|billowy|streaming)\b', {HS: {'straight': 1.4, 'w
              (r'.', {HS: {'bob': .6, 'layered': .5, 'blunt cut': .4}})]
 HAIR_SHAPE = {
     'ball': {HS: {'space buns': .8, 'curly': .6, 'bob': .5, 'pixie cut': .4}}, 'blob': {HS: {'messy bun': .8, 'curly': .6, 'wavy': .4}},
-    'squiggle': {HS: {'braid': 1.4, 'straight': 1.0}, HL: {'very long': .6, 'long': .4}}, 'fish': {HS: {'wavy': 1.0, 'wet-look slick': .8, 'finger waves': .5}},
+    'squiggle': {HS: {'braid': 1.4, 'straight': 1.0}, HL: {'very long': .6, 'long': .4}}, 'fish': {HS: {'wavy': 1.0, 'wet-look slick': .8, 'finger waves': .5, 'fishtail braid': 1.0, 'beach waves': .5}},
     'arms': {HS: {'ponytail': .4}}, 'upright': {HS: {'high ponytail': .3}}, 'legs': {HS: {'pixie cut': .4}},
     'quadruped': {HS: {'ponytail': .4, 'layered': .3}}, 'wings': {HS: {'feathered': 1.0, 'windswept': .6}},
-    'tentacles': {HS: {'locs': .8, 'ringlet curls': .6}}, 'heads': {HS: {'twin tail': 1.0, 'space buns': .6}},
+    'tentacles': {HS: {'locs': .8, 'ringlet curls': .6, 'box braids': .8}}, 'heads': {HS: {'twin tail': 1.0, 'space buns': .6}},
     'humanoid': {HS: {'straight': .4, 'hime cut': .3, 'layered': .3}}, 'bug-wings': {HS: {'twin tail': .6, 'bob': .4, 'layered': .4}},
     'armor': {HS: {'blunt cut': .8, 'undercut': .6}},
 }
 HAIR_TYPE = {
-    'fairy': {HS: {'ringlet curls': 1.0, 'twin tail': .6, 'crown braid': .5, 'curly': .3}, HB: {'straight bangs': .4, 'curtain bangs': .3}},
-    'psychic': {HS: {'hime cut': 1.0, 'chignon': .8, 'straight': .6, 'side part': .3}, HB: {'parted bangs': .5, 'straight bangs': .4}},
+    'fairy': {HS: {'ringlet curls': 1.0, 'twin tail': .6, 'crown braid': .5, 'curly': .3, 'afro puffs': .5}, HB: {'straight bangs': .4, 'curtain bangs': .3}},
+    'psychic': {HS: {'hime cut': 1.0, 'chignon': .8, 'straight': .6}, HB: {'parted bangs': .5, 'straight bangs': .4}},
     'ghost': {HS: {'straight': .8, 'asymmetric cut': .4, 'hime cut': .4}, HB: {'long side bangs covering one eye': 1.4, 'asymmetric bangs': .8, 'long side bangs': .5}, HL: {'long': .4}},
     'dark': {HS: {'asymmetric cut': .8, 'side-shaved long hair': .6, 'wolf cut': .5, 'straight': .3, 'shaggy': .4}, HB: {'long side bangs covering one eye': .8, 'asymmetric bangs': .8, 'long side bangs': .5}},
-    'dragon': {HS: {'high ponytail': 1.0, 'braid': .8, 'wolf cut': .6, 'side-shaved long hair': .5, 'swept back': .4, 'mullet': .3}, HL: {'long': .4}},
-    'fighting': {HS: {'high ponytail': 1.2, 'top knot': 1.0, 'braid': .6, 'undercut': .6, 'crew cut': .5, 'man bun': .5, 'fade': .4}, HB: {'none': .4, 'side-swept bangs': .3}},
-    'steel': {HS: {'blunt cut': 1.0, 'asymmetric cut': .6, 'undercut': .5, 'wet-look slick': .4, 'buzz cut': .4}, HB: {'straight bangs': .5}},
-    'rock': {HS: {'blunt cut': .8, 'low bun': .6, 'undercut': .4, 'crew cut': .3}, HB: {'straight bangs': .4, 'none': .3}},
-    'ground': {HS: {'low bun': .8, 'braid': .6, 'messy bun': .5}, HB: {'side-swept bangs': .3}},
-    'water': {HS: {'wavy': 1.0, 'finger waves': .5, 'straight': .4, 'wet-look slick': .3}, HB: {'curtain bangs': .4}},
+    'dragon': {HS: {'high ponytail': 1.0, 'braid': .8, 'wolf cut': .6, 'side-shaved long hair': .5}, HL: {'long': .4}},
+    'fighting': {HS: {'high ponytail': 1.2, 'top knot': 1.0, 'braid': .6, 'undercut': .6, 'cornrows': .6}, HB: {'none': .4, 'side-swept bangs': .3}},
+    'steel': {HS: {'blunt cut': 1.0, 'asymmetric cut': .6, 'undercut': .5, 'wet-look slick': .4}, HB: {'straight bangs': .5}},
+    'rock': {HS: {'blunt cut': .8, 'low bun': .6, 'undercut': .4}, HB: {'straight bangs': .4, 'none': .3}},
+    'ground': {HS: {'low bun': .8, 'braid': .6, 'messy bun': .5, 'box braids': .4}, HB: {'side-swept bangs': .3}},
+    'water': {HS: {'wavy': 1.0, 'finger waves': .5, 'straight': .4, 'wet-look slick': .3, 'beach waves': .6}, HB: {'curtain bangs': .4}},
     'ice': {HS: {'straight': .8, 'hime cut': .5, 'chignon': .5, 'blunt cut': .4}, HB: {'straight bangs': .5}},
     'fire': {HS: {'windswept': 1.2, 'wolf cut': .5, 'high ponytail': .5}, HB: {'side-swept bangs': .4, 'choppy bangs': .3}},
-    'electric': {HS: {'windswept': .7, 'asymmetric cut': .6, 'side ponytail': .6, 'high ponytail': .4, 'fade': .4}, HB: {'choppy bangs': .5, 'asymmetric bangs': .4}},
+    'electric': {HS: {'windswept': .7, 'asymmetric cut': .6, 'side ponytail': .6, 'high ponytail': .4}, HB: {'choppy bangs': .5, 'asymmetric bangs': .4}},
     'grass': {HS: {'half-up': .8, 'crown braid': .5, 'messy bun': .5, 'braid': .4}, HB: {'curtain bangs': .4}},
     'bug': {HS: {'twin tail': .5, 'pixie cut': .5, 'layered': .4, 'bob': .3}, HB: {'straight bangs': .4}},
     'poison': {HS: {'wet-look slick': .6, 'side-shaved long hair': .6, 'undercut': .4, 'curly': .3}, HB: {'asymmetric bangs': .4}},
-    'flying': {HS: {'feathered': .8, 'windswept': .6, 'layered': .5, 'swept back': .5}, HB: {'side-swept bangs': .5}},
-    'normal': {HS: {'ponytail': .6, 'layered': .5, 'half-up': .3, 'low bun': .3, 'side part': .4}, HB: {'curtain bangs': .3, 'side-swept bangs': .3}},
+    'flying': {HS: {'feathered': .8, 'windswept': .6, 'layered': .5}, HB: {'side-swept bangs': .5}},
+    'normal': {HS: {'ponytail': .6, 'layered': .5, 'half-up': .3, 'low bun': .3, 'afro': .3, 'shaggy': .3}, HB: {'curtain bangs': .3, 'side-swept bangs': .3}},
 }
 
 
@@ -325,7 +323,7 @@ def spec():
 
 
 def hair_spec():
-    """생성기 머리 항목 셋의 값·한글 이름, 남성 표시 헤어스타일(드문 몫으로만 쓴다), 길이가 고정되는 헤어스타일"""
+    """생성기 머리 항목 셋의 값·한글 이름, 여성 인물에 쓸 수 있는 헤어스타일, 길이가 고정되는 헤어스타일"""
     out = subprocess.run(['node', '-e', "global.window={};require('./lib/prompt-spec.js');const S=window.AtelierSpec;"
                           f"const K={json.dumps(HAIR_KEYS)};"
                           "process.stdout.write(JSON.stringify({defs:S.PARAM_DEFS.filter(d=>K.includes(d.key)),only:S.ONLY,limits:S.HAIR_LENGTH_LIMITS,keys:S.HAIR_KEYS||null}))"],
@@ -338,8 +336,7 @@ def hair_spec():
     male = {k: {v for v, s in (j['only'].get(k) or {}).items() if s == 'male'} for k in HAIR_KEYS}
     female = {k: [v for v in opts[k] if v not in male[k]] for k in HAIR_KEYS}
     assert j['keys'] is None or j['keys'] == HAIR_KEYS, ('HAIR_KEYS 가 생성기와 다르다', j['keys'])
-    assert set(male[HS]) == set(RARE_LEN), ('드문 헤어스타일이 생성기의 남성 표시와 다르다', set(male[HS]) ^ set(RARE_LEN))
-    assert set(opts[HS]) == set(HAIR_LEN), ('HAIR_LEN 이 헤어스타일 전부를 덮지 않는다', set(opts[HS]) ^ set(HAIR_LEN))
+    assert set(female[HS]) == set(HAIR_LEN), ('HAIR_LEN 이 여성 헤어스타일 전부를 덮지 않는다', set(female[HS]) ^ set(HAIR_LEN))
     assert set(sum(FAMILY.values(), [])) == set(HAIR_LEN) and set(ELAB) == set(HAIR_LEN)
     assert all(set(v) <= set(opts[HB]) for v in BANGS_OK.values()) and set(BANGS_BASE) == set(opts[HB])
     return {'opts': opts, 'ko': ko, 'name': name, 'male': male, 'female': female, 'limits': j['limits']}
@@ -349,7 +346,7 @@ def hair_spec():
 RECORD_DIRS = [os.path.join(ROOT, '..', d) for d in ('pkm-atelier-img/records', 'pkm-atelier-img/generation', 'pkm-atelier-img-2/records', 'pkm-atelier-img-3/records')]
 RECORD_SKIP = re.compile(r'reject|before|initial|attempt|not-selected|original|previous|retry|repair|kept-|targeted|revised|framing', re.I)
 CANON_LEN = {'pixie cut': 'short', 'bob': 'short', 'side-shaved long hair': 'long', 'buzz cut': 'very short', 'crew cut': 'very short'}
-FAM_EXTRA = {'shaggy': 'layer', 'swept back': 'sleek', 'side part': 'crop', 'mullet': 'layer', 'buzz cut': 'crop', 'crew cut': 'crop', 'fade': 'crop', 'man bun': 'bun'}
+FAM_EXTRA = {'swept back': 'sleek', 'side part': 'crop', 'mullet': 'layer', 'buzz cut': 'crop', 'crew cut': 'crop', 'fade': 'crop', 'man bun': 'bun'}
 
 
 def record_dirs():
@@ -512,7 +509,7 @@ def hair_triple(v):
 
 
 def hair_caps(n):
-    return {'all': int(HAIR_CAP * n), 'bob': int(BOB_CAP * n), 'rare': int(RARE_CAP * n)}
+    return {'all': int(HAIR_CAP * n), 'bob': int(BOB_CAP * n)}
 
 
 def design_hair(cards, app, img, old, roots, H):
@@ -520,7 +517,7 @@ def design_hair(cards, app, img, old, roots, H):
     n = len(cards)
     by = {c['name']: c for c in cards}
     caps = hair_caps(n)
-    styles = H['opts'][HS]
+    styles = H['female'][HS]
     def depth(c):
         d, cur, seen = 0, c, set()
         while cur.get('from') in by and cur['name'] not in seen:
@@ -554,7 +551,7 @@ def design_hair(cards, app, img, old, roots, H):
         if v.get(HL): lcnt[v[HL]] = lcnt.get(v[HL], 0) + 1
         if v.get(HB): bcnt[v[HB]] = bcnt.get(v[HB], 0) + 1
     for name, (v, _) in locked.items(): put(name, v)
-    cap = {s: max(caps['bob' if s == 'bob' else 'rare' if s in RARE_LEN else 'all'], cnt.get(s, 0)) for s in H['opts'][HS]}
+    cap = {s: max(caps['bob' if s == 'bob' else 'all'], cnt.get(s, 0)) for s in H['opts'][HS]}
     target_s, target_l, target_b = n / len(styles), n / len(LENGTHS), n / len(H['opts'][HB])
     kids = {}
     for c in cards:
@@ -565,22 +562,23 @@ def design_hair(cards, app, img, old, roots, H):
     line_of = {}
     for c in cards: line_of.setdefault(roots[c['name']], []).append(c['name'])
     res = {}
-    # 드문 머리 자리 — 헤어스타일마다 원작 단서가 가장 잘 맞는 종을 몫(상한 − 확정 그림 수)만큼 미리 고른다. 한 종은 드문 머리 하나만
     scores = {c['name']: hair_score(c, app.get(str(c['no'])), depth(c), not c.get('to'), H) for c in order if c['name'] not in locked}
-    rare_pick, taken = set(), working_cards()   # 다른 세션이 지금 만들고 있는 종(살아 있는 일상컷 예약)은 머리를 바꾸지 않는다
     cur = {c['name']: (out.get(c['name']) or (old.get(str(c['no'])) or {}).get('hair') or {}) for c in order}
-    def rare_fits(nm, st):
-        """지금 계열(부모·자식)의 머리와 이어지는 길이가 하나라도 있나 — 짧은 컷 묶음은 계열 중간에 끼우면 잇기 규칙에 걸린다"""
+    def fits(nm, st):
+        """지금 계열(부모·자식)의 머리와 이어지는 길이가 하나라도 있나"""
         c = by[nm]
         par = [cur[c['from']]] if c.get('from') in cur and cur[c['from']].get(HS) else []
         ch = [cur[k] for k in kids.get(nm, []) if cur.get(k, {}).get(HS)]
         return any(all(hair_edge_ok(pp, {HS: st, HL: L}) for pp in par) and all(hair_edge_ok({HS: st, HL: L}, k) for k in ch) for L in HAIR_LEN[st])
-    for st in sorted(RARE_LEN, key=lambda x: (cnt.get(x, 0), x)):
-        room = cap[st] - cnt.get(st, 0)
+    have = {}
+    for nm, v in cur.items():
+        if v.get(HS): have[v[HS]] = have.get(v[HS], 0) + 1
+    fill, taken = set(), working_cards()   # 다른 세션이 지금 만드는 종(살아 있는 일상컷 예약)은 바꾸지 않는다
+    for st in sorted((x for x in styles if have.get(x, 0) < FILL_MIN), key=lambda x: (have.get(x, 0), x)):
         best = sorted(((v[0][HS][st], -no_of[nm], nm) for nm, v in scores.items()
-                       if v[0][HS][st] >= RARE_MIN and nm not in taken and rare_fits(nm, st)), reverse=True)
-        for _, _, nm in best[:max(0, room)]:
-            rare_pick.add((nm, st)); taken.add(nm)
+                       if v[0][HS][st] >= FILL_SCORE and nm not in taken and fits(nm, st)), reverse=True)
+        for _, _, nm in best[:FILL_MIN - have.get(st, 0)]:
+            fill.add((nm, st)); taken.add(nm)
     for c in order:
         name, no = c['name'], c['no']
         if name in locked: continue
@@ -603,7 +601,7 @@ def design_hair(cards, app, img, old, roots, H):
                     v = raw - H_BAL * cnt.get(s, 0) / target_s - L_BAL * lcnt.get(L, 0) / target_l - B_BAL * bcnt.get(b, 0) / target_b
                     v -= NEAR_PEN * sum(1 for x in near if x.get(HS) == s)
                     if FAM_OF[s] in fams: v += .8
-                    if (name, s) in rare_pick: v += RARE_PULL
+                    if (name, s) in fill: v += FILL_PULL
                     if b in pb: v += .5
                     cands.append((v, raw, {HS: s, HL: L, HB: b}))
         def fails(t):
@@ -628,7 +626,7 @@ def design_hair(cards, app, img, old, roots, H):
         note = []
         if chosen[HS] != top[HS]:
             reason = fails(top)
-            what = {'cap': '헤어스타일 상한(8%·보브 4%·드문 머리 0.6%)에 닿아', 'edge': '진화 계열의 머리 잇기 규칙에 맞추려고',
+            what = {'cap': '헤어스타일 상한(8%·보브 4%)에 닿아', 'edge': '진화 계열의 머리 잇기 규칙에 맞추려고',
                     'same': '같은 계열 종과 머리가 똑같아', 'adj': '도감 바로 옆 다른 계열과 헤어스타일이 겹쳐'}
             note.append((what[reason[0]] if reason else '많이 쓴 헤어스타일이라 고르게 나누려고') +
                         f" {H['ko'][HS][top[HS]]} → {H['ko'][HS][chosen[HS]]}")
@@ -693,11 +691,11 @@ def check_hair(faces, cards, img, H, quiet=False):
             if f.get('hair_locked'): lcnt[h[HS]] = lcnt.get(h[HS], 0) + 1
         if f.get('hair_locked'): continue
         if set(h) != set(HAIR_KEYS): bad.append(f"{c['name']} 머리 항목 셋이 다 없다"); continue
-        if any(h[k] in H['male'][k] and not (k == HS and h[k] in RARE_LEN) for k in HAIR_KEYS): bad.append(f"{c['name']} 남성 전용 머리 {h}")
+        if any(h[k] in H['male'][k] for k in HAIR_KEYS): bad.append(f"{c['name']} 남성 전용 머리 {h}")
         if h[HL] not in HAIR_LEN.get(h[HS], []): bad.append(f"{c['name']} {h[HS]} 에 맞지 않는 길이 {h[HL]}")
         if h[HB] not in BANGS_OK.get(h[HS], H['opts'][HB]): bad.append(f"{c['name']} {h[HS]} 에 맞지 않는 앞머리 {h[HB]}")
     for s, k in cnt.items():
-        cap = caps['bob' if s == 'bob' else 'rare' if s in RARE_LEN else 'all']
+        cap = caps['bob' if s == 'bob' else 'all']
         if k > max(cap, lcnt.get(s, 0)): bad.append(f'헤어스타일 {s} {k}종 — 상한 {cap}(확정 그림 {lcnt.get(s, 0)})을 넘는다')
     hair = {c['name']: (faces.get(str(c['no'])) or {}).get('hair') or {} for c in cards}
     lock = {c['name']: bool((faces.get(str(c['no'])) or {}).get('hair_locked')) for c in cards}
@@ -924,7 +922,7 @@ def build(seed_doc=None):
     out = {'version': 1,
            'note': 'tools/face-design.py 가 만든다. 값은 생성기 얼굴 항목(lib/prompt-spec.js)의 열쇠 그대로이고, 새 인물(경장 ①)에만 FACE 줄로 실린다. 손으로 고치면 build 를 다시 돌려 겹침 검사를 받는다. faces: 번호 → {name,en,line,how,registered,face:{얼굴 항목: 값},why,cues,adjusted,hair:{hairstyle,hair length,bangs},hair_locked,hair_why,hair_cues,hair_record?}. hair 는 생성기 머리 항목 열쇠 그대로이고 FACE 뒤 HAIR 줄로 실린다. hair_locked 는 경장 ①이 등록된 종 — 그림 저장소 기록의 값(없으면 빈 hair)을 따른다.',
            'rules': {'lineMin': LINE_MIN, 'globalMin': GLOBAL_MIN, 'groups': [g for g, _ in GROUPS],
-                     'hair': {'keys': HAIR_KEYS, 'cap': HAIR_CAP, 'bobCap': BOB_CAP, 'rareCap': RARE_CAP, 'rare': sorted(RARE_LEN), 'lengths': LENGTHS, 'length': HAIR_LEN, 'bangs': BANGS_OK,
+                     'hair': {'keys': HAIR_KEYS, 'cap': HAIR_CAP, 'bobCap': BOB_CAP, 'lengths': LENGTHS, 'length': HAIR_LEN, 'bangs': BANGS_OK,
                               'family': FAMILY, 'familyLocked': FAM_EXTRA, 'grow': {k: sorted(v) for k, v in GROW.items()}, 'elab': ELAB}},
            'sources': ['data/card.json', 'data/source-appearance.json (Bulbapedia contributors, CC BY-NC-SA 2.5)'],
            'faces': faces}
@@ -1024,7 +1022,6 @@ def render():
         '- 값은 생성기 머리 항목의 열쇠 그대로다. 인물은 모두 여성이라 남성 전용 값(버즈컷·크루컷·페이드·맨번·멀릿·사이드 파트·스웹트 백·섀기)은 쓰지 않는다.',
         '- 길이는 컷에 맞춘다(`HAIR_LENGTH_LIMITS` 와 같은 뜻 — 픽시는 짧게, 보브는 짧은 머리, 한쪽 민 긴 머리는 길게). 히메컷은 일자 앞머리, 넘긴 머리는 앞머리 없음.',
         f'- 한 헤어스타일은 1,025종의 {int(HAIR_CAP * 100)}%(={hair_caps(len(faces))["all"]}종), 보브는 {int(BOB_CAP * 100)}%(={hair_caps(len(faces))["bob"]}종)를 넘지 않는다. 확정한 그림이 이미 그보다 많으면 새로 고르지 않는다.',
-        f'- 생성기가 남성 쪽으로 표시한 헤어스타일({", ".join(sorted(RARE_LEN))})은 드문 몫 {RARE_CAP * 100:g}%(={hair_caps(len(faces))["rare"]}종)까지만 원작 단서가 맞는 종에 배정한다.',
         '- 같은 진화 계열은 같은 묶음(' + ' · '.join(f'{FAM_KO[k]}' for k in FAMILY) + ') 안에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽으로 간다. 계열 안 두 종이 똑같지는 않고, 도감 바로 옆 번호의 다른 계열과는 헤어스타일이 다르다.',
         '- **경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다.',
         '',

@@ -24,18 +24,17 @@
 - 값은 생성기 머리 항목의 열쇠 그대로다. 인물은 모두 여성이라 남성 전용 값(버즈컷·크루컷·페이드·맨번·멀릿·사이드 파트·스웹트 백·섀기)은 쓰지 않는다.
 - 길이는 컷에 맞춘다(`HAIR_LENGTH_LIMITS` 와 같은 뜻 — 픽시는 짧게, 보브는 짧은 머리, 한쪽 민 긴 머리는 길게). 히메컷은 일자 앞머리, 넘긴 머리는 앞머리 없음.
 - 한 헤어스타일은 1,025종의 8%(=82종), 보브는 4%(=41종)를 넘지 않는다. 확정한 그림이 이미 그보다 많으면 새로 고르지 않는다.
-- 생성기가 남성 쪽으로 표시한 헤어스타일(buzz cut, crew cut, fade, man bun, mullet, shaggy, side part, swept back)은 드문 몫 0.6%(=6종)까지만 원작 단서가 맞는 종에 배정한다.
 - 같은 진화 계열은 같은 묶음(짧은 컷 · 곧은 결 · 층 낸 컷 · 웨이브·곱슬 · 묶은 꼬리 · 땋은 머리 · 올림머리) 안에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽으로 간다. 계열 안 두 종이 똑같지는 않고, 도감 바로 옆 번호의 다른 계열과는 헤어스타일이 다르다.
 - **경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다.
 
 ## 지금 상태
 
 - 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 650종, 원작 단서 규칙으로 고른 것 373종 · 겹침을 풀며 옮긴 종 850 · 머리를 옮긴 종 216
+- 직접 쓴 설계 650종, 원작 단서 규칙으로 고른 것 373종 · 겹침을 풀며 옮긴 종 850 · 머리를 옮긴 종 224
 - 그림이 이미 있는 종(①이 정본) 580
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 - 머리: 확정 그림으로 잠근 종 580(기록값 있음 414) · 새로 고른 종 445
-- 헤어스타일 분포(잠금 포함): 단정한 보브컷 51 · 웨이브 헤어 49 · 높이 묶은 포니테일 41 · 끝을 가볍게 친 페더컷 38 · 트윈테일 38 · 좌우 길이가 다른 비대칭컷 36 · 끝을 일자로 자른 컷 35 · 바람에 날린 듯한 스타일 35 · 곧은 생머리 34 · 한 갈래 땋은 머리 33 · 반묶음 33 · 짧고 가벼운 픽시컷 32 · 포니테일 30 · 층감이 강한 울프컷 28 · 굵은 곱슬 27 · 레트로 웨이브 20 · 층을 살린 레이어드 20 · 흐트러진 번 20 · 양쪽 동그란 번 20 · 세로로 말린 드릴 컬 19 · 머리를 둘러 땋은 왕관형 18 · 옆/뒤를 밀어낸 언더컷 18 · 단정하게 말아 올린 시뇽 17 · 히메컷 17 · 정수리에 묶어 올린 번 17 · 한쪽만 밀고 나머지는 긴 머리 16 · 로크스 / 드레드풍 14 · 목덜미 낮은 번 14 · 잔곱슬 / 아프로 14 · 사이드 포니테일 11 · 양갈래 땋은 머리 11 · 뒤로 넘긴 스타일 7 · 젖은 듯 넘긴 스타일 7 · 아주 짧게 민 머리 6 · 짧고 단정한 크루컷 6 · 앞은 짧고 뒤만 긴 컷 6 · 덥수룩하게 흐트러진 컷 6 · 뒤로 넘긴 볼륨 있는 스타일 6 · 가르마를 탄 단정한 컷 5 · 뒤로 묶어 올린 번 3 · 옆을 그라데이션으로 짧게 친 컷 1
+- 헤어스타일 분포(잠금 포함): 단정한 보브컷 51 · 끝을 가볍게 친 페더컷 43 · 끝을 일자로 자른 컷 41 · 높이 묶은 포니테일 41 · 웨이브 헤어 39 · 트윈테일 38 · 좌우 길이가 다른 비대칭컷 37 · 곧은 생머리 35 · 바람에 날린 듯한 스타일 33 · 짧고 가벼운 픽시컷 32 · 반묶음 31 · 포니테일 30 · 층감이 강한 울프컷 30 · 한 갈래 땋은 머리 29 · 굵은 곱슬 22 · 흐트러진 번 20 · 정수리에 묶어 올린 번 20 · 단정하게 말아 올린 시뇽 19 · 양쪽 동그란 번 19 · 레트로 웨이브 18 · 층을 살린 레이어드 18 · 옆/뒤를 밀어낸 언더컷 18 · 세로로 말린 드릴 컬 17 · 머리를 둘러 땋은 왕관형 16 · 히메컷 16 · 한쪽만 밀고 나머지는 긴 머리 16 · 목덜미 낮은 번 14 · 잔곱슬 / 아프로 13 · 로크스 / 드레드풍 11 · 사이드 포니테일 11 · 양갈래 땋은 머리 10 · 둥글게 부풀린 아프로 8 · 양쪽 아프로 퍼프 8 · 느슨한 해변 웨이브 8 · 가는 박스 브레이드 8 · 두피에 붙여 땋은 콘로 8 · 덥수룩하게 흐트러진 컷 8 · 뒤로 넘긴 스타일 8 · 한쪽으로 넘긴 피시테일 6 · 젖은 듯 넘긴 스타일 6 · 뒤로 넘긴 볼륨 있는 스타일 2 · 가르마를 탄 단정한 컷 1
 
 ## 고치는 법
 
@@ -14889,24 +14888,24 @@ HAIR: medium ringlet curls, side-swept bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 불꽃 고릴라의 큰 체적을 넓은 하관과 굵고 낮은 눈썹으로 구분한다.
 
-**머리:** ‘rounded red ape’에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 옆으로 넘긴 앞머리 — 달막화에서 이어 같은 묶음
+**머리:** ‘rounded red ape’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 달막화에서 이어 같은 묶음
 
-**머리 단서:** ‘rounded red ape’ → 헤어스타일 굵은 곱슬
+**머리 단서:** ‘rounded red ape’ → 헤어스타일 둥글게 부풀린 아프로
 
 **원작 단서:** ‘rounded red ape’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘rounded red ape’ → 얼굴 폭 넓은 얼굴 · ‘rounded red ape’ → 눈매 큰 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은 · ‘rounded red ape’ → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 바람에 날린 듯한 스타일 → 굵은 곱슬
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; full lips.
 ```
 
 ```text
-HAIR: long curly, side-swept bangs.
+HAIR: medium afro, choppy bangs.
 ```
 
 ### 556 · 마라카치 (Maractus)
@@ -15303,22 +15302,22 @@ HAIR: medium wet-look slick, no bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
-**머리:** 독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음 — 깨봉이에서 이어 같은 묶음
+**머리:** ‘round, lumpy body’·키 1.9m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 앞머리 없음 — 깨봉이에서 이어 더 공들인 묶음
 
-**머리 단서:** 독 타입 → 헤어스타일 젖은 듯 넘긴 스타일 · 키 1.9m → 머리 길이 긴 머리
+**머리 단서:** ‘round, lumpy body’ → 헤어스타일 양쪽 아프로 퍼프 · 키 1.9m → 머리 길이 긴 머리
 
 **원작 단서:** ‘round, lumpy body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round, lumpy body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘round, lumpy body’ → 눈썹 짧고 둥근 · ‘round, lumpy body’ → 코 코끝이 둥근 · ‘round, lumpy body’ → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 굵은 곱슬 → 젖은 듯 넘긴 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 젖은 듯 넘긴 스타일 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; short rounded brows; rounded soft tip nose; full lips.
 ```
 
 ```text
-HAIR: long wet-look slick, no bangs.
+HAIR: long afro puffs, no bangs.
 ```
 
 ### 570 · 조로아 (Zorua)
@@ -15361,24 +15360,24 @@ HAIR: medium wolf cut, asymmetric bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 |
+| 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
 
 **이유:** 환영 여우의 긴 갈기와 날카로운 선을 긴 얼굴 및 올라간 눈매로 옮긴다.
 
-**머리:** ‘large, red, voluminous mane’·‘black ruff’·악 타입에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 좌우 길이가 다른 앞머리 — 조로아에서 이어 같은 묶음
+**머리:** ‘large, red, voluminous mane’·‘black ruff’·키 1.6m에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 좌우 길이가 다른 앞머리 — 조로아에서 이어 같은 묶음
 
-**머리 단서:** ‘large, red, voluminous mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷 · 악 타입 → 앞머리 좌우 길이가 다른 앞머리
+**머리 단서:** ‘large, red, voluminous mane’ → 헤어스타일 덥수룩하게 흐트러진 컷 · 키 1.6m → 머리 길이 긴 머리 · 악 타입 → 앞머리 좌우 길이가 다른 앞머리
 
 **원작 단서:** ‘pointed snout’ → 얼굴 길이 긴 얼굴 · 악 타입 → 눈매 강하게 치켜올라간 눈
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; straight slender bridge nose; wide mouth.
 ```
 
 ```text
-HAIR: medium mullet, asymmetric bangs.
+HAIR: long shaggy, asymmetric bangs.
 ```
 
 ### 572 · 치라미 (Minccino)
@@ -15599,22 +15598,22 @@ HAIR: medium curly, parted bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘large, round head’에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 가운데를 가른 앞머리 — 듀란에서 이어 같은 묶음
+**머리:** ‘large, round head’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리 — 듀란에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘large, round head’ → 헤어스타일 굵은 곱슬
+**머리 단서:** ‘large, round head’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘large, round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘large, round head’ → 얼굴 길이 짧은 얼굴 · ‘large, round head’ → 얼굴 폭 넓은 얼굴 · ‘large, round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · ‘large, round head’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 작고 여린 코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 작고 여린 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; short rounded brows; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: long curly, parted bangs.
+HAIR: long afro puffs, straight bangs.
 ```
 
 ### 580 · 꼬지보리 (Ducklett)
@@ -15628,22 +15627,22 @@ HAIR: long curly, parted bangs.
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘two tufts forming a V’·키 0.5m에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 짧은 머리 · 앞머리 없음
+**머리:** ‘two tufts forming a V’·‘darker-blue feathery underside’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
-**머리 단서:** ‘two tufts forming a V’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 키 0.5m → 머리 길이 짧은 머리
+**머리 단서:** ‘two tufts forming a V’ → 헤어스타일 끝을 가볍게 친 페더컷 · 키 0.5m → 머리 길이 짧은 머리
 
 **원작 단서:** 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘two tufts forming a V’ → 눈썹 숱 많고 결이 보이는
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 숱 많고 결이 보이는
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, close-set; feathered full brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: short swept back, no bangs.
+HAIR: short feathered, side-swept bangs.
 ```
 
 ### 581 · 스완나 (Swanna)
@@ -15659,7 +15658,7 @@ HAIR: short swept back, no bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** 몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 꼬지보리에서 이어 더 공들인 묶음
+**머리:** 몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 꼬지보리에서 이어 같은 묶음
 
 **머리 단서:** 몸 형태 wings → 헤어스타일 끝을 가볍게 친 페더컷
 
@@ -15974,22 +15973,22 @@ HAIR: medium undercut, asymmetric bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
 | 입 | 입이 작은 |
-| 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘crown-like tuft’·‘triangular crown’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘five tentacle-like appendages’·‘invisible poison spikes’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘crown-like tuft’ → 헤어스타일 머리를 둘러 땋은 왕관형 · ‘invisible poison spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘five tentacle-like appendages’ → 헤어스타일 가는 박스 브레이드 · ‘invisible poison spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round head’ → 얼굴 길이 짧은 얼굴 · ‘round head’ → 얼굴 폭 넓은 얼굴 · ‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘invisible poison spikes’ → 눈매 가늘고 날카로운 눈 · ‘invisible poison spikes’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 머리를 둘러 땋은 왕관형 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; small mouth.
 ```
 
 ```text
-HAIR: long crown braid, choppy bangs.
+HAIR: long box braids, choppy bangs.
 ```
 
 ### 593 · 탱탱겔 (Jellicent)
@@ -16003,22 +16002,22 @@ HAIR: long crown braid, choppy bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 
-**머리:** ‘short white crown’·키 2.2m에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 탱그릴에서 이어 같은 묶음
+**머리:** ‘five tentacles’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 탱그릴에서 이어 같은 묶음
 
-**머리 단서:** ‘short white crown’ → 헤어스타일 머리를 둘러 땋은 왕관형 · 키 2.2m → 머리 길이 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
+**머리 단서:** ‘five tentacles’ → 헤어스타일 가는 박스 브레이드 · 키 2.2m → 머리 길이 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
 **원작 단서:** ‘red heart-shaped marking’ → 얼굴형 이마가 넓고 턱이 가는 하트형 · ‘red heart-shaped marking’ → 입술 윗입술이 활 모양인
 
-**조정:** 같은 계열 탱그릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 윗입술이 활 모양인 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 로크스 / 드레드풍 → 머리를 둘러 땋은 왕관형
+**조정:** 같은 계열 탱그릴와 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 머리를 둘러 땋은 왕관형 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: long crown braid, long side bangs covering one eye.
+HAIR: long box braids, long side bangs covering one eye.
 ```
 
 ### 594 · 맘복치 (Alomomola)
@@ -16032,22 +16031,22 @@ HAIR: long crown braid, long side bangs covering one eye.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
-**머리:** ‘ventral fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅
+**머리:** ‘ventral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
-**머리 단서:** ‘ventral fins’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘ventral fins’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** ‘heart-shaped body’ → 얼굴형 이마가 넓고 턱이 가는 하트형 · ‘round eyes’ → 눈매 큰 눈 · ‘round eyes’ → 눈꼬리 각도 수평 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; fine soft arches; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: medium wavy, curtain bangs.
+HAIR: medium beach waves, curtain bangs.
 ```
 
 ### 595 · 파쪼옥 (Joltik)
@@ -16119,20 +16118,22 @@ HAIR: medium locs, choppy bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘big spikes’·‘metallic body’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+
+**머리 단서:** ‘big spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · ‘big spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘big spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘big spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘big spikes’ → 눈매 강하게 치켜올라간 눈 · ‘small yellow eyes’ → 눈 크기 작은 눈 · 몸 형태 ball → 눈 간격 눈 사이가 넓은 · ‘big spikes’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 아주 짧게 민 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; sharp eyes, small size, level outer corners, wide-set; angled brows; prominent defined nose; thin lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: medium asymmetric cut, choppy bangs.
 ```
 
 ### 598 · 너트령 (Ferrothorn)
@@ -16146,22 +16147,22 @@ HAIR: buzz cut, no bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 크고 또렷한 코 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘green spike’·‘metallic body’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 철시드에서 이어 더 공들인 묶음
+**머리:** ‘vine-like, long green appendages’·‘green spike’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 철시드에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘green spike’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · ‘green spike’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘vine-like, long green appendages’ → 헤어스타일 가는 박스 브레이드 · ‘green spike’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘green spike’ → 얼굴형 각지고 선명한 얼굴형 · ‘green spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘green spike’ → 눈매 가늘고 날카로운 눈 · ‘green spike’ → 눈썹 바깥에서 꺾이는 사선 · ‘green spike’ → 코 크고 또렷한 코 · ‘green spike’ → 입술 굴곡 없이 곧은
 
-**조정:** 같은 계열 철시드와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 좌우 길이가 다른 비대칭컷
+**조정:** 같은 계열 철시드와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, narrow width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; angled brows; prominent defined nose; straight even lips.
 ```
 
 ```text
-HAIR: long asymmetric cut, choppy bangs.
+HAIR: long box braids, choppy bangs.
 ```
 
 ### 599 · 기어르 (Klink)
@@ -16175,20 +16176,22 @@ HAIR: long asymmetric cut, choppy bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 
 **이유:** 작은 톱니바퀴의 원형 중심과 정렬을 둥근 얼굴와 대칭적인 두 눈으로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘two interlocked gears’·‘six light-gray teeth per gear’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리
+**머리 단서:** ‘two interlocked gears’ → 헤어스타일 끝을 일자로 자른 컷 · 키 0.3m → 머리 길이 짧은 머리
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; straight medium brows; small delicate nose; thin lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: short blunt cut, straight bangs.
 ```
 
 ### 600 · 기기어르 (Klang)
@@ -16206,7 +16209,7 @@ HAIR: buzz cut, no bangs.
 
 **이유:** 크기가 다른 톱니의 맞물림을 타원 윤곽과 정돈된 수평 눈으로 구분한다.
 
-**머리:** ‘three interlocking gray gears’·‘six teeth on smaller gears’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 기어르에서 이어 더 공들인 묶음
+**머리:** ‘three interlocking gray gears’·‘six teeth on smaller gears’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 기어르에서 이어 같은 묶음
 
 **머리 단서:** ‘three interlocking gray gears’ → 헤어스타일 끝을 일자로 자른 컷
 
@@ -16471,24 +16474,24 @@ HAIR: medium windswept, long side bangs covering one eye.
 | 눈썹 | 짧고 둥근 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 촛대의 긴 곡선과 유령 불빛을 긴 윤곽과 낮은 눈꺼풀로 해석한다.
 
-**머리:** ‘tall, purple flame’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 램프라에서 이어 같은 묶음
+**머리:** ‘large vertical stripes’·‘striped, round head’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 램프라에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘tall, purple flame’ → 헤어스타일 바람에 날린 듯한 스타일 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
+**머리 단서:** ‘large vertical stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
 
 **원작 단서:** 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · ‘striped, round head’ → 눈썹 짧고 둥근 · ‘small, black spikes’ → 입술 얇은 입술
 
-**조정:** 같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근
+**조정:** 같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; short rounded brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: long windswept, long side bangs covering one eye.
+HAIR: long cornrows, no bangs.
 ```
 
 ### 610 · 터검니 (Axew)
@@ -16740,22 +16743,22 @@ HAIR: medium finger waves, long side bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
 
-**머리:** ‘two small, flimsy fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 긴 사이드뱅
+**머리:** ‘two small, flimsy fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 긴 사이드뱅
 
-**머리 단서:** ‘two small, flimsy fins’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘two small, flimsy fins’ → 헤어스타일 한쪽으로 넘긴 피시테일
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 땅 타입 → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 콧대가 낮고 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; fine soft arches; broad low bridge nose; full lips.
 ```
 
 ```text
-HAIR: medium wavy, long side bangs.
+HAIR: very long fishtail braid, long side bangs.
 ```
 
 ### 619 · 비조푸 (Mienfoo)
@@ -16769,22 +16772,22 @@ HAIR: medium wavy, long side bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
 **이유:** 작은 무술가의 가벼운 선을 작은 턱과 집중된 수평 눈으로 해석한다.
 
-**머리:** 격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 앞머리 없음
+**머리:** ‘small red band’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음
 
-**머리 단서:** 격투 타입 → 헤어스타일 정수리에 묶어 올린 번
+**머리 단서:** ‘small red band’ → 헤어스타일 두피에 붙여 땋은 콘로
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; balanced jawline; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; small delicate nose; thin lips.
 ```
 
 ```text
-HAIR: medium top knot, no bangs.
+HAIR: medium cornrows, no bangs.
 ```
 
 ### 620 · 비조도 (Mienshao)
@@ -16802,7 +16805,7 @@ HAIR: medium top knot, no bangs.
 
 **이유:** 흐르는 소매와 무술의 유연한 선을 긴 얼굴와 완만한 긴 눈으로 구분한다.
 
-**머리:** 격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음 — 비조푸에서 이어 같은 묶음
+**머리:** 격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음 — 비조푸에서 이어 더 공들인 묶음
 
 **머리 단서:** 격투 타입 → 헤어스타일 정수리에 묶어 올린 번
 
@@ -17090,7 +17093,7 @@ HAIR: short windswept, side-swept bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘shaggy darker brown wings’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 벌차이에서 이어 같은 묶음
+**머리:** ‘shaggy darker brown wings’·‘tan ruff’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 벌차이에서 이어 같은 묶음
 
 **머리 단서:** ‘shaggy darker brown wings’ → 헤어스타일 덥수룩하게 흐트러진 컷
 
@@ -17117,20 +17120,22 @@ HAIR: long shaggy, side-swept bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
 **이유:** 개미핥기의 긴 주둥이와 관형 입을 긴 콧대와 중앙이 도톰한 입술로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 양갈래 땋은 머리 · 중간 길이 · 옆으로 넘긴 앞머리
+**머리:** ‘yellow stripes’·‘are raised, dented bands’에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리
+**머리 단서:** ‘yellow stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; long nose with low tip; full lips.
 ```
 
 ```text
-HAIR: medium twin braids, side-swept bangs.
+HAIR: medium cornrows, no bangs.
 ```
 
 ### 632 · 아이앤트 (Durant)
@@ -17324,24 +17329,24 @@ HAIR: long locs, parted bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 철심의 단단함과 긴 뿔을 긴 윤곽과 곧은 콧대로 해석한다.
 
-**머리:** ‘shoulder blades’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 긴 사이드뱅
+**머리:** ‘black bands’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음
 
-**머리 단서:** ‘shoulder blades’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · 키 2.1m → 머리 길이 긴 머리
+**머리 단서:** ‘black bands’ → 헤어스타일 두피에 붙여 땋은 콘로 · 키 2.1m → 머리 길이 긴 머리
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 강철 타입 → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; long nose with low tip; straight even lips.
 ```
 
 ```text
-HAIR: long asymmetric cut, long side bangs.
+HAIR: long cornrows, no bangs.
 ```
 
 ### 639 · 테라키온 (Terrakion)
@@ -17355,24 +17360,24 @@ HAIR: long asymmetric cut, long side bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 뒤로 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 암굴의 큰 체적과 둥근 뿔을 넓은 하관과 굵은 눈썹으로 해석한다.
 
-**머리:** 키 1.9m에서 뒤로 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음
+**머리:** ‘two brown, axe-like horns’·격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 앞머리 없음
 
-**머리 단서:** 키 1.9m → 머리 길이 긴 머리
+**머리 단서:** ‘two brown, axe-like horns’ → 헤어스타일 높이 묶은 포니테일
 
 **원작 단서:** ‘two brown, axe-like horns’ → 얼굴형 각지고 선명한 얼굴형 · 무게 260kg → 얼굴 폭 넓은 얼굴 · ‘two brown, axe-like horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two brown, axe-like horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘two brown, axe-like horns’ → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; thick low brows; prominent defined nose; wide mouth.
 ```
 
 ```text
-HAIR: long man bun, no bangs.
+HAIR: very long high ponytail, no bangs.
 ```
 
 ### 640 · 비리디온 (Virizion)
@@ -17477,24 +17482,24 @@ HAIR: medium windswept, choppy bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 흰 깃과 긴 용의 곡선을 긴 얼굴와 완만한 눈매로 옮긴다.
 
-**머리:** ‘neck rings’·‘two large bands’·드래곤 타입에서 한 갈래 땋은 머리 · 매우 긴 머리 · 옆으로 넘긴 앞머리
+**머리:** ‘neck rings’·‘two large bands’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음
 
-**머리 단서:** ‘neck rings’ → 헤어스타일 한 갈래 땋은 머리 · 키 3.2m → 머리 길이 매우 긴 머리
+**머리 단서:** ‘neck rings’ → 헤어스타일 두피에 붙여 땋은 콘로
 
 **원작 단서:** ‘long and slender neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long and slender neck’ → 얼굴 길이 긴 얼굴 · ‘long and slender neck’ → 얼굴 폭 좁은 얼굴 · ‘long and slender neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long and slender neck’ → 눈매 아몬드형 눈 · ‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; almond eyes, medium size, downturned outer corners, wide-set; long arched brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
-HAIR: very long braid, side-swept bangs.
+HAIR: long cornrows, no bangs.
 ```
 
 ### 644 · 제크로무 (Zekrom)
@@ -17508,24 +17513,24 @@ HAIR: very long braid, side-swept bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 짧고 코끝이 들린 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 검은 용의 금속 같은 각과 전기적 선을 각진 얼굴과 수평 눈으로 해석한다.
 
-**머리:** ‘thundercloud-like crest’·‘small horn-like protrusion’·드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘thundercloud-like crest’에서 뒤로 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음
 
-**머리 단서:** ‘thundercloud-like crest’ → 헤어스타일 높이 묶은 포니테일 · 키 2.9m → 머리 길이 매우 긴 머리 · ‘small wing-spike’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘thundercloud-like crest’ → 헤어스타일 뒤로 넘긴 스타일
 
 **원작 단서:** ‘small wing-spike’ → 얼굴형 각지고 선명한 얼굴형 · ‘small wing-spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘small wing-spike’ → 눈매 가늘고 날카로운 눈 · ‘small wing-spike’ → 눈썹 바깥에서 꺾이는 사선 · ‘small wing-spike’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 짧고 코끝이 들린
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 넘긴 스타일
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; short nose with upturned tip; thin lips.
 ```
 
 ```text
-HAIR: very long high ponytail, choppy bangs.
+HAIR: long slicked back, no bangs.
 ```
 
 ### 645 · 랜드로스 (Landorus)
@@ -17601,22 +17606,22 @@ HAIR: very long straight, choppy bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
-**머리:** ‘large, feathery red mane’에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리
+**머리:** ‘large, feathery red mane’·‘fluffy, light blue fur’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 앞머리 없음
 
-**머리 단서:** ‘large, feathery red mane’ → 헤어스타일 층을 살린 레이어드
+**머리 단서:** ‘large, feathery red mane’ → 헤어스타일 둥글게 부풀린 아프로
 
 **원작 단서:** ‘fluffy, light blue fur’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘fluffy, light blue fur’ → 얼굴 폭 넓은 얼굴 · ‘fluffy, light blue fur’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘fluffy, light blue fur’ → 눈매 큰 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘fluffy, light blue fur’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 층을 살린 레이어드
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 짧은 얼굴 → 보통, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, wide width; soft rounded jaw; open rounded eyes, medium size, level outer corners, wide-set; short rounded brows; rounded soft tip nose; full lips.
 ```
 
 ```text
-HAIR: long layered, side-swept bangs.
+HAIR: medium afro, no bangs.
 ```
 
 ### 648 · 메로엣타 (Meloetta)
@@ -17630,24 +17635,24 @@ HAIR: long layered, side-swept bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 가르마를 탄 단정한 컷 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
 
 **이유:** 선율과 길게 흐르는 머리의 곡선을 긴 윤곽과 곡선 눈썹으로 해석한다.
 
-**머리:** ‘forehead jewel’에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리
+**머리:** ‘flowing hair with musical-bar streaks’(원작의 머리칼)·‘forehead jewel’·에스퍼 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 가운데를 가른 앞머리
 
-**머리 단서:** ‘forehead jewel’ → 앞머리 가운데를 가른 앞머리
+**머리 단서:** ‘flowing hair with musical-bar streaks’(원작의 머리칼) → 헤어스타일 곧은 생머리 · ‘flowing hair with musical-bar streaks’(원작의 머리칼) → 머리 길이 매우 긴 머리 · ‘forehead jewel’ → 앞머리 가운데를 가른 앞머리
 
 **원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 곧은 생머리 → 가르마를 탄 단정한 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; almond eyes, medium size, downturned outer corners, close-set; long arched brows; balanced nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: medium side part, parted bangs.
+HAIR: very long straight, parted bangs.
 ```
 
 ### 649 · 게노세크트 (Genesect)
@@ -17661,20 +17666,22 @@ HAIR: medium side part, parted bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘purple segmented metal body’·‘gray shoulder circles and abdomen band’에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음
+
+**머리 단서:** ‘purple segmented metal body’ → 헤어스타일 두피에 붙여 땋은 콘로
 
 **원작 단서:** ‘purple segmented metal body’ → 얼굴형 각지고 선명한 얼굴형 · ‘purple segmented metal body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘purple segmented metal body’ → 눈매 가늘고 날카로운 눈 · ‘purple segmented metal body’ → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 눈썹 바깥에서 꺾이는 사선 → 중간 두께의 직선, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 눈썹 바깥에서 꺾이는 사선 → 중간 두께의 직선, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, narrow width; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; straight even lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: medium cornrows, no bangs.
 ```
 
 ## 6세대 · 72종
@@ -18312,9 +18319,9 @@ HAIR: very long half-up, straight bangs.
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘shaggy, dark brown fur’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘leafy green mane’·‘shaggy, dark brown fur’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘shaggy, dark brown fur’ → 헤어스타일 덥수룩하게 흐트러진 컷 · ‘shaggy, dark brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘leafy green mane’ → 헤어스타일 덥수룩하게 흐트러진 컷 · ‘shaggy, dark brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘pointed black horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘pointed black horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘pointed black horns’ → 눈썹 바깥에서 꺾이는 사선 · ‘round black nose’ → 코 코끝이 둥근
 
@@ -18339,22 +18346,22 @@ HAIR: medium shaggy, choppy bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘thick, green leafy mane’·‘shaggy, brown fur’·키 1.7m에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 메이클에서 이어 같은 묶음
+**머리:** ‘thick, green leafy mane’·‘shaggy, brown fur’·키 1.7m에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 메이클에서 이어 같은 묶음
 
-**머리 단서:** ‘thick, green leafy mane’ → 헤어스타일 층을 살린 레이어드 · 키 1.7m → 머리 길이 긴 머리 · ‘shaggy, brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘thick, green leafy mane’ → 헤어스타일 덥수룩하게 흐트러진 컷 · 키 1.7m → 머리 길이 긴 머리 · ‘shaggy, brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘black horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘black horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘black horns’ → 입술 굴곡 없이 곧은
 
-**조정:** 같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 층을 살린 레이어드
+**조정:** 같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 덥수룩하게 흐트러진 컷
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; long arched brows; small delicate nose; straight even lips.
 ```
 
 ```text
-HAIR: long layered, choppy bangs.
+HAIR: long shaggy, choppy bangs.
 ```
 
 ### 674 · 판짱 (Pancham)
@@ -18637,22 +18644,22 @@ HAIR: short curly, straight bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
-| 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
-**머리:** ‘fluffy purple fur’에서 굵은 곱슬(웨이브·곱슬) · 중간 길이 · 일자 앞머리 — 슈쁘에서 이어 같은 묶음
+**머리:** ‘fluffy purple fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 슈쁘에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘fluffy purple fur’ → 헤어스타일 굵은 곱슬
+**머리 단서:** ‘fluffy purple fur’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘fluffy purple fur’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘fluffy purple fur’ → 얼굴 길이 짧은 얼굴 · ‘fluffy purple fur’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘fluffy purple fur’ → 눈매 큰 눈 · ‘fluffy purple fur’ → 눈썹 가늘고 완만한 곡선 · ‘fluffy purple fur’ → 코 코끝이 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, close-set; fine soft arches; rounded soft tip nose; small mouth.
 ```
 
 ```text
-HAIR: medium curly, straight bangs.
+HAIR: medium afro puffs, straight bangs.
 ```
 
 ### 684 · 나룸퍼프 (Swirlix)
@@ -18695,22 +18702,22 @@ HAIR: short tight curls, straight bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
-**머리:** 페어리 타입에서 세로로 말린 드릴 컬(웨이브·곱슬) · 중간 길이 · 일자 앞머리 — 나룸퍼프에서 이어 같은 묶음
+**머리:** ‘fluffy pink fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 나룸퍼프에서 이어 더 공들인 묶음
 
-**머리 단서:** 페어리 타입 → 헤어스타일 세로로 말린 드릴 컬
+**머리 단서:** ‘fluffy pink fur’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘fluffy pink fur’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘fluffy pink fur’ → 얼굴 길이 짧은 얼굴 · ‘fluffy pink fur’ → 얼굴 폭 넓은 얼굴 · ‘fluffy pink fur’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘fluffy pink fur’ → 눈매 큰 눈 · ‘fluffy pink fur’ → 눈썹 가늘고 완만한 곡선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 보통 → 큰 눈, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 세로로 말린 드릴 컬
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 보통 → 큰 눈, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, large size, level outer corners, average spacing; fine soft arches; rounded soft tip nose; thin lips.
 ```
 
 ```text
-HAIR: medium ringlet curls, straight bangs.
+HAIR: medium afro puffs, straight bangs.
 ```
 
 ### 686 · 오케이징 (Inkay)
@@ -18751,22 +18758,22 @@ HAIR: medium locs, straight bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
 
-**머리:** ‘long tentacle’에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 긴 사이드뱅 — 오케이징에서 이어 같은 묶음
+**머리:** ‘long tentacle’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 오케이징에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘long tentacle’ → 헤어스타일 로크스 / 드레드풍
+**머리 단서:** ‘long tentacle’ → 헤어스타일 가는 박스 브레이드
 
 **원작 단서:** 몸 형태 blob → 얼굴형 부드럽고 둥근 얼굴형 · 몸 형태 blob → 턱선 · 턱끝 부드럽고 둥근 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 blob → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 로크스 / 드레드풍
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; full lips.
 ```
 
 ```text
-HAIR: long locs, long side bangs.
+HAIR: long box braids, long side bangs.
 ```
 
 ### 688 · 거북손손 (Binacle)
@@ -18840,20 +18847,22 @@ HAIR: long twin tail, curtain bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
-**머리:** ‘rounded, light blue fin’·‘blunt spike’·물 타입에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘rounded, light blue fin’·독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
-**머리 단서:** ‘rounded, light blue fin’ → 헤어스타일 웨이브 헤어 · ‘blunt spike’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘rounded, light blue fin’ → 헤어스타일 젖은 듯 넘긴 스타일
 
 **원작 단서:** ‘blunt spike’ → 얼굴형 각지고 선명한 얼굴형 · ‘blunt spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘blunt spike’ → 눈매 가늘고 날카로운 눈 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘blunt spike’ → 눈썹 바깥에서 꺾이는 사선 · 몸 형태 blob → 입술 도톰한 입술
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 젖은 듯 넘긴 스타일
 
 ```text
 FACE (her own structure, not the style's default face): angular face, long length, narrow width; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; full lips.
 ```
 
 ```text
-HAIR: medium wavy, choppy bangs.
+HAIR: medium wet-look slick, no bangs.
 ```
 
 ### 691 · 드래캄 (Dragalge)
@@ -19016,24 +19025,24 @@ HAIR: long asymmetric cut, choppy bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 작은 공룡의 큰 머리와 턱을 넓은 얼굴와 열린 눈매로 해석한다.
 
-**머리:** ‘spiky ruff’·‘two orange spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘two orange spikes’·‘spiky ruff’·드래곤 타입에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘spiky ruff’ → 헤어스타일 앞은 짧고 뒤만 긴 컷 · ‘two orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘two orange spikes’ → 헤어스타일 층감이 강한 울프컷 · ‘two orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘two orange spikes’ → 눈썹 굵고 눈 가까이 낮은 · ‘blunt snout’ → 코 짧고 코끝이 들린
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 코끝이 둥근 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 코끝이 둥근 → 짧고 코끝이 들린
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; almond eyes, large size, level outer corners, close-set; thick low brows; short nose with upturned tip; wide mouth.
 ```
 
 ```text
-HAIR: medium mullet, choppy bangs.
+HAIR: medium wolf cut, choppy bangs.
 ```
 
 ### 697 · 견고라스 (Tyrantrum)
@@ -19047,24 +19056,24 @@ HAIR: medium mullet, choppy bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 폭군 공룡의 큰 턱과 날카로운 능선을 각진 하관과 작은 깊은 눈으로 구분한다.
 
-**머리:** ‘feathery white ruff’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 티고라스에서 이어 같은 묶음
+**머리:** ‘feathery white ruff’·‘white, primitive feathers’에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 티고라스에서 이어 같은 묶음
 
-**머리 단서:** ‘feathery white ruff’ → 헤어스타일 앞은 짧고 뒤만 긴 컷
+**머리 단서:** ‘feathery white ruff’ → 헤어스타일 끝을 가볍게 친 페더컷 · ‘long tail’ → 머리 길이 긴 머리 · ‘two orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘two orange spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘two orange spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two orange spikes’ → 눈매 가늘고 날카로운 눈 · ‘two orange spikes’ → 눈썹 굵고 눈 가까이 낮은 · ‘two orange spikes’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 앞은 짧고 뒤만 긴 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 얇은 입술
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; thick low brows; long nose with low tip; thin lips.
 ```
 
 ```text
-HAIR: medium mullet, side-swept bangs.
+HAIR: long feathered, choppy bangs.
 ```
 
 ### 698 · 아마루스 (Amaura)
@@ -19167,22 +19176,24 @@ HAIR: long twin tail, straight bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
 
 **이유:** 레슬링 새의 가면 같은 선과 날개를 높은 광대와 선명한 긴 눈으로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘feathery tail’·‘three rectangular, tassel-like feathers’·비행 타입에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리
+
+**머리 단서:** ‘feathery tail’ → 헤어스타일 끝을 가볍게 친 페더컷
 
 **원작 단서:** ‘three rectangular, tassel-like feathers’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘three rectangular, tassel-like feathers’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘three rectangular, tassel-like feathers’ → 눈매 가늘고 날카로운 눈 · ‘three rectangular, tassel-like feathers’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
 
 ```text
 FACE (her own structure, not the style's default face): sharp face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; wide mouth.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: medium feathered, side-swept bangs.
 ```
 
 ### 702 · 데덴네 (Dedenne)
@@ -19339,24 +19350,24 @@ HAIR: very long crown braid, parted bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
-| 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
 **이유:** 열쇠의 고리와 작은 중심 얼굴을 타원 윤곽과 정돈된 원형 눈으로 해석한다.
 
-**머리:** ‘spherical head’·몸 형태 ball에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 일자 앞머리
+**머리:** ‘spherical head’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리
 
-**머리 단서:** ‘spherical head’ → 헤어스타일 굵은 곱슬 · 키 0.2m → 머리 길이 짧은 머리
+**머리 단서:** ‘spherical head’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘spherical head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘spherical head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘spherical head’ → 눈매 큰 눈 · ‘spherical head’ → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, close-set; straight medium brows; small delicate nose; small mouth.
 ```
 
 ```text
-HAIR: short curly, straight bangs.
+HAIR: medium afro puffs, straight bangs.
 ```
 
 ### 708 · 나목령 (Phantump)
@@ -19397,22 +19408,22 @@ HAIR: long half-up, long side bangs covering one eye.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
-| 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
 
-**머리:** ‘green leaves’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 긴 사이드뱅 — 나목령에서 이어 같은 묶음
+**머리:** ‘wavy, horn-like branch’에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 나목령에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘green leaves’ → 헤어스타일 반묶음
+**머리 단서:** ‘wavy, horn-like branch’ → 헤어스타일 한쪽으로 넘긴 피시테일
 
 **원작 단서:** 몸 형태 tentacles → 얼굴형 이마가 넓고 턱이 가는 하트형 · 몸 형태 tentacles → 입술 입이 작은
 
-**조정:** 같은 계열 나목령와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선
+**조정:** 같은 계열 나목령와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; fine soft arches; small delicate nose; small mouth.
 ```
 
 ```text
-HAIR: long half-up, long side bangs.
+HAIR: long fishtail braid, long side bangs.
 ```
 
 ### 710 · 호바귀 (Pumpkaboo)
@@ -19579,22 +19590,22 @@ HAIR: short feathered, side-swept bangs.
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘fluffy mane’·‘two spines’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 음뱃에서 이어 같은 묶음
+**머리:** ‘fluffy mane’·‘two spines’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 음뱃에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘fluffy mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷 · ‘two spines’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘fluffy mane’ → 헤어스타일 둥글게 부풀린 아프로 · ‘two spines’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘fluffy mane’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘fluffy mane’ → 얼굴 길이 짧은 얼굴 · ‘fluffy mane’ → 얼굴 폭 넓은 얼굴 · ‘fluffy mane’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘fluffy mane’ → 눈매 큰 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리
 
-**조정:** 같은 계열 음뱃와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리, 눈썹 바깥에서 꺾이는 사선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷
+**조정:** 같은 계열 음뱃와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리, 눈썹 바깥에서 꺾이는 사선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, medium size, upturned outer corners, close-set; feathered full brows; rounded soft tip nose; full lips.
 ```
 
 ```text
-HAIR: medium mullet, choppy bangs.
+HAIR: medium afro, choppy bangs.
 ```
 
 ### 716 · 제르네아스 (Xerneas)
@@ -20498,22 +20509,22 @@ HAIR: long ponytail, no bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
 
-**머리:** ‘rounded dorsal fin’·키 0.2m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅
+**머리:** ‘rounded dorsal fin’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 긴 사이드뱅
 
-**머리 단서:** ‘rounded dorsal fin’ → 헤어스타일 레트로 웨이브 · 키 0.2m → 머리 길이 짧은 머리
+**머리 단서:** ‘rounded dorsal fin’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘large watery blue eyes’ → 눈매 큰 눈 · ‘large watery blue eyes’ → 눈 크기 큰 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 레트로 웨이브 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, large size, level outer corners, wide-set; fine soft arches; prominent defined nose; full lips.
 ```
 
 ```text
-HAIR: short finger waves, long side bangs.
+HAIR: very long beach waves, long side bangs.
 ```
 
 ### 747 · 시마사리 (Mareanie)
@@ -20761,20 +20772,22 @@ HAIR: very long half-up, curtain bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘thin white stem’·‘thin, stem-like body’에서 한 갈래 땋은 머리 · 긴 머리 · 일자 앞머리
+**머리:** ‘thin white stem’·‘thin, stem-like body’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 일자 앞머리
 
-**머리 단서:** ‘thin white stem’ → 헤어스타일 한 갈래 땋은 머리 · ‘largest mushroom’ → 앞머리 일자 앞머리
+**머리 단서:** ‘thin white stem’ → 헤어스타일 가는 박스 브레이드 · ‘largest mushroom’ → 앞머리 일자 앞머리
 
 **원작 단서:** ‘thin, stem-like body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, stem-like body’ → 얼굴 길이 긴 얼굴 · ‘thin, stem-like body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin, stem-like body’ → 눈매 아몬드형 눈 · ‘thin, stem-like body’ → 눈썹 길고 바깥 아치가 선명한 · 페어리 타입 → 입술 윗입술이 활 모양인
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, medium width; long chin with defined jaw; almond eyes, large size, level outer corners, average spacing; long arched brows; small delicate nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: long braid, straight bangs.
+HAIR: long box braids, straight bangs.
 ```
 
 ### 756 · 마셰이드 (Shiinotic)
@@ -20906,22 +20919,22 @@ HAIR: medium ponytail, side-swept bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
-**머리:** 격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 옆으로 넘긴 앞머리 — 포곰곰에서 이어 같은 묶음
+**머리:** ‘white band’·‘dark pink rings’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 포곰곰에서 이어 더 공들인 묶음
 
-**머리 단서:** 격투 타입 → 헤어스타일 높이 묶은 포니테일 · 키 2.1m → 머리 길이 긴 머리
+**머리 단서:** ‘white band’ → 헤어스타일 두피에 붙여 땋은 콘로 · 키 2.1m → 머리 길이 긴 머리
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 격투 타입 → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 높이 묶은 포니테일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; open rounded eyes, medium size, level outer corners, average spacing; thick low brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
-HAIR: long high ponytail, side-swept bangs.
+HAIR: long cornrows, no bangs.
 ```
 
 ### 761 · 달콤아 (Bounsweet)
@@ -21022,22 +21035,22 @@ HAIR: very long half-up, curtain bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘long, fluffy green crest’·몸 형태 ball에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 일자 앞머리
+**머리:** ‘long, fluffy green crest’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리
 
-**머리 단서:** ‘long, fluffy green crest’ → 헤어스타일 굵은 곱슬 · 키 0.1m → 머리 길이 짧은 머리
+**머리 단서:** ‘long, fluffy green crest’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘long, fluffy green crest’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘long, fluffy green crest’ → 얼굴 길이 짧은 얼굴 · ‘long, fluffy green crest’ → 얼굴 폭 좁은 얼굴 · ‘long, fluffy green crest’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘long, fluffy green crest’ → 눈매 아몬드형 눈 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 좁은 얼굴, 눈매 큰 눈 → 아몬드형 눈
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 좁은 얼굴, 눈매 큰 눈 → 아몬드형 눈 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, narrow width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; fine soft arches; rounded soft tip nose; full lips.
 ```
 
 ```text
-HAIR: short curly, straight bangs.
+HAIR: long afro puffs, straight bangs.
 ```
 
 ### 765 · 하랑우탄 (Oranguru)
@@ -21051,22 +21064,24 @@ HAIR: short curly, straight bangs.
 | 눈썹 | 가늘고 곧은 |
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 가르마를 탄 단정한 컷 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
 
 **이유:** 큰 원숭이의 넓은 코와 현자의 고요함을 넓은 얼굴와 낮은 눈꺼풀로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리
+**머리:** 에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 중간 길이 · 가운데를 가른 앞머리
+
+**머리 단서:** 에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽
 
 **원작 단서:** 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 단정하게 말아 올린 시뇽 → 가르마를 탄 단정한 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 가늘고 곧은
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; drooping eyes, medium size, downturned outer corners, average spacing; thin straight brows; rounded soft tip nose; medium lips.
 ```
 
 ```text
-HAIR: medium side part, parted bangs.
+HAIR: medium chignon, parted bangs.
 ```
 
 ### 766 · 내던숭이 (Passimian)
@@ -21467,22 +21482,22 @@ HAIR: very long straight, long side bangs covering one eye.
 | 눈썹 | 가늘고 곧은 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
-**머리:** ‘pectoral fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅
+**머리:** ‘pectoral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
-**머리 단서:** ‘pectoral fins’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘pectoral fins’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; thin straight brows; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: medium wavy, curtain bangs.
+HAIR: medium beach waves, curtain bangs.
 ```
 
 ### 780 · 할비롱 (Drampa)
@@ -21641,22 +21656,22 @@ HAIR: long high ponytail, no bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘bird mask’·‘one short spine’·페어리 타입에서 세로로 말린 드릴 컬(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘round, yellow structures’·키 1.8m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리
 
-**머리 단서:** ‘bird mask’ → 헤어스타일 세로로 말린 드릴 컬 · ‘one short spine’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘round, yellow structures’ → 헤어스타일 양쪽 아프로 퍼프 · 키 1.8m → 머리 길이 긴 머리
 
 **원작 단서:** ‘round, yellow structures’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round, yellow structures’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘round, yellow structures’ → 눈썹 짧고 둥근 · ‘round, yellow structures’ → 코 코끝이 둥근 · 페어리 타입 → 입술 윗입술이 활 모양인
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; short rounded brows; rounded soft tip nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: very long ringlet curls, choppy bangs.
+HAIR: long afro puffs, straight bangs.
 ```
 
 ### 786 · 카푸나비나 (Tapu Lele)
@@ -21881,20 +21896,22 @@ HAIR: very long straight, parted bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
 
 **이유:** 반투명 종과 긴 촉수의 흐름을 긴 얼굴와 큰 맑은 눈으로 해석한다.
 
-**머리:** ‘four shorter tentacles’·‘long hair’(원작의 머리칼)·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 매우 긴 머리 · 가운데를 가른 앞머리
+**머리:** ‘four shorter tentacles’·‘long hair’(원작의 머리칼)·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 매우 긴 머리 · 가운데를 가른 앞머리
 
-**머리 단서:** ‘four shorter tentacles’ → 헤어스타일 로크스 / 드레드풍 · ‘long hair’(원작의 머리칼) → 머리 길이 매우 긴 머리
+**머리 단서:** ‘four shorter tentacles’ → 헤어스타일 가는 박스 브레이드 · ‘long hair’(원작의 머리칼) → 머리 길이 매우 긴 머리
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; open rounded eyes, large size, level outer corners, average spacing; fine soft arches; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: very long locs, parted bangs.
+HAIR: very long box braids, parted bangs.
 ```
 
 ### 794 · 매시붕 (Buzzwole)
@@ -22152,20 +22169,22 @@ HAIR: very long ringlet curls, straight bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 뒤로 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 뒤로 묶어 올린 번(올림머리) · 중간 길이 · 앞머리 없음
+**머리:** ‘two curled horns’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 한쪽 눈을 덮는 긴 사이드뱅
+
+**머리 단서:** ‘two curled horns’ → 헤어스타일 정수리에 묶어 올린 번 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
 **원작 단서:** ‘two curled horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘two curled horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · ‘two curled horns’ → 눈썹 굵고 눈 가까이 낮은 · ‘two curled horns’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 뒤로 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; thick low brows; small delicate nose; thin lips.
 ```
 
 ```text
-HAIR: medium man bun, no bangs.
+HAIR: medium top knot, long side bangs covering one eye.
 ```
 
 ### 803 · 베베놈 (Poipole)
@@ -22692,22 +22711,22 @@ HAIR: short curly, curtain bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
-**머리:** ‘tan and brown plump body’에서 잔곱슬 / 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 탐리스에서 이어 같은 묶음
+**머리:** ‘tan and brown plump body’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 탐리스에서 이어 같은 묶음
 
-**머리 단서:** ‘tan and brown plump body’ → 헤어스타일 잔곱슬 / 아프로
+**머리 단서:** ‘tan and brown plump body’ → 헤어스타일 둥글게 부풀린 아프로
 
 **원작 단서:** ‘tan and brown plump body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘tan and brown plump body’ → 얼굴 길이 짧은 얼굴 · ‘tan and brown plump body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘tan and brown plump body’ → 눈매 큰 눈 · ‘tan and brown plump body’ → 눈썹 짧고 둥근 · ‘tan and brown plump body’ → 코 코끝이 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 잔곱슬 / 아프로
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 잔곱슬 / 아프로 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, close-set; short rounded brows; rounded soft tip nose; full lips.
 ```
 
 ```text
-HAIR: medium tight curls, curtain bangs.
+HAIR: medium afro, curtain bangs.
 ```
 
 ### 821 · 파라꼬 (Rookidee)
@@ -22750,22 +22769,22 @@ HAIR: short feathered, side-swept bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘mask-like crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음 — 파라꼬에서 이어 더 공들인 묶음
+**머리:** ‘breast feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 파라꼬에서 이어 같은 묶음
 
-**머리 단서:** ‘mask-like crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일
+**머리 단서:** ‘breast feathers’ → 헤어스타일 끝을 가볍게 친 페더컷
 
 **원작 단서:** 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘gray beak’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; square broad jaw; narrow eyes, medium size, upturned outer corners, close-set; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
-HAIR: medium swept back, no bangs.
+HAIR: medium feathered, side-swept bangs.
 ```
 
 ### 823 · 아머까오 (Corviknight)
@@ -22781,7 +22800,7 @@ HAIR: medium swept back, no bangs.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘scapular feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파크로우에서 이어 더 공들인 묶음
+**머리:** ‘scapular feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파크로우에서 이어 같은 묶음
 
 **머리 단서:** ‘scapular feathers’ → 헤어스타일 끝을 가볍게 친 페더컷 · 키 2.2m → 머리 길이 긴 머리
 
@@ -23655,24 +23674,24 @@ HAIR: medium ringlet curls, no bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
 | 입 | 입이 작은 |
-| 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 큰 문어의 얽힌 촉수와 유술의 힘을 넓은 하관과 깊은 눈매로 구분한다.
 
-**머리:** ‘eight blue tentacles’·‘one tentacle wrapped around waist’·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 앞머리 없음 — 때때무노에서 이어 같은 묶음
+**머리:** ‘eight blue tentacles’·‘one tentacle wrapped around waist’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 앞머리 없음 — 때때무노에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘eight blue tentacles’ → 헤어스타일 로크스 / 드레드풍 · 키 1.6m → 머리 길이 긴 머리
+**머리 단서:** ‘eight blue tentacles’ → 헤어스타일 가는 박스 브레이드 · 키 1.6m → 머리 길이 긴 머리
 
 **원작 단서:** 격투 타입 → 눈썹 굵고 눈 가까이 낮은 · 몸 형태 tentacles → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 입이 넓은 → 입이 작은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 입이 넓은 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, wide width; wide heavy chin; almond eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; small mouth.
 ```
 
 ```text
-HAIR: long locs, no bangs.
+HAIR: long box braids, no bangs.
 ```
 
 ### 854 · 데인차 (Sinistea)
@@ -24162,22 +24181,24 @@ HAIR: short undercut, long side bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
 **이유:** 작은 병사들의 투구와 방패의 반복을 정돈된 각진 얼굴로 해석한다. 인물은 하나다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘red horn and crest’·‘gold helmet-like shell’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 일자 앞머리
+
+**머리 단서:** ‘red horn and crest’ → 헤어스타일 정수리에 묶어 올린 번 · ‘gold helmet-like shell’ → 앞머리 일자 앞머리
 
 **원작 단서:** ‘paired horned shield plates’ → 얼굴형 각지고 선명한 얼굴형 · ‘paired horned shield plates’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘paired horned shield plates’ → 눈매 가늘고 날카로운 눈 · 몸 형태 heads → 눈 간격 눈 사이가 가까운 · ‘six black spherical troopers’ → 눈썹 짧고 둥근 · ‘paired horned shield plates’ → 코 크고 또렷한 코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근, 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근, 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; short rounded brows; prominent defined nose; thin lips.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: long top knot, straight bangs.
 ```
 
 ### 871 · 찌르성게 (Pincurchin)
@@ -24276,20 +24297,22 @@ HAIR: very long hime cut, straight bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘gray, rectangular body’·‘smaller rectangular stones’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리
+
+**머리 단서:** ‘gray, rectangular body’ → 헤어스타일 끝을 일자로 자른 컷
 
 **원작 단서:** ‘gray, rectangular body’ → 얼굴형 각지고 선명한 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · ‘gray, rectangular body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘gray, rectangular body’ → 눈매 가늘고 날카로운 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운 · ‘gray, rectangular body’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 코 보통 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 코 보통 → 콧대가 낮고 넓은
 
 ```text
 FACE (her own structure, not the style's default face): angular face, long length, medium width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; broad low bridge nose; thin lips.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: long blunt cut, straight bangs.
 ```
 
 ### 875 · 빙큐보 (Eiscue)
@@ -24332,24 +24355,24 @@ HAIR: very long straight, straight bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 가르마를 탄 단정한 컷 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 
 **이유:** 배 모양 몸과 둥근 얼굴 및 나선 뿔을 완만한 타원 윤곽과 곡선 눈썹으로 해석한다.
 
-**머리:** ‘upward-curved spiral horns’에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리
+**머리:** ‘white round face’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 앞머리 없음
 
-**머리 단서:** ‘upward-curved spiral horns’ → 앞머리 가운데를 가른 앞머리
+**머리 단서:** ‘white round face’ → 헤어스타일 둥글게 부풀린 아프로
 
 **원작 단서:** ‘white round face’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘white round face’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · ‘white round face’ → 코 코끝이 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 가르마를 탄 단정한 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; rounded soft tip nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: medium side part, parted bangs.
+HAIR: medium afro, no bangs.
 ```
 
 ### 877 · 모르페코 (Morpeko)
@@ -24537,22 +24560,22 @@ HAIR: long space buns, choppy bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
 
-**머리:** ‘white fins’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅
+**머리:** ‘white fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅
 
-**머리 단서:** ‘white fins’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘white fins’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** ‘round blue head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round blue head’ → 얼굴 길이 짧은 얼굴 · ‘round blue head’ → 얼굴 폭 넓은 얼굴 · ‘round blue head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘round blue head’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 콧대가 낮고 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 코 코끝이 둥근 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; short rounded brows; broad low bridge nose; full lips.
 ```
 
 ```text
-HAIR: very long wavy, curtain bangs.
+HAIR: very long beach waves, curtain bangs.
 ```
 
 ### 884 · 두랄루돈 (Duraludon)
@@ -25019,20 +25042,22 @@ HAIR: very long crown braid, curtain bangs.
 | 눈썹 | 가늘고 곧은 |
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 가르마를 탄 단정한 컷 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 가르마를 탄 단정한 컷(짧은 컷) · 중간 길이 · 가운데를 가른 앞머리
+**머리:** 에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 긴 머리 · 가운데를 가른 앞머리
+
+**머리 단서:** 에스퍼 타입 → 헤어스타일 단정하게 말아 올린 시뇽 · 키 1.8m → 머리 길이 긴 머리
 
 **원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈 · 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 아몬드형 눈, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 단정하게 말아 올린 시뇽 → 가르마를 탄 단정한 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 아몬드형 눈, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 단정하게 말아 올린 시뇽
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, medium size, level outer corners, average spacing; thin straight brows; balanced nose; full lips.
 ```
 
 ```text
-HAIR: medium side part, parted bangs.
+HAIR: long chignon, parted bangs.
 ```
 
 ### 900 · 사마자르 (Kleavor)
@@ -25104,22 +25129,22 @@ HAIR: long low bun, choppy bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 
-**머리:** ‘white pectoral fins’·‘smoke-like facial barbels’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 배쓰나이에서 이어 같은 묶음
+**머리:** ‘white pectoral fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 배쓰나이에서 이어 더 공들인 묶음
 
-**머리 단서:** ‘white pectoral fins’ → 헤어스타일 웨이브 헤어 · 키 3m → 머리 길이 매우 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
+**머리 단서:** ‘white pectoral fins’ → 헤어스타일 한쪽으로 넘긴 피시테일 · 키 3m → 머리 길이 매우 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 키 3m → 얼굴 길이 긴 얼굴 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): oval face, long length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; fine soft arches; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: very long wavy, long side bangs covering one eye.
+HAIR: very long fishtail braid, long side bangs covering one eye.
 ```
 
 ### 903 · 포푸니크 (Sneasler)
@@ -25408,24 +25433,24 @@ HAIR: long windswept, side-swept bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
 **이유:** 오리의 둥근 머리와 단정한 머리깃을 타원 얼굴와 둥근 눈으로 해석한다.
 
-**머리:** ‘teal coif with white wave marking’·‘teal webbed feet’·물 타입에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅
+**머리:** ‘teal coif with white wave marking’·‘teal webbed feet’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
-**머리 단서:** ‘teal coif with white wave marking’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘teal coif with white wave marking’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘yellow beak’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; open rounded eyes, medium size, level outer corners, average spacing; fine soft arches; straight slender bridge nose; bow-shaped upper lip.
 ```
 
 ```text
-HAIR: medium wavy, curtain bangs.
+HAIR: medium beach waves, curtain bangs.
 ```
 
 ### 913 · 아꾸왁 (Quaxwell)
@@ -25766,22 +25791,22 @@ HAIR: medium wolf cut, choppy bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
 
-**머리:** ‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 커튼뱅
+**머리:** ‘spherical head’·키 0.3m에서 둥글게 부풀린 아프로(웨이브·곱슬) · 짧은 머리 · 커튼뱅
 
-**머리 단서:** ‘spherical head’ → 헤어스타일 양쪽 동그란 번 · ‘long tail’ → 머리 길이 긴 머리
+**머리 단서:** ‘spherical head’ → 헤어스타일 둥글게 부풀린 아프로 · 키 0.3m → 머리 길이 짧은 머리
 
 **원작 단서:** ‘spherical head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘spherical head’ → 얼굴 길이 짧은 얼굴 · ‘spherical head’ → 얼굴 폭 넓은 얼굴 · ‘spherical head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 heads → 눈 간격 눈 사이가 가까운 · ‘spherical head’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 입술 입이 작은 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 양쪽 동그란 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 짧고 둥근, 입술 입이 작은 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양쪽 동그란 번 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; almond eyes, large size, level outer corners, close-set; short rounded brows; small delicate nose; medium lips.
 ```
 
 ```text
-HAIR: long space buns, curtain bangs.
+HAIR: short afro, curtain bangs.
 ```
 
 ### 925 · 파밀리쥐 (Maushold)
@@ -25797,7 +25822,7 @@ HAIR: long space buns, curtain bangs.
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 일자 앞머리 — 두리쥐에서 이어 같은 묶음
+**머리:** ‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 일자 앞머리 — 두리쥐에서 이어 더 공들인 묶음
 
 **머리 단서:** ‘spherical head’ → 헤어스타일 양쪽 동그란 번 · ‘long tail’ → 머리 길이 긴 머리
 
@@ -25882,22 +25907,22 @@ HAIR: pixie cut, choppy bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘few leaves’·‘jagged mouth’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘round green body’·‘jagged mouth’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘few leaves’ → 헤어스타일 반묶음 · ‘jagged mouth’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘round green body’ → 헤어스타일 둥글게 부풀린 아프로 · ‘jagged mouth’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘round green body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round green body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘round green body’ → 눈매 큰 눈 · ‘beady black eyes’ → 눈 크기 작은 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운 · ‘round green body’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, balanced length, medium width; soft rounded jaw; open rounded eyes, small size, level outer corners, close-set; short rounded brows; rounded soft tip nose; medium lips.
 ```
 
 ```text
-HAIR: medium half-up, choppy bangs.
+HAIR: medium afro, choppy bangs.
 ```
 
 ### 929 · 올리뇨 (Dolliv)
@@ -25913,7 +25938,7 @@ HAIR: medium half-up, choppy bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
-**머리:** ‘several leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 미니브에서 이어 같은 묶음
+**머리:** ‘several leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 미니브에서 이어 더 공들인 묶음
 
 **머리 단서:** ‘several leaves’ → 헤어스타일 반묶음
 
@@ -25965,22 +25990,22 @@ HAIR: long half-up, curtain bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘lumpy, pompadour-like black crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음
+**머리:** ‘white feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리
 
-**머리 단서:** ‘lumpy, pompadour-like black crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일
+**머리 단서:** ‘white feathers’ → 헤어스타일 끝을 가볍게 친 페더컷
 
 **원작 단서:** ‘lazy eyes’ → 눈매 살짝 처진 부드러운 눈 · ‘lazy eyes’ → 눈꼬리 각도 처진 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘rounded yellow beak’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 뒤로 넘긴 볼륨 있는 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; narrow tapered chin; drooping eyes, medium size, downturned outer corners, close-set; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
-HAIR: medium swept back, no bangs.
+HAIR: medium feathered, side-swept bangs.
 ```
 
 ### 932 · 베베솔트 (Nacli)
@@ -25994,20 +26019,22 @@ HAIR: medium swept back, no bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘white salt cube’·‘rock salt’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
+
+**머리 단서:** ‘white salt cube’ → 헤어스타일 끝을 일자로 자른 컷 · 키 0.4m → 머리 길이 짧은 머리
 
 **원작 단서:** 몸 형태 ball → 얼굴형 부드럽고 둥근 얼굴형 · 몸 형태 ball → 얼굴 길이 짧은 얼굴 · 몸 형태 ball → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, medium width; soft rounded jaw; sharp eyes, medium size, upturned outer corners, wide-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: short blunt cut, straight bangs.
 ```
 
 ### 933 · 스태솔트 (Naclstack)
@@ -26023,7 +26050,7 @@ HAIR: crew cut, no bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
-**머리:** ‘rugged, dark brown rock’·‘brown cuboid stone’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 베베솔트에서 이어 더 공들인 묶음
+**머리:** ‘rugged, dark brown rock’·‘brown cuboid stone’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 베베솔트에서 이어 같은 묶음
 
 **머리 단서:** ‘rugged, dark brown rock’ → 헤어스타일 끝을 일자로 자른 컷
 
@@ -26868,22 +26895,22 @@ HAIR: long messy bun, curtain bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘small fan-like crest’에서 뒤로 넘긴 볼륨 있는 스타일(곧은 결) · 중간 길이 · 앞머리 없음
+**머리:** ‘small fan-like crest’에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 옆으로 넘긴 앞머리
 
-**머리 단서:** ‘small fan-like crest’ → 헤어스타일 뒤로 넘긴 볼륨 있는 스타일
+**머리 단서:** ‘small fan-like crest’ → 헤어스타일 정수리에 묶어 올린 번
 
 **원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 뒤로 넘긴 볼륨 있는 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, medium width; long chin with defined jaw; narrow eyes, medium size, upturned outer corners, close-set; long arched brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
-HAIR: medium swept back, no bangs.
+HAIR: medium top knot, side-swept bangs.
 ```
 
 ### 963 · 맨돌핀 (Finizen)
@@ -26897,22 +26924,22 @@ HAIR: medium swept back, no bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
 
-**머리:** ‘dorsal fin’·‘pale bluish white wave patterns’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 중간 길이 · 커튼뱅
+**머리:** ‘dorsal fin’·‘pale bluish white wave patterns’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
-**머리 단서:** ‘dorsal fin’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘dorsal fin’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘short snout’ → 코 짧고 코끝이 들린
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 중간 두께의 직선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; straight medium brows; short nose with upturned tip; full lips.
 ```
 
 ```text
-HAIR: medium wavy, curtain bangs.
+HAIR: medium beach waves, curtain bangs.
 ```
 
 ### 964 · 돌핀맨 (Palafin)
@@ -26926,22 +26953,22 @@ HAIR: medium wavy, curtain bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
 
-**머리:** ‘white flank waves’·‘split tailfin with water ring’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 같은 묶음
+**머리:** ‘white flank waves’·‘split tailfin with water ring’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 같은 묶음
 
-**머리 단서:** ‘white flank waves’ → 헤어스타일 웨이브 헤어
+**머리 단서:** ‘white flank waves’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** ‘pink heart-shaped chest mark’ → 얼굴형 이마가 넓고 턱이 가는 하트형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 몸 형태 fish → 입술 아랫입술이 더 도톰한
 
-**조정:** 같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한
+**조정:** 같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; fine soft arches; small delicate nose; fuller lower lip.
 ```
 
 ```text
-HAIR: long wavy, curtain bangs.
+HAIR: long beach waves, curtain bangs.
 ```
 
 ### 965 · 부르롱 (Varoom)
@@ -26955,20 +26982,22 @@ HAIR: long wavy, curtain bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘metal engine-shaped body’·‘four black upper-block stripes’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리
+
+**머리 단서:** ‘metal engine-shaped body’ → 헤어스타일 끝을 일자로 자른 컷
 
 **원작 단서:** ‘metal engine-shaped body’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 legs → 얼굴 폭 좁은 얼굴 · ‘metal engine-shaped body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘metal engine-shaped body’ → 눈매 가늘고 날카로운 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운 · ‘metal engine-shaped body’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 코 보통 → 곧고 가는 콧대, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 좁은 얼굴, 코 보통 → 곧고 가는 콧대, 입술 얇은 입술 → 굴곡 없이 곧은
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, narrow width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; straight slender bridge nose; straight even lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: medium blunt cut, straight bangs.
 ```
 
 ### 966 · 부르르룸 (Revavroom)
@@ -26984,7 +27013,7 @@ HAIR: buzz cut, no bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘metallic body’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 부르롱에서 이어 더 공들인 묶음
+**머리:** ‘metallic body’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 부르롱에서 이어 같은 묶음
 
 **머리 단서:** ‘metallic body’ → 헤어스타일 끝을 일자로 자른 컷 · 키 1.8m → 머리 길이 긴 머리
 
@@ -27042,22 +27071,22 @@ HAIR: side-shaved long hair, long side bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
 
-**머리:** ‘parapodia-like tendrils’·‘six-segmented metal body’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 일자 앞머리
+**머리:** ‘parapodia-like tendrils’·몸 형태 squiggle에서 가는 박스 브레이드(땋은 머리) · 매우 긴 머리 · 일자 앞머리
 
-**머리 단서:** ‘parapodia-like tendrils’ → 헤어스타일 한 갈래 땋은 머리 · 몸 형태 squiggle → 머리 길이 매우 긴 머리
+**머리 단서:** ‘parapodia-like tendrils’ → 헤어스타일 가는 박스 브레이드 · 몸 형태 squiggle → 머리 길이 매우 긴 머리
 
 **원작 단서:** ‘six-segmented metal body’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · ‘six-segmented metal body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘six-segmented metal body’ → 눈매 강하게 치켜올라간 눈 · ‘six-segmented metal body’ → 눈썹 바깥에서 꺾이는 사선 · ‘six-segmented metal body’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 강하게 치켜올라간 눈
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 큰 눈 → 강하게 치켜올라간 눈 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드
 
 ```text
 FACE (her own structure, not the style's default face): angular face, long length, medium width; angular defined jaw; sharp eyes, small size, level outer corners, average spacing; angled brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: very long braid, straight bangs.
+HAIR: very long box braids, straight bangs.
 ```
 
 ### 969 · 초롱순 (Glimmet)
@@ -27276,22 +27305,22 @@ HAIR: very long straight, no bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**머리:** ‘translucent, bright magenta fins’·‘diamond-shaped spikes’·몸 형태 fish에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘translucent, bright magenta fins’·‘diamond-shaped spikes’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘translucent, bright magenta fins’ → 헤어스타일 웨이브 헤어 · 키 2.5m → 머리 길이 매우 긴 머리 · ‘diamond-shaped spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘translucent, bright magenta fins’ → 헤어스타일 한쪽으로 넘긴 피시테일 · 키 2.5m → 머리 길이 매우 긴 머리 · ‘diamond-shaped spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘diamond-shaped spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘diamond-shaped spikes’ → 눈썹 바깥에서 꺾이는 사선 · ‘diamond-shaped spikes’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대, 입술 도톰한 입술 → 얇은 입술
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대, 입술 도톰한 입술 → 얇은 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; angled brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
-HAIR: very long wavy, choppy bangs.
+HAIR: very long fishtail braid, choppy bangs.
 ```
 
 ### 977 · 어써러셔 (Dondozo)
@@ -27305,22 +27334,22 @@ HAIR: very long wavy, choppy bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 아랫입술이 더 도톰한 |
-| 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
 
-**머리:** ‘pectoral fins’·‘three gills’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅
+**머리:** ‘pectoral fins’·‘three gills’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 긴 사이드뱅
 
-**머리 단서:** ‘pectoral fins’ → 헤어스타일 레트로 웨이브
+**머리 단서:** ‘pectoral fins’ → 헤어스타일 느슨한 해변 웨이브
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 무게 220kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 무게 220kg → 코 콧대가 낮고 넓은 · 몸 형태 fish → 입술 아랫입술이 더 도톰한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 코 작고 여린 코 → 콧대가 낮고 넓은, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 웨이브 헤어 → 레트로 웨이브
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 코 작고 여린 코 → 콧대가 낮고 넓은, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 레트로 웨이브 → 느슨한 해변 웨이브
 
 ```text
 FACE (her own structure, not the style's default face): oval face, balanced length, medium width; square broad jaw; almond eyes, medium size, level outer corners, wide-set; fine soft arches; broad low bridge nose; fuller lower lip.
 ```
 
 ```text
-HAIR: medium finger waves, long side bangs.
+HAIR: medium beach waves, long side bangs.
 ```
 
 ### 978 · 싸리용 (Tatsugiri)
@@ -27334,24 +27363,24 @@ HAIR: medium finger waves, long side bangs.
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 작은 물고기의 매끈한 윤곽과 영리한 특징을 타원 얼굴와 낮은 눈꺼풀로 해석한다.
 
-**머리:** ‘long pectoral fins and split tailfin’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음
+**머리:** ‘long pectoral fins and split tailfin’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 앞머리 없음
 
-**머리 단서:** ‘long pectoral fins and split tailfin’ → 헤어스타일 젖은 듯 넘긴 스타일
+**머리 단서:** ‘long pectoral fins and split tailfin’ → 헤어스타일 한쪽으로 넘긴 피시테일
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 젖은 듯 넘긴 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 젖은 듯 넘긴 스타일 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): oval face, long length, medium width; soft rounded jaw; drooping eyes, medium size, downturned outer corners, wide-set; long arched brows; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: long wet-look slick, no bangs.
+HAIR: long fishtail braid, no bangs.
 ```
 
 ### 979 · 저승갓숭 (Annihilape)
@@ -27452,22 +27481,22 @@ HAIR: very long ponytail, choppy bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
-| 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
-**머리:** ‘blue underside and blue and cream stripes’·‘first body segment’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 옆으로 넘긴 앞머리 — 노고치에서 이어 같은 묶음
+**머리:** ‘blue underside and blue and cream stripes’·‘first body segment’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 노고치에서 이어 같은 묶음
 
-**머리 단서:** ‘blue underside and blue and cream stripes’ → 헤어스타일 한 갈래 땋은 머리 · 몸 형태 squiggle → 머리 길이 매우 긴 머리
+**머리 단서:** ‘blue underside and blue and cream stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
 
 **원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; balanced jawline; open rounded eyes, medium size, level outer corners, close-set; fine soft arches; rounded soft tip nose; medium lips.
 ```
 
 ```text
-HAIR: very long braid, side-swept bangs.
+HAIR: long cornrows, no bangs.
 ```
 
 ### 983 · 대도각참 (Kingambit)
@@ -27512,22 +27541,24 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 고대 코끼리의 큰 어금니와 육중함을 넓은 하관 및 긴 콧대로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘pinkish-red spikes’·‘dark purple plates’·키 2.2m에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
+
+**머리 단서:** ‘pinkish-red spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · 키 2.2m → 머리 길이 긴 머리 · ‘pinkish-red spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘pinkish-red spikes’ → 얼굴형 각지고 선명한 얼굴형 · 무게 320kg → 얼굴 폭 넓은 얼굴 · ‘pinkish-red spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘pinkish-red spikes’ → 눈매 가늘고 날카로운 눈 · ‘pinkish-red spikes’ → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; thick low brows; long nose with low tip; wide mouth.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: long asymmetric cut, choppy bangs.
 ```
 
 ### 985 · 우렁찬꼬리 (Scream Tail)
@@ -27541,24 +27572,24 @@ HAIR: crew cut, no bangs.
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
-| 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
 **이유:** 풍선 같은 큰 체적과 둥근 눈의 대비를 넓은 볼과 큰 사람 눈으로 해석한다.
 
-**머리:** 에스퍼 타입에서 히메컷(곧은 결) · 매우 긴 머리 · 일자 앞머리
+**머리:** ‘spherical body’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리
 
-**머리 단서:** 에스퍼 타입 → 헤어스타일 히메컷
+**머리 단서:** ‘spherical body’ → 헤어스타일 양쪽 아프로 퍼프
 
 **원작 단서:** ‘spherical body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘spherical body’ → 얼굴 길이 짧은 얼굴 · ‘spherical body’ → 얼굴 폭 넓은 얼굴 · ‘spherical body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘spherical body’ → 눈매 큰 눈 · ‘spherical body’ → 눈썹 가늘고 완만한 곡선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 입이 넓은 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 히메컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 입이 넓은 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 히메컷 → 양쪽 아프로 퍼프
 
 ```text
 FACE (her own structure, not the style's default face): softly rounded face, short length, wide width; soft rounded jaw; open rounded eyes, large size, level outer corners, close-set; fine soft arches; rounded soft tip nose; straight even lips.
 ```
 
 ```text
-HAIR: very long hime cut, straight bangs.
+HAIR: medium afro puffs, straight bangs.
 ```
 
 ### 986 · 사나운버섯 (Brute Bonnet)
@@ -27634,22 +27665,24 @@ HAIR: long ringlet curls, long side bangs covering one eye.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 뒤로 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 땅을 걷는 큰 나방의 둔중한 체적을 넓은 얼굴와 작은 깊은 눈으로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 뒤로 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음
+**머리:** ‘red spiny horn-like structure’·격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
+
+**머리 단서:** ‘red spiny horn-like structure’ → 헤어스타일 높이 묶은 포니테일 · 키 3.2m → 머리 길이 매우 긴 머리 · ‘red spiny horn-like structure’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘red spiny horn-like structure’ → 얼굴형 각지고 선명한 얼굴형 · ‘red spiny horn-like structure’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘red spiny horn-like structure’ → 눈매 가늘고 날카로운 눈 · ‘red spiny horn-like structure’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘red spiny horn-like structure’ → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 뒤로 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, small size, upturned outer corners, wide-set; thick low brows; rounded soft tip nose; wide mouth.
 ```
 
 ```text
-HAIR: long man bun, no bangs.
+HAIR: very long high ponytail, choppy bangs.
 ```
 
 ### 989 · 모래털가죽 (Sandy Shocks)
@@ -27694,22 +27727,24 @@ HAIR: long asymmetric cut, choppy bangs.
 | 눈썹 | 짧고 둥근 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 
 **이유:** 금속 코끼리의 반복 분절과 단단한 체적을 각진 하관과 수평 눈매로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘spherical gray metallic body’·‘metal plate’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리
+
+**머리 단서:** ‘spherical gray metallic body’ → 헤어스타일 끝을 일자로 자른 컷
 
 **원작 단서:** ‘spherical gray metallic body’ → 얼굴형 각지고 선명한 얼굴형 · ‘spherical gray metallic body’ → 얼굴 폭 넓은 얼굴 · ‘spherical gray metallic body’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘spherical gray metallic body’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘spherical gray metallic body’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴, 눈썹 중간 두께의 직선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 보통 → 넓은 얼굴, 눈썹 중간 두께의 직선 → 짧고 둥근
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, wide width; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; short rounded brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: medium blunt cut, straight bangs.
 ```
 
 ### 991 · 무쇠보따리 (Iron Bundle)
@@ -27754,20 +27789,22 @@ HAIR: medium chignon, straight bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 옆을 그라데이션으로 짧게 친 컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 
 **이유:** 기계 격투자의 길고 단단한 선을 긴 얼굴와 수평적인 눈매로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 옆을 그라데이션으로 짧게 친 컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘head crest’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 앞머리 없음
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 정수리에 묶어 올린 번 → 옆을 그라데이션으로 짧게 친 컷
+**머리 단서:** ‘head crest’ → 헤어스타일 정수리에 묶어 올린 번 · 키 1.8m → 머리 길이 긴 머리
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번
 
 ```text
 FACE (her own structure, not the style's default face): oval face, long length, narrow width; long chin with defined jaw; narrow eyes, medium size, level outer corners, close-set; straight medium brows; long nose with low tip; thin lips.
 ```
 
 ```text
-HAIR: very short fade, no bangs.
+HAIR: long top knot, no bangs.
 ```
 
 ### 993 · 무쇠머리 (Iron Jugulis)
@@ -28108,22 +28145,22 @@ HAIR: very long crown braid, asymmetric bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 
-**머리:** ‘red-yellow flame fish silhouette’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
+**머리:** 몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 옆으로 넘긴 앞머리
 
-**머리 단서:** ‘red-yellow flame fish silhouette’ → 헤어스타일 바람에 날린 듯한 스타일 · 키 0.4m → 머리 길이 짧은 머리
+**머리 단서:** 몸 형태 fish → 헤어스타일 한쪽으로 넘긴 피시테일
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 키 0.4m → 얼굴 길이 짧은 얼굴 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 한쪽으로 넘긴 피시테일
 
 ```text
 FACE (her own structure, not the style's default face): oval face, short length, medium width; soft rounded jaw; almond eyes, medium size, level outer corners, wide-set; angled brows; small delicate nose; full lips.
 ```
 
 ```text
-HAIR: short windswept, side-swept bangs.
+HAIR: very long fishtail braid, side-swept bangs.
 ```
 
 ### 1005 · 고동치는달 (Roaring Moon)
@@ -28261,24 +28298,24 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 거대한 수중 용의 긴 주둥이와 거친 선을 긴 윤곽과 날카로운 눈으로 해석한다.
 
-**머리:** ‘thick, large purple mane’·‘eight blue spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘thick, large purple mane’·‘large, hexagonal, cerulean blue crest’·드래곤 타입에서 층감이 강한 울프컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘thick, large purple mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷 · ‘eight blue spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘thick, large purple mane’ → 헤어스타일 층감이 강한 울프컷 · ‘eight blue spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** 키 3.5m → 얼굴형 길고 세련된 얼굴형 · 키 3.5m → 얼굴 길이 긴 얼굴 · ‘blue horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘blue horn’ → 눈매 강하게 치켜올라간 눈 · ‘blue horn’ → 눈꼬리 각도 올라간 눈꼬리 · ‘blue horn’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 앞은 짧고 뒤만 긴 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; angular defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; long nose with low tip; wide mouth.
 ```
 
 ```text
-HAIR: medium mullet, choppy bangs.
+HAIR: long wolf cut, choppy bangs.
 ```
 
 ### 1010 · 무쇠잎새 (Iron Leaves)
@@ -28629,24 +28666,24 @@ HAIR: long wolf cut, choppy bangs.
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 앞은 짧고 뒤만 긴 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 긴 목과 번개 모양 가시의 선을 긴 얼굴와 날카로운 긴 눈으로 해석한다.
 
-**머리:** ‘circle mane’·‘three blue triangle spikes’에서 앞은 짧고 뒤만 긴 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+**머리:** ‘dull purple rain clouds’·‘circle mane’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
-**머리 단서:** ‘circle mane’ → 헤어스타일 앞은 짧고 뒤만 긴 컷 · ‘three blue triangle spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
+**머리 단서:** ‘dull purple rain clouds’ → 헤어스타일 둥글게 부풀린 아프로 · ‘three blue triangle spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** 키 5.2m → 얼굴형 길고 세련된 얼굴형 · 키 5.2m → 얼굴 길이 긴 얼굴 · ‘three blue triangle spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘three blue triangle spikes’ → 눈매 강하게 치켜올라간 눈 · ‘three blue triangle spikes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 앞은 짧고 뒤만 긴 컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로
 
 ```text
 FACE (her own structure, not the style's default face): elongated face, long length, narrow width; angular defined jaw; sharp eyes, medium size, upturned outer corners, wide-set; thick low brows; long nose with low tip; thin lips.
 ```
 
 ```text
-HAIR: medium mullet, choppy bangs.
+HAIR: medium afro, choppy bangs.
 ```
 
 ### 1022 · 무쇠암석 (Iron Boulder)
@@ -28660,22 +28697,24 @@ HAIR: medium mullet, choppy bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
-| 머리 | 헤어스타일 짧고 단정한 크루컷 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
 **이유:** 회전하는 도끼 뿔과 금속 능선을 각진 하관과 정돈된 수평 눈매로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 짧고 단정한 크루컷(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘two brown, rotatable, axe-like horns’·‘several short spikes’에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
+
+**머리 단서:** ‘two brown, rotatable, axe-like horns’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · ‘several short spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
 **원작 단서:** ‘two brown, rotatable, axe-like horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘two brown, rotatable, axe-like horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two brown, rotatable, axe-like horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 짧고 단정한 크루컷
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술
 
 ```text
 FACE (her own structure, not the style's default face): angular face, balanced length, medium width; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; straight medium brows; balanced nose; full lips.
 ```
 
 ```text
-HAIR: crew cut, no bangs.
+HAIR: medium asymmetric cut, choppy bangs.
 ```
 
 ### 1023 · 무쇠감투 (Iron Crown)
@@ -28689,22 +28728,24 @@ HAIR: crew cut, no bangs.
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
 | 입 | 얇은 입술 |
-| 머리 | 헤어스타일 아주 짧게 민 머리 · 머리 길이 매우 짧은 머리 · 앞머리 앞머리 없음 |
+| 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 
 **이유:** 금속 염소의 뿔과 칼날 어깨의 긴 선을 긴 윤곽과 선명한 눈매로 해석한다.
 
-**머리:** 원작 단서가 적어 분포가 빈 쪽에서 아주 짧게 민 머리(짧은 컷) · 매우 짧은 머리 · 앞머리 없음
+**머리:** ‘two yellow metal horns’·‘yellow metal protrusions’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리
+
+**머리 단서:** ‘two yellow metal horns’ → 헤어스타일 끝을 일자로 자른 컷 · 키 1.6m → 머리 길이 긴 머리
 
 **원작 단서:** ‘two yellow metal horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘two yellow metal horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two yellow metal horns’ → 눈매 가늘고 날카로운 눈 · ‘two yellow metal horns’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘two yellow metal horns’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 아주 짧게 민 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈꼬리 각도 수평 → 올라간 눈꼬리 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 좌우 길이가 다른 비대칭컷 → 끝을 일자로 자른 컷
 
 ```text
 FACE (her own structure, not the style's default face): angular face, long length, narrow width; angular defined jaw; narrow eyes, medium size, upturned outer corners, wide-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
-HAIR: buzz cut, no bangs.
+HAIR: long blunt cut, straight bangs.
 ```
 
 ### 1024 · 테라파고스 (Terapagos)
