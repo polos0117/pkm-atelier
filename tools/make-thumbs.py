@@ -17,6 +17,10 @@ cover 로 잘라 보여주므로 여기서 굳이 맞추지 않는다.
 새로 올라온 것만 처리한다.
 
 화풍 견본(style-*.webp)은 목록에 안 쓰이므로 제외한다.
+
+열리지 않는 원본(업로드가 덜 된 0바이트 파일 등)은 건너뛰고 나머지를 다 만든 뒤 2 로 끝난다.
+GitHub Actions 에는 그 파일을 ::error:: 로 적는다. 2026-10-27 빼미스로우 중장 개방이 0바이트로 올라가
+여기서 멈추자, 그 뒤 12번의 실행이 다른 캐릭터 썸네일까지 하나도 못 만들었다.
 """
 import sys
 from pathlib import Path
@@ -60,6 +64,7 @@ def main() -> int:
         return 1
 
     made = skipped = total = 0
+    broken = []
     for src in targets():
         dst = DST / src.name
         if not stale(src, dst):
@@ -69,7 +74,12 @@ def main() -> int:
             print("생성 예정:", dst)
             made += 1
             continue
-        total += build(src, dst)
+        try:
+            total += build(src, dst)
+        except (OSError, ValueError) as e:   # PIL 의 UnidentifiedImageError 도 OSError 다
+            broken.append(src)
+            print(f"::error file={src}::열리지 않는 그림 — 썸네일을 건너뛴다({src.stat().st_size}바이트, {e.__class__.__name__})")
+            continue
         made += 1
 
     # 원본이 사라진 썸네일은 치운다
@@ -82,8 +92,11 @@ def main() -> int:
                 removed += 1
 
     print(f"썸네일 {made}장 생성, {skipped}장 유지, {removed}장 삭제"
-          + (f", 합계 {total/1024:.0f}KB" if total else ""))
-    return 0
+          + (f", 합계 {total/1024:.0f}KB" if total else "")
+          + (f", 열리지 않는 그림 {len(broken)}장" if broken else ""))
+    for p in broken:
+        print("  열리지 않음:", p, file=sys.stderr)
+    return 2 if broken else 0
 
 
 if __name__ == "__main__":

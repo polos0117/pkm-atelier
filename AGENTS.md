@@ -122,6 +122,7 @@ node tests/sprite-actor-copy.cjs # 도트 재생기 — lib/sprite-actor.js·.cs
 node tests/img-shards.cjs        # 그림 저장소 여럿 — 옛 주소 그대로 · where · 저장소 차례
 python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장소 · 같은 이름 · 못 받은 저장소
 python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 세션별 예약(IMAGE_RULES 3절)
+python3 tests/make-thumbs.py     # 썸네일 도구 — 열리지 않는 원본은 건너뛰고 나머지를 만든 뒤 2 로 끝난다
 node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기 · 피할 값 · 생성기 주소
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
