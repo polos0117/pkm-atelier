@@ -221,6 +221,15 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   }
   n++;
 }
+/* 가벼운 조깅은 자세가 아니라 액티브 갈래의 예시(light_jog) — 그 예시에는 움직이는 자세만 붙는다(2026-10-27) */
+{
+  assert(!S.POSE_OPTIONS.some(r => r[0] === 'small_jog') && S.EXAMPLE_MAP.active.some(r => r[0] === 'light_jog'), '조깅은 자세에서 빠지고 예시로');
+  let jog = 0;
+  for (let i = 0; i < 400; i++) for (const x of P.plan({ S, entries: [], card: 'J' + i, batch: [], seed: 'jog' + i }).cuts)
+    if (x.ex === 'light_jog') { jog++; assert(['mid_stride', 'mid_action', 'turning_back'].includes(x.pose), '조깅 예시에 ' + x.pose); }
+  assert(jog > 0, '조깅 예시가 한 번은 나온다');
+  n++;
+}
 /* 생성 전 예약이 여럿 쌓여도 계획이 나온다(2026-10-27) — 예약 열 명이 SOURCE 구성 일곱 가지·옷 종류 스물넷을 다 써도,
    구도·옷·세 축 비교는 가장 최근 예약 셋까지라 check 를 통과한다(예약 전부를 넣으면 40번 다 걸렸다) */
 {
