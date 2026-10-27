@@ -221,6 +221,27 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
   }
   n++;
 }
+/* 생성 전 예약이 여럿 쌓여도 계획이 나온다(2026-10-27) — 예약 열 명이 SOURCE 구성 일곱 가지·옷 종류 스물넷을 다 써도,
+   구도·옷·세 축 비교는 가장 최근 예약 셋까지라 check 를 통과한다(예약 전부를 넣으면 40번 다 걸렸다) */
+{
+  const base = [], now = Date.now();   /* 장부는 시각 차례 — 등록분은 예약보다 앞 시각이어야 한다 */
+  for (let i = 0; i < 12; i++) {
+    const p = P.plan({ S, entries: base, card: 'D' + i, batch: [], seed: 'pile' + i });
+    base.push({ card: 'D' + i, species: 'd-' + i, status: 'done', at: new Date(now - (100 - i) * 36e5).toISOString(), cuts: p.cuts });
+  }
+  const SRC = [['subtle', 'subtle', 'balanced'], ['subtle', 'subtle', 'strong'], ['balanced', 'balanced', 'subtle'], ['balanced', 'balanced', 'strong'],
+    ['strong', 'strong', 'subtle'], ['strong', 'strong', 'balanced'], ['subtle', 'balanced', 'strong']];
+  const GS = P.GARMENTS ? Object.keys(P.GARMENTS) : ['dress', 'jumpsuit', 'overalls', 'coat', 'jacket', 'cardigan', 'vest', 'sweater', 'shirt', 'blouse', 'knit_top', 'tank', 'crop_top', 'skirt', 'shorts', 'trousers', 'leggings', 'swimsuit', 'bikini', 'lingerie_set', 'slip', 'robe', 'apron', 'uniform', 'traditional'];
+  const pile = [];
+  for (let i = 0; i < 10; i++) {
+    const p = P.plan({ S, entries: base.concat(pile), card: 'Q' + i, batch: [], seed: 'q' + i });
+    p.cuts.forEach((c, k) => { c.axes = Object.assign({}, c.axes, { source_influence: SRC[i % 7][k] }); c.garments = [GS[(i * 3 + k) % GS.length]]; });
+    pile.push({ card: 'Q' + i, species: 'q-' + i, status: 'reserved', at: new Date(now - (60 - i) * 6e4).toISOString(), cuts: p.cuts });
+  }
+  const { plan, tries: t } = batchPlan(base.concat(pile), ['NEW'], 'pile');
+  assert(plan, '예약이 쌓여도 계획이 나온다');
+  n++;
+}
 /* 한 번도 안 쓴 예시가 남은 갈래에 가산점(2026-10-27) — 필수 아닌 갈래가 최근 10명에 다 안 나왔고(모두 덜 쓴 갈래) 예시는 옛날에 다 썼는데
    취미 갈래에만 안 쓴 예시 하나가 남았으면, 필수 아닌 자리 하나는 취미 갈래가 된다 */
 {

@@ -234,4 +234,28 @@ with tempfile.TemporaryDirectory() as tmp:
     imp = json.load(open(rec / "casual3-import.json")); imp.pop("plan_match"); json.dump(imp, open(rec / "casual3-import.json", "w"))
     assert [c["cut"] for c in L.read_records([str(repo)])[0]["cuts"]] == [1, 2], "계획과 맞춰 보지 않은 그림은 계획대로 셈하지 않는다"
 
+# 예약은 가장 최근 셋까지만 구도·옷·세 축 비교에 든다(2026-10-27) — 예약 다섯 가운데 가장 오래된 것과 SOURCE 구성이 같으면 통과,
+# 가장 최근 것과 같으면 걸린다. 장면 예시는 예약 전부와 견준다
+import datetime
+def _res(i, srcs, ex="pottery_class"):
+    t = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=60 - i * 10)).isoformat()
+    return {"card": "V%d" % i, "species": "v-%d" % i, "status": "reserved", "at": t, "cuts": [
+        cut(k + 1, "everyday_basic", ex if k == 0 else "x%d%d" % (i, k), "e%d" % k, "p%d" % k, "front", "full_body", srcs[k], ["apron"],
+            act="balanced") for k in range(3)]}
+for c_ in good["characters"][0]["cuts"]:
+    assert c_["axes"]["separates_preference"] == "balanced"
+SAME = ["strong", "balanced", "subtle"]
+OTHER = [["subtle", "subtle", "strong"], ["balanced", "balanced", "strong"], ["strong", "strong", "subtle"], ["subtle", "subtle", "balanced"]]
+def _doc(first, last):
+    rs = [_res(0, first)] + [_res(i + 1, OTHER[i]) for i in range(3)] + [_res(4, last)]
+    for r in rs:
+        for c_ in r["cuts"]:
+            c_["axes"]["separates_preference"] = "prefer separates"
+    return {"entries": hist + rs}
+assert not [e for e in L.check_plan(_doc(SAME, OTHER[3]), good, SP) if "SOURCE" in e], L.check_plan(_doc(SAME, OTHER[3]), good, SP)
+assert [e for e in L.check_plan(_doc(OTHER[3], SAME), good, SP) if "SOURCE" in e and "V4" in e], L.check_plan(_doc(OTHER[3], SAME), good, SP)
+_old_ex = [x for x in SP["ex"]["everyday_basic"] if x != "pottery_class"][0]
+_d = _doc(SAME, OTHER[3]); _d["entries"][len(hist)]["cuts"][0]["ex"] = _old_ex                          # 가장 오래된 예약의 예시
+_ex = copy.deepcopy(good); _ex["characters"][0]["cuts"][0].update(cat="everyday_basic", ex=_old_ex)
+assert [e for e in L.check_plan(_d, _ex, SP) if "이미 썼다" in e], L.check_plan(_d, _ex, SP)
 print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

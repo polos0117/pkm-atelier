@@ -64,6 +64,7 @@ FACE_ORIENT = {"front", "front_3q", "side", "over_shoulder", "low_angle", "high_
 BANNED_ORIENT = {"back", "back_to_camera", "walking_away"}
 EX_WINDOW = 10          # 같은 장면 예시는 최근 10명 안에서 다시 쓰지 않는다
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
+CMP_RESERVED = 3        # 그 비교에 넣는 다른 세션 예약도 가장 최근 셋까지(2026-10-27 — 전부 넣으면 예약이 쌓일 때 SOURCE 구성 일곱 가지·옷 종류가 다 막혔다)
 CAT_WINDOW = 10         # 덜 쓴 갈래는 최근 10명으로 센다
 CAT_LOW = 5             # 그중 사용 횟수 하위 5개(같은 횟수는 함께)
 # 도장 — 이 시각 전의 예약은 도장이 없어도 읽는다(도입 전에 적은 것)
@@ -526,7 +527,8 @@ def check_plan(doc, plan, sp, ledger=None):
     for ch in batch:
         who, cuts = ch.get("card"), ch.get("cuts") or []
         others = [{"card": o.get("card"), "cuts": o.get("cuts") or []} for o in batch if o is not ch]
-        cmp_ = base[-CMP_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
+        res = [e for e in es if e["status"] == "reserved" and e.get("card") not in names]
+        cmp_ = base[-CMP_WINDOW:] + [e for e in res[-CMP_RESERVED:] if e not in base[-CMP_WINDOW:]] + others
         exw = base[-EX_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
         bad = lambda m: errs.append("%s: %s" % (who, m))
         refill = bool(ch.get("refill"))
