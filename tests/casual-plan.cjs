@@ -205,7 +205,7 @@ assert.deepEqual(a1, a2, '같은 입력·씨앗 같은 답'); n++;
    (2026-10-24 안 풀린 다시 채우기 예약 셋 때문에 배치 둘째 캐릭터마다 "짝을 못 찾음" 으로 멈췄다). 못 지킨 조건은 why.relaxed 에 남고 check 가 말한다 */
 {
   const ORS = S.ORIENTATION_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v) && !['back', 'back_to_camera', 'walking_away'].includes(v));
-  const FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v) && !['face_close', 'detail'].includes(v));
+  const FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v) && !['detail'].includes(v));
   const crowded = [];
   for (let i = 0; i < 8; i++) crowded.push({ card: 'Z' + i, status: i >= 2 ? 'reserved' : 'done', at: at(400 + i), cuts: [1, 2, 3].map(k => {
     const j = i * 3 + k - 1;

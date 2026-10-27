@@ -43,6 +43,10 @@ def fails(mutate, why):
 fails(lambda c: c[0].update(cat="partner_care", ex="care_walk"), "이미 썼다")                       # 최근 10명 안 같은 예시
 fails(lambda c: c[0].update(orient="front", frame="full_body"), "짝")                                     # 구도 짝 겹침
 fails(lambda c: c[1].update(frame="detail"), "쓰지 않는")                                                 # 얼굴이 안 보이는 프레이밍
+fails(lambda c: c[1].update(frame="face_close"), "필수 갈래")                                              # 얼굴 클로즈업 — 수영복 컷엔 안 쓴다
+fails(lambda c: c[0].update(orient="crouching", frame="face_close"), "카메라 쪽")                            # 얼굴 클로즈업 — 몸 방향과 짝짓지 않는다
+_fc = copy.deepcopy(good); _fc["characters"][0]["cuts"][0].update(frame="face_close")                     # 얼굴 클로즈업 — 2026-10-27 열었다
+assert L.check_plan(doc, _fc, SP) == [], L.check_plan(doc, _fc, SP)
 fails(lambda c: c[2].update(cat="active", ex=SP["ex"]["active"][0]), "두 장")                        # 다섯 명에 한 번은 두 장
 fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURCE")                      # 세 장 같은 영향도
 fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만

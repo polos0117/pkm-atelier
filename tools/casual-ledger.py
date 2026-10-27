@@ -57,7 +57,10 @@ RESERVATIONS = "casual-reservations"
 REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 레트로 글래머 2026-10-26
 # 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름)
 NOT_COUNTED = {"auto_random", "__custom__", "everyday"}
-BANNED_FRAME = {"face_close", "detail"}
+BANNED_FRAME = {"detail"}
+# 얼굴 클로즈업은 2026-10-27 열었다 — 필수 갈래 컷에는 안 쓰고, 얼굴이 카메라 쪽인 방향하고만(lib/casual-plan.js 와 같게)
+FACE_FRAME = {"face_close"}
+FACE_ORIENT = {"front", "front_3q", "side", "over_shoulder", "low_angle", "high_angle", "leaning_forward", "looking_down", "looking_away", "profile_close"}
 BANNED_ORIENT = {"back", "back_to_camera", "walking_away"}
 EX_WINDOW = 10          # 같은 장면 예시는 최근 10명 안에서 다시 쓰지 않는다
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
@@ -558,6 +561,10 @@ def check_plan(doc, plan, sp, ledger=None):
                 bad("%s번: %s 는 예시가 %d개뿐 — 이번 바퀴에 아직 안 쓴 예시부터 쓴다" % (n, c["cat"], len(lst)))
             if c.get("frame") in BANNED_FRAME or c.get("orient") in BANNED_ORIENT:
                 bad("%s번: 일상컷에 쓰지 않는 방향·프레이밍" % n)
+            if c.get("frame") in FACE_FRAME and c.get("cat") in REQUIRED:
+                bad("%s번: 얼굴 클로즈업은 필수 갈래 컷에 쓰지 않는다(옷이 안 남는다)" % n)
+            if c.get("frame") in FACE_FRAME and c.get("orient") not in FACE_ORIENT:
+                bad("%s번: 얼굴 클로즈업은 얼굴이 카메라 쪽인 방향하고만(%s)" % (n, c.get("orient")))
             if (c.get("orient"), c.get("frame")) in pairs:
                 bad("%s번: (방향, 프레이밍) 짝 (%s, %s) 이 비교 대상과 겹친다" % (n, c.get("orient"), c.get("frame")))
             if not [g for g in (c.get("garments") or []) if g in GARMENTS]:
