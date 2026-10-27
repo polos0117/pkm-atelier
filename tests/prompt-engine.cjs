@@ -46,8 +46,11 @@ assert(sq.includes('face toward the camera')&&sq.includes('never a back view'));
 assert(!sq.includes('IDENTITY'),'no identity block without chosen values');
 /* 손 줄 — 개수·모양·자세·장갑·효과. 옛 "drawn correctly as hands" 한 줄로는 손가락이 늘고 뭉쳤다 */
 assert(sq.includes(S.PROMPT_LINES.hands)&&sq.includes(S.PROMPT_LINES.handsArmor),'action carries the hand line');
-assert(sq.includes('one thumb and four fingers')&&sq.includes('never fingerless')&&sq.includes('no hand thrust at the camera'));
+/* 2026-10-27 — 손은 짧은 긍정형만. 손가락 개수·금지 나열이 오히려 손에 주의를 끌어 고친 컷이 늘었다 */
+assert(sq.includes('full-finger')&&!/one thumb|four fingers|five fingers|never merged|mirrored|never fingerless|thrust at the camera/.test(sq),'hand lines stay short and positive');
 assert(!sq.includes('drawn correctly as hands'),'the weak hand line came back');
+/* 몸 개수 줄 BODY(2026-10-27, 약 40낱말 — 손 줄을 줄여 거의 상쇄) — 폼·이어가기·개방·일상컷 모두 */
+assert(sq.includes(S.PROMPT_LINES.body),'anchor carries the body line');
 assert(words(sq)<=400,'anchor budget: '+words(sq));
 
 /* 머리 특징 표현을 고르면 자동 머리 문장(귀·볼주머니)을 대신한다 */
@@ -79,8 +82,9 @@ assert(ref.includes('the species features she wears as costume'));
 for(const s of ['PALETTE','WEAR','IDENTITY','mint','U-shaped','omit referenced_image_paths']) assert(!ref.includes(s),'continuation re-sends '+s);
 /* 이어가기는 첨부 그림의 손복장을 그대로 — 맨손이던 인물에 장갑을 새로 씌우지 않는다 */
 assert(ref.includes(S.PROMPT_LINES.hands)&&ref.includes(S.PROMPT_LINES.handsWear),'continuation keeps the attached hand wear');
-for(const s of [S.PROMPT_LINES.handsArmor,'Gloves are','never fingerless']) assert(!ref.includes(s),'continuation forces gloves: '+s);
-assert(words(ref)<=310,'continuation budget: '+words(ref));
+for(const s of [S.PROMPT_LINES.handsArmor,'Gloves are','full-finger']) assert(!ref.includes(s),'continuation forces gloves: '+s);
+assert(ref.includes(S.PROMPT_LINES.body),'continuation carries the body line');
+assert(words(ref)<=330,'continuation budget: '+words(ref));
 assert(build('꼬부기',{identityMode:'reference',motifs:'KEEP_THIS'}).includes('MOTIFS to keep: KEEP_THIS.'));
 /* 새 인물은 고른 외형만 */
 const chosen=build('꼬부기',{params});
@@ -100,8 +104,9 @@ for(const base of ['light','heavy','mobility','reference']){
  assert.deepEqual(law(t),[]);
  assert(t.includes(S.PROMPT_LINES.handsKeep),base+' overdrive keeps the hands');
  assert(!/hands and expression tighten/.test(t)&&t.includes('eyes keep their color'),base+' overdrive moves hands or eye color');
- assert(!t.includes('never fingerless'),'overdrive must not re-glove the attached hands');
- assert(words(t)<=240,'overdrive budget: '+words(t));
+ assert(!t.includes('full-finger'),'overdrive must not re-glove the attached hands');
+ assert(t.includes(S.PROMPT_LINES.body),'overdrive carries the body line');
+ assert(words(t)<=260,'overdrive budget: '+words(t));
 }
 assert(build('꼬부기',{form:'overdrive',baseForm:'heavy'}).includes("attach this character's heavy-form card image"));
 assert(build('파이리',{form:'overdrive',baseForm:'light'}).includes(S.TYPE_ENERGY.fire));
@@ -121,7 +126,9 @@ assert(!HAND_POSE.test(S.PROMPT_LINES.hands),'HANDS must stay anatomy-only');
 for(const pose of ['holding_cup','taking_photo','waving','reading_book','hands_in_hair','carrying_something']){
  const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',pose}));
  assert(t.includes('Pose: '+S.POSE_GUIDES[pose][1]),pose+' pose is in the prompt');
- const tail=t.slice(t.indexOf('HANDS:'));
+ /* HAND TASK 는 고른 자세를 따르고 할 일 없는 손만 쉬게 한다 — 그 줄의 relaxed 는 덮어쓰기가 아니다(2026-10-27) */
+ const tail=t.slice(t.indexOf('HANDS:')).replace(S.PROMPT_LINES.handsCasual,'');
+ assert(t.includes(S.PROMPT_LINES.handsCasual)&&S.PROMPT_LINES.handsCasual.includes('for the pose and scene')&&S.PROMPT_LINES.handsCasual.includes('idle hand'),pose+': hand task follows the pose');
  assert(!HAND_POSE.test(tail),pose+': the hand line overrides the chosen pose');
  assert(!t.includes(S.PROMPT_LINES.handsDefault),pose+': default hand pose leaked into casual');
  const act=build('꼬부기',{pose});
@@ -129,7 +136,9 @@ for(const pose of ['holding_cup','taking_photo','waving','reading_book','hands_i
  assert(act.includes(S.PROMPT_LINES.hands)&&act.includes(S.PROMPT_LINES.handsArmor),pose+': action keeps anatomy and the new-character glove rule');
 }
 assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default hand pose applies');
-assert(words(cas)<=360,'casual budget: '+words(cas));
+/* 일상컷 손 규칙 HAND TASK(2026-10-27) — 할 일 없는 손은 보이는 곳에 */
+assert(cas.includes(S.PROMPT_LINES.body)&&cas.includes(S.PROMPT_LINES.handsCasual),'casual carries the body and hand-task lines');
+assert(words(cas)<=420,'casual budget: '+words(cas));
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
 /* 몸 부위(코·입·눈·다리·몸통·털·피부…)로 적힌 특징은 입는 법 문장이 되지 않는다 — 색만 PALETTE 로 */
@@ -147,7 +156,7 @@ for(const c of cards){
  if(words(t)>most[0]) most=[words(t),c.en];
  const pal=P.palette(s); assert(pal.length<=5,c.en);
 }
-assert(most[0]<=400,'anchor budget over 1025: '+most.join(' '));
+assert(most[0]<=420,'anchor budget over 1025: '+most.join(' '));
 assert(none<120,'too many species get no wear line: '+none);
 
 /* 스타일·모드 행렬 */
