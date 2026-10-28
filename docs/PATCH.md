@@ -13,6 +13,12 @@
 
 
 
+## 2026-10-28 · claude · 일상컷 화면비 — FRAME 줄을 늘 싣기
+- lib/prompt-spec.js · lib/prompt-anthro.js — 일상컷 지시문에 화면비가 빠졌다. 2:3 이 아닐 때만 "Aspect ratio" 를 실어 기본 2:3 에서는 비율 말이 하나도 없었다(사용자, game 에서 먼저 찾음). 일상컷은 이제 OUTPUT 바로 뒤에 FRAME 줄(2:3 이면 "a vertical 2:3 (1024×1536)")을 늘 싣고, SCENE 에는 겹쳐 싣지 않는다. 액션은 그대로(card 줄이 2:3 을 말한다).
+- IMAGE_RULES.md 일상컷 1절 — 비율 줄이 이제 프롬프트에 들어간다. camera 칸에 비율 문장을 손으로 넣던 방법은 뺐다.
+- prompt.html — prompt-spec·prompt-anthro v=frame1.
+- tests/prompt-casual.cjs — 기본 2:3 과 다른 비율 넷의 FRAME 줄, SCENE 에 겹치지 않음, 액션은 예전 규칙.
+
 ## 2026-10-28 · claude · 도트 재생기 복사 — floor 가 카드마다 한 명
 - lib/sprite-actor.js — 공방 모음 원본 복사(같은 카드의 다른 도트가 있어도 바닥엔 하나만 — 여기 자료엔 아직 그런 쌍이 없다). index·dex.html 의 ?v=4
 
