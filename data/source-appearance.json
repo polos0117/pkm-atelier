@@ -32871,37 +32871,34 @@
       "shape": "quadruped",
       "features": [
         {
-          "part": "pattern",
-          "detail": "various white-colored patterns"
+          "part": "body",
+          "detail": "red rectangular scales"
         },
         {
-          "part": "bird",
-          "detail": "orange fiery bird"
+          "part": "pattern",
+          "detail": "white geometric markings with black edges"
         },
         {
           "part": "crest",
-          "detail": "short crest"
+          "detail": "orange-yellow flame wreath and bird-shaped ornament"
         },
         {
           "part": "claw",
-          "detail": "three black claws"
+          "detail": "black claws"
         },
         {
           "part": "iris",
           "detail": "yellow irises"
-        },
-        {
-          "part": "scale",
-          "detail": "rectangular scales"
         }
       ],
       "source": "https://bulbapedia.bulbagarden.net/wiki/Skeledirge_%28Pok%C3%A9mon%29",
       "revision": 4628840,
-      "retrieved": "2026-09-20",
+      "retrieved": "2026-10-29",
       "sourceTextHash": "6bc1a86084eca659633e84632277b619ca05671c5fcb8324d089ef61379a1e48",
-      "method": "text-descriptor-extraction-v1",
+      "method": "manual-source-correction",
       "formScope": "base/species overview",
-      "status": "extracted"
+      "status": "extracted",
+      "correction_note": "Verified Biology section; restore primary red, black edging and flame wreath as costume motifs; no separate creature."
     },
     "912": {
       "name": "꾸왁스",
