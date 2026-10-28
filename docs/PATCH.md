@@ -13,6 +13,9 @@
 
 
 
+## 2026-10-28 · claude · 도트 재생기 복사 — 머리말(여섯 공방)
+- lib/sprite-actor.js — 공방 모음 원본 복사. 머리말만 바뀜(게임 공방이 여섯째로 붙어 「여섯 공방 저장소」) — 동작 그대로라 캐시 꼬리표는 안 올림
+
 ## 2026-10-28 · claude · 도트 둘 더 — 리자몽·블래키 4K
 - data/sprites.json — charizard(리자몽)·umbreon(블래키) 인물 칸(base 는 열린 pkm-atelier-img-3). 사용자 「삼국지는 빼고 공방별로 둘씩 더」 — 포켓몬 그림 중 내가 고른 둘(light 폼 그림이 정본). book 공방의 4K 길(2160×3840 원본 격자 그대로 · 칸 192×256 · dot 0.5)로 뽑아 pkm-atelier-img-3 의 sprites/<id>/ 에 올렸다(원본 gen1, 기록 records/sprites/<id>/*_4k.json). 연구소 바닥·캡슐·도감 상세에 저절로 선다
 
