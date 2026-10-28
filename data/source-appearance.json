@@ -32836,32 +32836,33 @@
       "features": [
         {
           "part": "body",
-          "detail": "stout, melon-shaped body"
+          "detail": "red rounded body"
         },
         {
           "part": "face",
-          "detail": "white face"
+          "detail": "white face and chest"
         },
         {
           "part": "hand",
           "detail": "black hands"
         },
         {
-          "part": "snout",
-          "detail": "long snout"
+          "part": "pattern",
+          "detail": "yellow scales and black-yellow chest stripes"
         },
         {
-          "part": "digit",
-          "detail": "three digits"
+          "part": "crest",
+          "detail": "orange nest crest with glowing yellow egg"
         }
       ],
       "source": "https://bulbapedia.bulbagarden.net/wiki/Crocalor_%28Pok%C3%A9mon%29",
       "revision": 4628839,
-      "retrieved": "2026-09-20",
+      "retrieved": "2026-10-29",
       "sourceTextHash": "c19f7adf88dbc9d2dae19fc2f9c8140abeafaa63f73fcd0874d98ce10bc4b997",
-      "method": "text-descriptor-extraction-v1",
+      "method": "manual-source-correction",
       "formScope": "base/species overview",
-      "status": "extracted"
+      "status": "extracted",
+      "correction_note": "Verified Biology section; restore omitted red primary color, yellow scales, orange fire nest and egg. Human anatomy is supplied by generator."
     },
     "911": {
       "name": "라우드본",
