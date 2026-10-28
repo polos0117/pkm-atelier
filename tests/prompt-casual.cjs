@@ -73,4 +73,14 @@ assert(P.buildPrompt({...base,outputMode:'action',frame:'CUSTOM_CROP'}).includes
 const open=P.buildPrompt({...base,...camera,outputMode:'action',form:'overdrive',baseForm:'heavy'});
 for(const s of ['KEEP_CUSTOM_CAMERA',S.FRAME_GUIDES.waist_up[1],S.LENS_GUIDES.wide24[1],S.POSE_GUIDES.offering_food[1]])
  assert(!open.includes(s),'casual camera/pose leaked to overdrive');
+// 일상컷 화면비 — 기본 2:3 도 늘 FRAME 줄로 싣는다. 고르면 그 비율 하나만(SCENE 에 겹쳐 싣지 않는다) (2026-10-28)
+{
+ const plain=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music'});
+ assert(plain.includes('FRAME: a vertical 2:3 (1024×1536) image.')&&!plain.includes('Aspect ratio'),'casual FRAME default 2:3');
+ for(const [a,w] of [['3:2','a horizontal 3:2 (1536×1024)'],['1:1','a square 1:1'],['9:16','a tall vertical 9:16'],['16:9','a wide horizontal 16:9']]){
+  const t=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music',aspect:a});
+  assert(t.includes('FRAME: '+w)&&!t.includes('2:3')&&!t.includes('Aspect ratio'),'casual FRAME '+a);
+ }
+ assert(P.buildPrompt({...base,outputMode:'action',aspect:'3:2'}).includes('Aspect ratio: 3:2')&&!P.buildPrompt({...base,outputMode:'action'}).includes('FRAME:'),'action keeps its own aspect rule');
+}
 console.log('PASS casual options: categories, descriptions, Pokémon jobs, poses, camera and mode isolation');
