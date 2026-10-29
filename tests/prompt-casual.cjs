@@ -83,4 +83,14 @@ for(const s of ['KEEP_CUSTOM_CAMERA',S.FRAME_GUIDES.waist_up[1],S.LENS_GUIDES.wi
  }
  assert(P.buildPrompt({...base,outputMode:'action',aspect:'3:2'}).includes('Aspect ratio: 3:2')&&!P.buildPrompt({...base,outputMode:'action'}).includes('FRAME:'),'action keeps its own aspect rule');
 }
+// 일상컷 옷은 장면의 옷 그대로 — 포켓몬의 특징은 장신구·주변 사물로만(2026-10-29, game 에서 먼저)
+{
+ assert(!/color echo|motif on the clothing|source palette and motifs in clothing|integrated into everyday clothing/.test(JSON.stringify(S.PROMPT_LINES)+JSON.stringify(S.SCENE_AXIS_GUIDES)),'old clothing-motif wording remains');
+ const t=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music'});
+ assert(t.includes("Do not carry the attached image's palette, patterns or trim into the outfit")&&t.includes("never in the outfit's colours, patterns or cut"),'outfit ignores the attached palette');
+ for(const v of ['subtle','balanced','strong']){
+  const s=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music',axes:{source_influence:v}});
+  assert(/accessor|props|object in the scene/.test((s.match(/source_influence: [^\n]*/)||[''])[0]),'source_influence '+v+' uses accessories and props');
+ }
+}
 console.log('PASS casual options: categories, descriptions, Pokémon jobs, poses, camera and mode isolation');

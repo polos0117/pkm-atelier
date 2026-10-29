@@ -138,7 +138,8 @@ for(const pose of ['holding_cup','taking_photo','waving','reading_book','hands_i
 assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default hand pose applies');
 /* 일상컷 손 규칙 HAND TASK(2026-10-27) — 할 일 없는 손은 보이는 곳에 */
 assert(cas.includes(S.PROMPT_LINES.body)&&cas.includes(S.PROMPT_LINES.handsCasual),'casual carries the body and hand-task lines');
-assert(words(cas)<=420,'casual budget: '+words(cas));
+/* 일상컷 FRAME 줄(2:3, 2026-10-28)로 21낱말, 옷은 첨부 그림의 색·무늬를 따르지 않는다는 말(2026-10-29)로 16낱말쯤 늘었다 */
+assert(words(cas)<=470,'casual budget: '+words(cas));
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
 /* 몸 부위(코·입·눈·다리·몸통·털·피부…)로 적힌 특징은 입는 법 문장이 되지 않는다 — 색만 PALETTE 로 */
