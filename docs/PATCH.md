@@ -13,6 +13,9 @@
 
 
 
+## 2026-10-29 · claude · 하는 일 「화장대 앞 치장」 문장을 동작 하나로
+- data/casual-tree.json — makeup 의 en 「putting on earrings and makeup」 → 「fastening one earring」(game 워크래프트 III 일상4 에서 팔이 가슴 사이로 튀어나왔다 — 두 동작이라 두 손이 다 얼굴로)
+
 ## 2026-10-29 · claude · 지시문 묶음 — 일상 안내에 고른 길의 트리 문장
 - tools/prompt-pack.cjs — settings.json 일상 컷의 `guide.tree` 에 고른 길의 트리 문장(시대·장소·하는 일·의상 계열·옷의 한글 이름·영어 문장, 장소 묶음·자세 계열·의상 안내)을, INDEX.md 에 컷마다 「고른 길」 표를 더했다(사용자 「일상컷 트리표도 같이 제공하는거야?」 — 장면·옷 칸을 길 문장과 나란히 읽어 써야 하는데 열쇠만 보였다).
 - tests/prompt-pack.cjs — 안내의 트리 문장 = 트리 표 = 지시문의 Place·Activity 줄. IMAGE_RULES.md — 3절 「지시문 묶음」 의 guide 설명.
