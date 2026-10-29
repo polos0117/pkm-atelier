@@ -79,7 +79,9 @@ node tools/prompt-pack.cjs build --dir <작업 폴더>
 - `settings.json` 에는 **고칠 수 있는 칸만** 있다. 자리마다 고정인 것(출력·인물 기준·장갑 폼·폭주 기준 장갑·첨부 — 위 표)은 도구가 정하고, 일상 세 컷의 선택값은 계획 파일에서만 온다
   (계획기 주소로 생성기를 연 것과 같은 길 — 채우고 모두 잠근다). 고칠 칸: ① `motifs`·`formOverride`·`headFeature`·`faceDesignOn`·`params`(외형)·`scene`(장면 칸 — 비워 두는 것이 기본),
   ②③ `motifs`·`formOverride`·`scene`, 폭주 셋 `motifs`·`formOverride`·`custom`, 일상 셋 `scene`·`outfit`·`camera`·`custom` 과 칸마다 사유 `why`.
-  일상 칸 옆의 `guide`(길·옷 종류·드러내기·장면 첫머리)는 쓰는 사람이 볼 것이라 build 가 읽지 않는다.
+  일상 칸 옆의 `guide` 는 쓰는 사람이 볼 것이라 build 가 읽지 않는다 — 고른 길의 **트리 문장**(시대·장소·하는 일·의상 계열·옷의 한글 이름과 영어 문장, 장소 묶음·자세 계열·의상 안내 —
+  `data/casual-tree.json` 그대로, 지시문의 `Place:`·`Activity:`·`Outfit:` 줄이 이 영어다)과 계획의 옷 종류·드러내기·장면 첫머리. `INDEX.md` 에도 컷마다 「고른 길」 표로 찍는다.
+  장면·옷 칸은 이 문장과 나란히 읽어 되풀이하거나 다르게 쓰지 않는다(아래 3·5). 트리 전체는 주지 않는다 — 길은 계획기가 정하고, 바꿀 것이 있으면 `--avoid` 로 계획기에 다시 맡긴다.
 - build 는 틀린 칸(없는 칸·고정값을 바꾸려 함·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷·트리에 안 맞는 계획 값)이 하나라도 있으면 **아무것도 쓰지 않고** 1 로 끝난다.
 - 결과: 자리마다 `<자리>-prompt.txt`(제출할 지시문)와 `<자리>-ui.json`(생성기 저장값 `storage` + `prompt` — 일상은 `plan`·`manual_inputs`·`manual_why` 도), `INDEX.md`(차례·첨부·올릴 파일 이름·지시문 sha256).
   **`<자리>-prompt.txt` 를 손으로 고쳐 제출하지 않는다** — 고칠 것이 있으면 settings 를 고쳐 build 를 다시 돌린다. 같은 settings 면 같은 글이 나온다.

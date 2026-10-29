@@ -15,7 +15,8 @@
      light               motifs · formOverride · headFeature · faceDesignOn · params(외형) · scene(장면 칸 — 비워 두는 것이 기본)
      heavy · mobility    motifs · formOverride · scene
      *_overdrive         motifs · formOverride · custom(추가 연출 요청 — 생성기도 폭주엔 이 칸만 보인다)
-     casual1~3           scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4) */
+     casual1~3           scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4)
+   일상 칸 옆 guide 에는 고른 길의 트리 문장(한글 이름·영어 문장·장소 묶음·자세 계열·의상 안내)과 옷 종류·드러내기·첫머리가 있고, INDEX.md 에도 컷마다 표로 찍는다 */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process'), crypto = require('node:crypto');
 const ROOT = path.resolve(__dirname, '..');
@@ -68,6 +69,20 @@ function planCut(plan, card, n) {
   return { cut, raw: new URLSearchParams(CP.generatorQuery(card, cut)).get('casual') };
 }
 
+/* 쓰는 사람이 볼 것 — 고른 길의 트리 문장(data/casual-tree.json — 지시문의 Place·Activity·Outfit 줄이 이 영어 그대로)과
+   계획의 옷 종류·드러내는 방식·장면 칸 첫머리. 장면·옷 칸은 이 문장을 되풀이하거나 다르게 쓰지 않는다(IMAGE_RULES 3절 3·5). build 는 읽지 않는다 */
+function guideOf(tree, cut) {
+  const e = CT.era(tree, cut.era), p = CT.place(tree, cut.place), a = CT.act(tree, cut.act), f = CT.family(tree, cut.ofam), it = cut.item ? CT.item(tree, cut.ofam, cut.item) : null;
+  const fam = CT.poseFamily(tree, cut.act), g = p && CT.group(tree, p.group);
+  const row = (x, extra) => x ? Object.assign({ key: x.key, ko: x.ko, en: x.en }, extra || {}) : null;
+  return {
+    path: [cut.era, cut.place, cut.act, cut.ofam, cut.item].filter(Boolean).join(' / '),
+    tree: { era: row(e), place: row(p, g ? { group: g.ko } : {}), act: row(a, fam ? { pose_family: fam.ko } : {}), ofam: row(f, f && f.guide ? { guide: f.guide } : {}),
+      item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' } },
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || ''
+  };
+}
+
 function init(o) {
   if (!o.card || !o.dir) throw new Error('init <카드> --dir <작업 폴더>');
   const d = data(), c = cardOf(d, o.card);
@@ -92,7 +107,7 @@ function init(o) {
     if (def.mode === 'casual' && plan) {
       const pc = planCut(plan, c.name, def.cut);
       /* 쓰는 사람이 볼 것 — 계획의 옷 종류·드러내는 방식·장면 칸 첫머리(build 는 이 칸을 읽지 않는다) */
-      if (pc) s.guide = { path: [pc.cut.era, pc.cut.place, pc.cut.act, pc.cut.ofam, pc.cut.item].filter(Boolean).join(' / '), garments: pc.cut.garments || [], expose: pc.cut.expose || [], lead: pc.cut.lead || '' };
+      if (pc) s.guide = guideOf(d.tree, pc.cut);
     }
     set.slots[slot] = s;
   }
@@ -194,6 +209,19 @@ function build(o) {
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
     '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 올릴 파일 |', '|---|---|---|---|---|---|---|'];
   for (const r of out) lines.push('| ' + SLOTS[r.slot].n + ' | ' + r.slot + ' | ' + att(SLOTS[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
+  /* 일상 컷마다 고른 길 — 트리 문장(지시문에 그대로 들어간다) */
+  for (const r of out.filter(x => x.ui.plan)) {
+    const g = guideOf(d.tree, r.ui.plan), t = g.tree;
+    lines.push('', '## ' + SLOTS[r.slot].n + ' ' + r.slot + ' — 고른 길', '',
+      '| 칸 | 고른 것 | 트리 문장(지시문 그대로) |', '|---|---|---|',
+      '| 시대 | ' + (t.era ? t.era.ko : '—') + ' | ' + (t.era ? t.era.en : '') + ' |',
+      '| 장소 | ' + (t.place ? t.place.ko + (t.place.group ? ' · ' + t.place.group : '') : '—') + ' | ' + (t.place ? t.place.en : '') + ' |',
+      '| 하는 일 | ' + (t.act ? t.act.ko + (t.act.pose_family ? ' · ' + t.act.pose_family : '') : '—') + ' | ' + (t.act ? t.act.en : '') + ' |',
+      '| 의상 계열 | ' + (t.ofam ? t.ofam.ko : '—') + ' | ' + (t.ofam ? t.ofam.en + (t.ofam.guide ? ' — ' + t.ofam.guide : '') : '') + ' |',
+      '| 옷 | ' + t.item.ko + ' | ' + t.item.en + ' |', '',
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
+  }
   if (!o.slot) fs.writeFileSync(path.join(o.dir, 'INDEX.md'), lines.join('\n') + '\n');
   console.log('썼다 ' + out.length + '자리 → ' + o.dir + (o.slot ? '' : ' (INDEX.md)'));
 }

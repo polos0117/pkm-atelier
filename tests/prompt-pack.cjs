@@ -29,7 +29,13 @@ try {
   assert.equal(set.style, 'glossy_promo', '기본 화풍');
   assert.deepEqual(Object.keys(set.slots), ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']);
   assert(!('form' in set.slots.heavy) && !('identityMode' in set.slots.light), '고정값은 settings 에 없다');
-  assert.deepEqual(set.slots.casual1.guide, { path: 'now / water_pool / sunbed / swimwear / classic_bikini', garments: ['bikini'], expose: ['strapless top'], lead: 'place' });
+  const g1 = set.slots.casual1.guide, treeJ = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree.json'), 'utf8'));
+  assert.equal(g1.path, 'now / water_pool / sunbed / swimwear / classic_bikini');
+  assert.deepEqual([g1.garments, g1.expose, g1.lead], [['bikini'], ['strapless top'], 'place']);
+  /* 고른 길의 트리 문장 — 지시문의 Place·Activity·Outfit 줄과 같은 영어 */
+  assert.equal(g1.tree.place.en, CT.place(treeJ, 'water_pool').en); assert.equal(g1.tree.act.en, CT.act(treeJ, 'sunbed').en);
+  assert.equal(g1.tree.item.en, CT.item(treeJ, 'swimwear', 'classic_bikini').en); assert(g1.tree.place.group && g1.tree.act.pose_family && g1.tree.era.ko, '묶음·자세 계열·시대 이름');
+  assert.equal(set.slots.casual2.guide.tree.item.key, '', '옷 자동');
   assert.notEqual(run('init', '피카츄', '--dir', dir).status, 0, '이미 있으면 덮지 않는다');
   checks += 3;
 
@@ -91,6 +97,8 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   /* 차례표 — 첨부·올릴 파일 */
   const index = fs.readFileSync(path.join(dir, 'INDEX.md'), 'utf8');
   assert(index.includes('| ⑤ | heavy_overdrive | ② 피카츄_heavy_glossy_promo_f.webp + (되면 ①) |') && index.includes('`피카츄_glossy_promo_f_casual1.webp`'), '차례표');
+  const c1text = fs.readFileSync(path.join(dir, 'casual1-prompt.txt'), 'utf8');
+  assert(index.includes('## ⑦ casual1 — 고른 길') && index.includes(g1.tree.place.en) && c1text.includes('Place: ' + g1.tree.place.en) && c1text.includes('Activity: ' + g1.tree.act.en), '차례표의 트리 문장 = 지시문 줄');
   checks += 2;
   /* 같은 settings 면 같은 글 */
   const before = fs.readFileSync(path.join(dir, 'casual3-prompt.txt'), 'utf8');
@@ -110,5 +118,5 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   other.card = '라이츄'; other.no = 26; fs.mkdirSync(odir); fs.writeFileSync(path.join(odir, 'settings.json'), JSON.stringify(other));
   r = run('build', '--dir', odir); assert.equal(r.status, 1); assert(/계획에 라이츄 1번 컷이 없다/.test(r.stderr));
   checks += 3;
-  console.log('PASS 지시문 묶음: init(고칠 칸만·안내·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표 · 같은 글 · 틀린 칸 — ' + checks + '가지');
+  console.log('PASS 지시문 묶음: init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

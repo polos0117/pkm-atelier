@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-29 · claude · 지시문 묶음 — 일상 안내에 고른 길의 트리 문장
+- tools/prompt-pack.cjs — settings.json 일상 컷의 `guide.tree` 에 고른 길의 트리 문장(시대·장소·하는 일·의상 계열·옷의 한글 이름·영어 문장, 장소 묶음·자세 계열·의상 안내)을, INDEX.md 에 컷마다 「고른 길」 표를 더했다(사용자 「일상컷 트리표도 같이 제공하는거야?」 — 장면·옷 칸을 길 문장과 나란히 읽어 써야 하는데 열쇠만 보였다).
+- tests/prompt-pack.cjs — 안내의 트리 문장 = 트리 표 = 지시문의 Place·Activity 줄. IMAGE_RULES.md — 3절 「지시문 묶음」 의 guide 설명.
+
 ## 2026-10-29 · claude · 지시문 묶음 — 브라우저 대신 파일로 생성기 지시문·저장값
 - tools/prompt-pack.cjs — 새 도구(사용자 「브라우저에서 하라고 시켰는데 파일로 정리해서 읽게 하는게 더 좋을거 같아」). `init <카드> --dir --plan` 이 고칠 칸만 있는 settings.json 을, `build --dir` 가 아홉 자리(IMAGE_RULES 3절 표 — 출력·인물 기준·장갑 폼·폭주 기준·첨부는 도구가 정한다)의 `<자리>-prompt.txt` · `<자리>-ui.json`(생성기 저장값 꼴) · INDEX.md(차례·첨부·올릴 파일·sha256)를 쓴다. 일상 선택값은 계획 파일에서만(계획기 주소와 같은 길), 직접 입력엔 사유가 있어야, 틀린 칸이 있으면 아무것도 안 쓰고 1.
 - lib/prompt-state.js — 새 공용 모듈. 생성기 화면의 저장값 꼴·바로잡기(normalize)·계획기 값 받기(planned)·조립부 입력을 lib/prompt-ui.js 에서 떼어 냈다 — 화면과 도구가 같은 코드라 같은 글이 나온다. prompt.html prompt-state v=1 · prompt-ui v=state1. tests/prompt-dom-harness.cjs 도 싣는다.
