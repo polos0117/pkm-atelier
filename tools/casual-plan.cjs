@@ -161,6 +161,7 @@ function show(o, res) {
     }
   }
   lines.push('', '계획 ' + res.file + ' — casual-ledger.py check 통과');
+  lines.push('지시문 묶음: node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> --plan <--out 으로 받은 계획 파일> → settings.json 을 채우고 build (IMAGE_RULES 3절 「지시문 묶음」)');
   return lines.join('\n');
 }
 

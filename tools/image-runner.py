@@ -405,7 +405,7 @@ def intent(run, slot, prompt, ui, files):
     if step.get('action') != 'prepare_ui_then_intent' or step['slot'] != slot:
         raise ValueError('not the next slot; pending result/review must be resolved first')
     c = current(run)
-    # UI is captured by the agent, not synthesized by this coordinator.
+    # UI comes from the agent — tools/prompt-pack.cjs (same state code as the generator) or the generator screen — never synthesized here.
     if not Path(prompt).read_text().strip() or not isinstance(json.loads(Path(ui).read_text()), dict):
         raise ValueError('actual prompt and UI JSON required')
     refs = [] if slot == 'light' else [slot.replace('_overdrive', '') if slot.endswith('_overdrive') else 'light']

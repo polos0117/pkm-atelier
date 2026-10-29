@@ -126,6 +126,8 @@ python3 tests/make-thumbs.py     # 썸네일 도구 — 열리지 않는 원본�
 python3 tools/casual-tree.py check  # 일상컷 트리 표 — 끊긴 길·없는 열쇠·필수 갈래·추천 조합·예전 기록 변환표(audit 은 장소×하는 일 훑기)
 node tests/casual-tree.cjs       # 일상컷 트리 ↔ 생성기 표 · 칸끼리 규칙 · pkm 몫(안 쓰는 값·얼굴 클로즈업·동료·세대의 해)
 python3 tests/casual-tree.py     # 일상컷 트리 검사기
+node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 아홉 자리 · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
+node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 아홉 자리 글자 하나 다르지 않다(브라우저)
 node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글

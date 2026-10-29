@@ -10,7 +10,7 @@
 
 ## 다음 실행의 짧은 지침
 
-먼저 AGENTS.md와 IMAGE_RULES.md를 읽고 코드와 이미지 세 저장소를 최신 main으로 받는다. 기존 로컬 변경을 reset하지 않는다. Python 3 + Pillow, Node, Playwright/Chromium이 필요하다. 코드·이미지 저장소 셋을 나란히 둔다. casual-plan은 실제 img/와 records를 읽으므로 기록만 받은 sparse checkout으로 생성 계획을 확정하지 않는다.
+먼저 AGENTS.md와 IMAGE_RULES.md를 읽고 코드와 이미지 세 저장소를 최신 main으로 받는다. 기존 로컬 변경을 reset하지 않는다. Python 3 + Pillow, Node가 필요하다(지시문은 `tools/prompt-pack.cjs` 로 — 브라우저가 필요 없다. Playwright/Chromium은 검사에만). 코드·이미지 저장소 셋을 나란히 둔다. casual-plan은 실제 img/와 records를 읽으므로 기록만 받은 sparse checkout으로 생성 계획을 확정하지 않는다.
 
 ```sh
 # 예약 호출 고유 ID를 한 번 정하고 모든 후속 명령/재진입에 그대로 재사용한다.
@@ -36,11 +36,13 @@ claims는 캐릭터 전체에 대한 owner/run 잠금이다. 시간 경과만으
 
 ## 생성과 검수
 
-관리기는 이미지 생성 API를 제공하지 않는다. 에이전트가 실제 UI를 선택하고 제출 원문을 확인한 뒤 현재 세션의 image_gen을 호출한다. 선택값·직접 입력 이유·잠금·원문은 IMAGE_RULES에 맞게 캡처한다. 다른 유료 API나 새 자격증명을 사용하지 않는다.
+관리기는 이미지 생성 API를 제공하지 않는다. 에이전트는 브라우저로 생성기를 조작하지 않고 지시문 묶음(`tools/prompt-pack.cjs`, IMAGE_RULES 3절 「지시문 묶음」 — 2026-10-29)으로 지시문·UI 파일을 만든다. 묶음의 `<slot>-prompt.txt` 를 고치지 않고 제출 원문으로 확인한 뒤 현재 세션의 image_gen을 호출한다. 선택값·직접 입력 이유·잠금은 묶음의 `<slot>-ui.json` 에 담긴다. 다른 유료 API나 새 자격증명을 사용하지 않는다.
 
 ```sh
 # 먼저 원문/UI를 영속 기록. 성공한 intent 하나당 생성 호출 한 번만.
-python3 tools/image-runner.py intent --owner pkm-daily --card 345 --slot heavy --prompt /path/prompt.txt --ui /path/ui.json
+node tools/prompt-pack.cjs init <카드> --dir /path/pack --plan /path/plan.json   # 한 캐릭터에 한 번 — settings.json 을 채우고
+node tools/prompt-pack.cjs build --dir /path/pack                             # 아홉 자리 <slot>-prompt.txt · <slot>-ui.json · INDEX.md
+python3 tools/image-runner.py intent --owner pkm-daily --card 345 --slot heavy --prompt /path/pack/heavy-prompt.txt --ui /path/pack/heavy-ui.json
 # 에이전트가 image_gen을 호출한다. 위 명령은 이미지를 만들지 않는다.
 # 도구가 실제로 반환한 파일 경로만 사용한다.
 python3 tools/image-runner.py record --owner pkm-daily --card 345 --slot heavy --image /actual/result.png

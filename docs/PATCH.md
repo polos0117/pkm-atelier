@@ -13,6 +13,13 @@
 
 
 
+## 2026-10-29 · claude · 지시문 묶음 — 브라우저 대신 파일로 생성기 지시문·저장값
+- tools/prompt-pack.cjs — 새 도구(사용자 「브라우저에서 하라고 시켰는데 파일로 정리해서 읽게 하는게 더 좋을거 같아」). `init <카드> --dir --plan` 이 고칠 칸만 있는 settings.json 을, `build --dir` 가 아홉 자리(IMAGE_RULES 3절 표 — 출력·인물 기준·장갑 폼·폭주 기준·첨부는 도구가 정한다)의 `<자리>-prompt.txt` · `<자리>-ui.json`(생성기 저장값 꼴) · INDEX.md(차례·첨부·올릴 파일·sha256)를 쓴다. 일상 선택값은 계획 파일에서만(계획기 주소와 같은 길), 직접 입력엔 사유가 있어야, 틀린 칸이 있으면 아무것도 안 쓰고 1.
+- lib/prompt-state.js — 새 공용 모듈. 생성기 화면의 저장값 꼴·바로잡기(normalize)·계획기 값 받기(planned)·조립부 입력을 lib/prompt-ui.js 에서 떼어 냈다 — 화면과 도구가 같은 코드라 같은 글이 나온다. prompt.html prompt-state v=1 · prompt-ui v=state1. tests/prompt-dom-harness.cjs 도 싣는다.
+- lib/prompt-ui.js — 위 모듈을 쓴다(동작은 그대로 — prompt·casual 검사 그대로 통과).
+- tests/prompt-pack.cjs · tests/prompt-pack-screen.cjs — 도구(node)와, 묶음 저장값을 실제 생성기 화면에 넣으면 아홉 자리 지시문이 글자 하나 다르지 않은지(브라우저).
+- IMAGE_RULES.md — 3절 「지시문 묶음」 을 새로 두고, 2절 파일 표·「그 밖의 원칙」(실제 UI → 묶음 칸, 묶음 지시문을 손으로 고쳐 내지 않는다)·일상컷 차례 3·기록 4를 묶음으로. docs/IMAGE_AUTOMATION.md — 생성 절차와 intent 예를 묶음 파일로, 브라우저는 검사에만. tools/casual-plan.cjs — 끝에 묶음 안내 한 줄. tools/image-runner.py — UI 출처 주석. AGENTS.md — 검사 둘.
+
 ## 2026-10-29 · claude · 일상컷 계획기 — 허브 통합 생성기 주소도 찍는다
 - tools/casual-plan.cjs — 컷마다 생성기 주소 밑에 `허브 https://polos0117.github.io/prompt.html?a=pkm&mech=…&casual=…` 한 줄(사용자 「일상컷 계획 불러오기도 허브에 넣어줘」). 허브가 같은 꼴을 받아 값을 채우고 계획 칸은 랜덤이 안 바꾼다 — 지시문은 옛 생성기와 같다(허브 tests/prompt-screen.cjs).
 - IMAGE_RULES.md — 3절 계획기 차례 3에 허브 주소로 열어도 된다는 한 줄.
