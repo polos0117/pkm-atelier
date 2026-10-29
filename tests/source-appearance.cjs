@@ -22,9 +22,9 @@ const empty=structuredClone(data);empty.entries['7'].features=[];assert.throws((
 validate(data);
 assert.equal(data.sources.license,'CC-BY-NC-SA-2.5');
 const ctx={window:{}};vm.createContext(ctx);
-for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
+for(const f of ['prompt-spec','casual-tree','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const P=ctx.window.AtelierPrompt;
-const base={style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params:[]};
+const base={style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params:[],tree:JSON.parse(require('node:fs').readFileSync('data/casual-tree.json','utf8'))};
 // 자료는 새 인물에만 — 색(PALETTE)과 입는 법(WEAR)으로. 이어가기·개방·일상은 첨부가 정하므로 다시 싣지 않는다.
 let worn=0,prompts=0;
 for(const c of cards){

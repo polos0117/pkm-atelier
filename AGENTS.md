@@ -123,7 +123,10 @@ node tests/img-shards.cjs        # 그림 저장소 여럿 — 옛 주소 그대
 python3 tests/register-images.py # 등록기 — 슬롯 · 닫힌/열린 저장소 · 같은 이름 · 못 받은 저장소
 python3 tests/casual-ledger.py   # 일상컷 장부 — 기록 읽기 · 계획 검사 · 세션별 예약(IMAGE_RULES 3절)
 python3 tests/make-thumbs.py     # 썸네일 도구 — 열리지 않는 원본은 건너뛰고 나머지를 만든 뒤 2 로 끝난다
-node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기 · 피할 값 · 생성기 주소
+python3 tools/casual-tree.py check  # 일상컷 트리 표 — 끊긴 길·없는 열쇠·필수 갈래·추천 조합·예전 기록 변환표(audit 은 장소×하는 일 훑기)
+node tests/casual-tree.cjs       # 일상컷 트리 ↔ 생성기 표 · 칸끼리 규칙 · pkm 몫(안 쓰는 값·얼굴 클로즈업·동료·세대의 해)
+python3 tests/casual-tree.py     # 일상컷 트리 검사기
+node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
 python3 tests/anatomy-check.py   # 팔·다리·손 검사기 — 떨어진 손·손 셋·뒤집힌 손·늘어난 팔다리·맨발·같은 손 두 번(모델 없이 점 목록으로)
@@ -139,6 +142,8 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 ```
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
+
+일상컷 트리 모듈 `lib/casual-tree.js` 와 검사기 `tools/casual-tree.py` 는 game-atelier 가 원본이고 book·myth·pkm 이 같은 파일을 복사해 쓴다(2026-10-29). 공방마다 다른 것은 트리 표 `data/casual-tree.json` 뿐 — pkm 만의 규칙(안 쓰는 값·얼굴 클로즈업 조건·동료 묶음·세대의 해)도 표의 칸이다. 모듈을 고치면 game 에서 고쳐 넷에 같이 복사하고 넷의 시험을 다 돌린다. 장면 고르기 규칙은 IMAGE_RULES.md 3절.
 
 도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 부르는 곳: 연구소(`index.html` — 캡슐 벽 밑 바닥 `.lab-floor`, 캡슐을 열면 그 포켓몬의 도트가 뛰쳐나와 화면을 거닌다)·도감(상세의 도트 줄, 목록 칸의 「도트」 표). 인물은 `data/sprites.json` 의 `actors` 에 도트 공방의 「인물 칸 복사」를 넣는다(card = 카드 이름), 그림은 열린 `pkm-atelier-img-3` 의 `sprites/`(인물 칸에 `base` — 루기아처럼 앞선 인물은 `pkm-atelier-img-2`, 자료 전체의 `base`).
 

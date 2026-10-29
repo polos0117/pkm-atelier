@@ -1,9 +1,10 @@
-/* NODE_PATH=<jsdom and preact node_modules> node tests/prompt-random-dom.cjs */
+/* NODE_PATH=<jsdom and preact node_modules> node tests/prompt-random-dom.cjs
+   일상컷 랜덤은 트리 차례 — 잠근 칸(장소·하는 일)은 그대로, 뒤 칸만 그 안에서 */
 const assert=require('node:assert/strict');
 const {open,pause,storeKey}=require('./prompt-dom-harness.cjs');
 const fixture=JSON.stringify({last:'피카츄',cards:{
  '피카츄':{mode:'casual',identityMode:'reference',form:'heavy',scenes:{
-  casual:{cat:'partner_care',ex:'care_feeding',pose:'walking',camera:'KEEP_CAMERA',custom:'KEEP_TEXT'},
+  casual:{era:'in_pokemon',place:'partner_garden',act:'care_feeding',ofam:'everyday',pose:'offering_food',camera:'KEEP_CAMERA',custom:'KEEP_TEXT'},
   action:{action:{category:'ranged',example:'aimed_release'}}}},
  '이상해씨':{mode:'casual',identityMode:'reference'}
 }});
@@ -17,12 +18,13 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   const lens=get('lens').value;assert(lens&&lens!=='natural50');
   await click('lock-lens');assert.equal(get('lock-lens').getAttribute('aria-pressed'),'true');
   assert(get('random-lens').disabled);await click('random-lens');assert.equal(get('lens').value,lens);
-  await click('lock-example');assert(get('random-category').disabled);
-  await click('random-scene');assert.equal(get('category').value,'partner_care');assert.equal(get('example').value,'care_feeding');
+  await click('lock-place');await click('lock-act');
+  await click('random-scene');assert.equal(get('place').value,'partner_garden');assert.equal(get('act').value,'care_feeding');
   assert.equal(get('lens').value,lens);assert.equal(get('camera').value,'KEEP_CAMERA');assert.equal(get('custom').value,'KEEP_TEXT');
   assert.equal(get('style').value,style);
-  await click('lock-example');await click('random-category');assert.notEqual(get('category').value,'partner_care');
-  assert.equal(get('example').value,'');await click('random-example');assert(get('example').value);
+  await click('lock-place');await click('lock-act');
+  await click('random-place');assert.notEqual(get('place').value,'partner_garden');
+  assert(get('act').value,'the activity is repaired inside the new place');
   await click('lock-pose');const pose=get('pose').value;
   await click('random-pose');assert.equal(get('pose').value,pose);
   await click('mode-action');assert.equal(get('lock-lens').getAttribute('aria-pressed'),'false');
@@ -46,6 +48,6 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   assert.equal(a.get('lock-lens').getAttribute('aria-pressed'),'true');assert.equal(a.get('lens').value,lens);
   await a.click('mode-action');assert(a.get('random-scene').disabled);assert.equal(a.get('action-effects').value,'none');
   assert.deepEqual(a.errors,[]);
-  console.log('PASS random DOM: per-field/all controls, locks, dependent examples, manual text, mode/card separation and restore');
+  console.log('PASS random DOM: per-field/all controls, locks, tree order, manual text, mode/card separation and restore');
  }finally{a.dom.window.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

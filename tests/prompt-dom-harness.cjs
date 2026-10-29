@@ -18,7 +18,7 @@ async function open(store,options={}){
  const preact=path.dirname(require.resolve('preact/package.json'));
  w.eval(fs.readFileSync(path.join(preact,'dist/preact.umd.js'),'utf8'));
  w.eval(fs.readFileSync(path.join(preact,'hooks/dist/hooks.umd.js'),'utf8'));
- for(const f of ['workspace-theme','words','img','prompt-spec','figures','prompt-anthro','prompt-lifestyle','prompt-random'])w.eval(read('lib/'+f+'.js'));
+ for(const f of ['workspace-theme','words','img','prompt-spec','casual-tree','figures','prompt-anthro','prompt-lifestyle','prompt-random','casual-plan'])w.eval(read('lib/'+f+'.js'));
  const imports='const {h,render}=window.preact; const {useState,useEffect,useLayoutEffect,useMemo,useRef}=window.preactHooks;';
  const strip=s=>s.replace(/^import .*;\n/gm,'').replace(/^export /gm,'');
  w.eval('(function(){'+imports+strip(read('lib/workspace-ui.js'))+'window.TestHeader=WorkspaceHeader;})();');

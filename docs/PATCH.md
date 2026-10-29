@@ -13,6 +13,16 @@
 
 
 
+## 2026-10-29 · claude · 일상컷 트리(B안) — 갈래·예시 대신 시대 → 장소 → 하는 일 → 의상 → 구도, 장부는 두 열쇠
+- data/casual-tree.json — 새 트리 표(game-atelier 트리를 바탕으로, 빌드는 세션 스크립트). 시대 넷: 지금 · 첫 등장 무렵(세대의 해 gen_years — 1세대 1996 … 9세대 2022, 사용자 「과거는 그렇게」) · 포켓몬 세계 안 · 무대·환상. pkm 몫 장소 묶음: 포켓몬 세계(포켓몬센터·콘테스트장·스타디움 …) · 포켓몬 직업 현장(예전 직업컷 61개가 하는 일 하나씩, 직업복 계열 — 기존 트레이너·관장·포켓몬센터 옷을 베끼지 않게) · 동료 포켓몬과 함께(companion — 예전 파트너 돌봄, 가슴 위·클로즈업 없음) · 나무열매·요리. 게임 몫(개발실·방송·PC방 …)은 뺐다. 필수 갈래는 pkm 규칙 그대로 의상 계열 역할극·수영복·란제리풍·레트로(세계 안 규칙 없음, 사용자 「필수 갈래는 pkm 규칙 유지」). 안 쓰는 값(banned: back·back_to_camera·walking_away·detail)과 얼굴 클로즈업 조건(frame_rules.face_close — 필수 갈래 컷엔 안 쓰고 얼굴이 카메라 쪽인 방향만)을 표에 적었다. 예전 갈래·예시 531개는 추천 조합 340·예전 기록 변환표 500으로(빠진 것 0). 활동 자세(박수·쌍안경·따르기 …)·눕기 자세·동료 자세(쓰다듬기·간식 내밀기 — companion)를 자세 계열에 넣었다.
+- lib/casual-tree.js · tools/casual-tree.py — game 원본 복사(규칙 칸 넷을 더했다: banned · not_required · companion 자세 · gen_years). tests/casual-tree.cjs · casual-tree.py 새로(pkm 몫까지).
+- lib/prompt-spec.js · prompt-anthro.js · prompt-lifestyle.js — 예전 표(CATS·EXAMPLE_MAP·EXAMPLE_DETAIL·EX_NOTE·CAT_KO·RANDOM_POOL·TRAD_EX)를 지우고 일상컷을 트리 길로 짓는다(casualDetails). game 차례 — FRAME 밑에 CROP(가까운 컷)·시대 줄(ERA 「그 포켓몬이 처음 나온 해」 · WORLD 포켓몬 세계 · SETTING)·SCENE, 그 뒤에 옷·각도 줄. 가까운 컷 옷 줄·노출 풀이, 직업복·전통 의상 Outfit note, 동료 묶음이면 동료 줄. ANGLE·손·고정값은 그대로. 쉿·엄지 척 자세. 예전 저장값의 갈래·예시는 변환표로 옮긴다.
+- lib/prompt-ui.js · prompt-random.js · prompt.html · lib/words.js — 갈래·예시 메뉴 대신 트리 단계(추천 조합 → 시대 → 장소 → 하는 일 → 의상 계열 → 옷), 자세·방향은 하는 일 안에서, 안 쓰는 값은 메뉴에 없고, 표정은 맨 끝. 고정값(strong·bold·2:3)은 처음부터 잠근다(game 과 같게). 랜덤은 트리 차례 — 잠근 칸이 살아남는 값만 뽑는다(시대를 뽑았는데 잠근 장소가 그 시대에 없으면 다른 시대). 버전 꼬리표 tree1.
+- lib/casual-plan.js · tools/casual-plan.cjs — 계획기가 트리 길을 고른다. 장부 규칙은 그대로 옮겼다: 같은 예시 → 같은 장소·하는 일(10명), 안 쓴 예시가 남은 갈래 → 안 쓴 길이 남은 장소 묶음, 덜 쓴 갈래 → 덜 쓴 장소 묶음, 작은 갈래 한 바퀴 → 작은 묶음 한 바퀴, 세 장은 서로 다른 묶음. 옷 종류(garments)는 고른 옷 문장에서, 드러내는 방식·장면 칸 첫머리는 그대로. 자세는 트리 규칙 위에 하는 일 문장 규칙(예전 예시 문장 규칙). 시대는 덜 쓴 것을 무게(지금 5 · 포켓몬 세계 3 · 첫 등장 2 · 환상 1)로, 옛 칸은 시대 셈에서 뺀다. 종목 전용 옷은 그 하는 일에서만. 생김새 몰림은 path:<장소>/<하는 일>·group:<묶음> 으로(Rust 색인은 그대로). 생성기 주소는 트리 칸(예전 주소의 갈래·예시도 받는다).
+- tools/casual-ledger.py — 두 열쇠: 옛 칸(갈래/예시)은 읽을 때 트리 변환표로 길을 붙인다(장부 파일은 그대로). check 는 같은 장소·하는 일·작은 묶음 한 바퀴·덜 쓴 묶음·세 장 다른 묶음·트리 위의 길(시대·장소·하는 일·옷)·안 쓰는 값·얼굴 클로즈업 조건을 본다. 기록·예약은 길 칸(era·place·act·ofam·item)을 적고 도장에 들어간다. 필수 갈래는 의상 계열(옛 칸은 갈래 이름으로도).
+- tests — prompt-casual · prompt-casual-dom · prompt-random · prompt-random-dom · casual-plan · casual-plan-screen · casual-ledger 를 트리 기준으로 다시 썼고, prompt-engine · prompt-action · prompt-appearance · source-appearance · styles · prompt-screen 은 트리 표를 넘기게. 모의 검사: 옛 장부 158명을 차례로 새 계획기로 다시 짜면 막힘 0 · 다시 정한 횟수 0 · 474컷에 길 405가지(같은 길 많아야 3번) · 묶음 16개 12~41컷.
+- IMAGE_RULES.md 3절 · AGENTS.md — 일상컷을 트리 기준으로(필수 갈래 표에 의상 계열 키, 장면 설정 순서 2를 시대 → 장소 → 하는 일 → 의상 → 옷으로, --avoid 칸 act·place·item·group·ofam, 기록 칸). image-runner 는 예시 열쇠를 안 써서 그대로.
+
 ## 2026-10-29 · claude · 일상컷 옷 — 첨부 그림의 색·무늬를 따라가지 않게, 포켓몬은 장신구·주변 사물로
 - lib/prompt-spec.js · prompt.html — game 일상컷 옷이 첨부 그림을 따라 비슷비슷하던 것과 같은 문구가 여기도 있었다(사용자 「book 이랑 pkm 도 같이」). OUTPUT 은 포켓몬을 장신구·주변 사물로만(옷의 색·무늬·재단엔 넣지 않는다, 장갑·종족 옷은 여전히 안 된다), WARDROBE 는 첨부 그림의 색·무늬·장식을 옷에 옮기지 말라, 원본 반영 축(source_influence)은 subtle 장신구 하나 / balanced 장신구 하나와 주변 사물 하나 / strong 장신구·소품 몇 가지(옷은 늘 그 장면의 옷). prompt-spec v=outfit1.
 - tests/prompt-casual.cjs — 옷에 포켓몬 색·무늬를 넣으라는 말이 없고, 원본 반영 세 값이 장신구·사물을 말한다.

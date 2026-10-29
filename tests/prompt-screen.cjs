@@ -87,7 +87,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert(!(await text()).includes('FORM —'));
   assert(!(await text()).includes('ONLY_LEFT_PANEL'));
   assert(!(await text()).includes('LOW_CAMERA_MARKER'));
-  await p.locator('#category').selectOption('everyday_basic');
+  await p.locator('#preset').selectOption('food_poffin');
   await p.locator('#scene').fill('CASUAL_SCENE_MARKER');await settled();
   const styleKeys=await p.locator('#style option').evaluateAll(es=>es.map(e=>e.value));
   for(const key of styleKeys){

@@ -1,10 +1,10 @@
 /* Appearance semantics and generated prompts, including saved-key compatibility. */
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ctx={window:{}};vm.createContext(ctx);
-for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
+for(const f of ['prompt-spec','casual-tree','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const {AtelierSpec:S,AtelierPrompt:P}=ctx.window;
 const params=require('./fixtures/appearance-bulbasaur.json');
-const base={mech:'이상해씨',sourceName:'Bulbasaur',series:'grass / poison',style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params,expr:'smirk'};
+const base={mech:'이상해씨',sourceName:'Bulbasaur',series:'grass / poison',style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params,expr:'smirk',tree:JSON.parse(require('node:fs').readFileSync('data/casual-tree.json','utf8'))};
 const build=override=>P.buildPrompt({...base,...override});
 const identity=t=>(t.split('\n\n').find(x=>x.startsWith(S.PROMPT_LINES.identity))||'');
 const original=JSON.stringify(params);

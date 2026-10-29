@@ -1,7 +1,8 @@
 """일상컷 장부 — 기록 읽기, 예약, 계획 검사. python3 tests/casual-ledger.py
    - build: casualN-ui.json 에서 선택값과 옷 종류를 읽고, 등록된 캐릭터의 reserved 는 done 으로 바뀐다
    - check: IMAGE_RULES 3절의 장부 조건을 하나씩 어긴 계획이 그 이유로 걸린다. 지키는 계획은 통과한다
-   - reserve: 통과한 계획만 reserved 로 적고, 다음 세션의 check 가 그것을 비교 대상으로 본다"""
+   - reserve: 통과한 계획만 reserved 로 적고, 다음 세션의 check 가 그것을 비교 대상으로 본다
+   - 두 열쇠(2026-10-29 트리, B안): 옛 칸(갈래/예시)은 변환표로 길을 붙여 읽고, 새 칸(트리 길)과 같은 열쇠로 견준다"""
 import copy, importlib.util, io, json, contextlib, os, sys, tempfile
 from pathlib import Path
 
@@ -28,10 +29,11 @@ hist = [done("A%d" % i, [cut(1, "adult_roleplay", "retro_racer", "e1", "p1", "fr
 doc = {"entries": hist}
 
 good = {"session": "t", "characters": [{"card": "B", "species": "b-1", "cuts": [
-    cut(1, "festivals_contests", "fest_lantern", "x1", "q1", "low_angle", "environmental", "strong", ["dress"], act="mostly active"),
+    cut(1, "travel_exploration", "travel_trail", "x1", "q1", "low_angle", "environmental", "strong", ["dress"], act="mostly active"),
     cut(2, "swimwear", "classic_bikini", "x2", "q2", "high_angle", "chest_up", "balanced", ["bikini"], act="mostly posed"),
     cut(3, "lingerie", "lace_set", "x3", "q3", "rear_3q", "full_body", "subtle", ["lingerie_set"], act="mostly posed")]}]}
-assert "classic_bikini" in SP["ex"]["swimwear"] and "lace_set" in SP["ex"]["lingerie"] and "fest_lantern" in SP["ex"]["festivals_contests"]
+LEG = SP["tree"]["legacy"]
+assert "swimwear/classic_bikini" in LEG and "lingerie/lace_set" in LEG and "travel_exploration/travel_trail" in LEG
 assert L.check_plan(doc, good, SP) == [], L.check_plan(doc, good, SP)
 
 
@@ -47,20 +49,43 @@ fails(lambda c: c[1].update(frame="face_close"), "필수 갈래")               
 fails(lambda c: c[0].update(orient="crouching", frame="face_close"), "카메라 쪽")                            # 얼굴 클로즈업 — 몸 방향과 짝짓지 않는다
 _fc = copy.deepcopy(good); _fc["characters"][0]["cuts"][0].update(frame="face_close")                     # 얼굴 클로즈업 — 2026-10-27 열었다
 assert L.check_plan(doc, _fc, SP) == [], L.check_plan(doc, _fc, SP)
-fails(lambda c: c[2].update(cat="active", ex=SP["ex"]["active"][0]), "두 장")                        # 다섯 명에 한 번은 두 장
+fails(lambda c: c[2].update(cat="active", ex="warmup"), "두 장")                        # 다섯 명에 한 번은 두 장
 fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURCE")                      # 세 장 같은 영향도
 fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만
 fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")                              # 채우기 문구
 fails(lambda c: c[0].update(scene="A plain unlettered lantern stall."), "글자")                          # 글자 금지 문구
-fails(lambda c: c[0].update(cat="partner_care", ex="care_walk"), "바퀴")                          # 예시 적은 갈래는 한 바퀴(취미는 2026-10-26 열두 개가 됐다)
+# 길이 적은 묶음은 한 바퀴 — 11명 전에 쓴 길(10명 창 밖)이라도 그 묶음에 아직 안 쓴 길이 남았으면 걸린다
+small = [g for g, l in SP["group_paths"].items() if 1 < len(l) <= L.SMALL_GROUP][0]
+first = SP["group_paths"][small][0]
+pl, ac = first.split("/")
+long_hist = [done("S0", [{**cut(1, "", "", "z", "z", "side", "waist_up", "subtle", ["dress"]), "cat": None, "ex": None, "era": "now", "place": pl, "act": ac, "ofam": "everyday"}], "2026-10-01T10:00:00+09:00")] + \
+    [done("F%d" % i, [cut(1, "lingerie", "lace_set", "y%d" % i, "y", "front_3q", "waist_up", "subtle", ["lingerie_set"])], "2026-10-0%dT10:00:00+09:00" % (i + 2)) for i in range(7)] + hist
+p = copy.deepcopy(good); p["characters"][0]["cuts"][0].update(cat=None, ex=None, era="now", place=pl, act=ac, ofam="everyday", item="")
+errs = L.check_plan({"entries": long_hist}, p, SP)
+assert any("1번" in e and "바퀴" in e for e in errs) and not any("1번" in e and "이미 썼다" in e for e in errs), errs
 
 # 덮는 겉옷은 한 장까지
 p = copy.deepcopy(good); p["characters"][0]["cuts"][0]["garments"] = ["dress", "coat"]; p["characters"][0]["cuts"][2]["garments"] = ["lingerie_set", "cardigan"]
 assert any("겉옷" in e for e in L.check_plan(doc, p, SP))
 # 시간대가 달라도 시각 차례로 줄 선다
 assert [e["card"] for e in L.live({"entries": [done("late", [], "2026-10-15T01:00:00+00:00"), done("early", [], "2026-10-15T09:30:00+09:00")]})] == ["early", "late"]
-# 한 바퀴: 예시가 적은 갈래는 덜 쓴 것부터 — 기록에 care_walk 만 썼으니 care_walk 은 바퀴에서 빠진다
-assert "care_walk" not in L.small_cat_open(doc["entries"], "partner_care", SP["ex"]["partner_care"])
+# 한 바퀴: 길이 적은 묶음은 덜 쓴 것부터 — 기록에 첫 길만 썼으니 그 길은 바퀴에서 빠진다
+assert first not in L.small_group_open(long_hist, small, SP["group_paths"][small]) and len(L.small_group_open(long_hist, small, SP["group_paths"][small])) == len(SP["group_paths"][small]) - 1
+# 두 열쇠 — 옛 칸(갈래/예시)과 그 길을 새 칸으로 적은 것은 같은 열쇠다. 최근 10명 안에서 옛 예시로 쓴 장소·하는 일은 새 칸으로도 못 쓴다
+old_path = L.with_path({"cat": "partner_care", "ex": "care_walk"})
+assert old_path["place"] == "partner_park" and old_path["act"] == "care_walk" and old_path["legacy"]
+fails(lambda c: c[0].update(cat=None, ex=None, era=old_path["era"], place=old_path["place"], act=old_path["act"], ofam="everyday", item=""), "이미 썼다")
+# 새 칸 계획도 통과한다 — 트리 위의 길이면
+newp = copy.deepcopy(good); c0 = newp["characters"][0]["cuts"][0]
+c0.update(cat=None, ex=None, era="in_pokemon", place="pw_center", act="center_wait", ofam="everyday", item="jeans_tee")
+assert L.check_plan(doc, newp, SP) == [], L.check_plan(doc, newp, SP)
+# 트리에서 못 고르는 길·옷은 걸린다(손으로 고친 계획)
+fails(lambda c: c[0].update(cat=None, ex=None, era="now", place="pw_center", act="center_wait", ofam="everyday"), "시대가 없다")
+fails(lambda c: c[0].update(cat=None, ex=None, era="in_pokemon", place="pw_center", act="swim", ofam="everyday"), "못 고른다")
+fails(lambda c: c[0].update(cat=None, ex=None, era="in_pokemon", place="pw_center", act="center_wait", ofam="everyday", item="lace_set"), "계열에 없다")
+# 세 장은 서로 다른 장소 묶음
+fails(lambda c: c[0].update(cat="homewear", ex="soft_tank_shorts"), "장소 묶음")
+
 # 필수 갈래 자리 — 바로 앞 캐릭터와 같은 자리면 걸린다
 p = copy.deepcopy(good); c = p["characters"][0]["cuts"]
 c[0].update(cat="adult_roleplay", ex="casino_dealer"); c[1].update(cat="festivals_contests", ex="fest_booth"); c[2].update(cat="travel_exploration", ex="travel_lakeside")
@@ -77,8 +102,10 @@ assert any(e.startswith("C:") and "이미 썼다" in e for e in errs) and any(e.
 # 다시 채우기 — 등록된 두 장은 kept, 빈 한 장만 새로. 차례 조건은 안 보고 새 컷의 겹침은 본다
 refill = {"session": "r", "characters": [{"card": "A5", "species": "A5", "refill": True, "cuts": [
     dict(hist[-1]["cuts"][0], kept=True), dict(hist[-1]["cuts"][1], kept=True),
-    cut(3, "festivals_contests", "fest_booth", "e9", "p9", "low_angle", "chest_up", "strong", ["dress"])]}]}
+    cut(3, "travel_exploration", "travel_lakeside", "e9", "p9", "low_angle", "chest_up", "strong", ["dress"])]}]}
 assert L.check_plan(doc, refill, SP) == [], L.check_plan(doc, refill, SP)
+_bg = copy.deepcopy(refill); _bg["characters"][0]["cuts"][2].update(cat="festivals_contests", ex="fest_booth")   # 등록된 컷(무대)과 같은 묶음
+assert any("장소 묶음" in e for e in L.check_plan(doc, _bg, SP))
 bad_refill = copy.deepcopy(refill); bad_refill["characters"][0]["cuts"][2].update(cat="partner_care", ex="care_walk", orient="side", frame="waist_up")
 errs = L.check_plan(doc, bad_refill, SP)
 assert any("이미 썼다" in e for e in errs) and any("짝" in e for e in errs) and not any("자리" in e or "두 장" in e for e in errs), errs
@@ -151,7 +178,7 @@ with tempfile.TemporaryDirectory() as tmp:
                         "cuts": copy.deepcopy(out["entries"][0]["cuts"])}
     assert [e["status"] for e in L.live({"entries": out["entries"] + [completed_refill]})] == ["done"]
     pending_refill = copy.deepcopy(completed_refill)
-    pending_refill["cuts"][-1]["ex"] = "not_yet_published"
+    pending_refill["cuts"][-1].update(place="water_pool", act="swim")   # 길이 다른 컷 — 아직 기록에 없다
     assert [e["status"] for e in L.live({"entries": out["entries"] + [pending_refill]})] == ["done", "reserved"]
     # 등록된 캐릭터의 다시 채우기 예약은 그 컷이 기록에 오를 때까지 남는다
     out["entries"].append({"card": "B", "species": "b-1", "status": "reserved", "refill": True, "at": L.now(),
@@ -196,6 +223,17 @@ with tempfile.TemporaryDirectory() as tmp:
     assert es[0]["cuts"][0]["garments"] == ["dress"]
     reserved = {**es[0], "status": "reserved", "at": L.now()}
     assert [e["status"] for e in L.live({"entries": es + [reserved]})] == ["done"]
+
+# 새 기록(트리 길) — 생성기 상태의 시대·장소·하는 일·의상 계열·옷을 그대로 읽는다(옛 칸 cat·ex 는 없다)
+with tempfile.TemporaryDirectory() as tmp:
+    repo = Path(tmp) / "images"; rec = repo / "records" / "tree-20261029"; rec.mkdir(parents=True); (repo / "img").mkdir()
+    (repo / "img" / "Tree_glossy_promo_f_casual1.webp").write_bytes(b"x")
+    sc = {"era": "in_pokemon", "place": "berry_kitchen", "act": "food_poffin", "ofam": "everyday", "item": "cardigan_skirt",
+          "expr": "calm", "pose": "", "orient": "front", "frame": "waist_up", "lens": "natural50", "axes": {}, "outfit": ""}
+    (rec / "casual1-ui.json").write_text(json.dumps({"storage": {"last": "Tree", "cards": {"Tree": {"scenes": {"casual": sc}}}}}))
+    got = L.read_records([str(repo)])[0]["cuts"][0]
+    assert (got["place"], got["act"], got["ofam"], got["item"], got["cat"]) == ("berry_kitchen", "food_poffin", "everyday", "cardigan_skirt", None), got
+    assert L.live({"entries": L.read_records([str(repo)])})[0]["cuts"][0].get("legacy") is None, "새 칸은 변환하지 않는다"
 
 # Fresh check/reserve must use the same registered records as the planner.
 with tempfile.TemporaryDirectory() as tmp:
@@ -254,8 +292,10 @@ def _doc(first, last):
     return {"entries": hist + rs}
 assert not [e for e in L.check_plan(_doc(SAME, OTHER[3]), good, SP) if "SOURCE" in e], L.check_plan(_doc(SAME, OTHER[3]), good, SP)
 assert [e for e in L.check_plan(_doc(OTHER[3], SAME), good, SP) if "SOURCE" in e and "V4" in e], L.check_plan(_doc(OTHER[3], SAME), good, SP)
-_old_ex = [x for x in SP["ex"]["everyday_basic"] if x != "pottery_class"][0]
+_pk = L.path_key(L.with_path({"cat": "everyday_basic", "ex": "pottery_class"}))
+_old_ex = [k.split("/")[1] for k in LEG if k.startswith("everyday_basic/") and k != "everyday_basic/" and L.path_key(L.with_path({"cat": "everyday_basic", "ex": k.split("/")[1]})) != _pk
+           and L.group_of(L.with_path({"cat": "everyday_basic", "ex": k.split("/")[1]})) not in {L.group_of(L.with_path(x)) for x in good["characters"][0]["cuts"][1:]}][0]
 _d = _doc(SAME, OTHER[3]); _d["entries"][len(hist)]["cuts"][0]["ex"] = _old_ex                          # 가장 오래된 예약의 예시
 _ex = copy.deepcopy(good); _ex["characters"][0]["cuts"][0].update(cat="everyday_basic", ex=_old_ex)
 assert [e for e in L.check_plan(_d, _ex, SP) if "이미 썼다" in e], L.check_plan(_d, _ex, SP)
-print("PASS 일상컷 장부: 기록 읽기·옷 종류 · 예시 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
+print("PASS 일상컷 장부: 두 열쇠(옛 칸 ↔ 트리 길) · 트리 위의 길 · 장소 묶음 셋 · 기록 읽기·옷 종류 · 장소·하는 일 10명·한 바퀴 · 구도 짝·새 값 · 필수 갈래 자리·두 장 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

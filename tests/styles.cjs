@@ -10,7 +10,7 @@ const actual = JSON.parse(fs.readFileSync('data/style.json', 'utf8'));
 assert.deepEqual(actual, expected, 'Registry differs from prompt choices');
 const ctx = { window: {}, console };
 vm.createContext(ctx);
-for (const f of ['lib/prompt-spec.js', 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
+for (const f of ['lib/prompt-spec.js', 'lib/casual-tree.js', 'lib/prompt-anthro.js', 'lib/prompt-lifestyle.js'])
   vm.runInContext(fs.readFileSync(f, 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
 // 화풍은 한 줄 — 갑주 출력은 ACTION_STYLE_CORES, 일상은 장갑 말이 없는 CASUAL_STYLE_CORES
@@ -20,7 +20,7 @@ for (const { key } of actual.styles) {
     assert(text.includes('STYLE: ' + S.ACTION_STYLE_CORES[key]), 'Wrong action style: ' + key);
     assert(!text.includes('undefined'), 'Unresolved prompt: ' + key);
   }
-  const casual = L.buildSingle({ mech: 'test', series: 'water', style: key, cat: 'everyday_basic', aspect: '2:3', axes: {} });
+  const casual = L.buildSingle({ mech: 'test', series: 'water', style: key, cat: 'everyday_basic', aspect: '2:3', axes: {}, tree: JSON.parse(fs.readFileSync('data/casual-tree.json', 'utf8')) });
   assert(casual.includes('STYLE: ' + S.CASUAL_STYLE_CORES[key]), 'Wrong casual style: ' + key);
   assert(!casual.includes(S.ACTION_STYLE_CORES[key]), 'Armor style leaked into casual: ' + key);
   assert(!casual.includes('undefined'), 'Unresolved prompt: ' + key);

@@ -1,9 +1,9 @@
 /* Action selections are optional direction, never a new form or identity. */
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ctx={window:{}};vm.createContext(ctx);
-for(const f of ['prompt-spec','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
+for(const f of ['prompt-spec','casual-tree','prompt-anthro'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const {AtelierSpec:S,AtelierPrompt:P}=ctx.window;
-const base={mech:'Pikachu',style:S.DEFAULT_STYLE,identityMode:'reference',outputMode:'action',form:'light'};
+const base={mech:'Pikachu',style:S.DEFAULT_STYLE,identityMode:'reference',outputMode:'action',form:'light',tree:JSON.parse(require('node:fs').readFileSync('data/casual-tree.json','utf8'))};
 assert(S.ACTION_CATEGORIES?.length>=8,'missing action categories');
 assert(S.ACTION_CONTROLS?.length>=6,'missing detailed action controls');
 let count=0;

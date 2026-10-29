@@ -12,7 +12,7 @@
             등록되면 읽을 때 빠진다(장부 안에 남은 옛 reserved 칸도 읽기는 한다)
 
   python3 tools/casual-ledger.py build   — 기록을 다시 읽어 done 칸을 만든다(reserved 는 지킨다)
-  python3 tools/casual-ledger.py report  — 계획에 쓸 요약(최근 예시·구도 짝·덜 쓴 갈래·옷 종류·필수 갈래 자리)
+  python3 tools/casual-ledger.py report  — 계획에 쓸 요약(최근 장소/하는 일·구도 짝·덜 쓴 장소 묶음·옷 종류·필수 갈래 자리)
   python3 tools/casual-ledger.py view [--fresh] — 장부 + 살아 있는 예약을 합친 JSON(계획기가 읽는다).
                                                   --fresh 면 기록을 다시 읽어 done 을 새로 센다
   python3 tools/casual-ledger.py check  PLAN.json — 계획이 IMAGE_RULES 3절 "일상컷 장면 설정 순서" 의
@@ -33,20 +33,26 @@ check 를 안 거친 예약은 도장이 없거나 안 맞는다(2026-10-25 히�
 PLAN.json 꼴(배치 하나 — 같이 만드는 캐릭터 전부):
   {"session": "아무 이름", "characters": [
      {"card": "무장조", "species": "skarmory-20261016",
-      "cuts": [{"cut": 1, "cat": "...", "ex": "...", "expr": "...", "pose": "...", "orient": "...",
-                "frame": "...", "lens": "...",
+      "cuts": [{"cut": 1, "era": "...", "place": "...", "act": "...", "ofam": "...", "item": "...",
+                "expr": "...", "pose": "...", "orient": "...", "frame": "...", "lens": "...",
                 "axes": {"action_level": "...", "source_influence": "...", "separates_preference": "..."},
                 "garments": ["dress", ...], "scene": "(선택)", "outfit": "(선택)"}, ...]}]}
 
 빠진 컷 다시 채우기(안전 필터에 막혀 비었거나 넘어간 컷): 그 캐릭터에 "refill": true 를 주고, 이미 등록된
-컷에는 "kept": true 를 붙여 세 장을 다 적는다. 새로 만드는 컷만 예시·구도·옷·채우기 문구를 보고, 차례에 매인
-조건(필수 갈래 자리 돌리기·다섯 명에 두 장·덜 쓴 갈래·새 값)은 보지 않는다. 세 장 안의 조건(값이 서로 다름·필수 갈래
+컷에는 "kept": true 를 붙여 세 장을 다 적는다. 새로 만드는 컷만 장소·하는 일·구도·옷·채우기 문구를 보고, 차례에 매인
+조건(필수 갈래 자리 돌리기·다섯 명에 두 장·덜 쓴 장소 묶음·새 값)은 보지 않는다. 세 장 안의 조건(값이 서로 다름·필수 갈래
 한 장 이상·덮는 겉옷 한 장까지)은 그대로 본다.
+
+두 열쇠(2026-10-29 일상컷 트리, B안): 새 컷은 트리 길(시대 era · 장소 place · 하는 일 act · 의상 계열 ofam · 옷 item —
+data/casual-tree.json)로 적는다. 옛 컷(갈래 cat · 예시 ex)은 트리 변환표(legacy)로 같은 길을 붙여 읽는다 — 장부 파일은 그대로 두고
+읽을 때만(view·check·report). 규칙은 그대로 옮겼다: 같은 예시 → 같은 장소·하는 일, 덜 쓴 갈래 → 덜 쓴 장소 묶음,
+작은 갈래 한 바퀴 → 작은 묶음 한 바퀴, 필수 갈래 → 의상 계열이 역할극·수영복·란제리풍·레트로(옛 칸은 갈래 이름으로도).
+안 쓰는 방향·프레이밍과 얼굴 클로즈업 조건은 트리 표(banned · frame_rules.face_close)에서 읽는다.
 
 기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3 이다(--repos 로 바꾼다).
 장부·예약은 그대로 둘째 저장소에 — 새 그림의 기록은 셋째 저장소에 쌓인다."""
 from pathlib import Path
-import argparse, datetime, json, os, re, subprocess, sys
+import argparse, datetime, importlib.util, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3")]
@@ -54,22 +60,17 @@ LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "ca
 # 예약은 세션마다 따로 파일(2026-10-22) — 한 장부 파일에 다들 쓰다 push 가 엇갈리면 남의 예약을 지웠다(밤선인·파치리스, 체리꼬·샤비)
 RESERVATIONS = "casual-reservations"
 
-REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 레트로 글래머 2026-10-26
-# 갈래 고르기에서 세지 않는 것: 자동·직접 입력, everyday(everyday_basic 과 예시가 같은 옛 이름)
-NOT_COUNTED = {"auto_random", "__custom__", "everyday"}
-BANNED_FRAME = {"detail"}
-# 얼굴 클로즈업은 2026-10-27 열었다 — 필수 갈래 컷에는 안 쓰고, 얼굴이 카메라 쪽인 방향하고만(lib/casual-plan.js 와 같게)
-FACE_FRAME = {"face_close"}
-FACE_ORIENT = {"front", "front_3q", "side", "over_shoulder", "low_angle", "high_angle", "leaning_forward", "looking_down", "looking_away", "profile_close"}
-BANNED_ORIENT = {"back", "back_to_camera", "walking_away"}
-EX_WINDOW = 10          # 같은 장면 예시는 최근 10명 안에서 다시 쓰지 않는다
+REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 옛 칸의 필수 갈래 이름(레트로 글래머 2026-10-26)
+TREE_FILE = os.path.join(ROOT, "data", "casual-tree.json")
+EX_WINDOW = 10          # 같은 장소·하는 일(옛 칸은 같은 예시)은 최근 10명 안에서 다시 쓰지 않는다
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
 CMP_RESERVED = 3        # 그 비교에 넣는 다른 세션 예약도 가장 최근 셋까지(2026-10-27 — 전부 넣으면 예약이 쌓일 때 SOURCE 구성 일곱 가지·옷 종류가 다 막혔다)
-CAT_WINDOW = 10         # 덜 쓴 갈래는 최근 10명으로 센다
-CAT_LOW = 5             # 그중 사용 횟수 하위 5개(같은 횟수는 함께)
+GROUP_WINDOW = 10       # 덜 쓴 장소 묶음은 최근 10명으로 센다(옛 「덜 쓴 갈래」)
+GROUP_LOW = 5           # 그중 사용 횟수 하위 5개(같은 횟수는 함께)
 # 도장 — 이 시각 전의 예약은 도장이 없어도 읽는다(도입 전에 적은 것)
 STAMP_SINCE = "2026-10-25T02:55:00+00:00"
-SMALL_CAT = 8           # 예시가 이 수 이하인 갈래는 한 바퀴를 다 돌기 전까지 같은 예시를 다시 쓰지 않는다
+SMALL_GROUP = 8         # 길(장소·하는 일)이 이 수 이하인 묶음은 한 바퀴를 다 돌기 전까지 같은 길을 다시 쓰지 않는다(옛 「작은 갈래」)
+PATH_KEYS = ("era", "place", "act", "ofam", "item")
 TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장
 RESERVE_HOURS = 24      # 이보다 오래된 reserved 는 끝난 것으로 보지 않고 버린다
 
@@ -113,16 +114,71 @@ def now():
     return datetime.datetime.now(datetime.timezone.utc).astimezone().isoformat(timespec="seconds")
 
 
+_CT = None
+
+
+def ct():
+    """트리 검사기(tools/casual-tree.py)의 길 함수 — 같은 허용 관계를 쓴다"""
+    global _CT
+    if _CT is None:
+        sp = importlib.util.spec_from_file_location("casual_tree", os.path.join(ROOT, "tools", "casual-tree.py"))
+        _CT = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(_CT)
+    return _CT
+
+
 def spec():
-    """생성기의 갈래·예시 목록. 정본은 lib/prompt-spec.js 라 node 로 읽는다"""
-    js = ("const fs=require('fs'),vm=require('vm');const c={window:{}};vm.createContext(c);"
-          "vm.runInContext(fs.readFileSync(process.argv[1],'utf8'),c);const S=c.window.AtelierSpec;"
-          "const ex={};for(const [k,v] of Object.entries(S.EXAMPLE_MAP))ex[k]=v.filter(r=>r[0]&&r[0]!=='__custom__'"
-          "&&!r[0].startsWith('auto_')&&r[4]!=='m').map(r=>r[0]);"
-          "process.stdout.write(JSON.stringify({cats:S.CATS.filter(r=>r[4]!=='m').map(r=>r[0]),ex}))")
-    out = subprocess.run(["node", "-e", js, os.path.join(ROOT, "lib", "prompt-spec.js")],
-                         capture_output=True, text=True, check=True).stdout
-    return json.loads(out)
+    """일상컷 트리 표와 거기서 센 것 — 묶음마다의 모든 길(장소/하는 일), 장소의 묶음"""
+    with open(TREE_FILE, encoding="utf-8") as f:
+        tree = json.load(f)
+    C = ct()
+    places = {p["key"]: p for p in tree["places"]}
+    keys = {}
+    for e in tree["eras"]:
+        for p in C.places_in(tree, e["key"]):
+            for a in C.activities_at(tree, p["key"]):
+                if C.outfit_families(tree, e["key"], p["key"], a):
+                    keys.setdefault(p["group"], set()).add(p["key"] + "/" + a["key"])
+    presets = {x["key"]: x for x in tree.get("presets", [])}
+    return {"tree": tree, "places": places, "groups": [g["key"] for g in tree["groups"]],
+            "group_paths": {g: sorted(v) for g, v in keys.items()}, "presets": presets,
+            "required": set((tree.get("required") or {}).get("outfits") or [])}
+
+
+SP = None
+
+
+def sp_():
+    global SP
+    if SP is None:
+        SP = spec()
+    return SP
+
+
+def with_path(c, sp=None):
+    """옛 칸(갈래·예시)에 트리 길을 붙인다 — lib/casual-tree.js fromLegacy 와 같다. 이미 길이 있으면 그대로"""
+    if not c or c.get("place"):
+        return c
+    sp = sp or sp_()
+    L = sp["tree"].get("legacy") or {}
+    v = L.get("%s/%s" % (c.get("cat"), c.get("ex") or "")) or L.get("%s/" % c.get("cat")) or L.get("everyday/") or {}
+    if v.get("preset"):
+        pr = sp["presets"].get(v["preset"]) or {}
+        v = {"era": pr.get("era"), "place": pr.get("place"), "act": pr.get("act"), "outfit": pr.get("outfit"), "item": pr.get("item")}
+    return {**c, "era": v.get("era"), "place": v.get("place"), "act": v.get("act"), "ofam": v.get("outfit"), "item": v.get("item") or "", "legacy": True}
+
+
+def path_key(c):
+    return "%s/%s" % (c.get("place"), c.get("act"))
+
+
+def group_of(c, sp=None):
+    p = (sp or sp_())["places"].get(c.get("place"))
+    return p["group"] if p else None
+
+
+def is_required(c, sp=None):
+    return c.get("ofam") in (sp or sp_())["required"] or c.get("cat") in REQUIRED
 
 
 def garments_of(text):
@@ -238,7 +294,7 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
-                                          ("cat", "ex", "expr", "pose", "orient", "frame", "lens")},
+                                          ("cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                              "garments": garments_of(c.get("outfit"))})
             if cuts:
@@ -276,7 +332,7 @@ def imported_cut(d, i):
             for c in ch.get("cuts") or []:
                 if c.get("cut") == i:
                     ax = c.get("axes") or {}
-                    return {"card": ch.get("card"), "cut": i, **{k: c.get(k) or None for k in ("cat", "ex", "expr", "pose", "orient", "frame", "lens")},
+                    return {"card": ch.get("card"), "cut": i, **{k: c.get(k) or None for k in ("cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens")},
                             "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                             "garments": sorted(c.get("garments") or [])}
     return None
@@ -404,20 +460,26 @@ def reservations(ledger, stale=False):
     return out
 
 
+def pathed(e):
+    return {**e, "cuts": [with_path(c) for c in e.get("cuts") or []]}
+
+
 def live(doc, ledger=None):
-    """장부의 칸 + 세션별 예약. 등록된 캐릭터(done)의 예약은 빼고(다시 채우기는 남긴다), 같은 캐릭터 예약은 늦은 것 하나만"""
-    es = [e for e in doc["entries"] if fresh(e)]
+    """장부의 칸 + 세션별 예약. 등록된 캐릭터(done)의 예약은 빼고(다시 채우기는 남긴다), 같은 캐릭터 예약은 늦은 것 하나만.
+    칸마다 트리 길을 붙여 준다(옛 칸은 변환표로) — 계획기·check 가 같은 열쇠로 본다"""
+    es = [pathed(e) for e in doc["entries"] if fresh(e)]
     if ledger:
-        es += reservations(ledger)
-        # 계획기가 정한 드러내는 방식(expose)은 생성기 상태에 남지 않는다 — 같은 컷(번호·예시)의 예약에서 옮겨 온다
-        plans = {(r.get("card"), c.get("cut"), c.get("ex")): c.get("expose") for r in reservations(ledger, stale=True) for c in r.get("cuts") or [] if c.get("expose")}
+        es += [pathed(e) for e in reservations(ledger)]
+        # 계획기가 정한 드러내는 방식(expose)은 생성기 상태에 남지 않는다 — 같은 컷(번호·길)의 예약에서 옮겨 온다
+        plans = {(r.get("card"), c.get("cut"), path_key(with_path(c))): c.get("expose") for r in reservations(ledger, stale=True) for c in r.get("cuts") or [] if c.get("expose")}
         for e in es:
             if e.get("status") != "reserved":
                 for c in e["cuts"]:
-                    if not c.get("expose") and plans.get((e.get("card"), c.get("cut"), c.get("ex"))):
-                        c["expose"] = plans[(e.get("card"), c.get("cut"), c.get("ex"))]
+                    k = (e.get("card"), c.get("cut"), path_key(c))
+                    if not c.get("expose") and plans.get(k):
+                        c["expose"] = plans[k]
     done = {e["card"] for e in es if e.get("status") != "reserved"}
-    completed_cuts = {(e["card"], c.get("cut"), c.get("cat"), c.get("ex"))
+    completed_cuts = {(e["card"], c.get("cut"), path_key(c))
                       for e in es if e.get("status") != "reserved" for c in e["cuts"]}
     last = {}
     for e in sorted(es, key=when):
@@ -425,7 +487,7 @@ def live(doc, ledger=None):
             if e.get("card") in done and not e.get("refill"):
                 continue
             if e.get("refill") and e.get("cuts") and all(
-                    (e.get("card"), c.get("cut"), c.get("cat"), c.get("ex")) in completed_cuts
+                    (e.get("card"), c.get("cut"), path_key(c)) in completed_cuts
                     for c in e["cuts"]):
                 continue
             last[e.get("card")] = e
@@ -440,7 +502,7 @@ def build(args):
     old = load(args.ledger)
     done = read_records(args.repos)
     cards = {e["card"] for e in done}
-    got = {(e["card"], c["cut"], c.get("cat"), c.get("ex")) for e in done for c in e["cuts"]}
+    got = {(e["card"], c["cut"], path_key(with_path(c))) for e in done for c in e["cuts"]}
 
     def pending(e):
         """등록되지 않은 예약 — 새 캐릭터이거나, 다시 채우는 컷이 아직 기록에 없다"""
@@ -448,7 +510,7 @@ def build(args):
             return False
         if e.get("card") not in cards:
             return True
-        return bool(e.get("refill")) and any((e["card"], c["cut"], c.get("cat"), c.get("ex")) not in got
+        return bool(e.get("refill")) and any((e["card"], c["cut"], path_key(with_path(c))) not in got
                                              for c in e["cuts"] if not c.get("kept"))
     keep = [e for e in old.get("entries", []) if pending(e)]
     save(args.ledger, {"entries": done + keep})
@@ -459,21 +521,21 @@ def cut_pairs(entries):
     return {(c.get("orient"), c.get("frame")) for e in entries for c in e["cuts"]}
 
 
-def cat_counts(entries, cats):
-    n = {k: 0 for k in cats if k not in NOT_COUNTED}
+def group_counts(entries, sp):
+    n = {k: 0 for k in sp["groups"]}
     for e in entries:
         for c in e["cuts"]:
-            k = "everyday_basic" if c.get("cat") == "everyday" else c.get("cat")
+            k = group_of(c, sp)
             if k in n:
                 n[k] += 1
     return n
 
 
-def low_cats(entries, cats):
-    n = cat_counts(entries, cats)
+def low_groups(entries, sp):
+    n = group_counts(entries, sp)
     if not n:
         return set()
-    cut = sorted(n.values())[min(CAT_LOW, len(n)) - 1]
+    cut = sorted(n.values())[min(GROUP_LOW, len(n)) - 1]
     return {k for k, v in n.items() if v <= cut}
 
 
@@ -481,48 +543,64 @@ def report(args):
     doc, sp = load(args.ledger), spec()
     es = live(doc, args.ledger)
     print("장부 %s — 칸 %d (reserved %d)" % (args.ledger, len(es), sum(e["status"] == "reserved" for e in es)))
-    print("\n[최근 %d명 · 다시 쓰지 않는 장면 예시]" % EX_WINDOW)
+    print("\n[최근 %d명 · 다시 쓰지 않는 장소/하는 일]" % EX_WINDOW)
     for e in es[-EX_WINDOW:]:
-        print("  %-8s %-9s %s" % (e["card"], e["status"], " · ".join("%s/%s" % (c.get("cat"), c.get("ex")) for c in e["cuts"])))
+        print("  %-8s %-9s %s" % (e["card"], e["status"], " · ".join(path_key(c) for c in e["cuts"])))
     print("\n[최근 %d명 · (방향, 프레이밍) 짝 · 옷 종류 · 세 축]" % CMP_WINDOW)
     for e in es[-CMP_WINDOW:]:
         for c in e["cuts"]:
             ax = c.get("axes") or {}
             print("  %-8s %d  (%s, %s)  %s  [%s/%s/%s]" % (e["card"], c["cut"], c.get("orient"), c.get("frame"),
                   ",".join(c.get("garments") or []) or "-", ax.get("action_level"), ax.get("source_influence"), ax.get("separates_preference")))
-    n = cat_counts(es[-CAT_WINDOW:], sp["cats"])
-    low = low_cats(es[-CAT_WINDOW:], sp["cats"])
-    print("\n[최근 %d명 갈래 사용 횟수 — * 는 덜 쓴 갈래]" % CAT_WINDOW)
+    n = group_counts(es[-GROUP_WINDOW:], sp)
+    low = low_groups(es[-GROUP_WINDOW:], sp)
+    print("\n[최근 %d명 장소 묶음 사용 횟수 — * 는 덜 쓴 묶음]" % GROUP_WINDOW)
     print("  " + " · ".join("%s%s=%d" % ("*" if k in low else "", k, v) for k, v in sorted(n.items(), key=lambda x: x[1])))
-    print("\n[예시가 %d개 이하인 갈래 — 이번 바퀴에 아직 안 쓴 예시]" % SMALL_CAT)
-    for k, lst in sp["ex"].items():
-        if 0 < len(lst) <= SMALL_CAT and k not in NOT_COUNTED:
-            print("  %s: %s" % (k, ", ".join(small_cat_open(doc["entries"], k, lst))))
+    print("\n[길이 %d개 이하인 묶음 — 이번 바퀴에 아직 안 쓴 길]" % SMALL_GROUP)
+    for k, lst in sp["group_paths"].items():
+        if 0 < len(lst) <= SMALL_GROUP:
+            print("  %s: %s" % (k, ", ".join(small_group_open(es, k, lst))))
     print("\n[필수 갈래 자리 — 최근 %d명]" % TWO_REQUIRED_EVERY)
     for e in es[-TWO_REQUIRED_EVERY:]:
-        print("  %-8s %s" % (e["card"], [c["cut"] for c in e["cuts"] if c.get("cat") in REQUIRED]))
+        print("  %-8s %s" % (e["card"], [c["cut"] for c in e["cuts"] if is_required(c, sp)]))
 
 
-def small_cat_open(entries, cat, lst):
-    """한 바퀴 — 이 갈래 예시 가운데 가장 적게 쓴 것들"""
+def small_group_open(entries, group, lst):
+    """한 바퀴 — 이 묶음 길 가운데 가장 적게 쓴 것들(장부의 살아 있는 칸 전부 — 계획기와 같다)"""
     n = {x: 0 for x in lst}
     for e in entries:
-        if not fresh(e):
-            continue
         for c in e["cuts"]:
-            if c.get("cat") == cat and c.get("ex") in n:
-                n[c["ex"]] += 1
+            k = path_key(with_path(c))
+            if k in n:
+                n[k] += 1
     m = min(n.values())
     return [x for x in lst if n[x] == m]
+
+
+def tree_problems(c, sp):
+    """그 컷이 트리 위의 길·구도인가 — 시대·장소·하는 일·의상 계열·옷, 안 쓰는 값, 얼굴 클로즈업 조건(트리 표)"""
+    tree, C, out = sp["tree"], ct(), []
+    errs = C.path_errors(tree, {"era": c.get("era"), "place": c.get("place"), "act": c.get("act"), "outfit": c.get("ofam"), "item": c.get("item") or ""})
+    out += errs
+    ban = tree.get("banned") or {}
+    if c.get("frame") in ban.get("frames", []) or c.get("orient") in ban.get("orients", []):
+        out.append("일상컷에 쓰지 않는 방향·프레이밍")
+    rule = (tree.get("frame_rules") or {}).get(c.get("frame")) or {}
+    if rule.get("not_required") and is_required(c, sp):
+        out.append("%s 는 필수 갈래 컷에 쓰지 않는다(옷이 안 남는다)" % c.get("frame"))
+    if c.get("orient") in (rule.get("no_orients") or []):
+        out.append("%s 에는 방향 %s 를 안 쓴다(얼굴이 카메라 쪽인 방향만)" % (c.get("frame"), c.get("orient")))
+    return out
 
 
 def check_plan(doc, plan, sp, ledger=None):
     errs = []
     es = live(doc, ledger)
-    batch = plan.get("characters") or []
+    batch = [{**ch, "cuts": [with_path(c, sp) for c in ch.get("cuts") or []]} for ch in plan.get("characters") or []]
     names = {ch.get("card") for ch in batch}
     base = [e for e in es if e.get("card") not in names]
-    prev_req = [c["cut"] for c in base[-1]["cuts"] if c.get("cat") in REQUIRED] if base else None
+    req_of = lambda c: is_required(c, sp)
+    prev_req = [c["cut"] for c in base[-1]["cuts"] if req_of(c)] if base else None
     hist = base[:]
     for ch in batch:
         who, cuts = ch.get("card"), ch.get("cuts") or []
@@ -534,18 +612,20 @@ def check_plan(doc, plan, sp, ledger=None):
         refill = bool(ch.get("refill"))
         if len(cuts) != 3:
             bad("일상컷은 세 장")
+        # 표정·자세는 비어 있어도 된다(하는 일이 정한다) — 고른 것끼리만 다르게
         for k in ("expr", "pose", "orient", "frame"):
-            if len({c.get(k) for c in cuts}) != len(cuts):
+            vals = [c.get(k) for c in cuts if c.get(k) or k in ("orient", "frame")]
+            if len(set(vals)) != len(vals):
                 bad("세 장의 %s 가 서로 달라야 한다" % k)
-        req = [c["cut"] for c in cuts if c.get("cat") in REQUIRED]
+        req = [c["cut"] for c in cuts if req_of(c)]
         if not req:
-            bad("필수 갈래(adult_roleplay·swimwear·lingerie·retro_glamour)가 없다")
+            bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required"])))
         if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]
-        if not refill and len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(c.get("cat") in REQUIRED for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
+        if not refill and len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(req_of(c) for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
             bad("앞 %d명이 모두 필수 갈래 한 장 — 이번에는 두 장" % (TWO_REQUIRED_EVERY - 1))
-        used_ex = {(c.get("cat"), c.get("ex")) for e in exw for c in e["cuts"]}
+        used_path = {path_key(c) for e in exw for c in e["cuts"]}
         pairs = cut_pairs(cmp_)
         orients = {c.get("orient") for e in cmp_ for c in e["cuts"]}
         frames = {c.get("frame") for e in cmp_ for c in e["cuts"]}
@@ -554,19 +634,17 @@ def check_plan(doc, plan, sp, ledger=None):
             n = c.get("cut")
             if c.get("kept"):
                 continue
-            if c.get("cat") in (None, "", "auto_random", "everyday") or not c.get("ex") or str(c.get("ex")).startswith("auto_"):
-                bad("%s번: 갈래·예시가 비었거나 자동·옛 이름이다" % n)
-            if (c.get("cat"), c.get("ex")) in used_ex and c.get("ex") != "__custom__":
-                bad("%s번: 예시 %s/%s 를 최근 %d명·예약·배치 안에서 이미 썼다" % (n, c.get("cat"), c.get("ex"), EX_WINDOW))
-            lst = sp["ex"].get(c.get("cat")) or []
-            if 0 < len(lst) <= SMALL_CAT and c.get("ex") in lst and c["ex"] not in small_cat_open(doc["entries"], c["cat"], lst):
-                bad("%s번: %s 는 예시가 %d개뿐 — 이번 바퀴에 아직 안 쓴 예시부터 쓴다" % (n, c["cat"], len(lst)))
-            if c.get("frame") in BANNED_FRAME or c.get("orient") in BANNED_ORIENT:
-                bad("%s번: 일상컷에 쓰지 않는 방향·프레이밍" % n)
-            if c.get("frame") in FACE_FRAME and c.get("cat") in REQUIRED:
-                bad("%s번: 얼굴 클로즈업은 필수 갈래 컷에 쓰지 않는다(옷이 안 남는다)" % n)
-            if c.get("frame") in FACE_FRAME and c.get("orient") not in FACE_ORIENT:
-                bad("%s번: 얼굴 클로즈업은 얼굴이 카메라 쪽인 방향하고만(%s)" % (n, c.get("orient")))
+            if not c.get("place") or not c.get("act"):
+                bad("%s번: 장소·하는 일이 비었다" % n)
+                continue
+            if path_key(c) in used_path:
+                bad("%s번: 장소·하는 일 %s 를 최근 %d명·예약·배치 안에서 이미 썼다" % (n, path_key(c), EX_WINDOW))
+            g = group_of(c, sp)
+            lst = sp["group_paths"].get(g) or []
+            if 0 < len(lst) <= SMALL_GROUP and path_key(c) not in small_group_open(es, g, lst):
+                bad("%s번: 묶음 %s 는 길이 %d개뿐 — 이번 바퀴에 아직 안 쓴 길부터 쓴다" % (n, g, len(lst)))
+            for m in tree_problems(c, sp):
+                bad("%s번: %s" % (n, m))
             if (c.get("orient"), c.get("frame")) in pairs:
                 bad("%s번: (방향, 프레이밍) 짝 (%s, %s) 이 비교 대상과 겹친다" % (n, c.get("orient"), c.get("frame")))
             if not [g for g in (c.get("garments") or []) if g in GARMENTS]:
@@ -574,6 +652,11 @@ def check_plan(doc, plan, sp, ledger=None):
             for p, why in FILLER:
                 if re.search(p, ((c.get("outfit") or "") + " " + (c.get("scene") or "")).lower()):
                     bad("%s번: %s" % (n, why))
+        # 세 장은 서로 다른 장소 묶음(옛 「세 장 모두 다른 갈래」) — 이미 등록된 컷(kept)끼리 겹친 것은 그대로 둔다
+        groups = [group_of(c, sp) for c in cuts]
+        for c in cuts:
+            if not c.get("kept") and groups.count(group_of(c, sp)) > 1:
+                bad("%s번: 장소 묶음 %s 를 다른 컷도 쓴다 — 세 장은 서로 다른 묶음" % (c.get("cut"), group_of(c, sp)))
         if sum(bool(re.search(r"\b(empty|deserted|quiet)\b", (c.get("scene") or "").lower())) for c in cuts) > 1:
             bad("빈·조용한 장소는 세 장 중 한 장까지")
         if refill:
@@ -585,9 +668,9 @@ def check_plan(doc, plan, sp, ledger=None):
             bad("방향이나 프레이밍을 비교 대상이 안 쓴 값으로 고른 컷이 없다")
         if not any(g not in gar for c in cuts for g in (c.get("garments") or [])):
             bad("비교 대상이 안 쓴 옷 종류가 한 장에도 없다")
-        low = low_cats(base[-CAT_WINDOW:] + others, sp["cats"])
-        if not any(c.get("cat") in low for c in cuts if c.get("cat") not in REQUIRED):
-            bad("필수 갈래가 아닌 컷 가운데 덜 쓴 갈래(%s)가 없다" % ", ".join(sorted(low)))
+        low = low_groups(base[-GROUP_WINDOW:] + others, sp)
+        if not any(group_of(c, sp) in low for c in cuts if not req_of(c)):
+            bad("필수 갈래가 아닌 컷 가운데 덜 쓴 장소 묶음(%s)이 없다" % ", ".join(sorted(low)))
         src = [(c.get("axes") or {}).get("source_influence") for c in cuts]
         if len(set(src)) == 1:
             bad("SOURCE 영향도가 세 장 모두 같다")
@@ -642,7 +725,7 @@ def check(args, write=False):
         at = now()
         for ch in plan["characters"]:
             e = {"species": ch.get("species"), "card": ch["card"], "at": at,
-                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex", "expr", "pose", "orient", "frame", "lens", "axes", "garments", "expose", "lead", "kept") if c.get(k) is not None and (k != "kept" or c.get(k))}
+                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens", "axes", "garments", "expose", "lead", "kept") if c.get(k) is not None and (k != "kept" or c.get(k))}
                           for c in ch["cuts"]]}
             if ch.get("refill"):
                 e["refill"] = True

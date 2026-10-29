@@ -13,14 +13,17 @@
       의상·장면 칸은 작업자가 쓴다: 계획의 garments(옷 종류) · expose(드러내는 방식 둘) · lead(장면 칸 첫머리) 를 따른다.
 
    이미지 도구가 막았거나 고른 값이 장면과 맞지 않으면 손으로 바꾸지 않고 --avoid 로 다시 정한다:
-       node tools/casual-plan.cjs 샤로다 --session s1 --avoid 샤로다:2:ex=pool_float --keep 샤로다:1,3 --reserve --push
+       node tools/casual-plan.cjs 샤로다 --session s1 --avoid 샤로다:2:act=sunbed --keep 샤로다:1,3 --reserve --push
    (--keep 은 이미 만든 컷 — 이 세션의 예약에서 그대로 두고 나머지만 다시 정한다)
-   생김새 색인(data/casual-look.json, rust/casual-look 이 만든다)이 있으면 생김새가 몰린 장면·구도·옷에 벌점을 준다. */
+   생김새 색인(data/casual-look.json, rust/casual-look 이 만든다)이 있으면 생김새가 몰린 장면·구도·옷에 벌점을 준다.
+   2026-10-29 일상컷 트리(B안): 장면은 트리 길(시대·장소·하는 일·의상 계열·옷)로 정한다. 장부의 옛 칸(갈래/예시)은 casual-ledger.py view 가
+   트리 변환표로 길을 붙여 준다 — 생김새 몰림도 그 길(path:<장소>/<하는 일>·group:<장소 묶음>)로 센다(Rust 색인은 그대로). --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..');
 const P = require(path.join(ROOT, 'lib', 'casual-plan.js'));
 const GENERATOR = 'https://polos0117.github.io/pkm-atelier/prompt.html';
+const TREE = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree.json'), 'utf8'));
 
 function args(argv) {
   const o = { cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
@@ -56,7 +59,7 @@ const ledgerPy = (o, ...a) => cp.execFileSync('python3', [path.join(ROOT, 'tools
 
 function view(o) { return JSON.parse(ledgerPy(o, 'view', '--fresh')).entries; }
 /* 생김새 색인 → 값마다 몰림 — 그 값을 쓴 지난 컷들의 crowd(가까운 이웃 수) 평균 */
-function lookCrowd(entries) {
+function lookCrowd(entries, tree = TREE) {
   const f = path.join(ROOT, 'data', 'casual-look.json');
   if (!fs.existsSync(f)) return null;
   const look = JSON.parse(fs.readFileSync(f, 'utf8')), per = {};
@@ -65,7 +68,8 @@ function lookCrowd(entries) {
   const add = (k, v) => { sum[k] = (sum[k] || 0) + v; cnt[k] = (cnt[k] || 0) + 1; };
   for (const e of entries) for (const c of e.cuts) {
     const v = per[e.card + '#' + c.cut]; if (v == null) continue;
-    add('ex:' + c.cat + '/' + c.ex, v); add('cat:' + c.cat, v); add('pair:' + c.orient + '|' + c.frame, v);
+    const q = P.pathOf(tree, c), pl = (tree.places || []).find(x => x.key === q.place);
+    add('path:' + P.pathKey(q), v); if (pl) add('group:' + pl.group, v); add('pair:' + c.orient + '|' + c.frame, v);
     for (const g of c.garments || []) add('garment:' + g, v);
   }
   const crowd = {};
@@ -101,7 +105,8 @@ function planBatch(o, S, entries, look, cards, attempt) {
       const m = entries.filter(e => e.card === c && e.status !== 'reserved').pop();
       return m ? { card: c, cuts: m.cuts } : null;
     }).filter(Boolean);
-    const p = P.plan({ S, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const gen = (cards.find(x => x.name === card) || {}).gen;
+    const p = P.plan({ S, tree: TREE, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
@@ -128,9 +133,16 @@ function whyText(why) {
   const req = r.slots && r.slots.length
     ? '필수 갈래 자리 ' + r.slots.join('·') + (r.two ? ' — 앞 넷이 모두 한 장이라 두 장' : '') + (r.prev ? ' (앞 캐릭터 ' + r.prev.join('·') + ')' : '')
     : '필수 갈래는 남은 컷에 있다';
-  return req + (why.low && why.low.length ? ' · 덜 쓴 갈래 ' + why.low.join('·') : '');
+  return req + (why.low && why.low.length ? ' · 덜 쓴 장소 묶음 ' + why.low.join('·') : '');
 }
 
+/* 길을 말로 — 시대 · 장소 · 하는 일 · 의상 계열(옷). 옛 칸은 갈래/예시도 */
+function pathText(c) {
+  const q = P.pathOf(TREE, c), by = (list, k) => (list || []).find(x => x.key === k) || {};
+  const f = by(TREE.outfits, q.ofam), it = by(f.items, q.item);
+  return [by(TREE.eras, q.era).ko, by(TREE.places, q.place).ko, by(TREE.activities, q.act).ko, (f.ko || q.ofam) + (it.ko ? '(' + it.ko + ')' : '')].join(' · ') +
+    (c.place ? '' : ' [옛 칸 ' + c.cat + '/' + c.ex + ']');
+}
 function show(o, res) {
   const lines = [];
   lines.push('일상컷 계획 — 세션 ' + res.plan.session + ' · 장부 ' + res.entries.length + '칸' +
@@ -138,8 +150,8 @@ function show(o, res) {
   for (const ch of res.plan.characters) {
     lines.push('', '■ ' + ch.card + ' (' + ch.species + ')' + (ch.refill ? ' — 빈 컷 다시 채우기' : '') + ' · ' + whyText(ch.why));
     for (const c of ch.cuts) {
-      if (c.kept) { lines.push('  ' + c.cut + '번 등록됨 — ' + c.cat + '/' + c.ex); continue; }
-      lines.push('  ' + c.cut + '번 ' + c.cat + '/' + c.ex + ' · 표정 ' + c.expr + ' · 자세 ' + c.pose + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
+      if (c.kept) { lines.push('  ' + c.cut + '번 등록됨 — ' + pathText(c)); continue; }
+      lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' · 자세 ' + (c.pose || '하는 일대로') + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
       lines.push('       세부 강도 ' + ['overall_intensity', 'skin_exposure', 'action_level', 'source_influence', 'separates_preference'].map(k => c.axes[k]).join(' / ') +
         ' · 옷 ' + c.garments.join('+') + ' · 드러내기 ' + c.expose.join(', ') + ' · 장면 칸 첫머리 ' + c.lead);
       lines.push('       ' + GENERATOR + '?' + P.generatorQuery(ch.card, c));
@@ -182,4 +194,4 @@ if (require.main === module) {
     process.stdout.write((o.json ? JSON.stringify(res.plan, null, 1) : show(o, res) + (o.reserve ? '\n예약 ' + (o.push ? '— push 했다. 이제 생성한다' : '— 그림 저장소에 그 파일만 commit·push 한 뒤 생성한다') : '\n(예약 안 함 — --reserve --push 로 적는다)')) + '\n');
   } catch (e) { process.stderr.write('✗ ' + e.message + '\n'); process.exit(1); }
 }
-module.exports = { args, planBatch, lookCrowd, show };
+module.exports = { args, planBatch, lookCrowd, show, pathText };

@@ -5,16 +5,17 @@
    - 일상: 평상복. 장갑·폼 말이 새지 않는다. */
 const fs=require('node:fs'), vm=require('node:vm'), assert=require('node:assert/strict');
 const ctx={window:{},console}; vm.createContext(ctx);
-for(const f of ['prompt-spec','figures','toolkit','prompt-anthro','prompt-lifestyle'])
+for(const f of ['prompt-spec','casual-tree','figures','toolkit','prompt-anthro','prompt-lifestyle'])
   vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const {AtelierSpec:S,AtelierPrompt:P,AtelierLifestyle:L}=ctx.window;
 const app=JSON.parse(fs.readFileSync('data/source-appearance.json','utf8')).entries;
 const cards=JSON.parse(fs.readFileSync('data/card.json','utf8')).cards.character;
+const tree=JSON.parse(fs.readFileSync('data/casual-tree.json','utf8'));
 const words=t=>(t.match(/\S+/g)||[]).length;
 function input(name,extra){
  const c=cards.find(x=>x.name===name||x.en===name);
  return {mech:c.name,sourceName:c.en,series:[c.element,c.element2].filter(Boolean).join(' / '),
-  sourceAppearance:app[String(c.no)],style:'glossy_promo',params:[],outputMode:'action',identityMode:'create',form:'light',...extra};
+  sourceAppearance:app[String(c.no)],style:'glossy_promo',params:[],outputMode:'action',identityMode:'create',form:'light',tree,gen:c.gen,...extra};
 }
 const build=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
@@ -123,8 +124,13 @@ assert(cas.includes(S.PROMPT_LINES.hands)&&!cas.includes('Gloves'),'casual: hand
 /* HANDS 는 해부만 — 고른 손 동작(컵 들기·사진 찍기…)을 끝의 손 줄이 덮어쓰지 않는다 */
 const HAND_POSE=/relaxed|loose fist|open palm|resting on something|no hand thrust|clawed/;
 assert(!HAND_POSE.test(S.PROMPT_LINES.hands),'HANDS must stay anatomy-only');
+/* 손을 쓰는 자세는 하는 일이 손을 비워 둘 때만(트리) — 자세마다 그 자세를 받는 길에서 */
+const CT=ctx.window.AtelierCasualTree;
+const poseAt=pose=>{for(const e of tree.eras)for(const p of CT.places(tree,e.key,null))for(const a of CT.acts(tree,e.key,p.key))
+ if(CT.poses(tree,a.key,'full_body').includes(pose)){const f=CT.outfitFamilies(tree,e.key,p.key,a.key)[0];if(f)return {era:e.key,place:p.key,act:a.key,ofam:f.key,frame:'full_body'};}
+ throw new Error('no path for '+pose);};
 for(const pose of ['holding_cup','taking_photo','waving','reading_book','hands_in_hair','carrying_something']){
- const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',pose}));
+ const t=L.buildSingle(input('꼬부기',{...poseAt(pose),pose}));
  assert(t.includes('Pose: '+S.POSE_GUIDES[pose][1]),pose+' pose is in the prompt');
  /* HAND TASK 는 고른 자세를 따르고 할 일 없는 손만 쉬게 한다 — 그 줄의 relaxed 는 덮어쓰기가 아니다(2026-10-27) */
  const tail=t.slice(t.indexOf('HANDS:')).replace(S.PROMPT_LINES.handsCasual,'');
@@ -188,7 +194,8 @@ for(const extra of [{identityMode:'reference',form:'heavy'},{form:'overdrive',ba
  assert(!withHair('꼬링크',extra).includes('HAIR: '),'HAIR leaked: '+JSON.stringify(extra));
 assert(!L.buildSingle(input('꼬링크',{faceDesign:faces[403],cat:'everyday_basic'})).includes('HAIR: '),'casual carries no HAIR line');
 /* 뒤돌아보기 — 등이 카메라를 보는 각도·돌아보는 자세에만 LOOK-BACK 줄(2026-10-25 도치보구·푸호꼬: 등 위에 정면 얼굴) */
-for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'over_shoulder'},{orient:'back'},{pose:'turning_back'}]){
+/* back 은 pkm 일상컷에 안 쓴다(트리 표 banned) */
+for(const extra of [{orient:'rear_3q'},{orient:'three_quarter_back'},{orient:'over_shoulder'},{...poseAt('turning_back'),pose:'turning_back'}]){
   const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',...extra}));
   assert(t.includes('LOOK-BACK: ')&&/quarter turn/.test(t),'look-back line for '+JSON.stringify(extra));
 }
