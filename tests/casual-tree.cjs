@@ -64,4 +64,20 @@ assert(CT.poses(tree, 'care_feeding', 'full_body').includes('offering_food') && 
 for (const a of tree.activities.filter(a => a.companion)) assert(CT.actPlaces(tree, a).every(k => CT.companion(tree, k)), a.key + ' 는 동료 묶음에만');
 assert.equal(CT.year(tree, { gen: 1 }), 1996); assert.equal(CT.year(tree, { gen: 9 }), 2022);
 assert(tree.places.filter(p => ['pokeworld', 'work', 'partner', 'berry'].includes(p.group)).every(p => p.eras.join() === 'in_pokemon'), '포켓몬 몫 장소는 포켓몬 세계 안에서만');
+/* 왜 못 고르나(why) · 해방(unlocked) — 허브 통합 생성기(2026-10-29, game 과 같은 모듈). 트리 안 값은 null, 밖 값은 까닭 코드. 해방한 칸은 고치지 않는다 */
+{
+  const close = S.CLOSE_FRAMES || [], sc = { era: tree.eras[0].key };
+  for (const k of ['place', 'act', 'ofam', 'frame']) sc[k] = CT.choices(tree, sc, k, null, close)[0];
+  for (const k of ['place', 'act', 'ofam', 'frame', 'pose', 'orient']) for (const v of CT.choices(tree, sc, k, null, close))
+    assert.equal(CT.why(tree, sc, k, v, null, close), null, k + ' ' + v + ' 는 고를 수 있다');
+  const farPlace = tree.places.find(p => !CT.places(tree, sc.era).some(q => q.key === p.key));
+  if (farPlace) assert(CT.why(tree, sc, 'place', farPlace.key), farPlace.key + ' 는 까닭이 붙는다');
+  assert.equal(CT.why(tree, sc, 'place', 'nope').code, 'unknown');
+  const outPose = [...poses].find(p => !CT.poses(tree, sc.act, sc.frame).includes(p));
+  assert(CT.why(tree, sc, 'pose', outPose), outPose + ' 는 트리 밖');
+  assert.equal(CT.repair(tree, { ...sc, pose: outPose, unlocked: ['pose'] }, null, close).pose, outPose, '해방한 자세는 그대로');
+  assert.equal(CT.repair(tree, { ...sc, pose: outPose }, null, close).pose || '', '', '해방 안 했으면 비운다');
+  assert(CT.unlocked({ pose: outPose, unlocked: ['pose'] }, 'pose') && !CT.unlocked({ pose: '', unlocked: ['pose'] }, 'pose'), '빈 칸은 해방이 아니다');
+  assert.equal(CT.why(tree, { era: 'now' }, 'orient', 'back').code, 'banned', '안 쓰는 방향');
+}
 console.log('PASS pkm 트리 몫: 안 쓰는 값 · 얼굴 클로즈업 조건 · 동료 묶음·자세 · 세대의 해 · 포켓몬 세계 장소');

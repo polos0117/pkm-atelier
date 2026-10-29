@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-29 · claude · 일상컷 트리 모듈 — 해방 까닭(why·unlocked)
+- lib/casual-tree.js — game 원본 다시 복사: 허브 통합 생성기(polos0117.github.io/prompt.html)의 「해방」 몫 `why`(트리 밖 값의 까닭 code, 안이면 null — 안 쓰는 값은 `banned` 가 먼저)와 `unlocked`(장면의 `unlocked` 칸은 repair 가 고치지 않는다). prompt.html casual-tree v=tree2.
+- tests/casual-tree.cjs — 트리 안 값은 까닭이 없고, 다른 시대 장소·없는 값·계열 밖 자세엔 까닭이 붙고, 해방한 자세는 고치기에도 남는지 · 등 돌림은 「안 쓴다」(banned).
+
 ## 2026-10-29 · claude · 일상컷 트리(B안) — 갈래·예시 대신 시대 → 장소 → 하는 일 → 의상 → 구도, 장부는 두 열쇠
 - data/casual-tree.json — 새 트리 표(game-atelier 트리를 바탕으로, 빌드는 세션 스크립트). 시대 넷: 지금 · 첫 등장 무렵(세대의 해 gen_years — 1세대 1996 … 9세대 2022, 사용자 「과거는 그렇게」) · 포켓몬 세계 안 · 무대·환상. pkm 몫 장소 묶음: 포켓몬 세계(포켓몬센터·콘테스트장·스타디움 …) · 포켓몬 직업 현장(예전 직업컷 61개가 하는 일 하나씩, 직업복 계열 — 기존 트레이너·관장·포켓몬센터 옷을 베끼지 않게) · 동료 포켓몬과 함께(companion — 예전 파트너 돌봄, 가슴 위·클로즈업 없음) · 나무열매·요리. 게임 몫(개발실·방송·PC방 …)은 뺐다. 필수 갈래는 pkm 규칙 그대로 의상 계열 역할극·수영복·란제리풍·레트로(세계 안 규칙 없음, 사용자 「필수 갈래는 pkm 규칙 유지」). 안 쓰는 값(banned: back·back_to_camera·walking_away·detail)과 얼굴 클로즈업 조건(frame_rules.face_close — 필수 갈래 컷엔 안 쓰고 얼굴이 카메라 쪽인 방향만)을 표에 적었다. 예전 갈래·예시 531개는 추천 조합 340·예전 기록 변환표 500으로(빠진 것 0). 활동 자세(박수·쌍안경·따르기 …)·눕기 자세·동료 자세(쓰다듬기·간식 내밀기 — companion)를 자세 계열에 넣었다.
 - lib/casual-tree.js · tools/casual-tree.py — game 원본 복사(규칙 칸 넷을 더했다: banned · not_required · companion 자세 · gen_years). tests/casual-tree.cjs · casual-tree.py 새로(pkm 몫까지).
