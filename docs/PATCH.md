@@ -13,6 +13,10 @@
 
 
 
+## 2026-10-29 · claude · 일상컷 계획기 — 허브 통합 생성기 주소도 찍는다
+- tools/casual-plan.cjs — 컷마다 생성기 주소 밑에 `허브 https://polos0117.github.io/prompt.html?a=pkm&mech=…&casual=…` 한 줄(사용자 「일상컷 계획 불러오기도 허브에 넣어줘」). 허브가 같은 꼴을 받아 값을 채우고 계획 칸은 랜덤이 안 바꾼다 — 지시문은 옛 생성기와 같다(허브 tests/prompt-screen.cjs).
+- IMAGE_RULES.md — 3절 계획기 차례 3에 허브 주소로 열어도 된다는 한 줄.
+
 ## 2026-10-29 · claude · 일상컷 트리 모듈 — 해방 까닭(why·unlocked)
 - lib/casual-tree.js — game 원본 다시 복사: 허브 통합 생성기(polos0117.github.io/prompt.html)의 「해방」 몫 `why`(트리 밖 값의 까닭 code, 안이면 null — 안 쓰는 값은 `banned` 가 먼저)와 `unlocked`(장면의 `unlocked` 칸은 repair 가 고치지 않는다). prompt.html casual-tree v=tree2.
 - tests/casual-tree.cjs — 트리 안 값은 까닭이 없고, 다른 시대 장소·없는 값·계열 밖 자세엔 까닭이 붙고, 해방한 자세는 고치기에도 남는지 · 등 돌림은 「안 쓴다」(banned).

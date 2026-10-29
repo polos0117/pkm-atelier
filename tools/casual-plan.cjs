@@ -9,7 +9,7 @@
    3. 배치의 캐릭터를 차례로 정하고, casual-ledger.py check 로 맞춰 본다. 걸리면 씨앗을 바꿔 다시 정한다(사람 손이 안 간다).
    4. --reserve 면 casual-ledger.py reserve 로 records/casual-reservations/<세션>.json 에 적고, --push 면 그 파일만 commit·push 한다.
       push 가 밀리면 rebase 하고(세션별 파일이라 충돌이 없다) 새로 들어온 다른 세션 예약으로 다시 check — 걸리면 다시 정한다.
-   5. 컷마다 선택값과 생성기 주소(prompt.html?mech=…&casual=… — 생성기가 값을 채우고 모두 잠근다)를 보여 준다.
+   5. 컷마다 선택값과 생성기 주소(prompt.html?mech=…&casual=… — 생성기가 값을 채우고 모두 잠근다)를 보여 준다. 허브 통합 생성기 주소(같은 꼴, ?a=pkm&…)도 한 줄 더.
       의상·장면 칸은 작업자가 쓴다: 계획의 garments(옷 종류) · expose(드러내는 방식 둘) · lead(장면 칸 첫머리) 를 따른다.
 
    이미지 도구가 막았거나 고른 값이 장면과 맞지 않으면 손으로 바꾸지 않고 --avoid 로 다시 정한다:
@@ -23,6 +23,8 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const ROOT = path.resolve(__dirname, '..');
 const P = require(path.join(ROOT, 'lib', 'casual-plan.js'));
 const GENERATOR = 'https://polos0117.github.io/pkm-atelier/prompt.html';
+/* 허브 통합 생성기도 같은 주소 꼴(?a=pkm&mech=&casual=)을 받는다 — 값을 채우고 계획 칸은 랜덤이 안 바꾼다(2026-10-29) */
+const HUB = 'https://polos0117.github.io/prompt.html?a=pkm';
 const TREE = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree.json'), 'utf8'));
 
 function args(argv) {
@@ -155,6 +157,7 @@ function show(o, res) {
       lines.push('       세부 강도 ' + ['overall_intensity', 'skin_exposure', 'action_level', 'source_influence', 'separates_preference'].map(k => c.axes[k]).join(' / ') +
         ' · 옷 ' + c.garments.join('+') + ' · 드러내기 ' + c.expose.join(', ') + ' · 장면 칸 첫머리 ' + c.lead);
       lines.push('       ' + GENERATOR + '?' + P.generatorQuery(ch.card, c));
+      lines.push('       허브 ' + HUB + '&' + P.generatorQuery(ch.card, c));
     }
   }
   lines.push('', '계획 ' + res.file + ' — casual-ledger.py check 통과');
