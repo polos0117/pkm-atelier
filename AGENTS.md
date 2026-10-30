@@ -129,6 +129,7 @@ python3 tests/casual-tree.py     # 일상컷 트리 검사기
 python3 tools/casual-tree-v2.py check  # 일상컷 트리 버전2 표(docs/CASUAL_TREE_V2.md, 옮기는 중) — 51곳 받침 · 역할 동작 · 동료 · 안 쓰는 값 · 다 되는 장소 없는 자세 추천
 python3 tests/casual-tree-v2.py  # 버전2 검사기가 pkm 몫을 거는지
 node tests/casual-tree-v2.cjs    # 버전2 거르기 모듈 × pkm 표 — 검사기와 같은 길, 랜덤(카드 세대) · 포켓몬 세계 장소 · 칸 바꾸기 뒤 걸리는 칸 없음
+node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1200 낱말 · 버전1 기록은 버전1 지시문
 node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 아홉 자리 · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 아홉 자리 글자 하나 다르지 않다(브라우저)
 node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠

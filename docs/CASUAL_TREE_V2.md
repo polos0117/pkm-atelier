@@ -95,6 +95,15 @@ pkm 줄은 그대로 둔다 — 첫 등장 무렵의 해(ERA), 포켓몬 세계(
 - game 에서 더한 의상 여덟 벌은 버전1 표에 넣지 않았다 — 넣으니 버전1 계획기 시험(`tests/casual-plan.cjs`)이 한 칸(헤엄)의 방향 · 프레이밍 짝을 못 찾았다. gpt 자동화가 그 계획기를 쓰니 4단계에서 같이 넣는다. 버전2 표의 그 옷 칸(의상 특징 · 날씨 ⚠)도 지금은 뺐다.
 - 시험 — `tests/casual-tree-v2.cjs`(추천 × 장소 7436 쌍 검사기와 견주기 · 랜덤 3000 · 포켓몬 세계 장소 3000 · 칸 바꾸기 1500), `tests/casual-tree-v2.py`(pkm 몫을 일부러 어겨 걸리는지). 동료 · 역할 장소 거르기를 모듈에서 빼 보면 시험이 실패하는 것을 봤다.
 
+## 7-2. 2단계 결과(2026-10-30)
+
+- `lib/prompt-anthro.js` — 장면이 `treeV: 2` 이고 버전2 표(`st.tree2`)가 오면 버전2 줄로 짓는다. 버전1 기록은 버전2 표가 와도 버전1 지시문 그대로.
+  SCENE 은 Place · **Role**(역할 동작이면) · **Companion**(동료 묶음이면) · 날씨 · Outfit(안경) · Outfit note(직업복) · POSTURE · SUPPORT · COMPOSITION · 렌즈(자동) · 손 둘 · PROP · LEGS · GAZE · EXPRESSION(시선 말을 뗀 표정) · Scene note · 세부 강도.
+  그 밖은 pkm 줄 그대로 — 첫 등장 무렵의 해(ERA) · 포켓몬 세계(WORLD) · 동료 한 마리(`figureCompanion`) · 옷 · ANGLE. HAND TASK 줄은 버전2 에 없다(손 칸이 정한다).
+- `lib/prompt-spec.js` — 버전2 줄 열하나(OUTPUT · FRAME · CROP · LOOK-BACK · BODY · HANDS · 손 · PROP 둘 · Role · Companion).
+- 시험 `tests/prompt-casual-v2.cjs` — 추천 × 장소 4500여 개 + 랜덤 1500(카드 세대 · 표정 · 세부 강도 다섯 · 안경)에서 가장 긴 것 805 낱말(상한 1200, game 과 같다). 버전1 일상컷(상한 470)보다 길다 — 손 · 소품 · 구도를 줄마다 따로 말해서다.
+- 생성기 화면은 아직 버전2 칸이 없다(3단계) — 지금 화면 · 지시문 묶음 · 자동화가 내는 지시문은 버전1 그대로.
+
 ## 8. 정할 것 — 처음 정해 둔 값
 
 - 자동화를 버전2 로 바꾸는 때 — 5단계 시범을 보고 사용자가 정한다. 그 전까지 gpt 자동화는 버전1.

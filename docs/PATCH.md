@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 2단계 — 지시문
+- lib/prompt-anthro.js — treeV 2 장면 + 버전2 표면 버전2 줄(POSTURE · SUPPORT · COMPOSITION · 렌즈 자동 · 손 둘 · PROP · LEGS · GAZE · 시선 말을 뗀 표정), pkm 몫 Role(직업 역할 동작) · Companion(동료 묶음) 줄, 첫 등장의 해 · 포켓몬 세계 · 동료 한 마리 줄은 그대로. 버전1 기록은 버전1 지시문
+- lib/prompt-spec.js — 버전2 줄 열하나 · prompt.html — prompt-spec · prompt-anthro v=tree2a
+- tests/prompt-casual-v2.cjs — 새 시험(가장 긴 것 805 낱말, 상한 1200) · AGENTS.md — 검사 목록 · docs/CASUAL_TREE_V2.md — 7-2 결과
+- 화면 · 지시문 묶음 · 자동화는 아직 버전1(3단계부터)
+
 ## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 1단계 — 공용 모듈 · pkm 표 · 검사
 - lib/casual-tree-v2.js · tools/casual-tree-v2.py — game-atelier 원본을 그대로 복사(같은 파일). pkm 칸(banned · not_required · companion · 동작 places · role)을 읽는 규칙을 game 에서 더했다
 - data/casual-tree-v2.json — 새 표: pkm 51곳 받침, 직업 현장 역할 동작 63, 동료 쓰다듬기 · 동료 동작 다섯, 나무열매 · 요리 · 몬스터볼 동작, 몸 뒤 안 씀, 동료 묶음 가슴 위 · 클로즈업 안 씀, 추천 53
