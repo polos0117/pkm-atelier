@@ -125,9 +125,11 @@ function solve(o, S, cards) {
   const entries = view(o), look = lookCrowd(entries);
   const file = o.out || path.join(require('node:os').tmpdir(), 'casual-plan-' + process.pid + '.json');
   for (let attempt = 0; attempt < 40; attempt++) {
-    const plan = planBatch(o, S, entries, look, cards, attempt);
-    fs.writeFileSync(file, JSON.stringify(plan, null, 1) + '\n');
-    const r = check(o, file);
+    /* 그 씨앗으로 짝을 못 찾아 계획기가 멈추면(드물다 — 장부가 바뀌면 고르는 길이 바뀐다) 장부 check 에 걸린 것처럼 다음 씨앗으로 */
+    let plan, r;
+    try { plan = planBatch(o, S, entries, look, cards, attempt); }
+    catch (e) { if (!/^casual-plan/.test(e.message)) throw e; r = { ok: false, out: '  ✗ ' + e.message }; }
+    if (plan) { fs.writeFileSync(file, JSON.stringify(plan, null, 1) + '\n'); r = check(o, file); }
     if (r.ok) return { plan, file, look, attempt, entries };
     if (attempt === 39) throw new Error('40번 정해도 장부 조건을 못 맞췄다:\n' + r.out);
   }

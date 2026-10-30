@@ -223,7 +223,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   const img2 = path.join(ROOT, '..', 'pkm-atelier-img-2');
   if (fs.existsSync(path.join(img2, 'records'))) {
     const ledger = JSON.parse(cp.execFileSync('python3', ['tools/casual-ledger.py', 'view', '--fresh'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 << 20 }));
-    assert(ledger.entries.every(e => e.cuts.every(x => x.place && x.act)), 'view 는 옛 칸에도 길을 붙여 준다');
+    assert(ledger.entries.every(e => e.cuts.every(x => x.place && (x.act || x.treeV === 2))), 'view 는 옛 칸에도 길을 붙여 준다(버전2 컷은 짓이라 act 가 없다)');
     const registry = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'img.json'), 'utf8'));
     const known = new Set(ledger.entries.map(e => e.card).concat(Object.keys(registry.img || {})));
     const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character.filter(c => !known.has(c.name)).slice(0, 1).map(c => c.name);

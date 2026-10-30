@@ -68,6 +68,9 @@ for (let i = 0; i < 30; i++) {
   entries.push({ card, status: 'done', at: at(entries.length), cuts: ch.cuts });
   n++;
 }
+/* 버전2 컷이 쌓인 장부 위에서 버전1 계획기도 check 를 통과한다 — 버전2 표의 새 장소도 같은 묶음으로 센다(이상해씨 시범 예약 뒤 버전1 계획기가 덜 쓴 묶음을 장부와 다르게 셌다) */
+assert(entries.slice(10).some(e => e.cuts.some(x => !tree.places.some(p => p.key === x.place))), '버전2 새 장소가 장부에 있다');
+for (let i = 0; i < 5; i++) batchPlan(entries, ['V' + i], 'after', false, { ['V' + i]: { tree2 } });
 /* 버전2 컷이 고르게 퍼진다 — pkm 몫(직업 역할 · 동료 · 포켓몬 세계)도 나온다 */
 const v2cuts = entries.slice(10).flatMap(e => e.cuts);
 const groups = new Set(v2cuts.map(x => (C2.place(t, x.place) || {}).group)), places = new Set(v2cuts.map(x => x.place));
@@ -99,5 +102,14 @@ assert.deepEqual(P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: '
 const dup = JSON.parse(JSON.stringify(entries[entries.length - 1].cuts));
 const bad = check(entries, { session: 't', characters: [{ card: 'D', species: 'D', cuts: dup }] });
 assert(/장소·하는 일 .* 이미 썼다/.test(bad) && /짝 .* 겹친다/.test(bad), '같은 장소/짓 · 같은 짝을 건다:\n' + bad);
+
+/* 5. 예약 파일이 버전2 칸을 다 담는다 — 그 예약에서 두 컷을 두고(--keep) 한 컷만 다시 정해도 check 를 통과한다(이상해씨 시범에서 예약이 버전1 칸만 적어 걸렸다) */
+const rp = batchPlan(entries, ['R'], 'res', true).plan;
+fs.writeFileSync(PLAN, JSON.stringify(rp));
+cp.execFileSync('python3', ['tools/casual-ledger.py', 'reserve', PLAN, '--ledger', LEDGER, '--repos', tmp], { cwd: ROOT, stdio: 'pipe' });
+const saved = JSON.parse(fs.readFileSync(path.join(tmp, 'casual-reservations', 't.json'), 'utf8')).characters[0].cuts;
+rp.characters[0].cuts.forEach((x, i) => { assert.equal(saved[i].treeV, 2); for (const k of P.V2_FIELDS) assert.equal(saved[i][k] || '', x[k] || '', '예약 칸 ' + k); });
+const re3 = P.planV2({ S, tree, tree2, subject, entries, card: 'R', seed: 'r3', kept: saved.slice(0, 2), avoid: [{ cut: 3, field: 'item', value: saved[2].item }] });
+assert.equal(check(entries, { session: 't2', characters: [{ card: 'R', species: 'R', cuts: re3.cuts, claims: re3.claims }] }), '', '두 컷을 두고 다시 정한 계획');
 fs.rmSync(tmp, { recursive: true, force: true });
-console.log('PASS 계획기 버전2: 버전1 열 명 위에 서른 명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠');
+console.log('PASS 계획기 버전2: 버전1 열 명 위에 서른 명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸');

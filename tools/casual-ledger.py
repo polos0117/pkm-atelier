@@ -423,6 +423,16 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
+RESERVE_TAIL = ("axes", "garments", "expose", "lead", "kept")
+
+
+def reserve_keys(c):
+    """예약 파일에 적는 칸 — 버전2 컷은 treeV 와 버전2 칸 전부(짓 · 몸+머리 는 장부가 다시 만든다), 버전1 컷은 지금까지 그대로"""
+    if is_v2(c):
+        return ("cut", "treeV") + V2_KEYS + RESERVE_TAIL
+    return ("cut", "cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens") + RESERVE_TAIL
+
+
 def stamp_of(session, e):
     """예약 칸 하나의 도장 — reserve 가 check 를 통과시킨 그대로인지(세션·캐릭터·시각·컷·다시 채우기)"""
     import hashlib
@@ -781,7 +791,7 @@ def check(args, write=False):
         at = now()
         for ch in plan["characters"]:
             e = {"species": ch.get("species"), "card": ch["card"], "at": at,
-                 "cuts": [{k: c.get(k) for k in ("cut", "cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens", "axes", "garments", "expose", "lead", "kept") if c.get(k) is not None and (k != "kept" or c.get(k))}
+                 "cuts": [{k: c.get(k) for k in reserve_keys(c) if c.get(k) is not None and (k != "kept" or c.get(k))}
                           for c in ch["cuts"]]}
             if ch.get("refill"):
                 e["refill"] = True
