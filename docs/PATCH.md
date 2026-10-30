@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 일상컷 표정 「윙크」
+- lib/prompt-spec.js — 표정 선택지와 문장에 윙크(game 에서 — 버전2 표엔 문장만 와 있고 선택지가 없어 생성기 · 랜덤 · 계획기가 못 골랐다) · prompt.html — prompt-spec v=wink
+- lib/casual-plan.js — 계획기 표정 묶음(평상 · 매력)에 윙크
+
 ## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 6단계 — 계획기 기본을 버전2 로
 - tools/casual-plan.cjs — 기본이 버전2(예전 길은 --v1), 그 버전에 없는 --avoid 칸이면 멈춘다
 - data/casual-tree.json — game 의 의상 여덟 벌(터틀넥+퀼팅 조끼 · 플리스+조거 · 스키 · 턱시도+캐미솔 · 제빵사 · 플로리스트 · 정비 점프수트 · 90년대 윈드브레이커) · data/casual-tree-v2.json — 그 옷 칸(의상 특징 · 날씨) 되살림
