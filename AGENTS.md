@@ -126,6 +126,9 @@ python3 tests/make-thumbs.py     # 썸네일 도구 — 열리지 않는 원본�
 python3 tools/casual-tree.py check  # 일상컷 트리 표 — 끊긴 길·없는 열쇠·필수 갈래·추천 조합·예전 기록 변환표(audit 은 장소×하는 일 훑기)
 node tests/casual-tree.cjs       # 일상컷 트리 ↔ 생성기 표 · 칸끼리 규칙 · pkm 몫(안 쓰는 값·얼굴 클로즈업·동료·세대의 해)
 python3 tests/casual-tree.py     # 일상컷 트리 검사기
+python3 tools/casual-tree-v2.py check  # 일상컷 트리 버전2 표(docs/CASUAL_TREE_V2.md, 옮기는 중) — 51곳 받침 · 역할 동작 · 동료 · 안 쓰는 값 · 다 되는 장소 없는 자세 추천
+python3 tests/casual-tree-v2.py  # 버전2 검사기가 pkm 몫을 거는지
+node tests/casual-tree-v2.cjs    # 버전2 거르기 모듈 × pkm 표 — 검사기와 같은 길, 랜덤(카드 세대) · 포켓몬 세계 장소 · 칸 바꾸기 뒤 걸리는 칸 없음
 node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 아홉 자리 · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 아홉 자리 글자 하나 다르지 않다(브라우저)
 node tests/casual-plan.cjs       # 일상컷 계획기 — 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
@@ -146,6 +149,7 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
 
 일상컷 트리 모듈 `lib/casual-tree.js` 와 검사기 `tools/casual-tree.py` 는 game-atelier 가 원본이고 book·myth·pkm 이 같은 파일을 복사해 쓴다(2026-10-29). 공방마다 다른 것은 트리 표 `data/casual-tree.json` 뿐 — pkm 만의 규칙(안 쓰는 값·얼굴 클로즈업 조건·동료 묶음·세대의 해)도 표의 칸이다. 모듈을 고치면 game 에서 고쳐 넷에 같이 복사하고 넷의 시험을 다 돌린다. 장면 고르기 규칙은 IMAGE_RULES.md 3절.
+버전2 모듈 `lib/casual-tree-v2.js` · 검사기 `tools/casual-tree-v2.py` 도 game 이 원본이고 pkm 이 같은 파일을 쓴다(2026-10-30 — 옮기는 계획과 단계는 `docs/CASUAL_TREE_V2.md`). pkm 몫(안 쓰는 몸 방향 · 동료 · 직업 역할 동작의 현장)은 버전2 표 `data/casual-tree-v2.json` 의 칸이다. 시범이 끝날 때까지 계획기 · 장부 · 자동화는 버전1 그대로다.
 
 도트 재생기 `lib/sprite-actor.js`·`lib/sprite-actor.css` 도 공방 모음의 `sprite-actor.js`·`.css` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(판 v1, 약속 — `data/sprites.json` 꼴·API — 은 그쪽 README 「도트 재생기」절, 인물의 그림은 공방 모음의 도트 공방 `dot.html` 에서 만든다). 고치면 원본과 다섯 저장소를 같이, `node tests/sprite-actor-copy.cjs` 가 원본과 견준다. 부르는 곳: 연구소(`index.html` — 캡슐 벽 밑 바닥 `.lab-floor`, 캡슐을 열면 그 포켓몬의 도트가 뛰쳐나와 화면을 거닌다)·도감(상세의 도트 줄, 목록 칸의 「도트」 표). 인물은 `data/sprites.json` 의 `actors` 에 도트 공방의 「인물 칸 복사」를 넣는다(card = 카드 이름), 그림은 열린 `pkm-atelier-img-3` 의 `sprites/`(인물 칸에 `base` — 루기아처럼 앞선 인물은 `pkm-atelier-img-2`, 자료 전체의 `base`).
 

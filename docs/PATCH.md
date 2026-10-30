@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 1단계 — 공용 모듈 · pkm 표 · 검사
+- lib/casual-tree-v2.js · tools/casual-tree-v2.py — game-atelier 원본을 그대로 복사(같은 파일). pkm 칸(banned · not_required · companion · 동작 places · role)을 읽는 규칙을 game 에서 더했다
+- data/casual-tree-v2.json — 새 표: pkm 51곳 받침, 직업 현장 역할 동작 63, 동료 쓰다듬기 · 동료 동작 다섯, 나무열매 · 요리 · 몬스터볼 동작, 몸 뒤 안 씀, 동료 묶음 가슴 위 · 클로즈업 안 씀, 추천 53
+- tests/casual-tree-v2.cjs · tests/casual-tree-v2.py — 새 시험 · AGENTS.md — 검사 목록 · 공용 모듈 줄 · docs/CASUAL_TREE_V2.md — 7-1 결과
+- 생성기 · 계획기 · 장부 · 자동화는 아직 버전1 그대로(2단계부터). game 의 새 의상 여덟 벌은 버전1 표에 넣으면 버전1 계획기 시험이 길을 못 찾아 4단계로 미뤘다
+
 ## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 계획
 - docs/CASUAL_TREE_V2.md — game-atelier 의 버전2 를 pkm 으로 옮기는 계획(사용자). 공용 모듈 · pkm 표 · 지시문 · 화면 · 계획기 · 장부 · 시범 여섯 단계. 시범이 끝날 때까지 계획기 기본과 gpt 자동화는 버전1 그대로
 
