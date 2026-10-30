@@ -7565,6 +7565,34 @@
    ],
    "y2k_lowrise": [
     "pocket"
+   ],
+   "baker_jacket_apron": [
+    "pocket"
+   ],
+   "florist_apron": [
+    "pocket",
+    "collar"
+   ],
+   "mechanic_jumpsuit": [
+    "pocket",
+    "collar"
+   ],
+   "turtleneck_quilted_vest": [
+    "pocket"
+   ],
+   "fleece_joggers": [
+    "pocket"
+   ],
+   "ski_set": [
+    "pocket",
+    "collar"
+   ],
+   "tuxedo_cami_trousers": [
+    "collar"
+   ],
+   "nineties_windbreaker_track": [
+    "pocket",
+    "collar"
    ]
   },
   "remove": {
@@ -8855,6 +8883,9 @@
    ],
    "outfits": [],
    "items": [
+    "ski_set",
+    "turtleneck_quilted_vest",
+    "fleece_joggers",
     "wool_coat",
     "long_coat_scarf"
    ],

@@ -64,6 +64,8 @@ python3 tools/image-runner.py block --reason '실제 실패 원인'
 python3 tools/image-runner.py resume --reason '확인한 해결 내용'
 ```
 
+계획기는 2026-10-30 부터 **버전2 칸**(몸 자세 · 받침 · 몸+머리 방향 · 손 둘 · 소품 동작 · 다리 · 시선 — `docs/CASUAL_TREE_V2.md`)으로 정한다. 명령은 같다. 지시문 묶음(`prompt-pack.cjs --plan`)이 버전2 컷을 그대로 잠그고, 관리기의 예약 · 도장 검사도 같다. 이미지 도구가 막아 다시 정할 때 `--avoid` 칸은 버전2 이름(`item=`·`place=`·`use=`·`posture=`·`body=`·`frame=` …)을 쓴다 — 버전1 칸(`act=`·`pose=`·`orient=`)은 계획기가 멈춘다. 옛 계획이 필요하면 `--v1`.
+
 계획기의 view/check/reserve는 모두 --fresh로 같은 원본 기록과 기존 예약을 합친다. 공유 장부 파일을 덮어쓰지 않는다. 직접 Python 검사를 할 때도 `casual-ledger.py check PLAN.json --fresh`를 쓴다. 검사를 완화하거나 실패를 무한 재시도로 숨기지 않는다.
 
 ## 업로드와 완료

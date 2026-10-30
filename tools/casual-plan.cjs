@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* 일상컷 계획기 — 생성 전에 세 장의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
-   node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v2]
+   node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
        [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3>]
 
    1. 그림 저장소를 받아 둔다(--no-pull 이 아니면 셋 다 pull --rebase). 장부·예약이 있는 pkm-atelier-img-2 에 커밋 안 한 변경이 있으면 멈춘다.
@@ -18,8 +18,9 @@
    생김새 색인(data/casual-look.json, rust/casual-look 이 만든다)이 있으면 생김새가 몰린 장면·구도·옷에 벌점을 준다.
    2026-10-29 일상컷 트리(B안): 장면은 트리 길(시대·장소·하는 일·의상 계열·옷)로 정한다. 장부의 옛 칸(갈래/예시)은 casual-ledger.py view 가
    트리 변환표로 길을 붙여 준다 — 생김새 몰림도 그 길(path:<장소>/<하는 일>·group:<장소 묶음>)로 센다(Rust 색인은 그대로). --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr
-   --v2(2026-10-30, docs/CASUAL_TREE_V2.md 4단계) — 버전2 칸으로 정한다(lib/casual-plan.js planV2). 시범이 끝날 때까지 기본은 버전1 이다.
-   버전2 컷은 장부 비교에서 짓(소품 동작 · 몸 자세+손) · 몸 방향+머리 방향으로 센다. --avoid 칸은 era·place·ofam·item·group·posture·body·frame·use·expr */
+   버전2(2026-10-30 기본, docs/CASUAL_TREE_V2.md) — 버전2 칸으로 정한다(lib/casual-plan.js planV2). 버전2 컷은 장부 비교에서 짓(소품 동작 · 몸 자세+손) ·
+   몸 방향+머리 방향으로 센다. --avoid 칸은 era·place·ofam·item·group·posture·body·frame·use·expr.
+   --v1 이면 예전 버전1 칸(하는 일 · 자세 · 방향 · 화각)으로 정한다 — 그때 --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..');
@@ -31,7 +32,7 @@ const TREE = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree.jso
 const TREE2 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree-v2.json'), 'utf8'));
 
 function args(argv) {
-  const o = { cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
+  const o = { v2: true, cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--session') o.session = argv[++i];
@@ -41,7 +42,8 @@ function args(argv) {
     else if (a === '--push') o.push = o.reserve = true;
     else if (a === '--no-pull') o.noPull = true;
     else if (a === '--json') o.json = true;
-    else if (a === '--v2') o.v2 = true;
+    else if (a === '--v2') o.v2 = true;   /* 기본이다 — 예전 명령을 그대로 받는다 */
+    else if (a === '--v1') o.v2 = false;
     else if (a === '--refill') o.refill.push(argv[++i]);
     else if (a === '--avoid') o.avoid.push(argv[++i]);
     else if (a === '--keep') { const m = /^(.+?):([\d,]+)$/.exec(argv[++i] || ''); if (!m) throw new Error('--keep 은 카드:컷번호(1,3)'); o.keep[m[1]] = m[2].split(',').map(Number); }
@@ -105,6 +107,9 @@ function planBatch(o, S, entries, look, cards, attempt) {
     if (refill && kept.length >= 3) throw new Error(card + ' 는 세 장이 다 있다');
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
+    /* 버전마다 칸이 다르다 — 없는 칸을 피하라고 하면 아무것도 안 피하고 조용히 지나간다 */
+    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'group', 'posture', 'body', 'frame', 'use', 'expr'] : ['era', 'place', 'act', 'ofam', 'item', 'group', 'pose', 'orient', 'frame', 'lens', 'expr'];
+    for (const x of avoid) if (!FIELDS.includes(x.field)) throw new Error('--avoid 칸 ' + x.field + ' 는 ' + (o.v2 ? '버전2' : '버전1(--v1)') + ' 에 없다 — ' + FIELDS.join('·'));
     const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
     /* 뒤에 정할 다시 채우기 캐릭터의 등록된 컷 — 지금 정하는 컷이 그것과 겹치면 안 된다 */
     const fixed = o.cards.slice(o.cards.indexOf(card) + 1).filter(c => o.refill.includes(c)).map(c => {

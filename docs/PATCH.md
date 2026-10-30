@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 6단계 — 계획기 기본을 버전2 로
+- tools/casual-plan.cjs — 기본이 버전2(예전 길은 --v1), 그 버전에 없는 --avoid 칸이면 멈춘다
+- data/casual-tree.json — game 의 의상 여덟 벌(터틀넥+퀼팅 조끼 · 플리스+조거 · 스키 · 턱시도+캐미솔 · 제빵사 · 플로리스트 · 정비 점프수트 · 90년대 윈드브레이커) · data/casual-tree-v2.json — 그 옷 칸(의상 특징 · 날씨) 되살림
+- lib/casual-plan.js — 버전1 계획기가 한 컷의 프레이밍을 앞 두 컷이 다 가져가면 멈추던 것 → 마지막 단계에서 자기 컷 값도 풀고 장부 check 에 맡긴다
+- IMAGE_RULES.md 3절 · docs/IMAGE_AUTOMATION.md · AGENTS.md — 버전2 칸 읽는 법 · 설정 키 · 기록 칸 · --avoid 칸 · docs/CASUAL_TREE_V2.md — 7-5 둘째 시범(파이리) · 7-6 결과
+- tests/casual-plan.cjs — 버전1 은 --v1, 실제 장부에서 기본(버전2) · --v1 둘 다, 버전2 에 없는 --avoid 칸
+- 허브(polos0117.github.io) — 버전2 계획 주소는 pkm 생성기로 넘긴다(4f9ee54)
+
 ## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 5단계 — 이상해씨 시범
 - docs/CASUAL_TREE_V2.md — 7-5 결과: 옛 시트 이상해씨의 빈 자리 casual2·3 을 계획기 --v2 로(세 장 그려 둘을 골랐다, 한 장은 안전 필터에 막혀 다시 정함), 시범이 찾은 계획기 문제 셋과 남은 것
 - 그림 · 기록은 pkm-atelier-img-3(`records/bulbasaur-20261030/`)

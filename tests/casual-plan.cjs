@@ -169,7 +169,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 /* Replanning must exclude both requested cards' previous reservations, as check_plan does. */
 {
   const cli = require('../tools/casual-plan.cjs');
-  const o = cli.args(['뚜꾸리', '차오꿀', '--session', 'replan-test']);
+  const o = cli.args(['뚜꾸리', '차오꿀', '--session', 'replan-test', '--v1']);
   const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character;
   const first = cli.planBatch(o, S, entries, null, cards, 0);
   const own = first.characters.map(ch => ({ ...ch, status: 'reserved', at: at(1) }));
@@ -227,8 +227,12 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
     const registry = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'img.json'), 'utf8'));
     const known = new Set(ledger.entries.map(e => e.card).concat(Object.keys(registry.img || {})));
     const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character.filter(c => !known.has(c.name)).slice(0, 1).map(c => c.name);
-    const out = cp.execFileSync('node', ['tools/casual-plan.cjs', ...cards, '--no-pull', '--seed', 'test'], { cwd: ROOT, encoding: 'utf8' });
-    assert(out.includes('check 통과'), out);
+    for (const v of [[], ['--v1']]) {   /* 기본(버전2)과 예전 버전1 둘 다 */
+      const out = cp.execFileSync('node', ['tools/casual-plan.cjs', ...cards, '--no-pull', '--seed', 'test', ...v], { cwd: ROOT, encoding: 'utf8' });
+      assert(out.includes('check 통과'), out);
+      assert.equal(out.includes('[버전2]'), !v.length, '기본은 버전2');
+    }
+    assert.throws(() => cp.execFileSync('node', ['tools/casual-plan.cjs', cards[0], '--no-pull', '--avoid', cards[0] + '::act=x'], { cwd: ROOT, stdio: 'pipe' }), /버전2 에 없다/, '버전2 에 없는 칸을 피하라면 멈춘다');
     n++;
   } else console.log('(그림 저장소가 옆에 없어 실제 장부 시험은 건너뜀)');
 }
