@@ -49,6 +49,11 @@ data/casual-tree.json)로 적는다. 옛 컷(갈래 cat · 예시 ex)은 트리 
 작은 갈래 한 바퀴 → 작은 묶음 한 바퀴, 필수 갈래 → 의상 계열이 역할극·수영복·란제리풍·레트로(옛 칸은 갈래 이름으로도).
 안 쓰는 방향·프레이밍과 얼굴 클로즈업 조건은 트리 표(banned · frame_rules.face_close)에서 읽는다.
 
+버전2 컷(2026-10-30, docs/CASUAL_TREE_V2.md — treeV 2, 계획기 --v2)엔 하는 일 · 방향이 없다. 읽을 때 비교 열쇠를 붙인다
+(lib/casual-plan.js pathOf 와 같다): 하는 일 act ← 짓(소품 동작 use, 없으면 몸 자세:오른손:왼손) · 방향 orient ← 몸 방향+머리 방향 ·
+자세 pose ← 자세 추천. 그래서 버전1 · 버전2 컷이 섞인 장부도 같은 규칙으로 견준다. 작은 묶음 한 바퀴는 버전1 길의 규칙이라 버전2 컷엔 안 본다.
+버전2 컷의 트리 검사는 안 쓰는 값(몸 방향 · 프레이밍)과 얼굴 클로즈업 조건만 — 칸끼리 맞는지는 계획기 · 지시문 묶음(plannedV2)이 본다.
+
 기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3 이다(--repos 로 바꾼다).
 장부·예약은 그대로 둘째 저장소에 — 새 그림의 기록은 셋째 저장소에 쌓인다."""
 from pathlib import Path
@@ -62,6 +67,9 @@ RESERVATIONS = "casual-reservations"
 
 REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 옛 칸의 필수 갈래 이름(레트로 글래머 2026-10-26)
 TREE_FILE = os.path.join(ROOT, "data", "casual-tree.json")
+TREE2_FILE = os.path.join(ROOT, "data", "casual-tree-v2.json")
+# 버전2 컷의 칸(lib/casual-plan.js V2_FIELDS)
+V2_KEYS = ("era", "place", "weather", "ofam", "item", "posture", "support", "frame", "body", "head", "camera", "right", "left", "use", "legs", "gaze", "expr", "preset")
 EX_WINDOW = 10          # 같은 장소·하는 일(옛 칸은 같은 예시)은 최근 10명 안에서 다시 쓰지 않는다
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
 CMP_RESERVED = 3        # 그 비교에 넣는 다른 세션 예약도 가장 최근 셋까지(2026-10-27 — 전부 넣으면 예약이 쌓일 때 SOURCE 구성 일곱 가지·옷 종류가 다 막혔다)
@@ -140,7 +148,15 @@ def spec():
                 if C.outfit_families(tree, e["key"], p["key"], a):
                     keys.setdefault(p["group"], set()).add(p["key"] + "/" + a["key"])
     presets = {x["key"]: x for x in tree.get("presets", [])}
-    return {"tree": tree, "places": places, "groups": [g["key"] for g in tree["groups"]],
+    try:
+        with open(TREE2_FILE, encoding="utf-8") as f:
+            tree2 = json.load(f)
+    except (OSError, ValueError):
+        tree2 = {}
+    # 버전2 표의 새 장소(도서관 · 온실 …)도 묶음을 안다 — 버전1 길 목록엔 넣지 않는다
+    for p in tree2.get("extra_places") or []:
+        places.setdefault(p["key"], p)
+    return {"tree": tree, "tree2": tree2, "places": places, "groups": [g["key"] for g in tree["groups"]],
             "group_paths": {g: sorted(v) for g, v in keys.items()}, "presets": presets,
             "required": set((tree.get("required") or {}).get("outfits") or [])}
 
@@ -155,8 +171,20 @@ def sp_():
     return SP
 
 
+def jit_of(c):
+    """버전2 컷의 짓 — 소품 동작, 없으면 몸 자세:오른손:왼손(lib/casual-plan.js jitOf)"""
+    return c.get("use") or "%s:%s:%s" % (c.get("posture") or "", c.get("right") or "-", c.get("left") or "-")
+
+
+def is_v2(c):
+    return bool(c) and c.get("treeV") == 2
+
+
 def with_path(c, sp=None):
-    """옛 칸(갈래·예시)에 트리 길을 붙인다 — lib/casual-tree.js fromLegacy 와 같다. 이미 길이 있으면 그대로"""
+    """옛 칸(갈래·예시)에 트리 길을 붙인다 — lib/casual-tree.js fromLegacy 와 같다. 이미 길이 있으면 그대로.
+    버전2 컷엔 비교 열쇠(act ← 짓 · orient ← 몸+머리 · pose ← 자세 추천)를 붙인다"""
+    if is_v2(c):
+        return {**c, "act": jit_of(c), "orient": "%s+%s" % (c.get("body") or "", c.get("head") or ""), "pose": c.get("preset") or None}
     if not c or c.get("place"):
         return c
     sp = sp or sp_()
@@ -293,6 +321,11 @@ def read_records(repos):
                     continue
                 files += mine
                 ax = c.get("axes") or {}
+                if is_v2(c):
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS},
+                                 "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
+                                 "garments": garments_of(c.get("outfit"))})
+                    continue
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
                                           ("cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
@@ -332,6 +365,10 @@ def imported_cut(d, i):
             for c in ch.get("cuts") or []:
                 if c.get("cut") == i:
                     ax = c.get("axes") or {}
+                    if is_v2(c):
+                        return {"card": ch.get("card"), "cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS},
+                                "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
+                                "garments": sorted(c.get("garments") or [])}
                     return {"card": ch.get("card"), "cut": i, **{k: c.get(k) or None for k in ("cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens")},
                             "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                             "garments": sorted(c.get("garments") or [])}
@@ -577,8 +614,27 @@ def small_group_open(entries, group, lst):
     return [x for x in lst if n[x] == m]
 
 
+def tree_problems_v2(c, sp):
+    """버전2 컷 — 꼭 있어야 하는 칸, 안 쓰는 값(몸 방향 · 프레이밍), 얼굴 클로즈업 조건. 칸끼리는 계획기 · 지시문 묶음이 본다"""
+    tree, tree2, out = sp["tree"], sp.get("tree2") or {}, []
+    for k in ("era", "place", "ofam", "posture", "support", "frame", "body", "head", "camera"):
+        if not c.get(k):
+            out.append("버전2 칸 %s 가 비었다" % k)
+    if c.get("place") and c.get("place") not in sp["places"]:
+        out.append("장소 %s 가 없다" % c.get("place"))
+    if c.get("frame") in (tree.get("banned") or {}).get("frames", []) + (tree2.get("banned") or {}).get("frames", []) or \
+            c.get("body") in (tree2.get("banned") or {}).get("body", []):
+        out.append("일상컷에 쓰지 않는 몸 방향·프레이밍")
+    rule = (tree.get("frame_rules") or {}).get(c.get("frame")) or {}
+    if rule.get("not_required") and is_required(c, sp):
+        out.append("%s 는 필수 갈래 컷에 쓰지 않는다(옷이 안 남는다)" % c.get("frame"))
+    return out
+
+
 def tree_problems(c, sp):
     """그 컷이 트리 위의 길·구도인가 — 시대·장소·하는 일·의상 계열·옷, 안 쓰는 값, 얼굴 클로즈업 조건(트리 표)"""
+    if is_v2(c):
+        return tree_problems_v2(c, sp)
     tree, C, out = sp["tree"], ct(), []
     errs = C.path_errors(tree, {"era": c.get("era"), "place": c.get("place"), "act": c.get("act"), "outfit": c.get("ofam"), "item": c.get("item") or ""})
     out += errs
@@ -641,7 +697,7 @@ def check_plan(doc, plan, sp, ledger=None):
                 bad("%s번: 장소·하는 일 %s 를 최근 %d명·예약·배치 안에서 이미 썼다" % (n, path_key(c), EX_WINDOW))
             g = group_of(c, sp)
             lst = sp["group_paths"].get(g) or []
-            if 0 < len(lst) <= SMALL_GROUP and path_key(c) not in small_group_open(es, g, lst):
+            if not is_v2(c) and 0 < len(lst) <= SMALL_GROUP and path_key(c) not in small_group_open(es, g, lst):
                 bad("%s번: 묶음 %s 는 길이 %d개뿐 — 이번 바퀴에 아직 안 쓴 길부터 쓴다" % (n, g, len(lst)))
             for m in tree_problems(c, sp):
                 bad("%s번: %s" % (n, m))

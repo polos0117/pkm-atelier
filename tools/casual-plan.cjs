@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* 일상컷 계획기 — 생성 전에 세 장의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
-   node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push]
+   node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v2]
        [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3>]
 
    1. 그림 저장소를 받아 둔다(--no-pull 이 아니면 셋 다 pull --rebase). 장부·예약이 있는 pkm-atelier-img-2 에 커밋 안 한 변경이 있으면 멈춘다.
@@ -17,7 +17,9 @@
    (--keep 은 이미 만든 컷 — 이 세션의 예약에서 그대로 두고 나머지만 다시 정한다)
    생김새 색인(data/casual-look.json, rust/casual-look 이 만든다)이 있으면 생김새가 몰린 장면·구도·옷에 벌점을 준다.
    2026-10-29 일상컷 트리(B안): 장면은 트리 길(시대·장소·하는 일·의상 계열·옷)로 정한다. 장부의 옛 칸(갈래/예시)은 casual-ledger.py view 가
-   트리 변환표로 길을 붙여 준다 — 생김새 몰림도 그 길(path:<장소>/<하는 일>·group:<장소 묶음>)로 센다(Rust 색인은 그대로). --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr */
+   트리 변환표로 길을 붙여 준다 — 생김새 몰림도 그 길(path:<장소>/<하는 일>·group:<장소 묶음>)로 센다(Rust 색인은 그대로). --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr
+   --v2(2026-10-30, docs/CASUAL_TREE_V2.md 4단계) — 버전2 칸으로 정한다(lib/casual-plan.js planV2). 시범이 끝날 때까지 기본은 버전1 이다.
+   버전2 컷은 장부 비교에서 짓(소품 동작 · 몸 자세+손) · 몸 방향+머리 방향으로 센다. --avoid 칸은 era·place·ofam·item·group·posture·body·frame·use·expr */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..');
@@ -26,6 +28,7 @@ const GENERATOR = 'https://polos0117.github.io/pkm-atelier/prompt.html';
 /* 허브 통합 생성기도 같은 주소 꼴(?a=pkm&mech=&casual=)을 받는다 — 값을 채우고 계획 칸은 랜덤이 안 바꾼다(2026-10-29) */
 const HUB = 'https://polos0117.github.io/prompt.html?a=pkm';
 const TREE = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree.json'), 'utf8'));
+const TREE2 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree-v2.json'), 'utf8'));
 
 function args(argv) {
   const o = { cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
@@ -38,6 +41,7 @@ function args(argv) {
     else if (a === '--push') o.push = o.reserve = true;
     else if (a === '--no-pull') o.noPull = true;
     else if (a === '--json') o.json = true;
+    else if (a === '--v2') o.v2 = true;
     else if (a === '--refill') o.refill.push(argv[++i]);
     else if (a === '--avoid') o.avoid.push(argv[++i]);
     else if (a === '--keep') { const m = /^(.+?):([\d,]+)$/.exec(argv[++i] || ''); if (!m) throw new Error('--keep 은 카드:컷번호(1,3)'); o.keep[m[1]] = m[2].split(',').map(Number); }
@@ -70,8 +74,8 @@ function lookCrowd(entries, tree = TREE) {
   const add = (k, v) => { sum[k] = (sum[k] || 0) + v; cnt[k] = (cnt[k] || 0) + 1; };
   for (const e of entries) for (const c of e.cuts) {
     const v = per[e.card + '#' + c.cut]; if (v == null) continue;
-    const q = P.pathOf(tree, c), pl = (tree.places || []).find(x => x.key === q.place);
-    add('path:' + P.pathKey(q), v); if (pl) add('group:' + pl.group, v); add('pair:' + c.orient + '|' + c.frame, v);
+    const q = P.pathOf(tree, c), pl = (tree.places || []).concat(TREE2.extra_places || []).find(x => x.key === q.place);
+    add('path:' + P.pathKey(q), v); if (pl) add('group:' + pl.group, v); add('pair:' + q.orient + '|' + q.frame, v);
     for (const g of c.garments || []) add('garment:' + g, v);
   }
   const crowd = {};
@@ -108,7 +112,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
       return m ? { card: c, cuts: m.cuts } : null;
     }).filter(Boolean);
     const gen = (cards.find(x => x.name === card) || {}).gen;
-    const p = P.plan({ S, tree: TREE, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
@@ -138,8 +142,17 @@ function whyText(why) {
   return req + (why.low && why.low.length ? ' · 덜 쓴 장소 묶음 ' + why.low.join('·') : '');
 }
 
+/* 버전2 컷을 말로 — 시대 · 장소 · 의상(옷) · 몸 자세 · 프레이밍 · 몸 방향 · 손 · 소품 동작(역할) */
+function v2Text(c) {
+  global.window = global.window || global; require(path.join(ROOT, 'lib', 'casual-tree-v2.js'));
+  const C2 = globalThis.AtelierCasualTreeV2, t = C2.make(TREE2, TREE), by = (list, k) => (list || []).find(x => x.key === k) || {};
+  const f = by(TREE.outfits, c.ofam), it = by(f.items, c.item), u = C2.use(t, c.use);
+  return [by(TREE.eras, c.era).ko, (C2.place(t, c.place) || {}).ko, (f.ko || c.ofam) + (it.ko ? '(' + it.ko + ')' : ''), (C2.posture(t, c.posture) || {}).ko, c.frame,
+    by(t.v2.body, c.body).ko + '·' + by(t.v2.head, c.head).ko, '손 ' + [c.right || 'AUTO', c.left || 'AUTO'].join('/'), u ? (u.role_ko ? u.role_ko + ' · ' : '') + u.ko : ''].filter(Boolean).join(' · ');
+}
 /* 길을 말로 — 시대 · 장소 · 하는 일 · 의상 계열(옷). 옛 칸은 갈래/예시도 */
 function pathText(c) {
+  if (c.treeV === 2) return v2Text(c);
   const q = P.pathOf(TREE, c), by = (list, k) => (list || []).find(x => x.key === k) || {};
   const f = by(TREE.outfits, q.ofam), it = by(f.items, q.item);
   return [by(TREE.eras, q.era).ko, by(TREE.places, q.place).ko, by(TREE.activities, q.act).ko, (f.ko || q.ofam) + (it.ko ? '(' + it.ko + ')' : '')].join(' · ') +
@@ -153,7 +166,8 @@ function show(o, res) {
     lines.push('', '■ ' + ch.card + ' (' + ch.species + ')' + (ch.refill ? ' — 빈 컷 다시 채우기' : '') + ' · ' + whyText(ch.why));
     for (const c of ch.cuts) {
       if (c.kept) { lines.push('  ' + c.cut + '번 등록됨 — ' + pathText(c)); continue; }
-      lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' · 자세 ' + (c.pose || '하는 일대로') + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
+      if (c.treeV === 2) lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' [버전2]');
+      else lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' · 자세 ' + (c.pose || '하는 일대로') + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
       lines.push('       세부 강도 ' + ['overall_intensity', 'skin_exposure', 'action_level', 'source_influence', 'separates_preference'].map(k => c.axes[k]).join(' / ') +
         ' · 옷 ' + c.garments.join('+') + ' · 드러내기 ' + c.expose.join(', ') + ' · 장면 칸 첫머리 ' + c.lead);
       lines.push('       ' + GENERATOR + '?' + P.generatorQuery(ch.card, c));
