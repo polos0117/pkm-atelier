@@ -21750,7 +21750,7 @@
 "en":"Krokorok",
 "line":"깜눈크",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -21772,25 +21772,27 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘triangular spike’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"[머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 목덜미 낮은 번",
+"adjusted":"",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"땅 타입에서 목덜미 낮은 번(올림머리) · 긴 머리 · 좌우 길이가 다른 앞머리 — 깜눈크에서 이어 같은 묶음",
-"hair_cues":[
-"땅 타입 → 헤어스타일 목덜미 낮은 번",
-"악 타입 → 앞머리 좌우 길이가 다른 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/krokorok-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/krokorok-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "553":{
 "name":"악비아르",
 "en":"Krookodile",
 "line":"깜눈크",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -21812,25 +21814,27 @@
 "‘five triangular spikes’ → 눈썹 바깥에서 꺾이는 사선",
 "‘long snout’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"같은 계열 악비르와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 균형 잡힌 타원형, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 좌우 길이가 다른 비대칭컷 → 목덜미 낮은 번",
+"adjusted":"같은 계열 악비르와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 균형 잡힌 타원형, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘five triangular spikes’·땅 타입에서 목덜미 낮은 번(올림머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 악비르에서 이어 같은 묶음",
-"hair_cues":[
-"땅 타입 → 헤어스타일 목덜미 낮은 번",
-"‘five triangular spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/krookodile-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/krookodile-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "554":{
 "name":"달막화",
 "en":"Darumaka",
 "line":"달막화",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -21854,18 +21858,21 @@
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘curly yellow eyebrows’에서 세로로 말린 드릴 컬(웨이브·곱슬) · 중간 길이 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"‘curly yellow eyebrows’ → 헤어스타일 세로로 말린 드릴 컬"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/darumaka-20261028/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/darumaka-20261028/light-prompt.txt",
+"kind":"prompt",
+"raw":{}
+}
 },
 "555":{
 "name":"불비달마",
 "en":"Darmanitan",
 "line":"달막화",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -21888,24 +21895,27 @@
 "‘flame-shaped bushy eyebrows’ → 눈썹 굵고 눈 가까이 낮은",
 "‘rounded red ape’ → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 굵은 곱슬 → 둥글게 부풀린 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 도톰한 입술",
 "hair":{
 "hairstyle":"afro",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘rounded red ape’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 달막화에서 이어 같은 묶음",
-"hair_cues":[
-"‘rounded red ape’ → 헤어스타일 둥글게 부풀린 아프로"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/darmanitan-20261028/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/darmanitan-20261028/light-prompt.txt",
+"kind":"prompt",
+"raw":{}
+}
 },
 "556":{
 "name":"마라카치",
 "en":"Maractus",
 "line":"마라카치",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -21931,19 +21941,21 @@
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘six pink petals’·‘yellow spike’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
-"hair_cues":[
-"‘six pink petals’ → 헤어스타일 머리를 둘러 땋은 왕관형",
-"‘yellow spike’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/maractus-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/maractus-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "557":{
 "name":"돌살이",
 "en":"Dwebble",
 "line":"돌살이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -21969,19 +21981,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"몸 형태 armor에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리",
-"hair_cues":[
-"몸 형태 armor → 헤어스타일 끝을 일자로 자른 컷",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/dwebble-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/dwebble-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "558":{
 "name":"암팰리스",
 "en":"Crustle",
 "line":"돌살이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -22008,18 +22022,21 @@
 "hair length":"long",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"몸 형태 armor에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 돌살이에서 이어 같은 묶음",
-"hair_cues":[
-"몸 형태 armor → 헤어스타일 끝을 일자로 자른 컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/crustle-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/crustle-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "559":{
 "name":"곤율랭",
 "en":"Scraggy",
 "line":"곤율랭",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -22038,25 +22055,27 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"adjusted":"",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"medium",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 좌우 길이가 다른 앞머리",
-"hair_cues":[
-"격투 타입 → 헤어스타일 정수리에 묶어 올린 번",
-"악 타입 → 앞머리 좌우 길이가 다른 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/scraggy-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/scraggy-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "560":{
 "name":"곤율거니",
 "en":"Scrafty",
 "line":"곤율랭",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -22075,25 +22094,27 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"‘red crest’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 좌우 길이가 다른 앞머리 — 곤율랭에서 이어 같은 묶음",
-"hair_cues":[
-"‘red crest’ → 헤어스타일 정수리에 묶어 올린 번",
-"악 타입 → 앞머리 좌우 길이가 다른 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/scrafty-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/scrafty-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "561":{
 "name":"심보러",
 "en":"Sigilyph",
 "line":"심보러",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -22122,20 +22143,21 @@
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘green zigzag pattern’·‘long tail-like appendage’·몸 형태 wings에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리",
-"hair_cues":[
-"‘green zigzag pattern’ → 헤어스타일 바람에 날린 듯한 스타일",
-"‘long tail-like appendage’ → 머리 길이 긴 머리",
-"‘two small spikes’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sigilyph-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/sigilyph-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "562":{
 "name":"데스마스",
 "en":"Yamask",
 "line":"데스마스",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -22153,26 +22175,27 @@
 "cues":[
 "몸 형태 arms → 턱선 · 턱끝 보통"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈 크기 큰 눈 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 포니테일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈 크기 큰 눈 → 보통",
 "hair":{
 "hairstyle":"ponytail",
 "hair length":"long",
 "bangs":"long side bangs covering one eye"
 },
-"hair_locked":false,
-"hair_why":"‘long tail-like appendage’·고스트 타입에서 포니테일(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅",
-"hair_cues":[
-"‘long tail-like appendage’ → 헤어스타일 포니테일",
-"‘long tail-like appendage’ → 머리 길이 긴 머리",
-"고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/yamask-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/yamask-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "563":{
 "name":"데스니칸",
 "en":"Cofagrigus",
 "line":"데스마스",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -22195,25 +22218,27 @@
 "‘red, menacing eyes’ → 눈썹 바깥에서 꺾이는 사선",
 "몸 형태 blob → 입술 도톰한 입술"
 ],
-"adjusted":"같은 계열 데스마스와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 흐트러진 번 → 사이드 포니테일",
+"adjusted":"같은 계열 데스마스와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
 "hair":{
 "hairstyle":"side ponytail",
 "hair length":"long",
 "bangs":"long side bangs covering one eye"
 },
-"hair_locked":false,
-"hair_why":"키 1.7m에서 사이드 포니테일(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 데스마스에서 이어 같은 묶음",
-"hair_cues":[
-"키 1.7m → 머리 길이 긴 머리",
-"고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/cofagrigus-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/cofagrigus-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "564":{
 "name":"프로토가",
 "en":"Tirtouga",
 "line":"프로토가",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -22231,24 +22256,27 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 목덜미 낮은 번",
+"adjusted":"",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"바위 타입에서 목덜미 낮은 번(올림머리) · 중간 길이 · 커튼뱅",
-"hair_cues":[
-"바위 타입 → 헤어스타일 목덜미 낮은 번"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tirtouga-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/tirtouga-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "565":{
 "name":"늑골라",
 "en":"Carracosta",
 "line":"프로토가",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -22269,24 +22297,27 @@
 "‘deep blue rocky structures’ → 눈매 가늘고 날카로운 눈",
 "‘deep blue rocky structures’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 끝을 일자로 자른 컷 → 목덜미 낮은 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 아랫입술이 더 도톰한",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"바위 타입에서 목덜미 낮은 번(올림머리) · 긴 머리 · 일자 앞머리 — 프로토가에서 이어 같은 묶음",
-"hair_cues":[
-"바위 타입 → 헤어스타일 목덜미 낮은 번"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/carracosta-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/carracosta-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "566":{
 "name":"아켄",
 "en":"Archen",
 "line":"아켄",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -22311,19 +22342,21 @@
 "hair length":"short",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘blue and red feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"‘blue and red feathers’ → 헤어스타일 끝을 가볍게 친 페더컷",
-"키 0.5m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/archen-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/archen-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "567":{
 "name":"아케오스",
 "en":"Archeops",
 "line":"아켄",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -22352,11 +22385,14 @@
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘frayed-looking yellow and blue feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 아켄에서 이어 같은 묶음",
-"hair_cues":[
-"‘frayed-looking yellow and blue feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/archeops-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/archeops-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "568":{
 "name":"깨봉이",
@@ -23353,16 +23389,16 @@
 "‘round eyes’ → 눈꼬리 각도 수평",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 느슨한 해변 웨이브 → 젖은 듯 넘긴 스타일",
 "hair":{
-"hairstyle":"beach waves",
+"hairstyle":"wet-look slick",
 "hair length":"medium",
-"bangs":"curtain bangs"
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘ventral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
+"hair_why":"‘ventral fins’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"‘ventral fins’ → 헤어스타일 느슨한 해변 웨이브"
+"‘ventral fins’ → 헤어스타일 젖은 듯 넘긴 스타일"
 ]
 },
 "595":{
@@ -26246,7 +26282,7 @@
 "en":"Floette",
 "line":"플라베베",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"balanced",
@@ -26271,18 +26307,21 @@
 "hair length":"very long",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘single leaf’·‘five rounded petals’에서 반묶음(묶은 꼬리) · 매우 긴 머리 · 커튼뱅 — 플라베베에서 이어 같은 묶음",
-"hair_cues":[
-"‘single leaf’ → 헤어스타일 반묶음"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/floette-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/floette-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "671":{
 "name":"플라제스",
 "en":"Florges",
 "line":"플라베베",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -26307,18 +26346,21 @@
 "hair length":"very long",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"‘large, patterned leaves’에서 반묶음(묶은 꼬리) · 매우 긴 머리 · 일자 앞머리 — 플라엣테에서 이어 같은 묶음",
-"hair_cues":[
-"‘large, patterned leaves’ → 헤어스타일 반묶음"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/florges-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/florges-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "672":{
 "name":"메이클",
 "en":"Skiddo",
 "line":"메이클",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -26340,25 +26382,27 @@
 "‘pointed black horns’ → 눈썹 바깥에서 꺾이는 사선",
 "‘round black nose’ → 코 코끝이 둥근"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 덥수룩하게 흐트러진 컷",
+"adjusted":"",
 "hair":{
 "hairstyle":"shaggy",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘leafy green mane’·‘shaggy, dark brown fur’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리",
-"hair_cues":[
-"‘leafy green mane’ → 헤어스타일 덥수룩하게 흐트러진 컷",
-"‘shaggy, dark brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skiddo-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/skiddo-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "673":{
 "name":"고고트",
 "en":"Gogoat",
 "line":"메이클",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -26379,26 +26423,27 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘black horns’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층을 살린 레이어드 → 덥수룩하게 흐트러진 컷",
+"adjusted":"같은 계열 메이클와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 길고 바깥 아치가 선명한, 입술 윗입술이 활 모양인 → 굴곡 없이 곧은",
 "hair":{
 "hairstyle":"shaggy",
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘thick, green leafy mane’·‘shaggy, brown fur’·키 1.7m에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 메이클에서 이어 같은 묶음",
-"hair_cues":[
-"‘thick, green leafy mane’ → 헤어스타일 덥수룩하게 흐트러진 컷",
-"키 1.7m → 머리 길이 긴 머리",
-"‘shaggy, brown fur’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gogoat-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/gogoat-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "674":{
 "name":"판짱",
 "en":"Pancham",
 "line":"판짱",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -26423,18 +26468,21 @@
 "hair length":"medium",
 "bangs":"none"
 },
-"hair_locked":false,
-"hair_why":"격투 타입에서 높이 묶은 포니테일(묶은 꼬리) · 중간 길이 · 앞머리 없음",
-"hair_cues":[
-"격투 타입 → 헤어스타일 높이 묶은 포니테일"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pancham-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pancham-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "675":{
 "name":"부란다",
 "en":"Pangoro",
 "line":"판짱",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -26457,25 +26505,27 @@
 "‘round belly’ → 코 코끝이 둥근",
 "‘round belly’ → 입술 도톰한 입술"
 ],
-"adjusted":"같은 계열 판짱와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 굵은 곱슬 → 양쪽 동그란 번",
+"adjusted":"같은 계열 판짱와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
 "hairstyle":"space buns",
 "hair length":"long",
 "bangs":"none"
 },
-"hair_locked":false,
-"hair_why":"‘round belly’·키 2.1m에서 양쪽 동그란 번(올림머리) · 긴 머리 · 앞머리 없음 — 판짱에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘round belly’ → 헤어스타일 양쪽 동그란 번",
-"키 2.1m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pangoro-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pangoro-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "676":{
 "name":"트리미앙",
 "en":"Furfrou",
 "line":"트리미앙",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -26502,19 +26552,21 @@
 "hair length":"long",
 "bangs":"none"
 },
-"hair_locked":false,
-"hair_why":"‘long rectangular ears’에서 트윈테일(묶은 꼬리) · 긴 머리 · 앞머리 없음",
-"hair_cues":[
-"‘long rectangular ears’ → 헤어스타일 트윈테일",
-"‘long rectangular ears’ → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/furfrou-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/furfrou-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "677":{
 "name":"냐스퍼",
 "en":"Espurr",
 "line":"냐스퍼",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -26541,19 +26593,21 @@
 "hair length":"short",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"‘fluffy tail’·키 0.3m에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 가운데를 가른 앞머리",
-"hair_cues":[
-"‘fluffy tail’ → 헤어스타일 굵은 곱슬",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/espurr-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/espurr-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "678":{
 "name":"냐오닉스",
 "en":"Meowstic",
 "line":"냐스퍼",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -26573,25 +26627,27 @@
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 눈매 큰 눈 → 아몬드형 눈, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 트윈테일 → 양갈래 땋은 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 눈매 큰 눈 → 아몬드형 눈, 눈썹 가늘고 완만한 곡선 → 가늘고 곧은",
 "hair":{
 "hairstyle":"twin braids",
 "hair length":"very long",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"‘two tails’에서 양갈래 땋은 머리 · 매우 긴 머리 · 가운데를 가른 앞머리 — 냐스퍼에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘two tails’ → 헤어스타일 양갈래 땋은 머리",
-"‘two tails’ → 머리 길이 매우 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/meowstic-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/meowstic-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "679":{
 "name":"단칼빙",
 "en":"Honedge",
 "line":"단칼빙",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -26617,12 +26673,14 @@
 "hair length":"medium",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"‘silver sword’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 좌우 길이가 다른 앞머리",
-"hair_cues":[
-"‘silver sword’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
-"‘silver sword’ → 앞머리 좌우 길이가 다른 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/honedge-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/honedge-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "680":{
 "name":"쌍검킬",
@@ -28629,7 +28687,7 @@
 "en":"Pikipek",
 "line":"콕코구리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"balanced",
@@ -28658,19 +28716,21 @@
 "hair length":"short",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"몸 형태 wings → 헤어스타일 끝을 가볍게 친 페더컷",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pikipek-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pikipek-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "732":{
 "name":"크라파",
 "en":"Trumbeak",
 "line":"콕코구리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -28695,18 +28755,21 @@
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘black feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 콕코구리에서 이어 같은 묶음",
-"hair_cues":[
-"‘black feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/trumbeak-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/trumbeak-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "733":{
 "name":"왕큰부리",
 "en":"Toucannon",
 "line":"콕코구리",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -28732,18 +28795,21 @@
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘black feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 크라파에서 이어 같은 묶음",
-"hair_cues":[
-"‘black feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/toucannon-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/toucannon-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "734":{
 "name":"영구스",
 "en":"Yungoos",
 "line":"영구스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -28767,18 +28833,21 @@
 "hair length":"short",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.4m에서 층을 살린 레이어드(층 낸 컷) · 짧은 머리 · 커튼뱅",
-"hair_cues":[
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/yungoos-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/yungoos-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "735":{
 "name":"형사구스",
 "en":"Gumshoos",
 "line":"영구스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -28796,22 +28865,27 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 층을 살린 레이어드",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통",
 "hair":{
 "hairstyle":"layered",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 층을 살린 레이어드(층 낸 컷) · 중간 길이 · 커튼뱅 — 영구스에서 이어 같은 묶음",
-"hair_cues":[]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gumshoos-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/gumshoos-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "736":{
 "name":"턱지충이",
 "en":"Grubbin",
 "line":"턱지충이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -28836,19 +28910,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.4m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 일자 앞머리",
-"hair_cues":[
-"키 0.4m → 헤어스타일 짧고 가벼운 픽시컷",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/grubbin-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/grubbin-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "737":{
 "name":"전지충이",
 "en":"Charjabug",
 "line":"턱지충이",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"long",
@@ -28876,19 +28952,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"‘two short, yellow spikes’·‘three square segments’·전기 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 짧은 머리 · 일자 앞머리 — 턱지충이에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘two short, yellow spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷",
-"키 0.5m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/charjabug-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/charjabug-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "738":{
 "name":"투구뿌논",
 "en":"Vikavolt",
 "line":"턱지충이",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -28915,19 +28993,21 @@
 "hair length":"long",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘wide, flat wings’·‘large spike’·전기 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 전지충이에서 이어 같은 묶음",
-"hair_cues":[
-"‘wide, flat wings’ → 헤어스타일 바람에 날린 듯한 스타일",
-"‘large spike’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/vikavolt-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/vikavolt-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "739":{
 "name":"오기지게",
 "en":"Crabrawler",
 "line":"오기지게",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -28946,24 +29026,27 @@
 "몸 형태 armor → 얼굴형 각지고 선명한 얼굴형",
 "몸 형태 armor → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 옆/뒤를 밀어낸 언더컷",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
 "hairstyle":"undercut",
 "hair length":"medium",
 "bangs":"none"
 },
-"hair_locked":false,
-"hair_why":"몸 형태 armor에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 앞머리 없음",
-"hair_cues":[
-"몸 형태 armor → 헤어스타일 옆/뒤를 밀어낸 언더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/crabrawler-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/crabrawler-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "740":{
 "name":"모단단게",
 "en":"Crabominable",
 "line":"오기지게",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -28988,12 +29071,14 @@
 "hair length":"long",
 "bangs":"none"
 },
-"hair_locked":false,
-"hair_why":"‘two blunt, square teeth’·몸 형태 armor에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 앞머리 없음 — 오기지게에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘two blunt, square teeth’ → 헤어스타일 끝을 일자로 자른 컷",
-"키 1.7m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/crabominable-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/crabominable-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "741":{
 "name":"춤추새",
@@ -29206,16 +29291,16 @@
 "‘large watery blue eyes’ → 눈 크기 큰 눈",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 레트로 웨이브 → 느슨한 해변 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 느슨한 해변 웨이브 → 젖은 듯 넘긴 스타일",
 "hair":{
-"hairstyle":"beach waves",
-"hair length":"very long",
-"bangs":"long side bangs"
+"hairstyle":"wet-look slick",
+"hair length":"medium",
+"bangs":"none"
 },
 "hair_locked":false,
-"hair_why":"‘rounded dorsal fin’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 긴 사이드뱅",
+"hair_why":"‘rounded dorsal fin’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음",
 "hair_cues":[
-"‘rounded dorsal fin’ → 헤어스타일 느슨한 해변 웨이브"
+"‘rounded dorsal fin’ → 헤어스타일 젖은 듯 넘긴 스타일"
 ]
 },
 "747":{
@@ -31632,7 +31717,7 @@
 "en":"Grookey",
 "line":"흥나숭",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -31651,24 +31736,27 @@
 "키 0.3m → 얼굴형 짧고 응축된 얼굴형",
 "키 0.3m → 얼굴 길이 짧은 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형 [머리] 헤어스타일 상한(8%·보브 4%)에 닿아 단정한 보브컷 → 잔곱슬 / 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형",
 "hair":{
 "hairstyle":"tight curls",
 "hair length":"short",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.3m에서 잔곱슬 / 아프로(웨이브·곱슬) · 짧은 머리 · 커튼뱅",
-"hair_cues":[
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/grookey-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/grookey-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "811":{
 "name":"채키몽",
 "en":"Thwackey",
 "line":"흥나숭",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -31687,22 +31775,27 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘several sharp teeth’ → 턱선 · 턱끝 각지고 또렷한 턱"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 반묶음 → 잔곱슬 / 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
 "hairstyle":"tight curls",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"원작 단서가 적어 분포가 빈 쪽에서 잔곱슬 / 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 흥나숭에서 이어 같은 묶음",
-"hair_cues":[]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/thwackey-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/thwackey-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "812":{
 "name":"고릴타",
 "en":"Rillaboom",
 "line":"흥나숭",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -31724,19 +31817,21 @@
 "hair length":"long",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘four leaves’·‘leafy crowns’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 채키몽에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘four leaves’ → 헤어스타일 반묶음",
-"키 2.1m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/rillaboom-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/rillaboom-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "813":{
 "name":"염버니",
 "en":"Scorbunny",
 "line":"염버니",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -31758,19 +31853,21 @@
 "hair length":"short",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"불꽃 타입 → 헤어스타일 바람에 날린 듯한 스타일",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/scorbunny-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/scorbunny-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "814":{
 "name":"래비풋",
 "en":"Raboot",
 "line":"염버니",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -31797,18 +31894,21 @@
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘long ears’에서 트윈테일(묶은 꼬리) · 중간 길이 · 옆으로 넘긴 앞머리 — 염버니에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘long ears’ → 헤어스타일 트윈테일"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/raboot-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/raboot-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "815":{
 "name":"에이스번",
 "en":"Cinderace",
 "line":"염버니",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -31832,19 +31932,21 @@
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘long white ears’에서 트윈테일(묶은 꼬리) · 긴 머리 · 옆으로 넘긴 앞머리 — 래비풋에서 이어 같은 묶음",
-"hair_cues":[
-"‘long white ears’ → 헤어스타일 트윈테일",
-"‘long white ears’ → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/cinderace-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/cinderace-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "816":{
 "name":"울머기",
 "en":"Sobble",
 "line":"울머기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -31862,25 +31964,27 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 작은 → 도톰한 입술",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"short",
 "bangs":"long side bangs"
 },
-"hair_locked":false,
-"hair_why":"‘yellow fin’·‘curled tail’·키 0.3m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅",
-"hair_cues":[
-"‘yellow fin’ → 헤어스타일 레트로 웨이브",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sobble-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/sobble-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "817":{
 "name":"누겔레온",
 "en":"Drizzile",
 "line":"울머기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -31898,24 +32002,27 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"medium",
 "bangs":"long side bangs"
 },
-"hair_locked":false,
-"hair_why":"‘water balloons’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 울머기에서 이어 같은 묶음",
-"hair_cues":[
-"‘water balloons’ → 헤어스타일 레트로 웨이브"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/drizzile-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/drizzile-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "818":{
 "name":"인텔리레온",
 "en":"Inteleon",
 "line":"울머기",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -31938,24 +32045,27 @@
 "‘thin, wavy, fin-like crest’ → 눈썹 길고 바깥 아치가 선명한",
 "‘thin, wavy, fin-like crest’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘thin, wavy, fin-like crest’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 누겔레온에서 이어 같은 묶음",
-"hair_cues":[
-"‘thin, wavy, fin-like crest’ → 헤어스타일 레트로 웨이브"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/inteleon-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/inteleon-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "819":{
 "name":"탐리스",
 "en":"Skwovet",
 "line":"탐리스",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -31980,19 +32090,21 @@
 "hair length":"short",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘large fluffy tail’·키 0.3m에서 굵은 곱슬(웨이브·곱슬) · 짧은 머리 · 커튼뱅",
-"hair_cues":[
-"‘large fluffy tail’ → 헤어스타일 굵은 곱슬",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skwovet-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/skwovet-20261028/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "820":{
 "name":"요씽리스",
 "en":"Greedent",
 "line":"탐리스",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -32015,24 +32127,27 @@
 "‘tan and brown plump body’ → 눈썹 짧고 둥근",
 "‘tan and brown plump body’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 잔곱슬 / 아프로 → 둥글게 부풀린 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근",
 "hair":{
 "hairstyle":"afro",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘tan and brown plump body’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 커튼뱅 — 탐리스에서 이어 같은 묶음",
-"hair_cues":[
-"‘tan and brown plump body’ → 헤어스타일 둥글게 부풀린 아프로"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/greedent-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/greedent-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "821":{
 "name":"파라꼬",
 "en":"Rookidee",
 "line":"파라꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"balanced",
@@ -32057,19 +32172,21 @@
 "hair length":"short",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘black feathers’·‘few tufts’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"‘black feathers’ → 헤어스타일 끝을 가볍게 친 페더컷",
-"키 0.2m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/rookidee-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/rookidee-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "822":{
 "name":"파크로우",
 "en":"Corvisquire",
 "line":"파라꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -32095,18 +32212,21 @@
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘breast feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 파라꼬에서 이어 같은 묶음",
-"hair_cues":[
-"‘breast feathers’ → 헤어스타일 끝을 가볍게 친 페더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/corvisquire-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/corvisquire-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "823":{
 "name":"아머까오",
 "en":"Corviknight",
 "line":"파라꼬",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -32135,19 +32255,21 @@
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘scapular feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 파크로우에서 이어 같은 묶음",
-"hair_cues":[
-"‘scapular feathers’ → 헤어스타일 끝을 가볍게 친 페더컷",
-"키 2.2m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/corviknight-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/corviknight-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "824":{
 "name":"두루지벌레",
 "en":"Blipbug",
 "line":"두루지벌레",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -32172,19 +32294,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.4m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 일자 앞머리",
-"hair_cues":[
-"키 0.4m → 헤어스타일 짧고 가벼운 픽시컷",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/blipbug-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/blipbug-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "825":{
 "name":"레돔벌레",
 "en":"Dottler",
 "line":"두루지벌레",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -32213,19 +32337,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"‘blue feelers’·키 0.4m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 일자 앞머리 — 두루지벌레에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘blue feelers’ → 헤어스타일 트윈테일",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/dottler-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/dottler-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "826":{
 "name":"이올브",
 "en":"Orbeetle",
 "line":"두루지벌레",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -32249,19 +32375,21 @@
 "hair length":"short",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"‘yellow antennae’·키 0.4m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 가운데를 가른 앞머리 — 레돔벌레에서 이어 같은 묶음",
-"hair_cues":[
-"‘yellow antennae’ → 헤어스타일 트윈테일",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/orbeetle-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/orbeetle-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "827":{
 "name":"훔처우",
 "en":"Nickit",
 "line":"훔처우",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -32290,12 +32418,14 @@
 "hair length":"medium",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"‘long tail’·악 타입에서 포니테일(묶은 꼬리) · 중간 길이 · 좌우 길이가 다른 앞머리",
-"hair_cues":[
-"‘long tail’ → 헤어스타일 포니테일",
-"악 타입 → 앞머리 좌우 길이가 다른 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/nickit-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/nickit-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "828":{
 "name":"폭슬라이",
@@ -35303,7 +35433,7 @@
 "en":"Sprigatito",
 "line":"나오하",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"heart-shaped",
 "face length":"balanced",
@@ -35321,24 +35451,27 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 [머리] 헤어스타일 상한(8%·보브 4%)에 닿아 단정한 보브컷 → 층을 살린 레이어드",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은",
 "hair":{
 "hairstyle":"layered",
 "hair length":"short",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.4m에서 층을 살린 레이어드(층 낸 컷) · 짧은 머리 · 커튼뱅",
-"hair_cues":[
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sprigatito-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/sprigatito-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "907":{
 "name":"나로테",
 "en":"Floragato",
 "line":"나오하",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -35365,18 +35498,21 @@
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘green fur-like leaves’·‘hard, round, visible pink flower bud’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 나오하에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘green fur-like leaves’ → 헤어스타일 반묶음"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/floragato-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/floragato-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "908":{
 "name":"마스카나",
 "en":"Meowscarada",
 "line":"나오하",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -35394,24 +35530,27 @@
 "cues":[
 "악 타입 → 눈매 강하게 치켜올라간 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 흐트러진 번 → 반묶음",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
 "hair":{
 "hairstyle":"half-up",
 "hair length":"long",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 나로테에서 이어 같은 묶음",
-"hair_cues":[
-"풀 타입 → 헤어스타일 반묶음"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/meowscarada-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/meowscarada-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "909":{
 "name":"뜨아거",
 "en":"Fuecoco",
 "line":"뜨아거",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"balanced",
@@ -35433,24 +35572,26 @@
 "hair length":"short",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘small flame sac’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리",
-"hair_cues":[
-"‘small flame sac’ → 헤어스타일 바람에 날린 듯한 스타일",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/fuecoco-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/fuecoco-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "910":{
 "name":"악뜨거",
 "en":"Crocalor",
 "line":"뜨아거",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
 "face width":"wide",
-"jaw & chin":"wide heavy chin",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -35462,26 +35603,31 @@
 "why":"둥근 머리와 불꽃 둥지의 둔중한 체적을 넓은 볼과 낮은 눈꺼풀로 구분한다.",
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
-"‘long snout’ → 코 길고 코끝이 내려온"
+"‘red rounded body’ → 얼굴 폭 넓은 얼굴",
+"‘red rounded body’ → 턱선 · 턱끝 부드럽고 둥근 턱",
+"‘red rounded body’ → 눈썹 가늘고 완만한 곡선"
 ],
-"adjusted":"같은 계열 뜨아거와 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 길고 코끝이 내려온",
+"adjusted":"",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리 — 뜨아거에서 이어 같은 묶음",
-"hair_cues":[
-"불꽃 타입 → 헤어스타일 바람에 날린 듯한 스타일"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/crocalor-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/crocalor-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "911":{
 "name":"라우드본",
 "en":"Skeledirge",
 "line":"뜨아거",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -35497,9 +35643,9 @@
 },
 "why":"노래하는 큰 악어의 긴 턱과 단단한 면을 각진 하관 및 넓은 입으로 해석한다.",
 "cues":[
-"‘rectangular scales’ → 얼굴형 각지고 선명한 얼굴형",
-"‘rectangular scales’ → 턱선 · 턱끝 각지고 또렷한 턱",
-"‘rectangular scales’ → 눈매 가늘고 날카로운 눈",
+"‘red rectangular scales’ → 얼굴형 각지고 선명한 얼굴형",
+"‘red rectangular scales’ → 턱선 · 턱끝 각지고 또렷한 턱",
+"‘red rectangular scales’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 길고 바깥 아치가 선명한",
@@ -35508,19 +35654,21 @@
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘orange fiery bird’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 악뜨거에서 이어 같은 묶음",
-"hair_cues":[
-"‘orange fiery bird’ → 헤어스타일 바람에 날린 듯한 스타일",
-"키 1.6m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skeledirge-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/skeledirge-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "912":{
 "name":"꾸왁스",
 "en":"Quaxly",
 "line":"꾸왁스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -35539,24 +35687,27 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘yellow beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대",
 "hair":{
 "hairstyle":"beach waves",
 "hair length":"medium",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘teal coif with white wave marking’·‘teal webbed feet’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅",
-"hair_cues":[
-"‘teal coif with white wave marking’ → 헤어스타일 느슨한 해변 웨이브"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/quaxly-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/quaxly-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "913":{
 "name":"아꾸왁",
 "en":"Quaxwell",
 "line":"꾸왁스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"long",
@@ -35575,24 +35726,27 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘pointed yellow beak’ → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 끝을 가볍게 친 페더컷 → 잔곱슬 / 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한",
 "hair":{
 "hairstyle":"tight curls",
 "hair length":"medium",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘round blue crest’에서 잔곱슬 / 아프로(웨이브·곱슬) · 중간 길이 · 옆으로 넘긴 앞머리 — 꾸왁스에서 이어 같은 묶음",
-"hair_cues":[
-"‘round blue crest’ → 헤어스타일 잔곱슬 / 아프로"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/quaxwell-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/quaxwell-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "914":{
 "name":"웨이니발",
 "en":"Quaquaval",
 "line":"꾸왁스",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"elongated",
 "face length":"long",
@@ -35615,25 +35769,27 @@
 "‘long light blue and orange-red feathers’ → 눈매 아몬드형 눈",
 "‘long light blue and orange-red feathers’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
 "bangs":"side-swept bangs"
 },
-"hair_locked":false,
-"hair_why":"‘large, flowing, slick, dark blue crest’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리 — 아꾸왁에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘large, flowing, slick, dark blue crest’ → 헤어스타일 정수리에 묶어 올린 번",
-"키 1.8m → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/quaquaval-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/quaquaval-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "915":{
 "name":"맛보돈",
 "en":"Lechonk",
 "line":"맛보돈",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"softly rounded",
 "face length":"short",
@@ -35657,18 +35813,21 @@
 "hair length":"short",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.5m에서 층을 살린 레이어드(층 낸 컷) · 짧은 머리 · 커튼뱅",
-"hair_cues":[
-"키 0.5m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/lechonk-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/lechonk-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "916":{
 "name":"퍼퓨돈",
 "en":"Oinkologne",
 "line":"맛보돈",
 "how":"species",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"balanced",
@@ -35694,19 +35853,21 @@
 "hair length":"long",
 "bangs":"curtain bangs"
 },
-"hair_locked":false,
-"hair_why":"‘long, thin tail’·노말 타입에서 포니테일(묶은 꼬리) · 긴 머리 · 커튼뱅 — 맛보돈에서 이어 더 공들인 묶음",
-"hair_cues":[
-"‘long, thin tail’ → 헤어스타일 포니테일",
-"‘long, thin tail’ → 머리 길이 긴 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/oinkologne-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/oinkologne-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "917":{
 "name":"타랜툴라",
 "en":"Tarountula",
 "line":"타랜툴라",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -35730,19 +35891,21 @@
 "hair length":"short",
 "bangs":"straight bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.3m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 일자 앞머리",
-"hair_cues":[
-"키 0.3m → 헤어스타일 짧고 가벼운 픽시컷",
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tarountula-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/tarountula-20261029/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "918":{
 "name":"트래피더",
 "en":"Spidops",
 "line":"타랜툴라",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -35764,24 +35927,27 @@
 "‘two large black eyes’ → 눈 크기 큰 눈",
 "몸 형태 armor → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"같은 계열 타랜툴라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은, 코 작고 여린 코 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 일자로 자른 컷 → 옆/뒤를 밀어낸 언더컷",
+"adjusted":"같은 계열 타랜툴라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은, 코 작고 여린 코 → 보통",
 "hair":{
 "hairstyle":"undercut",
 "hair length":"medium",
 "bangs":"long side bangs"
 },
-"hair_locked":false,
-"hair_why":"몸 형태 armor에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 타랜툴라에서 이어 같은 묶음",
-"hair_cues":[
-"몸 형태 armor → 헤어스타일 옆/뒤를 밀어낸 언더컷"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/spidops-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/spidops-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "919":{
 "name":"콩알뚜기",
 "en":"Nymble",
 "line":"콩알뚜기",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"angular",
 "face length":"balanced",
@@ -35805,19 +35971,21 @@
 "hair length":"short",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"‘two stubby semicircular antennae’·키 0.2m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 가운데를 가른 앞머리",
-"hair_cues":[
-"‘two stubby semicircular antennae’ → 헤어스타일 트윈테일",
-"키 0.2m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/nymble-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/nymble-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "920":{
 "name":"엑스레그",
 "en":"Lokix",
 "line":"콩알뚜기",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"sharp",
 "face length":"balanced",
@@ -35840,24 +36008,27 @@
 "‘orange spike’ → 코 크고 또렷한 코",
 "‘orange spike’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 턱선과 골격이 날카로운 얼굴형 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 좌우 길이가 다른 비대칭컷 → 트윈테일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 턱선과 골격이 날카로운 얼굴형",
 "hair":{
 "hairstyle":"twin tail",
 "hair length":"long",
 "bangs":"parted bangs"
 },
-"hair_locked":false,
-"hair_why":"‘black triangular antennae’에서 트윈테일(묶은 꼬리) · 긴 머리 · 가운데를 가른 앞머리 — 콩알뚜기에서 이어 같은 묶음",
-"hair_cues":[
-"‘black triangular antennae’ → 헤어스타일 트윈테일"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/lokix-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/lokix-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "921":{
 "name":"빠모",
 "en":"Pawmi",
 "line":"빠모",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"compact",
 "face length":"short",
@@ -35877,24 +36048,27 @@
 "키 0.3m → 얼굴 길이 짧은 얼굴",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 짧고 가벼운 픽시컷 → 층을 살린 레이어드",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형, 입술 도톰한 입술 → 보통",
 "hair":{
 "hairstyle":"layered",
 "hair length":"short",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"키 0.3m에서 층을 살린 레이어드(층 낸 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리",
-"hair_cues":[
-"키 0.3m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmi-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pawmi-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "922":{
 "name":"빠모트",
 "en":"Pawmo",
 "line":"빠모",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -35912,25 +36086,27 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 코 코끝이 둥근 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 바람에 날린 듯한 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 코 코끝이 둥근 → 짧고 코끝이 들린",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"short",
 "bangs":"asymmetric bangs"
 },
-"hair_locked":false,
-"hair_why":"전기 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리 — 빠모에서 이어 같은 묶음",
-"hair_cues":[
-"전기 타입 → 헤어스타일 바람에 날린 듯한 스타일",
-"키 0.4m → 머리 길이 짧은 머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmo-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pawmo-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "923":{
 "name":"빠르모트",
 "en":"Pawmot",
 "line":"빠모",
 "how":"draft",
-"registered":false,
+"registered":true,
 "face":{
 "face shape":"oval",
 "face length":"short",
@@ -35950,18 +36126,20 @@
 "격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱",
 "‘shaggy tufts’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"같은 계열 빠모트와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 층감이 강한 울프컷",
+"adjusted":"같은 계열 빠모트와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 부드럽고 둥근 턱 → 넓고 각진 사각 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 숱 많고 결이 보이는",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"medium",
 "bangs":"choppy bangs"
 },
-"hair_locked":false,
-"hair_why":"‘shaggy tufts’에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 빠모트에서 이어 같은 묶음",
-"hair_cues":[
-"‘shaggy tufts’ → 헤어스타일 층감이 강한 울프컷",
-"‘shaggy tufts’ → 앞머리 끝을 불규칙하게 친 앞머리"
-]
+"hair_locked":true,
+"hair_why":"확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmot-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금",
+"hair_cues":[],
+"hair_record":{
+"path":"pkm-atelier-img-3/records/pawmot-20261030/light-ui.json",
+"kind":"ui",
+"raw":{}
+}
 },
 "924":{
 "name":"두리쥐",
@@ -37500,16 +37678,16 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "몸 형태 fish → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 느슨한 해변 웨이브",
+"adjusted":"같은 계열 맨돌핀와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 이마가 넓고 턱이 가는 하트형, 입술 도톰한 입술 → 아랫입술이 더 도톰한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 느슨한 해변 웨이브 → 한쪽으로 넘긴 피시테일",
 "hair":{
-"hairstyle":"beach waves",
+"hairstyle":"fishtail braid",
 "hair length":"long",
 "bangs":"curtain bangs"
 },
 "hair_locked":false,
-"hair_why":"‘white flank waves’·‘split tailfin with water ring’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 같은 묶음",
+"hair_why":"‘white flank waves’·‘split tailfin with water ring’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 더 공들인 묶음",
 "hair_cues":[
-"‘white flank waves’ → 헤어스타일 느슨한 해변 웨이브"
+"‘white flank waves’ → 헤어스타일 한쪽으로 넘긴 피시테일"
 ]
 },
 "965":{

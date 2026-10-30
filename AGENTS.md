@@ -166,6 +166,7 @@ node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견
 
 ```bash
 # 1) 그림 — 배포 주소를 여기로 돌려 준다 (img/ 는 .gitignore 라 체크아웃에 없다)
+#    체형·머리 미리보기는 옆에 atelier 를 받아 두면(../atelier/assets/figures) 검사가 바로 읽는다(2026-10-30). 없으면:
 mkdir -p img/figure-previews
 cp <atelier>/assets/figures/*.png img/figure-previews/    # 체형·머리 미리보기 65장
 #    카드 그림은 pkm-atelier-img 의 img/ 를 img/ 로, pkm-atelier-img-2 의 img/ 를 img-2/ 로, pkm-atelier-img-3 의 img/ 를 img-3/ 으로

@@ -29,7 +29,10 @@ for (const g of [...new Set(data.cards.map(c => c.gen))]) {
   const n = C.genCards(real, g, false).length, r = C.canPickGen(real, g);
   ok(r.n === n && r.ok === (n >= 17) && r.need === Math.max(0, 17 - n), g + '세대 문턱: ' + JSON.stringify(r));
 }
-ok(data.cards.some(c => !C.inPool(real, c.name)) && [...new Set(data.cards.map(c => c.gen))].some(g => !C.canPickGen(real, g).ok && C.canPickGen(real, g).need > 0), '진짜 풀에선 모자란 세대가 있다 — n장 더');
+/* 모자란 세대 — 진짜 풀은 그림이 올라올수록 다 열린다(2026-10-30 아홉 세대 다 열림). 그래서 한 세대의 그림을 다 뺀 풀로 잠김 · n장 더를 본다(real 의 셈 자리 __pool 은 안 옮긴다) */
+const thin = { ...Object.fromEntries(Object.entries(real).filter(([k]) => !k.startsWith('__'))), img: Object.fromEntries(Object.entries(real.img).filter(([k]) => !by[k] || by[k].gen !== 9)) };
+ok(!C.canPickGen(thin, 9).ok && C.canPickGen(thin, 9).need === 17 && C.canPickGen(thin, 9).n === 0 && C.canPickGen(thin, 1).ok === C.canPickGen(real, 1).ok, '그림을 뺀 세대는 잠기고 17장 더');
+ok(data.cards.some(c => !C.inPool(real, c.name)), '진짜 풀엔 아직 그림 없는 카드가 있다');
 const p = C.newProfile(data, 1, 7);
 ok(p.owned.length === 25 && C.deckOf(p, 'lane').length === 25, '시작 컬렉션 25 = 시작 덱');
 ok(p.owned.filter(x => by[x].gen === 1).length === 17 && p.owned.every(x => !by[x].rare), '주 세대 17 · 비전설');
@@ -152,7 +155,9 @@ ok(C.conquered(data, p), '아홉을 다 이기면 정복');
   ok(A.championReady(data, 1).ok, '풀(allowAll)에선 1세대 챔피언이 열린다');
   for (const ch of data.lane.champions) { const r = A.championReady(real, ch.gen), own = C.genCards(real, ch.gen, false).length, ally = C.genCards(real, ch.ally, false).length;
     ok(r.ok === (own >= 17 && ally >= 8) && r.need === Math.max(0, 17 - own) + Math.max(0, 8 - ally), ch.gen + '세대 챔피언 그림 문턱: ' + JSON.stringify(r)); }
-  ok(data.lane.champions.some(ch => !A.championReady(real, ch.gen).ok && A.championReady(real, ch.gen).need > 0), '그림 문턱 — 진짜 풀에선 아직 잠긴 챔피언이 있다');
+  /* 잠긴 챔피언 — 진짜 풀은 다 열렸다(2026-10-30). 한 챔피언 세대의 그림을 다 뺀 풀(thin 과 같은 꼴)로 본다 */
+  { const ch = data.lane.champions[0], cut = { ...Object.fromEntries(Object.entries(real).filter(([k]) => !k.startsWith('__'))), img: Object.fromEntries(Object.entries(real.img).filter(([k]) => !by[k] || by[k].gen !== ch.gen)) }, r = A.championReady(cut, ch.gen);
+    ok(!r.ok && r.need === 17 + Math.max(0, 8 - C.genCards(cut, ch.ally, false).length), '그림 문턱 — 자기 세대 그림이 없으면 잠기고 17장 더: ' + JSON.stringify(r)); }
   ok(A.championPortrait(data, 1) === '뮤츠' && C.inPool(data, A.championPortrait(data, 5)), '초상은 그 세대 종족값 최고');
   const D = A.cardsOf(data);
   for (const lv of C.LEVELS) for (const g of [1, 5, 9]) {

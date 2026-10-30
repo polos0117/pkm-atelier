@@ -949,7 +949,8 @@ def check(data=None, quiet=False):
         for k in keys:
             if f['face'].get(k) not in opts[k]: bad.append(f"{c['name']} {k}={f['face'].get(k)} 는 생성기에 없는 값")
         if not compatible(f['face']): bad.append(f"{c['name']} 서로 맞지 않는 조합 {f['face']}")
-        if bool(f.get('registered')) != (c['name'] in img): bad.append(f"{c['name']} registered 표시가 img.json 과 다르다")
+        # 그림은 날마다 올라온다 — build 뒤에 등록된 종(registered 가 아직 거짓)은 다음 build 까지 기다린다. 등록 안 된 종이 registered 면 틀렸다
+        if f.get('registered') and c['name'] not in img: bad.append(f"{c['name']} registered 인데 img.json 에 없다")
     G = {no: groups(f['face']) for no, f in faces.items()}
     if len(set(G.values())) != len(G): bad.append('같은 얼굴이 둘 이상')
     line = {}

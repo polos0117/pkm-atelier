@@ -72,7 +72,9 @@ const by = C.byName(data);
   /* 그림 문턱 — 진짜 풀의 세대별 수로 본다. 그림이 올라올수록 열리는 챔피언이 늘므로 세대를 박지 않는다 */
   for (const ch of data.lane.champions) { const r = G.championReady(real, ch.gen), own = C.genCards(real, ch.gen, false).length, ally = C.genCards(real, ch.ally, false).length;
     ok(r.ok === (own >= 17 && ally >= 8) && r.need === Math.max(0, 17 - own) + Math.max(0, 8 - ally), ch.gen + '세대 챔피언 그림 문턱: ' + JSON.stringify(r)); }
-  ok(data.lane.champions.some(ch => !G.championReady(real, ch.gen).ok && G.championReady(real, ch.gen).need > 0), '그림 문턱 — 진짜 풀에선 아직 잠긴 챔피언이 있다');
+  /* 잠긴 챔피언 — 진짜 풀은 그림이 올라올수록 다 열린다(2026-10-30 다 열림). 그래서 한 챔피언 세대의 그림을 다 뺀 풀로 본다(real 의 셈 자리 __pool 은 안 옮긴다) */
+  { const ch = data.lane.champions[0], byN = C.byName(data), thin = { ...Object.fromEntries(Object.entries(real).filter(([k]) => !k.startsWith('__'))), img: Object.fromEntries(Object.entries(real.img).filter(([k]) => !byN[k] || byN[k].gen !== ch.gen)) }, r = G.championReady(thin, ch.gen);
+    ok(!r.ok && r.need === 17 + Math.max(0, 8 - C.genCards(thin, ch.ally, false).length), '그림 문턱 — 자기 세대 그림이 없으면 잠기고 17장 더: ' + JSON.stringify(r)); }
   ok(G.championPortrait(data, 1) === '뮤츠', '초상은 그 세대 종족값 최고');
   for (const lv of C.LEVELS) for (const g of [1, 5, 9]) {
     const d1 = G.championDeck(data, { rngState: 1 }, g, lv), d2 = G.championDeck(data, { rngState: 1 }, g, lv);

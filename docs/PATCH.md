@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 늘 빨갛던 시험 여섯을 고침(전체 72 통과)
+- tests/lane-sim.cjs · tests/gwent-sim.cjs — 「진짜 풀엔 아직 잠긴 세대 · 챔피언이 있다」 는 그림이 다 올라와 거짓이 됐다 → 한 세대 그림을 뺀 풀로 잠김 · n장 더를 본다(real 의 셈 자리 __pool 은 안 옮긴다 — 옮기면 뺀 것이 안 먹는다)
+- tests/dex-layout.cjs — 옛 개방 그림 칸을 img.json 맨 앞 카드로 박았다 → 옛 그림(폼 없는 overdrive)이 있는 카드를 찾아 쓴다
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — build 뒤 등록된 72종 registered · 머리 잠금 다시(tools/face-design.py build · render). 미등록 셋(맘복치 · 약어리 · 돌핀맨)은 잠금이 늘어 머리 몫을 다시 나눠 머리가 바뀌었다
+- tools/face-design.py · tests/face-design.cjs — registered 는 한쪽만 본다(그림은 날마다 올라와 build 전까지 늦을 수 있다 — 등록 안 된 종이 registered 면 틀림) · 일상 FACE/HAIR 없음 검사를 트리 길 · 버전2 장면으로(옛 갈래 cat 은 없어졌다)
+- tests/browser-harness.cjs — 체형 · 머리 미리보기를 img/figure-previews 에 안 옮겼으면 옆 atelier 체크아웃의 assets/figures 에서 읽는다(prompt-controls 가 30초 기다리다 죽었다) · AGENTS.md — 준비물 줄
+- appearance-extractor 는 코드가 아니라 준비물 — tools/appearance-requirements.txt 를 깔면 통과(AGENTS 에 이미 적혀 있다)
+
 ## 2026-10-30 · claude · 일상컷 표정 「윙크」
 - lib/prompt-spec.js — 표정 선택지와 문장에 윙크(game 에서 — 버전2 표엔 문장만 와 있고 선택지가 없어 생성기 · 랜덤 · 계획기가 못 골랐다) · prompt.html — prompt-spec v=wink
 - lib/casual-plan.js — 계획기 표정 묶음(평상 · 매력)에 윙크

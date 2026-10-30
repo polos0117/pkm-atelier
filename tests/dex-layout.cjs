@@ -3,6 +3,8 @@ const fs=require('node:fs'),assert=require('node:assert/strict');
 const {start,FOLD}=require('./browser-harness.cjs');
 const data=JSON.parse(fs.readFileSync('data/img.json','utf8'));
 const name=Object.keys(data.img)[0],style=Object.keys(data.img[name].byStyle)[0];
+/* 옛 그림(폼 없는 overdrive 하나)이 있는 카드 — 등록 차례 맨 앞이 옛 카드라고 박으면 새 카드가 앞에 오면 깨진다(2026-10-30) */
+const legacyName=Object.keys(data.img).find(k=>Object.values(data.img[k].byStyle).some(b=>b.byForm&&b.byForm.overdrive&&!b.byForm.light_overdrive));
 const forms=['light','heavy','mobility'];
 const slots=[...forms,...forms.map(f=>f+'_overdrive')];
 const bucket=data.img[name].byStyle[style];
@@ -15,8 +17,8 @@ const swap=doc=>[function(doc){
  window.fetch=(url,opt)=>String(url).includes('data/img.json')?
   Promise.resolve(new Response(JSON.stringify(doc))):real(url,opt);
 },doc];
-async function openCard(p){
- await p.locator('.search-row input').fill(name);
+async function openCard(p,who=name){
+ await p.locator('.search-row input').fill(who);
  await p.locator('.grid .cell').first().click();
  await p.waitForSelector('.fstrip .fcell');
 }
@@ -50,8 +52,9 @@ async function openCard(p){
   assert.deepEqual(a.errors,[]);
   assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
+  assert(legacyName,'옛 개방 그림이 있는 카드가 있다');
   const legacy=await h.open('dex.html'),q=legacy.page;
-  await openCard(q);
+  await openCard(q,legacyName);
   assert.equal(await q.locator('.fcell:disabled').count(),3);
   assert.equal(await q.locator('.bar .n').textContent(),'폼 3 / 6');
   assert.equal(await q.locator('.legacy-overdrive img').count(),1);

@@ -85,8 +85,14 @@ async function start() {
         origin === 'https://polos0117.github.io' && new URL(url).pathname.match(/\/(img\/.+)$/);
       if (local) {
         const rel = decodeURIComponent(local[1]);
-        const file = path.resolve(ROOT, rel);
-        if (!file.startsWith(ROOT + path.sep) || !fs.existsSync(file)) {
+        let file = path.resolve(ROOT, rel);
+        /* 체형·머리 미리보기 — img/figure-previews 에 안 옮겼으면 옆의 atelier 체크아웃(원본 assets/figures)에서 바로 읽는다.
+           img/ 는 그림 저장소로 잇는 일이 많아 거기에 복사하면 남의 저장소에 안 올릴 파일이 생긴다 */
+        if (figure && !fs.existsSync(file)) {
+          const near = path.resolve(ROOT, '..', 'atelier', 'assets', 'figures', path.basename(rel));
+          if (fs.existsSync(near)) file = near;
+        }
+        if (!(file.startsWith(ROOT + path.sep) || (figure && file.startsWith(path.resolve(ROOT, '..', 'atelier') + path.sep))) || !fs.existsSync(file)) {
           return route.fulfill({ status: 404, body: 'no ' + rel });
         }
         return route.fulfill({ status: 200, contentType: MIME[path.extname(file)] || 'application/octet-stream',

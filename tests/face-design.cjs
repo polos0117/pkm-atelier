@@ -4,13 +4,17 @@
    - 문서(docs/CHARACTER_FACE_DESIGNS.md)의 FACE 줄이 생성기가 실제로 만드는 줄과 글자까지 같다(도구와 엔진이 따로 놀지 않게) */
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = { window: {}, console }; vm.createContext(ctx);
-for (const f of ['prompt-spec', 'figures', 'toolkit', 'prompt-anthro', 'prompt-lifestyle'])
+for (const f of ['prompt-spec', 'figures', 'toolkit', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle'])
   vm.runInContext(fs.readFileSync('lib/' + f + '.js', 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
 const read = f => JSON.parse(fs.readFileSync(f, 'utf8'));
 const cards = read('data/card.json').cards.character, app = read('data/source-appearance.json').entries;
 const img = read('data/img.json').img, data = read('data/face-design.json'), F = data.faces;
 const doc = fs.readFileSync('docs/CHARACTER_FACE_DESIGNS.md', 'utf8');
+/* 일상컷은 트리 길로(2026-10-29 — 옛 갈래 cat 은 없어졌다) · 버전2 장면(2026-10-30 기본)도 */
+const tree = read('data/casual-tree.json'), tree2 = read('data/casual-tree-v2.json');
+const CASUAL = { tree, era: 'now', place: 'home_living', act: tree.activities.find(a => (a.places || []).includes('home_living')).key, ofam: 'everyday' };
+const CASUAL2 = { tree, tree2, treeV: 2, era: 'now', place: 'home_living', ofam: 'everyday', posture: 'stand', support: 'none', frame: 'waist_up', body: 'front', head: 'with_body', camera: 'eye' };
 const GROUPS = [['face shape', 'face length', 'face width', 'jaw & chin'], ['eye shape', 'eye size', 'eye tilt', 'eye spacing'], ['eyebrows'], ['nose character'], ['lips']];
 const sig = t => GROUPS.map(g => g.map(k => t[k]).join('|'));
 const diff = (a, b) => a.reduce((n, x, i) => n + (x !== b[i]), 0);
@@ -26,7 +30,8 @@ const S5 = {};
 for (const c of cards) {
   const f = F[c.no]; assert(f, c.name + ' 없음'); assert.equal(f.name, c.name);
   for (const k of S.FACE_KEYS) assert(opts[k].includes(f.face[k]), c.name + ' ' + k + '=' + f.face[k] + ' 는 생성기에 없는 값');
-  assert.equal(!!f.registered, !!img[c.name], c.name + ' registered 가 img.json 과 다르다');
+  /* 그림은 날마다 올라온다 — build 뒤에 등록된 종은 다음 build(tools/face-design.py build)까지 registered 가 거짓이어도 된다. 거꾸로는 틀렸다 */
+  if (f.registered) assert(img[c.name], c.name + ' registered 인데 img.json 에 없다');
   S5[c.no] = sig(f.face);
 }
 const all = Object.values(S5).map(s => s.join('/'));
@@ -55,7 +60,7 @@ assert(sq.indexOf('FACE (') > sq.indexOf('WEAR') && sq.indexOf('FACE (') < sq.in
 for (const k of S.FACE_KEYS) assert(block(sq).includes(F[card('꼬부기').no].face[k].replace(/ eyes$| eye spacing$/, '').replace(/^large$/, 'open rounded')), 'FACE 줄에 ' + k);
 for (const [why, extra] of [['이어가기', { identityMode: 'reference', form: 'heavy' }], ['개방', { form: 'overdrive', baseForm: 'light' }], ['끔', { faceDesignOn: false }], ['자료 없음', { faceDesign: null }]])
   assert(!P.buildPrompt(input('꼬부기', extra)).includes('FACE ('), why + '에 FACE 줄이 실렸다');
-assert(!L.buildSingle(input('꼬부기', { cat: 'everyday_basic' })).includes('FACE ('), '일상에 FACE 줄');
+for (const sc of [CASUAL, CASUAL2]) assert(!L.buildSingle(input('꼬부기', { ...sc, outputMode: 'casual', identityMode: 'reference' })).includes('FACE ('), '일상에 FACE 줄' + (sc.treeV ? '(버전2)' : ''));
 /* 직접 고른 얼굴 항목은 그 항목만 FACE 에서 빠지고 IDENTITY 가 쥔다 */
 const mine = P.buildPrompt(input('꼬부기', { params: [['lips', 'wide mouth'], ['eyebrows', 'thick low brows']] }));
 const own = F[card('꼬부기').no].face;
@@ -149,7 +154,7 @@ assert(!ft.includes('\nhairstyle: '), '설계 머리는 IDENTITY 로 가지 않�
 for (const [why, extra] of [['이어가기', { identityMode: 'reference', form: 'heavy' }], ['개방', { form: 'overdrive', baseForm: 'light' }], ['끔', { faceDesignOn: false }], ['자료 없음', { faceDesign: null }],
   ['헤어스타일을 고름', { params: [['hairstyle', 'locs']] }]])
   assert(!P.buildPrompt(input(free.name, extra)).includes('\n\nHAIR: '), why + '에 HAIR 줄이 실렸다');
-assert(!L.buildSingle(input(free.name, { cat: 'everyday_basic' })).includes('HAIR: '), '일상에 HAIR 줄');
+for (const sc of [CASUAL, CASUAL2]) assert(!L.buildSingle(input(free.name, { ...sc, outputMode: 'casual', identityMode: 'reference' })).includes('HAIR: '), '일상에 HAIR 줄' + (sc.treeV ? '(버전2)' : ''));
 const mineLen = P.buildPrompt(input(free.name, { params: [['hair length', 'very short']] }));
 assert.equal(hb(mineLen), 'HAIR: ' + fh.bangs + '.', '길이를 고르면 컷과 길이가 빠지고 앞머리만 남는다');
 assert(mineLen.includes('hair length: very short'), '고른 길이는 IDENTITY 로');
