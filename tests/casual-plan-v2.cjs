@@ -79,6 +79,12 @@ assert(v2cuts.some(x => (C2.use(t, x.use) || {}).role), '역할 동작');
 assert(v2cuts.some(x => x.era === 'in_pokemon'), '포켓몬 세계');
 assert(new Set(v2cuts.map(x => x.frame)).size >= 6 && new Set(v2cuts.map(x => x.body)).size >= 4, '구도가 퍼진다');
 assert(!v2cuts.some(x => x.body === 'back' || x.frame === 'detail'), '안 쓰는 값');
+/* 소품 — 마실 것(잔 · 칵테일 잔 · 물병 · 찻주전자)은 한 캐릭터에 한 장까지, 서른 명에 소품이 고르게(사용자 2026-10-30 「기본 소품이 컵 밖에 없다」) */
+const DR = ['cup', 'drink_glass', 'water_bottle', 'teapot'], propOf = x => (C2.use(t, x.use) || {}).prop;
+for (const e of entries.slice(10)) assert(e.cuts.filter(x => DR.includes(propOf(x))).length <= 1, e.card + ' 마실 것 두 장');
+const pc = {}; v2cuts.forEach(x => { const p = propOf(x); if (p) pc[p] = (pc[p] || 0) + 1; });
+const most = Math.max(...Object.values(pc)), withProp = Object.values(pc).reduce((a, b) => a + b, 0);
+assert(Object.keys(pc).length >= 10 && most <= Math.max(4, withProp / 4), '소품이 한쪽으로 몰린다: ' + JSON.stringify(pc));
 
 /* 2. 생성기 주소 → 생성기 상태 — 버전2 칸 그대로 잠근다 */
 const cut0 = entries[entries.length - 1].cuts[0], q = new URLSearchParams(P.generatorQuery('피카츄', cut0)).get('casual');
