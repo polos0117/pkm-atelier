@@ -16,13 +16,15 @@
      heavy · mobility    motifs · formOverride · scene
      *_overdrive         motifs · formOverride · custom(추가 연출 요청 — 생성기도 폭주엔 이 칸만 보인다)
      casual1~3           scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4)
-   일상 칸 옆 guide 에는 고른 길의 트리 문장(한글 이름·영어 문장·장소 묶음·자세 계열·의상 안내)과 옷 종류·드러내기·첫머리가 있고, INDEX.md 에도 컷마다 표로 찍는다 */
+   일상 칸 옆 guide 에는 고른 길의 트리 문장(한글 이름·영어 문장·장소 묶음·자세 계열·의상 안내)과 옷 종류·드러내기·첫머리가 있고, INDEX.md 에도 컷마다 표로 찍는다.
+   버전2 계획 컷(cut.treeV === 2 — 계획기 --v2, docs/CASUAL_TREE_V2.md)은 버전2 칸 그대로 잠그고 지시문도 버전2. 버전2 컷엔 자유 카메라 글이 없다
+   (camera 는 카메라 높이 칸이다 — 조명 · 분위기는 custom 에). 버전1 계획 컷은 지금까지와 같다 */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process'), crypto = require('node:crypto');
 const ROOT = path.resolve(__dirname, '..');
 global.window = global;
-for (const f of ['prompt-spec', 'casual-tree', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state']) require(path.join(ROOT, 'lib', f + '.js'));
-const S = window.AtelierSpec, CT = window.AtelierCasualTree, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
+for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state']) require(path.join(ROOT, 'lib', f + '.js'));
+const S = window.AtelierSpec, CT = window.AtelierCasualTree, C2 = window.AtelierCasualTreeV2, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
 const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8'));
 
 /* 아홉 자리 — IMAGE_RULES 3절 표 그대로 */
@@ -39,6 +41,7 @@ const SLOTS = {
 };
 const ACTION_SCENE = ['expr', 'pose', 'orient', 'frame', 'lens', 'aspect', 'camera', 'scene', 'outfit', 'custom', 'action'];
 const CASUAL_TEXT = ['scene', 'outfit', 'camera', 'custom'];
+const CASUAL_TEXT_V2 = ['scene', 'outfit', 'custom'];
 const keys = rows => rows.map(r => Array.isArray(r) ? r[0] : r.key).filter(v => v && v !== '__custom__');
 
 function args(argv) {
@@ -52,9 +55,9 @@ function args(argv) {
   return o;
 }
 function data() {
-  const cards = read('card.json').cards.character, tree = read('casual-tree.json');
+  const cards = read('card.json').cards.character, tree = read('casual-tree.json'), tree2 = read('casual-tree-v2.json');
   const opt = f => { try { return read(f); } catch (e) { return null; } };
-  return { cards, tree, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null };
+  return { cards, tree, tree2, v2: { C2, tree2 }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null };
 }
 /* 화면과 같은 몫 — 원작 외형은 없으면 undefined, 얼굴 설계는 없으면 null(lib/prompt-ui.js App) */
 const extras = (d, c) => ({ appearance: d.appearance ? d.appearance[String(c.no)] : undefined, face: d.faces ? d.faces[String(c.no)] || null : null });
@@ -66,11 +69,25 @@ function planCut(plan, card, n) {
   const ch = (plan.characters || []).find(x => x.card === card);
   const cut = ch && (ch.cuts || []).find(c => c.cut === n);
   if (!cut) return null;
+  if (cut.treeV === 2) return { cut, v2: true };
   return { cut, raw: new URLSearchParams(CP.generatorQuery(card, cut)).get('casual') };
 }
 
 /* 쓰는 사람이 볼 것 — 고른 길의 트리 문장(data/casual-tree.json — 지시문의 Place·Activity·Outfit 줄이 이 영어 그대로)과
    계획의 옷 종류·드러내는 방식·장면 칸 첫머리. 장면·옷 칸은 이 문장을 되풀이하거나 다르게 쓰지 않는다(IMAGE_RULES 3절 3·5). build 는 읽지 않는다 */
+/* 버전2 컷의 안내 — 장소 · 역할 · 소품 동작 · 몸 자세 · 구도 · 손 · 의상(지시문의 Place · Role · PROP · POSTURE 줄이 이 영어 그대로) */
+function guideOfV2(d, cut) {
+  const t = C2.make(d.tree2, d.tree), by = (list, k) => (list || []).find(r => r.key === k);
+  const row = (x, extra) => x ? Object.assign({ key: x.key, ko: x.ko, en: x.en }, extra || {}) : null;
+  const p = C2.place(t, cut.place), u = C2.use(t, cut.use), pr = u && C2.prop(t, u.prop), f = C2.family(t, cut.ofam), it = cut.item ? C2.item(t, cut.ofam, cut.item) : null;
+  return {
+    tree: 2, path: [cut.era, cut.place, cut.ofam, cut.item, cut.posture, cut.frame, cut.use].filter(Boolean).join(' / '),
+    v2: { era: row(CT.era(d.tree, cut.era)), place: row(p), role: u && u.role ? { ko: u.role_ko, en: u.role } : null, use: u ? { key: u.key, ko: u.ko, en: u.en.replace('{prop}', pr ? pr.en : ''), prop: pr ? pr.ko : '' } : null,
+      ofam: row(f, f && f.guide ? { guide: f.guide } : {}), item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' },
+      posture: row(C2.posture(t, cut.posture)), frame: cut.frame, body: row(by(t.v2.body, cut.body)), hands: [cut.right || 'AUTO', cut.left || 'AUTO'].join(' · ') },
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || ''
+  };
+}
 function guideOf(tree, cut) {
   const e = CT.era(tree, cut.era), p = CT.place(tree, cut.place), a = CT.act(tree, cut.act), f = CT.family(tree, cut.ofam), it = cut.item ? CT.item(tree, cut.ofam, cut.item) : null;
   const fam = CT.poseFamily(tree, cut.act), g = p && CT.group(tree, p.group);
@@ -107,7 +124,7 @@ function init(o) {
     if (def.mode === 'casual' && plan) {
       const pc = planCut(plan, c.name, def.cut);
       /* 쓰는 사람이 볼 것 — 계획의 옷 종류·드러내는 방식·장면 칸 첫머리(build 는 이 칸을 읽지 않는다) */
-      if (pc) s.guide = guideOf(d.tree, pc.cut);
+      if (pc) s.guide = pc.v2 ? guideOfV2(d, pc.cut) : guideOf(d.tree, pc.cut);
     }
     set.slots[slot] = s;
   }
@@ -126,6 +143,19 @@ function stateOf(set, slot, d, c, plan, bad) {
     if (!plan) { bad.push(slot + ' — 계획 파일이 없다(init --plan 또는 settings.plan)'); return null; }
     const pc = planCut(plan, c.name, def.cut);
     if (!pc) { bad.push(slot + ' — 계획에 ' + c.name + ' ' + def.cut + '번 컷이 없다'); return null; }
+    if (pc.v2) {
+      const base = ST.initial(S, CT, CP, { style: set.style, identityMode: 'reference' }, d.tree, c, null, d.v2).st;
+      const got = ST.plannedV2(S, base, pc.cut, d.tree, c, d.v2);
+      if (got.bad.length) bad.push(slot + ' — 계획 값이 버전2 트리에 안 맞는다: ' + got.bad.join(', ') + ' (tools/casual-plan.cjs --v2 로 다시 정한다)');
+      if (str('camera').trim()) bad.push(where('camera') + ' — 버전2 컷엔 자유 카메라 글이 없다(카메라 높이는 계획 칸 — 조명 · 분위기는 custom 에)');
+      const sc = Object.assign({}, got.st.scenes.casual), why = s.why && typeof s.why === 'object' ? s.why : {};
+      for (const f of CASUAL_TEXT_V2) {
+        sc[f] = str(f);
+        if (sc[f].trim() && !(typeof why[f] === 'string' && why[f].trim())) bad.push(where('why.' + f) + ' — 직접 입력엔 그 컷에 맞춘 사유를 쓴다(IMAGE_RULES 3절 4)');
+      }
+      for (const k of Object.keys(why)) if (CASUAL_TEXT_V2.indexOf(k) < 0) bad.push(where('why.' + k) + ' — 없는 칸');
+      return { st: Object.assign({}, got.st, { scenes: Object.assign({}, got.st.scenes, { casual: sc }) }), cut: pc.cut, manual: Object.fromEntries(CASUAL_TEXT_V2.filter(f => sc[f].trim()).map(f => [f, sc[f]])), why };
+    }
     const first = ST.initial(S, CT, CP, { style: set.style, identityMode: 'reference' }, d.tree, c, pc.raw);
     if (!first.plan) { bad.push(slot + ' — 계획 컷을 못 읽었다'); return null; }
     if (first.plan.bad.length) bad.push(slot + ' — 계획 값이 트리에 안 맞는다: ' + first.plan.bad.join(', ') + ' (tools/casual-plan.cjs 로 다시 정한다)');
@@ -188,7 +218,7 @@ function build(o) {
   for (const slot of want) {
     const r = stateOf(set, slot, d, c, plan, bad);
     if (!r) continue;
-    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree);
+    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2);
     const ui = { storage: { last: c.name, cards: { [c.name]: r.st } }, prompt: text };
     if (r.cut) { ui.plan = r.cut; ui.manual_inputs = r.manual; ui.manual_why = r.why; }
     out.push({ slot, text, ui });
@@ -210,7 +240,20 @@ function build(o) {
     '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 올릴 파일 |', '|---|---|---|---|---|---|---|'];
   for (const r of out) lines.push('| ' + SLOTS[r.slot].n + ' | ' + r.slot + ' | ' + att(SLOTS[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
   /* 일상 컷마다 고른 길 — 트리 문장(지시문에 그대로 들어간다) */
-  for (const r of out.filter(x => x.ui.plan)) {
+  for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV === 2)) {
+    const g = guideOfV2(d, r.ui.plan), v = g.v2;
+    lines.push('', '## ' + SLOTS[r.slot].n + ' ' + r.slot + ' — 고른 장면(버전2)', '',
+      '| 칸 | 고른 것 | 지시문 문장 |', '|---|---|---|',
+      '| 시대 | ' + (v.era ? v.era.ko : '—') + ' | ' + (v.era ? v.era.en : '') + ' |',
+      '| 장소 | ' + (v.place ? v.place.ko : '—') + ' | ' + (v.place ? v.place.en : '') + ' |',
+      '| 역할 | ' + (v.role ? v.role.ko : '—') + ' | ' + (v.role ? v.role.en : '') + ' |',
+      '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
+      '| 몸 자세 · 구도 | ' + (v.posture ? v.posture.ko : '—') + ' · ' + v.frame + ' · ' + (v.body ? v.body.ko : '—') + ' | ' + (v.posture ? v.posture.en : '') + ' |',
+      '| 손 · 소품 동작 | ' + v.hands + (v.use ? ' · ' + v.use.prop + ' · ' + v.use.ko : '') + ' | ' + (v.use ? v.use.en : '') + ' |', '',
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
+  }
+  for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV !== 2)) {
     const g = guideOf(d.tree, r.ui.plan), t = g.tree;
     lines.push('', '## ' + SLOTS[r.slot].n + ' ' + r.slot + ' — 고른 길', '',
       '| 칸 | 고른 것 | 트리 문장(지시문 그대로) |', '|---|---|---|',
@@ -233,4 +276,4 @@ if (require.main === module) {
     else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리]'); process.exit(2); }
   } catch (e) { console.error(e.message); process.exit(2); }
 }
-module.exports = { SLOTS, init, build, stateOf, planCut, fileName };
+module.exports = { SLOTS, init, build, stateOf, planCut, fileName, guideOfV2 };

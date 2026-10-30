@@ -87,7 +87,30 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert(!(await text()).includes('FORM —'));
   assert(!(await text()).includes('ONLY_LEFT_PANEL'));
   assert(!(await text()).includes('LOW_CAMERA_MARKER'));
-  await p.locator('#preset').selectOption('food_poffin');
+  /* 새 일상 장면은 버전2(2026-10-30) — 하는 일 칸 없이 몸 자세 · 구도 · 손 둘. 자세 추천은 지금 장소에서 쓸 수 있는 것만 */
+  assert.equal(await p.locator('#casual-tree-v2').count(),1,'새 장면은 버전2');
+  assert.equal(await p.locator('#act').count(),0,'버전2 엔 하는 일 칸이 없다');
+  await p.locator('#preset').selectOption({index:1});await settled();
+  assert((await text()).includes('POSTURE: ')&&(await text()).includes('COMPOSITION: ')&&!(await text()).includes('Activity: '),'버전2 줄');
+  /* 직업 현장 — 포켓몬 세계 · 연구소 · 두 손 소품이면 역할 동작, Role 줄 */
+  await p.locator('#era').selectOption('in_pokemon');await settled();
+  await p.locator('#place').selectOption('work_lab');await settled();
+  await p.locator('#preset').selectOption('counter_work');await settled();   // 작업대에 기대 두 손으로
+  const jobs=await p.locator('#use option').evaluateAll(es=>es.map(e=>e.value));
+  assert(jobs.includes('job_lab_maps'),'연구소 역할 동작 '+jobs);
+  await p.locator('#use').selectOption('job_lab_maps');await settled();
+  assert((await text()).includes('Role: she is at work here as a Pokémon research coordinator.'),'Role 줄');
+  /* 동료 묶음 — 동료 줄, 가슴 위 · 클로즈업 없음 */
+  await p.locator('#place').selectOption('partner_yard');await settled();
+  assert.equal(await p.locator('#companion-note').count(),1);
+  const frames=await p.locator('#frame option').evaluateAll(es=>es.map(e=>e.value));
+  assert(!frames.includes('chest_up')&&!frames.includes('face_close')&&!frames.includes('detail'),'동료 묶음 프레이밍 '+frames);
+  assert((await text()).includes('exactly one Pokémon companion'),'동료 한 마리 줄');
+  /* 몸 뒤는 pkm 일상컷에 없다 — 해방을 켜야 까닭과 함께 보인다 */
+  assert(!(await p.locator('#body option').evaluateAll(es=>es.map(e=>e.value))).includes('back'),'몸 뒤');
+  await p.locator('#unlock-v2').check();await settled();
+  assert((await p.locator('#body option[value="back"]').textContent()).includes('🔓'),'해방하면 까닭과 함께');
+  await p.locator('#unlock-v2').uncheck();await settled();
   await p.locator('#scene').fill('CASUAL_SCENE_MARKER');await settled();
   const styleKeys=await p.locator('#style option').evaluateAll(es=>es.map(e=>e.value));
   for(const key of styleKeys){
@@ -153,6 +176,19 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert(!(await qtext()).includes('HAIR: '),'이어가기에 HAIR 줄');
   assert.deepEqual(b.errors,[]);
   await b.close();
+  /* 버전1 기록 — 하는 일로 고른 예전 장면은 버전1 그대로 열고 지시문도 버전1, 「버전2로 다시 고르기」 로 옮긴다 */
+  const oldSave=JSON.stringify({last:'피카츄',cards:{'피카츄':{mode:'casual',scenes:{casual:{era:'now',place:'home_living',act:'read_book',ofam:'everyday',frame:'waist_up'}}}}});
+  const c1=await harness.open('prompt.html',{store:['pkm_prompt_v2',oldSave]});
+  const cp=c1.page,ctext=()=>cp.locator('#prompt-output').inputValue();
+  await cp.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('SCENE (chosen)'));
+  assert.equal(await cp.locator('#v1-record').count(),1,'버전1 기록 표');
+  assert((await ctext()).includes('Activity: ')&&!(await ctext()).includes('POSTURE: '),'버전1 지시문');
+  await cp.locator('#to-v2').click();await cp.waitForTimeout(90);
+  assert.equal(await cp.locator('#casual-tree-v2').count(),1);
+  assert((await ctext()).includes('POSTURE: ')&&!(await ctext()).includes('Activity: '),'버전2 로');
+  assert.equal(await cp.locator('#place').inputValue(),'home_living','장소는 지킨다');
+  assert.deepEqual(c1.errors,[]);
+  await c1.close();
   const corrupt=await harness.open('prompt.html',{store:['pkm_prompt_v2','not json']});
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);

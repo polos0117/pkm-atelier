@@ -118,5 +118,41 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   other.card = '라이츄'; other.no = 26; fs.mkdirSync(odir); fs.writeFileSync(path.join(odir, 'settings.json'), JSON.stringify(other));
   r = run('build', '--dir', odir); assert.equal(r.status, 1); assert(/계획에 라이츄 1번 컷이 없다/.test(r.stderr));
   checks += 3;
+  /* 버전2 계획 컷(계획기 --v2 — 2026-10-30) — 버전2 칸 그대로 잠그고 지시문도 버전2, 자유 카메라 글 없음, 표에 안 맞는 값은 걸린다 */
+  require('../lib/casual-tree-v2.js');
+  const C2 = window.AtelierCasualTreeV2, tree1 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree.json'), 'utf8')), tree2 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree-v2.json'), 'utf8'));
+  const T2 = C2.make(tree2, tree1), pk = { gen: 1 };
+  const v2cut = (n, base, preset, more) => Object.assign(C2.repair(T2, Object.assign(C2.applyPreset(T2, Object.assign({ treeV: 2 }, base), preset), more || {}), pk), { cut: n, treeV: 2, axes: AX, garments: ['shirt'], expose: [], lead: 'action' });
+  const V2CUTS = [v2cut(1, { era: 'in_pokemon', place: 'work_lab', ofam: 'work' }, 'counter_work', { use: 'job_lab_maps' }),
+    v2cut(2, { era: 'in_pokemon', place: 'partner_yard', ofam: 'everyday' }, 'kneel_pet', { expr: 'gentle' }),
+    v2cut(3, { era: 'now', place: 'home_living', ofam: 'swimwear' }, 'stand_inspect')];
+  assert.equal(V2CUTS[0].use, 'job_lab_maps');
+  const v2plan = path.join(tmp, 'PLAN-v2.json'), v2dir = path.join(tmp, 'pikachu-v2');
+  fs.writeFileSync(v2plan, JSON.stringify({ session: 't2', characters: [{ card: '피카츄', cuts: V2CUTS }] }));
+  r = run('init', '피카츄', '--dir', v2dir, '--plan', v2plan); assert.equal(r.status, 0, r.stderr);
+  const s2 = JSON.parse(fs.readFileSync(path.join(v2dir, 'settings.json'), 'utf8'));
+  assert.equal(s2.slots.casual1.guide.tree, 2); assert.equal(s2.slots.casual1.guide.v2.role.ko, '포켓몬 연구 코디네이터', '안내에 역할');
+  s2.slots.casual1.custom = 'warm lamp light over the desk'; s2.slots.casual1.why = { custom: '연구소 책상 조명 — 고른 장소 문장에 빛이 없다' };
+  fs.writeFileSync(path.join(v2dir, 'settings.json'), JSON.stringify(s2));
+  r = run('build', '--dir', v2dir); assert.equal(r.status, 0, r.stderr);
+  const t1 = fs.readFileSync(path.join(v2dir, 'casual1-prompt.txt'), 'utf8'), u1 = JSON.parse(fs.readFileSync(path.join(v2dir, 'casual1-ui.json'), 'utf8'));
+  assert(t1.includes('POSTURE: ') && t1.includes('Role: she is at work here as a Pokémon research coordinator.') && !t1.includes('Activity: '), '버전2 지시문');
+  const sc2 = u1.storage.cards['피카츄'].scenes.casual;
+  assert.equal(sc2.treeV, 2); assert.equal(sc2.use, 'job_lab_maps'); assert(sc2.randomLocks.place && sc2.randomLocks.use && sc2.randomLocks.right, '계획 칸 잠금');
+  assert(fs.readFileSync(path.join(v2dir, 'casual2-prompt.txt'), 'utf8').includes('exactly one Pokémon companion'), '동료 컷');
+  /* 저장값을 생성기 상태 코드로 다시 열면 같은 지시문 — 화면이 이 기록을 열어도 같다 */
+  const again = ST.initial(S, CT, CP, u1.storage.cards["피카츄"], tree1, { name: '피카츄', gen: 1 }, null, { C2, tree2 }).st;
+  const pika = JSON.parse(fs.readFileSync(path.join(ROOT, "data/card.json"), "utf8")).cards.character.find(c => c.name === "피카츄");
+  const appear = (JSON.parse(fs.readFileSync(path.join(ROOT, 'data/source-appearance.json'), 'utf8')).entries || {})[String(card.no)];
+  const faces = (JSON.parse(fs.readFileSync(path.join(ROOT, 'data/face-design.json'), 'utf8')).faces || {})[String(pika.no)] || null;
+  assert.equal(ST.prompt(P, L, again, pika, appear, faces, tree1, tree2) + '\n', t1, '저장값 → 같은 지시문');
+  assert(fs.readFileSync(path.join(v2dir, 'INDEX.md'), 'utf8').includes('고른 장면(버전2)'), '차례표');
+  /* 틀린 칸 — 버전2 컷의 카메라 글, 표에 안 맞는 계획 값 */
+  s2.slots.casual2.camera = 'low angle'; fs.writeFileSync(path.join(v2dir, 'settings.json'), JSON.stringify(s2));
+  r = run('build', '--dir', v2dir); assert.equal(r.status, 1); assert(/버전2 컷엔 자유 카메라 글이 없다/.test(r.stderr), r.stderr);
+  delete s2.slots.casual2.camera; fs.writeFileSync(path.join(v2dir, 'settings.json'), JSON.stringify(s2));
+  V2CUTS[2].body = 'back'; fs.writeFileSync(v2plan, JSON.stringify({ session: 't2', characters: [{ card: '피카츄', cuts: V2CUTS }] }));
+  r = run('build', '--dir', v2dir); assert.equal(r.status, 1); assert(/버전2 트리에 안 맞는다: body/.test(r.stderr), r.stderr);
+  checks += 4;
   console.log('PASS 지시문 묶음: init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

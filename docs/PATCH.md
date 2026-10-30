@@ -10,6 +10,13 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 3단계 — 생성기 화면 · 지시문 묶음
+- lib/prompt-ui.js — 일상 갈래 버전2 칸(game 생성기에서, 역할 · 동료 · 안 쓰는 값은 pkm 몫), 맞지 않는 칸이면 복사 막기 · 손 말 경고, 버전1 기록 표 · 버전2로 다시 고르기. 새 장면은 버전2, 계획기 주소는 버전1 그대로
+- lib/prompt-state.js — v2(C2 · tree2)를 주면 새 장면 · 버전2 기록은 버전2, plannedV2(버전2 계획 컷 잠그기), 계획기 값(버전1)은 버전1 빈 장면 위에 · lib/prompt-random.js — 버전2 장면 랜덤
+- lib/prompt-spec.js — CASUAL_HAND_WORDS · lib/words.js — 버전2 말(game 에서) + 까닭 required · companion, 역할 · prompt.html — casual-tree-v2.js 를 읽는다, v=v2a
+- tools/prompt-pack.cjs — 버전2 계획 컷(treeV 2)은 버전2 로 잠그고 짓는다, 그 컷엔 camera 글 없음, 안내 · 차례표 버전2. 버전1 컷은 그대로
+- tests/prompt-screen.cjs · tests/prompt-pack.cjs — 버전2 몫 · docs/CASUAL_TREE_V2.md — 7-3 결과
+
 ## 2026-10-30 · claude · 일상컷 트리 버전2 옮기기 2단계 — 지시문
 - lib/prompt-anthro.js — treeV 2 장면 + 버전2 표면 버전2 줄(POSTURE · SUPPORT · COMPOSITION · 렌즈 자동 · 손 둘 · PROP · LEGS · GAZE · 시선 말을 뗀 표정), pkm 몫 Role(직업 역할 동작) · Companion(동료 묶음) 줄, 첫 등장의 해 · 포켓몬 세계 · 동료 한 마리 줄은 그대로. 버전1 기록은 버전1 지시문
 - lib/prompt-spec.js — 버전2 줄 열하나 · prompt.html — prompt-spec · prompt-anthro v=tree2a
