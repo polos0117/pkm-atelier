@@ -29,7 +29,7 @@ cargo 가 없는 곳(생성 세션 등)에서는 `check` 를 node 로 돌린다 
 node tools/casual-look.cjs check --card 피카츄 a.webp b.webp c.webp [--json]   # 글·끝 번호(0·1·2)가 명령줄과 같다
 ```
 
-그림 저장소는 이 저장소 옆(`../pkm-atelier-img`, `../pkm-atelier-img-2`, `../pkm-atelier-img-3`)에서 찾고, `thumb/` 이 있으면
+그림 저장소는 이 저장소 옆(`../pkm-atelier-img`, `../pkm-atelier-img-2`, `../pkm-atelier-img-3`, `../pkm-atelier-img-4`)에서 찾고, `thumb/` 이 있으면
 그쪽을 읽는다. 저장소 뿌리는 `PKM_ROOT` 로 바꾼다. 의존 상자를 못 받는 곳에서는 `--offline`.
 
 ## 재는 것

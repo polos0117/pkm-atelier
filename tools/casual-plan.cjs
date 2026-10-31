@@ -2,9 +2,9 @@
 /* 일상컷 계획기 — 생성 전에 세 장의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
    node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
-       [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3>]
+       [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4>]
 
-   1. 그림 저장소를 받아 둔다(--no-pull 이 아니면 셋 다 pull --rebase). 장부·예약이 있는 pkm-atelier-img-2 에 커밋 안 한 변경이 있으면 멈춘다.
+   1. 그림 저장소를 받아 둔다(--no-pull 이 아니면 넷 다 pull --rebase). 장부·예약이 있는 pkm-atelier-img-2 에 커밋 안 한 변경이 있으면 멈춘다.
    2. tools/casual-ledger.py view --fresh 로 기록 + 세션별 예약을 읽는다(장부 파일은 쓰지 않는다 — 세션끼리 장부 커밋이 부딪치지 않게).
    3. 배치의 캐릭터를 차례로 정하고, casual-ledger.py check 로 맞춰 본다. 걸리면 씨앗을 바꿔 다시 정한다(사람 손이 안 간다).
    4. --reserve 면 casual-ledger.py reserve 로 records/casual-reservations/<세션>.json 에 적고, --push 면 그 파일만 commit·push 한다.
@@ -32,7 +32,7 @@ const TREE = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree.jso
 const TREE2 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-tree-v2.json'), 'utf8'));
 
 function args(argv) {
-  const o = { v2: true, cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
+  const o = { v2: true, cards: [], avoid: [], refill: [], keep: {}, repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4'].map(n => path.join(ROOT, '..', n)) };   // [1] 이 장부·예약 자리
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--session') o.session = argv[++i];

@@ -124,7 +124,8 @@ with tempfile.TemporaryDirectory() as tmp:
     code=repo('code',{'data/card.json':R.encoded({'cards':{'character':[{'no':n,'name':name} for n,name in [(345,'릴링'),(346,'릴리요'),(347,'아노딥스')]]}}),'data/img.json':R.encoded({'img':{}})})
     first=repo('pkm-atelier-img',{'README.md':b'preserve'})
     second=repo('pkm-atelier-img-2',{'README.md':b'preserve'})
-    third=repo('pkm-atelier-img-3',{'README.md':b'preserve'})   # open image repository (2026-10-23)
+    third=repo('pkm-atelier-img-3',{'README.md':b'preserve'})   # closed since 2026-10-31
+    fourth=repo('pkm-atelier-img-4',{'README.md':b'preserve'})   # open image repository (2026-10-31)
     oldroot,oldargv=R.ROOT,sys.argv
     def cli(*args):
         sys.argv=['image-runner.py',*args,'--repo',str(second),'--owner','worker','--execution-id','cli-test']

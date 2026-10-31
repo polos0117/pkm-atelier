@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-10-31 · claude · 그림 저장소4(pkm-atelier-img-4) 열기 · img-3 닫기
+- tools/register-images.py · lib/img.js · .github/workflows/register-images.yml · .gitignore — 넷째 그림 저장소 pkm-atelier-img-4(where 3)를 열린 저장소로. img-3 은 사이트 약 938MB(썸네일 워크플로의 900MB 경고)라 닫는다(교체만)
+- tools/image-runner.py — 저장소 목록(IMAGE_REPOS)에 img-4, 저장소 묶음을 목록 차례대로 만든다(shard_stores) — 올릴 곳(upload_base)은 목록 끝
+- tools/casual-ledger.py · tools/casual-plan.cjs · tools/face-design.py — 그림 저장소 넷을 읽는다(장부·예약·러너 상태는 img-2 에 그대로)
+- IMAGE_RULES.md · AGENTS.md · docs/IMAGE_AUTOMATION.md · README.md · rust/README.md — 저장소 표·올리는 곳·잇는 링크(img-4). 다음 저장소를 붙일 때 고칠 목록을 4절에 다 적었다
+- tests/image-runner-external.py — 넷째 저장소 자리
+- pkm-atelier-img-4 — 뼈대(README · .nojekyll · 썸네일 워크플로 · img/ · records/). 공방 모음 도트 공방도 pkm 그림 주소 차례 끝에 img-4, 새 도트는 img-4 sprites/ 로
+
 ## 2026-10-30 · claude · 일상컷 소품 고르게 — game 의 새 소품 · 마실 것 한 장
 - data/casual-tree-v2.json — game 버전2 표를 다시 받아(소품 104 → 115 · 동작 138 → 153): 농구공 · 비치볼 · 토트백 · 선글라스 · 종이 지도 · 스케이트보드 · 불꽃 막대 · 풍선 · 레코드판 · 편지 · 챙 넓은 모자, 헤드폰은 직업 현장 소품과 합쳐 장소를 넓혔다, 몇 곳에만 되던 소품의 장소도 넓혔다
 - lib/casual-plan.js — 버전2 계획기가 소품 단위로도 센다(동작만 세면 잔 동작 넷이 돌아가며 나왔다), 마실 것(잔 · 칵테일 잔 · 물병 · 찻주전자)은 한 무리로 세고 한 캐릭터 세 장에 한 장까지

@@ -4,7 +4,8 @@ All mutable state and preserved text assets (prompt, UI, QA, approvals) live in 
 Generated originals are NOT committed (2026-10-23): they stay in this session's cache (PKM_IMAGE_CACHE,
 default <tmp>/pkm-image-runner/<sha256>.<ext>) and the record keeps only their sha256 and the sha256 of
 their WebP conversion. Older records whose originals were committed still read them from img-2.
-New images are published to the open image repository (img-3); img and img-2 are closed (replacements only).
+New images are published to the open image repository (the last of IMAGE_REPOS, img-4 since 2026-10-31);
+the earlier ones are closed (replacements only).
 A normal fast-forward push is the compare-and-swap; contention stops the caller.
 """
 import copy
@@ -15,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
 SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
 TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
-IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3']   # data/img.json "where" order; last one is open
+IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4']   # data/img.json "where" order; last one is open
 DAILY_MAX = 12
 EXECUTION_MAX = 1
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -229,7 +230,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
                 h = digest(store.read(p))
                 item = {'file': f, 'shard': shard, 'sha256': h}
                 published.append(item)
-                if shard >= 1 and own.get(f) == h:   # img-2 (earlier runs) or img-3 (open) — never the closed first shard
+                if shard >= 1 and own.get(f) == h:   # img-2 (earlier runs), img-3 or img-4 (open) — never the closed first shard
                     ours.append(f)
                 else:
                     foreign.append(item)
@@ -659,6 +660,14 @@ def restore(state, read, target):
                             f.write(data)
 
 
+def shard_stores(store):
+    """Stores in IMAGE_REPOS order; store is img-2 (state). The open (last) repository must be cloned too."""
+    for n in IMAGE_REPOS:
+        if n != IMAGE_REPOS[1] and not (ROOT.parent / n).is_dir():
+            raise ValueError(n + ' must be cloned next to pkm-atelier' + (' (open image repository)' if n == IMAGE_REPOS[-1] else ''))
+    return [store if i == 1 else Store(ROOT.parent / n) for i, n in enumerate(IMAGE_REPOS)]
+
+
 def remote_inputs(code, imgs):
     registry = json.loads(code.read('data/img.json'))
     cards = json.loads(code.read('data/card.json'))['cards']['character']
@@ -736,7 +745,7 @@ def main():
         print('committed artifacts restored and hash verified; session_only originals require the existing local cache, otherwise STOP and report')
         return
     if a.command == 'verify-completed':
-        print(json.dumps({'verified_completed': verify_completed(state, [Store(ROOT.parent / IMAGE_REPOS[0]), store, Store(ROOT.parent / IMAGE_REPOS[2])], Store(ROOT))}))
+        print(json.dumps({'verified_completed': verify_completed(state, shard_stores(store), Store(ROOT))}))
         return
     if a.command == 'status':
         r = active(state)
@@ -753,10 +762,7 @@ def main():
     if not a.execution_id: raise ValueError('--execution-id or PKM_EXECUTION_ID required')
     state['policy']['external_publication'] = 'skip_after_preserving_in_flight_result'
     state['policy']['image_operations_require_card'] = True
-    code = Store(ROOT); first = Store(ROOT.parent / IMAGE_REPOS[0])
-    if not (ROOT.parent / IMAGE_REPOS[2]).is_dir():
-        raise ValueError(IMAGE_REPOS[2] + ' must be cloned next to pkm-atelier (open image repository)')
-    third = Store(ROOT.parent / IMAGE_REPOS[2]); shards = [first, store, third]
+    code = Store(ROOT); shards = shard_stores(store); opened = shards[-1]
     data = remote_inputs(code, shards)
     if a.command == 'reopen-deferred':
         if a.card is None: raise ValueError('--card required')
@@ -842,11 +848,11 @@ def main():
     commit = None
     if encoded(state) != before or files:
         if run: run['updated_at'] = now()
-        assert_heads([first, code, third, store])
+        assert_heads([*shards, code])
         commit = store.publish(state, files, 'Image runner: ' + operation)
     print(json.dumps({'commit': commit, 'operation': operation,
                       'intent_recorded': operation in ('intent', 'retry-intent', 'replan-rejected'),
-                      'upload_base': third.base if operation == 'prepublish' else None,
+                      'upload_base': opened.base if operation == 'prepublish' else None,
                       'next': next_step(run) if run else {'action': 'idle', 'reason': 'no daily capacity or eligible candidates'}}, ensure_ascii=False, indent=2))
 
 

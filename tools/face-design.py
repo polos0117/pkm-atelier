@@ -343,7 +343,7 @@ def hair_spec():
 
 
 # ── 확정한 그림의 머리 — 그림 저장소의 기록(records)에서 읽는다(읽기만) ─────────────────────────
-RECORD_DIRS = [os.path.join(ROOT, '..', d) for d in ('pkm-atelier-img/records', 'pkm-atelier-img/generation', 'pkm-atelier-img-2/records', 'pkm-atelier-img-3/records')]
+RECORD_DIRS = [os.path.join(ROOT, '..', d) for d in ('pkm-atelier-img/records', 'pkm-atelier-img/generation', 'pkm-atelier-img-2/records', 'pkm-atelier-img-3/records', 'pkm-atelier-img-4/records')]
 RECORD_SKIP = re.compile(r'reject|before|initial|attempt|not-selected|original|previous|retry|repair|kept-|targeted|revised|framing', re.I)
 CANON_LEN = {'pixie cut': 'short', 'bob': 'short', 'side-shaved long hair': 'long', 'buzz cut': 'very short', 'crew cut': 'very short'}
 FAM_EXTRA = {'swept back': 'sleek', 'side part': 'crop', 'mullet': 'layer', 'buzz cut': 'crop', 'crew cut': 'crop', 'fade': 'crop', 'man bun': 'bun'}

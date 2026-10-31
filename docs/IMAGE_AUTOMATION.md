@@ -70,17 +70,17 @@ python3 tools/image-runner.py resume --reason '확인한 해결 내용'
 
 ## 업로드와 완료
 
-9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지(img/)와 종별 records는 한 캐릭터 단위 커밋으로 **열린 저장소 img-3/main**에 올린다 — 생성 원본 PNG 없이(아래 "원본은 세션 안에만"). 상태(`records/automation/state.json`)는 그대로 img-2. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. 기존 원격 원본 기록은 보존하지만 새 원본 PNG/JPG는 업로드하지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
+9개 slot을 모두 승인한 뒤 IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지(img/)와 종별 records는 한 캐릭터 단위 커밋으로 **열린 저장소 img-4/main**(2026-10-31 부터 — img-3 은 약 938MB 라 닫힘)에 올린다 — 생성 원본 PNG 없이(아래 "원본은 세션 안에만"). 상태(`records/automation/state.json`)는 그대로 img-2. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. 기존 원격 원본 기록은 보존하지만 새 원본 PNG/JPG는 업로드하지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
 
 ```sh
 python3 tools/image-runner.py complete --owner pkm-daily --card 345
 ```
 
-complete는 where 가 가리키는 저장소(새 run 은 img-3 = where 2, 10-22 run 은 img-2 = where 1)의 9장 바이트가 record 때 적은 WebP sha256(옛 run 은 보존 원본의 규정 변환)과 같은지, 썸네일이 있는지, 코드 main의 data/img.json 슬롯과 where가 맞는지 확인한 뒤 다음 캐릭터를 허용한다. Actions 로그의 경고까지 조회하는 기능은 없으므로 에이전트가 별도로 확인·보고해야 한다. 원격 반영 전에는 완료로 표시하지 않는다.
+complete는 where 가 가리키는 저장소(새 run 은 img-4 = where 3, 10-23~10-31 run 은 img-3 = where 2, 10-22 run 은 img-2 = where 1)의 9장 바이트가 record 때 적은 WebP sha256(옛 run 은 보존 원본의 규정 변환)과 같은지, 썸네일이 있는지, 코드 main의 data/img.json 슬롯과 where가 맞는지 확인한 뒤 다음 캐릭터를 허용한다. Actions 로그의 경고까지 조회하는 기능은 없으므로 에이전트가 별도로 확인·보고해야 한다. 원격 반영 전에는 완료로 표시하지 않는다.
 
 ## 외부 작업이 먼저 게시한 경우
 
-`prepare`·`next`·이미지 작업 명령과 업로드 직전 `prepublish`는 최신 세 이미지 저장소(img·img-2·img-3)의 img/ 원본 및 코드 data/img.json을 함께 읽는다. 코드만 등록됐거나 이미지 일부만 게시됐으면 `skipped_external_partial`, 같은 화풍의 기본 9개 슬롯이 등록되고 해당 저장소의 원본·썸네일도 존재하면 `completed_externally`로 기록한다. 자기 claim만 종료 상태와 근거 commit·파일 해시를 남기며, 타 세션 예약·잠금·이미지는 수정하지 않는다. interrupted나 예약 만료를 소유권 양도로 보지 않는다.
+`prepare`·`next`·이미지 작업 명령과 업로드 직전 `prepublish`는 최신 네 이미지 저장소(img·img-2·img-3·img-4)의 img/ 원본 및 코드 data/img.json을 함께 읽는다. 코드만 등록됐거나 이미지 일부만 게시됐으면 `skipped_external_partial`, 같은 화풍의 기본 9개 슬롯이 등록되고 해당 저장소의 원본·썸네일도 존재하면 `completed_externally`로 기록한다. 자기 claim만 종료 상태와 근거 commit·파일 해시를 남기며, 타 세션 예약·잠금·이미지는 수정하지 않는다. interrupted나 예약 만료를 소유권 양도로 보지 않는다.
 
 건너뛴 뒤에는 남은 하루 한도 안에서 다음 적격 캐릭터를 번호순으로 보충한다. 아직 intent도 없는 캐릭터는 예약된 한도를 반환한다. intent/결과가 있는 캐릭터는 그날 한도에 남기므로 외부 게시를 이용해 실행당 1종 및 두 날짜별 12종 생성 상한을 넘길 수 없다. 후보 목록을 유한하게 한 번 검사하며 모두 제외되거나 한도가 소진되면 idle로 끝난다. `next`도 이제 필요한 대조·건너뛰기 상태를 일반 push할 수 있다. 읽기만 하려면 status를 쓴다.
 
