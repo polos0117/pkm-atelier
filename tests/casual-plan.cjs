@@ -53,6 +53,7 @@ for (let i = 0; i < 30; i++) {
   tries += r.tries;
   const ch = r.plan.characters[0];
   assert.equal(ch.cuts.length, 3);
+  assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');
   for (const x of ch.cuts) {
     assert(x.era && x.place && x.act && x.ofam && x.orient && x.frame && x.lens, '빈 값 없이: ' + JSON.stringify(x));
     assert(!x.cat && !x.ex, '새 컷은 트리 길만 적는다');
@@ -203,7 +204,9 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   /* 그 뒤 10명이 다른 묶음을 쓴다(창 밖으로 밀어낸다) */
   for (let i = 0; i < 11; i++) hist.push({ card: 'T' + i, status: 'done', at: at(100 + i), cuts: [{ cut: 1, cat: 'lingerie', ex: 'lace_set', orient: 'side', frame: 'waist_up', garments: ['lingerie_set'] }] });
   let hit = 0;
-  for (let s = 0; s < 40; s++) for (const x of plan({ entries: hist, card: 'NEW', seed: 'small' + s }).cuts) if (groupOf(x) === g) { hit++; assert.equal(key(x), once, '작은 묶음 ' + g + ' 은 아직 안 쓴 길부터'); }
+  /* 코스튬 칸(2026-11-01)이 자유 칸 하나를 가져가 작은 묶음이 덜 나온다 — 이 시험은 작은 묶음 규칙만 보니 코스튬 없는 표로 */
+  const noCos = { ...tree, costume_required: undefined };
+  for (let s = 0; s < 40; s++) for (const x of plan({ entries: hist, card: 'NEW', seed: 'small' + s, tree: noCos }).cuts) if (groupOf(x) === g) { hit++; assert.equal(key(x), once, '작은 묶음 ' + g + ' 은 아직 안 쓴 길부터'); }
   assert(hit > 0, '작은 묶음이 한 번은 나온다');
   n++;
 }

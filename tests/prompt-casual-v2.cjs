@@ -69,4 +69,16 @@ assert(tx.includes('around 1996'), '1세대 1996');
 /* 4. 버전1 기록은 버전1 지시문 — 버전2 표가 와도 */
 const v1 = L.buildSingle({ ...base, treeV: undefined, era: 'now', place: 'home_living', act: tree.activities.find(a => (a.places || []).includes('home_living')).key, ofam: 'everyday' });
 assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasual), '버전1 기록');
+/* 포켓몬 코스튬(2026-11-01) — 옷 문장의 {costume} 이 그 종의 영어 이름 · 색 · 특징으로 채워지고, OUTPUT · WARDROBE 줄이 바뀌고, 「장신구로만」 축 줄은 빠진다 */
+{
+  const ap = JSON.parse(fs.readFileSync('data/source-appearance.json', 'utf8')).entries['25'];
+  const sc = { era: 'now', place: 'stage_convention', ofam: 'pokemon_costume', item: 'pc_bodysuit', posture: 'stand', support: 'none', frame: 'three_quarter', body: 'front_3q', head: 'with_body', camera: 'eye', right: 'hip', left: 'natural', aspect: '2:3',
+    axes: { overall_intensity: 'strong', skin_exposure: 'bold', source_influence: 'subtle' } };
+  const text = L.buildSingle(Object.assign({}, base, { sourceName: 'Pikachu', sourceAppearance: ap }, sc)), sb = block(text, 'SCENE');
+  assert(/Outfit: a daring adult costume version of Pikachu itself — yellow/.test(sb) && sb.includes(ap.features[0].detail) && sb.includes('never painted on her own skin') && sb.includes('high-cut bodysuit'), '코스튬 옷 문장 ' + sb);
+  assert(text.includes(T.casualOutputCostume) && text.includes(T.casualWardrobeCostume) && !text.includes(T.casualOutputV2) && !text.includes(T.casualWardrobe) && !sb.includes('source_influence:'), '코스튬 OUTPUT · WARDROBE · 축 줄');
+  const hw = L.buildSingle(Object.assign({}, base, sc, { place: 'night_club', ofam: 'halloween', item: 'hw_vampire' }));
+  assert(hw.includes(T.casualOutputV2) && block(hw, 'SCENE').includes('source_influence: subtle'), '할로윈은 보통 옷 줄');
+  n += 2;
+}
 console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 버전1 기록`);

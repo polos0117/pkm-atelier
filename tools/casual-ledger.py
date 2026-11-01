@@ -109,6 +109,7 @@ GARMENTS = {
     "apron": r"\bapron\b",
     "uniform": r"\buniform\b",
     "traditional": r"\b(hanbok|kimono|yukata|sari|ao dai|dirndl|hanfu)\b",
+    "bodysuit": r"\b(bodysuit|leotard|catsuit)\b",  # 할로윈 · 포켓몬 코스튬(2026-11-01)
 }
 # 몸을 덮는 겉옷 — 피부 노출 bold 를 의상이 지워 버리지 않게 세 장 중 한 장까지
 COVERING = {"coat", "jacket", "cardigan", "sweater"}
@@ -158,7 +159,9 @@ def spec():
         places.setdefault(p["key"], p)
     return {"tree": tree, "tree2": tree2, "places": places, "groups": [g["key"] for g in tree["groups"]],
             "group_paths": {g: sorted(v) for g, v in keys.items()}, "presets": presets,
-            "required": set((tree.get("required") or {}).get("outfits") or [])}
+            "required": set((tree.get("required") or {}).get("outfits") or []),
+            # 포켓몬 코스튬(2026-11-01) — 필수 갈래와 따로 세 장에 한 장(새로 정하는 캐릭터만)
+            "costume": (tree.get("costume_required") or {}).get("outfit") or ""}
 
 
 SP = None
@@ -686,6 +689,9 @@ def check_plan(doc, plan, sp, ledger=None):
         req = [c["cut"] for c in cuts if req_of(c)]
         if not req:
             bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required"])))
+        # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
+        if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
+            bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 세 장에 한 장" % sp["costume"])
         if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]
@@ -735,7 +741,9 @@ def check_plan(doc, plan, sp, ledger=None):
         if not any(g not in gar for c in cuts for g in (c.get("garments") or [])):
             bad("비교 대상이 안 쓴 옷 종류가 한 장에도 없다")
         low = low_groups(base[-GROUP_WINDOW:] + others, sp)
-        if not any(group_of(c, sp) in low for c in cuts if not req_of(c)):
+        # 덜 쓴 묶음은 자유 컷(필수 갈래 · 코스튬이 아닌 컷)에서 — 필수 갈래 두 장 + 코스튬이면 자유 컷이 없어 보지 않는다(2026-11-01 완화)
+        free_cuts = [c for c in cuts if not req_of(c) and c.get("ofam") != sp.get("costume")]
+        if free_cuts and not any(group_of(c, sp) in low for c in free_cuts):
             bad("필수 갈래가 아닌 컷 가운데 덜 쓴 장소 묶음(%s)이 없다" % ", ".join(sorted(low)))
         src = [(c.get("axes") or {}).get("source_influence") for c in cuts]
         if len(set(src)) == 1:

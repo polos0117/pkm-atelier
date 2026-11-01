@@ -8073,7 +8073,9 @@
    "work": [
     "pocket",
     "collar"
-   ]
+   ],
+   "halloween": [],
+   "pokemon_costume": []
   },
   "add": {
    "overalls": [
@@ -8399,6 +8401,18 @@
     "!work_shore",
     "!work_aquarium"
    ]
+  },
+  {
+   "outfits": [
+    "halloween",
+    "pokemon_costume"
+   ],
+   "places": [
+    "@spa",
+    "@sports",
+    "@water"
+   ],
+   "ko": "할로윈·포켓몬 코스튬으로 목욕·운동·물가"
   }
  ],
  "presets": [

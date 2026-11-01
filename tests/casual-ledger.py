@@ -35,6 +35,11 @@ good = {"session": "t", "characters": [{"card": "B", "species": "b-1", "cuts": [
 LEG = SP["tree"]["legacy"]
 assert "swimwear/classic_bikini" in LEG and "lingerie/lace_set" in LEG and "travel_exploration/travel_trail" in LEG
 assert L.check_plan(doc, good, SP) == [], L.check_plan(doc, good, SP)
+# 포켓몬 코스튬(2026-11-01) — 트리 칸 계획은 세 장에 한 장 꼭. 필수 갈래 두 장 + 코스튬이면 자유 컷이 없어 덜 쓴 묶음은 보지 않는다
+_cos = copy.deepcopy(good); _cos["characters"][0]["cuts"][0].update(cat=None, ex=None, era="now", place="stage_convention", act="photozone_pose", ofam="pokemon_costume", item="pc_hoodie")
+assert L.check_plan(doc, _cos, SP) == [], L.check_plan(doc, _cos, SP)
+_nocos = copy.deepcopy(_cos); _nocos["characters"][0]["cuts"][0].update(ofam="costume", item="")
+assert any("포켓몬 코스튬" in e for e in L.check_plan(doc, _nocos, SP)), L.check_plan(doc, _nocos, SP)
 
 
 def fails(mutate, why):
@@ -78,7 +83,8 @@ fails(lambda c: c[0].update(cat=None, ex=None, era=old_path["era"], place=old_pa
 # 새 칸 계획도 통과한다 — 트리 위의 길이면
 newp = copy.deepcopy(good); c0 = newp["characters"][0]["cuts"][0]
 c0.update(cat=None, ex=None, era="in_pokemon", place="pw_center", act="center_wait", ofam="everyday", item="jeans_tee")
-assert L.check_plan(doc, newp, SP) == [], L.check_plan(doc, newp, SP)
+# (트리 칸이 섞이면 코스튬 컷도 있어야 한다 — 그것만 빼고 본다. 코스튬이 있는 계획은 위 _cos)
+assert [e for e in L.check_plan(doc, newp, SP) if "포켓몬 코스튬" not in e] == [], L.check_plan(doc, newp, SP)
 # 트리에서 못 고르는 길·옷은 걸린다(손으로 고친 계획)
 fails(lambda c: c[0].update(cat=None, ex=None, era="now", place="pw_center", act="center_wait", ofam="everyday"), "시대가 없다")
 fails(lambda c: c[0].update(cat=None, ex=None, era="in_pokemon", place="pw_center", act="swim", ofam="everyday"), "못 고른다")

@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-11-01 · claude · 할로윈 코스튬 의상 · 포켓몬 성인 코스튬 필수 컷
+- data/casual-tree.json · data/casual-tree-v2.json — 의상 계열 둘: 할로윈 코스튬(halloween, 열여섯 벌 — 수위 있게) · 포켓몬 코스튬(pokemon_costume, costume: true — 다섯 가지 재단, 옷 문장의 {costume} 을 종마다 채움). 시대는 지금 · 무대·환상, 무대 의상 받는 곳 + 거실 · 바 · 옥상 파티 · 축제 거리(코스튬은 코스프레 행사 · 테마 행사장 · 오락실 · 거실 · 침실 · 클럽 · 화보 스튜디오 · 별빛 무대). costume_required 칸. 버전2 어색한 조합에 목욕 · 운동 · 물가. 사용자 「각 공방에 일상컷 의상중에 할로윈 코스튬 의상 등 좀 더 추가해줘. 수위가 좀 있는걸로」 「포켓몬 공방에는 해당 케릭터의 성인 버전 코스튬 의상을 추가해서 필수컷에 넣어주고」 「위와 관련되서 걸리는 검사지 있으면 완화해줘」
+- lib/prompt-anthro.js · lib/prompt-spec.js — 코스튬 컷은 옷 문장 {costume} = 영어 이름 · 색(셋까지) · 특징(넷까지) → 코스튬 조각(피부엔 안 그림), casualOutputCostume · casualWardrobeCostume 로 바꾸고 source_influence 축 줄을 싣지 않는다(「원작은 장신구로만 · 생물 코스튬 아님」 과 부딪혔다). prompt.html 캐시 이름 costume
+- lib/casual-plan.js — 버전1 · 버전2 계획 모두 코스튬 칸 하나(필수 갈래 자리가 아닌 칸에서, 새 캐릭터만). 자유 칸은 코스튬 계열을 안 고른다. 옷 종류에 bodysuit(bodysuit · leotard · catsuit) — 코스튬 · 할로윈 옷이 옷 종류 없이 빠지지 않게
+- tools/casual-ledger.py — 트리 칸 계획에 코스튬 컷이 없으면 건다(옛 칸만 · 다시 채우기는 안 봄). 완화: 「필수 갈래가 아닌 컷 가운데 덜 쓴 장소 묶음」 은 자유 컷(필수 갈래 · 코스튬이 아닌 컷)에서만 — 필수 두 장 + 코스튬이면 보지 않는다. 옷 종류 bodysuit
+- IMAGE_RULES.md 3절 — 「원작 색·무늬를 옷에 옮기지 않는다」 의 예외(코스튬 컷) · 코스튬 한 장 꼭 · 할로윈 계열
+- tests/casual-ledger.py · tests/casual-plan.cjs · tests/casual-plan-v2.cjs · tests/prompt-casual-v2.cjs — 코스튬 있는 계획 통과 · 없으면 걸림 · 섞인 계획은 코스튬만 빼고 · 서른 명마다 코스튬 한 장(버전1 · 버전2) · 작은 묶음 시험은 코스튬 없는 표로(자유 칸 수를 보는 시험이 아니다) · 피카츄 코스튬 지시문 · 할로윈은 보통 옷 줄
+
 ## 2026-10-31 · claude · 그림 저장소4(pkm-atelier-img-4) 열기 · img-3 닫기
 - tools/register-images.py · lib/img.js · .github/workflows/register-images.yml · .gitignore — 넷째 그림 저장소 pkm-atelier-img-4(where 3)를 열린 저장소로. img-3 은 사이트 약 938MB(썸네일 워크플로의 900MB 경고)라 닫는다(교체만)
 - tools/image-runner.py — 저장소 목록(IMAGE_REPOS)에 img-4, 저장소 묶음을 목록 차례대로 만든다(shard_stores) — 올릴 곳(upload_base)은 목록 끝

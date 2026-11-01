@@ -58,6 +58,8 @@ for (let i = 0; i < 30; i++) {
   const card = 'B' + i, r = batchPlan(entries, [card], 'seq', true), ch = r.plan.characters[0];
   tries += r.tries;
   assert.equal(ch.cuts.length, 3);
+  const cos = ch.cuts.filter(x => x.ofam === 'pokemon_costume');
+  assert(cos.length === 1 && ['now', 'fantasy'].includes(cos[0].era) && !C2.awkward(t, cos[0].ofam, cos[0].place).length, card + ' 포켓몬 코스튬 한 장 — 지금 · 무대·환상, 어색하지 않은 곳');
   ch.cuts.forEach(x => validV2(x, card + ' ' + x.cut));
   assert(ch.cuts.some(x => P.isRequired(tree, x)), card + ' 필수 갈래');
   for (const f of ['frame']) assert.equal(new Set(ch.cuts.map(x => x[f])).size, 3, card + ' 다른 ' + f);
