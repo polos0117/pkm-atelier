@@ -104,6 +104,17 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   const before = fs.readFileSync(path.join(dir, 'casual3-prompt.txt'), 'utf8');
   assert.equal(run('build', '--dir', dir, '--slot', 'casual3').status, 0); assert.equal(fs.readFileSync(path.join(dir, 'casual3-prompt.txt'), 'utf8'), before, '다시 돌려도 같다');
 
+  /* 화풍 참조는 정체성 참조와 구분하고, 첨부 없음 안내를 대체하며 UI 원문에도 남는다. */
+  const sr = JSON.parse(JSON.stringify(set)), srdir = path.join(tmp, 'style-reference');
+  sr.slots.light.styleReference = 'Attached image is style only; literal $& stays as written.';
+  fs.mkdirSync(srdir); fs.writeFileSync(path.join(srdir, 'settings.json'), JSON.stringify(sr));
+  r = run('build', '--dir', srdir, '--slot', 'light'); assert.equal(r.status, 0, r.stderr);
+  const srtext = fs.readFileSync(path.join(srdir, 'light-prompt.txt'), 'utf8');
+  const srui = JSON.parse(fs.readFileSync(path.join(srdir, 'light-ui.json'), 'utf8'));
+  assert(srtext.startsWith('INPUT: ' + sr.slots.light.styleReference + '\n\n'));
+  assert(!srtext.includes('omit referenced_image_paths')); assert.equal(srui.style_reference, sr.slots.light.styleReference);
+  assert.equal(srui.prompt + '\n', srtext); checks++;
+
   /* 틀린 칸 — 아무것도 안 쓰고 1 */
   const bad = JSON.parse(JSON.stringify(set)), bdir = path.join(tmp, 'bad');
   bad.slots.heavy.form = 'light'; bad.slots.light.scene.expr = 'nope'; bad.slots.light.params['eye colour'] = 'red'; bad.slots.casual2.custom = 'soft rim light';

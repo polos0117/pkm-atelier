@@ -29,10 +29,10 @@
 
 ## 지금 상태
 
-- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 0
-- 직접 쓴 설계 650종, 원작 단서 규칙으로 고른 것 373종 · 겹침을 풀며 옮긴 종 849 · 머리를 옮긴 종 193
+- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 603
+- 직접 쓴 설계 651종, 원작 단서 규칙으로 고른 것 372종 · 겹침을 풀며 옮긴 종 850 · 머리를 옮긴 종 192
 - 그림이 이미 있는 종(①이 정본) 652
-- 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 5/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
+- 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 6/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 - 머리: 확정 그림으로 잠근 종 652(기록값 있음 486) · 새로 고른 종 373
 - 헤어스타일 분포(잠금 포함): 단정한 보브컷 51 · 끝을 가볍게 친 페더컷 43 · 끝을 일자로 자른 컷 41 · 높이 묶은 포니테일 41 · 웨이브 헤어 39 · 트윈테일 38 · 좌우 길이가 다른 비대칭컷 37 · 곧은 생머리 35 · 바람에 날린 듯한 스타일 33 · 짧고 가벼운 픽시컷 32 · 반묶음 31 · 포니테일 30 · 층감이 강한 울프컷 30 · 한 갈래 땋은 머리 29 · 굵은 곱슬 22 · 흐트러진 번 20 · 정수리에 묶어 올린 번 20 · 단정하게 말아 올린 시뇽 19 · 양쪽 동그란 번 19 · 레트로 웨이브 18 · 층을 살린 레이어드 18 · 옆/뒤를 밀어낸 언더컷 18 · 세로로 말린 드릴 컬 17 · 머리를 둘러 땋은 왕관형 16 · 히메컷 16 · 한쪽만 밀고 나머지는 긴 머리 16 · 목덜미 낮은 번 14 · 잔곱슬 / 아프로 13 · 로크스 / 드레드풍 11 · 사이드 포니테일 11 · 양갈래 땋은 머리 10 · 둥글게 부풀린 아프로 8 · 양쪽 아프로 퍼프 8 · 가는 박스 브레이드 8 · 두피에 붙여 땋은 콘로 8 · 덥수룩하게 흐트러진 컷 8 · 뒤로 넘긴 스타일 8 · 젖은 듯 넘긴 스타일 8 · 한쪽으로 넘긴 피시테일 7 · 느슨한 해변 웨이브 5 · 뒤로 넘긴 볼륨 있는 스타일 2 · 가르마를 탄 단정한 컷 1
 
@@ -17344,27 +17344,29 @@ HAIR: very long high ponytail, no bangs.
 
 ### 640 · 비리디온 (Virizion)
 
-계열 기준: 비리디온 · 설계: 원작 단서 규칙 · 새 경장에 적용
+계열 기준: 비리디온 · 설계: 직접 쓴 설계 · 새 경장에 적용
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
-| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
-| 눈썹 | 길고 바깥 아치가 선명한 |
-| 코 | 길고 코끝이 내려온 |
-| 입 | 윗입술이 활 모양인 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 보통 · 보통 |
+| 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
+| 눈썹 | 가늘고 완만한 곡선 |
+| 코 | 보통 |
+| 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+
+**이유:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 초원의 잎이 흐르는 선을 타원 윤곽·수평 아몬드 눈매로 옮기고, 뿔의 각은 얼굴 골격 대신 장식에 둔다.
 
 **머리:** ‘medium-long tail’·키 2m에서 포니테일(묶은 꼬리) · 긴 머리 · 앞머리 없음
 
 **머리 단서:** ‘medium-long tail’ → 헤어스타일 포니테일 · ‘medium-long tail’ → 머리 길이 긴 머리
 
-**원작 단서:** ‘long horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘long horns’ → 얼굴 길이 긴 얼굴 · ‘long horns’ → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘long horns’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long horns’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 초원의 잎이 흐르는 선을 타원 윤곽·수평 아몬드 눈매로 옮기고, 뿔의 각은 얼굴 골격 대신 장식에 둔다.
 
-**조정:** [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 높이 묶은 포니테일 → 포니테일
+**조정:** 2026-11-03 · 사용자 얼굴·체형 수정 요청: 비례를 완화한 경장 재설계
 
 ```text
-FACE (her own structure, not the style's default face): angular face, long length, medium width; square broad jaw; almond eyes, medium size, level outer corners, wide-set; long arched brows; long nose with low tip; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): oval face, balanced length, medium width; balanced jawline; almond eyes, medium size, level outer corners, average spacing; fine soft arches; balanced nose; fuller lower lip.
 ```
 
 ```text
@@ -17377,25 +17379,25 @@ HAIR: long ponytail, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
-| 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
-| 눈썹 | 굵고 눈 가까이 낮은 |
-| 코 | 곧고 가는 콧대 |
-| 입 | 입이 넓은 |
+| 윤곽 | 이마가 넓고 턱이 가는 하트형 · 길이 보통 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
+| 눈 | 끝이 올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
+| 눈썹 | 중간 두께의 직선 |
+| 코 | 보통 |
+| 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 
-**이유:** 선풍의 흐르는 구름과 강한 상체를 긴 윤곽과 강한 사선 눈썹으로 해석한다.
+**이유:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 바람의 경쾌함은 완만한 하트형 윤곽·살짝 올라간 눈매로 남기고, 굵은 눈썹·밀집한 눈·긴 턱의 과장을 줄인다.
 
 **머리:** ‘trailing cloud’·‘white, wavy, and billowy styled hair’(원작의 머리칼)에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
 
 **머리 단서:** ‘trailing cloud’ → 헤어스타일 웨이브 헤어 · ‘white, wavy, and billowy styled hair’(원작의 머리칼) → 머리 길이 매우 긴 머리 · ‘spiky white mustache’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘two purple long and sharp horns’ → 얼굴형 길고 세련된 얼굴형 · ‘two purple long and sharp horns’ → 얼굴 길이 긴 얼굴 · ‘two purple long and sharp horns’ → 얼굴 폭 좁은 얼굴 · ‘two purple long and sharp horns’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘two purple long and sharp horns’ → 눈매 강하게 치켜올라간 눈 · ‘two purple long and sharp horns’ → 눈꼬리 각도 올라간 눈꼬리
+**원작 단서:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 바람의 경쾌함은 완만한 하트형 윤곽·살짝 올라간 눈매로 남기고, 굵은 눈썹·밀집한 눈·긴 턱의 과장을 줄인다.
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 곧고 가는 콧대
+**조정:** 2026-11-03 · 사용자 얼굴·체형 수정 요청: 비례를 완화한 경장 재설계
 
 ```text
-FACE (her own structure, not the style's default face): elongated face, long length, narrow width; long chin with defined jaw; sharp eyes, medium size, upturned outer corners, close-set; thick low brows; straight slender bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): heart-shaped face, balanced length, medium width; narrow tapered chin; upturned eyes, medium size, upturned outer corners, average spacing; straight medium brows; balanced nose; fuller lower lip.
 ```
 
 ```text

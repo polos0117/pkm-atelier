@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-11-03 · gpt · 비리디온·토네로스 경장 미형 재설계
+- data/face-design.json — 두 종의 과도한 얼굴 길이·턱·눈 간격을 균형 있는 성인 얼굴로 조정.
+- docs/CHARACTER_FACE_DESIGNS.md — 수정한 두 종의 얼굴 설계표를 다시 생성.
+- tools/prompt-pack.cjs — 신규 경장에 기존 컬렉션을 화풍·비율 참조로 첨부할 때 정체성 참조와 구분하고 실제 INPUT·UI 기록에 반영.
+- tests/prompt-pack.cjs — 기본 출력 유지 및 명시적 화풍 참조의 안내·원문 보존 확인.
+
 ## 2026-11-02 · claude · 포켓몬 코스튬 컷엔 얼굴 클로즈업 안 씀
 - data/casual-tree.json — costume_required.not_frames [face_close]. 사용자 「포켓몬의 필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록 수정해줘」 — 얼굴만 남으면 코스튬이 안 보인다
 - lib/casual-tree.js · lib/casual-tree-v2.js · tools/casual-tree.py — 공용 모듈(game 원본) 복사: costumeNo — frameOk · why(code costume). 계획기 버전1 · 2 는 frameOk · why 로 고르니 그대로 걸러진다

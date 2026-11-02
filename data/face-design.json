@@ -25098,31 +25098,26 @@
 "name":"비리디온",
 "en":"Virizion",
 "line":"비리디온",
-"how":"draft",
+"how":"species",
 "registered":false,
 "face":{
-"face shape":"angular",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"medium",
-"jaw & chin":"square broad jaw",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
-"eye spacing":"wide-set eyes",
-"eyebrows":"long arched brows",
-"nose character":"long nose with low tip",
-"lips":"bow-shaped upper lip"
+"eye spacing":"average eye spacing",
+"eyebrows":"fine soft arches",
+"nose character":"balanced nose",
+"lips":"fuller lower lip"
 },
-"why":"",
+"why":"사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 초원의 잎이 흐르는 선을 타원 윤곽·수평 아몬드 눈매로 옮기고, 뿔의 각은 얼굴 골격 대신 장식에 둔다.",
 "cues":[
-"‘long horns’ → 얼굴형 각지고 선명한 얼굴형",
-"‘long horns’ → 얼굴 길이 긴 얼굴",
-"‘long horns’ → 턱선 · 턱끝 넓고 각진 사각 턱",
-"‘long horns’ → 눈매 아몬드형 눈",
-"몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
-"‘long horns’ → 눈썹 길고 바깥 아치가 선명한"
+"사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 초원의 잎이 흐르는 선을 타원 윤곽·수평 아몬드 눈매로 옮기고, 뿔의 각은 얼굴 골격 대신 장식에 둔다."
 ],
-"adjusted":"[머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 높이 묶은 포니테일 → 포니테일",
+"adjusted":"2026-11-03 · 사용자 얼굴·체형 수정 요청: 비례를 완화한 경장 재설계",
 "hair":{
 "hairstyle":"ponytail",
 "hair length":"long",
@@ -25142,28 +25137,23 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
-"face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
-"eye shape":"sharp",
+"face shape":"heart-shaped",
+"face length":"balanced",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
+"eye shape":"upturned",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
-"eye spacing":"close-set eyes",
-"eyebrows":"thick low brows",
-"nose character":"straight slender bridge",
-"lips":"wide mouth"
+"eye spacing":"average eye spacing",
+"eyebrows":"straight medium brows",
+"nose character":"balanced nose",
+"lips":"fuller lower lip"
 },
-"why":"선풍의 흐르는 구름과 강한 상체를 긴 윤곽과 강한 사선 눈썹으로 해석한다.",
+"why":"사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 바람의 경쾌함은 완만한 하트형 윤곽·살짝 올라간 눈매로 남기고, 굵은 눈썹·밀집한 눈·긴 턱의 과장을 줄인다.",
 "cues":[
-"‘two purple long and sharp horns’ → 얼굴형 길고 세련된 얼굴형",
-"‘two purple long and sharp horns’ → 얼굴 길이 긴 얼굴",
-"‘two purple long and sharp horns’ → 얼굴 폭 좁은 얼굴",
-"‘two purple long and sharp horns’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
-"‘two purple long and sharp horns’ → 눈매 강하게 치켜올라간 눈",
-"‘two purple long and sharp horns’ → 눈꼬리 각도 올라간 눈꼬리"
+"사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 바람의 경쾌함은 완만한 하트형 윤곽·살짝 올라간 눈매로 남기고, 굵은 눈썹·밀집한 눈·긴 턱의 과장을 줄인다."
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 보통 → 곧고 가는 콧대",
+"adjusted":"2026-11-03 · 사용자 얼굴·체형 수정 요청: 비례를 완화한 경장 재설계",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"very long",

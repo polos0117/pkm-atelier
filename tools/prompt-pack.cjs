@@ -11,6 +11,8 @@
      settings.json 을 읽어 지시문·저장값·차례표(INDEX.md)를 쓴다. 틀린 칸(없는 열쇠·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷)이 있으면
      아무것도 쓰지 않고 1 로 끝난다. 다시 돌리면 같은 글이 나온다(만든 때 줄만 다르다).
 
+   신규 경장에 기존 작품의 화풍만 참고하려면 light.styleReference 에 참조 역할을 쓴다. 인물 정체성 참조와 구분해 INPUT·UI 기록에 남긴다.
+
    자리마다 고정인 것(출력·인물 기준·장갑 폼·폭주 기준 장갑·첨부)은 도구가 정한다 — settings 에 없다. 고칠 수 있는 칸:
      light               motifs · formOverride · headFeature · faceDesignOn · params(외형) · scene(장면 칸 — 비워 두는 것이 기본)
      heavy · mobility    motifs · formOverride · scene
@@ -29,7 +31,7 @@ const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8')
 
 /* 아홉 자리 — IMAGE_RULES 3절 표 그대로 */
 const SLOTS = {
-  light: { n: '①', mode: 'action', form: 'light', identityMode: 'create', baseForm: 'light', attach: [], fields: ['motifs', 'formOverride', 'headFeature', 'faceDesignOn', 'params', 'scene'] },
+  light: { n: '①', mode: 'action', form: 'light', identityMode: 'create', baseForm: 'light', attach: [], fields: ['motifs', 'formOverride', 'headFeature', 'faceDesignOn', 'params', 'scene', 'styleReference'] },
   heavy: { n: '②', mode: 'action', form: 'heavy', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
   mobility: { n: '③', mode: 'action', form: 'mobility', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
   light_overdrive: { n: '④', mode: 'action', form: 'overdrive', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'custom'] },
@@ -218,8 +220,13 @@ function build(o) {
   for (const slot of want) {
     const r = stateOf(set, slot, d, c, plan, bad);
     if (!r) continue;
-    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2);
+    const x = extras(d, c);
+    let text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2);
+    const styleReference = slot === 'light' ? set.slots[slot].styleReference : '';
+    if (styleReference != null && typeof styleReference !== 'string') bad.push('light.styleReference — 글이어야 한다');
+    if (typeof styleReference === 'string' && styleReference.trim()) text = text.replace(/^INPUT:[\s\S]*?\n\n/, () => 'INPUT: ' + styleReference.trim() + '\n\n');
     const ui = { storage: { last: c.name, cards: { [c.name]: r.st } }, prompt: text };
+    if (styleReference) ui.style_reference = styleReference;
     if (r.cut) { ui.plan = r.cut; ui.manual_inputs = r.manual; ui.manual_why = r.why; }
     out.push({ slot, text, ui });
   }
@@ -232,6 +239,7 @@ function build(o) {
   }
   /* 차례표 — 이 자리의 지시문을 읽어 그대로 제출하고, 적힌 그림을 첨부한다 */
   const sha = t => crypto.createHash('sha256').update(t + '\n').digest('hex').slice(0, 12);
+  // styleReference is an explicit workflow attachment; the normal screen-state prompt is unchanged when blank.
   const att = a => a.map(x => x.endsWith('?') ? '(되면 ' + SLOTS[x.slice(0, -1)].n + ')' : SLOTS[x].n + ' ' + fileName(c.name, set.style, x)).join(' + ') || '없음';
   const lines = ['# ' + c.name + ' (' + String(c.no).padStart(4, '0') + ' · ' + c.en + ') — 지시문 묶음', '',
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
