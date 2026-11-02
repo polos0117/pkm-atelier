@@ -54,6 +54,7 @@ for (let i = 0; i < 30; i++) {
   const ch = r.plan.characters[0];
   assert.equal(ch.cuts.length, 3);
   assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');
+  assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => x.frame !== 'face_close'), card + ' 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02)');
   for (const x of ch.cuts) {
     assert(x.era && x.place && x.act && x.ofam && x.orient && x.frame && x.lens, '빈 값 없이: ' + JSON.stringify(x));
     assert(!x.cat && !x.ex, '새 컷은 트리 길만 적는다');

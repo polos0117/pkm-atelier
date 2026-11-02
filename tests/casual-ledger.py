@@ -40,6 +40,9 @@ _cos = copy.deepcopy(good); _cos["characters"][0]["cuts"][0].update(cat=None, ex
 assert L.check_plan(doc, _cos, SP) == [], L.check_plan(doc, _cos, SP)
 _nocos = copy.deepcopy(_cos); _nocos["characters"][0]["cuts"][0].update(ofam="costume", item="")
 assert any("포켓몬 코스튬" in e for e in L.check_plan(doc, _nocos, SP)), L.check_plan(doc, _nocos, SP)
+# 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02 — 표 costume_required.not_frames)
+_cosclose = copy.deepcopy(_cos); _cosclose["characters"][0]["cuts"][0].update(frame="face_close")
+assert any("코스튬 컷의 프레이밍 face_close" in e for e in L.check_plan(doc, _cosclose, SP)), L.check_plan(doc, _cosclose, SP)
 
 
 def fails(mutate, why):

@@ -13,6 +13,15 @@ const c = { window: {} }; vm.createContext(c); vm.runInContext(fs.readFileSync(p
 const S = c.window.AtelierSpec, CT = globalThis.AtelierCasualTree;
 const tree = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree.json'), 'utf8')), tree2 = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree-v2.json'), 'utf8'));
 const t = C2.make(tree2, tree), subject = { gen: 1 };
+/* 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02 사용자 「필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록」) — 표 costume_required.not_frames, 두 모듈 다 */
+{
+  const CT1 = globalThis.AtelierCasualTree, sc = { treeV: 2, era: 'now', place: 'stage_convention', ofam: 'pokemon_costume' };
+  require('node:assert/strict').deepEqual(tree.costume_required.not_frames, ['face_close']);
+  require('node:assert/strict').equal((C2.why(t, sc, 'frame', 'face_close', subject) || {}).code, 'costume');
+  require('node:assert/strict').equal(C2.why(t, { ...sc, ofam: 'everyday' }, 'frame', 'face_close', subject)?.code === 'costume', false);
+  require('node:assert/strict').equal(CT1.frameOk(tree, '', 'face_close', { ofam: 'pokemon_costume' }), false);
+  require('node:assert/strict').equal(CT1.why(tree, { ofam: 'pokemon_costume' }, 'frame', 'face_close').code, 'costume');
+}
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'casual-plan-v2-'));
 const LEDGER = path.join(tmp, 'casual-ledger.json'), PLAN = path.join(tmp, 'plan.json');
 const check = (entries, plan) => {
@@ -60,6 +69,7 @@ for (let i = 0; i < 30; i++) {
   assert.equal(ch.cuts.length, 3);
   const cos = ch.cuts.filter(x => x.ofam === 'pokemon_costume');
   assert(cos.length === 1 && ['now', 'fantasy'].includes(cos[0].era) && !C2.awkward(t, cos[0].ofam, cos[0].place).length, card + ' 포켓몬 코스튬 한 장 — 지금 · 무대·환상, 어색하지 않은 곳');
+  assert(cos[0].frame && cos[0].frame !== 'face_close', card + ' 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02) — ' + cos[0].frame);
   ch.cuts.forEach(x => validV2(x, card + ' ' + x.cut));
   assert(ch.cuts.some(x => P.isRequired(tree, x)), card + ' 필수 갈래');
   for (const f of ['frame']) assert.equal(new Set(ch.cuts.map(x => x[f])).size, 3, card + ' 다른 ' + f);

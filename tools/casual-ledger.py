@@ -161,7 +161,8 @@ def spec():
             "group_paths": {g: sorted(v) for g, v in keys.items()}, "presets": presets,
             "required": set((tree.get("required") or {}).get("outfits") or []),
             # 포켓몬 코스튬(2026-11-01) — 필수 갈래와 따로 세 장에 한 장(새로 정하는 캐릭터만)
-            "costume": (tree.get("costume_required") or {}).get("outfit") or ""}
+            "costume": (tree.get("costume_required") or {}).get("outfit") or "",
+            "costume_not_frames": (tree.get("costume_required") or {}).get("not_frames") or []}
 
 
 SP = None
@@ -692,6 +693,10 @@ def check_plan(doc, plan, sp, ledger=None):
         # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
         if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
             bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 세 장에 한 장" % sp["costume"])
+        # 코스튬 컷엔 얼굴 클로즈업을 안 쓴다(트리 표 costume_required.not_frames — 2026-11-02 사용자 「필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록」)
+        for c in cuts:
+            if sp.get("costume") and c.get("ofam") == sp["costume"] and c.get("frame") in sp.get("costume_not_frames", []):
+                bad("컷 %s: 코스튬 컷의 프레이밍 %s — 코스튬 컷엔 안 쓴다(%s)" % (c.get("cut"), c.get("frame"), "·".join(sp["costume_not_frames"])))
         if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]

@@ -10,6 +10,14 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-11-02 · claude · 포켓몬 코스튬 컷엔 얼굴 클로즈업 안 씀
+- data/casual-tree.json — costume_required.not_frames [face_close]. 사용자 「포켓몬의 필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록 수정해줘」 — 얼굴만 남으면 코스튬이 안 보인다
+- lib/casual-tree.js · lib/casual-tree-v2.js · tools/casual-tree.py — 공용 모듈(game 원본) 복사: costumeNo — frameOk · why(code costume). 계획기 버전1 · 2 는 frameOk · why 로 고르니 그대로 걸러진다
+- tools/casual-ledger.py — check 가 「코스튬 컷의 프레이밍 face_close」 를 건다
+- lib/words.js — prompt.v2.why.costume
+- tests/casual-plan.cjs · tests/casual-plan-v2.cjs · tests/casual-ledger.py — 서른 명마다 코스튬 컷 프레이밍 · 두 모듈의 이유 · 장부 검사
+- IMAGE_RULES.md 3절 코스튬 줄 · AGENTS.md 트리 표 칸 — 규칙
+
 ## 2026-11-01 · claude · 「난간에서 돌아보기」 빼기 — 뒷모습으로 돌아보며 얼굴 · 머리에 손 안 대기
 - data/casual-tree-v2.json — 자세 추천 rail_lookback(뒤 3/4 · 어깨 너머 · 오른손 난간 · 왼손 머리 넘기기)을 뺐다. 좌우 · 팔 줄을 적은 시험 세 장도 사용자가 「아니 지금도 이상해. 그냥 지금 구도는 갈래에서 없애줘」
 - lib/casual-tree-v2.js(공용) — 몸이 뒤쪽(far)이고 머리가 어깨 너머(look_back)면 얼굴 · 머리에 대는 손(zone face)을 못 고른다(why lookback — 화면 · 랜덤 · 계획기가 같이 막는다). backLook 은 팔 줄 없이 왼쪽 어깨 · 손의 화면 쪽만. 예전 기록의 그 손은 다시 검사(repair)가 비운다
