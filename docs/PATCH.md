@@ -10,6 +10,10 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-11-03 · claude · 지시문 묶음의 화풍 참조 칸(styleReference) 지움
+- tools/prompt-pack.cjs — light.styleReference 칸과 INPUT 줄 바꾸기를 뺐다(51990c5 에서 넣은 것). 사용자 「기존에 2D쏠림 이미지를 참고하면 결국 2d가 되잖아」 · 「해당 규칙은 지워줘」 — 참고한 테라키온 경장이 이미 2D 쪽이었고, INPUT 이 "drawn anime facial rendering, linework" 를 따르라 해 쏠림을 굳혔으며 자세 · 망토 · 배경까지 따라왔다. 그 칸이 든 settings 는 이제 틀린 칸(1)
+- tests/prompt-pack.cjs — 화풍 참조 칸 시험을 「받지 않는다」 로
+
 ## 2026-11-03 · claude · image_gen 에 실제로 넘긴 글을 그대로 남기고 묶음 지시문과 견주기
 - tools/prompt-pack.cjs — submitted 명령: 넘긴 글을 <자리>-submitted.txt 로 남기고 <자리>-prompt.txt 와 견준다(끝 공백만 무시). submitted.json 에 sha256 · 같은지 · 빠진 줄 · 더해진 줄 · 화풍 줄이 남았는지. 다르면 1. 사용자 「며칠전부터 화풍이 2d 애니쪽으로 치우치는것 같아 … 문구를 받아들이는 모델 성능이 바뀐게 아닌가」 — 기록엔 prompt.txt 의 sha 만 있어 세션이 글을 고쳐 넘겼는지 알 길이 없었다
 - IMAGE_RULES.md 3절 「지시문 묶음」 · 8절 체크포인트 — 부르기 직전 대조, 0 일 때만 부른다, 다른 글로 그린 그림은 올리지 않고 알린다, submitted_sha256 · submitted_same
