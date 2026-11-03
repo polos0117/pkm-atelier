@@ -165,5 +165,17 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   V2CUTS[2].body = 'back'; fs.writeFileSync(v2plan, JSON.stringify({ session: 't2', characters: [{ card: '피카츄', cuts: V2CUTS }] }));
   r = run('build', '--dir', v2dir); assert.equal(r.status, 1); assert(/버전2 트리에 안 맞는다: body/.test(r.stderr), r.stderr);
   checks += 4;
-  console.log('PASS 지시문 묶음: init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 — ' + checks + '가지');
+  /* 실제로 넘긴 글(2026-11-03) — 그대로면 0, 고쳐 쓴 글이면 1 과 빠진 화풍 줄. 기록은 자리마다 쌓인다 */
+  const lp = fs.readFileSync(path.join(dir, 'light-prompt.txt'), 'utf8'), sent = path.join(tmp, 'sent.txt');
+  fs.writeFileSync(sent, lp.trimEnd());
+  r = run('submitted', '--dir', dir, '--slot', 'light', '--file', sent); assert.equal(r.status, 0, r.stderr);
+  assert.equal(fs.readFileSync(path.join(dir, 'light-submitted.txt'), 'utf8'), lp.trimEnd(), '넘긴 글 그대로 남긴다');
+  fs.writeFileSync(sent, lp.split('\n').filter(x => !/^STYLE:/.test(x)).join('\n').replace('SUBJECT:', 'SUBJECT: anime girl,'));
+  r = run('submitted', '--dir', dir, '--slot', 'light', '--file', sent); assert.equal(r.status, 1);
+  const log = JSON.parse(fs.readFileSync(path.join(dir, 'submitted.json'), 'utf8')).light;
+  assert.deepEqual(log.map(x => x.same), [true, false]); assert.equal(log[1].style_kept, false);
+  assert(log[1].missing.some(x => /^STYLE:/.test(x)) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
+  assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
+  checks += 3;
+  console.log('PASS 지시문 묶음: init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

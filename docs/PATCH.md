@@ -10,6 +10,12 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+## 2026-11-03 · claude · image_gen 에 실제로 넘긴 글을 그대로 남기고 묶음 지시문과 견주기
+- tools/prompt-pack.cjs — submitted 명령: 넘긴 글을 <자리>-submitted.txt 로 남기고 <자리>-prompt.txt 와 견준다(끝 공백만 무시). submitted.json 에 sha256 · 같은지 · 빠진 줄 · 더해진 줄 · 화풍 줄이 남았는지. 다르면 1. 사용자 「며칠전부터 화풍이 2d 애니쪽으로 치우치는것 같아 … 문구를 받아들이는 모델 성능이 바뀐게 아닌가」 — 기록엔 prompt.txt 의 sha 만 있어 세션이 글을 고쳐 넘겼는지 알 길이 없었다
+- IMAGE_RULES.md 3절 「지시문 묶음」 · 8절 체크포인트 — 부르기 직전 대조, 0 일 때만 부른다, 다른 글로 그린 그림은 올리지 않고 알린다, submitted_sha256 · submitted_same
+- docs/IMAGE_AUTOMATION.md — 생성과 검수 명령 줄
+- tests/prompt-pack.cjs — 같은 글 0 · 화풍 줄 뺀 글 1 · 기록 쌓임 · --file 없으면 멈춤
+
 ## 2026-11-03 · gpt · 비리디온·토네로스 경장 미형 재설계
 - data/face-design.json — 두 종의 과도한 얼굴 길이·턱·눈 간격을 균형 있는 성인 얼굴로 조정.
 - docs/CHARACTER_FACE_DESIGNS.md — 수정한 두 종의 얼굴 설계표를 다시 생성.

@@ -10,6 +10,10 @@
    node tools/prompt-pack.cjs build --dir <작업 폴더> [--slot <자리>]
      settings.json 을 읽어 지시문·저장값·차례표(INDEX.md)를 쓴다. 틀린 칸(없는 열쇠·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷)이 있으면
      아무것도 쓰지 않고 1 로 끝난다. 다시 돌리면 같은 글이 나온다(만든 때 줄만 다르다).
+   node tools/prompt-pack.cjs submitted --dir <작업 폴더> --slot <자리> --file <image_gen 에 넘긴 글 그대로>
+     실제로 넘긴 글을 <자리>-submitted.txt 로 남기고 <자리>-prompt.txt 와 견준다(끝 공백만 무시). 결과는 submitted.json 에 자리마다 쌓는다.
+     같으면 0, 다르면 1 — 빠진 줄·더해진 줄·화풍 줄(STYLE)이 남았는지를 찍는다. 2026-11-03 사용자 「문구를 받아들이는 모델 성능이 바뀐게 아닌가」 —
+     세션이 지시문을 고쳐 쓰고 넘기는지 확인할 길이 없었다(기록엔 prompt.txt 의 sha 만 있었다).
 
    신규 경장에 기존 작품의 화풍만 참고하려면 light.styleReference 에 참조 역할을 쓴다. 인물 정체성 참조와 구분해 INPUT·UI 기록에 남긴다.
 
@@ -47,11 +51,11 @@ const CASUAL_TEXT_V2 = ['scene', 'outfit', 'custom'];
 const keys = rows => rows.map(r => Array.isArray(r) ? r[0] : r.key).filter(v => v && v !== '__custom__');
 
 function args(argv) {
-  const o = { cmd: argv[0], card: '', dir: '', style: '', plan: '', slot: '' };
+  const o = { cmd: argv[0], card: '', dir: '', style: '', plan: '', slot: '', file: '' };
   for (let i = 1; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dir') o.dir = argv[++i]; else if (a === '--style') o.style = argv[++i]; else if (a === '--plan') o.plan = argv[++i];
-    else if (a === '--slot') o.slot = argv[++i]; else if (!a.startsWith('--') && !o.card) o.card = a;
+    else if (a === '--slot') o.slot = argv[++i]; else if (a === '--file') o.file = argv[++i]; else if (!a.startsWith('--') && !o.card) o.card = a;
     else throw new Error('모르는 인자: ' + a);
   }
   return o;
@@ -277,11 +281,30 @@ function build(o) {
   console.log('썼다 ' + out.length + '자리 → ' + o.dir + (o.slot ? '' : ' (INDEX.md)'));
 }
 
+/* 실제로 넘긴 글 — 묶음 지시문과 글자 그대로인지(2026-11-03). 넘긴 글이 묶음과 다르면 그 그림은 묶음 지시문의 결과가 아니다 */
+function submitted(o) {
+  if (!o.dir || !SLOTS[o.slot] || !o.file) throw new Error('submitted --dir <작업 폴더> --slot <자리> --file <넘긴 글>');
+  const want = fs.readFileSync(path.join(o.dir, o.slot + '-prompt.txt'), 'utf8'), got = fs.readFileSync(o.file, 'utf8');
+  const out = path.join(o.dir, o.slot + '-submitted.txt');
+  if (path.resolve(o.file) !== path.resolve(out)) fs.writeFileSync(out, got);
+  const hash = t => crypto.createHash('sha256').update(t).digest('hex');
+  const lines = t => t.split('\n').map(x => x.trimEnd()).filter(Boolean);
+  const a = lines(want), b = lines(got), style = a.find(x => /^STYLE:/.test(x)) || '';
+  const r = { slot: o.slot, at: new Date().toISOString(), prompt_sha256: hash(want), submitted_sha256: hash(got), same: want.trimEnd() === got.trimEnd(),
+    prompt_words: P.words(want), submitted_words: P.words(got), style_kept: !style || b.includes(style),
+    missing: a.filter(x => !b.includes(x)).slice(0, 8), added: b.filter(x => !a.includes(x)).slice(0, 8) };
+  const logFile = path.join(o.dir, 'submitted.json'), log = fs.existsSync(logFile) ? JSON.parse(fs.readFileSync(logFile, 'utf8')) : {};
+  (log[o.slot] = log[o.slot] || []).push(r);
+  fs.writeFileSync(logFile, JSON.stringify(log, null, 1) + '\n');
+  console.log(JSON.stringify(r, null, 1));
+  if (!r.same) { console.error('넘긴 글이 ' + o.slot + '-prompt.txt 와 다르다 — 고쳐 쓰지 말고 파일 글 그대로 넘긴다(이미 그렸으면 그 그림은 올리지 말고 알린다)'); process.exit(1); }
+}
+
 if (require.main === module) {
   try {
     const o = args(process.argv.slice(2));
-    if (o.cmd === 'init') init(o); else if (o.cmd === 'build') build(o);
-    else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리]'); process.exit(2); }
+    if (o.cmd === 'init') init(o); else if (o.cmd === 'build') build(o); else if (o.cmd === 'submitted') submitted(o);
+    else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리] | submitted --dir <작업 폴더> --slot 자리 --file <넘긴 글>'); process.exit(2); }
   } catch (e) { console.error(e.message); process.exit(2); }
 }
-module.exports = { SLOTS, init, build, stateOf, planCut, fileName, guideOfV2 };
+module.exports = { SLOTS, init, build, submitted, stateOf, planCut, fileName, guideOfV2 };
