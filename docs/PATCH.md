@@ -10,6 +10,11 @@
 
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
+
+## 2026-11-03 · claude · 일상컷 얼굴 · 화풍은 첨부 그림에 맡긴다
+- lib/prompt-anthro.js — 일상컷 지시문 끝에서 refLock: 화풍 문장 → 「STYLE: keep the attached image's rendering exactly …」, 나이 줄 → 「FACE: exactly the face of the attached image …」(없으면 CHARACTER 밑에), 표정 줄 끝에 「눈썹 · 눈꺼풀 · 입꼬리로만」, FINAL CHECK 줄 뺌. 사용자 「일상컷 저거 너무 이상해」 → 「이제 좀 낫네」 → 「응 다 적용해줘」 — 화풍 · 얼굴 문장을 새로 주면 GPT 세션이 첨부 그림의 얼굴을 다시 그렸다(헬륨 메카 일상)
+- tests — 일상컷 화풍 · 얼굴 · 표정 줄 검사로 바꾸고 일상컷 낱말 상한을 올렸다
+- IMAGE_RULES.md — 일상컷 규칙 한 줄
 ## 2026-11-03 · gpt · 비리디온 경장 기준 후속 이미지 화풍 교체
 - docs/image-batches/virizion-restyle-20261103.md — 현재 경장 기준 중장·고기동·폼별 개방·일상 8장 교체 커밋과 실제 제출문·참조·QA를 기록했다. 기존 도감 슬롯과 주소를 유지한다.
 

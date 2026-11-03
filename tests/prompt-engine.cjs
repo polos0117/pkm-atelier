@@ -116,7 +116,10 @@ for(const type of new Set(cards.map(c=>c.element))) assert(S.TYPE_ENERGY[type],'
 /* 일상 — 평상복. 장갑·폼·입는 법이 새지 않는다 */
 const cas=L.buildSingle(input('꼬부기',{cat:'everyday_basic',form:'heavy',params}));
 assert(cas.startsWith('CHARACTER: the same woman as the attached image'));
-assert(cas.includes('STYLE: '+S.CASUAL_STYLE_CORES.glossy_promo));
+/* 일상컷 얼굴 · 화풍은 첨부 그림에 맡긴다(2026-11-03) — 화풍 문장 대신 「첨부 그림 그대로」, FACE 줄, 표정은 얼굴 안에서만 */
+assert(cas.includes("STYLE: keep the attached image's rendering exactly")&&!cas.includes(S.CASUAL_STYLE_CORES.glossy_promo),'casual style defers to the attached image');
+assert(/\n\nFACE: exactly the face of the attached image/.test(cas)&&cas.indexOf('FACE: exactly')<cas.indexOf('STYLE:'),'casual face line right after CHARACTER');
+assert(/EXPRESSION: [^\n]*Show it mildly, only with her brows, eyelids and mouth corners/.test(cas)||!cas.includes('EXPRESSION:'),'casual expression stays inside her face');
 assert(cas.includes('never armor, never a creature costume'));
 for(const s of ['FORM —','WEAR','PALETTE','IDENTITY','mint','plates']) assert(!cas.includes(s),'casual carries '+s);
 for(const [k] of S.ART_STYLES) assert(!/armor|mecha|hard-surface|mechanical/i.test(S.CASUAL_STYLE_CORES[k]),'casual style speaks armor: '+k);
@@ -145,7 +148,7 @@ assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default han
 /* 일상컷 손 규칙 HAND TASK(2026-10-27) — 할 일 없는 손은 보이는 곳에 */
 assert(cas.includes(S.PROMPT_LINES.body)&&cas.includes(S.PROMPT_LINES.handsCasual),'casual carries the body and hand-task lines');
 /* 일상컷 FRAME 줄(2:3, 2026-10-28)로 21낱말, 옷은 첨부 그림의 색·무늬를 따르지 않는다는 말(2026-10-29)로 16낱말쯤 늘었다 */
-assert(words(cas)<=470,'casual budget: '+words(cas));
+assert(words(cas)<=520,'casual budget: '+words(cas));   // 2026-11-03 +50 — 화풍 문장 대신 「첨부 그림 그대로」 · FACE 줄 · 표정 끝 한 마디
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
 /* 몸 부위(코·입·눈·다리·몸통·털·피부…)로 적힌 특징은 입는 법 문장이 되지 않는다 — 색만 PALETTE 로 */
