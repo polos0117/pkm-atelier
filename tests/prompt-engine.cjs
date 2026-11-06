@@ -43,7 +43,7 @@ assert(!sq.includes('light-blue skin'),'a skin color must not reach the prompt a
 assert(sq.includes('Her skin is human skin.'));
 assert(sq.includes('nothing is carried, mounted or put on display'));
 assert(sq.includes(S.FORM_LINES.light)&&sq.includes(S.ACTION_STYLE_CORES.glossy_promo));
-assert(sq.includes('face toward the camera')&&sq.includes('never a back view'));
+assert(sq.includes('Camera level with her face')&&sq.includes('three-quarters toward the camera')&&sq.includes('never a back view')&&sq.includes('no upward perspective on her face'),'① 카메라 수평 3/4(2026-11-06)');
 assert(!sq.includes('IDENTITY'),'no identity block without chosen values');
 /* 손 줄 — 개수·모양·자세·장갑·효과. 옛 "drawn correctly as hands" 한 줄로는 손가락이 늘고 뭉쳤다 */
 assert(sq.includes(S.PROMPT_LINES.hands)&&sq.includes(S.PROMPT_LINES.handsArmor),'action carries the hand line');
@@ -52,7 +52,7 @@ assert(sq.includes('full-finger')&&!/one thumb|four fingers|five fingers|never m
 assert(!sq.includes('drawn correctly as hands'),'the weak hand line came back');
 /* 몸 개수 줄 BODY(2026-10-27, 약 40낱말 — 손 줄을 줄여 거의 상쇄) — 폼·이어가기·개방·일상컷 모두 */
 assert(sq.includes(S.PROMPT_LINES.body),'anchor carries the body line');
-assert(words(sq)<=400,'anchor budget: '+words(sq));
+assert(words(sq)<=425,'anchor budget: '+words(sq));   // 2026-11-06 +25 — 카메라 수평 3/4 줄
 
 /* 머리 특징 표현을 고르면 자동 머리 문장(귀·볼주머니)을 대신한다 */
 const pk=build('피카츄'), pkHead=build('피카츄',{headFeature:'accessory'});
@@ -85,7 +85,7 @@ for(const s of ['PALETTE','WEAR','IDENTITY','mint','U-shaped','omit referenced_i
 assert(ref.includes(S.PROMPT_LINES.hands)&&ref.includes(S.PROMPT_LINES.handsWear),'continuation keeps the attached hand wear');
 for(const s of [S.PROMPT_LINES.handsArmor,'Gloves are','full-finger']) assert(!ref.includes(s),'continuation forces gloves: '+s);
 assert(ref.includes(S.PROMPT_LINES.body),'continuation carries the body line');
-assert(words(ref)<=330,'continuation budget: '+words(ref));
+assert(words(ref)<=355,'continuation budget: '+words(ref));   // 2026-11-06 +25 — 카메라 수평 3/4 줄
 assert(build('꼬부기',{identityMode:'reference',motifs:'KEEP_THIS'}).includes('MOTIFS to keep: KEEP_THIS.'));
 /* 새 인물은 고른 외형만 */
 const chosen=build('꼬부기',{params});
@@ -167,7 +167,7 @@ for(const c of cards){
  if(words(t)>most[0]) most=[words(t),c.en];
  const pal=P.palette(s); assert(pal.length<=5,c.en);
 }
-assert(most[0]<=420,'anchor budget over 1025: '+most.join(' '));
+assert(most[0]<=445,'anchor budget over 1025: '+most.join(' '));   // 2026-11-06 +25 — 카메라 수평 3/4 줄
 assert(none<120,'too many species get no wear line: '+none);
 
 /* 스타일·모드 행렬 */
