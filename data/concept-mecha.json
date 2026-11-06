@@ -959,7 +959,7 @@
    "long flowing hair",
    "a high ponytail",
    "a long side braid",
-   "shoulder-length layered hair",
+   "a shoulder-length layered cut",
    "a sleek low ponytail",
    "loose waist-length waves"
   ],
@@ -1004,6 +1004,18 @@
     ", cut in the same shape and colors",
     ""
    ]
-  ]
+  ],
+  "color_words": {
+   "black": "jet-black",
+   "blue": "sky-blue",
+   "brown": "chestnut-brown",
+   "gray": "silver-grey",
+   "green": "leaf-green",
+   "pink": "soft pink",
+   "purple": "violet",
+   "red": "crimson",
+   "white": "pearl-white",
+   "yellow": "golden-yellow"
+  }
  }
 }

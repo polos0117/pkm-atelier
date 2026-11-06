@@ -45,9 +45,14 @@ function autoSpecies(card) {
   const P = lib(), A = C.auto, no = String(c.no), types = [c.element, c.element2].filter(Boolean).map(String).map(t => t.toLowerCase()).filter(t => A.types[t]);
   if (!types.length) types.push('normal');
   const t0 = A.types[types[0]], st = { sourceAppearance: SA[no], faceDesign: FACES[no] }, r = rng('auto|' + card);
-  const pal = (P.palette(st) || []).filter(Boolean), c1 = pal[0] || ((SA[no] || {}).color) || 'silver', c2 = pal.find(x => x !== c1) || (c1 === 'black' ? 'silver' : 'black');
+  /* 주색은 그 종의 대표 색(source-appearance color) — 팔레트 첫 색은 특징 순서라 등딱지 갈색 같은 것이 먼저 온다(꼬부기). 팔레트는 보조색 */
+  const base = String((SA[no] || {}).color || '').toLowerCase(), pal = (P.palette(st) || []).filter(Boolean);
+  const c1 = (A.color_words || {})[base] || pal[0] || 'silver', near = x => x === base || x.indexOf(base) >= 0 && base;
+  const rest = pal.filter(x => !near(x)), c2 = rest[0] || (base === 'white' ? 'silver' : 'pearl-white');
   const hair = P.hairItems(st) || [];
-  const hairText = (c1[0].toUpperCase() + c1.slice(1)) + ' hair in ' + (hair.length ? 'a ' + hair[0] + (hair[1] ? ' with ' + hair.slice(1).join(' and ') : '') : pickOf(A.hair_fallback, r)).replace(/^a a /, 'a ').replace(/in a (long|loose|shoulder)/, 'in $1');
+  const fb = pickOf(A.hair_fallback, r), C1 = c1[0].toUpperCase() + c1.slice(1);
+  const hairText = hair.length ? C1 + ' hair in a ' + hair[0] + (hair[1] ? ' with ' + hair.slice(1).join(' and ') : '')
+    : /hair$/.test(fb) ? C1 + ' ' + fb.replace(/ hair$/, '') + ' hair' : C1 + ' hair in ' + fb;
   let wear = (P.wearClauses(st) || []).filter(s => !/the ’s|the 's/.test(s)).slice(0, 3);
   wear = wear.map(s => A.cloth.reduce((acc, [a, b]) => acc.split(a).join(b), s));
   const owns = [];
@@ -60,7 +65,7 @@ function autoSpecies(card) {
     no: c.no, types, owns, auto: true,
     PERSONA: t0.persona, HAIR: hairText, EYES: t0.eyes, FIGURE: fig,
     SIGNATURE: wear.length ? wear.join(', ') : 'small ' + c1 + ' accents echoing its silhouette on her plates',
-    COLOURS: c1 + '-and-' + c2, ACCENTS: (pal[2] || 'gold') + ' and silver accents', UNDERSUIT: 'a ' + (c1 === 'black' ? 'deep grey' : 'black') + ' flexible undersuit',
+    COLOURS: c1 + '-and-' + c2, ACCENTS: (rest[1] || 'gold') + ' and silver accents', UNDERSUIT: 'a ' + (c1 === 'black' ? 'deep grey' : 'black') + ' flexible undersuit',
     MOTIF: t0.motif, GLOW: t0.glow, LINE: 'graceful',
     BACKGROUND: t0.background, AMBIENT: 'restrained ' + fx.motes, KEY_COLOUR: c1
   });

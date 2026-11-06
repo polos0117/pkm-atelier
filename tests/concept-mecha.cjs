@@ -69,6 +69,9 @@ for (const nm of [...new Set(names)]) {
   na++;
 }
 assert(na > 1000, '자동 초안 ' + na);
+/* 주색 · 머리색은 대표 색(꼬부기 — 팔레트 첫 색이 등딱지 갈색이었다) */
+const sq = M.autoSpecies('꼬부기'); assert(sq.HAIR.startsWith('Sky-blue') && sq.COLOURS.startsWith('sky-blue-and-') && sq.KEY_COLOUR === 'sky-blue', '꼬부기 주색 ' + sq.HAIR + ' / ' + sq.COLOURS);
+for (const nm of ['이상해씨', '리자몽', '뮤츠', '님피아', '꼬부기']) assert(!/hair in (long|loose|shoulder-length)[^,]* hair/.test(M.autoSpecies(nm).HAIR), nm + ' 머리 문장 ' + M.autoSpecies(nm).HAIR);
 /* 타입 표현 — 하나만 · 다 · 손 없이 · 표현마다 타입 · 한 타입으로 · 섞기 · 틀린 값 */
 const fxB = (card, o) => { const r = M.choose(card, { ...base, ...o }, []); return { r, t: M.build(card, r.ch) }; };
 let x = fxB('팬텀', { fx: ['aura'] });

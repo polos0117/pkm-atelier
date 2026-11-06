@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 자동 초안 — 주색은 대표 색
+- tools/concept-mecha.cjs · data/concept-mecha.json — 머리색 · 장갑 주색 · 키 색을 그 종의 대표 색(source-appearance color → `auto.color_words`)으로, 팔레트는 보조색 · 장식색으로만. 꼬부기 시험 그림이 팔레트 첫 색(등딱지 갈색)으로 갈색 머리 · 갈색 장갑이 됐다. 대체 머리 문장(「… hair in shoulder-length layered hair」)도 고쳤다
+- tests/concept-mecha.cjs — 꼬부기 주색 하늘색 · 머리 문장
+
 ## 2026-11-06 · claude · 메카 컨셉 자동 초안 — 1025종
 - tools/concept-mecha.cjs · data/concept-mecha.json — 손글 표에 없는 종은 공방 자료로 캐릭터 칸 초안을 짓는다: 타입 · 키 · 몸무게(card.json), 얼굴 · 머리(face-design), 색 · 원작 특징(source-appearance — 생성기의 palette · wearClauses · hairItems 를 그대로 부르고 천은 판으로), 타입 표(성격 · 눈 · 배경 · 판 무늬 · 발광 색, `auto`). 원작 특징이 머리 · 등을 쥐면 그 칸은 비운다. 사용자 「다른케릭터는 설계 안되어있지?」 → 「그래」
 - tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 1025종 다 지어진다 · 빈 칸 없음 · 바뀐 입는 법에 천 없음 · 손글이 이긴다
