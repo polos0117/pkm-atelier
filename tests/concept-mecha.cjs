@@ -6,8 +6,9 @@ const M = require(path.join(__dirname, '..', 'tools', 'concept-mecha.cjs')), C =
 const SLOTS = C.slots.map(s => s.key), base = { set: [], random: false, seed: '' };
 
 /* 표 — 칸마다 값이 있고 열쇠가 겹치지 않으며, owns 는 있는 칸만 */
-assert.deepEqual(SLOTS, ['silhouette', 'weight', 'shoulders', 'chest', 'arms', 'hips', 'legs', 'back', 'head', 'fx_body', 'fx_space']);
-/* 타입 표현(2026-11-06) — 18 타입마다 빛 · 입자 · 바닥 낱말 */
+assert.deepEqual(SLOTS, ['silhouette', 'weight', 'shoulders', 'chest', 'arms', 'hips', 'legs', 'back', 'head']);
+/* 타입 표현(2026-11-06) — 일곱 가지(손 · 몸 셋 · 주변 셋), 18 타입마다 빛 · 입자 · 바닥 낱말 */
+assert.deepEqual(C.fx.map(f => f.key), ['hand', 'seams', 'aura', 'hair', 'orbit', 'ground', 'trail']);
 assert.deepEqual(Object.keys(C.type_fx).sort(), Object.keys(C.types).sort(), '타입 표현 낱말 = 타입 추천 타입');
 for (const [t, w] of Object.entries(C.type_fx)) for (const k of ['glow', 'motes', 'ground']) assert(w[k], t + ' ' + k);
 for (const k of SLOTS) { const o = k === 'silhouette' ? C.silhouettes : C.parts[k]; assert(o.length >= 3, k); assert.equal(new Set(o.map(x => x.key)).size, o.length, k + ' 열쇠 겹침'); o.forEach(x => assert(x.ko, k + ' ' + x.key + ' 한글')); }
@@ -24,9 +25,11 @@ for (const card of Object.keys(C.species)) {
   for (let i = 0; i < 30; i++) {
     const o = { ...base, seed: 's' + i, random: i % 2 === 1 }, r = M.choose(card, o, []), txt = M.build(card, r.ch);
     assert(!/\{[A-Z_]+\}|undefined|null|: ,|, ,|; ,/.test(txt), card + ' 빈 칸 ' + i);
-    if (!o.random || r.ch.fx_body !== 'none') assert(r.ch.fx_body !== 'none' && r.ch.fx_space !== 'none', card + ' 자동은 타입 표현을 싣는다');
-    if (r.ch.fx_body === 'hair') assert(!['orbit', 'trail'].includes(r.ch.fx_space), card + ' 같은 입자 두 번 ' + i);
-    assert(/relaxed beside her\. [A-Z][^.]*\. [A-Z][^.]*\. CAMERA:/.test(txt), card + ' 타입 표현 두 문장 ' + i);
+    const fk = r.ch.fx.map(x => x.key);
+    assert.equal(fk[0], 'hand', card + ' 자동은 손 + 몸 + 주변'); assert.equal(fk.length, 3);
+    assert(r.ch.fx.every(x => x.type === sp.types[0]), card + ' 기본은 첫 타입');
+    if (fk.includes('hair')) assert(!fk.includes('orbit') && !fk.includes('trail'), card + ' 같은 입자 두 번 ' + i);
+    assert(/relaxed beside her\. [A-Z][^.]*\. [A-Z][^.]*\. CAMERA:/.test(txt) && txt.includes(sp.HAND_EFFECT), card + ' 손(종의 손 효과) + 두 문장 ' + i);
     assert(txt.includes('CAMERA: camera level with her face') && txt.includes('no weapons') && txt.includes('Her two human hands are uncovered'), card + ' 고정 줄');
     assert(!/\ban? ((?!and\b)[\w-]+ ){0,2}(eyes|lips)\b/.test(txt.split('COSTUME:')[0]), card + ' 복수에 관사 ' + i);
     const sil = C.silhouettes.find(s => s.key === r.ch.silhouette);
@@ -49,9 +52,25 @@ assert.throws(() => M.choose('피카츄', { ...base, set: ['silhouette=knight_pl
 assert.throws(() => M.choose('피카츄', { ...base, set: ['head=crest'] }, []), /원작 특징/);
 assert.throws(() => M.choose('피카츄', { ...base, set: ['legs=jetpack'] }, []), /없는 값/);
 assert.throws(() => M.choose('뮤츠', base, []), /컨셉 표/);
-const nofx = M.build('팬텀', M.choose('팬텀', { ...base, set: ['fx_body=none', 'fx_space=none'] }, []).ch);
-assert(nofx.includes('relaxed beside her. CAMERA:'), '타입 표현을 뺄 수 있다');
-assert(M.build('잠만보', M.choose('잠만보', { ...base, set: ['fx_space=ground'] }, []).ch).includes('warm light spreads over the floor'), '첫 타입 낱말');
+/* 타입 표현 — 하나만 · 다 · 손 없이 · 표현마다 타입 · 한 타입으로 · 섞기 · 틀린 값 */
+const fxB = (card, o) => { const r = M.choose(card, { ...base, ...o }, []); return { r, t: M.build(card, r.ch) }; };
+let x = fxB('팬텀', { fx: ['aura'] });
+assert.deepEqual(x.r.ch.fx, [{ key: 'aura', type: 'ghost' }]); assert(x.t.includes(C.hands_rest + '. Her whole silhouette is outlined by a ghostly violet glow. CAMERA:'), '하나만 · 손 없이');
+x = fxB('잠만보', { fx: ['all'] });
+assert.equal(x.r.ch.fx.length, 7); assert(x.t.includes(C.species['잠만보'].HAND_EFFECT) && x.t.includes('warm light spreads over the floor') && x.t.includes('streams back from her heels'), '다');
+x = fxB('갸라도스', { fx: ['hand:flying,aura:water,orbit:flying'] });
+assert(x.t.includes('one open hand conjuring a pale sky-blue glow amid swirling air currents') && x.t.includes('outlined by a cyan-blue water glow') && x.t.includes('Swirling air currents and light streaks of wind circle'), '표현마다 타입(둘째 타입 손은 낱말로)');
+x = fxB('갸라도스', { fx: ['hand,ground'], fxType: ['flying'] });
+assert(x.r.ch.fx.every(f => f.type === 'flying') && x.t.includes('A swirl of wind sweeps the floor'), '한 타입으로');
+x = fxB('팬텀', { fx: ['hand,seams,orbit,ground'], mix: true });
+assert.deepEqual([...new Set(x.r.ch.fx.map(f => f.type))].sort(), ['ghost', 'poison'], '섞기 — 두 타입 다');
+x = fxB('피카츄', { fx: ['hand,aura'], mix: true }); assert(x.r.ch.fx.every(f => f.type === 'electric'), '한 타입 종은 섞어도 그 타입');
+x = fxB('팬텀', { fx: ['팬텀=hair', '피카츄'], set: [] }); assert.deepEqual(x.r.ch.fx.map(f => f.key), ['hair'], '카드=표현');
+assert.throws(() => fxB('팬텀', { fx: ['aura:water'] }), /팬텀 의 타입은/);
+assert.throws(() => fxB('팬텀', { fxType: ['fire'] }), /팬텀 의 타입은/);
+assert.throws(() => fxB('팬텀', { fx: ['laser'] }), /없는 타입 표현/);
+assert.throws(() => fxB('팬텀', { fx: ['aura,aura'] }), /두 번/);
+assert.throws(() => fxB('팬텀', { set: ['fx_body=none'] }), /--fx/);
 /* 배치 — 큰 실루엣이 서로 겹치지 않는다 */
 for (let i = 0; i < 20; i++) {
   const used = [];

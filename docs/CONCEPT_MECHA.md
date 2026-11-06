@@ -15,18 +15,22 @@
 ## 칸
 
 큰 실루엣(삼국지 공방 메카 실루엣 18 — `sam-atelier` `lib/prompt-spec.js` 의 `MECHA_SILHOUETTES`, 무기 · 노출 문장만 포켓몬 규칙에 맞게 + 없음) ·
-무게 · 어깨 · 흉부 · 팔 · 허리·골반 · 다리·부츠 · 등 유닛 · 머리 · 타입 표현 — 몸(장갑 이음새 빛 · 오라 · 머리끝 입자) · 타입 표현 — 주변(도는 입자 · 발밑 바닥 · 자취). `node tools/concept-mecha.cjs --list` 가 값을 다 보인다.
+무게 · 어깨 · 흉부 · 팔 · 허리·골반 · 다리·부츠 · 등 유닛 · 머리. `node tools/concept-mecha.cjs --list` 가 값을 다 보인다.
 
 - 실루엣의 `owns` 는 그 실루엣이 모양을 정하는 칸(예: 기사 갑주형 — 어깨 · 흉부 · 골반 · 머리) — 그 칸 부품은 안 싣는다.
 - 종의 `owns` 는 원작 특징(SIGNATURE)이 쥔 칸(피카츄 귀 머리띠 · 꼬리, 잠만보 손등 돌기) — 마찬가지로 안 싣는다. 직접 줘도 막는다.
 - 자동은 종 타입의 추천 안에서 씨앗(카드 이름 + `--seed`)으로 고른다. 추천이 없는 칸은 그 칸 전체에서. `--random` 은 추천을 안 본다.
 - 한 번에 여러 카드면 큰 실루엣이 서로 겹치지 않는다.
 - 얼굴(FACE)은 `data/face-design.json` 그 종에서 짓는다. 나머지 캐릭터 칸(성격 · 머리 · 눈 · 체형 · 원작 특징 · 색 · 손 효과 · 배경)은 종마다 표에 쓴다 — 지금 피카츄 · 갸라도스 · 팬텀 · 잠만보.
-- 타입 표현은 손 효과(HAND_EFFECT)에 더해 몸 · 주변 두 칸 — 낱말(빛 · 입자 · 바닥)은 첫 타입의 `type_fx`. 자동이면 늘 싣고(빼려면 `--set fx_body=none`), 머리끝 입자와 주변 입자 · 자취는 같이 안 고른다(같은 낱말 두 번).
+- 타입 표현(`--fx`) 일곱 가지 — 손에서 내는 효과 · 장갑 이음새 빛 · 오라 · 머리끝 입자 · 몸 둘레를 도는 입자 · 발밑 바닥 · 등 · 발꿈치 자취. 하나만 골라도 되고(`--fx aura`), 다 넣어도 되고(`--fx all`), 안 주면 자동(손 + 몸 하나 + 주변 하나). 손을 안 고르면 두 손은 편히 내린다.
+- 타입이 둘인 종은 표현마다 타입을 고른다 — 기본은 다 첫 타입, `--fx-type flying` 이면 다 그 타입, `--fx hand:flying,aura:water` 처럼 표현마다, `--mix` 면 타입을 안 적은 표현에 두 타입을 섞는다. 낱말(빛 · 입자 · 바닥)은 그 타입의 `type_fx`, 첫 타입 손 효과만 종이 쓴 `HAND_EFFECT`. 여러 카드면 `--fx 갸라도스=hand,aura` 처럼 카드를 붙인다.
+- 자동이면 같은 타입의 머리끝 입자와 도는 입자 · 자취는 같이 안 고른다(같은 낱말 두 번).
 - 카메라는 수평 3/4(2026-11-06 — 일상컷이 기준 그림 얼굴을 따라가서).
 
 ```sh
 node tools/concept-mecha.cjs 피카츄 갸라도스 팬텀 잠만보                 # 자동
 node tools/concept-mecha.cjs 잠만보 --set silhouette=hover_rings --set legs=heels
 node tools/concept-mecha.cjs 팬텀 --random --seed 3 --out <폴더>        # <영어 이름>.txt · -parts.json
+node tools/concept-mecha.cjs 갸라도스 --fx hand:water,aura:flying,ground:water
+node tools/concept-mecha.cjs 팬텀 --fx all --mix
 ```

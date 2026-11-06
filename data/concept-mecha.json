@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」) — 손 효과 말고 몸(fx_body)과 주변(fx_space) 칸, 낱말은 type_fx(첫 타입)",
+ "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx",
  "slots": [
   {
    "key": "silhouette",
@@ -37,14 +37,6 @@
   {
    "key": "head",
    "ko": "머리"
-  },
-  {
-   "key": "fx_body",
-   "ko": "타입 표현 — 몸"
-  },
-  {
-   "key": "fx_space",
-   "ko": "타입 표현 — 주변"
   }
  ],
  "silhouettes": [
@@ -383,50 +375,6 @@
     "ko": "머리 위 떠 있는 바이저 링",
     "en": "a thin visor ring floating above her head"
    }
-  ],
-  "fx_body": [
-   {
-    "key": "none",
-    "ko": "몸 효과 없음",
-    "en": ""
-   },
-   {
-    "key": "seams",
-    "ko": "장갑 이음새 · 코어로 흐르는 빛",
-    "en": "{glow} pulses along her armor seams and joints"
-   },
-   {
-    "key": "aura",
-    "ko": "실루엣을 두르는 오라",
-    "en": "her whole silhouette is outlined by {glow}"
-   },
-   {
-    "key": "hair",
-    "ko": "머리끝이 입자로 흩어짐",
-    "en": "the tips of her hair glow and dissolve into {motes}"
-   }
-  ],
-  "fx_space": [
-   {
-    "key": "none",
-    "ko": "주변 효과 없음",
-    "en": ""
-   },
-   {
-    "key": "orbit",
-    "ko": "몸 둘레를 도는 입자",
-    "en": "{motes} circle slowly around her"
-   },
-   {
-    "key": "ground",
-    "ko": "발밑 바닥 효과",
-    "en": "{ground}"
-   },
-   {
-    "key": "trail",
-    "ko": "등 · 발꿈치에서 흐르는 자취",
-    "en": "a light trail of {motes} streams back from her heels and back armor"
-   }
   ]
  },
  "types": {
@@ -613,7 +561,7 @@
    ]
   }
  },
- "template": "Use case: stylized-concept. Create ONE finished illustration of Pokémon {NAME} personified as a beautiful adult human woman, in a premium 2D Korean MMORPG official character illustration style. Single vertical 2:3 full-body artwork, head to boots fully visible with comfortable margins.\n\nSTYLE: Clearly hand-drawn 2D character art, delicate refined coloured linework, elegant adult anime facial design, expressive finely detailed eyes, carefully designed shapes, rich luminous colours and layered painted shading. Elaborate Korean fantasy game costume illustration with clean detailed rendering. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.\n\nCHARACTER: One adult woman in her mid-twenties, {PERSONA}. {HAIR}, {EYES}, a refined feminine face with {FACE}, {FIGURE}, balanced natural adult proportions. {NAME}'s identity is unmistakable: {SIGNATURE}.\n\nCOSTUME: A sophisticated fitted {COLOURS} science-fiction mecha powered armor with {ACCENTS}: {SILHOUETTE}{PARTS}, {UNDERSUIT}, {MOTIF}, visible panel seams, recessed bolts, small actuators, functional mechanical hinges, ventilation slots and restrained {GLOW} luminous circuit lines; {WEIGHT} with a {LINE}, feminine, visibly curvaceous silhouette rather than a giant robot suit, leaving her shoulders and upper thighs bare; solid hard-surface plates that read as armor, not cloth; no lace, no flowing fabric sleeves or cloth capes, no helmet covering the face, no weapons. Refined feminine costume design, intricate yet readable. Her two human hands are uncovered and fully visible.\n\nPOSE AND SCENE: A lively poised standing pose, {HAND_EFFECT} and the other relaxed beside her. {TYPE_FX}CAMERA: camera level with her face; her body and face turned gently three-quarters toward the camera, her head level with her chin neither raised nor tucked, no upward perspective on her face. {BACKGROUND} behind her; {AMBIENT} frame her silhouette. Bright clear lighting, rich {KEY_COLOUR} colours, polished 2D Korean MMORPG character key art.\n\nANATOMY: One head, two arms, two legs, two natural human hands, five fingers each. Natural neck and joints. No extra characters, no text, no logos, no UI, no collage.",
+ "template": "Use case: stylized-concept. Create ONE finished illustration of Pokémon {NAME} personified as a beautiful adult human woman, in a premium 2D Korean MMORPG official character illustration style. Single vertical 2:3 full-body artwork, head to boots fully visible with comfortable margins.\n\nSTYLE: Clearly hand-drawn 2D character art, delicate refined coloured linework, elegant adult anime facial design, expressive finely detailed eyes, carefully designed shapes, rich luminous colours and layered painted shading. Elaborate Korean fantasy game costume illustration with clean detailed rendering. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.\n\nCHARACTER: One adult woman in her mid-twenties, {PERSONA}. {HAIR}, {EYES}, a refined feminine face with {FACE}, {FIGURE}, balanced natural adult proportions. {NAME}'s identity is unmistakable: {SIGNATURE}.\n\nCOSTUME: A sophisticated fitted {COLOURS} science-fiction mecha powered armor with {ACCENTS}: {SILHOUETTE}{PARTS}, {UNDERSUIT}, {MOTIF}, visible panel seams, recessed bolts, small actuators, functional mechanical hinges, ventilation slots and restrained {GLOW} luminous circuit lines; {WEIGHT} with a {LINE}, feminine, visibly curvaceous silhouette rather than a giant robot suit, leaving her shoulders and upper thighs bare; solid hard-surface plates that read as armor, not cloth; no lace, no flowing fabric sleeves or cloth capes, no helmet covering the face, no weapons. Refined feminine costume design, intricate yet readable. Her two human hands are uncovered and fully visible.\n\nPOSE AND SCENE: A lively poised standing pose, {HANDS}. {TYPE_FX}CAMERA: camera level with her face; her body and face turned gently three-quarters toward the camera, her head level with her chin neither raised nor tucked, no upward perspective on her face. {BACKGROUND} behind her; {AMBIENT} frame her silhouette. Bright clear lighting, rich {KEY_COLOUR} colours, polished 2D Korean MMORPG character key art.\n\nANATOMY: One head, two arms, two legs, two natural human hands, five fingers each. Natural neck and joints. No extra characters, no text, no logos, no UI, no collage.",
  "species": {
   "피카츄": {
    "no": 25,
@@ -809,5 +757,50 @@
    "motes": "pink sparkles and drifting petals",
    "ground": "pink sparkles and petals lie scattered over the floor beneath her boots"
   }
- }
+ },
+ "fx": [
+  {
+   "key": "hand",
+   "ko": "손에서 내는 효과",
+   "en": "one open hand conjuring {glow} amid {motes}",
+   "where": "hand"
+  },
+  {
+   "key": "seams",
+   "ko": "장갑 이음새 · 관절로 흐르는 빛",
+   "en": "{glow} pulses along her armor seams and joints",
+   "where": "body"
+  },
+  {
+   "key": "aura",
+   "ko": "실루엣을 두르는 오라",
+   "en": "her whole silhouette is outlined by {glow}",
+   "where": "body"
+  },
+  {
+   "key": "hair",
+   "ko": "머리끝이 입자로 흩어짐",
+   "en": "the tips of her hair glow and dissolve into {motes}",
+   "where": "body"
+  },
+  {
+   "key": "orbit",
+   "ko": "몸 둘레를 도는 입자",
+   "en": "{motes} circle slowly around her",
+   "where": "space"
+  },
+  {
+   "key": "ground",
+   "ko": "발밑 바닥 효과",
+   "en": "{ground}",
+   "where": "space"
+  },
+  {
+   "key": "trail",
+   "ko": "등 · 발꿈치에서 흐르는 자취",
+   "en": "a light trail of {motes} streams back from her heels and back armor",
+   "where": "space"
+  }
+ ],
+ "hands_rest": "both hands relaxed at her sides with fingers softly curled"
 }
