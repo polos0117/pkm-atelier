@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 화풍 anime_gloss(애니 광택) — 도감에서 고르는 새 화풍
+- lib/prompt-spec.js · data/style.json — 화풍 열쇠 `anime_gloss`(애니 광택 — 2D MMORPG 메카 컨셉의 기본 화풍: 채도 낮은 흰색 · 은색 파스텔, 하이키 · 블룸 · 반짝이, 가는 머리 가닥, 자연광 윤기)를 ART_STYLES 끝에 더하고 세계 · 일상 화풍 줄(일상은 장갑 말 없이)을 넣었다. 기존 그림 · 기본 화풍(glossy_promo)은 그대로 — 도감 화풍 고르개에 따로 뜬다. 사용자 「이상해씨, 파이리,꼬부기 올려줘」 · 「신규 화풍으로 기존거는 두고, 도감에서 선택할 수 있게」
+- tests/prompt-engine.cjs — 화풍 수 15
+
 ## 2026-11-06 · claude · 메카 컨셉 기본 화풍 — 애니 광택(자연광 윤기)
 - data/concept-mecha.json — 기본 화풍 mmorpg2d → anime_gloss. anime_gloss 의 광택 문장을 젖은 스펙큘러 광택에서 야외 햇빛의 부드럽고 넓은 윤기(젖거나 기름지거나 플라스틱 같지 않게)로. 꼬부기 메카 · 일상컷 세 장을 보고 사용자 「응 이걸로 기본화풍 바꿔줘」. mmorpg2d · jp25d 는 --style 로 남는다
 - tools/concept-mecha.cjs · tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 기본 화풍 · 자연광 문장 검사
