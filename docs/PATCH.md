@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 자동 초안 — 1025종
+- tools/concept-mecha.cjs · data/concept-mecha.json — 손글 표에 없는 종은 공방 자료로 캐릭터 칸 초안을 짓는다: 타입 · 키 · 몸무게(card.json), 얼굴 · 머리(face-design), 색 · 원작 특징(source-appearance — 생성기의 palette · wearClauses · hairItems 를 그대로 부르고 천은 판으로), 타입 표(성격 · 눈 · 배경 · 판 무늬 · 발광 색, `auto`). 원작 특징이 머리 · 등을 쥐면 그 칸은 비운다. 사용자 「다른케릭터는 설계 안되어있지?」 → 「그래」
+- tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 1025종 다 지어진다 · 빈 칸 없음 · 바뀐 입는 법에 천 없음 · 손글이 이긴다
+
 ## 2026-11-06 · claude · 메카 컨셉 화풍 칸 — 2D MMORPG · 일본 2.5D
 - data/concept-mecha.json · tools/concept-mecha.cjs — 화풍 칸(`styles` · `--style`): `mmorpg2d`(2D 한국 MMORPG, 기본 — 지금 글 그대로) · `jp25d`(일본 2.5D 모바일 — 사용자가 붙여 준 지시문의 화풍 문구를 첫 줄 · STYLE · 끝맺음에, 피카츄 전용 얼굴 말은 일반 말로). 피카츄로 그려 보고 사용자 「응 넣어줘」
 - tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 기본은 글자 그대로 · 2.5D 는 화풍 세 자리만 다르다 · 없는 화풍 막기

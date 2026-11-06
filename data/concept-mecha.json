@@ -818,5 +818,192 @@
    "close": "Clear character silhouette against the softly painted atmospheric backdrop, strong facial clarity and restrained cinematic glow, rich {KEY_COLOUR} colours, premium Japanese 2.5D mobile RPG character key art."
   }
  },
- "style_default": "mmorpg2d"
+ "style_default": "mmorpg2d",
+ "auto": {
+  "note": "표에 손글 종이 없으면 이 표와 공방 자료(data/card.json 타입 · 키 · 몸무게, data/face-design.json 얼굴 · 머리, data/source-appearance.json 색 · 원작 특징 — 생성기의 입는 법 · 팔레트)로 초안을 짓는다(2026-11-06 사용자 「그래」). 손글 종(species)이 늘 이긴다",
+  "types": {
+   "normal": {
+    "persona": "a beautiful calm, warm-hearted and steady normal-element guardian",
+    "eyes": "warm brown eyes",
+    "background": "A sunlit stone terrace above rolling green meadows and a softly painted bright sky",
+    "motif": "rounded plate forms",
+    "glow": "soft white-gold"
+   },
+   "fire": {
+    "persona": "a beautiful bold, passionate and fearless fire-element vanguard",
+    "eyes": "bright amber-red eyes",
+    "background": "A volcanic stone terrace with glowing lava rivers below and a softly painted ember-orange sky",
+    "motif": "flame-shaped plate edges",
+    "glow": "ember-orange"
+   },
+   "water": {
+    "persona": "a beautiful serene, graceful and quietly strong water-element guardian",
+    "eyes": "clear aqua-blue eyes",
+    "background": "A seaside stone terrace above rolling waves and a softly painted ocean sky",
+    "motif": "wave-shaped plate edges",
+    "glow": "aqua"
+   },
+   "grass": {
+    "persona": "a beautiful gentle, nurturing and resilient grass-element guardian",
+    "eyes": "fresh leaf-green eyes",
+    "background": "A sunlit forest clearing terrace with mossy stones and a softly painted morning sky",
+    "motif": "leaf-shaped plate edges",
+    "glow": "fresh green"
+   },
+   "electric": {
+    "persona": "a beautiful confident, lively and quick electric-element adventurer",
+    "eyes": "bright golden eyes",
+    "background": "A sunlit fantasy stone terrace with a distant castle and a softly painted blue sky",
+    "motif": "lightning-shaped plate edges",
+    "glow": "electric-yellow"
+   },
+   "ice": {
+    "persona": "a beautiful cool, elegant and composed ice-element knight",
+    "eyes": "pale icy-blue eyes",
+    "background": "A snow-covered crystal terrace among glittering glaciers and a softly painted pale winter sky",
+    "motif": "crystal-shaped plate edges",
+    "glow": "icy-blue"
+   },
+   "fighting": {
+    "persona": "a beautiful disciplined, fierce and honourable fighting-element champion",
+    "eyes": "sharp amber eyes",
+    "background": "An open-air mountain dojo terrace with stone pillars and a softly painted dawn sky",
+    "motif": "angular reinforced plate edges",
+    "glow": "hot orange"
+   },
+   "poison": {
+    "persona": "a beautiful sly, alluring and dangerous poison-element alchemist",
+    "eyes": "vivid violet eyes",
+    "background": "A misty overgrown swamp terrace with glowing violet flowers and a softly painted dusky sky",
+    "motif": "bubble-like rounded plate studs",
+    "glow": "toxic violet"
+   },
+   "ground": {
+    "persona": "a beautiful steady, earthy and unshakeable ground-element warden",
+    "eyes": "warm earth-brown eyes",
+    "background": "A sunlit canyon terrace of layered red rock and a softly painted desert sky",
+    "motif": "layered stratum-like plate edges",
+    "glow": "amber"
+   },
+   "flying": {
+    "persona": "a beautiful free-spirited, swift and proud flying-element skyrider",
+    "eyes": "clear sky-blue eyes",
+    "background": "A high cliff-top terrace above a sea of clouds and a softly painted open sky",
+    "motif": "feather-shaped plate edges",
+    "glow": "pale sky-blue"
+   },
+   "psychic": {
+    "persona": "a beautiful mysterious, poised and perceptive psychic-element oracle",
+    "eyes": "luminous magenta eyes",
+    "background": "A floating marble terrace among drifting stone rings and a softly painted twilight sky",
+    "motif": "geometric glyph-like plate engravings",
+    "glow": "magenta"
+   },
+   "bug": {
+    "persona": "a beautiful curious, nimble and tireless bug-element ranger",
+    "eyes": "bright lime-green eyes",
+    "background": "A sunlit flowering meadow terrace with tall grasses and a softly painted summer sky",
+    "motif": "segmented carapace-like plate edges",
+    "glow": "lime-green"
+   },
+   "rock": {
+    "persona": "a beautiful sturdy, stoic and unyielding rock-element sentinel",
+    "eyes": "deep sandy-gold eyes",
+    "background": "A rugged stone fortress terrace among towering crags and a softly painted dusty sky",
+    "motif": "faceted stone-like plate edges",
+    "glow": "sandy-gold"
+   },
+   "ghost": {
+    "persona": "a beautiful mischievous, eerie and playful ghost-element trickster",
+    "eyes": "glowing violet eyes",
+    "background": "A moonlit gothic castle terrace and a softly painted violet night sky with a large full moon",
+    "motif": "wispy flame-shaped plate edges",
+    "glow": "ghostly violet"
+   },
+   "dragon": {
+    "persona": "a beautiful proud, regal and formidable dragon-element sovereign",
+    "eyes": "fierce golden eyes",
+    "background": "A towering cliff-top dragon shrine terrace above misty peaks and a softly painted storm sky",
+    "motif": "scale-shaped plate edges",
+    "glow": "deep indigo"
+   },
+   "dark": {
+    "persona": "a beautiful cool, cunning and self-assured dark-element rogue",
+    "eyes": "sharp crimson eyes",
+    "background": "A moonlit city rooftop terrace above glittering night lights and a softly painted deep night sky",
+    "motif": "jagged blade-like plate edges",
+    "glow": "crimson"
+   },
+   "steel": {
+    "persona": "a beautiful precise, resolute and noble steel-element knight",
+    "eyes": "cool silver-grey eyes",
+    "background": "A polished steel citadel terrace with gleaming spires and a softly painted clear sky",
+    "motif": "riveted bevelled plate edges",
+    "glow": "cool silver"
+   },
+   "fairy": {
+    "persona": "a beautiful charming, kind and radiant fairy-element enchantress",
+    "eyes": "soft rose-pink eyes",
+    "background": "A blossoming garden terrace with arched trellises and a softly painted pastel sky",
+    "motif": "petal-shaped plate edges",
+    "glow": "soft pink"
+   }
+  },
+  "figure": {
+   "soft": "a soft, rounded, gently plump figure of average build in natural proportion, a modest bust, a softly defined waist and gently rounded hips",
+   "tall": "a tall, statuesque athletic-curvaceous figure with a full bust, a defined waist, rounded hips and long legs",
+   "small": "a petite, lithe and graceful figure with a modest bust, a slim waist and gently rounded hips",
+   "base": "a graceful athletic-curvaceous figure with a full bust, a defined waist and rounded hips"
+  },
+  "hair_fallback": [
+   "long flowing hair",
+   "a high ponytail",
+   "a long side braid",
+   "shoulder-length layered hair",
+   "a sleek low ponytail",
+   "loose waist-length waves"
+  ],
+  "cloth": [
+   [
+    "split cape",
+    "pair of long rigid jointed back plates"
+   ],
+   [
+    "cape",
+    "set of long rigid jointed back plates"
+   ],
+   [
+    "mantle",
+    "plate mantle"
+   ],
+   [
+    "long sash hanging from the back of her belt",
+    "long segmented plate tail from the back of her waist"
+   ],
+   [
+    "sash",
+    "segmented plate trim"
+   ],
+   [
+    "trailing ribbons from her sleeves or belt",
+    "slim trailing plates from her forearms or belt"
+   ],
+   [
+    "ribbons",
+    "slim trailing plates"
+   ],
+   [
+    "skirt",
+    "skirt plates"
+   ],
+   [
+    ", in the same shape and colors",
+    ""
+   ],
+   [
+    ", cut in the same shape and colors",
+    ""
+   ]
+  ]
+ }
 }

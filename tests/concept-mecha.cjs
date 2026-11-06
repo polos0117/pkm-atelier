@@ -51,7 +51,24 @@ assert.equal(s1.ch.silhouette, 'wing_binder'); assert.equal(s1.ch.legs, 'heels')
 assert.throws(() => M.choose('피카츄', { ...base, set: ['silhouette=knight_plate', 'shoulders=balloon'] }, []), /실루엣 knight_plate/);
 assert.throws(() => M.choose('피카츄', { ...base, set: ['head=crest'] }, []), /원작 특징/);
 assert.throws(() => M.choose('피카츄', { ...base, set: ['legs=jetpack'] }, []), /없는 값/);
-assert.throws(() => M.choose('뮤츠', base, []), /컨셉 표/);
+assert.throws(() => M.choose('없는포켓몬', base, []), /카드/);
+/* 자동 초안(2026-11-06) — 표에 없는 종은 공방 자료로. 1025종 다 지어지고, 천(망토 · 띠 · 리본)은 판으로, 빈 칸 · 무기 없음, 손글 종이 이긴다 */
+const CARDN = require(path.join(__dirname, '..', 'data', 'card.json'));
+const names = []; (function walk(x) { if (Array.isArray(x)) x.forEach(walk); else if (x && typeof x === 'object') { if (x.name && x.en && x.no) names.push(x.name); Object.values(x).forEach(walk); } })(CARDN);
+let na = 0;
+for (const nm of [...new Set(names)]) {
+  const sp = M.speciesOf(nm); assert(sp, nm + ' 초안');
+  if (C.species[nm]) { assert(!sp.auto, nm + ' 손글이 이긴다'); continue; }
+  const r = M.choose(nm, { ...base, seed: 'a' }, []), t = M.build(nm, r.ch);
+  assert(!/\{[A-Z_]+\}|undefined|null|: ,|, ,|; ,/.test(t), nm + ' 빈 칸');
+  const sig = t.split("identity is unmistakable: ")[1].split('\n')[0];
+  const after = sig.split(/\bbecomes?\b/).slice(1).map(x => x.split(/, the /)[0]).join(' | ');   /* 바뀐 뒤 쪽만 — 원작 특징 이름(리본 같은)은 그대로 */
+  assert(!/\b(cape|sash|ribbons?)\b/.test(after) && !/(^|[^e]) mantle\b/.test(after), nm + ' 천 → 판 ' + after.slice(0, 160));
+  assert(sp.types.every(x => C.types[x]), nm + ' 타입');
+  for (const k of sp.owns) assert.equal(r.ch[k], null, nm + ' ' + k + ' 은 원작 특징이 정한다');
+  na++;
+}
+assert(na > 1000, '자동 초안 ' + na);
 /* 타입 표현 — 하나만 · 다 · 손 없이 · 표현마다 타입 · 한 타입으로 · 섞기 · 틀린 값 */
 const fxB = (card, o) => { const r = M.choose(card, { ...base, ...o }, []); return { r, t: M.build(card, r.ch) }; };
 let x = fxB('팬텀', { fx: ['aura'] });

@@ -27,6 +27,46 @@ const C = read('concept-mecha.json'), FACES = read('face-design.json').faces;
 const CARDS = (() => { const out = {}; (function walk(x) { if (Array.isArray(x)) x.forEach(walk); else if (x && typeof x === 'object') { if (x.name && x.en && x.no) out[x.name] = x; Object.values(x).forEach(walk); } })(read('card.json')); return out; })();
 const TYPE_KO = { normal: '노말', fire: '불꽃', water: '물', grass: '풀', electric: '전기', ice: '얼음', fighting: '격투', poison: '독', ground: '땅', flying: '비행', psychic: '에스퍼', bug: '벌레', rock: '바위', ghost: '고스트', dragon: '드래곤', dark: '악', steel: '강철', fairy: '페어리' };
 
+/* 자동 초안 — 표에 손글 종이 없으면 공방 자료로(2026-11-06 「다른케릭터는 설계 안되어있지?」 → 「그래」).
+   타입 · 키 · 몸무게(card.json), 얼굴 · 머리(face-design), 색 · 원작 특징(source-appearance — 생성기의 입는 법 · 팔레트 · 머리 줄을 그대로 부른다).
+   입는 법의 천(망토 · 띠 · 리본)은 메카라 판으로 바꾼다(auto.cloth). 손글 종이 늘 이긴다 */
+let PA = null;
+function lib() {
+  if (PA) return PA;
+  const g = global; g.window = g.window || g;
+  for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro']) require(path.join(ROOT, 'lib', f + '.js'));
+  return (PA = g.window.AtelierPrompt);
+}
+const SA = (() => { try { return read('source-appearance.json').entries || {}; } catch (e) { return {}; } })();
+const AUTO = {};
+function autoSpecies(card) {
+  if (AUTO[card]) return AUTO[card];
+  const c = CARDS[card]; if (!c || !C.auto) return null;
+  const P = lib(), A = C.auto, no = String(c.no), types = [c.element, c.element2].filter(Boolean).map(String).map(t => t.toLowerCase()).filter(t => A.types[t]);
+  if (!types.length) types.push('normal');
+  const t0 = A.types[types[0]], st = { sourceAppearance: SA[no], faceDesign: FACES[no] }, r = rng('auto|' + card);
+  const pal = (P.palette(st) || []).filter(Boolean), c1 = pal[0] || ((SA[no] || {}).color) || 'silver', c2 = pal.find(x => x !== c1) || (c1 === 'black' ? 'silver' : 'black');
+  const hair = P.hairItems(st) || [];
+  const hairText = (c1[0].toUpperCase() + c1.slice(1)) + ' hair in ' + (hair.length ? 'a ' + hair[0] + (hair[1] ? ' with ' + hair.slice(1).join(' and ') : '') : pickOf(A.hair_fallback, r)).replace(/^a a /, 'a ').replace(/in a (long|loose|shoulder)/, 'in $1');
+  let wear = (P.wearClauses(st) || []).filter(s => !/the ’s|the 's/.test(s)).slice(0, 3);
+  wear = wear.map(s => A.cloth.reduce((acc, [a, b]) => acc.split(a).join(b), s));
+  const owns = [];
+  if (wear.some(s => /hair ornament|headpiece|circlet|antenna|crown|crest/.test(s))) owns.push('head');
+  if (wear.some(s => /back plates|plate tail|from the back of her waist|wing/.test(s))) owns.push('back');
+  const h = Number(c.h) || 1, w = Number(c.w) || 30, bmi = w / (h * h);
+  const fig = bmi > 80 ? A.figure.soft : h >= 1.8 ? A.figure.tall : h <= 0.5 && bmi < 40 ? A.figure.small : A.figure.base;
+  const fx = C.type_fx[types[0]] || C.type_fx.normal;
+  return (AUTO[card] = {
+    no: c.no, types, owns, auto: true,
+    PERSONA: t0.persona, HAIR: hairText, EYES: t0.eyes, FIGURE: fig,
+    SIGNATURE: wear.length ? wear.join(', ') : 'small ' + c1 + ' accents echoing its silhouette on her plates',
+    COLOURS: c1 + '-and-' + c2, ACCENTS: (pal[2] || 'gold') + ' and silver accents', UNDERSUIT: 'a ' + (c1 === 'black' ? 'deep grey' : 'black') + ' flexible undersuit',
+    MOTIF: t0.motif, GLOW: t0.glow, LINE: 'graceful',
+    BACKGROUND: t0.background, AMBIENT: 'restrained ' + fx.motes, KEY_COLOUR: c1
+  });
+}
+const speciesOf = card => C.species[card] || autoSpecies(card);
+
 function hash(s) { let h = 2166136261; for (const ch of String(s)) { h ^= ch.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
 function rng(seed) { let a = hash(seed); return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 const pickOf = (arr, r) => arr[Math.floor(r() * arr.length)];
@@ -110,7 +150,7 @@ function chooseFx(card, sp, o, r) {
 /* 한 카드의 부품을 정한다 — 직접 준 값 → 실루엣(owns) → 칸마다 추천 · 씨앗 */
 function choose(card, o, usedSil) {
   o = Object.assign({ set: [], fx: [], fxType: [], mix: false, random: false, seed: '' }, o);
-  const sp = C.species[card]; if (!sp) throw new Error(card + ' 는 컨셉 표(data/concept-mecha.json species)에 없다');
+  const sp = speciesOf(card); if (!sp) throw new Error(card + ' 는 컨셉 표(data/concept-mecha.json species)에도 카드(data/card.json)에도 없다');
   const r = rng([card, o.seed, o.random ? 'random' : 'auto'].join('|'));
   const given = {};
   for (const s of o.set) {
@@ -143,7 +183,7 @@ function fxText(sp, x) {
 }
 
 function build(card, ch, style) {
-  const sp = C.species[card], c = CARDS[card] || {}, sil = findOpt('silhouette', ch.silhouette);
+  const sp = speciesOf(card), c = CARDS[card] || {}, sil = findOpt('silhouette', ch.silhouette);
   const ST = C.styles[style || C.style_default]; if (!ST) throw new Error('없는 화풍 ' + style + ' — ' + Object.keys(C.styles).join(' · '));
   const parts = ['shoulders', 'chest', 'arms', 'hips', 'legs', 'back', 'head'].map(k => ch[k] && findOpt(k, ch[k]).en).filter(Boolean);
   const fx = ch.fx || [{ key: 'hand', type: (sp.types || [])[0] }], hand = fx.find(x => x.key === 'hand');
@@ -163,7 +203,7 @@ function build(card, ch, style) {
 function summary(r) {
   const parts = C.slots.map(({ key, ko }) => ko + ' ' + (r.ch[key] ? (findOpt(key, r.ch[key]).ko) : (r.owned.includes(key) ? '(실루엣 · 원작 특징이 정함)' : '-')));
   const fx = (r.ch.fx || []).map(x => fxOf(x.key).ko + '(' + (TYPE_KO[x.type] || x.type) + ')');
-  return parts.join(' · ') + '\n  타입 표현: ' + fx.join(' · ') + (r.ch.style ? '\n  화풍: ' + C.styles[r.ch.style].ko : '');
+  return (speciesOf(r.card).auto ? '(자동 초안) ' : '') + parts.join(' · ') + '\n  타입 표현: ' + fx.join(' · ') + (r.ch.style ? '\n  화풍: ' + C.styles[r.ch.style].ko : '');
 }
 
 function main() {
@@ -190,4 +230,4 @@ function main() {
   for (const r of res) console.log('■ ' + r.card + ' — ' + summary(r) + '\n\n' + r.prompt + '\n');
 }
 if (require.main === module) { try { main(); } catch (e) { console.error('✗ ' + e.message); process.exit(1); } }
-module.exports = { choose, build, faceText, summary, C };
+module.exports = { choose, build, faceText, summary, autoSpecies, speciesOf, C };
