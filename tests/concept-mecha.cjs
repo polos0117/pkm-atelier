@@ -98,7 +98,8 @@ for (let i = 0; i < 20; i++) {
   assert.equal(new Set(used).size, used.length, '배치 실루엣 겹침 ' + used.join(' '));
 }
 /* 화풍(2026-11-06) — 기본은 2D 한국 MMORPG, jp25d 는 첫 줄 · STYLE · 끝맺음만 바뀐다 */
-assert.equal(C.style_default, 'mmorpg2d'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d']);
+assert.equal(C.style_default, 'mmorpg2d'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d', 'anime_gloss']);
+for (const [k, v] of Object.entries(C.styles)) assert(v.ko && v.head && v.style && v.close.includes('{KEY_COLOUR}'), k + ' 화풍 칸');
 for (const card of Object.keys(C.species)) {
   const ch = M.choose(card, { ...base, seed: 'st' }, []).ch, k = M.build(card, ch), j = M.build(card, ch, 'jp25d');
   assert.equal(M.build(card, ch, 'mmorpg2d'), k, card + ' 기본 화풍');

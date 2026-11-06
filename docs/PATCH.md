@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 화풍 anime_gloss(애니 광택)
+- data/concept-mecha.json · tools/concept-mecha.cjs — 화풍 `anime_gloss`: 채도 낮은 흰색 · 은색 파스텔에 진한 강조색 하나, 하얗게 빛나는 하이키 조명 · 블룸 · 반짝이, 피부 · 장갑 · 스타킹 광택, 결마다 빛이 맺힌 가는 머리 가닥, 끝맺음에서 「rich … colours」 를 뺐다. 사용자가 붙여 준 은발 세일러 그림과 수치로 견주어(채도 0.16 · 대비 0.24 — 꼬부기 메카 0.38 · 0.17) 사용자 「같은 2d 인데 이런느낌이 안나네」 → 「응 해줘」
+- tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 화풍 셋 · 칸 검사
+
 ## 2026-11-06 · claude · 메카 컨셉 자동 초안 — 주색은 대표 색
 - tools/concept-mecha.cjs · data/concept-mecha.json — 머리색 · 장갑 주색 · 키 색을 그 종의 대표 색(source-appearance color → `auto.color_words`)으로, 팔레트는 보조색 · 장식색으로만. 꼬부기 시험 그림이 팔레트 첫 색(등딱지 갈색)으로 갈색 머리 · 갈색 장갑이 됐다. 대체 머리 문장(「… hair in shoulder-length layered hair」)도 고쳤다
 - tests/concept-mecha.cjs — 꼬부기 주색 하늘색 · 머리 문장
