@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx",
+ "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx · 타입 낱말은 색보다 모양으로 가른다(독 거품 · 고스트 불꽃 · 비행 바람 줄기와 깃털 — 2026-11-06, 고스트/독 · 물/비행을 섞어도 차이가 안 보였다)",
  "slots": [
   {
    "key": "silhouette",
@@ -679,7 +679,7 @@
   },
   "water": {
    "glow": "a cyan-blue water glow",
-   "motes": "floating water droplets and thin water rings",
+   "motes": "floating water droplets, bubbles and thin water rings",
    "ground": "rippling water and spray spread over the floor beneath her boots"
   },
   "grass": {
@@ -703,8 +703,8 @@
    "ground": "a cracked shockwave ring opens in the floor beneath her boots"
   },
   "poison": {
-   "glow": "a violet toxic glow",
-   "motes": "small floating violet bubbles and vapor",
+   "glow": "a violet-and-acid-green toxic glow with bubbling drips",
+   "motes": "small floating toxic bubbles and dripping droplets",
    "ground": "a thin violet mist pools over the floor beneath her boots"
   },
   "ground": {
@@ -713,13 +713,13 @@
    "ground": "cracked earth and rising dust spread over the floor beneath her boots"
   },
   "flying": {
-   "glow": "a pale sky-blue glow",
-   "motes": "swirling air currents and light streaks of wind",
+   "glow": "a pale sky-blue glow with white wind streaks",
+   "motes": "swirling streaks of wind and small drifting white feathers",
    "ground": "a swirl of wind sweeps the floor beneath her boots"
   },
   "psychic": {
    "glow": "a magenta psychic glow",
-   "motes": "floating rings and glyphs of light",
+   "motes": "floating rings and geometric glyphs of light",
    "ground": "a faint magenta rune circle glows on the floor beneath her boots"
   },
   "bug": {
@@ -733,18 +733,18 @@
    "ground": "cracked stone plates lift slightly from the floor beneath her boots"
   },
   "ghost": {
-   "glow": "a ghostly violet glow",
-   "motes": "drifting wisps of shadow",
+   "glow": "a ghostly violet glow with flickering spectral flames",
+   "motes": "drifting wisps of shadow and small ghostly flames",
    "ground": "shadow wisps creep over the floor beneath her boots"
   },
   "dragon": {
    "glow": "a deep indigo draconic glow",
-   "motes": "streaks of draconic energy",
+   "motes": "sharp streaks of draconic energy shaped like scales",
    "ground": "a draconic energy sigil glows on the floor beneath her boots"
   },
   "dark": {
    "glow": "a dim crimson-black glow",
-   "motes": "drifting shards of shadow",
+   "motes": "drifting jagged shards of shadow",
    "ground": "a pool of shadow spreads over the floor beneath her boots"
   },
   "steel": {
@@ -754,7 +754,7 @@
   },
   "fairy": {
    "glow": "a soft pink fairy glow",
-   "motes": "pink sparkles and drifting petals",
+   "motes": "pink star-shaped sparkles and drifting petals",
    "ground": "pink sparkles and petals lie scattered over the floor beneath her boots"
   }
  },
@@ -774,13 +774,13 @@
   {
    "key": "aura",
    "ko": "실루엣을 두르는 오라",
-   "en": "her whole silhouette is outlined by {glow}",
+   "en": "her whole silhouette is outlined by {glow}, clearly visible as a bright rim of light along her body and armor",
    "where": "body"
   },
   {
    "key": "hair",
    "ko": "머리끝이 입자로 흩어짐",
-   "en": "the tips of her hair glow and dissolve into {motes}",
+   "en": "the tips of her hair glow brightly and visibly dissolve into {motes}",
    "where": "body"
   },
   {

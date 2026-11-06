@@ -55,11 +55,11 @@ assert.throws(() => M.choose('뮤츠', base, []), /컨셉 표/);
 /* 타입 표현 — 하나만 · 다 · 손 없이 · 표현마다 타입 · 한 타입으로 · 섞기 · 틀린 값 */
 const fxB = (card, o) => { const r = M.choose(card, { ...base, ...o }, []); return { r, t: M.build(card, r.ch) }; };
 let x = fxB('팬텀', { fx: ['aura'] });
-assert.deepEqual(x.r.ch.fx, [{ key: 'aura', type: 'ghost' }]); assert(x.t.includes(C.hands_rest + '. Her whole silhouette is outlined by a ghostly violet glow. CAMERA:'), '하나만 · 손 없이');
+assert.deepEqual(x.r.ch.fx, [{ key: 'aura', type: 'ghost' }]); assert(x.t.includes(C.hands_rest + '. Her whole silhouette is outlined by a ghostly violet glow with flickering spectral flames, clearly visible as a bright rim of light along her body and armor. CAMERA:'), '하나만 · 손 없이');
 x = fxB('잠만보', { fx: ['all'] });
 assert.equal(x.r.ch.fx.length, 7); assert(x.t.includes(C.species['잠만보'].HAND_EFFECT) && x.t.includes('warm light spreads over the floor') && x.t.includes('streams back from her heels'), '다');
 x = fxB('갸라도스', { fx: ['hand:flying,aura:water,orbit:flying'] });
-assert(x.t.includes('one open hand conjuring a pale sky-blue glow amid swirling air currents') && x.t.includes('outlined by a cyan-blue water glow') && x.t.includes('Swirling air currents and light streaks of wind circle'), '표현마다 타입(둘째 타입 손은 낱말로)');
+assert(x.t.includes('one open hand conjuring a pale sky-blue glow with white wind streaks amid swirling streaks of wind') && x.t.includes('outlined by a cyan-blue water glow, clearly visible') && x.t.includes('Swirling streaks of wind and small drifting white feathers circle'), '표현마다 타입(둘째 타입 손은 낱말로)');
 x = fxB('갸라도스', { fx: ['hand,ground'], fxType: ['flying'] });
 assert(x.r.ch.fx.every(f => f.type === 'flying') && x.t.includes('A swirl of wind sweeps the floor'), '한 타입으로');
 x = fxB('팬텀', { fx: ['hand,seams,orbit,ground'], mix: true });
