@@ -1,0 +1,669 @@
+{
+ "version": 1,
+ "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」",
+ "slots": [
+  {
+   "key": "silhouette",
+   "ko": "큰 실루엣"
+  },
+  {
+   "key": "weight",
+   "ko": "무게"
+  },
+  {
+   "key": "shoulders",
+   "ko": "어깨"
+  },
+  {
+   "key": "chest",
+   "ko": "흉부"
+  },
+  {
+   "key": "arms",
+   "ko": "팔"
+  },
+  {
+   "key": "hips",
+   "ko": "허리·골반"
+  },
+  {
+   "key": "legs",
+   "ko": "다리·부츠"
+  },
+  {
+   "key": "back",
+   "ko": "등 유닛"
+  },
+  {
+   "key": "head",
+   "ko": "머리"
+  }
+ ],
+ "silhouettes": [
+  {
+   "key": "none",
+   "ko": "큰 실루엣 없음(부품만)",
+   "en": "",
+   "owns": []
+  },
+  {
+   "key": "slim_suit",
+   "ko": "슬림 보디슈트형",
+   "en": "a sleek armored bodysuit — thin, long plates on the shoulders, arms and legs that follow her curves closely",
+   "owns": [
+    "weight"
+   ]
+  },
+  {
+   "key": "heavy_assault",
+   "ko": "중장갑 강습형",
+   "en": "heavy assault bulk — big, thick shoulder and leg armor, a broad upper silhouette and large thrusters on the back and legs, while the torso stays fitted and the waist narrow",
+   "owns": [
+    "weight",
+    "shoulders",
+    "back",
+    "legs"
+   ]
+  },
+  {
+   "key": "wing_binder",
+   "ko": "날개 바인더형",
+   "en": "large wing-shaped binder plates spread symmetrically behind her back as the main shape, with light body armor",
+   "owns": [
+    "back"
+   ]
+  },
+  {
+   "key": "skirt_plate",
+   "ko": "장갑 치마형",
+   "en": "several rigid jointed armor plates flaring from the waist like a skirt — plates, not cloth — with the legs showing between them",
+   "owns": [
+    "hips"
+   ]
+  },
+  {
+   "key": "long_coat_plate",
+   "ko": "장갑 롱코트형",
+   "en": "a long coat made of rigid plates from the shoulders to below the knees, open at the front to show the body armor, with an angular collar",
+   "owns": [
+    "hips"
+   ]
+  },
+  {
+   "key": "float_units",
+   "ko": "떠 있는 유닛형",
+   "en": "light body armor with several small shield and drone units floating symmetrically around her",
+   "owns": []
+  },
+  {
+   "key": "sub_arms",
+   "ko": "보조 팔형",
+   "en": "a symmetrical pair of mechanical sub-arms reaching out from her back, ending in shields or tools — her own two human arms stay as they are",
+   "owns": [
+    "back"
+   ]
+  },
+  {
+   "key": "big_backpack",
+   "ko": "대형 등짐형",
+   "en": "a large equipment unit worn on the back (tanks, cores or antennae) rising above her head as the main shape, with medium body armor",
+   "owns": [
+    "back"
+   ]
+  },
+  {
+   "key": "light_agile",
+   "ko": "경량 고기동형",
+   "en": "minimal thin armor with large thrusters at the calves and ankles — a light, fast, forward-leaning silhouette",
+   "owns": [
+    "weight",
+    "legs"
+   ]
+  },
+  {
+   "key": "halo_crown",
+   "ko": "후광·관형",
+   "en": "a large ring halo behind her head and a tall crown-like head unit, with long hanging shoulder plates — a ceremonial, elegant shape",
+   "owns": [
+    "head",
+    "shoulders"
+   ]
+  },
+  {
+   "key": "segmented_parts",
+   "ko": "장갑 분리형",
+   "en": "separate armor pieces rather than one shell — plates on the shoulders, forearms, chest, waist, thighs and shins, with a dark fitted inner suit showing between them",
+   "owns": []
+  },
+  {
+   "key": "full_armor",
+   "ko": "전신 장갑형",
+   "en": "complete armor with plates joined from neck to feet except where her shoulders and upper thighs show, dense visible seams and joints",
+   "owns": [
+    "weight"
+   ]
+  },
+  {
+   "key": "frame_exposed",
+   "ko": "골격 노출형",
+   "en": "sparse outer plates over an exposed mechanical skeleton of metal struts, pistons and cables — light and precise",
+   "owns": [
+    "weight"
+   ]
+  },
+  {
+   "key": "power_limbs",
+   "ko": "대형 팔다리형",
+   "en": "a slender torso with oversized mechanical forearms and lower legs — huge gauntlets and boots — the contrast is the main shape",
+   "owns": [
+    "arms",
+    "legs"
+   ]
+  },
+  {
+   "key": "knight_plate",
+   "ko": "기사 갑주형",
+   "en": "mecha armor shaped like a medieval knight's plate — big rounded pauldrons, a breastplate, layered plates below the waist, a head ornament instead of a helmet so her face shows",
+   "owns": [
+    "shoulders",
+    "chest",
+    "hips",
+    "head"
+   ]
+  },
+  {
+   "key": "cape_plates",
+   "ko": "망토판형",
+   "en": "several long rigid jointed plates hanging from behind the shoulders to the ankles like a cape — plates, not cloth",
+   "owns": [
+    "back"
+   ]
+  },
+  {
+   "key": "tail_unit",
+   "ko": "꼬리 유닛형",
+   "en": "one long segmented mechanical tail reaching from the back of her waist, tipped with an ornament",
+   "owns": [
+    "back"
+   ]
+  },
+  {
+   "key": "hover_rings",
+   "ko": "부유 링형",
+   "en": "ring-shaped armor bands floating free around her waist and ankles, with light body armor — the floating rings make the shape",
+   "owns": []
+  }
+ ],
+ "parts": {
+  "weight": [
+   {
+    "key": "light",
+    "ko": "몸에 붙는 경장",
+    "en": "agile light armor that sits close to her body"
+   },
+   {
+    "key": "medium",
+    "ko": "단단한 중간 장갑",
+    "en": "balanced medium armor"
+   },
+   {
+    "key": "heavy",
+    "ko": "두꺼운 중장",
+    "en": "sturdy heavy armor with thick plates while her body inside keeps its size"
+   }
+  ],
+  "shoulders": [
+   {
+    "key": "round_small",
+    "ko": "작은 둥근 어깨판",
+    "en": "compact rounded shoulder plates"
+   },
+   {
+    "key": "balloon",
+    "ko": "풍선형 큰 어깨판",
+    "en": "large rounded balloon-like pauldrons"
+   },
+   {
+    "key": "layered",
+    "ko": "겹친 어깨판",
+    "en": "layered overlapping shoulder plates"
+   },
+   {
+    "key": "swept",
+    "ko": "뒤로 뻗은 날카로운 어깨판",
+    "en": "sharp shoulder plates swept up and back"
+   },
+   {
+    "key": "collar_only",
+    "ko": "어깨판 없이 칼라만",
+    "en": "no shoulder plates, only a mechanical collar, her shoulders bare"
+   }
+  ],
+  "chest": [
+   {
+    "key": "open_plate",
+    "ko": "쇄골이 드러나는 흉갑",
+    "en": "a sculpted chest plate that shows her collarbones and upper chest"
+   },
+   {
+    "key": "high_collar",
+    "ko": "높은 칼라 흉갑",
+    "en": "a high mechanical collar over a fitted chest plate"
+   },
+   {
+    "key": "core",
+    "ko": "가운데 발광 코어 흉갑",
+    "en": "a chest plate with a softly glowing round core at its centre"
+   },
+   {
+    "key": "layered",
+    "ko": "겹판 흉갑",
+    "en": "a chest of overlapping layered plates"
+   }
+  ],
+  "arms": [
+   {
+    "key": "slim_bracers",
+    "ko": "얇은 팔뚝 판",
+    "en": "slim forearm bracers"
+   },
+   {
+    "key": "gauntlets",
+    "ko": "두꺼운 건틀릿",
+    "en": "thick mechanical gauntlets ending at the wrist"
+   },
+   {
+    "key": "segmented",
+    "ko": "어깨부터 손목까지 분절 팔 장갑",
+    "en": "segmented arm armor from shoulder to wrist"
+   },
+   {
+    "key": "finned",
+    "ko": "날 달린 팔뚝 판",
+    "en": "forearm bracers with short fin blades"
+   }
+  ],
+  "hips": [
+   {
+    "key": "highcut",
+    "ko": "하이컷 골반판",
+    "en": "a high-cut pelvic plate"
+   },
+   {
+    "key": "short_skirt",
+    "ko": "짧은 분절 옆 치마판",
+    "en": "short articulated side skirt plates"
+   },
+   {
+    "key": "long_panels",
+    "ko": "종아리까지 긴 판",
+    "en": "long rigid panels falling from the hips to the calves"
+   },
+   {
+    "key": "flared",
+    "ko": "허리에서 퍼지는 치마판",
+    "en": "several jointed skirt plates flaring from the waist"
+   }
+  ],
+  "legs": [
+   {
+    "key": "thigh_boots",
+    "ko": "허벅지까지 장갑 부츠",
+    "en": "armored thigh-high boots with precise knee and ankle joints"
+   },
+   {
+    "key": "knee_guards",
+    "ko": "뾰족한 무릎 보호대 부츠",
+    "en": "armored boots with large pointed knee guards"
+   },
+   {
+    "key": "round_toe",
+    "ko": "둥근 발끝 장갑 부츠",
+    "en": "round-toed armored boots"
+   },
+   {
+    "key": "heels",
+    "ko": "뾰족한 하이힐 장갑 부츠",
+    "en": "pointed high-heel armored boots with round ankle joints"
+   },
+   {
+    "key": "shin_plates",
+    "ko": "긴 정강이판",
+    "en": "long shin plates over slim boots"
+   }
+  ],
+  "back": [
+   {
+    "key": "none",
+    "ko": "등 유닛 없음",
+    "en": ""
+   },
+   {
+    "key": "thrusters",
+    "ko": "작은 추진기",
+    "en": "compact thrusters on her back"
+   },
+   {
+    "key": "tanks",
+    "ko": "작은 탱크·코어 한 쌍",
+    "en": "a pair of small tanks or cores on her back"
+   },
+   {
+    "key": "fins",
+    "ko": "등에서 솟은 핀",
+    "en": "slim fin plates rising from her back"
+   }
+  ],
+  "head": [
+   {
+    "key": "headband",
+    "ko": "얇은 머리띠",
+    "en": "a slim headband"
+   },
+   {
+    "key": "temple_sensor",
+    "ko": "관자 센서",
+    "en": "slim temple sensors"
+   },
+   {
+    "key": "crest",
+    "ko": "볏·귀 모양 머리 장식",
+    "en": "crest- or ear-shaped head ornaments"
+   },
+   {
+    "key": "visor_ring",
+    "ko": "머리 위 떠 있는 바이저 링",
+    "en": "a thin visor ring floating above her head"
+   }
+  ]
+ },
+ "types": {
+  "normal": {
+   "silhouette": [
+    "slim_suit",
+    "segmented_parts",
+    "knight_plate"
+   ],
+   "shoulders": [
+    "round_small",
+    "balloon"
+   ],
+   "legs": [
+    "round_toe"
+   ]
+  },
+  "fire": {
+   "silhouette": [
+    "heavy_assault",
+    "light_agile",
+    "cape_plates"
+   ],
+   "back": [
+    "thrusters"
+   ]
+  },
+  "water": {
+   "silhouette": [
+    "skirt_plate",
+    "tail_unit",
+    "hover_rings"
+   ],
+   "shoulders": [
+    "layered"
+   ],
+   "arms": [
+    "finned"
+   ],
+   "back": [
+    "fins"
+   ]
+  },
+  "grass": {
+   "silhouette": [
+    "skirt_plate",
+    "long_coat_plate",
+    "float_units"
+   ],
+   "hips": [
+    "long_panels",
+    "flared"
+   ]
+  },
+  "electric": {
+   "silhouette": [
+    "light_agile",
+    "slim_suit",
+    "float_units"
+   ],
+   "back": [
+    "fins"
+   ],
+   "head": [
+    "crest"
+   ]
+  },
+  "ice": {
+   "silhouette": [
+    "halo_crown",
+    "cape_plates",
+    "full_armor"
+   ],
+   "head": [
+    "visor_ring"
+   ]
+  },
+  "fighting": {
+   "silhouette": [
+    "power_limbs",
+    "heavy_assault",
+    "segmented_parts"
+   ],
+   "arms": [
+    "gauntlets"
+   ]
+  },
+  "poison": {
+   "silhouette": [
+    "frame_exposed",
+    "tail_unit",
+    "sub_arms"
+   ]
+  },
+  "ground": {
+   "silhouette": [
+    "heavy_assault",
+    "power_limbs",
+    "full_armor"
+   ],
+   "weight": [
+    "heavy"
+   ]
+  },
+  "flying": {
+   "silhouette": [
+    "wing_binder",
+    "light_agile",
+    "cape_plates"
+   ],
+   "shoulders": [
+    "swept"
+   ]
+  },
+  "psychic": {
+   "silhouette": [
+    "halo_crown",
+    "float_units",
+    "hover_rings"
+   ],
+   "chest": [
+    "core"
+   ]
+  },
+  "bug": {
+   "silhouette": [
+    "sub_arms",
+    "wing_binder",
+    "segmented_parts"
+   ]
+  },
+  "rock": {
+   "silhouette": [
+    "full_armor",
+    "knight_plate",
+    "heavy_assault"
+   ],
+   "weight": [
+    "heavy"
+   ]
+  },
+  "ghost": {
+   "silhouette": [
+    "float_units",
+    "cape_plates",
+    "frame_exposed"
+   ]
+  },
+  "dragon": {
+   "silhouette": [
+    "wing_binder",
+    "tail_unit",
+    "knight_plate"
+   ],
+   "head": [
+    "crest"
+   ]
+  },
+  "dark": {
+   "silhouette": [
+    "long_coat_plate",
+    "cape_plates",
+    "slim_suit"
+   ]
+  },
+  "steel": {
+   "silhouette": [
+    "full_armor",
+    "knight_plate",
+    "big_backpack"
+   ],
+   "chest": [
+    "high_collar"
+   ]
+  },
+  "fairy": {
+   "silhouette": [
+    "halo_crown",
+    "skirt_plate",
+    "hover_rings"
+   ],
+   "chest": [
+    "core"
+   ]
+  }
+ },
+ "template": "Use case: stylized-concept. Create ONE finished illustration of Pokémon {NAME} personified as a beautiful adult human woman, in a premium 2D Korean MMORPG official character illustration style. Single vertical 2:3 full-body artwork, head to boots fully visible with comfortable margins.\n\nSTYLE: Clearly hand-drawn 2D character art, delicate refined coloured linework, elegant adult anime facial design, expressive finely detailed eyes, carefully designed shapes, rich luminous colours and layered painted shading. Elaborate Korean fantasy game costume illustration with clean detailed rendering. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.\n\nCHARACTER: One adult woman in her mid-twenties, {PERSONA}. {HAIR}, {EYES}, a refined feminine face with {FACE}, {FIGURE}, balanced natural adult proportions. {NAME}'s identity is unmistakable: {SIGNATURE}.\n\nCOSTUME: A sophisticated fitted {COLOURS} science-fiction mecha powered armor with {ACCENTS}: {SILHOUETTE}{PARTS}, {UNDERSUIT}, {MOTIF}, visible panel seams, recessed bolts, small actuators, functional mechanical hinges, ventilation slots and restrained {GLOW} luminous circuit lines; {WEIGHT} with a {LINE}, feminine, visibly curvaceous silhouette rather than a giant robot suit, leaving her shoulders and upper thighs bare; solid hard-surface plates that read as armor, not cloth; no lace, no flowing fabric sleeves or cloth capes, no helmet covering the face, no weapons. Refined feminine costume design, intricate yet readable. Her two human hands are uncovered and fully visible.\n\nPOSE AND SCENE: A lively poised standing pose, {HAND_EFFECT} and the other relaxed beside her. CAMERA: camera level with her face; her body and face turned gently three-quarters toward the camera, her head level with her chin neither raised nor tucked, no upward perspective on her face. {BACKGROUND} behind her; {AMBIENT} frame her silhouette. Bright clear lighting, rich {KEY_COLOUR} colours, polished 2D Korean MMORPG character key art.\n\nANATOMY: One head, two arms, two legs, two natural human hands, five fingers each. Natural neck and joints. No extra characters, no text, no logos, no UI, no collage.",
+ "species": {
+  "피카츄": {
+   "no": 25,
+   "types": [
+    "electric"
+   ],
+   "owns": [
+    "head",
+    "back"
+   ],
+   "PERSONA": "a beautiful confident and lively electric-element adventurer",
+   "HAIR": "Golden-yellow hair in a flowing high ponytail",
+   "EYES": "warm amber eyes",
+   "FIGURE": "a graceful athletic-curvaceous figure with a full bust, a defined waist and rounded hips",
+   "SIGNATURE": "long yellow ears with black tips incorporated into an elegant headpiece, small red circular cheek markings, and a single broad yellow lightning-bolt tail with a brown base visibly extending from behind her waist",
+   "COLOURS": "yellow-and-black",
+   "ACCENTS": "gold and brown accents",
+   "UNDERSUIT": "a black flexible undersuit",
+   "MOTIF": "brown trim recalling Pikachu's back stripes and small lightning-shaped edges on the plates",
+   "GLOW": "electric-yellow",
+   "LINE": "graceful",
+   "HAND_EFFECT": "one open hand conjuring a few crisp golden electric arcs",
+   "BACKGROUND": "A sunlit fantasy stone terrace with a distant castle and a softly painted blue sky",
+   "AMBIENT": "restrained electric sparkles",
+   "KEY_COLOUR": "golden-yellow"
+  },
+  "갸라도스": {
+   "no": 130,
+   "types": [
+    "water",
+    "flying"
+   ],
+   "owns": [
+    "head",
+    "back"
+   ],
+   "PERSONA": "a beautiful fierce, proud and imperious water-element sea queen",
+   "HAIR": "Long navy-blue hair in a flowing high ponytail",
+   "EYES": "sharp red eyes",
+   "FIGURE": "a tall, statuesque athletic-curvaceous figure with a full bust, a defined waist, rounded hips and long powerful legs",
+   "SIGNATURE": "a three-pointed dark-blue crest and small white fin-shaped plates incorporated into her headpiece, yellow spot accents along her armor and a yellow collar trim recalling Gyarados's yellow lips, overlapping scale-like plates on her arms and legs, and a long segmented serpentine tail of blue scale plates with a small white fin visibly extending from behind her waist",
+   "COLOURS": "deep-blue-and-cream",
+   "ACCENTS": "white and yellow accents",
+   "UNDERSUIT": "a navy flexible undersuit with a cream front panel recalling Gyarados's pale underside",
+   "MOTIF": "overlapping scale-like plate textures and white fin-shaped edges",
+   "GLOW": "aqua",
+   "LINE": "powerful",
+   "HAND_EFFECT": "one open hand conjuring a cyan-blue water glow with spray and sheen",
+   "BACKGROUND": "A rain-swept seaside stone terrace above crashing waves and a softly painted storm sky",
+   "AMBIENT": "restrained rain droplets and swirling sea spray",
+   "KEY_COLOUR": "deep ocean-blue"
+  },
+  "팬텀": {
+   "no": 94,
+   "types": [
+    "ghost",
+    "poison"
+   ],
+   "owns": [
+    "head",
+    "back"
+   ],
+   "COLOURS": "dark-purple-and-black",
+   "ACCENTS": "silver and violet accents",
+   "UNDERSUIT": "a black flexible undersuit",
+   "MOTIF": "small spikes along the plate edges and a sly grinning face motif on one plate",
+   "GLOW": "violet",
+   "LINE": "lithe",
+   "PERSONA": "a beautiful mischievous and playfully menacing ghost-element trickster",
+   "HAIR": "Long lavender-violet hair falling loose to the waist with a few spiky tufted strands",
+   "EYES": "glowing violet eyes with a crimson inner glow",
+   "FIGURE": "a lithe, slender-curvaceous figure with a full bust, a narrow waist, rounded hips and long legs",
+   "SIGNATURE": "pointed dark-purple ear-like spikes incorporated into a spiky crown headpiece, numerous small spikes along her shoulder and back plates, a sly wide grin, and a short stubby purple tail plate visibly extending from behind her waist",
+   "HAND_EFFECT": "one open hand conjuring a ghostly violet glow with wisps of shadow",
+   "BACKGROUND": "A moonlit gothic castle terrace and a softly painted violet night sky with a large full moon",
+   "AMBIENT": "restrained drifting shadow wisps and violet sparks",
+   "KEY_COLOUR": "violet-purple"
+  },
+  "잠만보": {
+   "no": 143,
+   "types": [
+    "normal"
+   ],
+   "owns": [
+    "head",
+    "arms"
+   ],
+   "PERSONA": "a beautiful drowsy, gentle and unshakeable normal-element guardian",
+   "HAIR": "Medium-length navy-blue hair gathered in a low bun at the nape with soft side-swept bangs",
+   "EYES": "warm dark amber-brown eyes",
+   "FIGURE": "a soft, rounded, gently plump figure of average build in natural proportion, a modest bust, a softly defined waist and gently rounded hips, smooth soft contours with little visible muscle",
+   "COLOURS": "deep-blue-green-and-cream",
+   "ACCENTS": "soft gold accents",
+   "UNDERSUIT": "a dark teal flexible undersuit",
+   "MOTIF": "rounded plate forms with cream panels",
+   "GLOW": "soft-cream",
+   "LINE": "soft, gently rounded",
+   "SIGNATURE": "small pointed dark ears with cream tips as low triangular ornaments on her headband, a broad cream-coloured breastplate recalling Snorlax's cream face and belly, two tiny pale collar studs for its two pointed teeth, and three small blunt ridges on each gauntlet for its three claws",
+   "HAND_EFFECT": "one open hand releasing a warm white-gold light",
+   "BACKGROUND": "A sunlit forest clearing terrace with mossy stones and a softly painted warm morning sky",
+   "AMBIENT": "restrained floating motes of warm light and drifting leaves",
+   "KEY_COLOUR": "deep teal and cream"
+  }
+ }
+}
