@@ -398,7 +398,7 @@
    {
     "key": "aura",
     "ko": "실루엣을 두르는 오라",
-    "en": "a faint rim of {glow} outlines her whole silhouette"
+    "en": "her whole silhouette is outlined by {glow}"
    },
    {
     "key": "hair",
@@ -722,92 +722,92 @@
   "normal": {
    "glow": "a warm white-gold light",
    "motes": "soft floating motes of warm light",
-   "ground": "a soft ring of warm light spreading over the floor beneath her boots"
+   "ground": "a soft ring of warm light spreads over the floor beneath her boots"
   },
   "fire": {
    "glow": "an orange-red fire glow",
    "motes": "drifting embers and small flame wisps",
-   "ground": "glowing ember cracks and heat shimmer spreading over the floor beneath her boots"
+   "ground": "glowing ember cracks and heat shimmer spread over the floor beneath her boots"
   },
   "water": {
    "glow": "a cyan-blue water glow",
    "motes": "floating water droplets and thin water rings",
-   "ground": "rippling water and spray spreading over the floor beneath her boots"
+   "ground": "rippling water and spray spread over the floor beneath her boots"
   },
   "grass": {
    "glow": "a fresh green glow",
    "motes": "drifting leaves and pollen sparks",
-   "ground": "small sprouting leaves and moss spreading over the floor beneath her boots"
+   "ground": "small sprouting leaves and moss spread over the floor beneath her boots"
   },
   "electric": {
    "glow": "a yellow-white electric glow",
    "motes": "small crackling arcs of lightning",
-   "ground": "branching electric arcs crackling over the floor beneath her boots"
+   "ground": "branching electric arcs crackle over the floor beneath her boots"
   },
   "ice": {
    "glow": "a pale blue icy glow",
    "motes": "floating ice crystals and snowflakes",
-   "ground": "frost spreading over the floor beneath her boots"
+   "ground": "frost spreads over the floor beneath her boots"
   },
   "fighting": {
    "glow": "a hot orange aura of force",
    "motes": "pulsing rings of raw force",
-   "ground": "a cracked shockwave ring in the floor beneath her boots"
+   "ground": "a cracked shockwave ring opens in the floor beneath her boots"
   },
   "poison": {
    "glow": "a violet toxic glow",
    "motes": "small floating violet bubbles and vapor",
-   "ground": "a thin violet mist pooling over the floor beneath her boots"
+   "ground": "a thin violet mist pools over the floor beneath her boots"
   },
   "ground": {
    "glow": "an amber earthen glow",
    "motes": "rising dust and small pebbles",
-   "ground": "cracked earth and rising dust spreading over the floor beneath her boots"
+   "ground": "cracked earth and rising dust spread over the floor beneath her boots"
   },
   "flying": {
    "glow": "a pale sky-blue glow",
    "motes": "swirling air currents and light streaks of wind",
-   "ground": "a swirl of wind sweeping the floor beneath her boots"
+   "ground": "a swirl of wind sweeps the floor beneath her boots"
   },
   "psychic": {
    "glow": "a magenta psychic glow",
    "motes": "floating rings and glyphs of light",
-   "ground": "a faint magenta rune circle on the floor beneath her boots"
+   "ground": "a faint magenta rune circle glows on the floor beneath her boots"
   },
   "bug": {
    "glow": "a lime-green glow",
    "motes": "glowing firefly-like motes",
-   "ground": "a soft lime-green glow pooling over the floor beneath her boots"
+   "ground": "a soft lime-green glow pools over the floor beneath her boots"
   },
   "rock": {
    "glow": "a sandy-gold glow",
    "motes": "orbiting rock fragments",
-   "ground": "cracked stone plates lifting slightly from the floor beneath her boots"
+   "ground": "cracked stone plates lift slightly from the floor beneath her boots"
   },
   "ghost": {
    "glow": "a ghostly violet glow",
    "motes": "drifting wisps of shadow",
-   "ground": "creeping shadow wisps over the floor beneath her boots"
+   "ground": "shadow wisps creep over the floor beneath her boots"
   },
   "dragon": {
    "glow": "a deep indigo draconic glow",
    "motes": "streaks of draconic energy",
-   "ground": "a draconic energy sigil glowing on the floor beneath her boots"
+   "ground": "a draconic energy sigil glows on the floor beneath her boots"
   },
   "dark": {
    "glow": "a dim crimson-black glow",
    "motes": "drifting shards of shadow",
-   "ground": "a pool of shadow spreading over the floor beneath her boots"
+   "ground": "a pool of shadow spreads over the floor beneath her boots"
   },
   "steel": {
    "glow": "a cool silver metallic glow",
    "motes": "small floating polished metal plates",
-   "ground": "polished metal reflections and fine sparks over the floor beneath her boots"
+   "ground": "polished metal reflections and fine sparks play over the floor beneath her boots"
   },
   "fairy": {
    "glow": "a soft pink fairy glow",
    "motes": "pink sparkles and drifting petals",
-   "ground": "pink sparkles and petals scattered over the floor beneath her boots"
+   "ground": "pink sparkles and petals lie scattered over the floor beneath her boots"
   }
  }
 }

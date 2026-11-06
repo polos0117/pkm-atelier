@@ -51,7 +51,7 @@ assert.throws(() => M.choose('피카츄', { ...base, set: ['legs=jetpack'] }, []
 assert.throws(() => M.choose('뮤츠', base, []), /컨셉 표/);
 const nofx = M.build('팬텀', M.choose('팬텀', { ...base, set: ['fx_body=none', 'fx_space=none'] }, []).ch);
 assert(nofx.includes('relaxed beside her. CAMERA:'), '타입 표현을 뺄 수 있다');
-assert(M.build('잠만보', M.choose('잠만보', { ...base, set: ['fx_space=ground'] }, []).ch).includes('warm light spreading over the floor'), '첫 타입 낱말');
+assert(M.build('잠만보', M.choose('잠만보', { ...base, set: ['fx_space=ground'] }, []).ch).includes('warm light spreads over the floor'), '첫 타입 낱말');
 /* 배치 — 큰 실루엣이 서로 겹치지 않는다 */
 for (let i = 0; i < 20; i++) {
   const used = [];
