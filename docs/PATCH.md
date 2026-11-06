@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 일상컷 FACE 줄 — 카메라 · 자세가 얼굴을 길게 · 턱을 무겁게 만들지 않는다
+- lib/prompt-anthro.js — 일상컷 FACE 줄에 사용자 문장 그대로(낮은 · 높은 카메라 · 턱 괴기 · 옆모습 · 돌아보기에서도 첨부 그림의 얼굴형 · 턱 길이 · 얼굴 길이 대 폭 비율 유지), 금지 목록(Do not add …)에 「a face lengthened by the camera angle, a heavy jaw」. 원소공방 일상컷과 같은 문장. 사용자 「위 문장을 일상컷 생성기에 넣어줄래?」 · 「포켓몬에도」
+- tests/prompt-engine.cjs — 일상 낱말 상한 520 → 580, 얼굴 고정 문장이 실린다
+
 ## 2026-11-03 · claude · 일상컷 얼굴 · 화풍은 첨부 그림에 맡긴다
 - lib/prompt-anthro.js — 일상컷 지시문 끝에서 refLock: 화풍 문장 → 「STYLE: keep the attached image's rendering exactly …」, 나이 줄 → 「FACE: exactly the face of the attached image …」(없으면 CHARACTER 밑에), 표정 줄 끝에 「눈썹 · 눈꺼풀 · 입꼬리로만」, FINAL CHECK 줄 뺌. 사용자 「일상컷 저거 너무 이상해」 → 「이제 좀 낫네」 → 「응 다 적용해줘」 — 화풍 · 얼굴 문장을 새로 주면 GPT 세션이 첨부 그림의 얼굴을 다시 그렸다(헬륨 메카 일상)
 - tests — 일상컷 화풍 · 얼굴 · 표정 줄 검사로 바꾸고 일상컷 낱말 상한을 올렸다
