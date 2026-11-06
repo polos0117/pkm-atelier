@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 머리끝 입자는 고를 때만
+- data/concept-mecha.json · tools/concept-mecha.cjs — 타입 표현 머리끝 입자(hair)에 `manual` — 자동 후보에서 빼고 `--fx hair` 로 직접 고를 때만. 문장을 세게 해도 잠만보 시험 그림에서 거의 안 보였다. 사용자 「응 고를때만」
+- tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 자동엔 머리끝이 없다 · 고르면 실린다
+
 ## 2026-11-06 · claude · 메카 컨셉 타입 표현 — 더 또렷하게 · 모양으로 가르기
 - data/concept-mecha.json — 오라 · 머리끝 입자 문장을 세게(「clearly visible … bright rim」 · 「glow brightly and visibly」 — 시험 그림에서 옅었다). 타입 낱말을 색보다 모양으로 — 독 거품 · 방울(초록 기), 고스트 불꽃, 비행 바람 줄기 · 흰 깃털, 물 거품, 에스퍼 기하 문양, 페어리 별 모양, 드래곤 비늘 모양, 악 날 선 조각(고스트/독 · 물/비행을 섞어도 차이가 안 보였다). 사용자 「응 그래」
 - tests/concept-mecha.cjs — 낱말 따라 고침

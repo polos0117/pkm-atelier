@@ -16,7 +16,7 @@
      --fx hand,aura,ground        고른 것만(하나만 줘도 된다) · --fx all  일곱 가지 다 · 안 주면 자동(손 + 몸 하나 + 주변 하나)
      --fx hand:water,aura:flying  표현마다 타입 — 그 종의 타입만 · --fx-type flying  타입을 안 적은 표현은 다 그 타입(기본은 첫 타입)
      --mix                        타입을 안 적은 표현에 그 종의 타입을 섞어 준다(두 타입 종이면 둘 다 쓴다)
-     손을 안 고르면 두 손은 편히 내린다. 같은 타입의 머리끝 입자와 도는 입자 · 자취는 자동으로 같이 안 고른다(같은 낱말 두 번).
+     손을 안 고르면 두 손은 편히 내린다. 머리끝 입자(hair)는 직접 고를 때만(자동 후보에서 뺐다 — 시험 그림에서 거의 안 보였다). 같은 타입의 머리끝 입자와 도는 입자 · 자취는 자동으로 같이 안 고른다(같은 낱말 두 번).
    --out 이면 카드마다 <영어 이름>.txt(지시문 전체)와 <영어 이름>-parts.json(고른 부품)을 쓴다. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path');
@@ -83,7 +83,7 @@ function chooseFx(card, sp, o, r) {
   if (oneType != null && !types.includes(oneType)) throw new Error(card + ' 의 타입은 ' + types.join(' · ') + ' — ' + oneType + ' 은 아니다');
   let list;
   if (spec == null) {   /* 자동 — 손 + 몸 하나 + 주변 하나 */
-    const body = C.fx.filter(f => f.where === 'body'), space = C.fx.filter(f => f.where === 'space');
+    const body = C.fx.filter(f => f.where === 'body' && !f.manual), space = C.fx.filter(f => f.where === 'space' && !f.manual);   /* manual(머리끝 입자)은 직접 고를 때만 — 자동 그림에서 거의 안 보였다 */
     list = [{ key: 'hand' }, { key: pickOf(body, r).key }, { key: pickOf(space, r).key }];
   } else if (spec.trim() === 'all') list = C.fx.map(f => ({ key: f.key }));
   else list = spec.split(',').map(s => s.trim()).filter(Boolean).map(s => { const [key, type] = s.split(':'); return { key, type }; });

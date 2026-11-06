@@ -28,7 +28,7 @@ for (const card of Object.keys(C.species)) {
     const fk = r.ch.fx.map(x => x.key);
     assert.equal(fk[0], 'hand', card + ' 자동은 손 + 몸 + 주변'); assert.equal(fk.length, 3);
     assert(r.ch.fx.every(x => x.type === sp.types[0]), card + ' 기본은 첫 타입');
-    if (fk.includes('hair')) assert(!fk.includes('orbit') && !fk.includes('trail'), card + ' 같은 입자 두 번 ' + i);
+    assert(!fk.includes('hair'), card + ' 머리끝 입자는 고를 때만 ' + i);
     assert(/relaxed beside her\. [A-Z][^.]*\. [A-Z][^.]*\. CAMERA:/.test(txt) && txt.includes(sp.HAND_EFFECT), card + ' 손(종의 손 효과) + 두 문장 ' + i);
     assert(txt.includes('CAMERA: camera level with her face') && txt.includes('no weapons') && txt.includes('Her two human hands are uncovered'), card + ' 고정 줄');
     assert(!/\ban? ((?!and\b)[\w-]+ ){0,2}(eyes|lips)\b/.test(txt.split('COSTUME:')[0]), card + ' 복수에 관사 ' + i);
@@ -65,7 +65,7 @@ assert(x.r.ch.fx.every(f => f.type === 'flying') && x.t.includes('A swirl of win
 x = fxB('팬텀', { fx: ['hand,seams,orbit,ground'], mix: true });
 assert.deepEqual([...new Set(x.r.ch.fx.map(f => f.type))].sort(), ['ghost', 'poison'], '섞기 — 두 타입 다');
 x = fxB('피카츄', { fx: ['hand,aura'], mix: true }); assert(x.r.ch.fx.every(f => f.type === 'electric'), '한 타입 종은 섞어도 그 타입');
-x = fxB('팬텀', { fx: ['팬텀=hair', '피카츄'], set: [] }); assert.deepEqual(x.r.ch.fx.map(f => f.key), ['hair'], '카드=표현');
+x = fxB('팬텀', { fx: ['팬텀=hair', '피카츄'], set: [] }); assert.deepEqual(x.r.ch.fx.map(f => f.key), ['hair'], '카드=표현 · 머리끝은 고르면 실린다'); assert(x.t.includes('The tips of her hair glow brightly'));
 assert.throws(() => fxB('팬텀', { fx: ['aura:water'] }), /팬텀 의 타입은/);
 assert.throws(() => fxB('팬텀', { fxType: ['fire'] }), /팬텀 의 타입은/);
 assert.throws(() => fxB('팬텀', { fx: ['laser'] }), /없는 타입 표현/);

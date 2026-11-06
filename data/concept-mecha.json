@@ -781,7 +781,8 @@
    "key": "hair",
    "ko": "머리끝이 입자로 흩어짐",
    "en": "the tips of her hair glow brightly and visibly dissolve into {motes}",
-   "where": "body"
+   "where": "body",
+   "manual": true
   },
   {
    "key": "orbit",
