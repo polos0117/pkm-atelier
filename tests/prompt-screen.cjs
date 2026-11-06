@@ -14,7 +14,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.equal(await p.locator('#source').inputValue(),'피카츄','dex deep link');
   assert.deepEqual(await p.locator('#group option').evaluateAll(es=>es.slice(1).map(e=>e.textContent)),
    groups.order.map(k=>groups.name[k]));
-  assert.equal(await p.locator('#style option').count(),14);
+  assert.equal(await p.locator('#style option').count(),15);   // 2026-11-06 anime_gloss
   assert.equal(await p.locator('#mode-portrait').count(),0,'the sheet mode is gone');
   assert((await text()).startsWith('INPUT: text only'));
   assert((await text()).includes('lightning-shaped tail becomes'),'source data is worn as costume');
@@ -194,6 +194,6 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);
   await corrupt.close();
-  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 14 styles, copy, saved settings, figures, 44px controls and 3 viewport sizes');
+  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 15 styles, copy, saved settings, figures, 44px controls and 3 viewport sizes');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

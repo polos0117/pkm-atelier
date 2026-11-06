@@ -9,7 +9,9 @@
 | 파일 | 무엇 |
 |---|---|
 | `data/concept-mecha.json` | 틀(`template`) · 칸(`slots`) · 큰 실루엣(`silhouettes`) · 부품(`parts`) · 타입 추천(`types`) · 종(`species`) |
-| `tools/concept-mecha.cjs` | 부품을 골라 전체 지시문을 짓는다 |
+| `lib/concept-mecha.js` | 조립부 — 생성기 화면과 명령줄 도구가 같이 쓴다(같은 선택이면 같은 글) |
+| 생성기 `prompt.html` 「메카 컨셉」 탭 | 화풍 · 씨앗(다른 조합) · 칸마다 자동/직접(실루엣 · 원작이 정하는 칸은 막힘) · 타입 표현 자동/직접(표현마다 체크, 두 타입 종은 표현마다 타입) · 자동 초안 안내. 고른 것은 그 카드의 저장값(`concept`) |
+| `tools/concept-mecha.cjs` | 명령줄 — 옵션을 선택값으로 바꿔 조립부를 부른다 |
 | `tests/concept-mecha.cjs` | 표 · 자동 · 랜덤 · 직접 고르기 · 겹치는 칸 · 배치 |
 
 ## 칸

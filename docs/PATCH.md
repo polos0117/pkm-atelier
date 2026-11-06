@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 생성기에 「메카 컨셉」 갈래 — 실루엣 · 부품 · 타입 표현 고르기
+- lib/concept-mecha.js — 메카 컨셉 조립부를 도구에서 떼어 냈다(브라우저 · node 둘 다, 오류는 열쇠로). 같은 선택이면 화면과 도구가 글자 하나 다르지 않다
+- lib/prompt-ui.js · prompt.html · lib/words.js — 생성기 탭 「메카 컨셉」: 컨셉 화풍, 자동 조합 씨앗 · 다른 조합, 큰 실루엣 · 부위 부품 칸마다 자동(지금 고른 값 표시) / 직접, 실루엣 · 원작 특징이 정하는 칸은 막힘, 타입 표현 자동(두 타입 섞기) / 직접(일곱 가지 체크, 두 타입 종은 표현마다 타입), 자동 초안 안내, 그 화풍 경장 그림 보기. 사용자 「생성기에 메카 실루엣 설정이랑 속성 효과 선택하는건 안넣었어?」 → 「응」
+- lib/prompt-state.js — 저장값에 갈래 `concept` 와 선택값(`concept` — set · fx · mix · seed · style)
+- tools/concept-mecha.cjs — 조립부를 부르는 얇은 명령줄(옵션 · 한글 오류 그대로, 지시문 바뀌지 않음)
+- tests/concept-mecha-screen.cjs — 화면 = 도구 18가지(데스크톱 · 폰) · tests/prompt-screen.cjs — 화풍 수 15(앞 커밋에서 못 고친 것)
+- docs/CONCEPT_MECHA.md · AGENTS.md — 자리 · 시험
+
 ## 2026-11-06 · claude · 화풍 anime_gloss(애니 광택) — 도감에서 고르는 새 화풍
 - lib/prompt-spec.js · data/style.json — 화풍 열쇠 `anime_gloss`(애니 광택 — 2D MMORPG 메카 컨셉의 기본 화풍: 채도 낮은 흰색 · 은색 파스텔, 하이키 · 블룸 · 반짝이, 가는 머리 가닥, 자연광 윤기)를 ART_STYLES 끝에 더하고 세계 · 일상 화풍 줄(일상은 장갑 말 없이)을 넣었다. 기존 그림 · 기본 화풍(glossy_promo)은 그대로 — 도감 화풍 고르개에 따로 뜬다. 사용자 「이상해씨, 파이리,꼬부기 올려줘」 · 「신규 화풍으로 기존거는 두고, 도감에서 선택할 수 있게」
 - tests/prompt-engine.cjs — 화풍 수 15

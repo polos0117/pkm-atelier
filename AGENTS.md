@@ -132,6 +132,7 @@ node tests/casual-tree-v2.cjs    # 버전2 거르기 모듈 × pkm 표 — 검�
 node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1200 낱말 · 버전1 기록은 버전1 지시문
 node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 아홉 자리 · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
 node tests/concept-mecha.cjs     # 2D MMORPG 메카 컨셉(시범) — 부품 표 열쇠 · 실루엣 owns · 자동 · 랜덤 · --set · 겹치는 칸 막기 · 배치 실루엣 안 겹침 · 얼굴(docs/CONCEPT_MECHA.md)
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cjs  # 생성기 「메카 컨셉」 갈래 = 명령줄 도구 지시문(칸 직접 · 실루엣이 정하는 칸 막힘 · 화풍 · 씨앗 · 타입 표현 · 두 타입 · 자동 초안 · 새로고침 · 폰)
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 아홉 자리 글자 하나 다르지 않다(브라우저)
 node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 서른 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
