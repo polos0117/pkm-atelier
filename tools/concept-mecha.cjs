@@ -75,20 +75,27 @@ function choose(card, o, usedSil) {
     const all = optionsOf(slot).map(x => x.key), pref = o.random ? [] : (prefs[slot] || []).filter(k => all.includes(k));
     let pool = pref.length ? pref : all;
     if (slot === 'silhouette') { const fresh = pool.filter(k => !usedSil.includes(k) && k !== 'none'); pool = fresh.length ? fresh : all.filter(k => !usedSil.includes(k)); }
+    if (/^fx_/.test(slot)) pool = pool.filter(k => k !== 'none');   /* 타입 표현은 자동이면 늘 싣는다 — 빼려면 --set fx_body=none */
     return pickOf(pool, r);
   };
   const ch = { silhouette: given.silhouette || pick('silhouette') };
   const sil = findOpt('silhouette', ch.silhouette), owned = new Set([...(sil.owns || []), ...(sp.owns || [])]);
   for (const k of Object.keys(given)) if (k !== 'silhouette' && owned.has(k)) throw new Error(card + ' 의 ' + k + ' 칸은 ' + ((sil.owns || []).includes(k) ? '실루엣 ' + sil.key : '원작 특징') + ' 이 정한다 — --set 을 뺀다');
   for (const { key } of C.slots) if (key !== 'silhouette') ch[key] = owned.has(key) ? null : (given[key] || pick(key));
+  /* 머리끝이 입자로 흩어지면 주변 입자 · 자취는 같은 낱말이 두 번 — 자동이면 바닥 효과로 */
+  if (ch.fx_body === 'hair' && ['orbit', 'trail'].includes(ch.fx_space) && !given.fx_space) ch.fx_space = 'ground';
   return { card, ch, owned: [...owned] };
 }
 
 function build(card, ch) {
   const sp = C.species[card], c = CARDS[card] || {}, sil = findOpt('silhouette', ch.silhouette);
   const parts = ['shoulders', 'chest', 'arms', 'hips', 'legs', 'back', 'head'].map(k => ch[k] && findOpt(k, ch[k]).en).filter(Boolean);
+  /* 타입 표현 — 손 효과 말고 몸 · 주변(첫 타입의 낱말 type_fx) */
+  const tw = C.type_fx[(sp.types || [])[0]] || C.type_fx.normal;
+  const fx = ['fx_body', 'fx_space'].map(k => ch[k] && findOpt(k, ch[k]).en).filter(Boolean)
+    .map(s => s.replace(/\{(glow|motes|ground)\}/g, (m, k) => tw[k])).map(s => s[0].toUpperCase() + s.slice(1) + '. ').join('');
   const vals = Object.assign({}, sp, {
-    NAME: c.en || card, FACE: faceText(sp.no || c.no),
+    NAME: c.en || card, FACE: faceText(sp.no || c.no), TYPE_FX: fx,
     SILHOUETTE: sil.en ? sil.en + '; ' : '', PARTS: parts.join(', '),
     WEIGHT: ch.weight ? findOpt('weight', ch.weight).en : 'the whole armor'
   });
