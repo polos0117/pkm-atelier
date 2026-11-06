@@ -3,7 +3,7 @@
    사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」
 
    node tools/concept-mecha.cjs <카드> [<카드> …] [--set [<카드>:]<칸>=<값>] [--fx [<카드>=]<표현>[:<타입>],…] [--fx-type [<카드>=]<타입>] [--mix]
-       [--random] [--seed <씨앗>] [--out <폴더>] [--json]
+       [--random] [--seed <씨앗>] [--style mmorpg2d|jp25d] [--out <폴더>] [--json]
    node tools/concept-mecha.cjs --list          칸 · 타입 표현 · 고를 수 있는 값
 
    칸: silhouette(큰 실루엣 — 삼국지 공방 메카 실루엣 18 + 없음) · weight · shoulders · chest · arms · hips · legs · back · head
@@ -17,6 +17,7 @@
      --fx hand:water,aura:flying  표현마다 타입 — 그 종의 타입만 · --fx-type flying  타입을 안 적은 표현은 다 그 타입(기본은 첫 타입)
      --mix                        타입을 안 적은 표현에 그 종의 타입을 섞어 준다(두 타입 종이면 둘 다 쓴다)
      손을 안 고르면 두 손은 편히 내린다. 머리끝 입자(hair)는 직접 고를 때만(자동 후보에서 뺐다 — 시험 그림에서 거의 안 보였다). 같은 타입의 머리끝 입자와 도는 입자 · 자취는 자동으로 같이 안 고른다(같은 낱말 두 번).
+   화풍(--style): mmorpg2d(2D 한국 MMORPG, 기본) · jp25d(일본 2.5D 모바일) — 첫 줄 · STYLE · 끝맺음만 바뀐다(styles).
    --out 이면 카드마다 <영어 이름>.txt(지시문 전체)와 <영어 이름>-parts.json(고른 부품)을 쓴다. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path');
@@ -53,7 +54,7 @@ function faceText(no) {
 }
 
 function args(argv) {
-  const o = { cards: [], set: [], fx: [], fxType: [], mix: false, random: false, seed: '', out: '', json: false, list: false };
+  const o = { cards: [], set: [], fx: [], fxType: [], mix: false, random: false, seed: '', style: '', out: '', json: false, list: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--set') o.set.push(argv[++i]);
@@ -62,6 +63,7 @@ function args(argv) {
     else if (a === '--mix') o.mix = true;
     else if (a === '--random') o.random = true;
     else if (a === '--seed') o.seed = argv[++i];
+    else if (a === '--style') o.style = argv[++i];
     else if (a === '--out') o.out = argv[++i];
     else if (a === '--json') o.json = true;
     else if (a === '--list') o.list = true;
@@ -140,13 +142,15 @@ function fxText(sp, x) {
   return f.en.replace(/\{(glow|motes|ground)\}/g, (m, k) => w[k]);
 }
 
-function build(card, ch) {
+function build(card, ch, style) {
   const sp = C.species[card], c = CARDS[card] || {}, sil = findOpt('silhouette', ch.silhouette);
+  const ST = C.styles[style || C.style_default]; if (!ST) throw new Error('없는 화풍 ' + style + ' — ' + Object.keys(C.styles).join(' · '));
   const parts = ['shoulders', 'chest', 'arms', 'hips', 'legs', 'back', 'head'].map(k => ch[k] && findOpt(k, ch[k]).en).filter(Boolean);
   const fx = ch.fx || [{ key: 'hand', type: (sp.types || [])[0] }], hand = fx.find(x => x.key === 'hand');
   const order = C.fx.map(f => f.key), rest = fx.filter(x => x.key !== 'hand').sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
   const vals = Object.assign({}, sp, {
     NAME: c.en || card, FACE: faceText(sp.no || c.no),
+    STYLE_HEAD: ST.head, STYLE: ST.style, STYLE_CLOSE: ST.close.replace('{KEY_COLOUR}', sp.KEY_COLOUR),
     HANDS: hand ? fxText(sp, hand) + ' and the other relaxed beside her' : C.hands_rest,
     TYPE_FX: rest.map(x => { const s = fxText(sp, x); return s[0].toUpperCase() + s.slice(1) + '. '; }).join(''),
     SILHOUETTE: sil.en ? sil.en + '; ' : '', PARTS: parts.join(', '),
@@ -159,20 +163,21 @@ function build(card, ch) {
 function summary(r) {
   const parts = C.slots.map(({ key, ko }) => ko + ' ' + (r.ch[key] ? (findOpt(key, r.ch[key]).ko) : (r.owned.includes(key) ? '(실루엣 · 원작 특징이 정함)' : '-')));
   const fx = (r.ch.fx || []).map(x => fxOf(x.key).ko + '(' + (TYPE_KO[x.type] || x.type) + ')');
-  return parts.join(' · ') + '\n  타입 표현: ' + fx.join(' · ');
+  return parts.join(' · ') + '\n  타입 표현: ' + fx.join(' · ') + (r.ch.style ? '\n  화풍: ' + C.styles[r.ch.style].ko : '');
 }
 
 function main() {
   const o = args(process.argv.slice(2));
   if (o.list) {
     for (const { key, ko } of C.slots) console.log(ko + ' (' + key + '): ' + optionsOf(key).map(x => x.key + '=' + x.ko).join(' · '));
+    console.log('화풍 (--style): ' + Object.entries(C.styles).map(([k, v]) => k + '=' + v.ko).join(' · ') + ' (기본 ' + C.style_default + ')');
     console.log('타입 표현 (--fx): ' + C.fx.map(f => f.key + '=' + f.ko).join(' · ') + ' · all=다');
     for (const [k, v] of Object.entries(C.species)) console.log('  ' + k + ' 타입: ' + v.types.join(' · '));
     return;
   }
   if (!o.cards.length) throw new Error('카드 이름이 필요하다(컨셉 표에 있는 것: ' + Object.keys(C.species).join(' · ') + ')');
   const used = [], res = [];
-  for (const card of o.cards) { const r = choose(card, o, used); used.push(r.ch.silhouette); r.prompt = build(card, r.ch); res.push(r); }
+  for (const card of o.cards) { const r = choose(card, o, used); used.push(r.ch.silhouette); r.ch.style = o.style || C.style_default; r.prompt = build(card, r.ch, r.ch.style); res.push(r); }
   if (o.out) {
     fs.mkdirSync(o.out, { recursive: true });
     for (const r of res) {

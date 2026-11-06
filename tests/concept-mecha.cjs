@@ -77,6 +77,17 @@ for (let i = 0; i < 20; i++) {
   for (const card of Object.keys(C.species)) used.push(M.choose(card, { ...base, seed: 'b' + i }, used).ch.silhouette);
   assert.equal(new Set(used).size, used.length, '배치 실루엣 겹침 ' + used.join(' '));
 }
+/* 화풍(2026-11-06) — 기본은 2D 한국 MMORPG, jp25d 는 첫 줄 · STYLE · 끝맺음만 바뀐다 */
+assert.equal(C.style_default, 'mmorpg2d'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d']);
+for (const card of Object.keys(C.species)) {
+  const ch = M.choose(card, { ...base, seed: 'st' }, []).ch, k = M.build(card, ch), j = M.build(card, ch, 'jp25d');
+  assert.equal(M.build(card, ch, 'mmorpg2d'), k, card + ' 기본 화풍');
+  assert(k.includes('premium 2D Korean MMORPG official character illustration style') && k.includes('rich ' + C.species[card].KEY_COLOUR + ' colours, polished 2D Korean MMORPG character key art.'), card + ' 2D');
+  assert(j.includes('high-quality Japanese 2.5D mobile-game') && j.includes('STYLE: Premium Japanese mobile RPG') && j.includes('premium Japanese 2.5D mobile RPG character key art.') && !/Korean|MMORPG/.test(j) && !/amber|rounded jaw/.test(j.split('\n\n').find(p => p.startsWith('STYLE:'))), card + ' 2.5D(STYLE 에 피카츄 전용 말 없음)');
+  const strip = t => t.split('\n\n').filter(p => !/^(Use case|STYLE):/.test(p)).join('\n\n').replace(/Bright clear lighting.*$|Clear character silhouette against.*$/m, '');
+  assert.equal(strip(j), strip(k), card + ' 화풍 말고는 같다');
+}
+assert.throws(() => M.build('피카츄', M.choose('피카츄', base, []).ch, 'oil'), /없는 화풍/);
 /* 얼굴 — face-design 에서 */
 assert.match(M.faceText(130), /^an elongated, long and medium-width shape, an angular defined jaw, medium-sized sharp eyes/);
 console.log('PASS 메카 컨셉: 칸 ' + SLOTS.length + ' · 큰 실루엣 ' + C.silhouettes.length + ' · 종 ' + Object.keys(C.species).length + ' × 자동 · 랜덤 ' + n + ' 지시문 · 추천 · --set · 겹치는 칸 막기 · 배치 안 겹침 · 얼굴');

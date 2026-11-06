@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 화풍 칸 — 2D MMORPG · 일본 2.5D
+- data/concept-mecha.json · tools/concept-mecha.cjs — 화풍 칸(`styles` · `--style`): `mmorpg2d`(2D 한국 MMORPG, 기본 — 지금 글 그대로) · `jp25d`(일본 2.5D 모바일 — 사용자가 붙여 준 지시문의 화풍 문구를 첫 줄 · STYLE · 끝맺음에, 피카츄 전용 얼굴 말은 일반 말로). 피카츄로 그려 보고 사용자 「응 넣어줘」
+- tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 기본은 글자 그대로 · 2.5D 는 화풍 세 자리만 다르다 · 없는 화풍 막기
+
 ## 2026-11-06 · claude · 메카 컨셉 머리끝 입자는 고를 때만
 - data/concept-mecha.json · tools/concept-mecha.cjs — 타입 표현 머리끝 입자(hair)에 `manual` — 자동 후보에서 빼고 `--fx hair` 로 직접 고를 때만. 문장을 세게 해도 잠만보 시험 그림에서 거의 안 보였다. 사용자 「응 고를때만」
 - tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 자동엔 머리끝이 없다 · 고르면 실린다

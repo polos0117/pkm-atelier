@@ -24,6 +24,7 @@
 - 얼굴(FACE)은 `data/face-design.json` 그 종에서 짓는다. 나머지 캐릭터 칸(성격 · 머리 · 눈 · 체형 · 원작 특징 · 색 · 손 효과 · 배경)은 종마다 표에 쓴다 — 지금 피카츄 · 갸라도스 · 팬텀 · 잠만보.
 - 타입 표현(`--fx`) 일곱 가지 — 손에서 내는 효과 · 장갑 이음새 빛 · 오라 · 머리끝 입자 · 몸 둘레를 도는 입자 · 발밑 바닥 · 등 · 발꿈치 자취. 하나만 골라도 되고(`--fx aura`), 다 넣어도 되고(`--fx all`), 안 주면 자동(손 + 몸 하나 + 주변 하나). 손을 안 고르면 두 손은 편히 내린다. 머리끝 입자는 직접 고를 때만 — 자동 그림에서 거의 안 보였다.
 - 타입이 둘인 종은 표현마다 타입을 고른다 — 기본은 다 첫 타입, `--fx-type flying` 이면 다 그 타입, `--fx hand:flying,aura:water` 처럼 표현마다, `--mix` 면 타입을 안 적은 표현에 두 타입을 섞는다. 낱말(빛 · 입자 · 바닥)은 그 타입의 `type_fx`, 첫 타입 손 효과만 종이 쓴 `HAND_EFFECT`. 여러 카드면 `--fx 갸라도스=hand,aura` 처럼 카드를 붙인다.
+- 화풍(`--style`) — `mmorpg2d`(2D 한국 MMORPG, 기본) · `jp25d`(일본 2.5D 모바일 — 사용자가 붙여 준 지시문의 화풍 문구, 피카츄 전용 얼굴 말은 일반 말로). 첫 줄 · STYLE · 끝맺음만 바뀌고 나머지는 같다.
 - 카메라는 수평 3/4(2026-11-06 — 일상컷이 기준 그림 얼굴을 따라가서).
 
 ```sh
@@ -32,4 +33,5 @@ node tools/concept-mecha.cjs 잠만보 --set silhouette=hover_rings --set legs=h
 node tools/concept-mecha.cjs 팬텀 --random --seed 3 --out <폴더>        # <영어 이름>.txt · -parts.json
 node tools/concept-mecha.cjs 갸라도스 --fx hand:water,aura:flying,ground:water
 node tools/concept-mecha.cjs 팬텀 --fx all --mix
+node tools/concept-mecha.cjs 피카츄 --style jp25d
 ```
