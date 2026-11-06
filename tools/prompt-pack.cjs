@@ -27,7 +27,7 @@
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process'), crypto = require('node:crypto');
 const ROOT = path.resolve(__dirname, '..');
 global.window = global;
-for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state']) require(path.join(ROOT, 'lib', f + '.js'));
+for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state', 'concept-mecha']) require(path.join(ROOT, 'lib', f + '.js'));
 const S = window.AtelierSpec, CT = window.AtelierCasualTree, C2 = window.AtelierCasualTreeV2, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
 const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8'));
 
@@ -61,7 +61,7 @@ function args(argv) {
 function data() {
   const cards = read('card.json').cards.character, tree = read('casual-tree.json'), tree2 = read('casual-tree-v2.json');
   const opt = f => { try { return read(f); } catch (e) { return null; } };
-  return { cards, tree, tree2, v2: { C2, tree2 }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null };
+  return { cards, tree, tree2, v2: { C2, tree2 }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null, concept: opt('concept-mecha.json') };
 }
 /* 화면과 같은 몫 — 원작 외형은 없으면 undefined, 얼굴 설계는 없으면 null(lib/prompt-ui.js App) */
 const extras = (d, c) => ({ appearance: d.appearance ? d.appearance[String(c.no)] : undefined, face: d.faces ? d.faces[String(c.no)] || null : null });
@@ -222,7 +222,7 @@ function build(o) {
   for (const slot of want) {
     const r = stateOf(set, slot, d, c, plan, bad);
     if (!r) continue;
-    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2);
+    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2, d.concept);
     const ui = { storage: { last: c.name, cards: { [c.name]: r.st } }, prompt: text };
     if (r.cut) { ui.plan = r.cut; ui.manual_inputs = r.manual; ui.manual_why = r.why; }
     out.push({ slot, text, ui });

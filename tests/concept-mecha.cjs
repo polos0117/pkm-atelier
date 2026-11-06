@@ -112,4 +112,26 @@ for (const card of Object.keys(C.species)) {
 assert.throws(() => M.build('피카츄', M.choose('피카츄', base, []).ch, 'oil'), /없는 화풍/);
 /* 얼굴 — face-design 에서 */
 assert.match(M.faceText(130), /^an elongated, long and medium-width shape, an angular defined jaw, medium-sized sharp eyes/);
+/* 생성기 「새 인물 만들기」 의 메카 옵션(2026-11-06) — 조립부(lib/prompt-anthro.js)가 FORM 줄 바로 뒤에 lines 만 싣는다. 안 고르면 · 표가 없으면 · 이어가기면 그대로 */
+{
+  const ROOT = path.join(__dirname, '..');
+  for (const f of ['prompt-spec', 'casual-tree', 'prompt-anthro', 'prompt-lifestyle', 'prompt-state']) require(path.join(ROOT, 'lib', f + '.js'));
+  const W = global.window, ST = W.AtelierPromptState, S = W.AtelierSpec, CML = require(path.join(ROOT, 'lib', 'concept-mecha.js'));
+  const card = require(path.join(ROOT, 'data', 'card.json')).cards.character.find(c => c.name === '갸라도스');
+  const tree = require(path.join(ROOT, 'data', 'casual-tree.json')), nz = x => ST.normalize(S, W.AtelierCasualTree, x, tree), st0 = nz({});
+  const pr = (st, table) => ST.prompt(W.AtelierPrompt, W.AtelierLifestyle, st, card, undefined, null, tree, null, table);
+  const sel = { set: { silhouette: 'knight_plate', legs: 'heels', shoulders: 'balloon' }, fx: [{ key: 'aura', type: 'flying' }, { key: 'hand', type: '' }] };
+  const want = CML.lines(C, ['water', 'flying'], sel), withM = pr(nz({ mecha: sel }), C), base = pr(st0, C);
+  assert.equal(want.length, 2);
+  assert(want[1].indexOf('TYPE EFFECTS: One open hand') === 0 && want[1].includes('pale sky-blue glow'), '표현 순서는 표 순서 · 오라는 비행');
+  const paras = withM.split('\n\n'), i = paras.indexOf(want[0]);
+  assert.equal(paras[i - 1], S.FORM_LINES.light, 'FORM 줄 바로 뒤'); assert.equal(paras[i + 1], want[1]);
+  assert.equal(paras.filter((x, k) => k !== i && k !== i + 1).join('\n\n'), base, '두 줄 말고는 그대로');
+  assert.equal(pr(nz({ mecha: sel }), null), base, '표가 없으면 안 싣는다');
+  assert.equal(pr(nz({ mecha: { set: {}, fx: [] } }), C), base, '안 고르면 그대로');
+  assert(!/MECHA|TYPE EFFECTS/.test(pr(nz({ mecha: sel, identityMode: 'reference' }), C)), '이어가기에는 없다');
+  assert(C.silhouettes.find(o => o.key === 'knight_plate').owns.includes('shoulders'));
+  assert(!want[0].includes(C.parts.shoulders.find(o => o.key === 'balloon').en), '실루엣이 정하는 칸은 안 싣는다');
+  assert.equal(nz({ mode: 'concept', concept: { set: {} } }).mode, 'action', '잠깐 있던 갈래는 액션으로');
+}
 console.log('PASS 메카 컨셉: 칸 ' + SLOTS.length + ' · 큰 실루엣 ' + C.silhouettes.length + ' · 종 ' + Object.keys(C.species).length + ' × 자동 · 랜덤 ' + n + ' 지시문 · 추천 · --set · 겹치는 칸 막기 · 배치 안 겹침 · 얼굴');

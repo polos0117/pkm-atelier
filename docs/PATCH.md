@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 실루엣 · 타입 표현을 「새 인물 만들기」 옵션으로 — 따로 있던 탭은 뺐다
+- lib/prompt-ui.js · lib/words.js · prompt.html — 액션 · 새 인물 만들기에 「메카 실루엣 · 타입 표현 (선택)」 칸: 큰 실루엣 · 무게 · 부위 부품 칸마다 없음(기본) / 직접, 큰 실루엣이 정하는 칸은 막힘, 타입 표현 일곱 가지 체크(두 타입 종은 표현마다 타입), 모두 없음으로. 이어가기 · 일상컷 · 폭주에는 없다. 「메카 컨셉」 탭은 뺐다(명령줄 도구는 그대로). 사용자 「아 잘못 이해했네. 그 신규 생성에 붙여줘. 옵션값으로」
+- lib/concept-mecha.js — `lines(C, types, sel)`: 고른 칸만 `MECHA SILHOUETTE:` · `TYPE EFFECTS:` 줄로(표현은 표 순서, 빈 타입은 첫 타입)
+- lib/prompt-anthro.js — 새 인물 만들기 지시문의 FORM 줄 바로 뒤에 그 줄을 싣는다. 안 고르면 지금 지시문 그대로
+- lib/prompt-state.js · tools/prompt-pack.cjs — 저장값 `mecha`(set · fx), 잠깐 있던 갈래 `concept` 는 액션으로. 조립부 입력에 메카 표(data/concept-mecha.json) — 지시문 묶음도 화면과 같은 글
+- tests/concept-mecha-screen.cjs — 새 자리 26가지(데스크톱 · 폰) · tests/concept-mecha.cjs — FORM 줄 뒤 두 줄 말고는 그대로 · 표 없음 · 안 고름 · 이어가기
+- docs/CONCEPT_MECHA.md · AGENTS.md — 자리 · 시험
+
 ## 2026-11-06 · claude · 생성기에 「메카 컨셉」 갈래 — 실루엣 · 부품 · 타입 표현 고르기
 - lib/concept-mecha.js — 메카 컨셉 조립부를 도구에서 떼어 냈다(브라우저 · node 둘 다, 오류는 열쇠로). 같은 선택이면 화면과 도구가 글자 하나 다르지 않다
 - lib/prompt-ui.js · prompt.html · lib/words.js — 생성기 탭 「메카 컨셉」: 컨셉 화풍, 자동 조합 씨앗 · 다른 조합, 큰 실루엣 · 부위 부품 칸마다 자동(지금 고른 값 표시) / 직접, 실루엣 · 원작 특징이 정하는 칸은 막힘, 타입 표현 자동(두 타입 섞기) / 직접(일곱 가지 체크, 두 타입 종은 표현마다 타입), 자동 초안 안내, 그 화풍 경장 그림 보기. 사용자 「생성기에 메카 실루엣 설정이랑 속성 효과 선택하는건 안넣었어?」 → 「응」
