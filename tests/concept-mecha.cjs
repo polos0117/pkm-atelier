@@ -98,11 +98,12 @@ for (let i = 0; i < 20; i++) {
   assert.equal(new Set(used).size, used.length, '배치 실루엣 겹침 ' + used.join(' '));
 }
 /* 화풍(2026-11-06) — 기본은 2D 한국 MMORPG, jp25d 는 첫 줄 · STYLE · 끝맺음만 바뀐다 */
-assert.equal(C.style_default, 'mmorpg2d'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d', 'anime_gloss']);
+assert.equal(C.style_default, 'anime_gloss'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d', 'anime_gloss']);
 for (const [k, v] of Object.entries(C.styles)) assert(v.ko && v.head && v.style && v.close.includes('{KEY_COLOUR}'), k + ' 화풍 칸');
 for (const card of Object.keys(C.species)) {
-  const ch = M.choose(card, { ...base, seed: 'st' }, []).ch, k = M.build(card, ch), j = M.build(card, ch, 'jp25d');
-  assert.equal(M.build(card, ch, 'mmorpg2d'), k, card + ' 기본 화풍');
+  const ch = M.choose(card, { ...base, seed: 'st' }, []).ch, k = M.build(card, ch, 'mmorpg2d'), j = M.build(card, ch, 'jp25d');
+  assert.equal(M.build(card, ch), M.build(card, ch, 'anime_gloss'), card + ' 기본 화풍');
+  assert(M.build(card, ch).includes('natural sunlit sheen') && !M.build(card, ch).includes('glossy specular'), card + ' 자연광 윤기');
   assert(k.includes('premium 2D Korean MMORPG official character illustration style') && k.includes('rich ' + C.species[card].KEY_COLOUR + ' colours, polished 2D Korean MMORPG character key art.'), card + ' 2D');
   assert(j.includes('high-quality Japanese 2.5D mobile-game') && j.includes('STYLE: Premium Japanese mobile RPG') && j.includes('premium Japanese 2.5D mobile RPG character key art.') && !/Korean|MMORPG/.test(j) && !/amber|rounded jaw/.test(j.split('\n\n').find(p => p.startsWith('STYLE:'))), card + ' 2.5D(STYLE 에 피카츄 전용 말 없음)');
   const strip = t => t.split('\n\n').filter(p => !/^(Use case|STYLE):/.test(p)).join('\n\n').replace(/Bright clear lighting.*$|Clear character silhouette against.*$/m, '');

@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-06 · claude · 메카 컨셉 기본 화풍 — 애니 광택(자연광 윤기)
+- data/concept-mecha.json — 기본 화풍 mmorpg2d → anime_gloss. anime_gloss 의 광택 문장을 젖은 스펙큘러 광택에서 야외 햇빛의 부드럽고 넓은 윤기(젖거나 기름지거나 플라스틱 같지 않게)로. 꼬부기 메카 · 일상컷 세 장을 보고 사용자 「응 이걸로 기본화풍 바꿔줘」. mmorpg2d · jp25d 는 --style 로 남는다
+- tools/concept-mecha.cjs · tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 기본 화풍 · 자연광 문장 검사
+
 ## 2026-11-06 · claude · 메카 컨셉 화풍 anime_gloss(애니 광택)
 - data/concept-mecha.json · tools/concept-mecha.cjs — 화풍 `anime_gloss`: 채도 낮은 흰색 · 은색 파스텔에 진한 강조색 하나, 하얗게 빛나는 하이키 조명 · 블룸 · 반짝이, 피부 · 장갑 · 스타킹 광택, 결마다 빛이 맺힌 가는 머리 가닥, 끝맺음에서 「rich … colours」 를 뺐다. 사용자가 붙여 준 은발 세일러 그림과 수치로 견주어(채도 0.16 · 대비 0.24 — 꼬부기 메카 0.38 · 0.17) 사용자 「같은 2d 인데 이런느낌이 안나네」 → 「응 해줘」
 - tests/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 화풍 셋 · 칸 검사

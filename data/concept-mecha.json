@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx · 타입 낱말은 색보다 모양으로 가른다(독 거품 · 고스트 불꽃 · 비행 바람 줄기와 깃털 — 2026-11-06, 고스트/독 · 물/비행을 섞어도 차이가 안 보였다) · 화풍(2026-11-06 사용자 붙여 준 일본 2.5D 모바일 지시문의 화풍 문구 → 「응 넣어줘」) — styles 의 head · style · close 를 틀에 끼운다, 기본 mmorpg2d. jp25d 의 얼굴 줄은 피카츄 전용 말(호박색 눈 · 둥근 턱)을 일반 말로 · 애니 광택 화풍 anime_gloss(2026-11-06 — 사용자가 붙여 준 은발 세일러 그림과 견주어: 채도 절반 · 하이키 · 광택 · 가는 머리 가닥, 사용자 「같은 2d 인데 이런느낌이 안나네」 → 「응 해줘」)",
+ "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx · 타입 낱말은 색보다 모양으로 가른다(독 거품 · 고스트 불꽃 · 비행 바람 줄기와 깃털 — 2026-11-06, 고스트/독 · 물/비행을 섞어도 차이가 안 보였다) · 화풍(2026-11-06 사용자 붙여 준 일본 2.5D 모바일 지시문의 화풍 문구 → 「응 넣어줘」) — styles 의 head · style · close 를 틀에 끼운다, 기본 mmorpg2d. jp25d 의 얼굴 줄은 피카츄 전용 말(호박색 눈 · 둥근 턱)을 일반 말로 · 애니 광택 화풍 anime_gloss(2026-11-06 — 사용자가 붙여 준 은발 세일러 그림과 견주어: 채도 절반 · 하이키 · 광택 · 가는 머리 가닥, 사용자 「같은 2d 인데 이런느낌이 안나네」 → 「응 해줘」) · 기본 화풍을 anime_gloss 로(2026-11-06 — 광택을 자연광 윤기로 바꾼 꼬부기 메카 · 일상컷을 보고 사용자 「응 이걸로 기본화풍 바꿔줘」). mmorpg2d · jp25d 는 --style 로",
  "slots": [
   {
    "key": "silhouette",
@@ -818,13 +818,13 @@
    "close": "Clear character silhouette against the softly painted atmospheric backdrop, strong facial clarity and restrained cinematic glow, rich {KEY_COLOUR} colours, premium Japanese 2.5D mobile RPG character key art."
   },
   "anime_gloss": {
-   "ko": "애니 광택(하이키 파스텔)",
+   "ko": "애니 광택(하이키 파스텔 · 자연광 윤기)",
    "head": "a polished glossy 2D anime gacha character illustration style",
-   "style": "Polished Japanese-anime gacha character illustration in clean 2D: crisp thin dark linework, large finely detailed glossy eyes with layered highlights and a soft blush, very fine detailed hair rendered as many thin strands with sparkling highlights along every lock, soft airy cel-to-gradient shading with glossy specular highlights on skin, gloves, stockings and armor, and a bright high-key look where the highlights glow toward white while the darkest accents stay deep and clean. A low-saturation pastel palette dominated by white, silver and soft light tones, with one deep accent colour; gentle bloom and small sparkle particles in the air. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
+   "style": "Polished Japanese-anime gacha character illustration in clean 2D: crisp thin dark linework, large finely detailed glossy eyes with layered highlights and a soft blush, very fine detailed hair rendered as many thin strands with sparkling highlights along every lock, soft airy cel-to-gradient shading with a natural sunlit sheen — soft, broad highlights from real outdoor daylight on her skin, gloves, stockings and armor, never wet, oily or plastic-looking, and a bright high-key look where the highlights glow toward white while the darkest accents stay deep and clean. A low-saturation pastel palette dominated by white, silver and soft light tones, with one deep accent colour; gentle bloom and small sparkle particles in the air. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
    "close": "Bright high-key lighting with soft bloom and sparkles, a low-saturation white-and-silver palette with {KEY_COLOUR} as the single deep accent, glossy 2D anime gacha character illustration."
   }
  },
- "style_default": "mmorpg2d",
+ "style_default": "anime_gloss",
  "auto": {
   "note": "표에 손글 종이 없으면 이 표와 공방 자료(data/card.json 타입 · 키 · 몸무게, data/face-design.json 얼굴 · 머리, data/source-appearance.json 색 · 원작 특징 — 생성기의 입는 법 · 팔레트)로 초안을 짓는다(2026-11-06 사용자 「그래」). 손글 종(species)이 늘 이긴다",
   "types": {

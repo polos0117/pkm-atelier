@@ -17,7 +17,7 @@
      --fx hand:water,aura:flying  표현마다 타입 — 그 종의 타입만 · --fx-type flying  타입을 안 적은 표현은 다 그 타입(기본은 첫 타입)
      --mix                        타입을 안 적은 표현에 그 종의 타입을 섞어 준다(두 타입 종이면 둘 다 쓴다)
      손을 안 고르면 두 손은 편히 내린다. 머리끝 입자(hair)는 직접 고를 때만(자동 후보에서 뺐다 — 시험 그림에서 거의 안 보였다). 같은 타입의 머리끝 입자와 도는 입자 · 자취는 자동으로 같이 안 고른다(같은 낱말 두 번).
-   화풍(--style): mmorpg2d(2D 한국 MMORPG, 기본) · jp25d(일본 2.5D 모바일) · anime_gloss(애니 광택 — 하이키 파스텔) — 첫 줄 · STYLE · 끝맺음만 바뀐다(styles).
+   화풍(--style): anime_gloss(애니 광택 — 하이키 파스텔 · 자연광 윤기, 기본 — 2026-11-06) · mmorpg2d(2D 한국 MMORPG) · jp25d(일본 2.5D 모바일) — 첫 줄 · STYLE · 끝맺음만 바뀐다(styles).
    --out 이면 카드마다 <영어 이름>.txt(지시문 전체)와 <영어 이름>-parts.json(고른 부품)을 쓴다. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path');
