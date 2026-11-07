@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · gpt · 이상해씨 광택 자연광 8장 등록
+- data/img.json — gloss_daylight 메카 1장과 일상컷 7장을 새 화풍으로 추가. 기존 그림을 보존하고 원격 파일 목록으로 대조했다.
+
 ## 2026-11-07 · claude · 체형 문장 고침 — 허리 slim · 골반에서 허벅지로 매끄럽게 · 7.5등신
 - lib/prompt-spec.js(CARD_FIGURE · ANATOMY) · lib/prompt-anthro.js(일상 BODY LINE) · prompt.html — 허리 「very slim, tightly cinched」 → 「slim」, 「허벅지 위쪽만」 대신 골반에서 허벅지로 매끄럽게 이어져 무릎 쪽으로 서서히 좁아지게(골반 아래에서 갑자기 좁아지지 않게), 「long slender lower legs」 의 long 을 뺐다. ANATOMY 에 「about 7.5 heads tall, her head in proportion to her shoulders and body」. 사용자 「머리는 크고 몸이 너무 작게 나왔어」 · 「허벅지 위라고만 했더니 몸 라인이 골반 상단부에서 급격히 줄어들어서」 · 「긴몸통과 다리 문구는 자칫 위험할거 같아」 · 「허리는 slim으로」
 - IMAGE_RULES.md 3절 · tests/prompt-engine.cjs(앵커 425 → 440 · 1025종 445 → 460) · tests/face-design.cjs(490 → 505)
