@@ -5,7 +5,7 @@
    글자 하나 다르지 않은지는 tests/prompt-pack-screen.cjs 가 실제 생성기 화면과 견준다.
 
    2026-11-07 여덟 자리(사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「필수3 코스튬1 자유3」):
-     경장 ① 한 장 + 일상컷 일곱 장, 화풍 기본 gloss_daylight(생성기 기본과 같다). ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정해 settings 에 적는다(아래 mecha).
+     경장 ① 한 장 + 일상컷 일곱 장, 화풍 기본 anime_gloss(생성기 기본과 같다 — 2026-11-07 저녁 다시). ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정해 settings 에 적는다(아래 mecha).
      settings.version 2 가 여덟 자리, version 1(예전 · --legacy)은 아홉 자리 그대로 build 한다.
 
    node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style <화풍 키>] [--plan PLAN.json] [--legacy] [--repos <그림 저장소> …]
@@ -54,7 +54,7 @@ const NINE = {
 const SLOTS = { light: Object.assign({}, NINE.light, { fields: NINE.light.fields.concat(['mecha', 'mecha_why']) }) };
 ['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }; });
 const slotsOf = set => (set && set.version >= 2 ? SLOTS : NINE);
-const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(gloss_daylight) · 아홉 자리(--legacy)는 그때 기본 */
+const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(anime_gloss) · 아홉 자리(--legacy)는 그때 기본 */
 const MECHA_RECENT = 10;
 const ACTION_SCENE = ['expr', 'pose', 'orient', 'frame', 'lens', 'aspect', 'camera', 'scene', 'outfit', 'custom', 'action'];
 const CASUAL_TEXT = ['scene', 'outfit', 'camera', 'custom'];

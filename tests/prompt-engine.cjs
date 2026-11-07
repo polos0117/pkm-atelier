@@ -21,8 +21,8 @@ const build=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
 assert.equal(S.ART_STYLES.length,16);
 assert(!S.PROMPT_LINES.anatomy.includes('enlargement'),'ANATOMY 에 신체 과장 금지 말 없음(2026-11-07 — 체형 줄과 부딪혔다)');   // 2026-11-06 anime_gloss · 2026-11-07 gloss_daylight
-assert.equal(S.DEFAULT_STYLE,'gloss_daylight','기본 화풍은 광택 자연광(IMAGE_RULES 와 같이 — 2026-11-07 꼬부기 초안 4)');
-assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.gloss_daylight),'화풍을 안 고르면 광택 자연광');
+assert.equal(S.DEFAULT_STYLE,'anime_gloss','기본 화풍은 애니 광택(IMAGE_RULES 와 같이 — 2026-11-07 저녁 다시)');
+assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.anime_gloss),'화풍을 안 고르면 애니 광택');
 for(const [k] of S.ART_STYLES) assert(S.ACTION_STYLE_CORES[k]&&S.CASUAL_STYLE_CORES[k],'style lines: '+k);
 
 /* 옛 법조문이 돌아오면 실패 — 이 문단들이 "보여 주려고 옮기는" 그림을 만들었다 */

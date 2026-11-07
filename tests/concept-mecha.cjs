@@ -98,12 +98,12 @@ for (let i = 0; i < 20; i++) {
   assert.equal(new Set(used).size, used.length, '배치 실루엣 겹침 ' + used.join(' '));
 }
 /* 화풍(2026-11-06) — 기본은 2D 한국 MMORPG, jp25d 는 첫 줄 · STYLE · 끝맺음만 바뀐다 */
-assert.equal(C.style_default, 'gloss_daylight'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d', 'anime_gloss', 'gloss_daylight']);   // 2026-11-07 기본 광택 자연광
+assert.equal(C.style_default, 'anime_gloss'); assert.deepEqual(Object.keys(C.styles), ['mmorpg2d', 'jp25d', 'anime_gloss', 'gloss_daylight']);   // 2026-11-07 저녁 기본 다시 애니 광택
 for (const [k, v] of Object.entries(C.styles)) assert(v.ko && v.head && v.style && v.close.includes('{KEY_COLOUR}'), k + ' 화풍 칸');
 for (const card of Object.keys(C.species)) {
   const ch = M.choose(card, { ...base, seed: 'st' }, []).ch, k = M.build(card, ch, 'mmorpg2d'), j = M.build(card, ch, 'jp25d');
-  assert.equal(M.build(card, ch), M.build(card, ch, 'gloss_daylight'), card + ' 기본 화풍');
-  assert(M.build(card, ch).includes('Strong glossy shine') && M.build(card, ch).includes('Natural sunlit daylight'), card + ' 광택 자연광');
+  assert.equal(M.build(card, ch), M.build(card, ch, 'anime_gloss'), card + ' 기본 화풍');
+  assert(M.build(card, ch).includes('low-saturation pastel palette') && !M.build(card, ch).includes('Strong glossy shine'), card + ' 애니 광택');
   assert(M.build(card, ch, 'anime_gloss').includes('natural sunlit sheen'), card + ' 애니 광택은 그대로');
   /* 애니 광택 · 광택 자연광은 생성기 ① 과 같은 체형 · 약 7.5등신(2026-11-07), mmorpg2d · jp25d 는 종별 체형 */
   for (const st of ['anime_gloss', 'gloss_daylight']) assert(M.build(card, ch, st).includes(C.card_figure + ', natural adult proportions, about 7.5 heads tall'), card + ' ' + st + ' 체형');

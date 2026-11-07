@@ -832,7 +832,7 @@
    "figure": "card"
   }
  },
- "style_default": "gloss_daylight",
+ "style_default": "anime_gloss",
  "auto": {
   "note": "표에 손글 종이 없으면 이 표와 공방 자료(data/card.json 타입 · 키 · 몸무게, data/face-design.json 얼굴 · 머리, data/source-appearance.json 색 · 원작 특징 — 생성기의 입는 법 · 팔레트)로 초안을 짓는다(2026-11-06 사용자 「그래」). 손글 종(species)이 늘 이긴다",
   "types": {

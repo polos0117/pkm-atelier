@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 기준 화풍 다시 애니 광택(anime_gloss)
+- lib/prompt-spec.js — DEFAULT_STYLE 을 anime_gloss 로(사용자 「화풍 기준키 다시 이걸로 바꾸자」 — 애니 광택 꼬부기 ① + 일상 7장을 보고). 생성기 화면 처음 값 · 지시문 묶음 init 이 따라간다. 체형 · 7.5등신 · BODY LINE 은 그대로
+- tools/image-runner.py — 새 차례의 화풍 anime_gloss
+- data/concept-mecha.json · tools/concept-mecha.cjs · docs/CONCEPT_MECHA.md — 메카 컨셉 도구 기본 화풍도 anime_gloss
+- IMAGE_RULES.md · tools/prompt-pack.cjs — 기준 화풍 문장. 광택 자연광으로 시작한 캐릭터(이상해씨)는 그 화풍으로 이어 간다
+- tests/prompt-engine.cjs · prompt-pack.cjs · concept-mecha.cjs · image-runner.py — 기본 화풍 기대값
+
 ## 2026-11-08 · gpt · 이상해씨 일상 6번 최종 승인본 반영
 - data/img.json — 정본 얼굴을 다시 적용한 앉은 구도·은은한 미소의 최종 승인본으로 일상 6번만 교체하고 반영 시각을 갱신했다.
 

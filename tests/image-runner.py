@@ -25,7 +25,7 @@ with tempfile.TemporaryDirectory() as td:
     q=R.prepare(state,'worker',cards,{},'2026-10-22','test-execution')
     assert len(q['queue'])==1
     # 2026-11-07 — 새 차례는 경장 ① + 일상 일곱(애니 광택)
-    assert q['queue'][0]['slot_set']=='light7' and q['queue'][0]['style']=='gloss_daylight' and R.slots_of(q['queue'][0])==['light']+['casual%d'%n for n in range(1,8)]
+    assert q['queue'][0]['slot_set']=='light7' and q['queue'][0]['style']=='anime_gloss' and R.slots_of(q['queue'][0])==['light']+['casual%d'%n for n in range(1,8)]
     rejects(lambda:R.prepare(state,'other',cards,{},'2026-10-22','test-execution'),'owner takeover')
     rejects(lambda:R.charge(state,list(range(13)),'2026-10-22'),'third daily character')
     # Resume on another day charges the unfinished pair on that day too.
