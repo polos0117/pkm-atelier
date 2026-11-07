@@ -4,9 +4,16 @@
    한 캐릭터 아홉 자리(IMAGE_RULES 3절 표)의 지시문(<자리>-prompt.txt)과 생성기 저장값(<자리>-ui.json — 화면의 storage 와 같은 꼴)을 쓴다.
    글자 하나 다르지 않은지는 tests/prompt-pack-screen.cjs 가 실제 생성기 화면과 견준다.
 
-   node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style <화풍 키>] [--plan PLAN.json]
+   2026-11-07 여덟 자리(사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「필수3 코스튬1 자유3」):
+     경장 ① 한 장 + 일상컷 일곱 장, 화풍 기본 anime_gloss. ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정해 settings 에 적는다(아래 mecha).
+     settings.version 2 가 여덟 자리, version 1(예전 · --legacy)은 아홉 자리 그대로 build 한다.
+
+   node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style <화풍 키>] [--plan PLAN.json] [--legacy] [--repos <그림 저장소> …]
      작업 폴더에 settings.json(고칠 수 있는 칸만)을 만든다 — 이미 있으면 덮지 않고 멈춘다.
-     --plan 은 일상컷 계획기(tools/casual-plan.cjs --out)의 계획 파일. 일상 세 컷의 선택값은 계획에서만 온다(settings 에 안 쓴다).
+     --plan 은 일상컷 계획기(tools/casual-plan.cjs --out)의 계획 파일. 일상 컷의 선택값은 계획에서만 온다(settings 에 안 쓴다).
+     mecha — 그 종의 타입 추천 안에서 최근 열 명의 ①(그림 저장소 records/<폴더>/light-ui.json)이 안 쓴 큰 실루엣 하나 + 타입 표현 자동
+       (손 + 몸 하나 + 주변 하나, 두 타입 종은 섞는다 — lib/concept-mecha.js choose). 부위 부품은 비운다(원작 입는 법 WEAR 가 부위를 쥔다).
+       mecha_auto 는 정한 값 그대로(build 는 안 읽는다) — mecha 를 바꾸면 mecha_why 에 사유를 쓴다.
    node tools/prompt-pack.cjs build --dir <작업 폴더> [--slot <자리>]
      settings.json 을 읽어 지시문·저장값·차례표(INDEX.md)를 쓴다. 틀린 칸(없는 열쇠·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷)이 있으면
      아무것도 쓰지 않고 1 로 끝난다. 다시 돌리면 같은 글이 나온다(만든 때 줄만 다르다).
@@ -16,10 +23,10 @@
      세션이 지시문을 고쳐 쓰고 넘기는지 확인할 길이 없었다(기록엔 prompt.txt 의 sha 만 있었다).
 
    자리마다 고정인 것(출력·인물 기준·장갑 폼·폭주 기준 장갑·첨부)은 도구가 정한다 — settings 에 없다. 고칠 수 있는 칸:
-     light               motifs · formOverride · headFeature · faceDesignOn · params(외형) · scene(장면 칸 — 비워 두는 것이 기본)
+     light               motifs · formOverride · headFeature · faceDesignOn · params(외형) · scene(장면 칸 — 비워 두는 것이 기본) · mecha · mecha_why(여덟 자리만)
      heavy · mobility    motifs · formOverride · scene
      *_overdrive         motifs · formOverride · custom(추가 연출 요청 — 생성기도 폭주엔 이 칸만 보인다)
-     casual1~3           scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4)
+     casual1~7(아홉 자리는 1~3)  scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4)
    일상 칸 옆 guide 에는 고른 길의 트리 문장(한글 이름·영어 문장·장소 묶음·자세 계열·의상 안내)과 옷 종류·드러내기·첫머리가 있고, INDEX.md 에도 컷마다 표로 찍는다.
    버전2 계획 컷(cut.treeV === 2 — 계획기 --v2, docs/CASUAL_TREE_V2.md)은 버전2 칸 그대로 잠그고 지시문도 버전2. 버전2 컷엔 자유 카메라 글이 없다
    (camera 는 카메라 높이 칸이다 — 조명 · 분위기는 custom 에). 버전1 계획 컷은 지금까지와 같다 */
@@ -31,8 +38,8 @@ for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro'
 const S = window.AtelierSpec, CT = window.AtelierCasualTree, C2 = window.AtelierCasualTreeV2, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
 const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8'));
 
-/* 아홉 자리 — IMAGE_RULES 3절 표 그대로 */
-const SLOTS = {
+/* 아홉 자리(예전 — settings.version 1) */
+const NINE = {
   light: { n: '①', mode: 'action', form: 'light', identityMode: 'create', baseForm: 'light', attach: [], fields: ['motifs', 'formOverride', 'headFeature', 'faceDesignOn', 'params', 'scene'] },
   heavy: { n: '②', mode: 'action', form: 'heavy', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
   mobility: { n: '③', mode: 'action', form: 'mobility', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
@@ -43,16 +50,25 @@ const SLOTS = {
   casual2: { n: '⑧', mode: 'casual', cut: 2, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] },
   casual3: { n: '⑨', mode: 'casual', cut: 3, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }
 };
+/* 여덟 자리(2026-11-07 — settings.version 2, IMAGE_RULES 3절 표) — 경장 ① + 일상 일곱 */
+const SLOTS = { light: Object.assign({}, NINE.light, { fields: NINE.light.fields.concat(['mecha', 'mecha_why']) }) };
+['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }; });
+const slotsOf = set => (set && set.version >= 2 ? SLOTS : NINE);
+const PACK_STYLE = 'anime_gloss';   /* 여덟 자리의 기본 화풍(생성기 화면의 기본은 그대로) */
+const MECHA_RECENT = 10;
 const ACTION_SCENE = ['expr', 'pose', 'orient', 'frame', 'lens', 'aspect', 'camera', 'scene', 'outfit', 'custom', 'action'];
 const CASUAL_TEXT = ['scene', 'outfit', 'camera', 'custom'];
 const CASUAL_TEXT_V2 = ['scene', 'outfit', 'custom'];
 const keys = rows => rows.map(r => Array.isArray(r) ? r[0] : r.key).filter(v => v && v !== '__custom__');
 
 function args(argv) {
-  const o = { cmd: argv[0], card: '', dir: '', style: '', plan: '', slot: '', file: '' };
+  const o = { cmd: argv[0], card: '', dir: '', style: '', plan: '', slot: '', file: '', legacy: false,
+    repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4'].map(n => path.join(ROOT, '..', n)) };
   for (let i = 1; i < argv.length; i++) {
     const a = argv[i];
-    if (a === '--dir') o.dir = argv[++i]; else if (a === '--style') o.style = argv[++i]; else if (a === '--plan') o.plan = argv[++i];
+    if (a === '--legacy') o.legacy = true;
+    else if (a === '--repos') { o.repos = []; while (i + 1 < argv.length && !argv[i + 1].startsWith('--')) o.repos.push(argv[++i]); }
+    else if (a === '--dir') o.dir = argv[++i]; else if (a === '--style') o.style = argv[++i]; else if (a === '--plan') o.plan = argv[++i];
     else if (a === '--slot') o.slot = argv[++i]; else if (a === '--file') o.file = argv[++i]; else if (!a.startsWith('--') && !o.card) o.card = a;
     else throw new Error('모르는 인자: ' + a);
   }
@@ -66,6 +82,37 @@ function data() {
 /* 화면과 같은 몫 — 원작 외형은 없으면 undefined, 얼굴 설계는 없으면 null(lib/prompt-ui.js App) */
 const extras = (d, c) => ({ appearance: d.appearance ? d.appearance[String(c.no)] : undefined, face: d.faces ? d.faces[String(c.no)] || null : null });
 const cardOf = (d, name) => d.cards.find(c => c.name === name);
+/* 메카 조립부(lib/concept-mecha.js) — 자동 초안 종도 생성기와 같은 자료로 */
+function cmOf(d) {
+  if (!d.concept || !window.AtelierConceptMecha) return null;
+  const byName = {}; d.cards.forEach(c => { byName[c.name] = c; });
+  return window.AtelierConceptMecha.make(d.concept, { faces: d.faces || {}, appearance: d.appearance || {}, cards: byName, P });
+}
+/* 최근 ① 의 큰 실루엣 — 그림 저장소 records/<폴더>/light-ui.json 의 생성기 저장값(mecha). 폴더 끝 날짜(YYYYMMDD) 차례, 없는 저장소는 건너뛴다 */
+function recentSilhouettes(repos, except) {
+  const got = [];
+  for (const r of repos || []) {
+    const base = path.join(r, 'records');
+    let dirs = [];
+    try { dirs = fs.readdirSync(base); } catch (e) { continue; }
+    for (const dname of dirs) {
+      const f = path.join(base, dname, 'light-ui.json');
+      let ui; try { ui = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { continue; }
+      const cards = ((ui.storage || {}).cards) || {};
+      for (const [name, st] of Object.entries(cards)) {
+        const sil = st && st.mecha && st.mecha.set && st.mecha.set.silhouette;
+        if (sil && name !== except) got.push({ sil, at: (/(\d{8})$/.exec(dname) || [, '00000000'])[1] + '|' + dname });
+      }
+    }
+  }
+  return got.sort((a, b) => a.at < b.at ? -1 : a.at > b.at ? 1 : 0).slice(-MECHA_RECENT).map(x => x.sil);
+}
+function autoMecha(d, c, used) {
+  const CM = cmOf(d);
+  if (!CM) return null;
+  const r = CM.choose(c.name, { mix: true, strict: false }, used || []);
+  return { set: { silhouette: r.ch.silhouette }, fx: r.ch.fx.map(x => ({ key: x.key, type: x.type })) };
+}
 const fileName = (card, style, slot) => card + (slot.startsWith('casual') ? '' : '_' + slot) + '_' + style + '_f' + (slot.startsWith('casual') ? '_' + slot : '') + '.webp';   // tools/image-runner.py filename
 
 /* 계획 파일에서 그 카드의 컷 — 생성기 주소와 같은 길(generatorQuery → fromQuery)로 넘긴다 */
@@ -108,18 +155,20 @@ function init(o) {
   if (!o.card || !o.dir) throw new Error('init <카드> --dir <작업 폴더>');
   const d = data(), c = cardOf(d, o.card);
   if (!c) throw new Error('카드가 없다: ' + o.card + ' (data/card.json 의 이름 그대로)');
-  const style = o.style || S.DEFAULT_STYLE;
+  const SL = o.legacy ? NINE : SLOTS, style = o.style || (o.legacy ? S.DEFAULT_STYLE : PACK_STYLE);
   if (!S.ACTION_STYLE_CORES[style]) throw new Error('화풍 키가 없다: ' + style);
   const file = path.join(o.dir, 'settings.json');
   if (fs.existsSync(file)) throw new Error('이미 있다 — 덮지 않는다: ' + file);
   const blank = () => { return { expr: '', pose: '', orient: '', frame: '', lens: '', aspect: '2:3', camera: '', scene: '', outfit: '', custom: '', action: ST.normalizeAction(S, {}) }; };
-  const set = { version: 1, card: c.name, no: c.no, style, plan: o.plan ? path.resolve(o.plan) : '',
+  const set = { version: o.legacy ? 1 : 2, card: c.name, no: c.no, style, plan: o.plan ? path.resolve(o.plan) : '',
     note: '고칠 수 있는 칸만 있다. 자리마다 고정인 것(출력·인물 기준·장갑 폼·폭주 기준·첨부)은 tools/prompt-pack.cjs 가 정한다. 다 쓰면 build.', slots: {} };
   const plan = o.plan ? JSON.parse(fs.readFileSync(o.plan, 'utf8')) : null;
-  for (const [slot, def] of Object.entries(SLOTS)) {
+  const used = o.legacy ? [] : recentSilhouettes(o.repos, c.name);
+  for (const [slot, def] of Object.entries(SL)) {
     const s = {};
     for (const f of def.fields) {
       if (f === 'params') s.params = {};
+      else if (f === 'mecha') { s.mecha = autoMecha(d, c, used) || { set: {}, fx: [] }; s.mecha_auto = JSON.parse(JSON.stringify(s.mecha)); s.mecha_recent = used; }
       else if (f === 'faceDesignOn') s.faceDesignOn = true;
       else if (f === 'scene' && def.mode === 'action') s.scene = blank();
       else if (f === 'why') s.why = {};
@@ -139,9 +188,9 @@ function init(o) {
 
 /* settings 한 자리 → 생성기 상태(화면이 저장할 그대로). 틀린 칸은 bad 에 */
 function stateOf(set, slot, d, c, plan, bad) {
-  const def = SLOTS[slot], s = set.slots[slot] || {};
+  const def = slotsOf(set)[slot], s = set.slots[slot] || {};
   const where = k => slot + '.' + k;
-  for (const k of Object.keys(s)) if (def.fields.indexOf(k) < 0 && k !== 'guide') bad.push(where(k) + ' — 이 자리엔 없는 칸(고정값은 도구가 정한다)');
+  for (const k of Object.keys(s)) if (def.fields.indexOf(k) < 0 && k !== 'guide' && !(def.fields.indexOf('mecha') >= 0 && (k === 'mecha_auto' || k === 'mecha_recent'))) bad.push(where(k) + ' — 이 자리엔 없는 칸(고정값은 도구가 정한다)');
   const str = k => { const v = s[k]; if (v != null && typeof v !== 'string') bad.push(where(k) + ' — 글이어야 한다'); return typeof v === 'string' ? v : ''; };
   if (def.mode === 'casual') {
     if (!plan) { bad.push(slot + ' — 계획 파일이 없다(init --plan 또는 settings.plan)'); return null; }
@@ -202,6 +251,31 @@ function stateOf(set, slot, d, c, plan, bad) {
   }
   if (def.fields.indexOf('custom') >= 0) scene.custom = str('custom');
   raw.scenes = { action: scene };
+  /* 메카 큰 실루엣 · 부품 · 타입 표현(여덟 자리 ①) — 표에 있는 값만, 정한 값(mecha_auto)과 다르면 사유 */
+  if (def.fields.indexOf('mecha') >= 0 && s.mecha != null) {
+    const C = d.concept, m = s.mecha, types = [c.element, c.element2].filter(Boolean);
+    if (!C) bad.push(where('mecha') + ' — data/concept-mecha.json 이 없다');
+    else if (typeof m !== 'object' || Array.isArray(m)) bad.push(where('mecha') + ' — { set: {칸: 값}, fx: [{key, type}] }');
+    else {
+      for (const k of Object.keys(m)) if (k !== 'set' && k !== 'fx') bad.push(where('mecha.' + k) + ' — 없는 칸');
+      const optsOf = k => k === 'silhouette' ? C.silhouettes : C.parts[k];
+      for (const [k, v] of Object.entries(m.set || {})) {
+        if (!C.slots.some(x => x.key === k)) bad.push(where('mecha.set.' + k) + ' — 없는 칸(' + C.slots.map(x => x.key).join(' · ') + ')');
+        else if (v && !(optsOf(k) || []).some(x => x.key === v)) bad.push(where('mecha.set.' + k) + ' — 표에 없는 값 ' + JSON.stringify(v));
+      }
+      const seen = {};
+      for (const f of Array.isArray(m.fx) ? m.fx : []) {
+        if (!f || !C.fx.some(x => x.key === f.key)) bad.push(where('mecha.fx') + ' — 없는 타입 표현 ' + JSON.stringify(f && f.key));
+        else if (seen[f.key]) bad.push(where('mecha.fx') + ' — ' + f.key + ' 가 두 번');
+        else if (f.type && !types.includes(f.type)) bad.push(where('mecha.fx') + ' — ' + c.name + ' 의 타입은 ' + types.join(' · ') + ' (' + f.type + ' 아님)');
+        if (f && f.key) seen[f.key] = 1;
+      }
+      if (m.fx != null && !Array.isArray(m.fx)) bad.push(where('mecha.fx') + ' — 목록이어야 한다');
+      const norm = x => JSON.stringify(ST.normalizeMecha(x));
+      if (s.mecha_auto && norm(m) !== norm(s.mecha_auto) && !(typeof s.mecha_why === 'string' && s.mecha_why.trim())) bad.push(where('mecha_why') + ' — 정한 메카 값(mecha_auto)을 바꾸면 사유를 쓴다');
+      raw.mecha = ST.normalizeMecha(m);
+    }
+  }
   return { st: ST.initial(S, CT, CP, raw, d.tree, c, null).st };
 }
 
@@ -213,11 +287,12 @@ function build(o) {
   if (!c) throw new Error('카드가 없다: ' + set.card);
   if (c.no !== set.no) bad.push('no — 카드 번호가 다르다(' + set.no + ' ≠ ' + c.no + ')');
   if (!S.ACTION_STYLE_CORES[set.style]) bad.push('style — 화풍 키가 없다: ' + set.style);
-  for (const k of Object.keys(set.slots || {})) if (!SLOTS[k]) bad.push('slots.' + k + ' — 없는 자리');
+  const SL = slotsOf(set);
+  for (const k of Object.keys(set.slots || {})) if (!SL[k]) bad.push('slots.' + k + ' — 없는 자리');
   const planFile = o.plan || set.plan, plan = planFile && fs.existsSync(planFile) ? JSON.parse(fs.readFileSync(planFile, 'utf8')) : null;
   if (planFile && !plan) bad.push('plan — 계획 파일이 없다: ' + planFile);
-  const want = o.slot ? [o.slot] : Object.keys(SLOTS);
-  if (o.slot && !SLOTS[o.slot]) throw new Error('자리: ' + Object.keys(SLOTS).join(' · '));
+  const want = o.slot ? [o.slot] : Object.keys(SL);
+  if (o.slot && !SL[o.slot]) throw new Error('자리: ' + Object.keys(SL).join(' · '));
   const out = [];
   for (const slot of want) {
     const r = stateOf(set, slot, d, c, plan, bad);
@@ -236,17 +311,17 @@ function build(o) {
   }
   /* 차례표 — 이 자리의 지시문을 읽어 그대로 제출하고, 적힌 그림을 첨부한다 */
   const sha = t => crypto.createHash('sha256').update(t + '\n').digest('hex').slice(0, 12);
-  const att = a => a.map(x => x.endsWith('?') ? '(되면 ' + SLOTS[x.slice(0, -1)].n + ')' : SLOTS[x].n + ' ' + fileName(c.name, set.style, x)).join(' + ') || '없음';
+  const att = a => a.map(x => x.endsWith('?') ? '(되면 ' + SL[x.slice(0, -1)].n + ')' : SL[x].n + ' ' + fileName(c.name, set.style, x)).join(' + ') || '없음';
   const lines = ['# ' + c.name + ' (' + String(c.no).padStart(4, '0') + ' · ' + c.en + ') — 지시문 묶음', '',
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
     '자리마다 `<자리>-prompt.txt` 를 **고치지 않고 그대로** 제출하고, 첨부 칸의 그림을 붙인다. 고칠 것이 있으면 settings.json 을 고쳐 build 를 다시 돌린다.',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
     '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 올릴 파일 |', '|---|---|---|---|---|---|---|'];
-  for (const r of out) lines.push('| ' + SLOTS[r.slot].n + ' | ' + r.slot + ' | ' + att(SLOTS[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
+  for (const r of out) lines.push('| ' + SL[r.slot].n + ' | ' + r.slot + ' | ' + att(SL[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
   /* 일상 컷마다 고른 길 — 트리 문장(지시문에 그대로 들어간다) */
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV === 2)) {
     const g = guideOfV2(d, r.ui.plan), v = g.v2;
-    lines.push('', '## ' + SLOTS[r.slot].n + ' ' + r.slot + ' — 고른 장면(버전2)', '',
+    lines.push('', '## ' + SL[r.slot].n + ' ' + r.slot + ' — 고른 장면(버전2)', '',
       '| 칸 | 고른 것 | 지시문 문장 |', '|---|---|---|',
       '| 시대 | ' + (v.era ? v.era.ko : '—') + ' | ' + (v.era ? v.era.en : '') + ' |',
       '| 장소 | ' + (v.place ? v.place.ko : '—') + ' | ' + (v.place ? v.place.en : '') + ' |',
@@ -259,7 +334,7 @@ function build(o) {
   }
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV !== 2)) {
     const g = guideOf(d.tree, r.ui.plan), t = g.tree;
-    lines.push('', '## ' + SLOTS[r.slot].n + ' ' + r.slot + ' — 고른 길', '',
+    lines.push('', '## ' + SL[r.slot].n + ' ' + r.slot + ' — 고른 길', '',
       '| 칸 | 고른 것 | 트리 문장(지시문 그대로) |', '|---|---|---|',
       '| 시대 | ' + (t.era ? t.era.ko : '—') + ' | ' + (t.era ? t.era.en : '') + ' |',
       '| 장소 | ' + (t.place ? t.place.ko + (t.place.group ? ' · ' + t.place.group : '') : '—') + ' | ' + (t.place ? t.place.en : '') + ' |',
@@ -275,7 +350,7 @@ function build(o) {
 
 /* 실제로 넘긴 글 — 묶음 지시문과 글자 그대로인지(2026-11-03). 넘긴 글이 묶음과 다르면 그 그림은 묶음 지시문의 결과가 아니다 */
 function submitted(o) {
-  if (!o.dir || !SLOTS[o.slot] || !o.file) throw new Error('submitted --dir <작업 폴더> --slot <자리> --file <넘긴 글>');
+  if (!o.dir || !(SLOTS[o.slot] || NINE[o.slot]) || !o.file) throw new Error('submitted --dir <작업 폴더> --slot <자리> --file <넘긴 글>');
   const want = fs.readFileSync(path.join(o.dir, o.slot + '-prompt.txt'), 'utf8'), got = fs.readFileSync(o.file, 'utf8');
   const out = path.join(o.dir, o.slot + '-submitted.txt');
   if (path.resolve(o.file) !== path.resolve(out)) fs.writeFileSync(out, got);
@@ -299,4 +374,4 @@ if (require.main === module) {
     else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리] | submitted --dir <작업 폴더> --slot 자리 --file <넘긴 글>'); process.exit(2); }
   } catch (e) { console.error(e.message); process.exit(2); }
 }
-module.exports = { SLOTS, init, build, submitted, stateOf, planCut, fileName, guideOfV2 };
+module.exports = { SLOTS, NINE, slotsOf, PACK_STYLE, init, build, submitted, stateOf, planCut, fileName, guideOfV2, recentSilhouettes, autoMecha };

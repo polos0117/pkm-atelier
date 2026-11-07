@@ -11,6 +11,15 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 이미지 생성 규칙 — 경장 ① 한 장(애니 광택 · 메카 실루엣 자동) + 일상컷 일곱 장(필수 셋 · 코스튬 · 자유 셋)
+- IMAGE_RULES.md · docs/IMAGE_AUTOMATION.md · docs/CONCEPT_MECHA.md · AGENTS.md — 한 캐릭터 = 경장 ① + 일상 일곱(중장 · 고기동 · 개방은 이제 안 만든다), 기준 화풍 anime_gloss, 일상 필수 갈래는 역할극 · 수영복 · 란제리풍이 한 장씩(레트로는 자유로), 필수 자리 돌리기 · 다섯 명에 두 장은 세 장 시절 규칙으로. 이미 아홉 장으로 시작한 캐릭터는 아홉 장 그대로. 사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「일상컷 규칙은 기존에 필수갈래 택1에서 전체포함으로 7장으로 하자」 · 「레트로는 필수에서 빼고, 필수3 코스튬1 자유3 으로」 · 실루엣 · 효과는 「계획기 자동 — 실루엣만 + 효과 자동」
+- data/casual-tree.json — 필수 갈래 roleplay · swimwear · lingerie, `legacy_outfits` retro(세 장 기록을 읽을 때만)
+- lib/casual-plan.js · tools/casual-plan.cjs — 새 캐릭터 일곱 장(세 장 캐릭터 다시 채우기는 세 장 그대로): 필수 셋 한 장씩(덜 간 번호로) + 코스튬 + 자유 셋, 일곱 묶음, 방향 · 프레이밍 같은 값 두 장까지 · 같은 짝 한 장, 새 값(방향 · 프레이밍 · 옷 종류)은 바로 앞 캐릭터와, 세 축 겹침은 다섯 장 이상, 드러내기 · 첫머리는 다 돌면 다시. 버전1 · 버전2 모두. 실제 장부(세 장 캐릭터 위)에서도 check 통과
+- tools/casual-ledger.py — 같은 조건으로 검사(일곱 장 · 필수 셋 한 장씩 · 같은 값 두 장 · 같은 짝), 기록 읽기 casual1~7, 세 장 다시 채우기는 옛 규칙
+- tools/prompt-pack.cjs — 여덟 자리(settings version 2): 경장 ① + casual1~7, 기본 화풍 anime_gloss, ① 의 `mecha` 를 init 이 정한다(타입 추천 안에서 최근 열 명의 ① 이 안 쓴 큰 실루엣 + 타입 표현 자동, `mecha_auto` · `mecha_recent`), 바꾸면 `mecha_why`, 표에 없는 값 · 다른 타입 · 두 번은 걸린다. 아홉 자리는 `--legacy`(version 1 settings 는 그대로 아홉 자리로 build)
+- tools/image-runner.py — 새 차례는 `slot_set: light7`(경장 + casual1~7, 화풍 anime_gloss), 그 전 차례는 아홉 자리 그대로. 다 찬 캐릭터 판정은 아홉 자리 또는 경장 + 일상 일곱
+- tests/casual-plan.cjs · casual-plan-v2.cjs · casual-ledger.py · casual-tree.py · prompt-pack.cjs · prompt-pack-screen.cjs · image-runner*.py — 일곱 장 · 여덟 자리(화면 대조 여덟 + 아홉) · 예전 아홉 자리 차례
+
 ## 2026-11-06 · claude · 메카 실루엣 · 타입 표현을 「새 인물 만들기」 옵션으로 — 따로 있던 탭은 뺐다
 - lib/prompt-ui.js · lib/words.js · prompt.html — 액션 · 새 인물 만들기에 「메카 실루엣 · 타입 표현 (선택)」 칸: 큰 실루엣 · 무게 · 부위 부품 칸마다 없음(기본) / 직접, 큰 실루엣이 정하는 칸은 막힘, 타입 표현 일곱 가지 체크(두 타입 종은 표현마다 타입), 모두 없음으로. 이어가기 · 일상컷 · 폭주에는 없다. 「메카 컨셉」 탭은 뺐다(명령줄 도구는 그대로). 사용자 「아 잘못 이해했네. 그 신규 생성에 붙여줘. 옵션값으로」
 - lib/concept-mecha.js — `lines(C, types, sel)`: 고른 칸만 `MECHA SILHOUETTE:` · `TYPE EFFECTS:` 줄로(표현은 표 순서, 빈 타입은 첫 타입)

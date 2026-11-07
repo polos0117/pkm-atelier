@@ -21,6 +21,7 @@ def w(name, obj):
 
 a = {'policy': {}, 'daily': {}, 'runs': [], 'claims': {}, 'blocked_candidates': {}, 'external_holds': {}}
 r = R.prepare(a, 'worker', [{'no': 366, 'name': '진주몽'}], {}, '2026-10-24T02:00:00Z', 'e1'); c = r['queue'][0]
+c.pop('slot_set')   # 2026-11-07 전에 잡은 아홉 자리 차례(폼 · 개방이 있다) — 그 차례는 아홉 자리 그대로 이어 간다
 for k in ('light', 'heavy', 'light_overdrive', 'heavy_overdrive', 'casual1', 'casual2', 'casual3'):
     c['slots'][k] = {'status': 'accepted', 'image': {'path': 'x/' + k, 'sha256': k}}
 old_prompt = w('old.txt', 'old prompt')

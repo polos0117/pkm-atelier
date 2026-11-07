@@ -54,7 +54,7 @@ print('PASS 일상컷 트리: 실제 표 · 없는 열쇠·자세 계열·장소
 # pkm 몫(2026-10-29) — 안 쓰는 값·얼굴 클로즈업 조건·동료·세대의 해, 필수 갈래는 의상 계열 넷(세계 안 규칙 없음)
 assert doc['banned']['orients'] == ['back', 'back_to_camera', 'walking_away'] and doc['banned']['frames'] == ['detail']
 assert doc['frame_rules']['face_close']['not_required'] and 'rear_3q' in doc['frame_rules']['face_close']['no_orients']
-assert sorted(doc['required']['outfits']) == ['lingerie', 'retro', 'roleplay', 'swimwear'] and 'world' not in doc['required'] and 'in_game' not in doc['required']
+assert sorted(doc['required']['outfits']) == ['lingerie', 'roleplay', 'swimwear'] and doc['required'].get('legacy_outfits') == ['retro'] and 'world' not in doc['required'] and 'in_game' not in doc['required']
 fails(lambda d: d['banned']['orients'].append('flying'), '안 쓰는 방향 flying')
 fails(lambda d: d['banned'].update(frames=['panorama']), "안 쓰는 프레이밍 'panorama'")
 fails(lambda d: act(d, 'care_feeding')['places'].append('street_park'), '동료 묶음 밖')
@@ -62,4 +62,4 @@ fails(lambda d: d['gen_years'].update({'1': 96}), '세대 연도')
 fails(lambda d: [a.pop('companion') for a in d['activities'] if a.get('companion')], '동료 자세')
 keys = {p['key'] for p in doc['places']}
 assert not keys & {'arcade_pcbang', 'studio_dev', 'studio_stream', 'game_place'} and {'pw_center', 'work_lab', 'partner_garden', 'berry_orchard'} <= keys
-print('PASS pkm 트리 몫: 안 쓰는 값 · 얼굴 클로즈업 · 필수 갈래 넷 · 동료 묶음 · 세대 연도')
+print('PASS pkm 트리 몫: 안 쓰는 값 · 얼굴 클로즈업 · 필수 갈래 셋(레트로는 옛 기록만) · 동료 묶음 · 세대 연도')

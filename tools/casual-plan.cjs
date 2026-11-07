@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* 일상컷 계획기 — 생성 전에 세 장의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
+/* 일상컷 계획기 — 생성 전에 일상컷(새 캐릭터 일곱 장 — 2026-11-07, 세 장으로 등록된 캐릭터 다시 채우기는 세 장)의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
    node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
        [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4>]
@@ -104,7 +104,9 @@ function planBatch(o, S, entries, look, cards, attempt) {
       if (!res) throw new Error(card + ' 의 이 세션(' + o.session + ') 예약이 없다 — --keep 은 예약한 세션에서만');
       kept = res.cuts.filter(c => o.keep[card].includes(c.cut)).map(c => ({ ...c, kept: true }));
     }
-    if (refill && kept.length >= 3) throw new Error(card + ' 는 세 장이 다 있다');
+    /* 2026-11-07 일곱 장 — 세 장으로 등록된 캐릭터 다시 채우기만 세 장 규칙 */
+    const count = refill && !mine.cuts.some(c => c.cut > P.LEGACY_CUTS) ? P.LEGACY_CUTS : P.CUTS;
+    if (refill && kept.length >= count) throw new Error(card + ' 는 ' + count + '장이 다 있다');
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
     /* 버전마다 칸이 다르다 — 없는 칸을 피하라고 하면 아무것도 안 피하고 조용히 지나간다 */
@@ -117,7 +119,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
       return m ? { card: c, cuts: m.cuts } : null;
     }).filter(Boolean);
     const gen = (cards.find(x => x.name === card) || {}).gen;
-    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
@@ -143,7 +145,7 @@ function solve(o, S, cards) {
 /* 계획기가 돌려준 까닭(lib 은 값만 준다)을 말로 */
 function whyText(why) {
   const r = why.required || {};
-  const req = r.slots && r.slots.length
+  const req = r.all ? '필수 갈래 셋(역할극 · 수영복 · 란제리풍) 자리 ' + (r.slots || []).join('·') : r.slots && r.slots.length
     ? '필수 갈래 자리 ' + r.slots.join('·') + (r.two ? ' — 앞 넷이 모두 한 장이라 두 장' : '') + (r.prev ? ' (앞 캐릭터 ' + r.prev.join('·') + ')' : '')
     : '필수 갈래는 남은 컷에 있다';
   return req + (why.low && why.low.length ? ' · 덜 쓴 장소 묶음 ' + why.low.join('·') : '');

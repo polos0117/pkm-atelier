@@ -1,7 +1,7 @@
 /* 일상컷 계획기 버전2 — lib/casual-plan.js planV2 · tools/casual-plan.cjs --v2(docs/CASUAL_TREE_V2.md 4단계). node tests/casual-plan-v2.cjs
    - 빈 장부에서 서른 명을 차례로 버전2 로 정해도 매번 tools/casual-ledger.py check 를 통과하고, 컷마다 버전2 모듈이 고칠 칸이 없다
    - 버전1 컷이 쌓인 장부 위에서도(섞인 장부) — 비교 열쇠는 짓 · 몸+머리(casual-ledger.py with_path 와 같다)
-   - 세 장: 필수 갈래 한 장 이상 · 다른 묶음 · 다른 프레이밍 · 다른 몸+머리, 장소/짓은 최근 10명 안에서 안 겹친다
+   - 일곱 장(2026-11-07): 필수 셋 한 장씩 · 다른 묶음 · 프레이밍 · 몸+머리 같은 값 두 장까지 · 같은 짝 없음, 장소/짓은 최근 10명 안에서 안 겹친다
    - 생성기 주소(generatorQuery) → 생성기 상태(prompt-state planned)가 버전2 칸 그대로 잠근다 · 피할 값 · 만든 컷 두기 */
 const fs = require('node:fs'), path = require('node:path'), os = require('node:os'), vm = require('node:vm'), cp = require('node:child_process');
 const assert = require('node:assert/strict');
@@ -66,15 +66,16 @@ let tries = 0;
 for (let i = 0; i < 30; i++) {
   const card = 'B' + i, r = batchPlan(entries, [card], 'seq', true), ch = r.plan.characters[0];
   tries += r.tries;
-  assert.equal(ch.cuts.length, 3);
+  assert.equal(ch.cuts.length, 7);
   const cos = ch.cuts.filter(x => x.ofam === 'pokemon_costume');
   assert(cos.length === 1 && ['now', 'fantasy'].includes(cos[0].era) && !C2.awkward(t, cos[0].ofam, cos[0].place).length, card + ' 포켓몬 코스튬 한 장 — 지금 · 무대·환상, 어색하지 않은 곳');
   assert(cos[0].frame && cos[0].frame !== 'face_close', card + ' 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02) — ' + cos[0].frame);
   ch.cuts.forEach(x => validV2(x, card + ' ' + x.cut));
-  assert(ch.cuts.some(x => P.isRequired(tree, x)), card + ' 필수 갈래');
-  for (const f of ['frame']) assert.equal(new Set(ch.cuts.map(x => x[f])).size, 3, card + ' 다른 ' + f);
-  assert.equal(new Set(ch.cuts.map(x => x.body + '+' + x.head)).size, 3, card + ' 다른 몸+머리');
-  assert.equal(new Set(ch.cuts.map(x => (C2.place(t, x.place) || {}).group)).size, 3, card + ' 다른 묶음');
+  for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(x => x.ofam === f).length, 1, card + ' 필수 ' + f + ' 한 장');
+  const bh = x => x.body + '+' + x.head;
+  assert(ch.cuts.every(x => ch.cuts.filter(y => y.frame === x.frame).length <= 2 && ch.cuts.filter(y => bh(y) === bh(x)).length <= 2), card + ' 프레이밍 · 몸+머리 같은 값 두 장까지');
+  assert.equal(new Set(ch.cuts.map(x => bh(x) + '|' + x.frame)).size, 7, card + ' 같은 짝 없음');
+  assert.equal(new Set(ch.cuts.map(x => (C2.place(t, x.place) || {}).group)).size, 7, card + ' 다른 묶음');
   const recent = new Set(entries.slice(-10).flatMap(e => e.cuts.map(key)));
   for (const x of ch.cuts) assert(!recent.has(key(x)), card + ' 장소/짓 ' + key(x) + ' 최근 10명');
   entries.push({ card, status: 'done', at: at(entries.length), cuts: ch.cuts });

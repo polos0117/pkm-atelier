@@ -7161,10 +7161,12 @@
   "outfits": [
    "roleplay",
    "swimwear",
-   "lingerie",
+   "lingerie"
+  ],
+  "legacy_outfits": [
    "retro"
   ],
-  "note": "세 장에 한 장 이상 — 의상 계열이 역할극·수영복·란제리풍·레트로(pkm 필수 갈래: adult_roleplay·swimwear·lingerie·retro_glamour). 세계 안 규칙은 없다"
+  "note": "일곱 장에 셋 다 한 장씩(2026-11-07 사용자 「레트로는 필수에서 빼고, 필수3 코스튬1 자유3 으로」) — 의상 계열이 역할극·수영복·란제리풍. legacy_outfits 는 세 장 시절(한 장 이상, 레트로도 필수)의 기록을 읽을 때만 — 옛 칸 갈래 adult_roleplay·swimwear·lingerie·retro_glamour. 세계 안 규칙은 없다"
  },
  "presets": [
   {

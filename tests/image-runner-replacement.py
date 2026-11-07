@@ -12,10 +12,10 @@ files={};old=png('red');new=png('blue');prefix='records/automation/replacements/
 def art(n,b):
  p=prefix+'/'+n;files[p]=b;return {'path':p,'sha256':r.digest(b)}
 olditem={'status':'accepted','image':art('old.png',old)}
-c={'no':346,'name':'릴리요','style':'glossy_promo','status':'complete','completed_at':'old-time','outputs':{'historical':'unchanged'},'slots':{s:copy.deepcopy(olditem) for s in r.SLOTS}}
+c={'no':346,'name':'릴리요','style':'glossy_promo','status':'complete','completed_at':'old-time','outputs':{'historical':'unchanged'},'slots':{s:copy.deepcopy(olditem) for s in r.LEGACY_SLOTS}}
 run={'id':'r','status':'complete','queue':[c]};state={'runs':[run],'claims':{'346':{'status':'complete'}}}
 entry={'casual':{'f':[]},'byForm':{}};reg={'img':{'릴리요':{'byStyle':{'glossy_promo':entry}}},'where':{}}
-for slot in r.SLOTS:
+for slot in r.LEGACY_SLOTS:
  n=r.filename(c,slot);files['img/'+n]=r.webp(old);reg['where'][n]=1
  if slot.startswith('casual'):entry['casual']['f'].append(n)
  else:entry['byForm'][slot]={'f':n}

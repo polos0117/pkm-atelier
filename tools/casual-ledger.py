@@ -79,7 +79,19 @@ GROUP_LOW = 5           # 그중 사용 횟수 하위 5개(같은 횟수는 함�
 STAMP_SINCE = "2026-10-25T02:55:00+00:00"
 SMALL_GROUP = 8         # 길(장소·하는 일)이 이 수 이하인 묶음은 한 바퀴를 다 돌기 전까지 같은 길을 다시 쓰지 않는다(옛 「작은 갈래」)
 PATH_KEYS = ("era", "place", "act", "ofam", "item")
-TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장
+TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장(세 장 시절 규칙)
+CUTS, LEGACY_CUTS = 7, 3  # 2026-11-07 — 새 캐릭터는 일곱 장(필수 셋 한 장씩 + 코스튬 + 자유 셋), 세 장으로 등록된 캐릭터 다시 채우기는 세 장
+MAX_CUT = CUTS
+
+
+def repeat_limit(n):
+    """방향 · 프레이밍 같은 값 몇 장까지 — lib/casual-plan.js repeatLimit"""
+    return 2 if n > LEGACY_CUTS else 1
+
+
+def same_axes_limit(n):
+    """비교 대상 한 명과 세 축이 같은 컷이 몇 장 이상이면 겹침 — lib/casual-plan.js sameAxesLimit"""
+    return n - 2 if n > LEGACY_CUTS else 2
 RESERVE_HOURS = 24      # 이보다 오래된 reserved 는 끝난 것으로 보지 않고 버린다
 
 # 옷 종류 — 계획의 garments 는 이 말만 쓴다. 기록에서 읽을 때는 의상 문장에서 찾는다
@@ -160,6 +172,8 @@ def spec():
     return {"tree": tree, "tree2": tree2, "places": places, "groups": [g["key"] for g in tree["groups"]],
             "group_paths": {g: sorted(v) for g, v in keys.items()}, "presets": presets,
             "required": set((tree.get("required") or {}).get("outfits") or []),
+            # 세 장 시절의 필수 갈래(레트로도) — 세 장 기록을 읽을 때만(2026-11-07 레트로를 필수에서 뺐다)
+            "required_legacy": set((tree.get("required") or {}).get("outfits") or []) | set((tree.get("required") or {}).get("legacy_outfits") or []),
             # 포켓몬 코스튬(2026-11-01) — 필수 갈래와 따로 세 장에 한 장(새로 정하는 캐릭터만)
             "costume": (tree.get("costume_required") or {}).get("outfit") or "",
             "costume_not_frames": (tree.get("costume_required") or {}).get("not_frames") or []}
@@ -209,8 +223,9 @@ def group_of(c, sp=None):
     return p["group"] if p else None
 
 
-def is_required(c, sp=None):
-    return c.get("ofam") in (sp or sp_())["required"] or c.get("cat") in REQUIRED
+def is_required(c, sp=None, legacy=False):
+    sp = sp or sp_()
+    return c.get("ofam") in sp["required_legacy" if legacy else "required"] or c.get("cat") in REQUIRED
 
 
 def garments_of(text):
@@ -280,7 +295,7 @@ def read_records(repos):
             for ch in run.get('queue', []):
                 for replacement in ch.get('replacements', []):
                     slot = replacement.get('slot', '')
-                    if replacement.get('status') == 'accepted' and re.fullmatch(r'casual[1-3]', slot):
+                    if replacement.get('status') == 'accepted' and re.fullmatch(r'casual[1-7]', slot):
                         relative = replacement['ui']['path']
                         if not relative.startswith('records/automation/') or '..' in Path(relative).parts:
                             raise ValueError('invalid replacement UI path')
@@ -292,7 +307,7 @@ def read_records(repos):
             continue
         for d in sorted(os.listdir(base)):
             cuts, card, files = [], None, []
-            for i in (1, 2, 3):
+            for i in range(1, MAX_CUT + 1):
                 f = os.path.join(base, d, "casual%d-ui.json" % i)
                 # 다시 채운 컷 — 막힌 앞 시도의 casualN-ui.json 이 남아 있어도 등록된 그림을 만든 상태는 casualN-refill-ui.json 이다
                 # (2026-10-24 미라몽·치렁·마자: 막힌 장면이 등록분으로 읽혀 다시 채우기 예약이 안 풀리고 비교 대상이 늘어 계획기가 멈췄다)
@@ -669,7 +684,7 @@ def check_plan(doc, plan, sp, ledger=None):
     batch = [{**ch, "cuts": [with_path(c, sp) for c in ch.get("cuts") or []]} for ch in plan.get("characters") or []]
     names = {ch.get("card") for ch in batch}
     base = [e for e in es if e.get("card") not in names]
-    req_of = lambda c: is_required(c, sp)
+    req_of = lambda c: is_required(c, sp, True)
     prev_req = [c["cut"] for c in base[-1]["cuts"] if req_of(c)] if base else None
     hist = base[:]
     for ch in batch:
@@ -680,33 +695,49 @@ def check_plan(doc, plan, sp, ledger=None):
         exw = base[-EX_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
         bad = lambda m: errs.append("%s: %s" % (who, m))
         refill = bool(ch.get("refill"))
-        if len(cuts) != 3:
-            bad("일상컷은 세 장")
-        # 표정·자세는 비어 있어도 된다(하는 일이 정한다) — 고른 것끼리만 다르게
+        # 2026-11-07 일곱 장 — 세 장으로 등록된 캐릭터를 다시 채우는 계획만 세 장 규칙
+        n_cuts = LEGACY_CUTS if refill and all((c.get("cut") or 0) <= LEGACY_CUTS for c in cuts) and len(cuts) <= LEGACY_CUTS else CUTS
+        legacy = n_cuts == LEGACY_CUTS
+        if len(cuts) != n_cuts:
+            bad("일상컷은 %d장" % n_cuts)
+        # 표정·자세는 비어 있어도 된다(하는 일이 정한다) — 고른 것끼리만 다르게. 일곱 장은 방향 · 프레이밍 같은 값 두 장까지, 같은 짝은 한 장
         for k in ("expr", "pose", "orient", "frame"):
             vals = [c.get(k) for c in cuts if c.get(k) or k in ("orient", "frame")]
-            if len(set(vals)) != len(vals):
-                bad("세 장의 %s 가 서로 달라야 한다" % k)
-        req = [c["cut"] for c in cuts if req_of(c)]
-        if not req:
-            bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required"])))
+            lim = repeat_limit(n_cuts) if k in ("orient", "frame") else 1
+            over = sorted(v for v in set(vals) if vals.count(v) > lim)
+            if over:
+                bad("%s %s 가 %d장 — 같은 값은 %d장까지" % (k, over[0], vals.count(over[0]), lim) if lim > 1 else "%d장의 %s 가 서로 달라야 한다" % (n_cuts, k))
+        if not legacy:
+            prs = [(c.get("orient"), c.get("frame")) for c in cuts]
+            if len(set(prs)) != len(prs):
+                bad("같은 (방향, 프레이밍) 짝을 두 컷에")
+        req = [c["cut"] for c in cuts if (req_of(c) if legacy else is_required(c, sp))]
+        if legacy and not req:
+            bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required_legacy"])))
+        if not legacy:
+            for f in sorted(sp["required"]):
+                k = sum(1 for c in cuts if c.get("ofam") == f)
+                if k != 1:
+                    bad("필수 갈래 %s 가 %d장 — 일곱 장에 한 장씩(%s)" % (f, k, "·".join(sorted(sp["required"]))))
         # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
         if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
-            bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 세 장에 한 장" % sp["costume"])
+            bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 한 장" % sp["costume"])
         # 코스튬 컷엔 얼굴 클로즈업을 안 쓴다(트리 표 costume_required.not_frames — 2026-11-02 사용자 「필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록」)
         for c in cuts:
             if sp.get("costume") and c.get("ofam") == sp["costume"] and c.get("frame") in sp.get("costume_not_frames", []):
                 bad("컷 %s: 코스튬 컷의 프레이밍 %s — 코스튬 컷엔 안 쓴다(%s)" % (c.get("cut"), c.get("frame"), "·".join(sp["costume_not_frames"])))
-        if not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
+        if legacy and not refill and prev_req is not None and req and sorted(req) == sorted(prev_req):
             bad("필수 갈래 자리 %s 가 바로 앞 캐릭터와 같다 — 컷 번호를 돌린다" % req)
         last = hist[-(TWO_REQUIRED_EVERY - 1):]
-        if not refill and len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(req_of(c) for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
+        if legacy and not refill and len(last) == TWO_REQUIRED_EVERY - 1 and all(sum(req_of(c) for c in e["cuts"]) < 2 for e in last) and len(req) < 2:
             bad("앞 %d명이 모두 필수 갈래 한 장 — 이번에는 두 장" % (TWO_REQUIRED_EVERY - 1))
         used_path = {path_key(c) for e in exw for c in e["cuts"]}
         pairs = cut_pairs(cmp_)
-        orients = {c.get("orient") for e in cmp_ for c in e["cuts"]}
-        frames = {c.get("frame") for e in cmp_ for c in e["cuts"]}
-        gar = {g for e in cmp_ for c in e["cuts"] for g in (c.get("garments") or [])}
+        # 새 값(방향 · 프레이밍 · 옷 종류) — 일곱 장이면 바로 앞 캐릭터(+ 배치)와만(lib/casual-plan.js freshWindow)
+        fw = cmp_ if legacy else base[-1:] + others
+        orients = {c.get("orient") for e in fw for c in e["cuts"]}
+        frames = {c.get("frame") for e in fw for c in e["cuts"]}
+        gar = {g for e in fw for c in e["cuts"] for g in (c.get("garments") or [])}
         for c in cuts:
             n = c.get("cut")
             if c.get("kept"):
@@ -733,13 +764,13 @@ def check_plan(doc, plan, sp, ledger=None):
         groups = [group_of(c, sp) for c in cuts]
         for c in cuts:
             if not c.get("kept") and groups.count(group_of(c, sp)) > 1:
-                bad("%s번: 장소 묶음 %s 를 다른 컷도 쓴다 — 세 장은 서로 다른 묶음" % (c.get("cut"), group_of(c, sp)))
+                bad("%s번: 장소 묶음 %s 를 다른 컷도 쓴다 — 컷마다 서로 다른 묶음" % (c.get("cut"), group_of(c, sp)))
         if sum(bool(re.search(r"\b(empty|deserted|quiet)\b", (c.get("scene") or "").lower())) for c in cuts) > 1:
-            bad("빈·조용한 장소는 세 장 중 한 장까지")
+            bad("빈·조용한 장소는 한 장까지")
         if refill:
             cover = [c["cut"] for c in cuts if set(c.get("garments") or []) & COVERING]
             if len(cover) > 1:
-                bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 세 장 중 한 장까지" % ("·".join(sorted(COVERING)), cover))
+                bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 한 장까지" % ("·".join(sorted(COVERING)), cover))
             continue
         if not any(c.get("orient") not in orients or c.get("frame") not in frames for c in cuts):
             bad("방향이나 프레이밍을 비교 대상이 안 쓴 값으로 고른 컷이 없다")
@@ -747,24 +778,24 @@ def check_plan(doc, plan, sp, ledger=None):
             bad("비교 대상이 안 쓴 옷 종류가 한 장에도 없다")
         low = low_groups(base[-GROUP_WINDOW:] + others, sp)
         # 덜 쓴 묶음은 자유 컷(필수 갈래 · 코스튬이 아닌 컷)에서 — 필수 갈래 두 장 + 코스튬이면 자유 컷이 없어 보지 않는다(2026-11-01 완화)
-        free_cuts = [c for c in cuts if not req_of(c) and c.get("ofam") != sp.get("costume")]
+        free_cuts = [c for c in cuts if not (req_of(c) if legacy else is_required(c, sp)) and c.get("ofam") != sp.get("costume")]
         if free_cuts and not any(group_of(c, sp) in low for c in free_cuts):
             bad("필수 갈래가 아닌 컷 가운데 덜 쓴 장소 묶음(%s)이 없다" % ", ".join(sorted(low)))
         src = [(c.get("axes") or {}).get("source_influence") for c in cuts]
         if len(set(src)) == 1:
-            bad("SOURCE 영향도가 세 장 모두 같다")
+            bad("SOURCE 영향도가 모든 컷에 같다")
         for e in cmp_:
             if sorted(src) == sorted((c.get("axes") or {}).get("source_influence") for c in e["cuts"]) and len(e["cuts"]) == len(cuts):
                 bad("SOURCE 영향도 구성이 %s 와 같다" % e.get("card"))
             same = sum(1 for c in cuts if any((c.get("axes") or {}) == (d.get("axes") or {}) for d in e["cuts"]))
-            if same >= 2:
-                bad("세 축 값이 %s 의 컷과 같은 컷이 둘 이상" % e.get("card"))
+            if same >= same_axes_limit(n_cuts):
+                bad("세 축 값이 %s 의 컷과 같은 컷이 %d장 이상" % (e.get("card"), same_axes_limit(n_cuts)))
         cover = [c["cut"] for c in cuts if set(c.get("garments") or []) & COVERING]
         if len(cover) > 1:
-            bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 세 장 중 한 장까지" % ("·".join(sorted(COVERING)), cover))
+            bad("몸을 덮는 겉옷(%s)을 %s번 컷에 — 한 장까지" % ("·".join(sorted(COVERING)), cover))
         motif = sum(bool(re.search(r"\b(tiny|small|one) [a-z -]*(charm|pendant|ring|earring|clasp|pin|brooch|bracelet|badge|clip|stud)", (c.get("outfit") or "").lower())) for c in cuts)
-        if motif == 3:
-            bad("세 장 모두 작은 원작 장신구 — 필요한 컷에만 넣는다")
+        if cuts and motif == len(cuts):
+            bad("모든 컷에 작은 원작 장신구 — 필요한 컷에만 넣는다")
         hist.append({"card": who, "cuts": cuts})
         prev_req = req
     return errs

@@ -162,7 +162,7 @@ with tempfile.TemporaryDirectory() as tmp:
         buf=io.BytesIO();Image.new('RGB',(1024,1536)).save(buf,format='PNG');raw=buf.getvalue()
         source='records/automation/fixture.png';c['slots']={slot:{'status':'accepted','image':{'path':source,'sha256':R.digest(raw)}} for slot in R.SLOTS}
         R.prepare_publication(run,lambda p:raw)
-        assert len(c['publication']['files'])==9 and R.next_step(run)['action']=='publish_images_then_verify_registration'
+        assert len(c['publication']['files'])==len(R.slots_of(c)) and R.next_step(run)['action']=='publish_images_then_verify_registration'
         c['own_publication']={'files':[R.filename(c,slot) for slot in R.SLOTS]}
         assert R.next_step(run)['action']=='verify_registration'
     finally:R.ROOT=oldroot;sys.argv=oldargv

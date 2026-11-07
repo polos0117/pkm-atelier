@@ -1,5 +1,5 @@
 /* 지시문 묶음 = 생성기 화면 — tools/prompt-pack.cjs 가 쓴 저장값(<자리>-ui.json 의 storage)을 생성기에 넣고 열면
-   화면의 지시문이 묶음의 <자리>-prompt.txt 와 글자 하나 다르지 않다(아홉 자리 모두). 파일로 읽고 그대로 제출해도 생성기를 쓴 것과 같다.
+   화면의 지시문이 묶음의 <자리>-prompt.txt 와 글자 하나 다르지 않다(아홉 자리 --legacy 모두 · 2026-11-07 여덟 자리 — ① 메카 실루엣 · 타입 표현 포함). 파일로 읽고 그대로 제출해도 생성기를 쓴 것과 같다.
    ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-pack-screen.cjs */
 const assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path'), os = require('node:os'), cp = require('node:child_process');
 const { start } = require('./browser-harness.cjs');
@@ -13,7 +13,7 @@ const CUTS = [
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'prompt-pack-screen-')), dir = path.join(tmp, 'pack'), planFile = path.join(tmp, 'PLAN.json');
   fs.writeFileSync(planFile, JSON.stringify({ characters: [{ card: '피카츄', cuts: CUTS }] }));
   const run = (...a) => { const r = cp.spawnSync(process.execPath, [TOOL, ...a], { encoding: 'utf8' }); assert.equal(r.status, 0, r.stderr); };
-  run('init', '피카츄', '--dir', dir, '--plan', planFile);
+  run('init', '피카츄', '--dir', dir, '--plan', planFile, '--legacy');
   const set = JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8'));
   set.slots.light.params = { 'apparent age': '30s', hairstyle: 'bob' }; set.slots.light.headFeature = 'yellow ear headband';
   set.slots.heavy.scene = { ...set.slots.heavy.scene, expr: 'focused', pose: 'low_guard', frame: 'full_body', action: { category: 'melee', example: 'melee_counter', timing: 'windup' } };
@@ -22,17 +22,30 @@ const CUTS = [
   set.slots.casual3.scene = 'Rain streaks the cafe window.'; set.slots.casual3.camera = 'eye level'; set.slots.casual3.why = { scene: '장면 첫머리', camera: '눈높이로 고정' };
   fs.writeFileSync(path.join(dir, 'settings.json'), JSON.stringify(set, null, 1));
   run('build', '--dir', dir);
+  /* 여덟 자리 — 계획기 버전2 일곱 컷, ① 메카 자동 + 직접 바꾼 부품 하나(사유와 함께) */
+  global.window = global;
+  for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'casual-plan']) require('../lib/' + f + '.js');
+  const read = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', f), 'utf8'));
+  const p7 = window.AtelierCasualPlan.planV2({ S: window.AtelierSpec, tree: read('casual-tree.json'), tree2: read('casual-tree-v2.json'), subject: { gen: 1 }, entries: [], card: '피카츄', seed: 'screen7' });
+  const dir7 = path.join(tmp, 'pack7'), plan7 = path.join(tmp, 'PLAN7.json');
+  fs.writeFileSync(plan7, JSON.stringify({ characters: [{ card: '피카츄', cuts: p7.cuts }] }));
+  run('init', '피카츄', '--dir', dir7, '--plan', plan7, '--repos', path.join(tmp, 'none'));
+  const set7 = JSON.parse(fs.readFileSync(path.join(dir7, 'settings.json'), 'utf8'));
+  set7.slots.light.mecha.set.legs = 'heels'; set7.slots.light.mecha_why = '다리 부품 하나 직접';
+  fs.writeFileSync(path.join(dir7, 'settings.json'), JSON.stringify(set7, null, 1));
+  run('build', '--dir', dir7);
+  assert(fs.readFileSync(path.join(dir7, 'light-prompt.txt'), 'utf8').includes('MECHA SILHOUETTE:'), '① 메카 줄');
   const h = await start();
   let checks = 0;
   try {
-    for (const slot of Object.keys(set.slots)) {
-      const ui = JSON.parse(fs.readFileSync(path.join(dir, slot + '-ui.json'), 'utf8')), want = fs.readFileSync(path.join(dir, slot + '-prompt.txt'), 'utf8').replace(/\n$/, '');
+    for (const [d, slot] of Object.keys(set.slots).map(k => [dir, k]).concat(Object.keys(set7.slots).map(k => [dir7, k]))) {
+      const ui = JSON.parse(fs.readFileSync(path.join(d, slot + '-ui.json'), 'utf8')), want = fs.readFileSync(path.join(d, slot + '-prompt.txt'), 'utf8').replace(/\n$/, '');
       const a = await h.open('prompt.html?mech=' + encodeURIComponent('피카츄'), { viewport: { width: 390, height: 844 }, store: ['pkm_prompt_v2', JSON.stringify(ui.storage)] });
       await a.page.waitForFunction(() => (document.getElementById('prompt-output') || {}).value?.length > 200, null, { timeout: 20000 });
       assert.equal(await a.page.locator('#prompt-output').inputValue(), want, slot + ' — 묶음과 생성기 화면의 지시문이 다르다');
       assert.deepEqual(a.errors, [], slot + ' 오류');
       await a.close(); checks++;
     }
-    console.log('PASS 지시문 묶음 = 생성기 화면: 아홉 자리(① 외형·머리 직접 입력 · ② 연출 · ③ 폼 요청 · 폭주 셋 · 일상 셋 계획 값·옷·장면·카메라) — ' + checks + '가지');
+    console.log('PASS 지시문 묶음 = 생성기 화면: 여덟 자리(① 메카 실루엣 · 부품 · 타입 표현 · 일상 일곱) + 아홉 자리(① 외형·머리 직접 입력 · ② 연출 · ③ 폼 요청 · 폭주 셋 · 일상 셋 계획 값·옷·장면·카메라) — ' + checks + '가지');
   } finally { await h.stop(); fs.rmSync(tmp, { recursive: true, force: true }); }
 })().catch(e => { console.error(e); process.exit(1); });

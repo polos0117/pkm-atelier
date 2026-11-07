@@ -1,6 +1,7 @@
 /* 지시문 묶음(tools/prompt-pack.cjs) — 브라우저 없이 생성기와 같은 지시문·저장값을 파일로.
    - init 은 고칠 칸만 있는 settings.json 을 만들고, 이미 있으면 덮지 않는다
-   - build 는 아홉 자리(IMAGE_RULES 3절 표 — 출력·인물 기준·장갑 폼·폭주 기준·첨부)를 도구가 정하고 지시문·저장값·차례표를 쓴다
+   - build 는 아홉 자리(--legacy, settings.version 1)를 도구가 정하고 지시문·저장값·차례표를 쓴다
+   - 2026-11-07 기본은 여덟 자리(경장 ① + 일상 일곱, anime_gloss) — ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정하고(최근 ① 과 다른 실루엣), 바꾸면 사유
    - 저장값은 생성기 상태 코드(lib/prompt-state.js)를 다시 돌려도 그대로이고, 지시문은 그 저장값으로 조립부가 지은 글과 같다
    - 일상 세 컷의 선택값은 계획 파일에서만(생성기 주소와 같은 길), 직접 입력은 사유가 있어야, 장부(casual-ledger.py)가 그대로 읽는다
    - 틀린 칸(없는 칸·고정값·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷)이면 아무것도 쓰지 않고 1
@@ -23,7 +24,7 @@ const dir = path.join(tmp, 'pikachu');
 let checks = 0;
 try {
   /* init — 고칠 칸만, 일상컷엔 계획의 길·옷 종류·드러내기·첫머리 안내 */
-  let r = run('init', '피카츄', '--dir', dir, '--plan', planFile);
+  let r = run('init', '피카츄', '--dir', dir, '--plan', planFile, '--legacy');
   assert.equal(r.status, 0, r.stderr);
   const set = JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8'));
   assert.equal(set.style, 'glossy_promo', '기본 화풍');
@@ -36,7 +37,7 @@ try {
   assert.equal(g1.tree.place.en, CT.place(treeJ, 'water_pool').en); assert.equal(g1.tree.act.en, CT.act(treeJ, 'sunbed').en);
   assert.equal(g1.tree.item.en, CT.item(treeJ, 'swimwear', 'classic_bikini').en); assert(g1.tree.place.group && g1.tree.act.pose_family && g1.tree.era.ko, '묶음·자세 계열·시대 이름');
   assert.equal(set.slots.casual2.guide.tree.item.key, '', '옷 자동');
-  assert.notEqual(run('init', '피카츄', '--dir', dir).status, 0, '이미 있으면 덮지 않는다');
+  assert.notEqual(run('init', '피카츄', '--dir', dir, '--legacy').status, 0, '이미 있으면 덮지 않는다');
   checks += 3;
 
   /* 채운다 — ① 외형·머리 특징, 일상1 옷·장면(사유와 함께) */
@@ -136,7 +137,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert.equal(V2CUTS[0].use, 'job_lab_maps');
   const v2plan = path.join(tmp, 'PLAN-v2.json'), v2dir = path.join(tmp, 'pikachu-v2');
   fs.writeFileSync(v2plan, JSON.stringify({ session: 't2', characters: [{ card: '피카츄', cuts: V2CUTS }] }));
-  r = run('init', '피카츄', '--dir', v2dir, '--plan', v2plan); assert.equal(r.status, 0, r.stderr);
+  r = run('init', '피카츄', '--dir', v2dir, '--plan', v2plan, '--legacy'); assert.equal(r.status, 0, r.stderr);
   const s2 = JSON.parse(fs.readFileSync(path.join(v2dir, 'settings.json'), 'utf8'));
   assert.equal(s2.slots.casual1.guide.tree, 2); assert.equal(s2.slots.casual1.guide.v2.role.ko, '포켓몬 연구 코디네이터', '안내에 역할');
   s2.slots.casual1.custom = 'warm lamp light over the desk'; s2.slots.casual1.why = { custom: '연구소 책상 조명 — 고른 장소 문장에 빛이 없다' };
@@ -161,6 +162,55 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   V2CUTS[2].body = 'back'; fs.writeFileSync(v2plan, JSON.stringify({ session: 't2', characters: [{ card: '피카츄', cuts: V2CUTS }] }));
   r = run('build', '--dir', v2dir); assert.equal(r.status, 1); assert(/버전2 트리에 안 맞는다: body/.test(r.stderr), r.stderr);
   checks += 4;
+  /* 여덟 자리(2026-11-07) — 경장 ① + 일상 일곱, anime_gloss, ① 메카 실루엣 · 타입 표현 자동(최근 ① 이 쓴 실루엣은 피한다) */
+  {
+    require('../lib/concept-mecha.js');
+    const CMT = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/concept-mecha.json'), 'utf8'));
+    const p7 = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'pack7' });
+    assert.equal(p7.cuts.length, 7);
+    const plan7 = path.join(tmp, 'PLAN-7.json'), repo = path.join(tmp, 'img-x'), d7 = path.join(tmp, 'pikachu-7'), d7b = path.join(tmp, 'pikachu-7b');
+    fs.writeFileSync(plan7, JSON.stringify({ session: 't7', characters: [{ card: '피카츄', cuts: p7.cuts }] }));
+    fs.mkdirSync(path.join(repo, 'records'), { recursive: true });
+    r = run('init', '피카츄', '--dir', d7, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
+    const s7 = JSON.parse(fs.readFileSync(path.join(d7, 'settings.json'), 'utf8'));
+    assert.equal(s7.version, 2); assert.equal(s7.style, 'anime_gloss', '기본 화풍 애니 광택');
+    assert.deepEqual(Object.keys(s7.slots), ['light', 'casual1', 'casual2', 'casual3', 'casual4', 'casual5', 'casual6', 'casual7']);
+    const m = s7.slots.light.mecha, sil = CMT.silhouettes.find(x => x.key === m.set.silhouette);
+    assert(sil && sil.key !== 'none' && Object.keys(m.set).length === 1, '큰 실루엣 하나만(부위 부품은 비운다)');
+    assert(CMT.types.electric.silhouette.includes(sil.key), '타입 추천 안에서');
+    assert.deepEqual(m.fx.map(x => x.key)[0], 'hand'); assert.equal(m.fx.length, 3, '타입 표현 자동 — 손 + 몸 하나 + 주변 하나');
+    assert.deepEqual(s7.slots.light.mecha_auto, m);
+    /* 최근 ① 이 그 실루엣을 썼으면 다른 것 */
+    const rec = path.join(repo, 'records', 'raichu-anime_gloss-20261107'); fs.mkdirSync(rec);
+    fs.writeFileSync(path.join(rec, 'light-ui.json'), JSON.stringify({ storage: { last: '라이츄', cards: { '라이츄': { mecha: { set: { silhouette: sil.key }, fx: [] } } } } }));
+    r = run('init', '피카츄', '--dir', d7b, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
+    const s7b = JSON.parse(fs.readFileSync(path.join(d7b, 'settings.json'), 'utf8'));
+    assert.deepEqual(s7b.slots.light.mecha_recent, [sil.key]); assert.notEqual(s7b.slots.light.mecha.set.silhouette, sil.key, '최근 ① 의 실루엣은 피한다');
+    /* build — 여덟 자리, ① 에 MECHA SILHOUETTE · TYPE EFFECTS 줄, 저장값 → 같은 지시문 */
+    r = run('build', '--dir', d7); assert.equal(r.status, 0, r.stderr);
+    const lt = fs.readFileSync(path.join(d7, 'light-prompt.txt'), 'utf8'), lu = JSON.parse(fs.readFileSync(path.join(d7, 'light-ui.json'), 'utf8'));
+    const want = window.AtelierConceptMecha.lines(CMT, ['electric'], m);
+    assert(want.length === 2 && want.every(x => lt.includes(x)), '① 메카 줄');
+    assert.deepEqual(lu.storage.cards['피카츄'].mecha, m, '저장값에 mecha');
+    assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, lu.storage.cards['피카츄'], tree1, pika, null, { C2, tree2 }).st, pika, appear, faces, tree1, tree2, CMT) + '\n', lt, '저장값 → 같은 지시문');
+    const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');
+    assert(idx.includes('| ⑧ | casual7 | ① 피카츄_light_anime_gloss_f.webp |') && idx.includes('`피카츄_anime_gloss_f_casual7.webp`') && !idx.includes('heavy'), '차례표 여덟 자리');
+    for (let n = 1; n <= 7; n++) assert(fs.existsSync(path.join(d7, 'casual' + n + '-prompt.txt')), 'casual' + n);
+    /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */
+    const s7c = JSON.parse(JSON.stringify(s7)); s7c.slots.light.mecha = { set: { silhouette: 'knight_plate' }, fx: [{ key: 'aura', type: '' }] };
+    fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));
+    r = run('build', '--dir', d7); assert.equal(r.status, 1); assert(/mecha_why/.test(r.stderr), r.stderr);
+    s7c.slots.light.mecha_why = '사용자가 기사 갑주로'; fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));
+    r = run('build', '--dir', d7); assert.equal(r.status, 0, r.stderr);
+    assert(fs.readFileSync(path.join(d7, 'light-prompt.txt'), 'utf8').includes(CMT.silhouettes.find(x => x.key === 'knight_plate').en), '바꾼 실루엣');
+    s7c.slots.light.mecha = { set: { silhouette: 'nope', legs: 'heels' }, fx: [{ key: 'aura', type: 'water' }, { key: 'aura' }] };
+    fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));
+    r = run('build', '--dir', d7); assert.equal(r.status, 1);
+    assert(/mecha\.set\.silhouette — 표에 없는 값/.test(r.stderr) && /타입은 electric/.test(r.stderr) && /aura 가 두 번/.test(r.stderr), r.stderr);
+    /* 아홉 자리 settings(version 1)는 그대로 아홉 자리 */
+    assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8')).version, 1);
+    checks += 6;
+  }
   /* 실제로 넘긴 글(2026-11-03) — 그대로면 0, 고쳐 쓴 글이면 1 과 빠진 화풍 줄. 기록은 자리마다 쌓인다 */
   const lp = fs.readFileSync(path.join(dir, 'light-prompt.txt'), 'utf8'), sent = path.join(tmp, 'sent.txt');
   fs.writeFileSync(sent, lp.trimEnd());
@@ -173,5 +223,5 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.some(x => /^STYLE:/.test(x)) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  console.log('PASS 지시문 묶음: init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
+  console.log('PASS 지시문 묶음: 여덟 자리(경장 + 일상 일곱 · anime_gloss · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

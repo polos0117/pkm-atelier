@@ -14,7 +14,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
-SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
+LEGACY_SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
+# 2026-11-07 — 새 캐릭터는 경장 ① 한 장 + 일상 일곱 장(화풍 anime_gloss). 그 전에 잡은 차례(slot_set 없음)는 아홉 자리 그대로
+SLOTS = ['light'] + ['casual%d' % n for n in range(1, 8)]
+ALL_SLOTS = LEGACY_SLOTS + [s for s in SLOTS if s not in LEGACY_SLOTS]
+STYLE = 'anime_gloss'
+
+
+def slots_of(c):
+    return SLOTS if c.get('slot_set') == 'light7' else LEGACY_SLOTS
+
+
+def style_complete(v):
+    """그 화풍이 다 찼나 — 아홉 자리(폼 여섯 + 일상 셋) 또는 경장 + 일상 일곱"""
+    forms, casual = v.get('byForm', {}), v.get('casual', {}).get('f', [])
+    nine = all(forms.get(f, {}).get('f') for f in LEGACY_SLOTS[:6]) and len(casual) >= 3
+    eight = bool(forms.get('light', {}).get('f')) and len(casual) >= 7
+    return nine or eight
 TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
 IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4']   # data/img.json "where" order; last one is open
 DAILY_MAX = 12
@@ -198,9 +214,11 @@ def registered_files(value):
 
 def externally_complete(card, registry, images):
     for style, v in registry.get('img', {}).get(card['name'], {}).get('byStyle', {}).items():
-        names = [v.get('byForm', {}).get(s, {}).get('f') for s in SLOTS[:6]]
         casual = v.get('casual', {}).get('f', [])
-        names += [next((f for f in casual if f.endswith('_f_casual' + str(n) + '.webp')), None) for n in (1, 2, 3)]
+        pick = lambda n: next((f for f in casual if f.endswith('_f_casual' + str(n) + '.webp')), None)
+        nine = [v.get('byForm', {}).get(s, {}).get('f') for s in LEGACY_SLOTS[:6]] + [pick(n) for n in (1, 2, 3)]
+        eight = [v.get('byForm', {}).get('light', {}).get('f')] + [pick(n) for n in range(1, 8)]
+        names = nine if all(nine) else eight
         if not all(names):
             continue
         def exists(f):
@@ -327,7 +345,7 @@ def next_step(run):
         return {'action': 'complete'}
     if c['status'] == 'blocked':
         return {'card': c['name'], 'action': 'blocked', 'reason': c['reason']}
-    for slot in SLOTS:
+    for slot in slots_of(c):
         item = c['slots'].get(slot)
         if not item:
             return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': 'prepare_ui_then_intent',
@@ -337,7 +355,7 @@ def next_step(run):
                     'casual_session': 'image-runner-' + run['id'] + '-' + str(c['no']), 'was': item}   # 기다리던 참조가 생겼다
         if item['status'] != 'accepted':
             return {'card': c['name'], 'no': c['no'], 'slot': slot, 'action': item['status'], 'evidence': item}
-    waiting = len(c.get('own_publication', {}).get('files', [])) == 9
+    waiting = len(c.get('own_publication', {}).get('files', [])) == len(slots_of(c))
     return {'card': c['name'], 'no': c['no'], 'action': 'verify_registration' if waiting else 'publish_images_then_verify_registration'}
 
 
@@ -348,8 +366,7 @@ def candidates(cards, registry, inventories, records, reservations, state):
         if str(n) in state['claims'] or str(n) in state['external_holds'] or name in reservations:
             continue
         styles = registry.get('img', {}).get(name, {}).get('byStyle', {})
-        complete = any(all(v.get('byForm', {}).get(f, {}).get('f') for f in SLOTS[:6]) and
-                       len(v.get('casual', {}).get('f', [])) >= 3 for v in styles.values())
+        complete = any(style_complete(v) for v in styles.values())
         if complete:
             continue
         if styles:
@@ -388,7 +405,7 @@ def prepare(state, owner, available, blocked, at, execution_id=None):
     charge(state, [picked['no']], at)
     ident = utc + '-' + str(len(state['runs']) + 1)
     r = {'id': ident, 'execution_id': execution_id, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
-        {'no': picked['no'], 'name': picked['name'], 'style': 'glossy_promo', 'status': 'claimed', 'slots': {}}]}
+        {'no': picked['no'], 'name': picked['name'], 'style': STYLE, 'slot_set': 'light7', 'status': 'claimed', 'slots': {}}]}
     state['runs'].append(r)
     state['claims'][str(picked['no'])] = {'owner': owner, 'run': ident, 'status': 'held', 'at': now()}
     return r
@@ -579,7 +596,7 @@ def verify_completed(state, images, code):
             shadow = copy.deepcopy(state)
             r = next(x for x in shadow['runs'] if x['id'] == run['id'])
             cc = next(x for x in r['queue'] if x['no'] == c['no'])
-            cc['slots'] = {slot: effective_slot(c, slot) for slot in SLOTS}
+            cc['slots'] = {slot: effective_slot(c, slot) for slot in slots_of(c)}
             cc['status'] = 'working'
             r['queue'] = [cc]
             complete(r, shadow, images, code)
@@ -594,11 +611,11 @@ def complete(run, state, images, code, read=None):
     read = read or (shards[1].read if shards else images.read)
     c = current(run)
     if next_step(run)['action'] not in ('publish_images_then_verify_registration', 'verify_registration'):
-        raise ValueError('all nine slots require accepted QA before completion')
+        raise ValueError('all slots require accepted QA before completion')
     registry = json.loads(code.read('data/img.json'))
     entry = registry.get('img', {}).get(c['name'], {}).get('byStyle', {}).get(c['style'], {})
     outputs = {}
-    for slot in SLOTS:
+    for slot in slots_of(c):
         expected = public_hash(c['slots'][slot]['image'], read)
         if slot.startswith('casual'):
             filename = c['name'] + '_' + c['style'] + '_f_' + slot + '.webp'
@@ -624,10 +641,10 @@ def complete(run, state, images, code, read=None):
 
 def prepare_publication(run, read):
     if next_step(run)['action'] != 'publish_images_then_verify_registration':
-        raise ValueError('publication requires all nine accepted slots')
+        raise ValueError('publication requires all accepted slots')
     c = current(run)
     c['publication'] = {'status': 'preflight_checked', 'at': now(), 'repository': IMAGE_REPOS[-1],
-                        'files': {'img/' + filename(c, s): public_hash(c['slots'][s]['image'], read) for s in SLOTS}}
+                        'files': {'img/' + filename(c, s): public_hash(c['slots'][s]['image'], read) for s in slots_of(c)}}
 
 
 def assert_heads(stores):
@@ -731,7 +748,7 @@ def main():
     ap.add_argument('--execution-id', default=os.environ.get('PKM_EXECUTION_ID'))
     ap.add_argument('--owner', default='pkm-daily')
     ap.add_argument('--repo', default=str(ROOT.parent / 'pkm-atelier-img-2'))
-    ap.add_argument('--slot', choices=SLOTS)
+    ap.add_argument('--slot', choices=ALL_SLOTS)
     ap.add_argument('--card', type=int, help='required dex number for image/QA operations; prevents stale UI applying to a replacement')
     for key in ['prompt', 'ui', 'image', 'qa', 'reason', 'dir', 'pilot-checkpoint', 'approval', 'failure']:
         ap.add_argument('--' + key)

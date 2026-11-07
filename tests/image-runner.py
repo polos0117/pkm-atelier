@@ -24,6 +24,8 @@ with tempfile.TemporaryDirectory() as td:
     cards=[{'no':345,'name':'릴링'},{'no':346,'name':'릴리요'},{'no':347,'name':'아노딥스'}]
     q=R.prepare(state,'worker',cards,{},'2026-10-22','test-execution')
     assert len(q['queue'])==1
+    # 2026-11-07 — 새 차례는 경장 ① + 일상 일곱(애니 광택)
+    assert q['queue'][0]['slot_set']=='light7' and q['queue'][0]['style']=='anime_gloss' and R.slots_of(q['queue'][0])==['light']+['casual%d'%n for n in range(1,8)]
     rejects(lambda:R.prepare(state,'other',cards,{},'2026-10-22','test-execution'),'owner takeover')
     rejects(lambda:R.charge(state,list(range(13)),'2026-10-22'),'third daily character')
     # Resume on another day charges the unfinished pair on that day too.
@@ -40,17 +42,17 @@ with tempfile.TemporaryDirectory() as td:
     ui=t/'ui.json';ui.write_text('{}');files={}
     R.intent(q,'light',prompt,ui,files)
     rejects(lambda:R.intent(q,'light',prompt,ui,files),'duplicate generation')
-    rejects(lambda:R.intent(q,'heavy',prompt,ui,files),'skip light result')
+    rejects(lambda:R.intent(q,'casual1',prompt,ui,files),'skip light result')
     image=t/'out.png';Image.new('RGB',(1024,1536)).save(image)
     R.record(q,'light',image,files)
     rejects(lambda:R.record(q,'light',image,files),'replace existing result')
-    rejects(lambda:R.intent(q,'heavy',prompt,ui,files),'skip light QA')
+    rejects(lambda:R.intent(q,'casual1',prompt,ui,files),'skip light QA')
     qa=t/'qa.json';qa.write_text(json.dumps({'accepted':True,'image_sha256':'wrong','reviewer':'agent','observations':'visible'}))
     rejects(lambda:R.review(q,'light',qa,files),'wrong QA hash')
     sha=q['queue'][0]['slots']['light']['image']['sha256']
     qa.write_text(json.dumps({'accepted':True,'image_sha256':sha,'reviewer':'agent','observations':'visible','face_reason':'source based','compared_characters':['a','b','c']}))
-    R.review(q,'light',qa,files);R.intent(q,'heavy',prompt,ui,files)
-    assert q['queue'][0]['slots']['heavy']['references']=={'light':sha}
+    R.review(q,'light',qa,files);R.intent(q,'casual1',prompt,ui,files)
+    assert q['queue'][0]['slots']['casual1']['references']=={'light':sha}
     # Preservation: immutable text artifacts are committed and restorable; originals are session-only —
     # never committed (Pages size), only their sha256 and WebP sha256 are recorded.
     store=R.Store(repo);store.publish(state,files,'checkpoint')
@@ -90,11 +92,12 @@ with tempfile.TemporaryDirectory() as td:
     blobs = {c['slots']['light']['image']['path']: raw}
     entry = {'byForm': {}, 'casual': {'f': []}}; where = {}
     for slot in R.SLOTS:
-        f = c['name'] + ('_' + slot if not slot.startswith('casual') else '') + '_glossy_promo_f' + ('_' + slot if slot.startswith('casual') else '') + '.webp'
+        f = R.filename(c, slot)
         if slot.startswith('casual'): entry['casual']['f'].append(f)
         else: entry['byForm'][slot] = {'f': f}
         blobs['img/' + f] = buf.getvalue(); blobs['img/thumb/' + f] = thumb.getvalue(); where[f] = 1
-    registry = {'img': {c['name']: {'byStyle': {'glossy_promo': entry}}}, 'where': where}
+    registry = {'img': {c['name']: {'byStyle': {c['style']: entry}}}, 'where': where}
+    assert len(where) == 8
     image_store = type('Images', (), {'base':'image-commit','read':lambda self,p:blobs[p]})()
     code_store = type('Code', (), {'base':'code-commit','read':lambda self,p:R.encoded(registry)})()
     broken = next(p for p in blobs if p.startswith('img/') and not p.startswith('img/thumb/'))

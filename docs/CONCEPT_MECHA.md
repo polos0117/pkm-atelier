@@ -12,6 +12,7 @@
 | `lib/concept-mecha.js` | 조립부 — 생성기 화면과 명령줄 도구가 같이 쓴다(같은 선택이면 같은 글) |
 | 생성기 `prompt.html` 액션 · 새 인물 만들기 「메카 실루엣 · 타입 표현 (선택)」 | 칸마다 없음(기본)/직접(큰 실루엣이 정하는 칸은 막힘) · 타입 표현 체크(두 타입 종은 표현마다 타입). 고른 칸만 FORM 줄 바로 뒤에 `MECHA SILHOUETTE:` · `TYPE EFFECTS:` 줄(`lines`) — 안 고르면 지시문 그대로. 저장값 `mecha`. 따로 있던 「메카 컨셉」 탭은 뺐다(2026-11-06 「그 신규 생성에 붙여줘. 옵션값으로」) |
 | `tools/concept-mecha.cjs` | 명령줄 — 옵션을 선택값으로 바꿔 조립부를 부른다 |
+| 지시문 묶음 `tools/prompt-pack.cjs init`(여덟 자리 ①, 2026-11-07) | 큰 실루엣 하나(타입 추천 안 · 최근 열 명의 ① `records/<폴더>/light-ui.json` 이 안 쓴 것) + 타입 표현 자동(두 타입 섞기)을 `light.mecha` 에. 부품은 비운다. 바꾸면 `mecha_why` (IMAGE_RULES 3절) |
 | `tests/concept-mecha.cjs` | 표 · 자동 · 랜덤 · 직접 고르기 · 겹치는 칸 · 배치 · 새 인물 만들기 옵션 줄 |
 | `tests/concept-mecha-screen.cjs` | 생성기 옵션 자리(브라우저) |
 
