@@ -48,7 +48,8 @@ assert(!open.includes('Action category:')&&!open.includes(S.ACTION_POSES.find(r=
 // Form images for the game come from action mode: whole figure, face to camera, unless the user picks otherwise.
 for(const form of ['light','heavy','mobility'])for(const identityMode of ['create','reference']){
  const t=P.buildPrompt({...base,form,identityMode});
- assert(t.includes('card')&&t.includes('face toward the camera')&&t.includes('never a back view'),'action must stay usable as card art');
+ // 2026-11-06 카메라 수평 3/4 — 「face toward the camera」 대신 「face turned gently three-quarters toward the camera」
+ assert(t.includes('card')&&/face turned gently three-quarters toward the camera/.test(t)&&t.includes('never a back view')&&t.includes('Camera level with her face'),'action must stay usable as card art');
  assert(!P.buildPrompt({...base,form,identityMode,outputMode:'casual'}).includes('card art'),'card default leaked into casual');
 }
 assert(P.buildPrompt({...base,orient:'rear_3q'}).includes(S.ORIENTATION_GUIDES.rear_3q[1]),'an explicit orientation still wins');

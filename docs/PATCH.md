@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 시험 셋을 지금 지시문에 맞춤 — 액션 카드 줄 · 앵커 예산 · 일상컷 화풍 줄
+- tests/prompt-action.cjs · tests/face-design.cjs — 2026-11-06 ① · 이어가기 카메라 수평 3/4(f46e651)가 바꾼 card 줄(「face toward the camera」 → 「face turned gently three-quarters toward the camera」, 「Camera level with her face」)을 보고, 앵커 예산 460 → 480(그 줄이 약 20낱말 늘었다 — 가장 긴 Walking Wake 477). 그 커밋에서 같이 고쳤어야 했다
+- tests/styles.cjs — 일상컷은 2026-11-03 부터 화풍을 첨부 그림에 맡긴다(REF_STYLE) — 공방 화풍 문장 대신 그 줄을 본다
+
 ## 2026-11-07 · claude · 생성기 화면 기본 화풍 — 애니 광택(anime_gloss)
 - lib/prompt-spec.js · prompt.html — DEFAULT_STYLE glossy_promo → anime_gloss. 새로 여는 카드 · 화풍을 안 고른 지시문이 애니 광택. 이미 저장된 카드의 화풍은 그대로. 사용자(화면 기본값도 바꿀까?) 「응 바꿔줘」
 - tools/prompt-pack.cjs — 여덟 자리 기본 = 화면 기본, 아홉 자리(--legacy)는 그때 기본 glossy_promo 그대로

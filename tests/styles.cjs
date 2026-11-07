@@ -21,7 +21,8 @@ for (const { key } of actual.styles) {
     assert(!text.includes('undefined'), 'Unresolved prompt: ' + key);
   }
   const casual = L.buildSingle({ mech: 'test', series: 'water', style: key, cat: 'everyday_basic', aspect: '2:3', axes: {}, tree: JSON.parse(fs.readFileSync('data/casual-tree.json', 'utf8')) });
-  assert(casual.includes('STYLE: ' + S.CASUAL_STYLE_CORES[key]), 'Wrong casual style: ' + key);
+  /* 일상컷은 화풍을 첨부 그림에 맡긴다(2026-11-03 — lib/prompt-anthro.js REF_STYLE) — 공방 화풍 문장이 안 실린다 */
+  assert(casual.includes("STYLE: keep the attached image's rendering exactly") && !casual.includes('STYLE: ' + S.CASUAL_STYLE_CORES[key]), 'Wrong casual style: ' + key);
   assert(!casual.includes(S.ACTION_STYLE_CORES[key]), 'Armor style leaked into casual: ' + key);
   assert(!casual.includes('undefined'), 'Unresolved prompt: ' + key);
 }
