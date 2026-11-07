@@ -57,6 +57,10 @@ for (let i = 0; i < 30; i++) {
   for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(x => x.ofam === f).length, 1, card + ' 필수 ' + f + ' 한 장(2026-11-07)');
   for (const k of ['orient', 'frame']) assert(ch.cuts.every(x => ch.cuts.filter(y => y[k] === x[k]).length <= 2), card + ' ' + k + ' 같은 값 두 장까지');
   assert.equal(new Set(ch.cuts.map(x => x.orient + '|' + x.frame)).size, 7, card + ' 같은 짝 없음');
+  /* 드러내는 방식 — 같은 짝은 한 번, 한 방식은 세 장까지(2026-11-07 가디 넷이 같은 짝. 옷 종류마다 고를 수 있는 방식이 여섯 ~ 아홉이라 열네 번 고르면 셋까지 간다) */
+  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 7, card + ' 드러내기 짝 겹침');
+  const exN = {}; ch.cuts.flatMap(x => x.expose).forEach(e => { exN[e] = (exN[e] || 0) + 1; });
+  assert(Object.values(exN).every(v => v <= 3), card + ' 드러내기 한 방식이 네 장 이상: ' + JSON.stringify(exN));
   assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');
   assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => x.frame !== 'face_close'), card + ' 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02)');
   for (const x of ch.cuts) {

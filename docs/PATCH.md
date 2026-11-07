@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 일곱 장 일상컷 — 드러내는 방식 · 옷 종류가 한 캐릭터 안에서 되풀이되지 않게
+- lib/casual-plan.js — 드러내는 방식: 후보가 다 돌면 처음으로 돌아가던 것을, 이 캐릭터에 덜 쓴 방식부터 · 같은 짝은 한 번만(가디 일곱 장 중 넷이 「트인 등 + 원숄더」 — 사용자 「응 고쳐줘」). 옷 종류: 이 캐릭터가 이미 입힌 종류에 점수를 더 줘 같은 옷(뮤츠 시험 셔츠 + 반바지 셋)이 되풀이되지 않게. 버전1 · 버전2 모두
+- tools/casual-ledger.py — 일곱 장 계획에 같은 드러내는 방식 짝이 두 컷이면 건다
+- tests/casual-plan.cjs · casual-plan-v2.cjs · casual-ledger.py — 드러내기 짝 겹침 없음 · 한 방식 세 장까지 · 같은 짝은 걸린다
+
 ## 2026-11-07 · claude · 시험 셋을 지금 지시문에 맞춤 — 액션 카드 줄 · 앵커 예산 · 일상컷 화풍 줄
 - tests/prompt-action.cjs · tests/face-design.cjs — 2026-11-06 ① · 이어가기 카메라 수평 3/4(f46e651)가 바꾼 card 줄(「face toward the camera」 → 「face turned gently three-quarters toward the camera」, 「Camera level with her face」)을 보고, 앵커 예산 460 → 480(그 줄이 약 20낱말 늘었다 — 가장 긴 Walking Wake 477). 그 커밋에서 같이 고쳤어야 했다
 - tests/styles.cjs — 일상컷은 2026-11-03 부터 화풍을 첨부 그림에 맡긴다(REF_STYLE) — 공방 화풍 문장 대신 그 줄을 본다

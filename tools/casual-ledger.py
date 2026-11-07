@@ -711,6 +711,10 @@ def check_plan(doc, plan, sp, ledger=None):
             prs = [(c.get("orient"), c.get("frame")) for c in cuts]
             if len(set(prs)) != len(prs):
                 bad("같은 (방향, 프레이밍) 짝을 두 컷에")
+            # 드러내는 방식 짝 — 한 캐릭터에 같은 짝은 한 번(2026-11-07, lib/casual-plan.js charPairs). 다시 채운 컷(kept)끼리는 그대로 둔다
+            exs = ["+".join(sorted(c.get("expose") or [])) for c in cuts if not c.get("kept") and len(c.get("expose") or []) == 2]
+            if len(set(exs)) != len(exs):
+                bad("같은 드러내는 방식 짝(%s)을 두 컷에" % next(e for e in exs if exs.count(e) > 1))
         req = [c["cut"] for c in cuts if (req_of(c) if legacy else is_required(c, sp))]
         if legacy and not req:
             bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required_legacy"])))
