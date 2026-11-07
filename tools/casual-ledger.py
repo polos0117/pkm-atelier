@@ -341,14 +341,14 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None,
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "expose": c.get("expose") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
                                           ("cat", "ex") + PATH_KEYS + ("ocolor", "expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
-                             "garments": garments_of(c.get("outfit"))})
+                             "expose": c.get("expose") or None, "garments": garments_of(c.get("outfit"))})
             if cuts:
                 entries.append({"species": d, "card": card, "repo": os.path.basename(repo),
                                 "at": added_at(repo, os.path.join("records", d), card, files), "status": "done", "cuts": cuts})

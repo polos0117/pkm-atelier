@@ -108,7 +108,7 @@ const st = ST.initial(S, CT, P, {}, tree, { name: '피카츄', gen: 1 }, q, { C2
 assert(st.plan && !st.plan.bad.length, '주소 값이 트리에 맞는다 ' + JSON.stringify(st.plan));
 const sc = st.st.scenes.casual;
 assert.equal(sc.treeV, 2); assert.equal(st.st.mode, 'casual');
-for (const k of P.V2_FIELDS) if (cut0[k]) { assert.equal(sc[k], cut0[k], '주소 ' + k); if (k !== 'preset') assert(sc.randomLocks[k], '잠금 ' + k); }
+for (const k of P.V2_FIELDS) if (cut0[k]) { assert.deepEqual(sc[k], cut0[k], '주소 ' + k); if (k !== 'preset') assert(sc.randomLocks[k], '잠금 ' + k); }
 /* 버전1 계획기 주소는 버전1 장면 그대로 */
 const v1cut = entries[0].cuts[0], s1 = ST.initial(S, CT, P, {}, tree, { name: '피카츄', gen: 1 }, new URLSearchParams(P.generatorQuery('피카츄', v1cut)).get('casual'), { C2, tree2 });
 assert(!s1.st.scenes.casual.treeV && s1.st.scenes.casual.act === v1cut.act, '버전1 주소');
@@ -130,7 +130,7 @@ const rp = batchPlan(entries, ['R'], 'res', true).plan;
 fs.writeFileSync(PLAN, JSON.stringify(rp));
 cp.execFileSync('python3', ['tools/casual-ledger.py', 'reserve', PLAN, '--ledger', LEDGER, '--repos', tmp], { cwd: ROOT, stdio: 'pipe' });
 const saved = JSON.parse(fs.readFileSync(path.join(tmp, 'casual-reservations', 't.json'), 'utf8')).characters[0].cuts;
-rp.characters[0].cuts.forEach((x, i) => { assert.equal(saved[i].treeV, 2); for (const k of P.V2_FIELDS) assert.equal(saved[i][k] || '', x[k] || '', '예약 칸 ' + k); });
+rp.characters[0].cuts.forEach((x, i) => { assert.equal(saved[i].treeV, 2); for (const k of P.V2_FIELDS) assert.deepEqual(saved[i][k] || '', x[k] || '', '예약 칸 ' + k); });
 const re3 = P.planV2({ S, tree, tree2, subject, entries, card: 'R', seed: 'r3', kept: saved.slice(0, 2), avoid: [{ cut: 3, field: 'item', value: saved[2].item }] });
 assert.equal(check(entries, { session: 't2', characters: [{ card: 'R', species: 'R', cuts: re3.cuts, claims: re3.claims }] }), '', '두 컷을 두고 다시 정한 계획');
 fs.rmSync(tmp, { recursive: true, force: true });

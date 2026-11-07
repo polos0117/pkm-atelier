@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 일상컷 의상 — 몸매가 드러나는 깊게 파인 옷
+- lib/casual-plan.js — 드러내는 방식에 깊은 V넥 · 스위트하트 넥 · 등 전체가 트인 · 허리 컷아웃을 더하고, 컷마다 첫째는 깊게 파인 목선(플런징 · 깊은 V · 스위트하트), 둘째는 목선이 아닌 것. 사용자 「일상컷 의상들을 더 몸매가 드러나는 파인 의상들로 설정 변경해줘」
+- lib/prompt-anthro.js · lib/prompt-state.js · lib/prompt-ui.js · lib/words.js · prompt.html — 그 두 방식을 지시문 「Cut: … — a figure-hugging fit that follows her curves; chest and pelvis stay securely covered.」 줄로(버전1 · 2, 옷 직접 쓰기 글이 없어도), 생성기 주소 · 계획 칸에 expose(잠금), 일상컷 화면에 「드러내는 곳」 안내
+- lib/prompt-spec.js — 피부 노출 bold 문장(전체 · 가까운 컷)을 「low-cut, figure-hugging … a deep neckline …; chest and pelvis stay securely covered」로
+- tools/casual-ledger.py — 기록에서 expose 를 읽는다
+- IMAGE_RULES.md 3절 · tests/casual-plan.cjs(컷마다 목선) · casual-plan-v2.cjs(목록 칸 비교)
+
 ## 2026-11-07 · claude · 도감 — 화풍을 고르면 그 화풍에 그림이 없는 카드는 「이 화풍 그림 없음」 칸으로
 - lib/dex-filter.js · dex.html · lib/words.js — 화풍을 고르면 모든 카드가 나오고, 그 화풍(과 고른 폼 · 컷)에 그림이 없는 카드는 점선 빈 칸 「이 화풍 그림 없음」(밑에 화풍 이름 · 「비어 있음」). 다른 화풍 그림으로 채우지 않는다. 빈 칸을 열면 자세히 보기에 「〈화풍〉 그림은 아직 비어 있어요 — 다른 화풍을 보여 줍니다」. 폼만 고른 거르기는 그대로. 사용자 「도감에서 화풍 별로 셀렉트할때, 그 화풍에 빈 그림은 비어있다고 표시해줘」
 - tests/dex-filter.cjs — 빈 화풍은 모든 카드가 빈 칸(그 화풍 열쇠), 채운 칸 + 빈 칸 = 목록
