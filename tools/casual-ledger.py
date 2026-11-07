@@ -715,6 +715,10 @@ def check_plan(doc, plan, sp, ledger=None):
             exs = ["+".join(sorted(c.get("expose") or [])) for c in cuts if not c.get("kept") and len(c.get("expose") or []) == 2]
             if len(set(exs)) != len(exs):
                 bad("같은 드러내는 방식 짝(%s)을 두 컷에" % next(e for e in exs if exs.count(e) > 1))
+            # 자유 컷(필수 · 코스튬이 아닌 컷)의 의상 계열은 서로 다르게(2026-11-07 — 뮤츠 시험 자유 셋이 다 일상복)
+            fams = [c.get("ofam") for c in cuts if c.get("ofam") and not c.get("kept") and not is_required(c, sp) and c.get("ofam") != sp.get("costume")]
+            if len(set(fams)) != len(fams):
+                bad("자유 컷의 의상 계열 %s 이 겹친다" % next(f for f in fams if fams.count(f) > 1))
             # 옷 색(2026-11-07, lib/casual-plan.js chooseColors) — 같은 색은 두 컷까지(옷 문장이 색을 정한 컷이 겹칠 수 있다)
             cols = [c.get("ocolor") for c in cuts if c.get("ocolor") and not c.get("kept")]
             over = sorted({x for x in cols if cols.count(x) > 2})
@@ -743,7 +747,7 @@ def check_plan(doc, plan, sp, ledger=None):
         used_path = {path_key(c) for e in exw for c in e["cuts"]}
         pairs = cut_pairs(cmp_)
         # 새 값(방향 · 프레이밍 · 옷 종류) — 일곱 장이면 바로 앞 캐릭터(+ 배치)와만(lib/casual-plan.js freshWindow)
-        fw = cmp_ if legacy else base[-1:] + others
+        fw = cmp_ if legacy else hist[-1:]   # 배치 안이면 배치에서 바로 앞 캐릭터(hist 가 차례로 쌓는다)
         orients = {c.get("orient") for e in fw for c in e["cuts"]}
         frames = {c.get("frame") for e in fw for c in e["cuts"]}
         gar = {g for e in fw for c in e["cuts"] for g in (c.get("garments") or [])}

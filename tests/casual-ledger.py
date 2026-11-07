@@ -34,7 +34,7 @@ good = {"session": "t", "characters": [{"card": "B", "species": "b-1", "cuts": [
     cut(3, "lingerie", "lace_set", "x3", "q3", "rear_3q", "full_body", "subtle", ["lingerie_set"], act="mostly posed"),
     # 2026-11-07 일곱 장 — 필수 셋(역할극 · 수영복 · 란제리풍) 한 장씩 + 자유. 옛 칸만이라 코스튬은 안 본다(아래 _cos 가 코스튬을 넣는다)
     cut(4, "adult_roleplay", "idol_stage", "x4", "q4", "over_shoulder", "waist_up", "balanced", ["skirt", "uniform"], act="mostly posed"),
-    cut(5, "food_berries", "food_picnic", "x5", "q5", "looking_away", "three_quarter", "balanced", ["jumpsuit"], act="mostly active"),
+    cut(5, "occupation_basic", "office_project", "x5", "q5", "looking_away", "three_quarter", "balanced", ["jumpsuit"], act="mostly active"),   # 자유 컷 의상 계열이 서로 다르게(2026-11-07)
     cut(6, "fantasy_costume", "star_goddess", "x6", "q6", "front_3q", "full_body", "subtle", ["dress"], act="mostly active"),
     cut(7, "traditional", "hanfu_formal", "x7", "q7", "leaning_forward", "environmental", "balanced", ["traditional"], act="mostly active")]}]}
 LEG = SP["tree"]["legacy"]
@@ -69,7 +69,8 @@ fails(lambda c: c[3].update(frame="full_body"), "frame full_body 가 3장")     
 fails(lambda c: c[3].update(orient="front_3q", frame="full_body"), "같은 (방향, 프레이밍) 짝")
 fails(lambda c: c.pop(), "일상컷은 7장")
 fails(lambda c: [x.update(expose=["open back", "one-shoulder cut"]) for x in c[:2]], "같은 드러내는 방식 짝")
-fails(lambda c: [x.update(ocolor="teal") for x in c[:3]], "옷 색 teal 이 세 컷 이상")                         # 옷 색(2026-11-07)     # 가디(2026-11-07) — 같은 짝 넷
+fails(lambda c: [x.update(ocolor="teal") for x in c[:3]], "옷 색 teal 이 세 컷 이상")
+fails(lambda c: [x.update(cat=None, ex=None, era="now", place=pl_, act=ac_, ofam="everyday", item="") for x, (pl_, ac_) in zip(c[4:6], [("street_cafe", "read_book"), ("street_park", "stroll")])], "자유 컷의 의상 계열 everyday 이 겹친다")                         # 옷 색(2026-11-07)     # 가디(2026-11-07) — 같은 짝 넷
 fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURCE")                      # 세 장 같은 영향도
 fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만
 fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")                              # 채우기 문구

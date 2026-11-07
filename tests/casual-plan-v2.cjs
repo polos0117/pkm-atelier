@@ -76,6 +76,8 @@ for (let i = 0; i < 30; i++) {
   assert(ch.cuts.every(x => ch.cuts.filter(y => y.frame === x.frame).length <= 2 && ch.cuts.filter(y => bh(y) === bh(x)).length <= 2), card + ' 프레이밍 · 몸+머리 같은 값 두 장까지');
   assert.equal(new Set(ch.cuts.map(x => bh(x) + '|' + x.frame)).size, 7, card + ' 같은 짝 없음');
   assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 7, card + ' 드러내기 짝 겹침');
+  const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
+  assert.equal(new Set(freeFams).size, freeFams.length, card + ' 자유 컷 의상 계열 겹침: ' + freeFams);
   assert.equal(new Set(ch.cuts.map(x => (C2.place(t, x.place) || {}).group)).size, 7, card + ' 다른 묶음');
   const recent = new Set(entries.slice(-10).flatMap(e => e.cuts.map(key)));
   for (const x of ch.cuts) assert(!recent.has(key(x)), card + ' 장소/짓 ' + key(x) + ' 최근 10명');

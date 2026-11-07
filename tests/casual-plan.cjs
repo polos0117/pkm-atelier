@@ -61,6 +61,8 @@ for (let i = 0; i < 30; i++) {
   assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 7, card + ' 드러내기 짝 겹침');
   const exN = {}; ch.cuts.flatMap(x => x.expose).forEach(e => { exN[e] = (exN[e] || 0) + 1; });
   assert(Object.values(exN).every(v => v <= 3), card + ' 드러내기 한 방식이 네 장 이상: ' + JSON.stringify(exN));
+  const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
+  assert.equal(new Set(freeFams).size, freeFams.length, card + ' 자유 컷 의상 계열 겹침: ' + freeFams);
   /* 옷 색(2026-11-07) — 코스튬 컷은 없음, 나머지는 표의 색, 같은 색은 두 장까지 */
   const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume').map(x => x.ocolor);
   assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => !x.ocolor) && cols.every(x => COLS.includes(x)), card + ' 옷 색: ' + cols);
