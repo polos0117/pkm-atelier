@@ -341,12 +341,12 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS},
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
-                                          ("cat", "ex") + PATH_KEYS + ("expr", "pose", "orient", "frame", "lens")},
+                                          ("cat", "ex") + PATH_KEYS + ("ocolor", "expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                              "garments": garments_of(c.get("outfit"))})
             if cuts:
@@ -442,7 +442,7 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-RESERVE_TAIL = ("axes", "garments", "expose", "lead", "kept")
+RESERVE_TAIL = ("ocolor", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07)
 
 
 def reserve_keys(c):
@@ -715,6 +715,11 @@ def check_plan(doc, plan, sp, ledger=None):
             exs = ["+".join(sorted(c.get("expose") or [])) for c in cuts if not c.get("kept") and len(c.get("expose") or []) == 2]
             if len(set(exs)) != len(exs):
                 bad("같은 드러내는 방식 짝(%s)을 두 컷에" % next(e for e in exs if exs.count(e) > 1))
+            # 옷 색(2026-11-07, lib/casual-plan.js chooseColors) — 같은 색은 두 컷까지(옷 문장이 색을 정한 컷이 겹칠 수 있다)
+            cols = [c.get("ocolor") for c in cuts if c.get("ocolor") and not c.get("kept")]
+            over = sorted({x for x in cols if cols.count(x) > 2})
+            if over:
+                bad("옷 색 %s 이 세 컷 이상" % over[0])
         req = [c["cut"] for c in cuts if (req_of(c) if legacy else is_required(c, sp))]
         if legacy and not req:
             bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required_legacy"])))

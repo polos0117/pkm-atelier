@@ -207,6 +207,15 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));
     r = run('build', '--dir', d7); assert.equal(r.status, 1);
     assert(/mecha\.set\.silhouette — 표에 없는 값/.test(r.stderr) && /타입은 electric/.test(r.stderr) && /aura 가 두 번/.test(r.stderr), r.stderr);
+    /* 옷 색(2026-11-07) — 계획 색이 지시문 줄로, 옷 직접 쓰기 글은 그 색 낱말을 쓴다 */
+    const cc = p7.cuts.find(x => x.ocolor), slotC = 'casual' + cc.cut, colRow = S.OUTFIT_COLORS.find(x => x.key === cc.ocolor);
+    assert(fs.readFileSync(path.join(d7b, '..', 'pikachu-7', slotC + '-prompt.txt'), 'utf8').includes('Outfit colours: ' + colRow.en), '옷 색 줄');
+    assert.equal(s7.slots[slotC].guide.color.key, cc.ocolor, '안내에 옷 색');
+    const s7d = JSON.parse(JSON.stringify(s7b)); s7d.slots[slotC].outfit = 'a fitted dress with a short hem'; s7d.slots[slotC].why = { outfit: '옷 문장 다듬기' };
+    fs.writeFileSync(path.join(d7b, 'settings.json'), JSON.stringify(s7d));
+    r = run('build', '--dir', d7b); assert.equal(r.status, 1); assert(new RegExp(slotC + '.outfit — 계획의 옷 색').test(r.stderr), r.stderr);
+    s7d.slots[slotC].outfit = 'a fitted ' + colRow.words[0] + ' dress with a short hem'; fs.writeFileSync(path.join(d7b, 'settings.json'), JSON.stringify(s7d));
+    r = run('build', '--dir', d7b); assert.equal(r.status, 0, r.stderr);
     /* 아홉 자리 settings(version 1)는 그대로 아홉 자리 */
     assert.equal(JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8')).version, 1);
     checks += 6;

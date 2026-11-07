@@ -68,7 +68,8 @@ fails(lambda c: c[4].update(cat="lingerie", ex="garter_set"), "lingerie 가 2장
 fails(lambda c: c[3].update(frame="full_body"), "frame full_body 가 3장")                                    # 같은 프레이밍 두 장까지
 fails(lambda c: c[3].update(orient="front_3q", frame="full_body"), "같은 (방향, 프레이밍) 짝")
 fails(lambda c: c.pop(), "일상컷은 7장")
-fails(lambda c: [x.update(expose=["open back", "one-shoulder cut"]) for x in c[:2]], "같은 드러내는 방식 짝")     # 가디(2026-11-07) — 같은 짝 넷
+fails(lambda c: [x.update(expose=["open back", "one-shoulder cut"]) for x in c[:2]], "같은 드러내는 방식 짝")
+fails(lambda c: [x.update(ocolor="teal") for x in c[:3]], "옷 색 teal 이 세 컷 이상")                         # 옷 색(2026-11-07)     # 가디(2026-11-07) — 같은 짝 넷
 fails(lambda c: [x["axes"].update(source_influence="subtle") for x in c], "SOURCE")                      # 세 장 같은 영향도
 fails(lambda c: c[0].update(garments=["robe2"]), "garments")                                             # 정해 둔 옷 종류만
 fails(lambda c: c[0].update(outfit="Linen dress, no outer layer."), "덧옷")                              # 채우기 문구

@@ -136,9 +136,11 @@ function guideOfV2(d, cut) {
     v2: { era: row(CT.era(d.tree, cut.era)), place: row(p), role: u && u.role ? { ko: u.role_ko, en: u.role } : null, use: u ? { key: u.key, ko: u.ko, en: u.en.replace('{prop}', pr ? pr.en : ''), prop: pr ? pr.ko : '' } : null,
       ofam: row(f, f && f.guide ? { guide: f.guide } : {}), item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' },
       posture: row(C2.posture(t, cut.posture)), frame: cut.frame, body: row(by(t.v2.body, cut.body)), hands: [cut.right || 'AUTO', cut.left || 'AUTO'].join(' · ') },
-    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || ''
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut)
   };
 }
+/* 옷 색(2026-11-07) — 계획의 ocolor. 옷 직접 쓰기 글은 이 색 낱말을 하나는 쓴다(build 가 본다) */
+function colorGuide(cut) { const c = (S.OUTFIT_COLORS || []).find(x => x.key === cut.ocolor); return c ? { key: c.key, ko: c.ko, en: c.en, words: c.words } : null; }
 function guideOf(tree, cut) {
   const e = CT.era(tree, cut.era), p = CT.place(tree, cut.place), a = CT.act(tree, cut.act), f = CT.family(tree, cut.ofam), it = cut.item ? CT.item(tree, cut.ofam, cut.item) : null;
   const fam = CT.poseFamily(tree, cut.act), g = p && CT.group(tree, p.group);
@@ -147,7 +149,7 @@ function guideOf(tree, cut) {
     path: [cut.era, cut.place, cut.act, cut.ofam, cut.item].filter(Boolean).join(' / '),
     tree: { era: row(e), place: row(p, g ? { group: g.ko } : {}), act: row(a, fam ? { pose_family: fam.ko } : {}), ofam: row(f, f && f.guide ? { guide: f.guide } : {}),
       item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' } },
-    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || ''
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut)
   };
 }
 
@@ -186,6 +188,12 @@ function init(o) {
   console.log('만들었다 ' + file + ' — 칸을 채우고 node tools/prompt-pack.cjs build --dir ' + o.dir);
 }
 
+/* 옷 직접 쓰기 글이 계획 색을 따랐나 — 그 색 낱말이 하나도 없으면 고칠 칸(2026-11-07). 코스튬 컷 · 색 없는 계획은 안 본다 */
+function colorCheck(sc, cut, where, bad) {
+  const g = colorGuide(cut), text = String(sc.outfit || '').toLowerCase();
+  if (!g || !text.trim()) return;
+  if (!g.words.some(w => new RegExp('\\b' + w + '\\b').test(text))) bad.push(where('outfit') + ' — 계획의 옷 색 ' + g.ko + '(' + g.words.slice(0, 3).join(' · ') + ' …)을 쓴다');
+}
 /* settings 한 자리 → 생성기 상태(화면이 저장할 그대로). 틀린 칸은 bad 에 */
 function stateOf(set, slot, d, c, plan, bad) {
   const def = slotsOf(set)[slot], s = set.slots[slot] || {};
@@ -207,6 +215,7 @@ function stateOf(set, slot, d, c, plan, bad) {
         if (sc[f].trim() && !(typeof why[f] === 'string' && why[f].trim())) bad.push(where('why.' + f) + ' — 직접 입력엔 그 컷에 맞춘 사유를 쓴다(IMAGE_RULES 3절 4)');
       }
       for (const k of Object.keys(why)) if (CASUAL_TEXT_V2.indexOf(k) < 0) bad.push(where('why.' + k) + ' — 없는 칸');
+      colorCheck(sc, pc.cut, where, bad);
       return { st: Object.assign({}, got.st, { scenes: Object.assign({}, got.st.scenes, { casual: sc }) }), cut: pc.cut, manual: Object.fromEntries(CASUAL_TEXT_V2.filter(f => sc[f].trim()).map(f => [f, sc[f]])), why };
     }
     const first = ST.initial(S, CT, CP, { style: set.style, identityMode: 'reference' }, d.tree, c, pc.raw);
@@ -218,6 +227,7 @@ function stateOf(set, slot, d, c, plan, bad) {
       if (sc[f].trim() && !(typeof why[f] === 'string' && why[f].trim())) bad.push(where('why.' + f) + ' — 직접 입력엔 그 컷에 맞춘 사유를 쓴다(IMAGE_RULES 3절 4)');
     }
     for (const k of Object.keys(why)) if (CASUAL_TEXT.indexOf(k) < 0) bad.push(where('why.' + k) + ' — 없는 칸');
+    colorCheck(sc, pc.cut, where, bad);
     return { st: Object.assign({}, first.st, { scenes: Object.assign({}, first.st.scenes, { casual: sc }) }), cut: pc.cut, manual: Object.fromEntries(CASUAL_TEXT.filter(f => sc[f].trim()).map(f => [f, sc[f]])), why };
   }
   const raw = { style: set.style, mode: 'action', form: def.form, identityMode: def.identityMode, baseForm: def.baseForm, motifs: str('motifs'), formOverride: str('formOverride') };
@@ -329,7 +339,7 @@ function build(o) {
       '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
       '| 몸 자세 · 구도 | ' + (v.posture ? v.posture.ko : '—') + ' · ' + v.frame + ' · ' + (v.body ? v.body.ko : '—') + ' | ' + (v.posture ? v.posture.en : '') + ' |',
       '| 손 · 소품 동작 | ' + v.hands + (v.use ? ' · ' + v.use.prop + ' · ' + v.use.ko : '') + ' | ' + (v.use ? v.use.en : '') + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
   }
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV !== 2)) {
@@ -341,7 +351,7 @@ function build(o) {
       '| 하는 일 | ' + (t.act ? t.act.ko + (t.act.pose_family ? ' · ' + t.act.pose_family : '') : '—') + ' | ' + (t.act ? t.act.en : '') + ' |',
       '| 의상 계열 | ' + (t.ofam ? t.ofam.ko : '—') + ' | ' + (t.ofam ? t.ofam.en + (t.ofam.guide ? ' — ' + t.ofam.guide : '') : '') + ' |',
       '| 옷 | ' + t.item.ko + ' | ' + t.item.en + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
   }
   if (!o.slot) fs.writeFileSync(path.join(o.dir, 'INDEX.md'), lines.join('\n') + '\n');

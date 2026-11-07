@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 일상컷 옷 색 — 계획기가 컷마다 정한다
+- lib/prompt-spec.js — 옷 색 열둘(OUTFIT_COLORS — 한글 이름 · 지시문 영어 · 알아보는 낱말 · card.json color 짝). 사용자 「의상색도 정해줘」
+- lib/casual-plan.js · tools/casual-plan.cjs — 3b 단계 옷 색(ocolor): 옷 문장이 색을 정하면 그 색, 아니면 이 캐릭터에 아직 안 쓴 색 가운데 최근 열 명에서 덜 쓴 것, 그 종의 대표 색은 피한다. 코스튬 컷은 없음. 생성기 주소 · 버전2 칸 · --avoid 칸에 ocolor
+- lib/prompt-anthro.js · lib/prompt-state.js · lib/prompt-ui.js · lib/words.js · prompt.html — 지시문 Outfit 줄 다음 「Outfit colours: …」(버전1 · 2, 코스튬 컷 빼고), 계획 값은 잠근다, 일상컷 「옷 색」 칸
+- tools/casual-ledger.py — 기록 · 예약에 ocolor, 같은 색 세 컷 이상이면 건다
+- tools/prompt-pack.cjs — 일상 안내 · 차례표에 옷 색, 옷 직접 쓰기 글에 계획 색 낱말이 없으면 고칠 칸
+- IMAGE_RULES.md 3절 · tests/casual-plan.cjs · casual-ledger.py · prompt-pack.cjs — 옷 색 규칙 · 검사
+
 ## 2026-11-07 · claude · 일곱 장 일상컷 — 드러내는 방식 · 옷 종류가 한 캐릭터 안에서 되풀이되지 않게
 - lib/casual-plan.js — 드러내는 방식: 후보가 다 돌면 처음으로 돌아가던 것을, 이 캐릭터에 덜 쓴 방식부터 · 같은 짝은 한 번만(가디 일곱 장 중 넷이 「트인 등 + 원숄더」 — 사용자 「응 고쳐줘」). 옷 종류: 이 캐릭터가 이미 입힌 종류에 점수를 더 줘 같은 옷(뮤츠 시험 셔츠 + 반바지 셋)이 되풀이되지 않게. 버전1 · 버전2 모두
 - tools/casual-ledger.py — 일곱 장 계획에 같은 드러내는 방식 짝이 두 컷이면 건다

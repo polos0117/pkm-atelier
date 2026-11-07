@@ -110,7 +110,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
     /* 버전마다 칸이 다르다 — 없는 칸을 피하라고 하면 아무것도 안 피하고 조용히 지나간다 */
-    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'group', 'posture', 'body', 'frame', 'use', 'expr'] : ['era', 'place', 'act', 'ofam', 'item', 'group', 'pose', 'orient', 'frame', 'lens', 'expr'];
+    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'ocolor', 'group', 'posture', 'body', 'frame', 'use', 'expr'] : ['era', 'place', 'act', 'ofam', 'item', 'ocolor', 'group', 'pose', 'orient', 'frame', 'lens', 'expr'];
     for (const x of avoid) if (!FIELDS.includes(x.field)) throw new Error('--avoid 칸 ' + x.field + ' 는 ' + (o.v2 ? '버전2' : '버전1(--v1)') + ' 에 없다 — ' + FIELDS.join('·'));
     const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
     /* 뒤에 정할 다시 채우기 캐릭터의 등록된 컷 — 지금 정하는 컷이 그것과 겹치면 안 된다 */
@@ -118,8 +118,8 @@ function planBatch(o, S, entries, look, cards, attempt) {
       const m = entries.filter(e => e.card === c && e.status !== 'reserved').pop();
       return m ? { card: c, cuts: m.cuts } : null;
     }).filter(Boolean);
-    const gen = (cards.find(x => x.name === card) || {}).gen;
-    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const cardRow = cards.find(x => x.name === card) || {}, gen = cardRow.gen;
+    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen, color: cardRow.color }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };

@@ -61,6 +61,10 @@ for (let i = 0; i < 30; i++) {
   assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 7, card + ' 드러내기 짝 겹침');
   const exN = {}; ch.cuts.flatMap(x => x.expose).forEach(e => { exN[e] = (exN[e] || 0) + 1; });
   assert(Object.values(exN).every(v => v <= 3), card + ' 드러내기 한 방식이 네 장 이상: ' + JSON.stringify(exN));
+  /* 옷 색(2026-11-07) — 코스튬 컷은 없음, 나머지는 표의 색, 같은 색은 두 장까지 */
+  const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume').map(x => x.ocolor);
+  assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => !x.ocolor) && cols.every(x => COLS.includes(x)), card + ' 옷 색: ' + cols);
+  assert(cols.every(x => cols.filter(y => y === x).length <= 2), card + ' 같은 옷 색 세 장: ' + cols);
   assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');
   assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => x.frame !== 'face_close'), card + ' 코스튬 컷엔 얼굴 클로즈업 안 씀(2026-11-02)');
   for (const x of ch.cuts) {
@@ -94,6 +98,18 @@ assert(new Set(req).size >= 4 && req.every(r => r.split(',').length === 3), '필
 assert(entries.some(e => e.cuts.some(x => x.ofam === 'retro')), '레트로는 자유 컷으로 나온다');
 n += 4;
 
+/* ── 옷 색은 그 종의 대표 색을 피한다(옷 문장이 색을 정한 컷만 예외) · 덜 쓴 색부터 ── */
+{
+  const named = x => { const it = CT.item(tree, x.ofam, x.item); return it && S.OUTFIT_COLORS.some(c => c.words.some(w => new RegExp('\\b' + w + '\\b').test(it.en.toLowerCase()))); };
+  for (let s = 0; s < 20; s++) {
+    const p = plan({ entries, card: 'Y' + s, seed: 'col' + s, subject: { gen: 1, color: 'yellow' } });
+    assert(p.cuts.every(x => x.ocolor !== 'yellow' || named(x)), '대표 색 노랑을 옷에: ' + p.cuts.map(x => x.ocolor));
+  }
+  const allCols = entries.flatMap(e => e.cuts.map(x => x.ocolor).filter(Boolean)), cn = {};
+  allCols.forEach(c => { cn[c] = (cn[c] || 0) + 1; });
+  assert(Object.keys(cn).length === S.OUTFIT_COLORS.length && Math.max(...Object.values(cn)) <= 3 * Math.min(...Object.values(cn)), '서른 명 동안 색이 고르게: ' + JSON.stringify(cn));
+  n++;
+}
 /* ── 같은 씨앗 같은 답 ── */
 assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 'X', seed: 's' }), '같은 입력·씨앗 같은 답'); n++;
 
