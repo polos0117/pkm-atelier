@@ -48,6 +48,10 @@ body {color:var(--text);font-size:15px}
 .face img {display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .ph {display:flex;align-items:center;justify-content:center;height:100%;padding:6px;
   color:var(--muted);font:10px/1.4 var(--sans);text-align:center;font-variant-numeric:tabular-nums}
+/* 고른 화풍에 그림이 없는 카드(2026-11-07) — 점선 칸 */
+.cell.style-empty .face {outline:1px dashed var(--line);outline-offset:-6px}
+.cell.style-empty .ph {color:var(--muted);font-size:11px}
+.style-missing {margin:6px 0;color:var(--muted);font:400 13px/1.5 var(--sans)}
 .cap {display:block;font-weight:700;overflow-wrap:anywhere}
 .cap i {display:block;margin-top:3px;font:400 11px var(--sans);font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}
 .search-row {display:grid;grid-template-columns:minmax(0,1fr);}
@@ -170,10 +174,10 @@ body {color:var(--text);font-size:15px}
 .dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=dot1"></script>
+<script src="lib/words.js?v=styleempty1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=recent2"></script>
-<script src="lib/dex-filter.js?v=2"></script>
+<script src="lib/dex-filter.js?v=3"></script>
 <link rel="stylesheet" href="lib/gallery.css?v=recent1">
 <script src="lib/scene-motion.js?v=1"></script>
 <link rel="stylesheet" href="lib/scene-motion.css?v=1">
@@ -451,6 +455,8 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
   const [focus, setFocus] = useState(selection?.file ? selection : null);
   const [wantForm, setForm] = useState(selection?.form || '');
   const style = keys.indexOf(wantStyle) >= 0 ? wantStyle : (bestStyle(entry, want).style || keys[0] || '');
+  /* 목록에서 이 카드에 없는 화풍으로 열었다 — 다른 화풍을 보여 주되 비었다고 말한다(2026-11-07) */
+  const missingStyle = wantStyle && keys.indexOf(wantStyle) < 0 ? wantStyle : '';
   const bucket = (style ? IMG.styleMap(entry)[style] : entry) || {};
   const prog = IMG.formsDone(bucket, want, V);
   /* 고르개에는 그림이 있는 폼만 올린다. 빈 폼을 고를 수 있게 두면
@@ -573,7 +579,8 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     </div>`}
 
 </section>
-    <section class="story-panel"><p class="editorial-kicker">No.${String(card.no).padStart(4,'0')} · ${W('card.gen',{n:card.gen})}</p><p class="persona">${card.genus || card.name}</p>    ${keys.length > 1 && html`<div class="sw" role="group" aria-label=${W('dex.style')}>
+    <section class="story-panel"><p class="editorial-kicker">No.${String(card.no).padStart(4,'0')} · ${W('card.gen',{n:card.gen})}</p><p class="persona">${card.genus || card.name}</p>    ${missingStyle && html`<p class="style-missing" id="dex-style-missing" role="note">${W('dex.style.missing', { style: styleName[missingStyle] || missingStyle })}</p>`}
+    ${keys.length > 1 && html`<div class="sw" role="group" aria-label=${W('dex.style')}>
       ${keys.map(k => html`<button key=${k} class=${k === style ? 'on' : ''}
         onClick=${() => { setStyle(k); setForm(''); setFocus(null); }}>${styleName[k] || k || W('dex.style.unknown')}</button>`)}
     </div>`}
@@ -768,15 +775,16 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
       ? html`<p class="empty">${W('dex.filter.empty')}</p>`
       : html`<div class="grid" ref=${gridRef}>${shown.map((shot,i) => {
           const c=shot.card,entry=st.img[c.name],want=wanted(st.defs,c);
-          const prog=IMG.formsDone(shot.style?IMG.styleMap(entry)[shot.style]:entry,want,V),fresh=rowNew(shot,f);
-          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':'cell'}
+          const prog=IMG.formsDone(shot.style?(IMG.styleMap(entry||{})[shot.style]||{}):entry,want,V),fresh=rowNew(shot,f);
+          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':shot.empty?'cell style-empty':'cell'}
             data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut} data-new=${fresh?'1':undefined}
             onClick=${() => onOpen(shot)}>
             <span class="face">${shot.file
               ? html`<${Pic} file=${shot.file} alt=${c.name+' · '+shotLabel(shot,st.defs)} />`
-              : html`<span class="ph">${W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}${SP && sprites && SP.actorFor(sprites, c.name) && html`<span class="dot-badge" title=${W('dex.dot.label')}>${W('dex.dot.badge')}</span>`}</span>
+              : html`<span class="ph">${shot.empty ? W('dex.style.empty') : W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}${SP && sprites && SP.actorFor(sprites, c.name) && html`<span class="dot-badge" title=${W('dex.dot.label')}>${W('dex.dot.badge')}</span>`}</span>
             <span class="cap"><span class="card-meta">${[c.element,c.element2].filter(Boolean).map(k=>st.group.name[k]||k).join(' · ')}<span>${String(c.no).padStart(4,'0')}</span></span><strong>${c.name}</strong>
               ${shot.file&&html`<i>${st.styleName[shot.style]||W('dex.style.unknown')}</i><i>${shotLabel(shot,st.defs)}</i>`}
+              ${shot.empty&&html`<i>${st.styleName[shot.style]||shot.style}</i><i>${W('dex.style.empty.short')}</i>`}
               <i>${W('art.form.done',prog)}</i>
             </span>
           </button>`;

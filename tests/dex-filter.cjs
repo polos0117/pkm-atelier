@@ -2,7 +2,7 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['img','dex-filter'])vm.runInContext(fs.readFileSync('lib/'+f+'.js','utf8'),ctx);
 const F=ctx.window.AtelierDexFilter,st=require('./dex-filter-fixture.cjs');
-const select=f=>F.select(st,f),files=f=>Array.from(select(f),r=>r.file);
+const select=f=>F.select(st,f),files=f=>Array.from(select(f).filter(r=>r.file),r=>r.file);
 assert.equal(select({}).length,4,'default roster includes missing art');
 assert.equal(select({q:'#0001'}).length,1,'number search must not match 1001');
 assert.equal(select({q:'alpha'})[0].card.name,'A');
@@ -19,8 +19,15 @@ assert.deepEqual(files({cut:'base'}),['a-base.webp','d-legacy.webp']);
 assert.deepEqual(files({cut:'extra'}),['a-extra.webp']);
 assert.equal(files({style:'game_keyart',cut:'all',form:'heavy'}).length,3);
 assert.equal(files({style:'game_keyart',cut:'casual'}).length,3);
-assert.equal(select({style:'mecha_cinematic_keyart'}).length,0,'empty style does not show unregistered cards');
-assert.equal(select({form:'mobility'}).length,0,'missing requested form must not use another cut');
+// 2026-11-07 — a chosen style lists every card; cards with nothing in it are empty cells of that style, never another style's art
+const empty=select({style:'mecha_cinematic_keyart'});
+assert.equal(empty.length,4,'empty style lists every card as empty');
+assert(empty.every(r=>r.file===null&&r.style==='mecha_cinematic_keyart'&&r.empty==='style'),'empty cells keep the chosen style');
+const heavyGloss=select({style:'glossy_promo',cut:'portrait',form:'heavy'});
+assert(heavyGloss.length===4&&heavyGloss.every(r=>!r.file&&r.empty==='style'),'missing form in that style is an empty cell too');
+assert(select({style:'game_keyart'}).filter(r=>r.empty).length===select({}).length-select({style:'game_keyart'}).filter(r=>r.file).length,'filled + empty = roster');
+assert.equal(select({form:'mobility'}).length,0,'form filter alone still hides cards without it');
+assert.equal(select({form:'mobility'}).filter(r=>r.file).length,0,'missing requested form must not use another cut');
 assert.equal(select({style:'game_keyart'})[1].file,'b-old-od.webp');
 assert.deepEqual(JSON.parse(JSON.stringify(F.normalize({cut:'BAD',gen:'99',style:'BAD',type:'BAD',form:'BAD',q:4},st))),JSON.parse(JSON.stringify(F.defaults())));
 const real=JSON.parse(fs.readFileSync('data/card.json','utf8'));
