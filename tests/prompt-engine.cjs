@@ -149,7 +149,7 @@ assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default han
 /* 일상컷 손 규칙 HAND TASK(2026-10-27) — 할 일 없는 손은 보이는 곳에 */
 assert(cas.includes(S.PROMPT_LINES.body)&&cas.includes(S.PROMPT_LINES.handsCasual),'casual carries the body and hand-task lines');
 /* 일상컷 FRAME 줄(2:3, 2026-10-28)로 21낱말, 옷은 첨부 그림의 색·무늬를 따르지 않는다는 말(2026-10-29)로 16낱말쯤 늘었다 */
-assert(words(cas)<=640,'casual budget: '+words(cas));   // 2026-11-07 +50 — BODY LINE 줄 · 2026-11-03 +50 — 화풍 문장 대신 「첨부 그림 그대로」 · FACE 줄 · 표정 끝 한 마디 · 2026-11-06 +60 — FACE 줄 얼굴 고정 문장(카메라 · 자세가 얼굴을 길게 · 턱을 무겁게 만들지 않는다) · 금지 두 낱말
+assert(words(cas)<=660,'casual budget: '+words(cas));   // 2026-11-07 +20 — BODY LINE 골반 · 허벅지 · 머리 비율 · ANATOMY 7.5등신 · +50 — BODY LINE 줄 · 2026-11-03 +50 — 화풍 문장 대신 「첨부 그림 그대로」 · FACE 줄 · 표정 끝 한 마디 · 2026-11-06 +60 — FACE 줄 얼굴 고정 문장(카메라 · 자세가 얼굴을 길게 · 턱을 무겁게 만들지 않는다) · 금지 두 낱말
 assert(cas.includes('jaw length and face length-to-width ratio')&&cas.includes('a face lengthened by the camera angle, a heavy jaw'),'casual FACE line keeps face length against camera angle');
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */
