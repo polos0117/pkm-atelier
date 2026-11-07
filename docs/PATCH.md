@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · ① 체형 — 메카 컨셉의 종별 체형 문장 · 경장 폼 줄은 장갑만 가늘게
+- tools/prompt-pack.cjs · lib/concept-mecha.js(generatorFigure) · data/concept-mecha.json(auto.figure.full) — 여덟 자리 ① 의 외형 칸 body type 에 메카 컨셉의 종별 체형 문장. 통통한 체형(auto.figure.soft · 손글의 plump)은 한 단계 아래 full(「a full-figured, softly curvaceous figure …」). 메카 컨셉 도구의 체형은 그대로. 사용자 「이전이랑 비교해서 몸매 볼륨이 좀 줄었네」 → 「통통체형은 빼고 한단계 아래로 설정해서 둘 다 해줘」 — 어제 꼬부기 · 파이리 · 이상해씨(메카 컨셉 도구)엔 체형 줄이 있었고 생성기 ① 엔 없었다
+- lib/prompt-spec.js · prompt.html — 경장 폼 줄 「a slim readable outline」 → 「the armor's outline stays slim and readable without slimming her figure」(생성기로 만드는 모든 경장 ①)
+- IMAGE_RULES.md 3절 · tests/prompt-pack.cjs · tests/face-design.cjs(앵커 예산 480 → 490)
+
 ## 2026-11-07 · claude · 일곱 장 자유 컷 — 의상 계열이 서로 다르게 · 새 값은 바로 앞 캐릭터와
 - lib/casual-plan.js — 일곱 장이면 이 캐릭터가 이미 쓴 의상 계열(일상복 포함)에 큰 감점, 자유 컷은 아직 안 쓴 계열이 있는 길 · 장소에서 고른다(뮤츠 시험 자유 셋이 다 일상복 — 사용자 「응」). 새 값(방향 · 프레이밍 · 옷 종류) 비교는 바로 앞 캐릭터 하나 — 배치 안이면 배치에서 바로 앞(세 명 배치에서 스물한 컷이 값을 다 써 계획이 안 나왔다). 세 장 규칙은 그대로
 - tools/casual-ledger.py — 일곱 장 자유 컷의 의상 계열이 겹치면 건다, 새 값 비교는 차례대로 바로 앞 캐릭터

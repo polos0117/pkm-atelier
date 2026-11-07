@@ -959,7 +959,8 @@
    "soft": "a soft, rounded, gently plump figure of average build in natural proportion, a modest bust, a softly defined waist and gently rounded hips",
    "tall": "a tall, statuesque athletic-curvaceous figure with a full bust, a defined waist, rounded hips and long legs",
    "small": "a petite, lithe and graceful figure with a modest bust, a slim waist and gently rounded hips",
-   "base": "a graceful athletic-curvaceous figure with a full bust, a defined waist and rounded hips"
+   "base": "a graceful athletic-curvaceous figure with a full bust, a defined waist and rounded hips",
+  "full": "a full-figured, softly curvaceous figure with a full bust, a defined waist and full rounded hips"
   },
   "hair_fallback": [
    "long flowing hair",

@@ -180,6 +180,10 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert(CMT.types.electric.silhouette.includes(sil.key), '타입 추천 안에서');
     assert.deepEqual(m.fx.map(x => x.key)[0], 'hand'); assert.equal(m.fx.length, 3, '타입 표현 자동 — 손 + 몸 하나 + 주변 하나');
     assert.deepEqual(s7.slots.light.mecha_auto, m);
+    /* ① 체형(2026-11-07) — 메카 컨셉의 종별 체형 문장을 body type 에, 통통한 체형은 한 단계 아래(full) */
+    assert.equal(s7.slots.light.params['body type'], CMT.auto.figure.base, '피카츄 체형');
+    const sn = path.join(tmp, 'snorlax-7'); r = run('init', '잠만보', '--dir', sn, '--repos', repo); assert.equal(r.status, 0, r.stderr);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(sn, 'settings.json'), 'utf8')).slots.light.params['body type'], CMT.auto.figure.full, '통통 → 한 단계 아래');
     /* 최근 ① 이 그 실루엣을 썼으면 다른 것 */
     const rec = path.join(repo, 'records', 'raichu-anime_gloss-20261107'); fs.mkdirSync(rec);
     fs.writeFileSync(path.join(rec, 'light-ui.json'), JSON.stringify({ storage: { last: '라이츄', cards: { '라이츄': { mecha: { set: { silhouette: sil.key }, fx: [] } } } } }));
@@ -191,6 +195,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     const lt = fs.readFileSync(path.join(d7, 'light-prompt.txt'), 'utf8'), lu = JSON.parse(fs.readFileSync(path.join(d7, 'light-ui.json'), 'utf8'));
     const want = window.AtelierConceptMecha.lines(CMT, ['electric'], m);
     assert(want.length === 2 && want.every(x => lt.includes(x)), '① 메카 줄');
+    assert(lt.includes('body type: ' + CMT.auto.figure.base) && lt.includes('without slimming her figure'), '① 체형 줄 · 장갑만 가늘게');
     assert.deepEqual(lu.storage.cards['피카츄'].mecha, m, '저장값에 mecha');
     assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, lu.storage.cards['피카츄'], tree1, pika, null, { C2, tree2 }).st, pika, appear, faces, tree1, tree2, CMT) + '\n', lt, '저장값 → 같은 지시문');
     const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');

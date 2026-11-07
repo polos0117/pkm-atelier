@@ -107,6 +107,8 @@ function recentSilhouettes(repos, except) {
   }
   return got.sort((a, b) => a.at < b.at ? -1 : a.at > b.at ? 1 : 0).slice(-MECHA_RECENT).map(x => x.sil);
 }
+/* ① 체형(2026-11-07 사용자 「이전이랑 비교해서 몸매 볼륨이 좀 줄었네」 → 「통통체형은 빼고 한단계 아래로」) — 메카 컨셉의 종별 체형 문장을 외형 칸 body type 에(직접 쓴 글) */
+function figureOf(d, c) { const CM = cmOf(d); return CM ? CM.generatorFigure(c.name) : ''; }
 function autoMecha(d, c, used) {
   const CM = cmOf(d);
   if (!CM) return null;
@@ -169,7 +171,7 @@ function init(o) {
   for (const [slot, def] of Object.entries(SL)) {
     const s = {};
     for (const f of def.fields) {
-      if (f === 'params') s.params = {};
+      if (f === 'params') { s.params = {}; const fig = !o.legacy && figureOf(d, c); if (fig) s.params['body type'] = fig; }
       else if (f === 'mecha') { s.mecha = autoMecha(d, c, used) || { set: {}, fx: [] }; s.mecha_auto = JSON.parse(JSON.stringify(s.mecha)); s.mecha_recent = used; }
       else if (f === 'faceDesignOn') s.faceDesignOn = true;
       else if (f === 'scene' && def.mode === 'action') s.scene = blank();
