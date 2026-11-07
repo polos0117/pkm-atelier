@@ -107,8 +107,9 @@ function recentSilhouettes(repos, except) {
   }
   return got.sort((a, b) => a.at < b.at ? -1 : a.at > b.at ? 1 : 0).slice(-MECHA_RECENT).map(x => x.sil);
 }
-/* ① 체형(2026-11-07 사용자 「이전이랑 비교해서 몸매 볼륨이 좀 줄었네」 → 「통통체형은 빼고 한단계 아래로」) — 메카 컨셉의 종별 체형 문장을 외형 칸 body type 에(직접 쓴 글) */
-function figureOf(d, c) { const CM = cmOf(d); return CM ? CM.generatorFigure(c.name) : ''; }
+/* ① 체형 — 외형 칸 body type 에(직접 쓴 글). 2026-11-07 처음엔 메카 컨셉의 종별 체형 문장(통통은 한 단계 아래)이었고,
+   같은 날 꼬부기 초안 4(흉부 은은하게 · 허리 가늘게 · 골반 크게 · 허벅지 위쪽만 약간)를 사용자 「이대로 고정해줘」 — 모든 종 같은 문장(S.CARD_FIGURE) */
+function figureOf(d, c) { return S.CARD_FIGURE || ''; }
 function autoMecha(d, c, used) {
   const CM = cmOf(d);
   if (!CM) return null;

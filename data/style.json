@@ -61,6 +61,10 @@
     {
       "key": "anime_gloss",
       "name": "애니 광택"
+    },
+    {
+      "key": "gloss_daylight",
+      "name": "광택 자연광"
     }
   ]
 }

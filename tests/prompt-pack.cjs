@@ -173,17 +173,17 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     fs.mkdirSync(path.join(repo, 'records'), { recursive: true });
     r = run('init', '피카츄', '--dir', d7, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
     const s7 = JSON.parse(fs.readFileSync(path.join(d7, 'settings.json'), 'utf8'));
-    assert.equal(s7.version, 2); assert.equal(s7.style, 'anime_gloss', '기본 화풍 애니 광택');
+    assert.equal(s7.version, 2); assert.equal(s7.style, 'gloss_daylight', '기본 화풍 광택 자연광(2026-11-07)');
     assert.deepEqual(Object.keys(s7.slots), ['light', 'casual1', 'casual2', 'casual3', 'casual4', 'casual5', 'casual6', 'casual7']);
     const m = s7.slots.light.mecha, sil = CMT.silhouettes.find(x => x.key === m.set.silhouette);
     assert(sil && sil.key !== 'none' && Object.keys(m.set).length === 1, '큰 실루엣 하나만(부위 부품은 비운다)');
     assert(CMT.types.electric.silhouette.includes(sil.key), '타입 추천 안에서');
     assert.deepEqual(m.fx.map(x => x.key)[0], 'hand'); assert.equal(m.fx.length, 3, '타입 표현 자동 — 손 + 몸 하나 + 주변 하나');
     assert.deepEqual(s7.slots.light.mecha_auto, m);
-    /* ① 체형(2026-11-07) — 메카 컨셉의 종별 체형 문장을 body type 에, 통통한 체형은 한 단계 아래(full) */
-    assert.equal(s7.slots.light.params['body type'], CMT.auto.figure.base, '피카츄 체형');
+    /* ① 체형(2026-11-07 꼬부기 초안 4 — 「이대로 고정해줘」) — 모든 종 같은 문장 */
+    assert.equal(s7.slots.light.params['body type'], S.CARD_FIGURE, '피카츄 체형');
     const sn = path.join(tmp, 'snorlax-7'); r = run('init', '잠만보', '--dir', sn, '--repos', repo); assert.equal(r.status, 0, r.stderr);
-    assert.equal(JSON.parse(fs.readFileSync(path.join(sn, 'settings.json'), 'utf8')).slots.light.params['body type'], CMT.auto.figure.full, '통통 → 한 단계 아래');
+    assert.equal(JSON.parse(fs.readFileSync(path.join(sn, 'settings.json'), 'utf8')).slots.light.params['body type'], S.CARD_FIGURE, '잠만보도 같은 문장');
     /* 최근 ① 이 그 실루엣을 썼으면 다른 것 */
     const rec = path.join(repo, 'records', 'raichu-anime_gloss-20261107'); fs.mkdirSync(rec);
     fs.writeFileSync(path.join(rec, 'light-ui.json'), JSON.stringify({ storage: { last: '라이츄', cards: { '라이츄': { mecha: { set: { silhouette: sil.key }, fx: [] } } } } }));
@@ -195,12 +195,13 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     const lt = fs.readFileSync(path.join(d7, 'light-prompt.txt'), 'utf8'), lu = JSON.parse(fs.readFileSync(path.join(d7, 'light-ui.json'), 'utf8'));
     const want = window.AtelierConceptMecha.lines(CMT, ['electric'], m);
     assert(want.length === 2 && want.every(x => lt.includes(x)), '① 메카 줄');
-    assert(lt.includes('body type: ' + CMT.auto.figure.base) && lt.includes('without slimming her figure'), '① 체형 줄 · 장갑만 가늘게');
+    assert(lt.includes('body type: ' + S.CARD_FIGURE) && lt.includes('without slimming her figure'), '① 체형 줄 · 장갑만 가늘게');
     assert.deepEqual(lu.storage.cards['피카츄'].mecha, m, '저장값에 mecha');
     assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, lu.storage.cards['피카츄'], tree1, pika, null, { C2, tree2 }).st, pika, appear, faces, tree1, tree2, CMT) + '\n', lt, '저장값 → 같은 지시문');
     const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');
-    assert(idx.includes('| ⑧ | casual7 | ① 피카츄_light_anime_gloss_f.webp |') && idx.includes('`피카츄_anime_gloss_f_casual7.webp`') && !idx.includes('heavy'), '차례표 여덟 자리');
+    assert(idx.includes('| ⑧ | casual7 | ① 피카츄_light_gloss_daylight_f.webp |') && idx.includes('`피카츄_gloss_daylight_f_casual7.webp`') && !idx.includes('heavy'), '차례표 여덟 자리');
     for (let n = 1; n <= 7; n++) assert(fs.existsSync(path.join(d7, 'casual' + n + '-prompt.txt')), 'casual' + n);
+    assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY LINE: keep her figure from the attached image'), '일상컷 몸 라인 줄(2026-11-07)');
     /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */
     const s7c = JSON.parse(JSON.stringify(s7)); s7c.slots.light.mecha = { set: { silhouette: 'knight_plate' }, fx: [{ key: 'aura', type: '' }] };
     fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));
@@ -237,5 +238,5 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.some(x => /^STYLE:/.test(x)) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  console.log('PASS 지시문 묶음: 여덟 자리(경장 + 일상 일곱 · anime_gloss · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
+  console.log('PASS 지시문 묶음: 여덟 자리(경장 + 일상 일곱 · gloss_daylight · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

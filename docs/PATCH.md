@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 기준 화풍 광택 자연광(gloss_daylight) · ① 체형 · 일상컷 몸 라인 — 꼬부기 초안 4 그대로
+- lib/prompt-spec.js · data/style.json · prompt.html — 새 화풍 gloss_daylight(광택 자연광 — 자연광 · 피부의 강한 광택 하이라이트 · 진한 색과 금 테두리 · 색이 들어간 부드러운 선 · 낮 빛망울 배경)을 기본(DEFAULT_STYLE)으로. 애니 광택은 그대로 남는다(이미 그 화풍인 캐릭터). ANATOMY 줄의 「No body-part enlargement」 를 뺐다. CARD_FIGURE — ① 체형 문장(흉부 은은하게 · 허리 아주 가늘게 · 골반 넓게 · 허벅지 위쪽만 약간). 사용자(첨부 그림 화풍 → 꼬부기 초안 1~4) 「이대로 고정해줘」
+- tools/prompt-pack.cjs — 여덟 자리 기본 화풍 = gloss_daylight, ① body type 은 모든 종 CARD_FIGURE(종별 체형 문장 대신)
+- lib/prompt-anthro.js — 일상컷(버전1 · 2) FACE 줄 다음에 「BODY LINE: keep her figure from the attached image and show its line slightly emphasized — …」
+- tools/image-runner.py — 새 차례의 화풍 gloss_daylight
+- IMAGE_RULES.md 1 · 3절 · tests/prompt-engine.cjs(화풍 16 · 기본 · ANATOMY · 일상 예산 580 → 640) · prompt-screen.cjs · prompt-pack.cjs · image-runner.py
+
 ## 2026-11-07 · claude · 피부 노출 「많이」 문장은 예전 그대로
 - lib/prompt-spec.js · IMAGE_RULES.md — 바로 앞 칸에서 바꾼 bold 문장(전체 · 가까운 컷)을 되돌렸다. 깊은 목선 드러내기와 「Cut」 줄은 그대로. 사용자 「노출 많이도 우선은 놔둬줘」
 
