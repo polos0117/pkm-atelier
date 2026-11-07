@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 생성기 화면 기본 화풍 — 애니 광택(anime_gloss)
+- lib/prompt-spec.js · prompt.html — DEFAULT_STYLE glossy_promo → anime_gloss. 새로 여는 카드 · 화풍을 안 고른 지시문이 애니 광택. 이미 저장된 카드의 화풍은 그대로. 사용자(화면 기본값도 바꿀까?) 「응 바꿔줘」
+- tools/prompt-pack.cjs — 여덟 자리 기본 = 화면 기본, 아홉 자리(--legacy)는 그때 기본 glossy_promo 그대로
+- IMAGE_RULES.md 1절 · tests/prompt-engine.cjs — 기본 화풍 문장 · 검사
+
 ## 2026-11-07 · claude · 이미지 생성 규칙 — 경장 ① 한 장(애니 광택 · 메카 실루엣 자동) + 일상컷 일곱 장(필수 셋 · 코스튬 · 자유 셋)
 - IMAGE_RULES.md · docs/IMAGE_AUTOMATION.md · docs/CONCEPT_MECHA.md · AGENTS.md — 한 캐릭터 = 경장 ① + 일상 일곱(중장 · 고기동 · 개방은 이제 안 만든다), 기준 화풍 anime_gloss, 일상 필수 갈래는 역할극 · 수영복 · 란제리풍이 한 장씩(레트로는 자유로), 필수 자리 돌리기 · 다섯 명에 두 장은 세 장 시절 규칙으로. 이미 아홉 장으로 시작한 캐릭터는 아홉 장 그대로. 사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「일상컷 규칙은 기존에 필수갈래 택1에서 전체포함으로 7장으로 하자」 · 「레트로는 필수에서 빼고, 필수3 코스튬1 자유3 으로」 · 실루엣 · 효과는 「계획기 자동 — 실루엣만 + 효과 자동」
 - data/casual-tree.json — 필수 갈래 roleplay · swimwear · lingerie, `legacy_outfits` retro(세 장 기록을 읽을 때만)

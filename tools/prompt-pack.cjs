@@ -54,7 +54,7 @@ const NINE = {
 const SLOTS = { light: Object.assign({}, NINE.light, { fields: NINE.light.fields.concat(['mecha', 'mecha_why']) }) };
 ['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }; });
 const slotsOf = set => (set && set.version >= 2 ? SLOTS : NINE);
-const PACK_STYLE = 'anime_gloss';   /* 여덟 자리의 기본 화풍(생성기 화면의 기본은 그대로) */
+const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(anime_gloss) · 아홉 자리(--legacy)는 그때 기본 */
 const MECHA_RECENT = 10;
 const ACTION_SCENE = ['expr', 'pose', 'orient', 'frame', 'lens', 'aspect', 'camera', 'scene', 'outfit', 'custom', 'action'];
 const CASUAL_TEXT = ['scene', 'outfit', 'camera', 'custom'];
@@ -155,7 +155,7 @@ function init(o) {
   if (!o.card || !o.dir) throw new Error('init <카드> --dir <작업 폴더>');
   const d = data(), c = cardOf(d, o.card);
   if (!c) throw new Error('카드가 없다: ' + o.card + ' (data/card.json 의 이름 그대로)');
-  const SL = o.legacy ? NINE : SLOTS, style = o.style || (o.legacy ? S.DEFAULT_STYLE : PACK_STYLE);
+  const SL = o.legacy ? NINE : SLOTS, style = o.style || (o.legacy ? LEGACY_STYLE : PACK_STYLE);
   if (!S.ACTION_STYLE_CORES[style]) throw new Error('화풍 키가 없다: ' + style);
   const file = path.join(o.dir, 'settings.json');
   if (fs.existsSync(file)) throw new Error('이미 있다 — 덮지 않는다: ' + file);

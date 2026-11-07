@@ -20,8 +20,8 @@ function input(name,extra){
 const build=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
 assert.equal(S.ART_STYLES.length,15);   // 2026-11-06 anime_gloss
-assert.equal(S.DEFAULT_STYLE,'glossy_promo','기본 화풍은 글로시 프로모 키아트(IMAGE_RULES·얼굴 설계표와 같이)');
-assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.glossy_promo),'화풍을 안 고르면 글로시 프로모');
+assert.equal(S.DEFAULT_STYLE,'anime_gloss','기본 화풍은 애니 광택(IMAGE_RULES 와 같이 — 2026-11-07)');
+assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.anime_gloss),'화풍을 안 고르면 애니 광택');
 for(const [k] of S.ART_STYLES) assert(S.ACTION_STYLE_CORES[k]&&S.CASUAL_STYLE_CORES[k],'style lines: '+k);
 
 /* 옛 법조문이 돌아오면 실패 — 이 문단들이 "보여 주려고 옮기는" 그림을 만들었다 */
