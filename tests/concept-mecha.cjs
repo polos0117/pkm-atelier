@@ -105,6 +105,9 @@ for (const card of Object.keys(C.species)) {
   assert.equal(M.build(card, ch), M.build(card, ch, 'gloss_daylight'), card + ' 기본 화풍');
   assert(M.build(card, ch).includes('Strong glossy shine') && M.build(card, ch).includes('Natural sunlit daylight'), card + ' 광택 자연광');
   assert(M.build(card, ch, 'anime_gloss').includes('natural sunlit sheen'), card + ' 애니 광택은 그대로');
+  /* 애니 광택 · 광택 자연광은 생성기 ① 과 같은 체형 · 약 7.5등신(2026-11-07), mmorpg2d · jp25d 는 종별 체형 */
+  for (const st of ['anime_gloss', 'gloss_daylight']) assert(M.build(card, ch, st).includes(C.card_figure + ', natural adult proportions, about 7.5 heads tall'), card + ' ' + st + ' 체형');
+  assert(k.includes(C.species[card].FIGURE) && !k.includes('7.5 heads'), card + ' mmorpg2d 는 종별 체형');
   assert(k.includes('premium 2D Korean MMORPG official character illustration style') && k.includes('rich ' + C.species[card].KEY_COLOUR + ' colours, polished 2D Korean MMORPG character key art.'), card + ' 2D');
   assert(j.includes('high-quality Japanese 2.5D mobile-game') && j.includes('STYLE: Premium Japanese mobile RPG') && j.includes('premium Japanese 2.5D mobile RPG character key art.') && !/Korean|MMORPG/.test(j) && !/amber|rounded jaw/.test(j.split('\n\n').find(p => p.startsWith('STYLE:'))), card + ' 2.5D(STYLE 에 피카츄 전용 말 없음)');
   const strip = t => t.split('\n\n').filter(p => !/^(Use case|STYLE):/.test(p)).join('\n\n').replace(/Bright clear lighting.*$|Clear character silhouette against.*$/m, '');
@@ -118,6 +121,7 @@ assert.match(M.faceText(130), /^an elongated, long and medium-width shape, an an
   const ROOT = path.join(__dirname, '..');
   for (const f of ['prompt-spec', 'casual-tree', 'prompt-anthro', 'prompt-lifestyle', 'prompt-state']) require(path.join(ROOT, 'lib', f + '.js'));
   const W = global.window, ST = W.AtelierPromptState, S = W.AtelierSpec, CML = require(path.join(ROOT, 'lib', 'concept-mecha.js'));
+  assert.equal(C.card_figure, S.CARD_FIGURE, '메카 컨셉의 체형 = 생성기 ① 체형(같은 글을 두 곳에 — 고치면 둘 다)');
   const card = require(path.join(ROOT, 'data', 'card.json')).cards.character.find(c => c.name === '갸라도스');
   const tree = require(path.join(ROOT, 'data', 'casual-tree.json')), nz = x => ST.normalize(S, W.AtelierCasualTree, x, tree), st0 = nz({});
   const pr = (st, table) => ST.prompt(W.AtelierPrompt, W.AtelierLifestyle, st, card, undefined, null, tree, null, table);

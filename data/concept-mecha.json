@@ -821,13 +821,15 @@
    "ko": "애니 광택(하이키 파스텔 · 자연광 윤기)",
    "head": "a polished glossy 2D anime gacha character illustration style",
    "style": "Polished Japanese-anime gacha character illustration in clean 2D: crisp thin dark linework, large finely detailed glossy eyes with layered highlights and a soft blush, very fine detailed hair rendered as many thin strands with sparkling highlights along every lock, soft airy cel-to-gradient shading with a natural sunlit sheen — soft, broad highlights from real outdoor daylight on her skin, gloves, stockings and armor, never wet, oily or plastic-looking, and a bright high-key look where the highlights glow toward white while the darkest accents stay deep and clean. A low-saturation pastel palette dominated by white, silver and soft light tones, with one deep accent colour; gentle bloom and small sparkle particles in the air. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
-   "close": "Bright high-key lighting with soft bloom and sparkles, a low-saturation white-and-silver palette with {KEY_COLOUR} as the single deep accent, glossy 2D anime gacha character illustration."
+   "close": "Bright high-key lighting with soft bloom and sparkles, a low-saturation white-and-silver palette with {KEY_COLOUR} as the single deep accent, glossy 2D anime gacha character illustration.",
+   "figure": "card"
   },
   "gloss_daylight": {
    "ko": "광택 자연광(자연광 · 강한 광택 · 진한 색과 금 테두리)",
    "head": "a polished, richly glossy 2D anime gacha character illustration style",
    "style": "Polished Japanese-anime gacha character illustration with a rich, glossy commercial finish: soft coloured linework rather than black outlines, large finely detailed eyes in her own eye colour with multiple sparkling catchlights and thick lashes, a soft blush across her cheeks. Natural sunlit daylight — bright, clear outdoor light with soft, broad highlights. Strong glossy shine: her skin has bright, smooth specular highlights on her shoulders, collarbones, chest, arms and thighs, a polished lustrous finish over warm peachy-pink skin; armor and trim read as polished enamel and burnished gold with sparkling gem highlights. Rich, saturated colours with clear contrast — her palette set against deep darks and gold trim. A detailed background softly blurred with daylight bokeh and floating light motes. Keep the face and body illustrated in 2D anime; no 3D render or photorealistic appearance.",
-   "close": "Natural sunlit daylight with glossy specular highlights on her skin and armor, rich saturated colours with {KEY_COLOUR} and gold trim, softly blurred daylight bokeh, glossy 2D anime gacha character illustration."
+   "close": "Natural sunlit daylight with glossy specular highlights on her skin and armor, rich saturated colours with {KEY_COLOUR} and gold trim, softly blurred daylight bokeh, glossy 2D anime gacha character illustration.",
+   "figure": "card"
   }
  },
  "style_default": "gloss_daylight",
@@ -1030,5 +1032,7 @@
    "white": "pearl-white",
    "yellow": "golden-yellow"
   }
- }
+ },
+ "card_figure": "an hourglass figure with a subtly full bust, a slim waist and very wide, curvy rounded hips that flow smoothly into softly full thighs, the line tapering gradually toward the knees with no sudden narrowing below the hips, and slender lower legs — never thick or heavy",
+ "card_figure_note": "애니 광택 · 광택 자연광 화풍은 종별 FIGURE 대신 이 체형(생성기 lib/prompt-spec.js CARD_FIGURE 와 같은 글)과 「약 7.5등신」 — 2026-11-07 사용자 「애니광택에도 메카컷이랑, 일상컷 몸매관련된 것만 수정해줘」. mmorpg2d · jp25d 는 종별 FIGURE 그대로"
 }
