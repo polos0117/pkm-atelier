@@ -53,7 +53,7 @@ assert(sq.includes('full-finger')&&!/one thumb|four fingers|five fingers|never m
 assert(!sq.includes('drawn correctly as hands'),'the weak hand line came back');
 /* 몸 개수 줄 BODY(2026-10-27, 약 40낱말 — 손 줄을 줄여 거의 상쇄) — 폼·이어가기·개방·일상컷 모두 */
 assert(sq.includes(S.PROMPT_LINES.body),'anchor carries the body line');
-assert(words(sq)<=425,'anchor budget: '+words(sq));   // 2026-11-06 +25 — 카메라 수평 3/4 줄
+assert(words(sq)<=440,'anchor budget: '+words(sq));   // 2026-11-07 +14 — ANATOMY 7.5등신 · 2026-11-06 +25 — 카메라 수평 3/4 줄
 
 /* 머리 특징 표현을 고르면 자동 머리 문장(귀·볼주머니)을 대신한다 */
 const pk=build('피카츄'), pkHead=build('피카츄',{headFeature:'accessory'});
@@ -168,7 +168,7 @@ for(const c of cards){
  if(words(t)>most[0]) most=[words(t),c.en];
  const pal=P.palette(s); assert(pal.length<=5,c.en);
 }
-assert(most[0]<=445,'anchor budget over 1025: '+most.join(' '));   // 2026-11-06 +25 — 카메라 수평 3/4 줄
+assert(most[0]<=460,'anchor budget over 1025: '+most.join(' '));   // 2026-11-07 +14 — ANATOMY 7.5등신 · 2026-11-06 +25 — 카메라 수평 3/4 줄
 assert(none<120,'too many species get no wear line: '+none);
 
 /* 스타일·모드 행렬 */
