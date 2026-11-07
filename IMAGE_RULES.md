@@ -190,7 +190,7 @@ node tools/prompt-pack.cjs build --dir <작업 폴더>
 - **몸매가 드러나는 파인 옷**(2026-11-07 사용자 「일상컷 의상들을 더 몸매가 드러나는 파인 의상들로 설정 변경해줘」) — 계획기의 드러내는 방식 둘 가운데 첫째는 늘 깊게 파인 목선
   (`plunging neckline` · `deep V neckline` · `sweetheart neckline` — 그 옷 종류에 없으면 다른 것), 둘째는 목선이 아닌 것(트인 등 · 등 전체가 트인 · 허리 컷아웃 · 슬릿 …).
   두 방식은 지시문 Outfit 줄 다음에 `Cut: … built into the outfit — a figure-hugging fit that follows her curves; chest and pelvis stay securely covered.` 한 줄로 실린다(옷 직접 쓰기 글이 없어도).
-  피부 노출 「많이(bold)」 문장도 「몸에 붙는 깊게 파인 옷 — 깊은 목선 …, 가슴 · 골반은 가린다」로. 가슴 · 골반을 가리는 선은 그대로다.
+  피부 노출 「많이(bold)」 문장은 그대로 둔다(사용자 「노출 많이도 우선은 놔둬줘」).
 - **옷 색은 계획기가 정한다**(2026-11-07 사용자 「의상색도 정해줘」) — 색 열둘(아이보리 · 블랙 · 레드 · 핑크 · 코랄 · 옐로 · 세이지 · 민트 · 스카이 · 라벤더 · 카멜 · 그레이 — `lib/prompt-spec.js` `OUTFIT_COLORS`)에서
   컷마다 하나(`ocolor`): 이 캐릭터에 아직 안 쓴 색 가운데 최근 열 명에서 덜 쓴 것, 그 종의 대표 색(`data/card.json` 의 `color`)은 피한다. 옷 문장이 이미 색을 정하면 그 색으로 친다.
   포켓몬 코스튬 컷은 원작 색이라 없다. 지시문엔 Outfit 줄 다음에 `Outfit colours: …` 한 줄, 생성기 일상컷엔 「옷 색」 칸(계획 값이면 잠김).

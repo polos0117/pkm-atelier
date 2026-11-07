@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 피부 노출 「많이」 문장은 예전 그대로
+- lib/prompt-spec.js · IMAGE_RULES.md — 바로 앞 칸에서 바꾼 bold 문장(전체 · 가까운 컷)을 되돌렸다. 깊은 목선 드러내기와 「Cut」 줄은 그대로. 사용자 「노출 많이도 우선은 놔둬줘」
+
 ## 2026-11-07 · claude · 일상컷 의상 — 몸매가 드러나는 깊게 파인 옷
 - lib/casual-plan.js — 드러내는 방식에 깊은 V넥 · 스위트하트 넥 · 등 전체가 트인 · 허리 컷아웃을 더하고, 컷마다 첫째는 깊게 파인 목선(플런징 · 깊은 V · 스위트하트), 둘째는 목선이 아닌 것. 사용자 「일상컷 의상들을 더 몸매가 드러나는 파인 의상들로 설정 변경해줘」
 - lib/prompt-anthro.js · lib/prompt-state.js · lib/prompt-ui.js · lib/words.js · prompt.html — 그 두 방식을 지시문 「Cut: … — a figure-hugging fit that follows her curves; chest and pelvis stay securely covered.」 줄로(버전1 · 2, 옷 직접 쓰기 글이 없어도), 생성기 주소 · 계획 칸에 expose(잠금), 일상컷 화면에 「드러내는 곳」 안내
