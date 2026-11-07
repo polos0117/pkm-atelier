@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-07 · claude · 메카 컨셉 도구 기본 화풍도 광택 자연광
+- data/concept-mecha.json · tools/concept-mecha.cjs — 화풍 gloss_daylight(광택 자연광 — 생성기와 같은 STYLE 문장, 첫 줄 · 끝맺음)을 더하고 기본(style_default)으로. 애니 광택 · mmorpg2d · jp25d 는 --style 로 남는다. 사용자 「기본 화풍도 바꿔줘. 지금 만든걸로」 — 생성기 · 지시문 묶음 · 관리기는 바로 앞 칸에서 이미 바뀌었다
+- tests/concept-mecha.cjs · tools/prompt-pack.cjs(설명 글)
+
 ## 2026-11-07 · claude · 기준 화풍 광택 자연광(gloss_daylight) · ① 체형 · 일상컷 몸 라인 — 꼬부기 초안 4 그대로
 - lib/prompt-spec.js · data/style.json · prompt.html — 새 화풍 gloss_daylight(광택 자연광 — 자연광 · 피부의 강한 광택 하이라이트 · 진한 색과 금 테두리 · 색이 들어간 부드러운 선 · 낮 빛망울 배경)을 기본(DEFAULT_STYLE)으로. 애니 광택은 그대로 남는다(이미 그 화풍인 캐릭터). ANATOMY 줄의 「No body-part enlargement」 를 뺐다. CARD_FIGURE — ① 체형 문장(흉부 은은하게 · 허리 아주 가늘게 · 골반 넓게 · 허벅지 위쪽만 약간). 사용자(첨부 그림 화풍 → 꼬부기 초안 1~4) 「이대로 고정해줘」
 - tools/prompt-pack.cjs — 여덟 자리 기본 화풍 = gloss_daylight, ① body type 은 모든 종 CARD_FIGURE(종별 체형 문장 대신)

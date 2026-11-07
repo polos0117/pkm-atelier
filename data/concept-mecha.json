@@ -822,9 +822,15 @@
    "head": "a polished glossy 2D anime gacha character illustration style",
    "style": "Polished Japanese-anime gacha character illustration in clean 2D: crisp thin dark linework, large finely detailed glossy eyes with layered highlights and a soft blush, very fine detailed hair rendered as many thin strands with sparkling highlights along every lock, soft airy cel-to-gradient shading with a natural sunlit sheen — soft, broad highlights from real outdoor daylight on her skin, gloves, stockings and armor, never wet, oily or plastic-looking, and a bright high-key look where the highlights glow toward white while the darkest accents stay deep and clean. A low-saturation pastel palette dominated by white, silver and soft light tones, with one deep accent colour; gentle bloom and small sparkle particles in the air. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
    "close": "Bright high-key lighting with soft bloom and sparkles, a low-saturation white-and-silver palette with {KEY_COLOUR} as the single deep accent, glossy 2D anime gacha character illustration."
+  },
+  "gloss_daylight": {
+   "ko": "광택 자연광(자연광 · 강한 광택 · 진한 색과 금 테두리)",
+   "head": "a polished, richly glossy 2D anime gacha character illustration style",
+   "style": "Polished Japanese-anime gacha character illustration with a rich, glossy commercial finish: soft coloured linework rather than black outlines, large finely detailed eyes in her own eye colour with multiple sparkling catchlights and thick lashes, a soft blush across her cheeks. Natural sunlit daylight — bright, clear outdoor light with soft, broad highlights. Strong glossy shine: her skin has bright, smooth specular highlights on her shoulders, collarbones, chest, arms and thighs, a polished lustrous finish over warm peachy-pink skin; armor and trim read as polished enamel and burnished gold with sparkling gem highlights. Rich, saturated colours with clear contrast — her palette set against deep darks and gold trim. A detailed background softly blurred with daylight bokeh and floating light motes. Keep the face and body illustrated in 2D anime; no 3D render or photorealistic appearance.",
+   "close": "Natural sunlit daylight with glossy specular highlights on her skin and armor, rich saturated colours with {KEY_COLOUR} and gold trim, softly blurred daylight bokeh, glossy 2D anime gacha character illustration."
   }
  },
- "style_default": "anime_gloss",
+ "style_default": "gloss_daylight",
  "auto": {
   "note": "표에 손글 종이 없으면 이 표와 공방 자료(data/card.json 타입 · 키 · 몸무게, data/face-design.json 얼굴 · 머리, data/source-appearance.json 색 · 원작 특징 — 생성기의 입는 법 · 팔레트)로 초안을 짓는다(2026-11-06 사용자 「그래」). 손글 종(species)이 늘 이긴다",
   "types": {
@@ -960,7 +966,7 @@
    "tall": "a tall, statuesque athletic-curvaceous figure with a full bust, a defined waist, rounded hips and long legs",
    "small": "a petite, lithe and graceful figure with a modest bust, a slim waist and gently rounded hips",
    "base": "a graceful athletic-curvaceous figure with a full bust, a defined waist and rounded hips",
-  "full": "a full-figured, softly curvaceous figure with a full bust, a defined waist and full rounded hips"
+   "full": "a full-figured, softly curvaceous figure with a full bust, a defined waist and full rounded hips"
   },
   "hair_fallback": [
    "long flowing hair",
