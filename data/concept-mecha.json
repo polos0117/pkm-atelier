@@ -48,8 +48,8 @@
   },
   {
    "key": "slim_suit",
-   "ko": "슬림 보디슈트형",
-   "en": "a sleek armored bodysuit — thin, long plates on the shoulders, arms and legs that follow her curves closely",
+   "ko": "슬림 밀착 장갑형",
+   "en": "a sleek, close-fitting suit of plate armor — thin, long plates on the shoulders, arms, torso and legs that follow her curves closely",
    "owns": [
     "weight"
    ]

@@ -179,7 +179,7 @@ for (const c of cards) {
   const w = P.words(t); if (w > most[0]) most = [w, c.en];
 }
 // BODY 줄(2026-10-27, 약 40낱말)로 440 → 460 · 카메라 수평 3/4 줄(2026-11-06, 약 20낱말 늘었다)로 460 → 480 · 경장 폼 줄 「몸을 가늘게 하지 않는다」(2026-11-07, +7)로 480 → 490 · ANATOMY 7.5등신(+14)로 → 505
-assert(most[0] <= 535, '얼굴·머리 줄을 더한 앵커 예산: ' + most.join(' '));   // 2026-11-08 +30 — 메카 노출 줄(두 곳만 열린 장갑)
+assert(most[0] <= 645, '얼굴·머리 줄을 더한 앵커 예산: ' + most.join(' '));   // 2026-11-08 +105 — 경장 판 · ARMOR 줄 · 2026-11-08 +30 — 메카 노출 줄(두 곳만 열린 장갑)
 const top = Object.entries(count).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([s, k]) => s + ' ' + k).join(', ');
 console.log(`PASS 얼굴 설계: 1025종 서로 다름 · 계열 ${Object.values(lines).filter(x => x.length > 1).length}개 ${pairs}쌍 셋 이상 다름 · 전체 둘 이상 다름 · 새 인물에만 FACE · 직접 고른 항목 우선 · 문서=엔진 · 최대 ${most[0]}낱말(${most[1]})`);
 console.log(`PASS 머리 설계: 헤어스타일 ${Object.keys(count).length}가지(많은 순 ${top}) · 8%·보브 4% 상한 · 계열 잇기 · 옆 번호 다름 · 잠금 ${locked}(기록값 ${lockedWith}, 기록 대조 ${checkedRecords}) · 새 인물에만 HAIR · 직접 고른 머리 우선`);

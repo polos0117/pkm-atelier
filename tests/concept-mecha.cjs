@@ -130,7 +130,7 @@ assert.match(M.faceText(130), /^an elongated, long and medium-width shape, an an
   assert.equal(want.length, 2);
   assert(want[1].indexOf('TYPE EFFECTS: One open hand') === 0 && want[1].includes('pale sky-blue glow'), '표현 순서는 표 순서 · 오라는 비행');
   const paras = withM.split('\n\n'), i = paras.indexOf(want[0]);
-  assert.equal(paras[i - 1], S.FORM_LINES.light, 'FORM 줄 바로 뒤'); assert.equal(paras[i + 1], want[1]);
+  assert.equal(paras[i - 2], S.FORM_LINES.light, 'FORM 줄 · ARMOR 줄 뒤'); assert.equal(paras[i - 1], S.PROMPT_LINES.armor, 'ARMOR 줄(2026-11-08) 바로 뒤'); assert.equal(paras[i + 1], want[1]);
   assert.equal(paras.filter((x, k) => k !== i && k !== i + 1).join('\n\n'), base, '두 줄 말고는 그대로');
   assert.equal(pr(nz({ mecha: sel }), null), base, '표가 없으면 안 싣는다');
   assert.equal(pr(nz({ mecha: { set: {}, fx: [] } }), C), base, '안 고르면 그대로');

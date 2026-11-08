@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 메카컷 — 바디슈트처럼 보이던 장갑을 단단한 판으로
+- lib/prompt-spec.js — 경장 FORM 줄: 가슴판 · 배 마디 판 · 어깨 · 팔 · 골반 · 허벅지 · 무릎 · 정강이 · 부츠까지 얇은 판이 몸 대부분을 덮고 슈트는 관절 틈에만(얇고 몸에 붙는 것 · 체형은 그대로, 노출은 EXPOSURE 줄이 연다). 새 ARMOR 줄 — 두께 · 모서리 · 패널 선 · 통풍구 · 센서 빛이 있는 단단한 기계 판, 천에 그린 무늬 · 무늬 바디슈트 아님(사용자 「메카 이미지가 조촐 — 바디슈트만 입은 느낌」). 새 화풍(애니 광택 · 애니 2.5D)의 STYLE 엔 기계 말이 없어 장갑이 천처럼 그려졌다. 꼬부기 · 피카츄 애니 2.5D 로 전후 확인
+- lib/prompt-anthro.js — ARMOR 줄을 FORM 줄 바로 뒤에(경장 · 중장 · 고기동, 새 인물 · 이어가기). 일상컷 · 개방은 그대로
+- data/concept-mecha.json — 실루엣 slim_suit 를 「슬림 밀착 장갑형」, 문장의 bodysuit 를 plate armor 로(몸통 판까지)
+- docs/PROMPT_REWRITE.md — 경장 낱말 · prompt.html — 스크립트 판(armor1)
+- tests/prompt-engine.cjs · face-design.cjs · concept-mecha.cjs · concept-mecha-screen.cjs — ARMOR 줄 자리 · 경장 판 · 낱말 상한(앵커 +105, 이어가기 +56)
+
 ## 2026-11-08 · claude · 메카 폼 노출 두 곳 · 막히면 노출 한 단계씩 낮춰 재시도
 - 사용자 「pkm쪽도 삼국지처럼 장갑 일부 여는 식으로 바꿔줘」 — lib/prompt-spec.js MECHA_OPENINGS · MECHA_EXPOSE, lib/prompt-anthro.js mechaOpenings · mechaExposure: 네 곳(어깨 · 위팔 / 가슴 창 / 허리 / 허벅지) 가운데 종 이름 해시로 두 곳, ① · ② · ③ 같은 곳, 끝은 「intimate areas covered」. 낱말 예산 검사(prompt-engine · face-design)를 그만큼(+30~35) 올렸다.
 - 사용자 「pkm쪽도 막히면 낮춰서 재시도로 룰 바꿔줘. 삼국지쪽에 맞게」 — tools/prompt-pack.cjs 에 자리별 exposure(moderate · low) · exposure_why(막힌 사유 없으면 build 멈춤): 일상은 skin_exposure, 메카 폼은 열린 곳 두 곳 → 한 곳 → 없음. IMAGE_RULES 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 → 계획기로 장면 다시), 1절 · 6 검수 · IMAGE_AUTOMATION · INDEX.md 첫머리 맞춤. tests/prompt-pack.cjs 가 사유 · 단계를 막는다.

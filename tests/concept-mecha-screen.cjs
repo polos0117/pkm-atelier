@@ -28,7 +28,8 @@ const CM = require(path.join(ROOT, 'lib', 'concept-mecha.js'));
       let txt = await out();
       assert(txt.includes(sil), 'MECHA SILHOUETTE 줄 = lines'); n++;
       const paras = txt.split('\n\n'), form = await p.evaluate(() => window.AtelierSpec.FORM_LINES.light);
-      assert.equal(paras[paras.indexOf(sil) - 1], form, 'FORM 줄 바로 뒤'); n++;
+      assert.equal(paras[paras.indexOf(sil) - 2], form, 'FORM 줄 · ARMOR 줄 뒤'); n++;
+      assert.equal(paras[paras.indexOf(sil) - 1], await p.evaluate(() => window.AtelierSpec.PROMPT_LINES.armor), 'ARMOR 줄(2026-11-08) 바로 뒤'); n++;
       assert.equal(txt.replace('\n\n' + sil, ''), base, '그 줄 말고는 그대로'); n++;
       /* 타입 표현 하나만 — 오라 */
       await p.check('#mecha-fx-aura');

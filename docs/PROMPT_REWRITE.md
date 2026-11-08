@@ -114,7 +114,7 @@ open rounded eyes, small size, level outer corners, average spacing; fine soft a
 
 ### 폼과 개방
 
-폼은 한 줄씩이고 썸네일에서 갈리는 낱말을 쥔다: 경장 "one close-fitting armor layer", 중장 "plates over
+폼은 한 줄씩이고 썸네일에서 갈리는 낱말을 쥔다: 경장 "one layer of thin, close-fitting hard armor"(2026-11-08 — 판이 몸 대부분을 덮고 슈트는 관절 틈에만, 뒤에 ARMOR 줄), 중장 "plates over
 plates" + 몸은 그대로, 고기동 "split and fan outward and back" + 거대 날개 없음. 헬멧은 폼이 정한다(경장 없음,
 중장 얼굴 개방형, 고기동 센서 핀).
 
