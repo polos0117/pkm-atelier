@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 프롬프트 임의 수정 금지 — 이미지 모델에도 · 노출은 세션이 줄이지 않는다
+- 사용자 「pkm쪽에도 프롬포트 임의 수정 금지 조항이랑 위에처럼 지시문 등도 pkm쪽에 맞춰서 추가해줘」 — 삼국지 공방과 같은 날 같은 규칙을 pkm 꼴로.
+- IMAGE_RULES.md 1절 — 고쳐도 되는 사유(settings 고친 뒤 build · 3절 7 계획기 다시 계획 · 3절 6 같은 지시문 재생성 · 사용자가 시킨 부분 고치기)만, image_gen 에도 글 그대로(submitted 0 일 때만), 고정값 · 노출 줄을 세션이 누그러뜨리지 않는다. 3절 6 노출 항목에 qa.json exposure(match · weaker · stronger + 근거).
+- docs/IMAGE_AUTOMATION.md 「생성과 검수」 · tools/prompt-pack.cjs INDEX.md 첫머리에 같은 두 줄 — tests/prompt-pack.cjs 가 막는다.
+
 ## 2026-11-08 · claude · 기준 화풍 애니 2.5D 디테일(anime_25d)
 - lib/prompt-spec.js — DEFAULT_STYLE 을 anime_25d 로(사용자 「기본 화풍 바꿔줘」). 생성기 화면 처음 값 · 지시문 묶음 init 이 따라간다. 이미 저장된 카드 · 시작한 캐릭터의 화풍은 그대로
 - tools/image-runner.py · tools/prompt-pack.cjs — 새 차례 · 여덟 자리 기본 화풍 anime_25d

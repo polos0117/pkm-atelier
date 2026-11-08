@@ -97,6 +97,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert.deepEqual(got.slice(0, 3), ['water_pool', 'sunbed', 'side']); assert(got[3].includes('bikini'), '장부가 옷 종류를 읽는다');
   /* 차례표 — 첨부·올릴 파일 */
   const index = fs.readFileSync(path.join(dir, 'INDEX.md'), 'utf8');
+  assert(index.includes('프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다') && index.includes('노출은 세션이 줄이지 않는다'), '차례표 — 임의 수정 금지 · 노출(2026-11-08)');
   assert(index.includes('| ⑤ | heavy_overdrive | ② 피카츄_heavy_glossy_promo_f.webp + (되면 ①) |') && index.includes('`피카츄_glossy_promo_f_casual1.webp`'), '차례표');
   const c1text = fs.readFileSync(path.join(dir, 'casual1-prompt.txt'), 'utf8');
   assert(index.includes('## ⑦ casual1 — 고른 길') && index.includes(g1.tree.place.en) && c1text.includes('Place: ' + g1.tree.place.en) && c1text.includes('Activity: ' + g1.tree.act.en), '차례표의 트리 문장 = 지시문 줄');
