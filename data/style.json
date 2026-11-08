@@ -65,6 +65,10 @@
     {
       "key": "gloss_daylight",
       "name": "광택 자연광"
+    },
+    {
+      "key": "anime_25d",
+      "name": "애니 2.5D 디테일"
     }
   ]
 }

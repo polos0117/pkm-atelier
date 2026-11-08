@@ -19,7 +19,7 @@ function input(name,extra){
 }
 const build=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
-assert.equal(S.ART_STYLES.length,16);
+assert.equal(S.ART_STYLES.length,17);   // 2026-11-08 anime_25d
 assert(!S.PROMPT_LINES.anatomy.includes('enlargement'),'ANATOMY 에 신체 과장 금지 말 없음(2026-11-07 — 체형 줄과 부딪혔다)');   // 2026-11-06 anime_gloss · 2026-11-07 gloss_daylight
 assert.equal(S.DEFAULT_STYLE,'anime_gloss','기본 화풍은 애니 광택(IMAGE_RULES 와 같이 — 2026-11-07 저녁 다시)');
 assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.anime_gloss),'화풍을 안 고르면 애니 광택');
