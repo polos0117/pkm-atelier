@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 새 화풍 키 애니 2.5D 광택(anime_25d_gloss) — 기본 화풍
+- lib/prompt-spec.js · data/style.json — 피부 광택 문장을 새 키 anime_25d_gloss(애니 2.5D 광택)로 옮기고 anime_25d 는 광택 전 문장으로 되돌렸다(사용자 「새 화풍키로 등록해줘. 그래야 도감에서 안겹치겠다」 — 광택 전에 등록한 anime_25d 그림 22명 174장과 도감에서 갈린다). 기본 화풍 = anime_25d_gloss. 두 문장은 앞 커밋의 것과 글자까지 같다
+- tools/image-runner.py · tools/prompt-pack.cjs · IMAGE_RULES.md — 새 차례 · 여덟 자리 기본 화풍, 기준 화풍 문장. prompt.html — 스크립트 판(gloss25dkey1)
+- tests/prompt-engine.cjs · prompt-pack.cjs · prompt-screen.cjs · image-runner.py · styles.cjs — 화풍 18가지 · 기본 화풍 · 광택은 새 키에만 · 장갑 말 없는 화풍은 두 문장이 같다
+
 ## 2026-11-08 · claude · 일상컷 — 화풍 문장 · 설계표 체형(첨부 ① 은 얼굴 · 머리만)
 - lib/prompt-anthro.js — 일상컷 STYLE 줄을 「첨부 그림 렌더링 그대로」 대신 그 화풍 문장(CASUAL_STYLE_CORES — 메카컷 문장에서 장갑 말만 뺀 것)으로(사용자 「메카컷에 쓰인 화풍 문구를 붙여서」). BODY LINE 대신 BODY TYPE — 설계표 체형 문구(카드의 body type, 없으면 CARD_FIGURE), 첨부 ① 은 갑옷이 몸을 가리니 몸은 이 줄에서(사용자 「첨부는 하고, 몸매만 따로 적자」). FACE 줄 · 첨부는 그대로. 꼬부기 애니 2.5D 일상 4 · 6 으로 확인(5 링 비키니는 안전 필터에 막혔다)
 - lib/prompt-spec.js — CHARACTER 줄 「몸 비율」 대신 「몸매는 BODY TYPE」, WARDROBE 세 줄 「첨부에서 얼굴 · 머리만」. prompt.html — 스크립트 판(casualbody1)
