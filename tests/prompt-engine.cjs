@@ -120,7 +120,11 @@ for(const type of new Set(cards.map(c=>c.element))) assert(S.TYPE_ENERGY[type],'
 const cas=L.buildSingle(input('꼬부기',{cat:'everyday_basic',form:'heavy',params}));
 assert(cas.startsWith('CHARACTER: the same woman as the attached image'));
 /* 일상컷 얼굴 · 화풍은 첨부 그림에 맡긴다(2026-11-03) — 화풍 문장 대신 「첨부 그림 그대로」, FACE 줄, 표정은 얼굴 안에서만 */
-assert(cas.includes("STYLE: keep the attached image's rendering exactly")&&!cas.includes(S.CASUAL_STYLE_CORES.glossy_promo),'casual style defers to the attached image');
+/* 2026-11-08 — 일상컷 STYLE 은 그 화풍 문장(「첨부 그림 그대로」 대신), 몸은 설계표 체형(BODY TYPE — 첨부 ① 은 갑옷이 몸을 가린다), 얼굴은 여전히 첨부 그림 */
+assert(cas.includes('STYLE: '+S.CASUAL_STYLE_CORES.glossy_promo)&&!cas.includes("keep the attached image's rendering"),'casual style = the chosen style line');
+assert(cas.includes('BODY TYPE: '+S.CARD_FIGURE+' — ')&&!cas.includes('BODY LINE:')&&cas.includes('FACE: exactly the face of the attached image'),'casual body = card figure, face from the attached image');
+assert(cas.includes('her figure follows BODY TYPE')&&cas.includes('take only her face and hair')&&!cas.includes('face, hair and body'),'casual takes only face and hair from the attachment');
+assert(build('꼬부기',{outputMode:'casual',identityMode:'reference',params:[['body type','MY_FIGURE']]}).includes('BODY TYPE: MY_FIGURE — '),'casual body follows the card body type');
 assert(/\n\nFACE: exactly the face of the attached image/.test(cas)&&cas.indexOf('FACE: exactly')<cas.indexOf('STYLE:'),'casual face line right after CHARACTER');
 assert(/EXPRESSION: [^\n]*Show it mildly, only with her brows, eyelids and mouth corners/.test(cas)||!cas.includes('EXPRESSION:'),'casual expression stays inside her face');
 assert(cas.includes('never armor, never a creature costume'));

@@ -115,8 +115,8 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   const styleKeys=await p.locator('#style option').evaluateAll(es=>es.map(e=>e.value));
   for(const key of styleKeys){
    await p.locator('#style').selectOption(key);await settled();
-   /* 일상컷 화풍은 첨부 그림 그대로(2026-11-03) — 어느 화풍을 골라도 판 문장 대신 같은 줄 */
-   assert((await text()).includes("STYLE: keep the attached image's rendering exactly")&&!(await text()).includes(await p.evaluate(k=>window.AtelierSpec.CASUAL_STYLE_CORES[k],key)),key);
+   /* 일상컷 화풍은 그 화풍 문장(2026-11-08 — 그 전엔 「첨부 그림 그대로」) */
+   assert((await text()).includes('STYLE: '+await p.evaluate(k=>window.AtelierSpec.CASUAL_STYLE_CORES[k],key))&&!(await text()).includes("keep the attached image's rendering"),key);
    assert(!(await text()).includes('undefined'),key);
   }
   await p.locator('#style').selectOption('bright_catalog');await settled();

@@ -213,7 +213,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');
     assert(idx.includes('| ⑧ | casual7 | ① 피카츄_light_anime_25d_f.webp |') && idx.includes('`피카츄_anime_25d_f_casual7.webp`') && !idx.includes('heavy'), '차례표 여덟 자리');
     for (let n = 1; n <= 7; n++) assert(fs.existsSync(path.join(d7, 'casual' + n + '-prompt.txt')), 'casual' + n);
-    assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY LINE: keep her figure from the attached image'), '일상컷 몸 라인 줄(2026-11-07)');
+    assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY TYPE: ' + S.CARD_FIGURE + ' — '), '일상컷 몸 = 설계표 체형(2026-11-08)');
     /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */
     const s7c = JSON.parse(JSON.stringify(s7)); s7c.slots.light.mecha = { set: { silhouette: 'knight_plate' }, fx: [{ key: 'aura', type: '' }] };
     fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7c));

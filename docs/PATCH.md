@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 일상컷 — 화풍 문장 · 설계표 체형(첨부 ① 은 얼굴 · 머리만)
+- lib/prompt-anthro.js — 일상컷 STYLE 줄을 「첨부 그림 렌더링 그대로」 대신 그 화풍 문장(CASUAL_STYLE_CORES — 메카컷 문장에서 장갑 말만 뺀 것)으로(사용자 「메카컷에 쓰인 화풍 문구를 붙여서」). BODY LINE 대신 BODY TYPE — 설계표 체형 문구(카드의 body type, 없으면 CARD_FIGURE), 첨부 ① 은 갑옷이 몸을 가리니 몸은 이 줄에서(사용자 「첨부는 하고, 몸매만 따로 적자」). FACE 줄 · 첨부는 그대로. 꼬부기 애니 2.5D 일상 4 · 6 으로 확인(5 링 비키니는 안전 필터에 막혔다)
+- lib/prompt-spec.js — CHARACTER 줄 「몸 비율」 대신 「몸매는 BODY TYPE」, WARDROBE 세 줄 「첨부에서 얼굴 · 머리만」. prompt.html — 스크립트 판(casualbody1)
+- IMAGE_RULES.md — 일상컷 몸 · 화풍 문장
+- tests/prompt-engine.cjs · styles.cjs · prompt-pack.cjs · prompt-screen.cjs — 일상컷 STYLE = 그 화풍 문장, BODY TYPE · 카드 체형 · 얼굴 · 머리만
+
 ## 2026-11-08 · claude · 애니 2.5D 디테일 — 피부 광택
 - lib/prompt-spec.js — anime_25d 화풍 문장(메카컷 · 일상컷): 하이라이트 절제는 옷(메카컷은 옷과 장갑)에만, 피부엔 어깨 · 쇄골 · 가슴 · 팔 · 허벅지의 매끈하고 밝은 광택(젖거나 기름지지 않게)(사용자 「2.5d에 피부광택만 좀 추가해볼래?」 · 「일상컷에도 넣고」). 일상컷은 첨부 ① 의 렌더링을 따르므로 ① 의 광택을 이어받는다. 꼬부기 ① · 일상 3장으로 확인
 - prompt.html — 스크립트 판(gloss25d1)
