@@ -36,7 +36,10 @@ good = {"session": "t", "characters": [{"card": "B", "species": "b-1", "cuts": [
     cut(4, "adult_roleplay", "idol_stage", "x4", "q4", "over_shoulder", "waist_up", "balanced", ["skirt", "uniform"], act="mostly posed"),
     cut(5, "occupation_basic", "office_project", "x5", "q5", "looking_away", "three_quarter", "balanced", ["jumpsuit"], act="mostly active"),   # 자유 컷 의상 계열이 서로 다르게(2026-11-07)
     cut(6, "fantasy_costume", "star_goddess", "x6", "q6", "front_3q", "full_body", "subtle", ["dress"], act="mostly active"),
-    cut(7, "traditional", "hanfu_formal", "x7", "q7", "leaning_forward", "environmental", "balanced", ["traditional"], act="mostly active")]}]}
+    cut(7, "traditional", "hanfu_formal", "x7", "q7", "leaning_forward", "environmental", "balanced", ["traditional"], act="mostly active"),
+    # 2026-11-09 아홉 장 — 상황 노출 한 장(필수 · 코스튬이 아닌 컷, 얼굴 클로즈업 아닌 컷) + 자유 하나 더
+    cut(8, "private_evening", "mirror_touchup", "x8", "q8", "side", "chest_up", "strong", ["dress"], act="mostly posed", situ="wind"),
+    cut(9, "active", "warmup", "x9", "q9", "front", "three_quarter", "subtle", ["shorts", "crop_top"], act="mostly active")]}]}
 LEG = SP["tree"]["legacy"]
 assert "swimwear/classic_bikini" in LEG and "lingerie/lace_set" in LEG and "travel_exploration/travel_trail" in LEG
 assert L.check_plan(doc, good, SP) == [], L.check_plan(doc, good, SP)
@@ -67,7 +70,13 @@ fails(lambda c: c[1].update(cat="active", ex="warmup"), "swimwear 가 0장")
 fails(lambda c: c[4].update(cat="lingerie", ex="garter_set"), "lingerie 가 2장")
 fails(lambda c: c[3].update(frame="full_body"), "frame full_body 가 3장")                                    # 같은 프레이밍 두 장까지
 fails(lambda c: c[3].update(orient="front_3q", frame="full_body"), "같은 (방향, 프레이밍) 짝")
-fails(lambda c: c.pop(), "일상컷은 7장")
+fails(lambda c: c.pop(), "일상컷은 9장")
+# 상황 노출(2026-11-09) — 아홉 장에 한 장, 필수 · 코스튬 컷이 아닌 컷, 얼굴 클로즈업 아닌 컷
+fails(lambda c: c[7].pop("situ"), "상황 노출 컷이 0장")
+fails(lambda c: c[8].update(situ="wet"), "상황 노출 컷이 2장")
+fails(lambda c: [c[7].pop("situ"), c[1].update(situ="strap")], "필수 갈래 · 코스튬 컷이 아닌 컷")
+fails(lambda c: c[7].update(frame="face_close", orient="front"), "얼굴 클로즈업엔 안 쓴다")
+fails(lambda c: c[7].update(situ="changing"), "표에 없다")
 fails(lambda c: [x.update(expose=["open back", "one-shoulder cut"]) for x in c[:2]], "같은 드러내는 방식 짝")
 fails(lambda c: [x.update(ocolor="teal") for x in c[:3]], "옷 색 teal 이 세 컷 이상")
 fails(lambda c: [x.update(cat=None, ex=None, era="now", place=pl_, act=ac_, ofam="everyday", item="") for x, (pl_, ac_) in zip(c[4:6], [("street_cafe", "read_book"), ("street_park", "stroll")])], "자유 컷의 의상 계열 everyday 이 겹친다")                         # 옷 색(2026-11-07)     # 가디(2026-11-07) — 같은 짝 넷
@@ -316,4 +325,4 @@ _old_ex = [k.split("/")[1] for k in LEG if k.startswith("everyday_basic/") and k
 _d = _doc(SAME, OTHER[3]); _d["entries"][len(hist)]["cuts"][0]["ex"] = _old_ex                          # 가장 오래된 예약의 예시
 _ex = copy.deepcopy(good); _ex["characters"][0]["cuts"][0].update(cat="everyday_basic", ex=_old_ex)
 assert [e for e in L.check_plan(_d, _ex, SP) if "이미 썼다" in e], L.check_plan(_d, _ex, SP)
-print("PASS 일상컷 장부: 일곱 장(필수 셋 한 장씩 · 같은 프레이밍 두 장까지 · 같은 짝 한 장) · 두 열쇠(옛 칸 ↔ 트리 길) · 트리 위의 길 · 장소 묶음 · 기록 읽기·옷 종류 · 장소·하는 일 10명·한 바퀴 · 구도 짝·새 값 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
+print("PASS 일상컷 장부: 아홉 장(필수 셋 한 장씩 · 상황 노출 한 장 · 같은 프레이밍 두 장까지 · 같은 짝 한 장) · 두 열쇠(옛 칸 ↔ 트리 길) · 트리 위의 길 · 장소 묶음 · 기록 읽기·옷 종류 · 장소·하는 일 10명·한 바퀴 · 구도 짝·새 값 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")

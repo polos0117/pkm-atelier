@@ -1,7 +1,7 @@
 /* 일상컷 계획기 — lib/casual-plan.js · tools/casual-plan.cjs. node tests/casual-plan.cjs
    2026-10-29 일상컷 트리(B안) — 장면은 트리 길, 장부의 옛 칸(갈래/예시)은 변환표로 같은 길.
    - 빈 장부에서 서른 명을 차례로 정해도 매번 tools/casual-ledger.py check 를 통과한다(사람 손 없이)
-   - 2026-11-07 일곱 장 — 필수 셋(역할극 · 수영복 · 란제리풍) 한 장씩 + 코스튬 한 장 + 자유 셋, 일곱 묶음이 다 다르다, 방향 · 프레이밍 같은 값 두 장까지
+   - 2026-11-09 아홉 장 — 필수 셋(역할극 · 수영복 · 란제리풍) 한 장씩 + 코스튬 한 장 + 상황 노출 한 장 + 자유 넷, 아홉 묶음이 다 다르다, 방향 · 프레이밍 같은 값 두 장까지
    - 세 명 배치 · 빈 컷 다시 채우기(일곱 장 · 세 장으로 등록된 옛 캐릭터) · 피할 값(--avoid) · 만든 컷 두기 · 같은 씨앗 같은 답
    - 생성기 주소(generatorQuery ↔ fromQuery)는 트리 위의 값만 받는다(예전 주소의 갈래·예시는 변환표로)
    - 옷 종류 말과 식이 casual-ledger.py 의 GARMENTS 와 같다
@@ -53,14 +53,17 @@ for (let i = 0; i < 30; i++) {
   const card = 'C' + i, r = batchPlan(entries, [card], 'seq');
   tries += r.tries;
   const ch = r.plan.characters[0];
-  assert.equal(ch.cuts.length, 7);
+  assert.equal(ch.cuts.length, 9);
+  /* 상황 노출(2026-11-09) — 한 장, 필수 · 코스튬 · 얼굴 클로즈업이 아닌 컷에 그 옷에 맞는 것 */
+  { const si = ch.cuts.filter(x => x.situ); assert.equal(si.length, 1, card + ' 상황 한 장');
+    assert(!P.isRequired(tree, si[0]) && si[0].ofam !== 'pokemon_costume' && si[0].frame !== 'face_close' && P.situsFor(S, P.outfitText(tree, si[0])).includes(si[0].situ), card + ' 상황 컷: ' + JSON.stringify(si[0])); }
   for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(x => x.ofam === f).length, 1, card + ' 필수 ' + f + ' 한 장(2026-11-07)');
   for (const k of ['orient', 'frame']) assert(ch.cuts.every(x => ch.cuts.filter(y => y[k] === x[k]).length <= 2), card + ' ' + k + ' 같은 값 두 장까지');
-  assert.equal(new Set(ch.cuts.map(x => x.orient + '|' + x.frame)).size, 7, card + ' 같은 짝 없음');
+  assert.equal(new Set(ch.cuts.map(x => x.orient + '|' + x.frame)).size, 9, card + ' 같은 짝 없음');
   /* 드러내는 방식 — 같은 짝은 한 번, 한 방식은 세 장까지(2026-11-07 가디 넷이 같은 짝. 옷 종류마다 고를 수 있는 방식이 여섯 ~ 아홉이라 열네 번 고르면 셋까지 간다) */
-  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 7, card + ' 드러내기 짝 겹침');
+  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 9, card + ' 드러내기 짝 겹침');
   const exN = {}; ch.cuts.flatMap(x => x.expose).forEach(e => { exN[e] = (exN[e] || 0) + 1; });
-  assert(Object.values(exN).every(v => v <= 3), card + ' 드러내기 한 방식이 네 장 이상: ' + JSON.stringify(exN));
+  assert(Object.values(exN).every(v => v <= 4), card + ' 드러내기 한 방식이 다섯 장 이상: ' + JSON.stringify(exN));   /* 아홉 장(2026-11-09) — 첫째는 늘 목선이라 목선 하나가 넷까지 */
   /* 깊게 파인 목선(2026-11-07) — 컷마다 첫째 드러내기는 목선 */
   assert(ch.cuts.every(x => P.NECKLINE.includes(x.expose[0])), card + ' 목선 없는 컷: ' + ch.cuts.map(x => x.expose.join('+')));
   const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
@@ -86,7 +89,7 @@ for (let i = 0; i < 30; i++) {
     assert(P.LEAD.includes(x.lead));
   }
   assert.equal(new Set(ch.cuts.map(x => x.lead)).size, P.LEAD.length, '장면 칸 첫머리가 다 돈다');
-  assert.equal(new Set(ch.cuts.map(groupOf)).size, 7, '일곱 장은 서로 다른 장소 묶음');
+  assert.equal(new Set(ch.cuts.map(groupOf)).size, 9, '아홉 장은 서로 다른 장소 묶음');
   entries.push({ card, status: 'done', at: at(i), cuts: ch.cuts });
   n++;
 }
@@ -121,9 +124,9 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 {
   const r = batchPlan(entries, ['B1', 'B2', 'B3'], 'batch');
   const ks = r.plan.characters.flatMap(ch => ch.cuts.map(key));
-  assert.equal(new Set(ks).size, 21, '배치 안 장소·하는 일 스물하나가 다 다르다');
+  assert.equal(new Set(ks).size, 27, '배치 안 장소·하는 일 스물일곱이 다 다르다');
   const pairs = r.plan.characters.flatMap(ch => ch.cuts.map(x => x.orient + '|' + x.frame));
-  assert.equal(new Set(pairs).size, 21, '배치 안 (방향, 프레이밍) 짝이 다 다르다');
+  assert.equal(new Set(pairs).size, 27, '배치 안 (방향, 프레이밍) 짝이 다 다르다');
   n += 2;
 }
 
@@ -132,7 +135,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   const mine = entries[entries.length - 1], kept = mine.cuts.slice(0, 6);
   const r = batchPlan(entries, [mine.card], 'refill', { [mine.card]: { refill: true, kept } });
   const cuts = r.plan.characters[0].cuts;
-  assert(cuts.length === 7 && cuts.slice(0, 6).every(x => x.kept) && !cuts[6].kept && cuts[6].cut === 7, '빈 7번만 새로');
+  assert(cuts.length === 9 && cuts.slice(0, 6).every(x => x.kept) && cuts.slice(6).every(x => !x.kept) && cuts[6].cut === 7, '빈 7 · 8 · 9번만 새로');
   assert.deepEqual({ ...cuts[0], kept: undefined }, { ...kept[0], kept: undefined });
   n++;
 }
@@ -279,7 +282,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   let batch = [];
   for (const card of ['Y1', 'Y2', 'Y3']) {
     const p = plan({ entries: entries.concat(crowded), card, batch, seed: 'crowded|' + card });
-    assert.equal(p.cuts.length, 7, card + ' 계획이 나온다');
+    assert.equal(p.cuts.length, 9, card + ' 계획이 나온다');
     assert(p.cuts.every(x => x.orient && x.frame && x.place), card + ' 컷마다 값이 있다');
     batch.push({ card, cuts: p.cuts, claims: p.claims });
   }

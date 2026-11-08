@@ -80,7 +80,7 @@ STAMP_SINCE = "2026-10-25T02:55:00+00:00"
 SMALL_GROUP = 8         # 길(장소·하는 일)이 이 수 이하인 묶음은 한 바퀴를 다 돌기 전까지 같은 길을 다시 쓰지 않는다(옛 「작은 갈래」)
 PATH_KEYS = ("era", "place", "act", "ofam", "item")
 TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장(세 장 시절 규칙)
-CUTS, LEGACY_CUTS = 7, 3  # 2026-11-07 — 새 캐릭터는 일곱 장(필수 셋 한 장씩 + 코스튬 + 자유 셋), 세 장으로 등록된 캐릭터 다시 채우기는 세 장
+CUTS, MID_CUTS, LEGACY_CUTS = 9, 7, 3  # 2026-11-09 — 새 캐릭터는 아홉 장(필수 셋 한 장씩 + 코스튬 + 상황 노출 + 자유 넷), 일곱 장(2026-11-07 ~ 11-08) · 세 장으로 등록된 캐릭터 다시 채우기는 그때 규칙
 MAX_CUT = CUTS
 
 
@@ -176,7 +176,10 @@ def spec():
             "required_legacy": set((tree.get("required") or {}).get("outfits") or []) | set((tree.get("required") or {}).get("legacy_outfits") or []),
             # 포켓몬 코스튬(2026-11-01) — 필수 갈래와 따로 세 장에 한 장(새로 정하는 캐릭터만)
             "costume": (tree.get("costume_required") or {}).get("outfit") or "",
-            "costume_not_frames": (tree.get("costume_required") or {}).get("not_frames") or []}
+            "costume_not_frames": (tree.get("costume_required") or {}).get("not_frames") or [],
+            # 상황 노출(2026-11-09) — 아홉 장에 한 장
+            "situ_keys": set((tree.get("situ_required") or {}).get("keys") or []),
+            "situ_not_frames": (tree.get("situ_required") or {}).get("not_frames") or []}
 
 
 SP = None
@@ -341,7 +344,7 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "expose": c.get("expose") or None,
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "expose": c.get("expose") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
@@ -442,7 +445,7 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-RESERVE_TAIL = ("ocolor", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07)
+RESERVE_TAIL = ("ocolor", "situ", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09)
 
 
 def reserve_keys(c):
@@ -695,8 +698,9 @@ def check_plan(doc, plan, sp, ledger=None):
         exw = base[-EX_WINDOW:] + [e for e in es if e["status"] == "reserved" and e.get("card") not in names] + others
         bad = lambda m: errs.append("%s: %s" % (who, m))
         refill = bool(ch.get("refill"))
-        # 2026-11-07 일곱 장 — 세 장으로 등록된 캐릭터를 다시 채우는 계획만 세 장 규칙
-        n_cuts = LEGACY_CUTS if refill and all((c.get("cut") or 0) <= LEGACY_CUTS for c in cuts) and len(cuts) <= LEGACY_CUTS else CUTS
+        # 2026-11-09 아홉 장 — 세 장 · 일곱 장으로 등록된 캐릭터를 다시 채우는 계획만 그때 규칙
+        under = lambda m: refill and all((c.get("cut") or 0) <= m for c in cuts) and len(cuts) <= m
+        n_cuts = LEGACY_CUTS if under(LEGACY_CUTS) else MID_CUTS if under(MID_CUTS) else CUTS
         legacy = n_cuts == LEGACY_CUTS
         if len(cuts) != n_cuts:
             bad("일상컷은 %d장" % n_cuts)
@@ -731,7 +735,18 @@ def check_plan(doc, plan, sp, ledger=None):
             for f in sorted(sp["required"]):
                 k = sum(1 for c in cuts if c.get("ofam") == f)
                 if k != 1:
-                    bad("필수 갈래 %s 가 %d장 — 일곱 장에 한 장씩(%s)" % (f, k, "·".join(sorted(sp["required"]))))
+                    bad("필수 갈래 %s 가 %d장 — %d장에 한 장씩(%s)" % (f, k, n_cuts, "·".join(sorted(sp["required"]))))
+        # 상황 노출(2026-11-09) — 아홉 장이면 한 장, 필수 셋 · 코스튬이 아닌 컷, 얼굴 클로즈업 아닌 컷. 일곱 장 · 세 장은 상황 없이
+        si = [c for c in cuts if c.get("situ")]
+        if n_cuts == CUTS and sp.get("situ_keys") and not refill and len(si) != 1:
+            bad("상황 노출 컷이 %d장 — 아홉 장에 한 장(%s)" % (len(si), "·".join(sorted(sp["situ_keys"]))))
+        for c in si:
+            if c.get("situ") not in sp.get("situ_keys", set()):
+                bad("컷 %s: 상황 %s 은 표에 없다" % (c.get("cut"), c.get("situ")))
+            if is_required(c, sp) or c.get("ofam") == sp.get("costume"):
+                bad("컷 %s: 상황 노출은 필수 갈래 · 코스튬 컷이 아닌 컷에" % c.get("cut"))
+            if c.get("frame") in sp.get("situ_not_frames", []):
+                bad("컷 %s: 상황 노출 컷의 프레이밍 %s — 얼굴 클로즈업엔 안 쓴다" % (c.get("cut"), c.get("frame")))
         # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
         if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
             bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 한 장" % sp["costume"])

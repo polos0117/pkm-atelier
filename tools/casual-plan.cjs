@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* 일상컷 계획기 — 생성 전에 일상컷(새 캐릭터 일곱 장 — 2026-11-07, 세 장으로 등록된 캐릭터 다시 채우기는 세 장)의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
+/* 일상컷 계획기 — 생성 전에 일상컷(새 캐릭터 아홉 장 — 2026-11-09 필수 셋 · 코스튬 · 상황 노출 · 자유 넷, 일곱 장 · 세 장으로 등록된 캐릭터 다시 채우기는 그때 규칙)의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
    node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
        [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4>]
@@ -104,13 +104,13 @@ function planBatch(o, S, entries, look, cards, attempt) {
       if (!res) throw new Error(card + ' 의 이 세션(' + o.session + ') 예약이 없다 — --keep 은 예약한 세션에서만');
       kept = res.cuts.filter(c => o.keep[card].includes(c.cut)).map(c => ({ ...c, kept: true }));
     }
-    /* 2026-11-07 일곱 장 — 세 장으로 등록된 캐릭터 다시 채우기만 세 장 규칙 */
-    const count = refill && !mine.cuts.some(c => c.cut > P.LEGACY_CUTS) ? P.LEGACY_CUTS : P.CUTS;
+    /* 2026-11-09 아홉 장 — 세 장 · 일곱 장으로 등록된 캐릭터 다시 채우기는 그때 규칙(일곱 장은 상황 없이) */
+    const count = refill ? P.refillCount(mine) : P.CUTS;   /* 등록 시각이 NINE_SINCE 앞이고 7번까지면 일곱 장 */
     if (refill && kept.length >= count) throw new Error(card + ' 는 ' + count + '장이 다 있다');
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
     /* 버전마다 칸이 다르다 — 없는 칸을 피하라고 하면 아무것도 안 피하고 조용히 지나간다 */
-    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'ocolor', 'group', 'posture', 'body', 'frame', 'use', 'expr'] : ['era', 'place', 'act', 'ofam', 'item', 'ocolor', 'group', 'pose', 'orient', 'frame', 'lens', 'expr'];
+    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'ocolor', 'situ', 'group', 'posture', 'body', 'frame', 'use', 'expr'] : ['era', 'place', 'act', 'ofam', 'item', 'ocolor', 'situ', 'group', 'pose', 'orient', 'frame', 'lens', 'expr'];
     for (const x of avoid) if (!FIELDS.includes(x.field)) throw new Error('--avoid 칸 ' + x.field + ' 는 ' + (o.v2 ? '버전2' : '버전1(--v1)') + ' 에 없다 — ' + FIELDS.join('·'));
     const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
     /* 뒤에 정할 다시 채우기 캐릭터의 등록된 컷 — 지금 정하는 컷이 그것과 겹치면 안 된다 */

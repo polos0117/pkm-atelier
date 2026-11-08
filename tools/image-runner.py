@@ -16,13 +16,15 @@ ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
 LEGACY_SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
 # 2026-11-07 — 새 캐릭터는 경장 ① 한 장 + 일상 일곱 장(화풍 anime_25d_gloss). 그 전에 잡은 차례(slot_set 없음)는 아홉 자리 그대로
-SLOTS = ['light'] + ['casual%d' % n for n in range(1, 8)]
+SLOTS7 = ['light'] + ['casual%d' % n for n in range(1, 8)]
+# 2026-11-09 — 새로 잡는 캐릭터는 경장 ① + 일상 아홉 장(필수 셋 · 코스튬 · 상황 노출 · 자유 넷 — 사용자 「일상컷 생성 수를 9장으로」). 일곱 장으로 잡은 차례(light7)는 그대로
+SLOTS = ['light'] + ['casual%d' % n for n in range(1, 10)]
 ALL_SLOTS = LEGACY_SLOTS + [s for s in SLOTS if s not in LEGACY_SLOTS]
 STYLE = 'anime_25d_gloss'   # 2026-11-08 애니 2.5D 광택(사용자 「새 화풍키로 등록해줘」) — 그 전 anime_25d · anime_gloss · gloss_daylight
 
 
 def slots_of(c):
-    return SLOTS if c.get('slot_set') == 'light7' else LEGACY_SLOTS
+    return SLOTS if c.get('slot_set') == 'light9' else SLOTS7 if c.get('slot_set') == 'light7' else LEGACY_SLOTS
 
 
 def style_complete(v):
@@ -405,7 +407,7 @@ def prepare(state, owner, available, blocked, at, execution_id=None):
     charge(state, [picked['no']], at)
     ident = utc + '-' + str(len(state['runs']) + 1)
     r = {'id': ident, 'execution_id': execution_id, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
-        {'no': picked['no'], 'name': picked['name'], 'style': STYLE, 'slot_set': 'light7', 'status': 'claimed', 'slots': {}}]}
+        {'no': picked['no'], 'name': picked['name'], 'style': STYLE, 'slot_set': 'light9', 'status': 'claimed', 'slots': {}}]}
     state['runs'].append(r)
     state['claims'][str(picked['no'])] = {'owner': owner, 'run': ident, 'status': 'held', 'at': now()}
     return r

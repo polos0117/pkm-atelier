@@ -134,7 +134,7 @@ node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 여덟 자�
 node tests/concept-mecha.cjs     # 메카 옵션 표 — 부품 표 열쇠 · 실루엣 owns · 자동 · 직접 고르기 · 겹치는 칸 · 배치 실루엣 안 겹침 · 옵션 줄 자리(docs/CONCEPT_MECHA.md, 명령줄 도구는 2026-11-08 지웠다)
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cjs  # 새 인물 만들기의 메카 옵션(기본 없음 = 그대로 · 실루엣 칸 막힘 · MECHA SILHOUETTE / TYPE EFFECTS 줄 · 두 타입 · 새로고침 · 이어가기 · 일상컷 · 폰)
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 여덟 자리 · 아홉 자리 글자 하나 다르지 않다(브라우저)
-node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 일곱 장(필수 셋 한 장씩 · 코스튬 · 자유 셋) 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
+node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 아홉 장(2026-11-09 — 필수 셋 한 장씩 · 코스튬 · 상황 노출(버전2) · 자유 셋) 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 서른 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글

@@ -44,7 +44,7 @@ claims는 캐릭터 전체에 대한 owner/run 잠금이다. 시간 경과만으
 ```sh
 # 먼저 원문/UI를 영속 기록. 성공한 intent 하나당 생성 호출 한 번만.
 node tools/prompt-pack.cjs init <카드> --dir /path/pack --plan /path/plan.json   # 한 캐릭터에 한 번 — settings.json 을 채우고
-node tools/prompt-pack.cjs build --dir /path/pack                             # 여덟 자리(① + 일상 일곱 — 2026-11-07, 예전 차례는 아홉) <slot>-prompt.txt · <slot>-ui.json · INDEX.md
+node tools/prompt-pack.cjs build --dir /path/pack                             # 열 자리(① + 일상 아홉 — 2026-11-09, settings version 2 는 여덟 자리 · 예전 차례는 아홉) <slot>-prompt.txt · <slot>-ui.json · INDEX.md
 python3 tools/image-runner.py intent --owner pkm-daily --card 345 --slot heavy --prompt /path/pack/heavy-prompt.txt --ui /path/pack/heavy-ui.json
 node tools/prompt-pack.cjs submitted --dir /path/pack --slot heavy --file /path/sent.txt   # 넘길 글 그대로 — 0 일 때만 부른다(IMAGE_RULES 3절)
 # 에이전트가 image_gen을 호출한다. 위 명령은 이미지를 만들지 않는다.

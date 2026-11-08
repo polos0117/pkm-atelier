@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 일상컷 아홉 장 · 상황 노출 필수 · 삼국지 쪽 계열 · 옷 · 장소 옮기기
+- 사용자 「포켓몬쪽에도 삼국지쪽이랑 비교해서 없는 갈래들이랑 의상들 있으면 추가해줘. 일상컷 룰에 '상황으로 만들기'를 필수로 넣어주고, 거기는 일상컷 생성 수를 9장으로 맞춰줘」
+- data/casual-tree.json · casual-tree-v2.json — 삼국지 공방에서 계열 셋(동탄룩 · 모험가 · 신화 드레이프 — 지금 · 그 해 · 포켓몬 세계 · 무대·환상 시대에 맞게), 같은 계열의 없던 옷 46벌(평상복 · 란제리풍 네글리제 · 실크 파자마 · 운동복 · 전통 · 역할극 바텐더 · 오피스룩 · 레이싱 모델 …), 장소 열여덟(사무실 · 다이너 · 공항 · 녹음실 · 목장 · 해적선 · 정글 유적 · 오아시스 · 대리석 신전 · 목욕궁 · 하늘 정원 · 물속 궁 · 얼음 궁 …, 역사의 자리 · 세계 안은 삼국지 몫이라 뺐다). 옷 계열 17 → 20, 옷 → 351, 장소 135 → 153. situ_required 표
+- lib/prompt-spec.js SITUATIONS(젖은 옷 · 바람에 날림 · 반쯤 푼 차림 · 흘러내린 어깨끈, 삼국지와 같은 글) · SITU_NOT_FRAMES, lib/prompt-anthro.js 일상컷 Cut 줄 다음 「Situation: right now — …」(맞는 옷에만 · 코스튬 컷 빼고), lib/prompt-state.js · lib/prompt-ui.js · lib/words.js 생성기 「상황」 칸(계획 값이면 잠김)
+- lib/casual-plan.js — CUTS 9(MID_CUTS 7 · LEGACY_CUTS 3), chooseSitu: 필수 셋 · 코스튬 · 얼굴 클로즈업이 아닌 컷 가운데 그 옷에 맞는 상황 하나(최근에 덜 쓴 상황부터, 버전1 · 2 모두). 다시 채우기 장수는 refillCount(등록 시각이 NINE_SINCE 앞이고 7번까지면 일곱 장). tools/casual-plan.cjs --avoid situ
+- tools/casual-ledger.py — 아홉 장 · 상황 노출 한 장(필수 · 코스튬 · 얼굴 클로즈업 컷이 아닌) 검사, 예약 칸 situ. tools/prompt-pack.cjs settings version 3 = 열 자리(②~⑩), version 2 여덟 자리 그대로, 일상 칸 situ none(막혔을 때만, exposure_why). tools/image-runner.py 새 차례 slot_set light9(일곱 장 차례 light7 그대로)
+- 문서 IMAGE_RULES(3절 표 · 아홉 장 · 상황 노출 · 필터 순서에 상황 빼기) · AGENTS · docs/IMAGE_AUTOMATION. 검사 casual-plan · casual-plan-v2(상황 넷 · 새 계열) · casual-ledger · prompt-pack · image-runner
+
 ## 2026-11-08 · claude · 메카 컨셉 명령줄 도구를 지웠다
 - tools/concept-mecha.cjs — 지웠다(사용자 「도구 안쓰면 지워줘」 — 생성기 · 지시문 묶음으로만 만든다)
 - lib/concept-mecha.js — 도구만 쓰던 지시문 조립(build · faceText · fxText · generatorFigure · extraLines)을 뺐다. 생성기 옵션 줄(lines) · 지시문 묶음 자동 고르기(make · choose)는 그대로
