@@ -15,10 +15,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STATE = 'records/automation/state.json'
 LEGACY_SLOTS = ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']
-# 2026-11-07 — 새 캐릭터는 경장 ① 한 장 + 일상 일곱 장(화풍 anime_gloss). 그 전에 잡은 차례(slot_set 없음)는 아홉 자리 그대로
+# 2026-11-07 — 새 캐릭터는 경장 ① 한 장 + 일상 일곱 장(화풍 anime_25d). 그 전에 잡은 차례(slot_set 없음)는 아홉 자리 그대로
 SLOTS = ['light'] + ['casual%d' % n for n in range(1, 8)]
 ALL_SLOTS = LEGACY_SLOTS + [s for s in SLOTS if s not in LEGACY_SLOTS]
-STYLE = 'anime_gloss'   # 2026-11-07 저녁 다시 애니 광택(사용자 「화풍 기준키 다시 이걸로 바꾸자」) — 낮엔 gloss_daylight
+STYLE = 'anime_25d'   # 2026-11-08 애니 2.5D 디테일(사용자 「기본 화풍 바꿔줘」) — 그 전 anime_gloss · gloss_daylight
 
 
 def slots_of(c):

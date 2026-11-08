@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 기준 화풍 애니 2.5D 디테일(anime_25d)
+- lib/prompt-spec.js — DEFAULT_STYLE 을 anime_25d 로(사용자 「기본 화풍 바꿔줘」). 생성기 화면 처음 값 · 지시문 묶음 init 이 따라간다. 이미 저장된 카드 · 시작한 캐릭터의 화풍은 그대로
+- tools/image-runner.py · tools/prompt-pack.cjs — 새 차례 · 여덟 자리 기본 화풍 anime_25d
+- IMAGE_RULES.md — 기준 화풍 문장
+- tests/prompt-engine.cjs · prompt-pack.cjs · image-runner.py — 기본 화풍 기대값
+
 ## 2026-11-08 · claude · 새 화풍 애니 2.5D 디테일(anime_25d)
 - lib/prompt-spec.js · data/style.json · prompt.html — 사용자가 붙여 준 「CHARACTER RENDERING STYLE ONLY」 문장을 그대로 화풍 anime_25d(애니 2.5D 디테일)로 더했다(갑주 · 일상 같은 문장). 꼬부기 메카컷 · 일상 2장으로 확인. 기본 화풍은 그대로 anime_gloss
 - tests/prompt-engine.cjs · prompt-screen.cjs — 화풍 17가지
