@@ -40,19 +40,19 @@ const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8')
 
 /* 아홉 자리(예전 — settings.version 1) */
 const NINE = {
-  light: { n: '①', mode: 'action', form: 'light', identityMode: 'create', baseForm: 'light', attach: [], fields: ['motifs', 'formOverride', 'headFeature', 'faceDesignOn', 'params', 'scene'] },
-  heavy: { n: '②', mode: 'action', form: 'heavy', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
-  mobility: { n: '③', mode: 'action', form: 'mobility', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene'] },
+  light: { n: '①', mode: 'action', form: 'light', identityMode: 'create', baseForm: 'light', attach: [], fields: ['motifs', 'formOverride', 'headFeature', 'faceDesignOn', 'params', 'scene', 'exposure', 'exposure_why'] },
+  heavy: { n: '②', mode: 'action', form: 'heavy', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene', 'exposure', 'exposure_why'] },
+  mobility: { n: '③', mode: 'action', form: 'mobility', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'scene', 'exposure', 'exposure_why'] },
   light_overdrive: { n: '④', mode: 'action', form: 'overdrive', identityMode: 'reference', baseForm: 'light', attach: ['light'], fields: ['motifs', 'formOverride', 'custom'] },
   heavy_overdrive: { n: '⑤', mode: 'action', form: 'overdrive', identityMode: 'reference', baseForm: 'heavy', attach: ['heavy', 'light?'], fields: ['motifs', 'formOverride', 'custom'] },
   mobility_overdrive: { n: '⑥', mode: 'action', form: 'overdrive', identityMode: 'reference', baseForm: 'mobility', attach: ['mobility', 'light?'], fields: ['motifs', 'formOverride', 'custom'] },
-  casual1: { n: '⑦', mode: 'casual', cut: 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] },
-  casual2: { n: '⑧', mode: 'casual', cut: 2, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] },
-  casual3: { n: '⑨', mode: 'casual', cut: 3, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }
+  casual1: { n: '⑦', mode: 'casual', cut: 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why'] },
+  casual2: { n: '⑧', mode: 'casual', cut: 2, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why'] },
+  casual3: { n: '⑨', mode: 'casual', cut: 3, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why'] }
 };
 /* 여덟 자리(2026-11-07 — settings.version 2, IMAGE_RULES 3절 표) — 경장 ① + 일상 일곱 */
 const SLOTS = { light: Object.assign({}, NINE.light, { fields: NINE.light.fields.concat(['mecha', 'mecha_why']) }) };
-['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why'] }; });
+['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why'] }; });
 const slotsOf = set => (set && set.version >= 2 ? SLOTS : NINE);
 const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(anime_25d) · 아홉 자리(--legacy)는 그때 기본 */
 const MECHA_RECENT = 10;
@@ -197,6 +197,15 @@ function colorCheck(sc, cut, where, bad) {
   if (!g || !text.trim()) return;
   if (!g.words.some(w => new RegExp('\\b' + w + '\\b').test(text))) bad.push(where('outfit') + ' — 계획의 옷 색 ' + g.ko + '(' + g.words.slice(0, 3).join(' · ') + ' …)을 쓴다');
 }
+/* 노출 낮추기(사용자 2026-11-08 「pkm쪽도 막히면 낮춰서 재시도로 룰 바꿔줘. 삼국지쪽에 맞게」) — 안전 필터에 막힌 자리만, 한 단계씩.
+   일상: skin_exposure bold → moderate → low. 메카 폼(① · ② · ③): 두 곳 열기 → 한 곳(moderate) → 열지 않기(low). 사유(exposure_why — 막힌 응답)가 꼭 있다(IMAGE_RULES 3절 7) */
+const EXPOSE_LOWER = ['moderate', 'low'];
+function lowerOf(s, where, bad) {
+  if (s.exposure == null || s.exposure === '') return '';
+  if (EXPOSE_LOWER.indexOf(s.exposure) < 0) { bad.push(where('exposure') + ' — ' + EXPOSE_LOWER.join(' · ') + ' 중 하나(안전 필터에 막혀 한 단계씩 낮출 때만)'); return ''; }
+  if (!(typeof s.exposure_why === 'string' && s.exposure_why.trim())) { bad.push(where('exposure_why') + ' — 노출을 낮추면 막힌 사유(응답 · request_id)를 쓴다'); return ''; }
+  return s.exposure;
+}
 /* settings 한 자리 → 생성기 상태(화면이 저장할 그대로). 틀린 칸은 bad 에 */
 function stateOf(set, slot, d, c, plan, bad) {
   const def = slotsOf(set)[slot], s = set.slots[slot] || {};
@@ -219,6 +228,7 @@ function stateOf(set, slot, d, c, plan, bad) {
       }
       for (const k of Object.keys(why)) if (CASUAL_TEXT_V2.indexOf(k) < 0) bad.push(where('why.' + k) + ' — 없는 칸');
       colorCheck(sc, pc.cut, where, bad);
+      const lw2 = lowerOf(s, where, bad); if (lw2) sc.axes = Object.assign({}, sc.axes, { skin_exposure: lw2 });
       return { st: Object.assign({}, got.st, { scenes: Object.assign({}, got.st.scenes, { casual: sc }) }), cut: pc.cut, manual: Object.fromEntries(CASUAL_TEXT_V2.filter(f => sc[f].trim()).map(f => [f, sc[f]])), why };
     }
     const first = ST.initial(S, CT, CP, { style: set.style, identityMode: 'reference' }, d.tree, c, pc.raw);
@@ -231,6 +241,7 @@ function stateOf(set, slot, d, c, plan, bad) {
     }
     for (const k of Object.keys(why)) if (CASUAL_TEXT.indexOf(k) < 0) bad.push(where('why.' + k) + ' — 없는 칸');
     colorCheck(sc, pc.cut, where, bad);
+    const lw1 = lowerOf(s, where, bad); if (lw1) sc.axes = Object.assign({}, sc.axes, { skin_exposure: lw1 });
     return { st: Object.assign({}, first.st, { scenes: Object.assign({}, first.st.scenes, { casual: sc }) }), cut: pc.cut, manual: Object.fromEntries(CASUAL_TEXT.filter(f => sc[f].trim()).map(f => [f, sc[f]])), why };
   }
   const raw = { style: set.style, mode: 'action', form: def.form, identityMode: def.identityMode, baseForm: def.baseForm, motifs: str('motifs'), formOverride: str('formOverride') };
@@ -289,7 +300,9 @@ function stateOf(set, slot, d, c, plan, bad) {
       raw.mecha = ST.normalizeMecha(m);
     }
   }
-  return { st: ST.initial(S, CT, CP, raw, d.tree, c, null).st };
+  const lw = lowerOf(s, where, bad), st0 = ST.initial(S, CT, CP, raw, d.tree, c, null).st;
+  if (lw) st0.mechaExposure = lw;   /* 메카 폼 노출 한 단계씩(2026-11-08) */
+  return { st: st0 };
 }
 
 function build(o) {
@@ -329,7 +342,7 @@ function build(o) {
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
     '자리마다 `<자리>-prompt.txt` 를 **고치지 않고 그대로** 제출하고, 첨부 칸의 그림을 붙인다. 고칠 것이 있으면 settings.json 을 고쳐 build 를 다시 돌린다.', '',
     '**프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다(2026-11-08).** IMAGE_RULES.md 1절의 변경 사유(settings 고친 뒤 build · 막혔을 때 계획기 다시 계획 · 같은 지시문 재생성 · 사용자가 시킨 부분 고치기) 말고는 낱말 하나도 고치지 않는다. image_gen 에도 이 글 그대로 넘기고(`submitted` 0 일 때만) 고쳐 쓰지 말고 그대로 그리게 한다.', '',
-    '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 낮추지 않는다 — 막히면 IMAGE_RULES.md 3절 7. 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
+    '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
     '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 올릴 파일 |', '|---|---|---|---|---|---|---|'];
   for (const r of out) lines.push('| ' + SL[r.slot].n + ' | ' + r.slot + ' | ' + att(SL[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');

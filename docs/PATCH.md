@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 메카 폼 노출 두 곳 · 막히면 노출 한 단계씩 낮춰 재시도
+- 사용자 「pkm쪽도 삼국지처럼 장갑 일부 여는 식으로 바꿔줘」 — lib/prompt-spec.js MECHA_OPENINGS · MECHA_EXPOSE, lib/prompt-anthro.js mechaOpenings · mechaExposure: 네 곳(어깨 · 위팔 / 가슴 창 / 허리 / 허벅지) 가운데 종 이름 해시로 두 곳, ① · ② · ③ 같은 곳, 끝은 「intimate areas covered」. 낱말 예산 검사(prompt-engine · face-design)를 그만큼(+30~35) 올렸다.
+- 사용자 「pkm쪽도 막히면 낮춰서 재시도로 룰 바꿔줘. 삼국지쪽에 맞게」 — tools/prompt-pack.cjs 에 자리별 exposure(moderate · low) · exposure_why(막힌 사유 없으면 build 멈춤): 일상은 skin_exposure, 메카 폼은 열린 곳 두 곳 → 한 곳 → 없음. IMAGE_RULES 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 → 계획기로 장면 다시), 1절 · 6 검수 · IMAGE_AUTOMATION · INDEX.md 첫머리 맞춤. tests/prompt-pack.cjs 가 사유 · 단계를 막는다.
+
 ## 2026-11-08 · claude · 프롬프트 임의 수정 금지 — 이미지 모델에도 · 노출은 세션이 줄이지 않는다
 - 사용자 「pkm쪽에도 프롬포트 임의 수정 금지 조항이랑 위에처럼 지시문 등도 pkm쪽에 맞춰서 추가해줘」 — 삼국지 공방과 같은 날 같은 규칙을 pkm 꼴로.
 - IMAGE_RULES.md 1절 — 고쳐도 되는 사유(settings 고친 뒤 build · 3절 7 계획기 다시 계획 · 3절 6 같은 지시문 재생성 · 사용자가 시킨 부분 고치기)만, image_gen 에도 글 그대로(submitted 0 일 때만), 고정값 · 노출 줄을 세션이 누그러뜨리지 않는다. 3절 6 노출 항목에 qa.json exposure(match · weaker · stronger + 근거).

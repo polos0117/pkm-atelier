@@ -156,6 +156,17 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   const faces = (JSON.parse(fs.readFileSync(path.join(ROOT, 'data/face-design.json'), 'utf8')).faces || {})[String(pika.no)] || null;
   assert.equal(ST.prompt(P, L, again, pika, appear, faces, tree1, tree2) + '\n', t1, '저장값 → 같은 지시문');
   assert(fs.readFileSync(path.join(v2dir, 'INDEX.md'), 'utf8').includes('고른 장면(버전2)'), '차례표');
+  /* 막히면 한 단계씩 낮춘다(2026-11-08 「pkm쪽도 막히면 낮춰서 재시도로」) — 사유 없이는 build 가 멈추고, 있으면 일상은 skin_exposure, 메카 폼은 열린 곳이 하나 · 없음 */
+  { const sx = JSON.parse(JSON.stringify(s2)), wpath = path.join(v2dir, 'settings.json');
+    sx.slots.casual1.exposure = 'moderate'; fs.writeFileSync(wpath, JSON.stringify(sx));
+    assert.notEqual(run('build', '--dir', v2dir).status, 0, '노출을 낮추면 사유가 있어야 한다');
+    sx.slots.casual1.exposure_why = 'moderation_blocked x2 — request_id test'; sx.slots.light.exposure = 'low'; sx.slots.light.exposure_why = 'moderation_blocked x2'; sx.slots.heavy.exposure = 'moderate'; sx.slots.heavy.exposure_why = 'moderation_blocked x2';
+    fs.writeFileSync(wpath, JSON.stringify(sx)); const rx = run('build', '--dir', v2dir); assert.equal(rx.status, 0, rx.stderr);
+    const cx = fs.readFileSync(path.join(v2dir, 'casual1-prompt.txt'), 'utf8'), lx = fs.readFileSync(path.join(v2dir, 'light-prompt.txt'), 'utf8'), hx = fs.readFileSync(path.join(v2dir, 'heavy-prompt.txt'), 'utf8');
+    assert(/skin_exposure: moderate/.test(cx) && !/skin_exposure: bold/.test(cx), '일상 한 단계 낮춤');
+    assert(!/^EXPOSURE:/m.test(lx), '메카 폼 low — 열린 곳 없음');
+    assert(/^EXPOSURE: armor and undersuit open by design only at /m.test(hx) && P.mechaOpenings('Pikachu', 'moderate').length === 1 && P.mechaOpenings('Pikachu').length === 2, '메카 폼 moderate — 한 곳');
+    fs.writeFileSync(wpath, JSON.stringify(s2)); assert.equal(run('build', '--dir', v2dir).status, 0); }
   /* 틀린 칸 — 버전2 컷의 카메라 글, 표에 안 맞는 계획 값 */
   s2.slots.casual2.camera = 'low angle'; fs.writeFileSync(path.join(v2dir, 'settings.json'), JSON.stringify(s2));
   r = run('build', '--dir', v2dir); assert.equal(r.status, 1); assert(/버전2 컷엔 자유 카메라 글이 없다/.test(r.stderr), r.stderr);
