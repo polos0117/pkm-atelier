@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-08 · claude · 메카 컨셉 명령줄 도구를 지웠다
+- tools/concept-mecha.cjs — 지웠다(사용자 「도구 안쓰면 지워줘」 — 생성기 · 지시문 묶음으로만 만든다)
+- lib/concept-mecha.js — 도구만 쓰던 지시문 조립(build · faceText · fxText · generatorFigure · extraLines)을 뺐다. 생성기 옵션 줄(lines) · 지시문 묶음 자동 고르기(make · choose)는 그대로
+- data/concept-mecha.json — 도구 몫(template · styles · style_default · card_figure · hands_rest)을 뺐다. 실루엣 · 부품 · 타입 표현 · 타입 추천 · 종 · 자동 초안은 그대로
+- docs/CONCEPT_MECHA.md · AGENTS.md · lib/prompt-spec.js(주석) — 메카 옵션 표 설명으로
+- tests/concept-mecha.cjs — 도구 대신 조립부를 직접 본다(표 · 자동 · 직접 고르기 · 타입 표현 · 배치 · 자동 초안 · 옵션 줄 자리 · 도구 없음)
+
 ## 2026-11-08 · claude · 새 화풍 키 애니 2.5D 광택(anime_25d_gloss) — 기본 화풍
 - lib/prompt-spec.js · data/style.json — 피부 광택 문장을 새 키 anime_25d_gloss(애니 2.5D 광택)로 옮기고 anime_25d 는 광택 전 문장으로 되돌렸다(사용자 「새 화풍키로 등록해줘. 그래야 도감에서 안겹치겠다」 — 광택 전에 등록한 anime_25d 그림 22명 174장과 도감에서 갈린다). 기본 화풍 = anime_25d_gloss. 두 문장은 앞 커밋의 것과 글자까지 같다
 - tools/image-runner.py · tools/prompt-pack.cjs · IMAGE_RULES.md — 새 차례 · 여덟 자리 기본 화풍, 기준 화풍 문장. prompt.html — 스크립트 판(gloss25dkey1)

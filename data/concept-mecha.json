@@ -1,6 +1,6 @@
 {
  "version": 1,
- "note": "포켓몬 2D MMORPG 메카 컨셉(2026-11-06) — 틀 하나에 부품 칸을 끼워 장갑 실루엣을 갈아 끼운다. tools/concept-mecha.cjs 가 짓는다. 큰 실루엣 18가지는 삼국지 공방(sam-atelier lib/prompt-spec.js MECHA_SILHOUETTES, 2026-11-05)에서 옮겼다 — 무기 · 노출 문장만 포켓몬 규칙에 맞게. 실루엣의 owns 칸은 그 실루엣이 모양을 정하므로 부품을 따로 안 싣는다. 종의 owns 는 원작 특징(SIGNATURE)이 쥔 칸. 얼굴(FACE)은 data/face-design.json 에서 짓는다. 사용자 「포켓몬 메카 실루엣을 생성단계에서 다양하게 부품교체하듯 갈아끼울 수 있음 좋겠는데」 · 「실루엣을 삼국지 공방 실루엣 자료에서 더 가져올 수 있으면 가져오자」 · 타입 표현(2026-11-06 사용자 「타입 표현을 손에 드는거 외에도 몇가지 더 추가하자」 · 「표현을 다 넣어도 되고, 하나만 선택해도 되는걸로. 타입이 두가지인건 선택적으로, 같은 타입 스타일로 골라도 되고, 각각 다른 스타일을 고를수도 있게」) — fx 일곱 가지를 골라 싣는다(손 포함, 하나만 · 다). 표현마다 그 종의 타입 하나 — 기본은 첫 타입, 종의 HAND_EFFECT 는 첫 타입 손 효과. 낱말은 type_fx · 타입 낱말은 색보다 모양으로 가른다(독 거품 · 고스트 불꽃 · 비행 바람 줄기와 깃털 — 2026-11-06, 고스트/독 · 물/비행을 섞어도 차이가 안 보였다) · 화풍(2026-11-06 사용자 붙여 준 일본 2.5D 모바일 지시문의 화풍 문구 → 「응 넣어줘」) — styles 의 head · style · close 를 틀에 끼운다, 기본 mmorpg2d. jp25d 의 얼굴 줄은 피카츄 전용 말(호박색 눈 · 둥근 턱)을 일반 말로 · 애니 광택 화풍 anime_gloss(2026-11-06 — 사용자가 붙여 준 은발 세일러 그림과 견주어: 채도 절반 · 하이키 · 광택 · 가는 머리 가닥, 사용자 「같은 2d 인데 이런느낌이 안나네」 → 「응 해줘」) · 기본 화풍을 anime_gloss 로(2026-11-06 — 광택을 자연광 윤기로 바꾼 꼬부기 메카 · 일상컷을 보고 사용자 「응 이걸로 기본화풍 바꿔줘」). mmorpg2d · jp25d 는 --style 로",
+ "note": "메카 옵션 표(2026-11-06) — 생성기 「새 인물 만들기」 의 큰 실루엣(silhouettes) · 부위 부품(parts) · 타입 표현(fx · type_fx)과, 지시문 묶음 ① 자동 고르기의 타입 추천(types) · 손글 종(species — types · owns) · 자동 초안(auto). 조립은 lib/concept-mecha.js. 처음엔 2D MMORPG 메카 컨셉 명령줄 도구의 표였다 — 그 도구(지시문 틀 template · 화풍 styles · 체형 card_figure)는 2026-11-08 지웠다(사용자 「도구 안쓰면 지워줘」). species 의 HAIR · FIGURE 같은 지시문 칸은 그때의 손글 기록으로 남는다",
  "slots": [
   {
    "key": "silhouette",
@@ -561,7 +561,6 @@
    ]
   }
  },
- "template": "Use case: stylized-concept. Create ONE finished illustration of Pokémon {NAME} personified as a beautiful adult human woman, in {STYLE_HEAD}. Single vertical 2:3 full-body artwork, head to boots fully visible with comfortable margins.\n\nSTYLE: {STYLE}\n\nCHARACTER: One adult woman in her mid-twenties, {PERSONA}. {HAIR}, {EYES}, a refined feminine face with {FACE}, {FIGURE}, balanced natural adult proportions. {NAME}'s identity is unmistakable: {SIGNATURE}.\n\nCOSTUME: A sophisticated fitted {COLOURS} science-fiction mecha powered armor with {ACCENTS}: {SILHOUETTE}{PARTS}, {UNDERSUIT}, {MOTIF}, visible panel seams, recessed bolts, small actuators, functional mechanical hinges, ventilation slots and restrained {GLOW} luminous circuit lines; {WEIGHT} with a {LINE}, feminine, visibly curvaceous silhouette rather than a giant robot suit, leaving her shoulders and upper thighs bare; solid hard-surface plates that read as armor, not cloth; no lace, no flowing fabric sleeves or cloth capes, no helmet covering the face, no weapons. Refined feminine costume design, intricate yet readable. Her two human hands are uncovered and fully visible.\n\nPOSE AND SCENE: A lively poised standing pose, {HANDS}. {TYPE_FX}CAMERA: camera level with her face; her body and face turned gently three-quarters toward the camera, her head level with her chin neither raised nor tucked, no upward perspective on her face. {BACKGROUND} behind her; {AMBIENT} frame her silhouette. {STYLE_CLOSE}\n\nANATOMY: One head, two arms, two legs, two natural human hands, five fingers each. Natural neck and joints. No extra characters, no text, no logos, no UI, no collage.",
  "species": {
   "피카츄": {
    "no": 25,
@@ -803,36 +802,6 @@
    "where": "space"
   }
  ],
- "hands_rest": "both hands relaxed at her sides with fingers softly curled",
- "styles": {
-  "mmorpg2d": {
-   "ko": "2D 한국 MMORPG",
-   "head": "a premium 2D Korean MMORPG official character illustration style",
-   "style": "Clearly hand-drawn 2D character art, delicate refined coloured linework, elegant adult anime facial design, expressive finely detailed eyes, carefully designed shapes, rich luminous colours and layered painted shading. Elaborate Korean fantasy game costume illustration with clean detailed rendering. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
-   "close": "Bright clear lighting, rich {KEY_COLOUR} colours, polished 2D Korean MMORPG character key art."
-  },
-  "jp25d": {
-   "ko": "일본 2.5D 모바일",
-   "head": "a high-quality Japanese 2.5D mobile-game character illustration style",
-   "style": "Premium Japanese mobile RPG character key art. A refined adult anime face with expressive, finely detailed eyes and delicate features; softly sculpted three-dimensional facial shading while preserving Japanese anime character design. Polished 2.5D painted rendering: delicate selective coloured linework, rich luminous colours, smooth dimensional gradients, carefully modelled hair and body, precise material highlights. Clearly illustrated game art with strong depth and volume, not a photorealistic person or a plastic 3D doll. Keep the face, body and costume in this same rendering style.",
-   "close": "Clear character silhouette against the softly painted atmospheric backdrop, strong facial clarity and restrained cinematic glow, rich {KEY_COLOUR} colours, premium Japanese 2.5D mobile RPG character key art."
-  },
-  "anime_gloss": {
-   "ko": "애니 광택(하이키 파스텔 · 자연광 윤기)",
-   "head": "a polished glossy 2D anime gacha character illustration style",
-   "style": "Polished Japanese-anime gacha character illustration in clean 2D: crisp thin dark linework, large finely detailed glossy eyes with layered highlights and a soft blush, very fine detailed hair rendered as many thin strands with sparkling highlights along every lock, soft airy cel-to-gradient shading with a natural sunlit sheen — soft, broad highlights from real outdoor daylight on her skin, gloves, stockings and armor, never wet, oily or plastic-looking, and a bright high-key look where the highlights glow toward white while the darkest accents stay deep and clean. A low-saturation pastel palette dominated by white, silver and soft light tones, with one deep accent colour; gentle bloom and small sparkle particles in the air. Keep the face and body visibly illustrated in 2D; no 3D render or photorealistic appearance.",
-   "close": "Bright high-key lighting with soft bloom and sparkles, a low-saturation white-and-silver palette with {KEY_COLOUR} as the single deep accent, glossy 2D anime gacha character illustration.",
-   "figure": "card"
-  },
-  "gloss_daylight": {
-   "ko": "광택 자연광(자연광 · 강한 광택 · 진한 색과 금 테두리)",
-   "head": "a polished, richly glossy 2D anime gacha character illustration style",
-   "style": "Polished Japanese-anime gacha character illustration with a rich, glossy commercial finish: soft coloured linework rather than black outlines, large finely detailed eyes in her own eye colour with multiple sparkling catchlights and thick lashes, a soft blush across her cheeks. Natural sunlit daylight — bright, clear outdoor light with soft, broad highlights. Strong glossy shine: her skin has bright, smooth specular highlights on her shoulders, collarbones, chest, arms and thighs, a polished lustrous finish over warm peachy-pink skin; armor and trim read as polished enamel and burnished gold with sparkling gem highlights. Rich, saturated colours with clear contrast — her palette set against deep darks and gold trim. A detailed background softly blurred with daylight bokeh and floating light motes. Keep the face and body illustrated in 2D anime; no 3D render or photorealistic appearance.",
-   "close": "Natural sunlit daylight with glossy specular highlights on her skin and armor, rich saturated colours with {KEY_COLOUR} and gold trim, softly blurred daylight bokeh, glossy 2D anime gacha character illustration.",
-   "figure": "card"
-  }
- },
- "style_default": "anime_gloss",
  "auto": {
   "note": "표에 손글 종이 없으면 이 표와 공방 자료(data/card.json 타입 · 키 · 몸무게, data/face-design.json 얼굴 · 머리, data/source-appearance.json 색 · 원작 특징 — 생성기의 입는 법 · 팔레트)로 초안을 짓는다(2026-11-06 사용자 「그래」). 손글 종(species)이 늘 이긴다",
   "types": {
@@ -1032,7 +1001,5 @@
    "white": "pearl-white",
    "yellow": "golden-yellow"
   }
- },
- "card_figure": "an hourglass figure with a subtly full bust, a slim waist and very wide, curvy rounded hips that flow smoothly into softly full thighs, the line tapering gradually toward the knees with no sudden narrowing below the hips, and slender lower legs — never thick or heavy",
- "card_figure_note": "애니 광택 · 광택 자연광 화풍은 종별 FIGURE 대신 이 체형(생성기 lib/prompt-spec.js CARD_FIGURE 와 같은 글)과 「약 7.5등신」 — 2026-11-07 사용자 「애니광택에도 메카컷이랑, 일상컷 몸매관련된 것만 수정해줘」. mmorpg2d · jp25d 는 종별 FIGURE 그대로"
+ }
 }
