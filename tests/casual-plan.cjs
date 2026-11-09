@@ -54,6 +54,8 @@ for (let i = 0; i < 30; i++) {
   tries += r.tries;
   const ch = r.plan.characters[0];
   assert.equal(ch.cuts.length, 9);
+  /* 옷 자유 컷(2026-11-09) — 두 장, 필수 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷, 옷 색 없음 */
+  { const fr = ch.cuts.filter(x => x.ofree); assert.equal(fr.length, 2, card + ' 옷 자유 두 장'); assert(fr.every(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume' && !x.situ && x.frame !== 'face_close' && !x.ocolor), card + ' 옷 자유 컷'); }
   /* 상황 노출(2026-11-09) — 한 장, 필수 · 코스튬 · 얼굴 클로즈업이 아닌 컷에 그 옷에 맞는 것 */
   { const si = ch.cuts.filter(x => x.situ); assert.equal(si.length, 1, card + ' 상황 한 장');
     assert(!P.isRequired(tree, si[0]) && si[0].ofam !== 'pokemon_costume' && si[0].frame !== 'face_close' && P.situsFor(S, P.outfitText(tree, si[0])).includes(si[0].situ), card + ' 상황 컷: ' + JSON.stringify(si[0])); }
@@ -69,7 +71,7 @@ for (let i = 0; i < 30; i++) {
   const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
   assert.equal(new Set(freeFams).size, freeFams.length, card + ' 자유 컷 의상 계열 겹침: ' + freeFams);
   /* 옷 색(2026-11-07) — 코스튬 컷은 없음, 나머지는 표의 색, 같은 색은 두 장까지 */
-  const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume').map(x => x.ocolor);
+  const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume' && !x.ofree).map(x => x.ocolor);   /* 옷 자유 컷은 색 없음(2026-11-09) */
   assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => !x.ocolor) && cols.every(x => COLS.includes(x)), card + ' 옷 색: ' + cols);
   assert(cols.every(x => cols.filter(y => y === x).length <= 2), card + ' 같은 옷 색 세 장: ' + cols);
   assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');

@@ -82,6 +82,7 @@ PATH_KEYS = ("era", "place", "act", "ofam", "item")
 TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장(세 장 시절 규칙)
 CUTS, MID_CUTS, LEGACY_CUTS = 9, 7, 3  # 2026-11-09 — 새 캐릭터는 아홉 장(필수 셋 한 장씩 + 코스튬 + 상황 노출 + 자유 넷), 일곱 장(2026-11-07 ~ 11-08) · 세 장으로 등록된 캐릭터 다시 채우기는 그때 규칙
 MAX_CUT = CUTS
+OFREE_N = 2   # 옷 자유 컷(2026-11-09) — 아홉 장에 두 장, lib/casual-plan.js OFREE_N
 
 
 def repeat_limit(n):
@@ -344,7 +345,7 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "expose": c.get("expose") or None,
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "ofree": bool(c.get("ofree")) or None, "expose": c.get("expose") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
@@ -445,7 +446,7 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-RESERVE_TAIL = ("ocolor", "situ", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09)
+RESERVE_TAIL = ("ocolor", "situ", "ofree", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09)
 
 
 def reserve_keys(c):
@@ -747,6 +748,13 @@ def check_plan(doc, plan, sp, ledger=None):
                 bad("컷 %s: 상황 노출은 필수 갈래 · 코스튬 컷이 아닌 컷에" % c.get("cut"))
             if c.get("frame") in sp.get("situ_not_frames", []):
                 bad("컷 %s: 상황 노출 컷의 프레이밍 %s — 얼굴 클로즈업엔 안 쓴다" % (c.get("cut"), c.get("frame")))
+        # 옷 자유 컷(2026-11-09 「포켓몬은 지금 일상9장이니까 2장정도 분배」) — 아홉 장이면 두 장, 필수 · 코스튬 · 상황 컷이 아니고 얼굴 클로즈업 아님
+        fr = [c for c in cuts if c.get("ofree")]
+        if n_cuts == CUTS and not refill and len(fr) != OFREE_N:
+            bad("옷 자유 컷이 %d장 — 아홉 장에 %d장" % (len(fr), OFREE_N))
+        for c in fr:
+            if is_required(c, sp) or c.get("ofam") == sp.get("costume") or c.get("situ") or c.get("frame") in sp.get("situ_not_frames", []):
+                bad("컷 %s: 옷 자유는 필수 갈래 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷에" % c.get("cut"))
         # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
         if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
             bad("포켓몬 코스튬 컷(의상 계열 %s)이 없다 — 한 장" % sp["costume"])

@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 일상컷 옷 자유 컷 두 장 — 우리 옷 계열에 없는 것 위주로
+- 사용자 「element, pkm 쪽도 넣어주고. 포켓몬은 지금 일상9장이니까 2장정도 분배해줘도 되겠다」 · 「포켓몬쪽은 일상컷만」 · 「gpt나 너한테 맡긴다면 지금 우리쪽 갈래나 의상 등 없는거 위주로 … 최대한 없는걸로」 — ① 은 그대로(우리 설계 한 장)
+- lib/prompt-spec.js OUTFIT_FREE(삼국지와 같은 글 — 노출 의상 주문 · 우리 계열 목록에 없는 꼴 먼저). lib/prompt-anthro.js 장면 칸 ofree 면 Outfit 줄이 그 주문, Outfit colours · Cut 줄 없음. lib/prompt-state.js PLAN_V2 ofree
+- lib/casual-plan.js chooseOfree — 아홉 장이면 두 장(필수 셋 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷, 이미 만든 컷의 옷 자유는 센다), 옷 색 비움. tools/casual-ledger.py 옷 자유 두 장 검사 · 예약 칸 ofree. tools/prompt-pack.cjs INDEX 안내
+- 검사 casual-plan · casual-plan-v2 · casual-ledger · prompt-pack. 문서 IMAGE_RULES. prompt.html 스크립트 판 ofree1
+
 ## 2026-11-09 · claude · 일상컷 아홉 장 · 상황 노출 필수 · 삼국지 쪽 계열 · 옷 · 장소 옮기기
 - 사용자 「포켓몬쪽에도 삼국지쪽이랑 비교해서 없는 갈래들이랑 의상들 있으면 추가해줘. 일상컷 룰에 '상황으로 만들기'를 필수로 넣어주고, 거기는 일상컷 생성 수를 9장으로 맞춰줘」
 - data/casual-tree.json · casual-tree-v2.json — 삼국지 공방에서 계열 셋(동탄룩 · 모험가 · 신화 드레이프 — 지금 · 그 해 · 포켓몬 세계 · 무대·환상 시대에 맞게), 같은 계열의 없던 옷 46벌(평상복 · 란제리풍 네글리제 · 실크 파자마 · 운동복 · 전통 · 역할극 바텐더 · 오피스룩 · 레이싱 모델 …), 장소 열여덟(사무실 · 다이너 · 공항 · 녹음실 · 목장 · 해적선 · 정글 유적 · 오아시스 · 대리석 신전 · 목욕궁 · 하늘 정원 · 물속 궁 · 얼음 궁 …, 역사의 자리 · 세계 안은 삼국지 몫이라 뺐다). 옷 계열 17 → 20, 옷 → 351, 장소 135 → 153. situ_required 표

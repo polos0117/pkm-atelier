@@ -243,6 +243,9 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
       fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7s)); r = run('build', '--dir', d7); assert.equal(r.status, 1); assert(/exposure_why/.test(r.stderr), r.stderr);
       s7s.slots[slotS].exposure_why = '안전 필터 — 시험'; fs.writeFileSync(path.join(d7, 'settings.json'), JSON.stringify(s7s)); r = run('build', '--dir', d7); assert.equal(r.status, 0, r.stderr);
       assert(!fs.readFileSync(path.join(d7, slotS + '-prompt.txt'), 'utf8').includes('Situation:'), '뺀 상황'); }
+    /* 옷 자유 컷(2026-11-09 — 포켓몬은 일상컷만) — Outfit 줄이 주문, 옷 색 · 재단 줄 없음 */
+    { const fc = p7.cuts.filter(x => x.ofree); assert.equal(fc.length, 2, '옷 자유 두 장');
+      for (const x of fc) { const t = fs.readFileSync(path.join(d7, 'casual' + x.cut + '-prompt.txt'), 'utf8'); assert(t.includes(S.OUTFIT_FREE) && !/^Outfit colours: /m.test(t) && !/^Cut: /m.test(t), '옷 자유 줄 ' + x.cut); } }
     /* 일곱 장 settings(version 2)는 그대로 여덟 자리 */
     { const d72 = path.join(tmp, 'pikachu-72'); r = run('init', '피카츄', '--dir', d72, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
       const s72 = JSON.parse(fs.readFileSync(path.join(d72, 'settings.json'), 'utf8')); s72.version = 2; delete s72.slots.casual8; delete s72.slots.casual9;
