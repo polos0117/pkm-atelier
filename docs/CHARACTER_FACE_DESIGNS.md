@@ -12,7 +12,7 @@
 - 이미 확정한 경장 ①이 있으면 그 그림이 정본이다. 이 표와 달라도 다시 그리지 않는다(`registered` — 지금 그림이 등록된 종).
 - 고르는 법은 무작위가 아니다. 원작 외형 특징·몸 형태·타입·키와 무게에 낱말 표로 점수를 주고(`tools/face-design.py` 의 CUES), 앞서 직접 쓴 설계에 가산점을 준다. 그러고 나서 도감 번호 차례로 겹침을 푼다.
 - 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **3개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**2개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.
-- 긴 얼굴(길쭉한 얼굴형 · 긴 길이 · 긴 턱끝)은 FACE 줄에서 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다(2026-11-09 — 셋이 겹친 159종이 기괴하게 길어졌다). 자료 값은 그대로다.
+- 긴 얼굴 — 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 **둘까지만** 고른다(2026-11-09 — 셋 이상 겹친 159종이 기괴하게 길어져 `relong` 으로 다시 골랐다). FACE 줄에서는 그 낱말을 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다.
 - 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.
 - 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.
 
@@ -40,8 +40,8 @@
 
 ## 지금 상태
 
-- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 601
-- 직접 쓴 설계 651종, 원작 단서 규칙으로 고른 것 372종 · 겹침을 풀며 옮긴 종 850 · 머리를 옮긴 종 192
+- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 414
+- 직접 쓴 설계 651종, 원작 단서 규칙으로 고른 것 372종 · 겹침을 풀며 옮긴 종 873 · 머리를 옮긴 종 192
 - 그림이 이미 있는 종(①이 정본) 652
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 6/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
 - 머리: 확정 그림으로 잠근 종 652(기록값 있음 486) · 새로 고른 종 373
@@ -156,7 +156,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -168,10 +168,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** ‘long snout’ → 얼굴 길이 긴 얼굴 · ‘slightly hooked tip’ → 눈매 강하게 치켜올라간 눈 · ‘single horn-like protrusion’ → 눈꼬리 각도 올라간 눈꼬리 · ‘slightly hooked tip’ → 눈썹 바깥에서 꺾이는 사선 · ‘single horn-like protrusion’ → 입술 얇은 입술
+**원작 단서:** ‘single horn-like protrusion’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘long snout’ → 얼굴 길이 긴 얼굴 · ‘single horn-like protrusion’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘slightly hooked tip’ → 눈매 강하게 치켜올라간 눈 · ‘single horn-like protrusion’ → 눈꼬리 각도 올라간 눈꼬리 · ‘slightly hooked tip’ → 눈썹 바깥에서 꺾이는 사선
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; balanced nose; thin lips.
 ```
 
 ### 006 · 리자몽 (Charizard)
@@ -416,7 +418,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
@@ -428,10 +430,12 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**원작 단서:** 몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, close-set; angled brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; sharp eyes, medium size, upturned outer corners, close-set; angled brows; straight slender bridge nose; thin lips.
 ```
 
 ### 016 · 구구 (Pidgey)
@@ -488,7 +492,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -502,8 +506,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 wings → 눈 간격 눈 사이가 가까운
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; long arched brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, close-set; long arched brows; balanced nose; thin lips.
 ```
 
 ### 019 · 꼬렛 (Rattata)
@@ -584,7 +590,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -596,10 +602,12 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/깨비드릴조-glossy-promo-20261008.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘vulturine neck’ → 얼굴형 길고 세련된 얼굴형 · ‘vulturine neck’ → 얼굴 길이 긴 얼굴 · ‘vulturine neck’ → 얼굴 폭 좁은 얼굴 · ‘vulturine neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘vulturine neck’ → 코 길고 코끝이 내려온
+**원작 단서:** ‘vulturine neck’ → 얼굴형 길고 세련된 얼굴형 · ‘vulturine neck’ → 얼굴 길이 긴 얼굴 · ‘vulturine neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘vulturine neck’ → 코 길고 코끝이 내려온
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, level outer corners, close-set; angled brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -612,7 +620,7 @@ HAIR: high ponytail.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -624,10 +632,12 @@ HAIR: high ponytail.
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘slit-pupil eye’ → 눈매 가늘고 날카로운 눈
+**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · ‘slit-pupil eye’ → 눈매 가늘고 날카로운 눈
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ### 024 · 아보크 (Arbok)
@@ -862,7 +872,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -874,12 +884,12 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/니드리노-glossy-promo-20261008.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long, pointed horn’ → 얼굴형 길고 세련된 얼굴형 · ‘long, pointed horn’ → 얼굴 길이 긴 얼굴 · ‘long, pointed horn’ → 얼굴 폭 좁은 얼굴 · ‘long, pointed horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, pointed horn’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘long, pointed horn’ → 얼굴형 길고 세련된 얼굴형 · ‘long, pointed horn’ → 얼굴 길이 긴 얼굴 · ‘long, pointed horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, pointed horn’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long, pointed horn’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -994,7 +1004,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 코끝이 둥근 |
@@ -1006,12 +1016,12 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/나인테일-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘long, fluffy crest’ → 얼굴형 길고 세련된 얼굴형 · ‘long, fluffy crest’ → 얼굴 길이 긴 얼굴 · ‘long, fluffy crest’ → 얼굴 폭 좁은 얼굴 · ‘long, fluffy crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long, fluffy crest’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long, fluffy crest’ → 얼굴 길이 긴 얼굴 · ‘long, fluffy crest’ → 얼굴 폭 좁은 얼굴 · ‘long, fluffy crest’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long, fluffy crest’ → 눈썹 길고 바깥 아치가 선명한 · ‘long, fluffy crest’ → 코 코끝이 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; long arched brows; rounded soft tip nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; soft rounded jaw; narrow eyes, small size, level outer corners, wide-set; long arched brows; rounded soft tip nose; thin lips.
 ```
 
 ### 039 · 푸린 (Jigglypuff)
@@ -1070,7 +1080,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -1082,12 +1092,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/주뱃-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 몸 형태 wings → 코 곧고 가는 콧대 · ‘two fangs on each jaw’ → 입술 굴곡 없이 곧은
+**원작 단서:** ‘two fangs on each jaw’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 몸 형태 wings → 코 곧고 가는 콧대 · ‘two fangs on each jaw’ → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; straight medium brows; straight slender bridge nose; straight even lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, close-set; straight medium brows; straight slender bridge nose; straight even lips.
 ```
 
 ### 042 · 골뱃 (Golbat)
@@ -1326,7 +1336,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 코끝이 둥근 |
@@ -1340,8 +1350,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 heads → 얼굴 폭 좁은 얼굴 · 몸 형태 heads → 눈 간격 눈 사이가 가까운
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, close-set; straight medium brows; rounded soft tip nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, close-set; straight medium brows; rounded soft tip nose; medium lips.
 ```
 
 ### 052 · 나옹 (Meowth)
@@ -1374,7 +1386,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
@@ -1386,10 +1398,10 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/persian-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; long arched brows; small delicate nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; long arched brows; small delicate nose; thin lips.
 ```
 
 ### 054 · 고라파덕 (Psyduck)
@@ -1424,7 +1436,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -1436,10 +1448,12 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/golduck-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘four horns’ → 눈매 가늘고 날카로운 눈 · ‘four horns’ → 입술 얇은 입술
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘four horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘four horns’ → 눈매 가늘고 날카로운 눈 · ‘four horns’ → 입술 얇은 입술
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
 ```
 
 ### 056 · 망키 (Mankey)
@@ -1658,7 +1672,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -1672,10 +1686,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; long nose with low tip; thin lips.
 ```
 
 ### 065 · 후딘 (Alakazam)
@@ -1684,7 +1698,7 @@ FACE (her own structure, not the style's default face): oval face, slightly long
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -1696,12 +1710,12 @@ FACE (her own structure, not the style's default face): oval face, slightly long
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/alakazam-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘long, thin snout’ → 얼굴 길이 긴 얼굴 · ‘ear-like spikes’ → 눈매 가늘고 날카로운 눈 · ‘long, thin snout’ → 코 길고 코끝이 내려온 · ‘ear-like spikes’ → 입술 얇은 입술
+**원작 단서:** ‘ear-like spikes’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘long, thin snout’ → 얼굴 길이 긴 얼굴 · ‘ear-like spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘ear-like spikes’ → 눈매 가늘고 날카로운 눈 · ‘long, thin snout’ → 코 길고 코끝이 내려온 · ‘ear-like spikes’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; straight medium brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, close-set; straight medium brows; long nose with low tip; thin lips.
 ```
 
 ### 066 · 알통몬 (Machop)
@@ -1798,7 +1812,7 @@ HAIR: long braid.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 작고 여린 코 |
@@ -1812,8 +1826,10 @@ HAIR: long braid.
 
 **원작 단서:** ‘beady black eyes’ → 눈 크기 작은 눈
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, average spacing; fine soft arches; small delicate nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, average spacing; fine soft arches; small delicate nose; full lips.
 ```
 
 ### 070 · 우츠동 (Weepinbell)
@@ -1848,7 +1864,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -1860,12 +1876,12 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/victreebel-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘swollen pink lip’ → 입술 도톰한 입술
+**원작 단서:** 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘swollen pink lip’ → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; balanced nose; full lips.
 ```
 
 ### 072 · 왕눈해 (Tentacool)
@@ -1902,7 +1918,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 크고 또렷한 코 |
@@ -1916,10 +1932,10 @@ HAIR: bob.
 
 **원작 단서:** ‘two blue, beak-like appendages’ → 코 크고 또렷한 코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 보통 → 크고 또렷한 코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; prominent defined nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; prominent defined nose; thin lips.
 ```
 
 ```text
@@ -2012,7 +2028,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -2026,8 +2042,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; long arched brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, medium size, level outer corners, wide-set; long arched brows; long nose with low tip; thin lips.
 ```
 
 ### 078 · 날쌩마 (Rapidash)
@@ -2036,7 +2054,7 @@ FACE (her own structure, not the style's default face): softly elongated face, s
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -2048,12 +2066,12 @@ FACE (her own structure, not the style's default face): softly elongated face, s
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/rapidash-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘long, flowing mane’ → 얼굴형 길고 세련된 얼굴형 · ‘long, flowing mane’ → 얼굴 길이 긴 얼굴 · ‘long, flowing mane’ → 얼굴 폭 좁은 얼굴 · ‘long, flowing mane’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘pointed horn’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘pointed horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘long, flowing mane’ → 얼굴 길이 긴 얼굴 · ‘long, flowing mane’ → 얼굴 폭 좁은 얼굴 · ‘pointed horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘pointed horn’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 같은 계열 포니타와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 바깥에서 꺾이는 사선
+**조정:** 같은 계열 포니타와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 바깥에서 꺾이는 사선 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; medium lips.
 ```
 
 ### 079 · 야돈 (Slowpoke)
@@ -2188,7 +2206,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -2202,10 +2220,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 legs → 얼굴 폭 좁은 얼굴 · ‘two beady black eyes’ → 눈 크기 작은 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운 · ‘long sharp beak’ → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, close-set; straight medium brows; long nose with low tip; small mouth.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, close-set; straight medium brows; long nose with low tip; small mouth.
 ```
 
 ### 085 · 두트리오 (Dodrio)
@@ -2464,7 +2482,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -2476,12 +2494,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘rocky spine’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘rocky spine’ → 눈매 가늘고 날카로운 눈 · ‘rocky spine’ → 입술 얇은 입술
+**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · ‘rocky spine’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘rocky spine’ → 눈매 가늘고 날카로운 눈 · ‘rocky spine’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
 ```
 
 ### 096 · 슬리프 (Drowzee)
@@ -2516,7 +2534,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 코끝이 둥근 |
@@ -2530,10 +2548,10 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 **원작 단서:** ‘sleepy-looking eyes’ → 눈매 살짝 처진 부드러운 눈 · ‘sleepy-looking eyes’ → 눈꼬리 각도 처진 눈꼬리 · ‘large nose’ → 코 코끝이 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 코끝이 둥근
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; rounded soft tip nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; rounded soft tip nose; thin lips.
 ```
 
 ### 098 · 크랩 (Krabby)
@@ -2756,7 +2774,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 짧고 둥근 |
 | 코 | 길고 코끝이 내려온 |
@@ -2768,12 +2786,12 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** ‘ovoid body’ → 눈썹 짧고 둥근
+**원작 단서:** ‘ovoid body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘ovoid body’ → 눈썹 짧고 둥근
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; short rounded brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; soft rounded jaw; narrow eyes, small size, level outer corners, average spacing; short rounded brows; long nose with low tip; thin lips.
 ```
 
 ### 107 · 홍수몬 (Hitmonchan)
@@ -3072,7 +3090,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -3084,12 +3102,12 @@ HAIR: bob.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/seadra-20261012/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 blob → 입술 도톰한 입술
+**원작 단서:** 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · 몸 형태 blob → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; long nose with low tip; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; long nose with low tip; full lips.
 ```
 
 ```text
@@ -3730,7 +3748,7 @@ HAIR: pixie cut.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
@@ -3744,10 +3762,10 @@ HAIR: pixie cut.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; straight slender bridge nose; thin lips.
 ```
 
 ### 142 · 프테라 (Aerodactyl)
@@ -3810,7 +3828,7 @@ HAIR: medium low bun.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -3824,10 +3842,10 @@ HAIR: medium low bun.
 
 **원작 단서:** ‘circular red eyes’ → 눈꼬리 각도 수평 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘short gray beak’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 곧고 가는 콧대
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 곧고 가는 콧대 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, close-set; long arched brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, medium size, level outer corners, close-set; long arched brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -3870,7 +3888,7 @@ HAIR: short wolf cut.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -3882,10 +3900,12 @@ HAIR: short wolf cut.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/moltres-20261013/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long, flowing head crest’ → 얼굴형 길고 세련된 얼굴형 · ‘long, flowing head crest’ → 얼굴 길이 긴 얼굴 · ‘long, flowing head crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long, flowing head crest’ → 눈썹 길고 바깥 아치가 선명한 · ‘pointed, brown beak’ → 코 곧고 가는 콧대
+**원작 단서:** ‘long, flowing head crest’ → 얼굴형 길고 세련된 얼굴형 · ‘long, flowing head crest’ → 얼굴 길이 긴 얼굴 · ‘long, flowing head crest’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long, flowing head crest’ → 눈썹 길고 바깥 아치가 선명한 · ‘pointed, brown beak’ → 코 곧고 가는 콧대
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; long arched brows; straight slender bridge nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, level outer corners, close-set; long arched brows; straight slender bridge nose; full lips.
 ```
 
 ```text
@@ -3922,7 +3942,7 @@ FACE (her own structure, not the style's default face): oval face, slightly long
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 코끝이 둥근 |
@@ -3934,10 +3954,12 @@ FACE (her own structure, not the style's default face): oval face, slightly long
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dragonair-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘rounded snout’ → 코 코끝이 둥근
+**원작 단서:** ‘small, white horn’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘small, white horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘rounded snout’ → 코 코끝이 둥근
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; rounded soft tip nose; medium lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; rounded soft tip nose; medium lips.
 ```
 
 ### 149 · 망나뇽 (Dragonite)
@@ -3972,7 +3994,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -3986,10 +4008,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** ‘two short, blunt, ear-like horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘two short, blunt, ear-like horns’ → 눈매 가늘고 날카로운 눈 · ‘two short, blunt, ear-like horns’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ### 151 · 뮤 (Mew)
@@ -4142,7 +4164,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 코끝이 둥근 |
@@ -4154,12 +4176,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/generation/quilava-20261010.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘long and slender body’ → 얼굴형 길고 세련된 얼굴형 · ‘long and slender body’ → 얼굴 길이 긴 얼굴 · ‘long and slender body’ → 얼굴 폭 좁은 얼굴 · ‘long and slender body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘triangular red eyes’ → 눈매 강하게 치켜올라간 눈 · ‘triangular red eyes’ → 눈꼬리 각도 올라간 눈꼬리
+**원작 단서:** ‘long and slender body’ → 얼굴형 길고 세련된 얼굴형 · ‘long and slender body’ → 얼굴 길이 긴 얼굴 · ‘long and slender body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘triangular red eyes’ → 눈매 강하게 치켜올라간 눈 · ‘triangular red eyes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; rounded soft tip nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; rounded soft tip nose; thin lips.
 ```
 
 ### 157 · 블레이범 (Typhlosion)
@@ -4308,7 +4330,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
@@ -4320,10 +4342,10 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/furret-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; fine soft arches; rounded soft tip nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, medium size, downturned outer corners, close-set; fine soft arches; rounded soft tip nose; medium lips.
 ```
 
 ### 163 · 부우부 (Hoothoot)
@@ -4358,7 +4380,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -4372,10 +4394,10 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 **원작 단서:** ‘bushy, cream-colored feather horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘bushy, cream-colored feather horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘bushy, cream-colored feather horns’ → 눈썹 바깥에서 꺾이는 사선 · ‘bushy, cream-colored feather horns’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; thin lips.
 ```
 
 ### 165 · 레디바 (Ledyba)
@@ -4462,7 +4484,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 크고 또렷한 코 |
@@ -4474,12 +4496,12 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** ‘white horn’ → 얼굴형 각지고 선명한 얼굴형 · ‘white horn’ → 눈매 강하게 치켜올라간 눈 · ‘white horn’ → 눈꼬리 각도 올라간 눈꼬리 · ‘white horn’ → 눈썹 바깥에서 꺾이는 사선 · ‘white horn’ → 코 크고 또렷한 코 · ‘white horn’ → 입술 얇은 입술
+**원작 단서:** ‘white horn’ → 얼굴형 각지고 선명한 얼굴형 · ‘white horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘white horn’ → 눈매 강하게 치켜올라간 눈 · ‘white horn’ → 눈꼬리 각도 올라간 눈꼬리 · ‘white horn’ → 눈썹 바깥에서 꺾이는 사선 · ‘white horn’ → 코 크고 또렷한 코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 크고 또렷한 코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; prominent defined nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; prominent defined nose; thin lips.
 ```
 
 ### 169 · 크로뱃 (Crobat)
@@ -4722,7 +4744,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 콧대가 볼록한 매부리코 |
@@ -4734,12 +4756,12 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/xatu-20261011/prompts/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘two long, red feather crests’ → 얼굴형 길고 세련된 얼굴형 · ‘two long, red feather crests’ → 얼굴 길이 긴 얼굴 · ‘two long, red feather crests’ → 얼굴 폭 좁은 얼굴 · ‘two long, red feather crests’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long, slightly hooked beak’ → 코 콧대가 볼록한 매부리코
+**원작 단서:** ‘two long, red feather crests’ → 얼굴형 길고 세련된 얼굴형 · ‘two long, red feather crests’ → 얼굴 길이 긴 얼굴 · ‘two long, red feather crests’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long, slightly hooked beak’ → 코 콧대가 볼록한 매부리코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 볼록한 매부리코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 볼록한 매부리코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; aquiline nose with convex bridge; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; aquiline nose with convex bridge; thin lips.
 ```
 
 ### 179 · 메리프 (Mareep)
@@ -4800,7 +4822,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -4812,8 +4834,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ampharos-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; medium lips.
 ```
 
 ### 182 · 아르코 (Bellossom)
@@ -4912,7 +4938,7 @@ HAIR: high ponytail.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -4924,10 +4950,10 @@ HAIR: high ponytail.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/sudowoodo-20261012/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -5134,7 +5160,7 @@ HAIR: wavy.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -5146,12 +5172,12 @@ HAIR: wavy.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/yanma-20261012/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 bug-wings → 눈 크기 큰 눈 · ‘two gray spikes’ → 입술 얇은 입술
+**원작 단서:** ‘two gray spikes’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 bug-wings → 눈 크기 큰 눈 · ‘two gray spikes’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -5382,7 +5408,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 부드럽고 둥근 얼굴형 · 길이 짧은 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
@@ -5394,10 +5420,12 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/wobbuffet-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘soft body’ → 눈썹 가늘고 완만한 곡선 · ‘soft body’ → 코 코끝이 둥근
+**원작 단서:** ‘soft body’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘soft body’ → 얼굴 길이 짧은 얼굴 · ‘soft body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘soft body’ → 눈썹 가늘고 완만한 곡선 · ‘soft body’ → 코 코끝이 둥근
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 부드럽고 둥근 얼굴형, 얼굴 길이 긴 얼굴 → 짧은 얼굴, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; fine soft arches; rounded soft tip nose; wide mouth.
+FACE (her own structure, not the style's default face): softly rounded face, short length, narrow width; soft rounded jaw; drooping eyes, medium size, downturned outer corners, average spacing; fine soft arches; rounded soft tip nose; wide mouth.
 ```
 
 ### 203 · 키링키 (Girafarig)
@@ -5406,7 +5434,7 @@ FACE (her own structure, not the style's default face): softly elongated face, s
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -5418,12 +5446,12 @@ FACE (her own structure, not the style's default face): softly elongated face, s
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/girafarig-20261012/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 얼굴 폭 좁은 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long neck’ → 눈매 아몬드형 눈 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘many, pink spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 얼굴 폭 좁은 얼굴 · ‘many, pink spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long neck’ → 눈매 아몬드형 눈 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; long arched brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, level outer corners, average spacing; long arched brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -5494,7 +5522,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 짧고 둥근 |
 | 코 | 코끝이 둥근 |
@@ -5506,12 +5534,12 @@ HAIR: bob.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img/records/dunsparce-20261012/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘round head’ → 눈썹 짧고 둥근 · ‘round head’ → 코 코끝이 둥근 · ‘wide mouth’ → 입술 입이 넓은
+**원작 단서:** 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘round head’ → 눈썹 짧고 둥근 · ‘round head’ → 코 코끝이 둥근 · ‘wide mouth’ → 입술 입이 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, close-set; short rounded brows; rounded soft tip nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; soft rounded jaw; drooping eyes, medium size, downturned outer corners, close-set; short rounded brows; rounded soft tip nose; wide mouth.
 ```
 
 ```text
@@ -6082,7 +6110,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
@@ -6094,12 +6122,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/skarmory-20261013/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘triangular crest’ → 얼굴형 각지고 선명한 얼굴형 · ‘long, metallic blue neck’ → 얼굴 길이 긴 얼굴 · ‘long, metallic blue neck’ → 얼굴 폭 좁은 얼굴 · ‘long, metallic blue neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘triangular crest’ → 눈매 가늘고 날카로운 눈 · ‘triangular crest’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘triangular crest’ → 얼굴형 각지고 선명한 얼굴형 · ‘long, metallic blue neck’ → 얼굴 길이 긴 얼굴 · ‘long, metallic blue neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘triangular crest’ → 눈매 가늘고 날카로운 눈 · ‘triangular crest’ → 눈썹 바깥에서 꺾이는 사선 · ‘pointed beak’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; angled brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; angled brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -6142,7 +6170,7 @@ HAIR: short ponytail.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
@@ -6154,10 +6182,12 @@ HAIR: short ponytail.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/houndoom-20261013/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long, curved gray horns’ → 얼굴형 길고 세련된 얼굴형 · ‘long, curved gray horns’ → 얼굴 길이 긴 얼굴 · ‘long, curved gray horns’ → 얼굴 폭 좁은 얼굴 · ‘long, curved gray horns’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, curved gray horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘long, curved gray horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘long, curved gray horns’ → 얼굴 길이 긴 얼굴 · ‘long, curved gray horns’ → 얼굴 폭 좁은 얼굴 · ‘long, curved gray horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, curved gray horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -6170,7 +6200,7 @@ HAIR: long straight.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -6182,12 +6212,12 @@ HAIR: long straight.
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img-2/records/kingdra-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**원작 단서:** ‘thin, blue spines’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, blue spines’ → 얼굴 길이 긴 얼굴 · ‘thin, blue spines’ → 얼굴 폭 좁은 얼굴 · ‘thin, blue spines’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘thin, blue spines’ → 코 길고 코끝이 내려온
+**원작 단서:** ‘thin, blue spines’ → 얼굴 길이 긴 얼굴 · ‘thin, blue spines’ → 얼굴 폭 좁은 얼굴 · 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘thin, blue spines’ → 코 길고 코끝이 내려온
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; straight medium brows; long nose with low tip; fuller lower lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; narrow eyes, small size, level outer corners, wide-set; straight medium brows; long nose with low tip; fuller lower lip.
 ```
 
 ### 231 · 코코리 (Phanpy)
@@ -6282,7 +6312,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -6296,10 +6326,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; long arched brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, wide-set; long arched brows; balanced nose; medium lips.
 ```
 
 ### 235 · 루브도 (Smeargle)
@@ -6574,7 +6604,7 @@ HAIR: medium wolf cut.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 길고 코끝이 내려온 |
@@ -6586,12 +6616,12 @@ HAIR: medium wolf cut.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/suicune-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘thick, purple mane’ → 눈썹 숱 많고 결이 보이는
+**원작 단서:** 무게 187kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘thick, purple mane’ → 눈썹 숱 많고 결이 보이는
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; feathered full brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; almond eyes, medium size, downturned outer corners, wide-set; feathered full brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -6694,7 +6724,7 @@ HAIR: ponytail.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -6706,10 +6736,12 @@ HAIR: ponytail.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/lugia-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long, slender neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, slender neck’ → 얼굴 길이 긴 얼굴 · ‘long, slender neck’ → 얼굴 폭 좁은 얼굴 · ‘long, slender neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, slender neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘blue or black spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘long, slender neck’ → 얼굴 길이 긴 얼굴 · ‘long, slender neck’ → 얼굴 폭 좁은 얼굴 · ‘blue or black spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, slender neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; straight medium brows; straight slender bridge nose; medium lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, close-set; straight medium brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
@@ -6806,7 +6838,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -6818,10 +6850,12 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **머리:** 확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/grovyle-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; medium lips.
 ```
 
 ### 254 · 나무킹 (Sceptile)
@@ -6918,7 +6952,7 @@ HAIR: high ponytail.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 콧대가 볼록한 매부리코 |
@@ -6930,12 +6964,12 @@ HAIR: high ponytail.
 
 **머리:** 확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다
 
-**원작 단서:** ‘hooked beak’ → 눈썹 바깥에서 꺾이는 사선 · ‘hooked beak’ → 코 콧대가 볼록한 매부리코
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘hooked beak’ → 눈썹 바깥에서 꺾이는 사선 · ‘hooked beak’ → 코 콧대가 볼록한 매부리코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 콧대가 볼록한 매부리코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 콧대가 볼록한 매부리코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; aquiline nose with convex bridge; thin lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; aquiline nose with convex bridge; thin lips.
 ```
 
 ### 258 · 물짱이 (Mudkip)
@@ -7052,7 +7086,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
@@ -7066,10 +7100,10 @@ HAIR: bob.
 
 **원작 단서:** ‘dark triangular eye markings’ → 눈매 강하게 치켜올라간 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; wide mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; sharp eyes, medium size, level outer corners, wide-set; thick low brows; balanced nose; wide mouth.
 ```
 
 ```text
@@ -7110,7 +7144,7 @@ HAIR: medium shaggy.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 보통 |
@@ -7120,12 +7154,12 @@ HAIR: medium shaggy.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/linoone-20261013/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long cheek fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long cheek fur’ → 얼굴 길이 긴 얼굴 · ‘long cheek fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long cheek fur’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘small, tuft-like ears’ → 눈썹 숱 많고 결이 보이는
+**원작 단서:** ‘long cheek fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long cheek fur’ → 얼굴 길이 긴 얼굴 · ‘small pointed teeth’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long cheek fur’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘small, tuft-like ears’ → 눈썹 숱 많고 결이 보이는
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; feathered full brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; feathered full brows; balanced nose; medium lips.
 ```
 
 ```text
@@ -7468,7 +7502,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 곧고 가는 콧대 |
@@ -7482,8 +7516,10 @@ HAIR: bob.
 
 **원작 단서:** ‘small, narrow eyes’ → 눈매 가늘고 날카로운 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · ‘pointed, yellow beak’ → 코 곧고 가는 콧대
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, upturned outer corners, average spacing; thin straight brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, upturned outer corners, average spacing; thin straight brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -7612,7 +7648,7 @@ HAIR: medium wavy.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -7624,12 +7660,12 @@ HAIR: medium wavy.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/gardevoir-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘short spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · ‘short spikes’ → 입술 얇은 입술
+**원작 단서:** ‘short spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘short spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · ‘short spikes’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -8350,7 +8386,7 @@ HAIR: medium top knot.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -8362,10 +8398,10 @@ HAIR: medium top knot.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/medicham-20261019/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -8672,7 +8708,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -8686,8 +8722,10 @@ HAIR: bob.
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 악 타입 → 눈썹 바깥에서 꺾이는 사선 · ‘large mouth’ → 입술 입이 넓은
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -8964,7 +9002,7 @@ HAIR: medium curly, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -8976,12 +9014,12 @@ HAIR: medium curly, straight bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/vibrava-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 bug-wings → 눈 크기 큰 눈 · ‘two large white teeth’ → 입술 아랫입술이 더 도톰한
+**원작 단서:** 드래곤 타입 → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 bug-wings → 눈 크기 큰 눈 · ‘two large white teeth’ → 입술 아랫입술이 더 도톰한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; fuller lower lip.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; fuller lower lip.
 ```
 
 ```text
@@ -8994,7 +9032,7 @@ HAIR: long twin tail, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -9008,10 +9046,10 @@ HAIR: long twin tail, side-swept bangs.
 
 **원작 단서:** 몸 형태 wings → 눈 간격 눈 사이가 가까운
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, close-set; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, close-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -9162,7 +9200,7 @@ HAIR: long twin tail, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -9172,12 +9210,12 @@ HAIR: long twin tail, choppy bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/seviper-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
+**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 작은 눈 → 보통, 입술 얇은 입술 → 도톰한 입술
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 작은 눈 → 보통, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; full lips.
 ```
 
 ```text
@@ -9560,7 +9598,7 @@ HAIR: medium wavy, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -9572,10 +9610,12 @@ HAIR: medium wavy, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/milotic-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘straight spike’ → 턱선 · 턱끝 각지고 또렷한 턱
+**원작 단서:** ‘straight spike’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘straight spike’ → 턱선 · 턱끝 각지고 또렷한 턱
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; long nose with low tip; full lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; long nose with low tip; full lips.
 ```
 
 ```text
@@ -9764,7 +9804,7 @@ HAIR: long space buns, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -9774,10 +9814,12 @@ HAIR: long space buns, long side bangs covering one eye.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tropius-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; long arched brows; straight slender bridge nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, wide-set; long arched brows; straight slender bridge nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -10048,7 +10090,7 @@ HAIR: medium space buns, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
@@ -10058,12 +10100,12 @@ HAIR: medium space buns, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/huntail-20261024-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘serpentine body’ → 얼굴 길이 긴 얼굴 · ‘serpentine body’ → 얼굴 폭 좁은 얼굴 · ‘serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘serpentine body’ → 눈매 아몬드형 눈
+**원작 단서:** ‘serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘serpentine body’ → 얼굴 길이 긴 얼굴 · ‘serpentine body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘serpentine body’ → 눈매 아몬드형 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; medium lips.
 ```
 
 ```text
@@ -10450,7 +10492,7 @@ HAIR: long feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -10462,12 +10504,12 @@ HAIR: long feathered, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/latios-20261025-automation/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘thick neck’ → 얼굴형 길고 세련된 얼굴형 · ‘thick neck’ → 얼굴 길이 긴 얼굴 · ‘thick neck’ → 얼굴 폭 좁은 얼굴 · ‘thick neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘thick neck’ → 얼굴형 길고 세련된 얼굴형 · ‘thick neck’ → 얼굴 길이 긴 얼굴 · ‘thick neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; balanced nose; full lips.
 ```
 
 ```text
@@ -10540,7 +10582,7 @@ HAIR: long asymmetric cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -10552,12 +10594,12 @@ HAIR: long asymmetric cut, choppy bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/rayquaza-20261025-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · ‘two white fangs’ → 입술 굴곡 없이 곧은
+**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · ‘two white fangs’ → 턱선 · 턱끝 각지고 또렷한 턱 · 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · ‘two white fangs’ → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; angled brows; long nose with low tip; straight even lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; angled brows; long nose with low tip; straight even lips.
 ```
 
 ```text
@@ -10598,7 +10640,7 @@ HAIR: very long hime cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -10610,10 +10652,10 @@ HAIR: very long hime cut, straight bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/deoxys-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 윗입술이 활 모양인
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 윗입술이 활 모양인 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; balanced nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; balanced nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -10852,7 +10894,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -10866,10 +10908,10 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 
 **원작 단서:** ‘three pointed horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘three pointed horns’ → 눈매 가늘고 날카로운 눈 · ‘three pointed horns’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -11056,7 +11098,7 @@ HAIR: bob.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 코끝이 둥근 |
@@ -11070,8 +11112,10 @@ HAIR: bob.
 
 **원작 단서:** 몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘dark red, round nose’ → 코 코끝이 둥근
 
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
+
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; rounded soft tip nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; rounded soft tip nose; thin lips.
 ```
 
 ```text
@@ -11850,7 +11894,7 @@ HAIR: long space buns, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -11862,10 +11906,12 @@ HAIR: long space buns, long side bangs covering one eye.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/honchkrow-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘broad, short neck’ → 얼굴형 길고 세련된 얼굴형 · ‘broad, short neck’ → 얼굴 길이 긴 얼굴 · ‘broad, short neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘broad, short neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘broad, short neck’ → 얼굴형 길고 세련된 얼굴형 · ‘broad, short neck’ → 얼굴 길이 긴 얼굴 · ‘broad, short neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘broad, short neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, upturned outer corners, close-set; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, upturned outer corners, close-set; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -12250,7 +12296,7 @@ HAIR: medium high ponytail, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -12260,12 +12306,12 @@ HAIR: medium high ponytail, parted bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gabite-20261024/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · 땅 타입 → 코 콧대가 낮고 넓은
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · 땅 타입 → 코 콧대가 낮고 넓은
 
-**조정:** 같은 계열 딥상어동와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은
+**조정:** 같은 계열 딥상어동와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; broad low bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; broad low bridge nose; wide mouth.
 ```
 
 ```text
@@ -12364,7 +12410,7 @@ HAIR: medium chignon, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -12378,10 +12424,10 @@ HAIR: medium chignon, no bangs.
 
 **원작 단서:** ‘long snout’ → 얼굴 길이 긴 얼굴 · ‘short, round spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘short, round spike’ → 눈매 가늘고 날카로운 눈 · ‘long snout’ → 코 길고 코끝이 내려온 · ‘short, round spike’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 보통 → 길고 코끝이 내려온
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 보통 → 길고 코끝이 내려온 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -13130,7 +13176,7 @@ HAIR: medium ponytail, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -13142,12 +13188,12 @@ HAIR: medium ponytail, parted bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gallade-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘thin green torso’ → 얼굴형 길고 세련된 얼굴형 · ‘thin green torso’ → 얼굴 길이 긴 얼굴 · ‘thin green torso’ → 얼굴 폭 좁은 얼굴 · ‘thin green torso’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘sharp red plate’ → 눈매 가늘고 날카로운 눈 · ‘sharp red plate’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘sharp red plate’ → 얼굴형 각지고 선명한 얼굴형 · ‘thin green torso’ → 얼굴 길이 긴 얼굴 · ‘thin green torso’ → 얼굴 폭 좁은 얼굴 · ‘sharp red plate’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘sharp red plate’ → 눈매 가늘고 날카로운 눈 · ‘sharp red plate’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 얇은 입술 → 굴곡 없이 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; straight even lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; straight even lips.
 ```
 
 ```text
@@ -13188,7 +13234,7 @@ HAIR: long blunt cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -13200,10 +13246,12 @@ HAIR: long blunt cut, straight bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/dusknoir-20261026/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 고스트 타입 → 눈매 살짝 처진 부드러운 눈
+**원작 단서:** 몸 형태 arms → 턱선 · 턱끝 보통 · 고스트 타입 → 눈매 살짝 처진 부드러운 눈
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; balanced nose; wide mouth.
 ```
 
 ```text
@@ -13480,7 +13528,7 @@ HAIR: very long braid, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -13492,12 +13540,12 @@ HAIR: very long braid, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/giratina-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 얼굴 폭 좁은 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘two large horns’ → 눈매 가늘고 날카로운 눈 · ‘two large horns’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘two large horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two large horns’ → 눈매 가늘고 날카로운 눈 · ‘two large horns’ → 눈썹 바깥에서 꺾이는 사선 · ‘long neck’ → 코 길고 코끝이 내려온
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; angled brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, close-set; angled brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -13598,7 +13646,7 @@ HAIR: short twin tail, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -13610,10 +13658,10 @@ HAIR: short twin tail, parted bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/darkrai-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; drooping eyes, medium size, downturned outer corners, close-set; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; drooping eyes, medium size, downturned outer corners, close-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -13656,7 +13704,7 @@ HAIR: very long half-up, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -13668,12 +13716,12 @@ HAIR: very long half-up, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/arceus-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 키 3.2m → 얼굴형 길고 세련된 얼굴형 · 키 3.2m → 얼굴 길이 긴 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 무게 320kg → 코 콧대가 낮고 넓은
+**원작 단서:** 키 3.2m → 얼굴형 길고 세련된 얼굴형 · 키 3.2m → 얼굴 길이 긴 얼굴 · 무게 320kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 무게 320kg → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; straight medium brows; broad low bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; almond eyes, medium size, downturned outer corners, wide-set; straight medium brows; broad low bridge nose; thin lips.
 ```
 
 ```text
@@ -13716,7 +13764,7 @@ HAIR: very long twin tail, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -13730,10 +13778,10 @@ HAIR: very long twin tail, straight bangs.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; long arched brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; long arched brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -13774,7 +13822,7 @@ HAIR: medium half-up, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -13786,12 +13834,12 @@ HAIR: medium half-up, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/serperior-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
+**원작 단서:** 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; long arched brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; long arched brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -13954,7 +14002,7 @@ HAIR: medium top knot, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
@@ -13966,12 +14014,12 @@ HAIR: medium top knot, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/samurott-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘spear-like horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘spear-like horn’ → 눈매 가늘고 날카로운 눈 · ‘spear-like horn’ → 눈썹 굵고 눈 가까이 낮은 · ‘spear-like horn’ → 입술 얇은 입술
+**원작 단서:** ‘spear-like horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘spear-like horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘spear-like horn’ → 눈매 가늘고 날카로운 눈 · ‘spear-like horn’ → 눈썹 굵고 눈 가까이 낮은 · ‘spear-like horn’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, average spacing; thick low brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -14072,7 +14120,7 @@ HAIR: short twin tail, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -14084,12 +14132,12 @@ HAIR: short twin tail, choppy bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/herdier-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long, cream fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long, cream fur’ → 얼굴 길이 긴 얼굴 · ‘long, cream fur’ → 얼굴 폭 좁은 얼굴 · ‘long, cream fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, cream fur’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘long, cream fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long, cream fur’ → 얼굴 길이 긴 얼굴 · ‘long, cream fur’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long, cream fur’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long, cream fur’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 길고 바깥 아치가 선명한
+**조정:** 같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 길고 바깥 아치가 선명한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; long arched brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, wide-set; long arched brows; balanced nose; full lips.
 ```
 
 ```text
@@ -14510,7 +14558,7 @@ HAIR: long feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -14522,12 +14570,12 @@ HAIR: long feathered, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/blitzle-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘spiky, white mane’ → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘spiky, white mane’ → 눈썹 바깥에서 꺾이는 사선 · ‘spiky, white mane’ → 입술 얇은 입술
+**원작 단서:** ‘spiky, white mane’ → 얼굴형 각지고 선명한 얼굴형 · ‘spiky, white mane’ → 턱선 · 턱끝 각지고 또렷한 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘spiky, white mane’ → 눈썹 바깥에서 꺾이는 사선 · ‘spiky, white mane’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, large size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, large size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -14540,7 +14588,7 @@ HAIR: medium wolf cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -14552,10 +14600,10 @@ HAIR: medium wolf cut, choppy bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/zebstrika-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; thick low brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, average spacing; thick low brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -15158,7 +15206,7 @@ HAIR: long twin tail, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -15170,12 +15218,12 @@ HAIR: long twin tail, asymmetric bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/scolipede-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 키 2.5m → 얼굴형 길고 세련된 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · 몸 형태 armor → 눈썹 굵고 눈 가까이 낮은
+**원작 단서:** 키 2.5m → 얼굴형 길고 세련된 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · 몸 형태 armor → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 armor → 눈썹 굵고 눈 가까이 낮은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; thick low brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; sharp eyes, medium size, upturned outer corners, average spacing; thick low brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -15584,7 +15632,7 @@ HAIR: medium top knot, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -15598,10 +15646,10 @@ HAIR: medium top knot, asymmetric bangs.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; angled brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; angled brows; balanced nose; full lips.
 ```
 
 ```text
@@ -15780,7 +15828,7 @@ HAIR: short feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 곧고 가는 콧대 |
@@ -15790,12 +15838,12 @@ HAIR: short feathered, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/archeops-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘scaly snake-like head’ → 얼굴형 길고 세련된 얼굴형 · ‘scaly snake-like head’ → 얼굴 길이 긴 얼굴 · ‘scaly snake-like head’ → 얼굴 폭 좁은 얼굴 · ‘scaly snake-like head’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘scaly snake-like head’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘scaly snake-like head’ → 얼굴형 길고 세련된 얼굴형 · ‘scaly snake-like head’ → 얼굴 길이 긴 얼굴 · ‘scaly snake-like head’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘scaly snake-like head’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘scaly snake-like head’ → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, level outer corners, close-set; thin straight brows; straight slender bridge nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, small size, level outer corners, close-set; thin straight brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
@@ -15898,7 +15946,7 @@ HAIR: medium wolf cut, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -15912,12 +15960,12 @@ HAIR: medium wolf cut, asymmetric bangs.
 
 **머리 단서:** ‘large, red, voluminous mane’ → 헤어스타일 덥수룩하게 흐트러진 컷 · 키 1.6m → 머리 길이 긴 머리 · 악 타입 → 앞머리 좌우 길이가 다른 앞머리
 
-**원작 단서:** ‘pointed snout’ → 얼굴 길이 긴 얼굴 · 악 타입 → 눈매 강하게 치켜올라간 눈
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘pointed snout’ → 얼굴 길이 긴 얼굴 · 악 타입 → 눈매 강하게 치켜올라간 눈
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; straight slender bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; straight slender bridge nose; wide mouth.
 ```
 
 ```text
@@ -15994,7 +16042,7 @@ HAIR: long ponytail, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -16006,12 +16054,12 @@ HAIR: long ponytail, curtain bangs.
 
 **머리 단서:** ‘two white, bow-shaped feelers’ → 헤어스타일 트윈테일 · 키 0.4m → 머리 길이 짧은 머리 · ‘white zigzagging line’ → 앞머리 좌우 길이가 다른 앞머리
 
-**원작 단서:** ‘two large blue eyes’ → 눈매 큰 눈 · ‘two large blue eyes’ → 눈 크기 큰 눈
+**원작 단서:** 키 0.4m → 얼굴 길이 짧은 얼굴 · ‘two large blue eyes’ → 눈매 큰 눈 · ‘two large blue eyes’ → 눈 크기 큰 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 짧은 얼굴
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; small mouth.
+FACE (her own structure, not the style's default face): oval face, short length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; small mouth.
 ```
 
 ```text
@@ -16024,7 +16072,7 @@ HAIR: short twin tail, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -16036,10 +16084,10 @@ HAIR: short twin tail, asymmetric bangs.
 
 **원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈매 가늘고 날카로운 눈 → 아몬드형 눈 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 사이드 포니테일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈매 가늘고 날카로운 눈 → 아몬드형 눈 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 사이드 포니테일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -16052,7 +16100,7 @@ HAIR: medium side ponytail, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 곧고 가는 콧대 |
@@ -16064,10 +16112,10 @@ HAIR: medium side ponytail, parted bangs.
 
 **원작 단서:** 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 같은 계열 고디보미와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 히메컷 → 사이드 포니테일
+**조정:** 같은 계열 고디보미와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 히메컷 → 사이드 포니테일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; thin straight brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; thin straight brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -16204,7 +16252,7 @@ HAIR: short feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -16216,12 +16264,12 @@ HAIR: short feathered, side-swept bangs.
 
 **머리 단서:** 몸 형태 wings → 헤어스타일 끝을 가볍게 친 페더컷
 
-**원작 단서:** ‘long, curving neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, curving neck’ → 얼굴 길이 긴 얼굴 · ‘long, curving neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, curving neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘strong bill’ → 코 콧대가 낮고 넓은
+**원작 단서:** ‘long, curving neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, curving neck’ → 얼굴 길이 긴 얼굴 · ‘long, curving neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long, curving neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘strong bill’ → 코 콧대가 낮고 넓은
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 끝을 가볍게 친 페더컷
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 끝을 가볍게 친 페더컷 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, close-set; straight medium brows; broad low bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, close-set; straight medium brows; broad low bridge nose; wide mouth.
 ```
 
 ```text
@@ -16836,7 +16884,7 @@ HAIR: long blunt cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -16848,12 +16896,12 @@ HAIR: long blunt cut, straight bangs.
 
 **머리 단서:** ‘wavy yellow side stripe’ → 헤어스타일 레트로 웨이브 · 키 0.2m → 머리 길이 짧은 머리
 
-**원작 단서:** ‘white tapered eel body’ → 얼굴형 길고 세련된 얼굴형 · ‘white tapered eel body’ → 얼굴 길이 긴 얼굴 · ‘white tapered eel body’ → 얼굴 폭 좁은 얼굴 · ‘white tapered eel body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘white tapered eel body’ → 눈매 아몬드형 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘white tapered eel body’ → 얼굴형 길고 세련된 얼굴형 · ‘white tapered eel body’ → 얼굴 길이 긴 얼굴 · ‘white tapered eel body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘white tapered eel body’ → 눈매 아몬드형 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · ‘white tapered eel body’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, level outer corners, wide-set; long arched brows; straight slender bridge nose; fuller lower lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, small size, level outer corners, wide-set; long arched brows; straight slender bridge nose; fuller lower lip.
 ```
 
 ```text
@@ -16866,7 +16914,7 @@ HAIR: short finger waves, long side bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 큰 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -16880,10 +16928,10 @@ HAIR: short finger waves, long side bangs.
 
 **원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · ‘small pupils’ → 눈 크기 작은 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브
+**조정:** [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, wide-set; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, small size, level outer corners, wide-set; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -16926,7 +16974,7 @@ HAIR: long locs, long side bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 작고 여린 코 |
@@ -16938,12 +16986,12 @@ HAIR: long locs, long side bangs.
 
 **머리 단서:** 키 0.5m → 헤어스타일 짧고 가벼운 픽시컷 · 키 0.5m → 머리 길이 짧은 머리
 
-**원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈 · 에스퍼 타입 → 눈썹 가늘고 곧은
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 에스퍼 타입 → 눈매 아몬드형 눈 · 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; thin straight brows; small delicate nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; thin straight brows; small delicate nose; full lips.
 ```
 
 ```text
@@ -16956,7 +17004,7 @@ HAIR: pixie cut, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 보통 |
@@ -16970,10 +17018,10 @@ HAIR: pixie cut, parted bangs.
 
 **원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈
 
-**조정:** 같은 계열 리그레와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 작고 여린 코 → 보통
+**조정:** 같은 계열 리그레와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 작고 여린 코 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; fine soft arches; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; fine soft arches; balanced nose; full lips.
 ```
 
 ```text
@@ -17050,7 +17098,7 @@ HAIR: medium windswept, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 짧고 둥근 |
 | 코 | 보통 |
@@ -17064,12 +17112,12 @@ HAIR: medium windswept, long side bangs covering one eye.
 
 **머리 단서:** ‘large vertical stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
 
-**원작 단서:** 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · ‘striped, round head’ → 눈썹 짧고 둥근 · ‘small, black spikes’ → 입술 얇은 입술
+**원작 단서:** ‘small, black spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘small, black spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · ‘striped, round head’ → 눈썹 짧고 둥근 · ‘small, black spikes’ → 입술 얇은 입술
 
-**조정:** 같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로
+**조정:** 같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; short rounded brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; drooping eyes, medium size, downturned outer corners, average spacing; short rounded brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -17388,7 +17436,7 @@ HAIR: medium cornrows, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -17402,10 +17450,12 @@ HAIR: medium cornrows, no bangs.
 
 **머리 단서:** 격투 타입 → 헤어스타일 정수리에 묶어 올린 번
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; balanced nose; fuller lower lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; balanced nose; fuller lower lip.
 ```
 
 ```text
@@ -17718,7 +17768,7 @@ HAIR: long shaggy, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -17732,10 +17782,12 @@ HAIR: long shaggy, side-swept bangs.
 
 **머리 단서:** ‘yellow stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; long nose with low tip; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; straight medium brows; long nose with low tip; full lips.
 ```
 
 ```text
@@ -17934,7 +17986,7 @@ HAIR: long locs, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -17948,12 +18000,12 @@ HAIR: long locs, parted bangs.
 
 **머리 단서:** ‘black bands’ → 헤어스타일 두피에 붙여 땋은 콘로 · 키 2.1m → 머리 길이 긴 머리
 
-**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 강철 타입 → 입술 굴곡 없이 곧은
+**원작 단서:** 격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 강철 타입 → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; long nose with low tip; straight even lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; long nose with low tip; straight even lips.
 ```
 
 ```text
@@ -18094,7 +18146,7 @@ HAIR: medium windswept, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -18108,12 +18160,12 @@ HAIR: medium windswept, choppy bangs.
 
 **머리 단서:** ‘neck rings’ → 헤어스타일 두피에 붙여 땋은 콘로
 
-**원작 단서:** ‘long and slender neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long and slender neck’ → 얼굴 길이 긴 얼굴 · ‘long and slender neck’ → 얼굴 폭 좁은 얼굴 · ‘long and slender neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long and slender neck’ → 눈매 아몬드형 눈 · ‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long and slender neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long and slender neck’ → 얼굴 길이 긴 얼굴 · 무게 330kg → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘long and slender neck’ → 눈매 아몬드형 눈 · ‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한 · ‘long and slender neck’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; long arched brows; straight slender bridge nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; almond eyes, medium size, downturned outer corners, wide-set; long arched brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
@@ -18190,7 +18242,7 @@ HAIR: long twin braids, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 크고 또렷한 코 |
@@ -18204,12 +18256,12 @@ HAIR: long twin braids, choppy bangs.
 
 **머리 단서:** 얼음 타입 → 헤어스타일 곧은 생머리 · 키 3m → 머리 길이 매우 긴 머리 · ‘two spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘long, gray neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, gray neck’ → 얼굴 길이 긴 얼굴 · ‘long, gray neck’ → 얼굴 폭 좁은 얼굴 · ‘long, gray neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘two spikes’ → 눈매 가늘고 날카로운 눈 · ‘two spikes’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘long, gray neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, gray neck’ → 얼굴 길이 긴 얼굴 · ‘two spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two spikes’ → 눈매 가늘고 날카로운 눈 · ‘two spikes’ → 눈썹 바깥에서 꺾이는 사선 · ‘two spikes’ → 코 크고 또렷한 코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 곧은 생머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; angled brows; prominent defined nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; angled brows; prominent defined nose; thin lips.
 ```
 
 ```text
@@ -18252,7 +18304,7 @@ HAIR: medium afro, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -18268,10 +18320,10 @@ HAIR: medium afro, no bangs.
 
 **원작 단서:** 에스퍼 타입 → 눈매 아몬드형 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; long arched brows; balanced nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; long arched brows; balanced nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -18466,7 +18518,7 @@ HAIR: long wolf cut, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -18480,10 +18532,10 @@ HAIR: long wolf cut, side-swept bangs.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 에스퍼 타입 → 눈매 아몬드형 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; long arched brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -18556,7 +18608,7 @@ HAIR: medium undercut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -18570,10 +18622,10 @@ HAIR: medium undercut, choppy bangs.
 
 **원작 단서:** 악 타입 → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; angled brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; angled brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -19064,7 +19116,7 @@ HAIR: long space buns, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -19078,10 +19130,10 @@ HAIR: long space buns, no bangs.
 
 **원작 단서:** ‘pointed snout’ → 얼굴 길이 긴 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long rectangular ears’ → 눈썹 길고 바깥 아치가 선명한 · ‘pointed snout’ → 코 길고 코끝이 내려온
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; long arched brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, medium size, downturned outer corners, wide-set; long arched brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -19150,7 +19202,7 @@ HAIR: very long twin braids, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -19164,10 +19216,10 @@ HAIR: very long twin braids, parted bangs.
 
 **원작 단서:** 강철 타입 → 얼굴형 각지고 선명한 얼굴형 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · 몸 형태 blob → 입술 도톰한 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 도톰한 입술
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): angular face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; straight medium brows; balanced nose; full lips.
 ```
 
 ```text
@@ -19636,7 +19688,7 @@ HAIR: pixie cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 짧고 코끝이 들린 |
@@ -19650,12 +19702,12 @@ HAIR: pixie cut, choppy bangs.
 
 **머리 단서:** ‘orange spikes’ → 헤어스타일 좌우 길이가 다른 비대칭컷 · ‘orange spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘orange spikes’ → 눈매 가늘고 날카로운 눈 · ‘orange spikes’ → 눈썹 바깥에서 꺾이는 사선 · ‘orange spikes’ → 입술 얇은 입술
+**원작 단서:** ‘orange spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘orange spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘orange spikes’ → 눈매 가늘고 날카로운 눈 · ‘orange spikes’ → 눈썹 바깥에서 꺾이는 사선 · ‘orange spikes’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 짧고 코끝이 들린
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 짧고 코끝이 들린 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; angled brows; short nose with upturned tip; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, medium size, level outer corners, wide-set; angled brows; short nose with upturned tip; thin lips.
 ```
 
 ```text
@@ -19732,7 +19784,7 @@ HAIR: long feathered, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 보통 |
@@ -19744,12 +19796,12 @@ HAIR: long feathered, choppy bangs.
 
 **머리 단서:** ‘dark blue crystal’ → 헤어스타일 곧은 생머리
 
-**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long neck’ → 눈썹 가늘고 곧은
+**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long neck’ → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; thin straight brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, wide-set; thin straight brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -20126,7 +20178,7 @@ HAIR: medium messy bun, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 보통 |
@@ -20140,12 +20192,12 @@ HAIR: medium messy bun, long side bangs covering one eye.
 
 **머리 단서:** ‘crescent-shaped tuft’ → 헤어스타일 흐트러진 번 · ‘long, light pink hair’(원작의 머리칼) → 머리 길이 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
-**원작 단서:** 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘crescent-shaped tuft’ → 눈썹 숱 많고 결이 보이는
+**원작 단서:** 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · 고스트 타입 → 눈매 살짝 처진 부드러운 눈 · 몸 형태 blob → 눈 간격 눈 사이가 넓은 · ‘crescent-shaped tuft’ → 눈썹 숱 많고 결이 보이는
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 흐트러진 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, wide-set; feathered full brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; drooping eyes, medium size, downturned outer corners, wide-set; feathered full brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -20282,7 +20334,7 @@ HAIR: medium afro, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -20296,12 +20348,12 @@ HAIR: medium afro, choppy bangs.
 
 **머리 단서:** 키 3m → 머리 길이 매우 긴 머리 · ‘upward curving horn’ → 앞머리 가운데를 가른 앞머리
 
-**원작 단서:** 키 3m → 얼굴형 길고 세련된 얼굴형 · 키 3m → 얼굴 길이 긴 얼굴 · ‘upward curving horn’ → 턱선 · 턱끝 각지고 또렷한 턱
+**원작 단서:** ‘upward curving horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · 키 3m → 얼굴 길이 긴 얼굴 · ‘upward curving horn’ → 턱선 · 턱끝 각지고 또렷한 턱
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 머리를 둘러 땋은 왕관형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 머리를 둘러 땋은 왕관형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, close-set; long arched brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, close-set; long arched brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -20346,7 +20398,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 콧대가 낮고 넓은 |
@@ -20360,12 +20412,12 @@ HAIR: side-shaved long hair, asymmetric bangs.
 
 **머리 단서:** 몸 형태 squiggle → 헤어스타일 한 갈래 땋은 머리 · 몸 형태 squiggle → 머리 길이 매우 긴 머리
 
-**원작 단서:** ‘black serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘black serpentine body’ → 얼굴 길이 긴 얼굴 · ‘black serpentine body’ → 얼굴 폭 좁은 얼굴 · ‘black serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘black serpentine body’ → 눈썹 길고 바깥 아치가 선명한 · 땅 타입 → 코 콧대가 낮고 넓은
+**원작 단서:** ‘black serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘black serpentine body’ → 얼굴 길이 긴 얼굴 · 무게 305kg → 턱선 · 턱끝 넓고 각진 사각 턱 · ‘black serpentine body’ → 눈썹 길고 바깥 아치가 선명한 · 땅 타입 → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한, 코 보통 → 콧대가 낮고 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한, 코 보통 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; long arched brows; broad low bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; narrow eyes, medium size, level outer corners, average spacing; long arched brows; broad low bridge nose; thin lips.
 ```
 
 ```text
@@ -20534,7 +20586,7 @@ HAIR: medium feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 콧대가 볼록한 매부리코 |
@@ -20548,10 +20600,10 @@ HAIR: medium feathered, side-swept bangs.
 
 **원작 단서:** ‘hooked dark green beak’ → 코 콧대가 볼록한 매부리코 · ‘hooked dark green beak’ → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 보통 → 콧대가 볼록한 매부리코, 입술 얇은 입술 → 입이 작은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 보통 → 콧대가 볼록한 매부리코, 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; aquiline nose with convex bridge; small mouth.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; aquiline nose with convex bridge; small mouth.
 ```
 
 ```text
@@ -20714,7 +20766,7 @@ HAIR: medium wavy, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 보통 |
@@ -20726,12 +20778,12 @@ HAIR: medium wavy, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/primarina-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 페어리 타입 → 눈썹 가늘고 완만한 곡선
+**원작 단서:** 몸 형태 fish → 얼굴형 균형 잡힌 타원형 · 몸 형태 fish → 눈 간격 눈 사이가 넓은 · 페어리 타입 → 눈썹 가늘고 완만한 곡선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; fine soft arches; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, wide-set; fine soft arches; balanced nose; full lips.
 ```
 
 ```text
@@ -20828,7 +20880,7 @@ HAIR: long feathered, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 짧은 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -20840,10 +20892,12 @@ HAIR: long feathered, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/yungoos-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** 키 0.4m → 얼굴 길이 짧은 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 짧은 얼굴
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, large size, level outer corners, wide-set; thick low brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): oval face, short length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, large size, level outer corners, wide-set; thick low brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -21304,7 +21358,7 @@ HAIR: medium low bun, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 콧대가 낮고 넓은 |
@@ -21318,12 +21372,12 @@ HAIR: medium low bun, side-swept bangs.
 
 **머리 단서:** 땅 타입 → 헤어스타일 목덜미 낮은 번
 
-**원작 단서:** 키 2.5m → 얼굴형 길고 세련된 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 땅 타입 → 코 콧대가 낮고 넓은
+**원작 단서:** 키 2.5m → 얼굴형 길고 세련된 얼굴형 · 키 2.5m → 얼굴 길이 긴 얼굴 · 무게 920kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 땅 타입 → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 층감이 강한 울프컷 → 목덜미 낮은 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 층감이 강한 울프컷 → 목덜미 낮은 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, wide-set; thick low brows; broad low bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; narrow eyes, medium size, level outer corners, wide-set; thick low brows; broad low bridge nose; wide mouth.
 ```
 
 ```text
@@ -21456,7 +21510,7 @@ HAIR: very long half-up, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
@@ -21468,12 +21522,12 @@ HAIR: very long half-up, curtain bangs.
 
 **머리 단서:** ‘thin white stem’ → 헤어스타일 가는 박스 브레이드 · ‘largest mushroom’ → 앞머리 일자 앞머리
 
-**원작 단서:** ‘thin, stem-like body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, stem-like body’ → 얼굴 길이 긴 얼굴 · ‘thin, stem-like body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin, stem-like body’ → 눈매 아몬드형 눈 · ‘thin, stem-like body’ → 눈썹 길고 바깥 아치가 선명한 · 페어리 타입 → 입술 윗입술이 활 모양인
+**원작 단서:** ‘thin, stem-like body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, stem-like body’ → 얼굴 길이 긴 얼굴 · ‘thin, stem-like body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘thin, stem-like body’ → 눈매 아몬드형 눈 · ‘thin, stem-like body’ → 눈썹 길고 바깥 아치가 선명한 · 페어리 타입 → 입술 윗입술이 활 모양인
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, large size, level outer corners, average spacing; long arched brows; small delicate nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, large size, level outer corners, average spacing; long arched brows; small delicate nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -21516,7 +21570,7 @@ HAIR: long crown braid, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -21530,10 +21584,10 @@ HAIR: long crown braid, straight bangs.
 
 **원작 단서:** ‘slit pupils’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; straight medium brows; straight slender bridge nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, wide-set; straight medium brows; straight slender bridge nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -21546,7 +21600,7 @@ HAIR: medium windswept, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -21558,12 +21612,12 @@ HAIR: medium windswept, choppy bangs.
 
 **머리 단서:** 불꽃 타입 → 헤어스타일 바람에 날린 듯한 스타일
 
-**원작 단서:** ‘thin body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin body’ → 얼굴 길이 긴 얼굴 · ‘thin body’ → 얼굴 폭 좁은 얼굴 · ‘thin body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin body’ → 눈매 아몬드형 눈 · ‘thin body’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘thin body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin body’ → 얼굴 길이 긴 얼굴 · ‘thin body’ → 눈매 아몬드형 눈 · ‘thin body’ → 눈썹 길고 바깥 아치가 선명한 · ‘thin body’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 바람에 날린 듯한 스타일
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 바람에 날린 듯한 스타일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, level outer corners, average spacing; long arched brows; straight slender bridge nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; almond eyes, small size, level outer corners, average spacing; long arched brows; straight slender bridge nose; full lips.
 ```
 
 ```text
@@ -21698,7 +21752,7 @@ HAIR: long half-up, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -21712,10 +21766,10 @@ HAIR: long half-up, curtain bangs.
 
 **머리 단서:** ‘shortest leaf’ → 헤어스타일 반묶음
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; balanced nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; long arched brows; balanced nose; full lips.
 ```
 
 ```text
@@ -22250,7 +22304,7 @@ HAIR: very long braid, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -22262,12 +22316,12 @@ HAIR: very long braid, curtain bangs.
 
 **머리 단서:** 몸 형태 blob → 헤어스타일 흐트러진 번 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
-**원작 단서:** 키 3.9m → 얼굴형 길고 세련된 얼굴형 · 키 3.9m → 얼굴 길이 긴 얼굴 · 무게 210kg → 코 콧대가 낮고 넓은 · ‘sharp teeth’ → 입술 굴곡 없이 곧은
+**원작 단서:** 키 3.9m → 얼굴 길이 긴 얼굴 · 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · 무게 210kg → 코 콧대가 낮고 넓은 · ‘sharp teeth’ → 입술 굴곡 없이 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 콧대가 낮고 넓은, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 흐트러진 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 콧대가 낮고 넓은, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; broad low bridge nose; straight even lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; broad low bridge nose; straight even lips.
 ```
 
 ```text
@@ -22586,7 +22640,7 @@ HAIR: very long hime cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 짧고 코끝이 들린 |
@@ -22600,12 +22654,12 @@ HAIR: very long hime cut, straight bangs.
 
 **머리 단서:** 에스퍼 타입 → 헤어스타일 곧은 생머리 · 키 4m → 머리 길이 매우 긴 머리
 
-**원작 단서:** 키 4m → 얼굴형 길고 세련된 얼굴형 · 키 4m → 얼굴 길이 긴 얼굴 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘short snout’ → 코 짧고 코끝이 들린 · ‘slightly curved spike’ → 입술 얇은 입술
+**원작 단서:** ‘slightly curved spike’ → 얼굴형 각지고 선명한 얼굴형 · 키 4m → 얼굴 길이 긴 얼굴 · ‘slightly curved spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · 에스퍼 타입 → 눈매 아몬드형 눈 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘short snout’ → 코 짧고 코끝이 들린
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 곧은 생머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; long arched brows; short nose with upturned tip; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, close-set; long arched brows; short nose with upturned tip; thin lips.
 ```
 
 ```text
@@ -22618,7 +22672,7 @@ HAIR: very long straight, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 보통 |
@@ -22632,10 +22686,12 @@ HAIR: very long straight, parted bangs.
 
 **머리 단서:** ‘four shorter tentacles’ → 헤어스타일 가는 박스 브레이드 · ‘long hair’(원작의 머리칼) → 머리 길이 매우 긴 머리
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드
+**원작 단서:** 바위 타입 → 턱선 · 턱끝 넓고 각진 사각 턱
+
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, average spacing; fine soft arches; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; open rounded eyes, large size, level outer corners, average spacing; fine soft arches; balanced nose; thin lips.
 ```
 
 ```text
@@ -22680,7 +22736,7 @@ HAIR: very long ringlet curls, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -22692,12 +22748,12 @@ HAIR: very long ringlet curls, choppy bangs.
 
 **머리 단서:** ‘yellow, crown-like structure’ → 헤어스타일 머리를 둘러 땋은 왕관형
 
-**원작 단서:** ‘long, thin neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, thin neck’ → 얼굴 길이 긴 얼굴 · ‘long, thin neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, thin neck’ → 눈매 아몬드형 눈 · ‘long, thin neck’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long, thin neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, thin neck’ → 얼굴 길이 긴 얼굴 · ‘long, thin neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long, thin neck’ → 눈매 아몬드형 눈 · ‘long, thin neck’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -22740,7 +22796,7 @@ HAIR: very long side ponytail, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -22754,12 +22810,12 @@ HAIR: very long side ponytail, asymmetric bangs.
 
 **머리 단서:** ‘eight black bamboo stalks’ → 헤어스타일 한 갈래 땋은 머리 · 키 9.2m → 머리 길이 매우 긴 머리 · ‘four white spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘long gray horn’ → 얼굴형 길고 세련된 얼굴형 · ‘long gray horn’ → 얼굴 길이 긴 얼굴 · ‘long gray horn’ → 얼굴 폭 좁은 얼굴 · ‘four white spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long gray horn’ → 눈매 아몬드형 눈 · ‘four white spikes’ → 코 곧고 가는 콧대
+**원작 단서:** ‘four white spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘long gray horn’ → 얼굴 길이 긴 얼굴 · ‘long gray horn’ → 얼굴 폭 좁은 얼굴 · ‘four white spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long gray horn’ → 눈매 아몬드형 눈 · ‘four white spikes’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, downturned outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -22960,7 +23016,7 @@ HAIR: medium wolf cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -22974,12 +23030,12 @@ HAIR: medium wolf cut, choppy bangs.
 
 **머리 단서:** ‘long gray spike’ → 헤어스타일 층감이 강한 울프컷 · ‘long gray spike’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘long gray spike’ → 얼굴형 길고 세련된 얼굴형 · ‘long gray spike’ → 얼굴 길이 긴 얼굴 · ‘long gray spike’ → 얼굴 폭 좁은 얼굴 · ‘long gray spike’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long gray spike’ → 눈매 강하게 치켜올라간 눈 · ‘long gray spike’ → 눈꼬리 각도 올라간 눈꼬리
+**원작 단서:** ‘long gray spike’ → 얼굴형 길고 세련된 얼굴형 · ‘long gray spike’ → 얼굴 길이 긴 얼굴 · ‘long gray spike’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long gray spike’ → 눈매 강하게 치켜올라간 눈 · ‘long gray spike’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, close-set; angled brows; long nose with low tip; fuller lower lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, close-set; angled brows; long nose with low tip; fuller lower lip.
 ```
 
 ```text
@@ -23022,7 +23078,7 @@ HAIR: long blunt cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 큰 눈 · 크기 큰 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 작고 여린 코 |
@@ -23036,10 +23092,12 @@ HAIR: long blunt cut, straight bangs.
 
 **머리 단서:** 고스트 타입 → 헤어스타일 곧은 생머리 · 키 1.8m → 머리 길이 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
-**원작 단서:** ‘slender torso’ → 얼굴형 길고 세련된 얼굴형 · ‘slender torso’ → 얼굴 길이 긴 얼굴 · ‘slender torso’ → 얼굴 폭 좁은 얼굴 · ‘slender torso’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘slender torso’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘slender torso’ → 얼굴형 길고 세련된 얼굴형 · ‘slender torso’ → 얼굴 길이 긴 얼굴 · ‘slender torso’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘slender torso’ → 눈썹 길고 바깥 아치가 선명한
+
+**조정:** 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, large size, level outer corners, average spacing; long arched brows; small delicate nose; wide mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, large size, level outer corners, average spacing; long arched brows; small delicate nose; wide mouth.
 ```
 
 ```text
@@ -23294,7 +23352,7 @@ HAIR: medium twin tail, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -23308,10 +23366,10 @@ HAIR: medium twin tail, side-swept bangs.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; angled brows; balanced nose; medium lips.
 ```
 
 ```text
@@ -23384,7 +23442,7 @@ HAIR: medium finger waves, long side bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -23396,12 +23454,12 @@ HAIR: medium finger waves, long side bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/inteleon-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘thin, wavy, fin-like crest’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, wavy, fin-like crest’ → 얼굴 길이 긴 얼굴 · ‘thin, wavy, fin-like crest’ → 얼굴 폭 좁은 얼굴 · ‘thin, wavy, fin-like crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin, wavy, fin-like crest’ → 눈썹 길고 바깥 아치가 선명한 · ‘thin, wavy, fin-like crest’ → 코 길고 코끝이 내려온
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘thin, wavy, fin-like crest’ → 얼굴 길이 긴 얼굴 · ‘thin, wavy, fin-like crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin, wavy, fin-like crest’ → 눈썹 길고 바깥 아치가 선명한 · ‘thin, wavy, fin-like crest’ → 코 길고 코끝이 내려온
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; long arched brows; long nose with low tip; fuller lower lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; long arched brows; long nose with low tip; fuller lower lip.
 ```
 
 ```text
@@ -24116,7 +24174,7 @@ HAIR: very long twin braids, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -24128,12 +24186,12 @@ HAIR: very long twin braids, curtain bangs.
 
 **머리 단서:** 땅 타입 → 헤어스타일 목덜미 낮은 번 · 키 2.2m → 머리 길이 긴 머리
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘oval green eyes’ → 눈매 큰 눈 · ‘oval green eyes’ → 눈꼬리 각도 수평
+**원작 단서:** 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴 · ‘oval green eyes’ → 눈매 큰 눈 · ‘oval green eyes’ → 눈꼬리 각도 수평
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 목덜미 낮은 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 목덜미 낮은 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, medium size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; narrow tapered chin; open rounded eyes, medium size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -24146,7 +24204,7 @@ HAIR: long low bun, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -24156,12 +24214,12 @@ HAIR: long low bun, side-swept bangs.
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 흐트러진 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리 — 모래뱀에서 이어 같은 묶음
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
+**원작 단서:** 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
 
-**조정:** 같은 계열 모래뱀와 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 입술 얇은 입술 → 보통 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 흐트러진 번
+**조정:** 같은 계열 모래뱀와 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 입술 얇은 입술 → 보통 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
@@ -24326,7 +24384,7 @@ HAIR: long asymmetric cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -24340,12 +24398,12 @@ HAIR: long asymmetric cut, choppy bangs.
 
 **머리 단서:** ‘two fiery whiskers’ → 헤어스타일 바람에 날린 듯한 스타일
 
-**원작 단서:** ‘long, flat body’ → 얼굴형 길고 세련된 얼굴형 · ‘long, flat body’ → 얼굴 길이 긴 얼굴 · ‘long, flat body’ → 얼굴 폭 좁은 얼굴 · ‘long, flat body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long, flat body’ → 코 길고 코끝이 내려온 · 몸 형태 tentacles → 입술 입이 작은
+**원작 단서:** ‘long, flat body’ → 얼굴형 길고 세련된 얼굴형 · ‘long, flat body’ → 얼굴 길이 긴 얼굴 · ‘long, flat body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long, flat body’ → 코 길고 코끝이 내려온 · 몸 형태 tentacles → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 입이 작은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; angled brows; long nose with low tip; small mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, small size, level outer corners, wide-set; angled brows; long nose with low tip; small mouth.
 ```
 
 ```text
@@ -24358,7 +24416,7 @@ HAIR: medium windswept, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 보통 |
@@ -24374,10 +24432,10 @@ HAIR: medium windswept, side-swept bangs.
 
 **원작 단서:** 키 3m → 얼굴형 길고 세련된 얼굴형 · 키 3m → 얼굴 길이 긴 얼굴 · 불꽃 타입 → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 tentacles → 입술 입이 작은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 입이 작은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, average spacing; thick low brows; balanced nose; small mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; sharp eyes, medium size, upturned outer corners, average spacing; thick low brows; balanced nose; small mouth.
 ```
 
 ```text
@@ -24580,7 +24638,7 @@ HAIR: medium ringlet curls, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 보통 |
@@ -24594,12 +24652,12 @@ HAIR: medium ringlet curls, straight bangs.
 
 **머리 단서:** ‘single tentacle’ → 헤어스타일 세로로 말린 드릴 컬 · ‘extremely long, layered, symmetrical hair’(원작의 머리칼) → 머리 길이 긴 머리
 
-**원작 단서:** ‘thin, white body’ → 얼굴형 길고 세련된 얼굴형 · ‘thin, white body’ → 얼굴 길이 긴 얼굴 · ‘thin, white body’ → 얼굴 폭 좁은 얼굴 · ‘thin, white body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘thin, white body’ → 눈매 아몬드형 눈 · ‘thin, white body’ → 눈썹 가늘고 곧은
+**원작 단서:** ‘thin, white body’ → 얼굴 길이 긴 얼굴 · ‘thin, white body’ → 얼굴 폭 좁은 얼굴 · 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · ‘thin, white body’ → 눈매 아몬드형 눈 · ‘thin, white body’ → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, average spacing; thin straight brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; almond eyes, medium size, downturned outer corners, average spacing; thin straight brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -24704,7 +24762,7 @@ HAIR: very long twin tail, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -24716,12 +24774,12 @@ HAIR: very long twin tail, asymmetric bangs.
 
 **머리 단서:** 악 타입 → 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 키 1.6m → 머리 길이 긴 머리 · 악 타입 → 앞머리 좌우 길이가 다른 앞머리
 
-**원작 단서:** ‘long thick forward-leaning neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long thick forward-leaning neck’ → 얼굴 길이 긴 얼굴 · ‘long thick forward-leaning neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long thick forward-leaning neck’ → 눈매 아몬드형 눈 · ‘long thick forward-leaning neck’ → 코 길고 코끝이 내려온
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘long thick forward-leaning neck’ → 얼굴 길이 긴 얼굴 · ‘long thick forward-leaning neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long thick forward-leaning neck’ → 눈매 아몬드형 눈 · ‘long thick forward-leaning neck’ → 코 길고 코끝이 내려온
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 한쪽만 밀고 나머지는 긴 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; thick low brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; thick low brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -25306,10 +25364,10 @@ HAIR: very long straight, long side bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
-| 코 | 길고 코끝이 내려온 |
+| 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 쿨함 · 눈 jade green · a thin, sharp eyeliner |
@@ -25320,12 +25378,12 @@ HAIR: very long straight, long side bangs.
 
 **머리 단서:** ‘rounded triangular plate’ → 헤어스타일 양쪽 동그란 번 · 키 2.3m → 머리 길이 긴 머리 · ‘three curved spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘three curved spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘green neck’ → 얼굴 길이 긴 얼굴 · ‘green neck’ → 얼굴 폭 좁은 얼굴 · ‘green neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘rounded triangular plate’ → 눈매 큰 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘three curved spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘green neck’ → 얼굴 길이 긴 얼굴 · ‘green neck’ → 얼굴 폭 좁은 얼굴 · ‘three curved spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘rounded triangular plate’ → 눈매 큰 눈 · 몸 형태 legs → 눈 간격 눈 사이가 가까운
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 양쪽 동그란 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 양쪽 동그란 번 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; open rounded eyes, medium size, level outer corners, close-set; angled brows; long nose with low tip; full lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; open rounded eyes, medium size, level outer corners, close-set; angled brows; straight slender bridge nose; full lips.
 ```
 
 ```text
@@ -25398,7 +25456,7 @@ HAIR: long braid, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 곧고 가는 콧대 |
@@ -25410,12 +25468,12 @@ HAIR: long braid, asymmetric bangs.
 
 **머리 단서:** ‘three fins’ → 헤어스타일 곧은 생머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
-**원작 단서:** ‘serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘serpentine body’ → 얼굴 길이 긴 얼굴 · ‘serpentine body’ → 얼굴 폭 좁은 얼굴 · ‘serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘serpentine body’ → 눈매 아몬드형 눈 · ‘serpentine body’ → 코 곧고 가는 콧대
+**원작 단서:** ‘serpentine body’ → 얼굴형 길고 세련된 얼굴형 · ‘serpentine body’ → 얼굴 길이 긴 얼굴 · ‘serpentine body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘serpentine body’ → 눈매 아몬드형 눈 · ‘serpentine body’ → 코 곧고 가는 콧대
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 곧은 생머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; small mouth.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, small size, level outer corners, average spacing; straight medium brows; straight slender bridge nose; small mouth.
 ```
 
 ```text
@@ -25458,7 +25516,7 @@ HAIR: long ponytail, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -25474,10 +25532,10 @@ HAIR: long ponytail, long side bangs covering one eye.
 
 **원작 단서:** 키 3m → 얼굴형 길고 세련된 얼굴형 · 키 3m → 얼굴 길이 긴 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; straight medium brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, average spacing; straight medium brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -25490,7 +25548,7 @@ HAIR: long high ponytail, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -25506,10 +25564,10 @@ HAIR: long high ponytail, long side bangs covering one eye.
 
 **원작 단서:** 키 2.8m → 얼굴형 길고 세련된 얼굴형 · 키 2.8m → 얼굴 길이 긴 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 굴곡 없이 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; straight even lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, average spacing; long arched brows; balanced nose; straight even lips.
 ```
 
 ```text
@@ -25554,7 +25612,7 @@ HAIR: very long crown braid, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -25568,12 +25626,12 @@ HAIR: very long crown braid, no bangs.
 
 **머리 단서:** ‘thin tendrils’ → 헤어스타일 한 갈래 땋은 머리 · 키 20m → 머리 길이 매우 긴 머리
 
-**원작 단서:** 키 20m → 얼굴형 길고 세련된 얼굴형 · 키 20m → 얼굴 길이 긴 얼굴 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · 무게 950kg → 코 콧대가 낮고 넓은
+**원작 단서:** 키 20m → 얼굴형 길고 세련된 얼굴형 · 키 20m → 얼굴 길이 긴 얼굴 · 무게 950kg → 턱선 · 턱끝 넓고 각진 사각 턱 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · 무게 950kg → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; angled brows; broad low bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; narrow eyes, small size, level outer corners, close-set; angled brows; broad low bridge nose; thin lips.
 ```
 
 ```text
@@ -25650,7 +25708,7 @@ HAIR: long side ponytail, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -25666,10 +25724,10 @@ HAIR: long side ponytail, no bangs.
 
 **원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; thick low brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, close-set; thick low brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -25714,7 +25772,7 @@ HAIR: medium space buns, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 콧대가 낮고 넓은 |
@@ -25728,10 +25786,10 @@ HAIR: medium space buns, choppy bangs.
 
 **원작 단서:** 드래곤 타입 → 눈썹 바깥에서 꺾이는 사선 · 무게 200kg → 코 콧대가 낮고 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 한쪽만 밀고 나머지는 긴 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; angled brows; broad low bridge nose; wide mouth.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, medium size, level outer corners, average spacing; angled brows; broad low bridge nose; wide mouth.
 ```
 
 ```text
@@ -25774,7 +25832,7 @@ HAIR: long ponytail, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 보통 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 숱 많고 결이 보이는 |
 | 코 | 길고 코끝이 내려온 |
@@ -25788,10 +25846,10 @@ HAIR: long ponytail, choppy bangs.
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘wavy purple mane’ → 눈썹 숱 많고 결이 보이는
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; feathered full brows; long nose with low tip; medium lips.
+FACE (her own structure, not the style's default face): oval face, balanced length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, wide-set; feathered full brows; long nose with low tip; medium lips.
 ```
 
 ```text
@@ -25986,7 +26044,7 @@ HAIR: long top knot, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 곧고 가는 콧대 |
@@ -25998,12 +26056,12 @@ HAIR: long top knot, side-swept bangs.
 
 **머리 단서:** 악 타입 → 앞머리 좌우 길이가 다른 앞머리
 
-**원작 단서:** ‘two very long spikes’ → 얼굴형 길고 세련된 얼굴형 · ‘two very long spikes’ → 얼굴 길이 긴 얼굴 · ‘two very long spikes’ → 얼굴 폭 좁은 얼굴 · ‘two very long spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two very long spikes’ → 눈매 가늘고 날카로운 눈 · ‘small light-yellow eyes’ → 눈 크기 작은 눈
+**원작 단서:** ‘two very long spikes’ → 얼굴형 길고 세련된 얼굴형 · ‘two very long spikes’ → 얼굴 길이 긴 얼굴 · ‘two very long spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘two very long spikes’ → 눈매 가늘고 날카로운 눈 · ‘small light-yellow eyes’ → 눈 크기 작은 눈 · 몸 형태 fish → 눈 간격 눈 사이가 넓은
 
-**조정:** [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 흐트러진 번
+**조정:** [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; angled brows; straight slender bridge nose; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; angled brows; straight slender bridge nose; full lips.
 ```
 
 ```text
@@ -26110,7 +26168,7 @@ HAIR: medium half-up, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 보통 |
@@ -26122,12 +26180,12 @@ HAIR: medium half-up, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/meowscarada-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 악 타입 → 눈매 강하게 치켜올라간 눈
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 악 타입 → 눈매 강하게 치켜올라간 눈
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; sharp eyes, medium size, upturned outer corners, close-set; long arched brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; sharp eyes, medium size, upturned outer corners, close-set; long arched brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -26256,7 +26314,7 @@ HAIR: medium beach waves, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -26268,12 +26326,12 @@ HAIR: medium beach waves, curtain bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/quaxwell-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘pointed yellow beak’ → 입술 아랫입술이 더 도톰한
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘round blue crest’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘pointed yellow beak’ → 입술 아랫입술이 더 도톰한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; fuller lower lip.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; soft rounded jaw; narrow eyes, medium size, level outer corners, average spacing; straight medium brows; balanced nose; fuller lower lip.
 ```
 
 ```text
@@ -26286,7 +26344,7 @@ HAIR: medium tight curls, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 크고 또렷한 코 |
@@ -26298,12 +26356,12 @@ HAIR: medium tight curls, side-swept bangs.
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/quaquaval-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
-**원작 단서:** ‘long light blue and orange-red feathers’ → 얼굴형 길고 세련된 얼굴형 · ‘long light blue and orange-red feathers’ → 얼굴 길이 긴 얼굴 · ‘long light blue and orange-red feathers’ → 얼굴 폭 좁은 얼굴 · ‘long light blue and orange-red feathers’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long light blue and orange-red feathers’ → 눈매 아몬드형 눈 · ‘long light blue and orange-red feathers’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · ‘long light blue and orange-red feathers’ → 얼굴 길이 긴 얼굴 · ‘long light blue and orange-red feathers’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long light blue and orange-red feathers’ → 눈매 아몬드형 눈 · ‘long light blue and orange-red feathers’ → 눈썹 길고 바깥 아치가 선명한 · ‘pointed yellow beak’ → 코 크고 또렷한 코
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; long arched brows; prominent defined nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; long arched brows; prominent defined nose; full lips.
 ```
 
 ```text
@@ -26962,7 +27020,7 @@ HAIR: long hime cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -26976,12 +27034,12 @@ HAIR: long hime cut, straight bangs.
 
 **머리 단서:** ‘purple-cyan blades’ → 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 키 1.6m → 머리 길이 긴 머리 · ‘purple-cyan blades’ → 앞머리 좌우 길이가 다른 앞머리
 
-**원작 단서:** ‘sharp pale blue protrusion’ → 눈매 가늘고 날카로운 눈 · ‘sharp pale blue protrusion’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘sharp pale blue protrusion’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘sharp pale blue protrusion’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘sharp pale blue protrusion’ → 눈매 가늘고 날카로운 눈 · ‘sharp pale blue protrusion’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, average spacing; angled brows; balanced nose; small mouth.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, average spacing; angled brows; balanced nose; small mouth.
 ```
 
 ```text
@@ -27530,7 +27588,7 @@ HAIR: pixie cut, parted bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 길고 코끝이 내려온 |
@@ -27544,12 +27602,12 @@ HAIR: pixie cut, parted bangs.
 
 **머리 단서:** ‘white feathers’ → 헤어스타일 끝을 가볍게 친 페더컷 · 키 1.9m → 머리 길이 긴 머리
 
-**원작 단서:** 에스퍼 타입 → 눈썹 가늘고 곧은
+**원작 단서:** 몸 형태 upright → 얼굴형 균형 잡힌 타원형 · 에스퍼 타입 → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; thin straight brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; thin straight brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -27654,7 +27712,7 @@ HAIR: medium asymmetric cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 뒤로 물러난 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 코끝이 둥근 |
@@ -27666,12 +27724,12 @@ HAIR: medium asymmetric cut, straight bangs.
 
 **머리 단서:** 몸 형태 blob → 헤어스타일 흐트러진 번
 
-**원작 단서:** ‘long white worm-like body’ → 얼굴형 길고 세련된 얼굴형 · ‘long white worm-like body’ → 얼굴 길이 긴 얼굴 · ‘long white worm-like body’ → 얼굴 폭 좁은 얼굴 · ‘long white worm-like body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long white worm-like body’ → 눈매 아몬드형 눈 · ‘small dark-blue eyes’ → 눈 크기 작은 눈
+**원작 단서:** ‘long white worm-like body’ → 얼굴 길이 긴 얼굴 · ‘long white worm-like body’ → 얼굴 폭 좁은 얼굴 · 몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난 · ‘long white worm-like body’ → 눈매 아몬드형 눈 · ‘small dark-blue eyes’ → 눈 크기 작은 눈 · 몸 형태 blob → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 흐트러진 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, level outer corners, wide-set; straight medium brows; rounded soft tip nose; full lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; receding soft chin; almond eyes, small size, level outer corners, wide-set; straight medium brows; rounded soft tip nose; full lips.
 ```
 
 ```text
@@ -27714,7 +27772,7 @@ HAIR: long messy bun, curtain bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 곧고 가는 콧대 |
@@ -27726,12 +27784,12 @@ HAIR: long messy bun, curtain bangs.
 
 **머리 단서:** ‘small fan-like crest’ → 헤어스타일 정수리에 묶어 올린 번
 
-**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long neck’ → 얼굴 길이 긴 얼굴 · ‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운 · ‘long neck’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, upturned outer corners, close-set; long arched brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, upturned outer corners, close-set; long arched brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -27864,7 +27922,7 @@ HAIR: long blunt cut, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 보통 |
@@ -27878,12 +27936,12 @@ HAIR: long blunt cut, straight bangs.
 
 **머리 단서:** 키 1.6m → 머리 길이 긴 머리
 
-**원작 단서:** ‘black neck’ → 얼굴형 길고 세련된 얼굴형 · ‘black neck’ → 얼굴 길이 긴 얼굴 · ‘black neck’ → 얼굴 폭 좁은 얼굴 · ‘black neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘black neck’ → 눈썹 가늘고 곧은
+**원작 단서:** ‘black neck’ → 얼굴형 길고 세련된 얼굴형 · ‘black neck’ → 얼굴 길이 긴 얼굴 · ‘black neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘black neck’ → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 한쪽만 밀고 나머지는 긴 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; thin straight brows; balanced nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; narrow eyes, medium size, level outer corners, close-set; thin straight brows; balanced nose; medium lips.
 ```
 
 ```text
@@ -28046,7 +28104,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 부드럽고 둥근 턱 |
 | 눈 | 아몬드형 눈 · 크기 작은 눈 · 올라간 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 짧고 둥근 |
 | 코 | 곧고 가는 콧대 |
@@ -28058,12 +28116,12 @@ HAIR: long messy bun, long side bangs covering one eye.
 
 **머리 단서:** ‘rounded body’ → 헤어스타일 양쪽 동그란 번 · 키 1.6m → 머리 길이 긴 머리
 
-**원작 단서:** ‘long serpentine neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long serpentine neck’ → 얼굴 길이 긴 얼굴 · ‘long serpentine neck’ → 얼굴 폭 좁은 얼굴 · ‘long serpentine neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long serpentine neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리
+**원작 단서:** ‘long serpentine neck’ → 얼굴 길이 긴 얼굴 · ‘long serpentine neck’ → 얼굴 폭 좁은 얼굴 · ‘rounded body’ → 턱선 · 턱끝 부드럽고 둥근 턱 · ‘long serpentine neck’ → 눈매 아몬드형 눈 · 몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 wings → 눈 간격 눈 사이가 가까운
 
-**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 양쪽 동그란 번
+**조정:** [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 양쪽 동그란 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, small size, upturned outer corners, close-set; short rounded brows; straight slender bridge nose; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; soft rounded jaw; almond eyes, small size, upturned outer corners, close-set; short rounded brows; straight slender bridge nose; thin lips.
 ```
 
 ```text
@@ -28290,7 +28348,7 @@ HAIR: long curly, long side bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 각지고 또렷한 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 곧고 가는 콧대 |
@@ -28302,12 +28360,12 @@ HAIR: long curly, long side bangs.
 
 **머리 단서:** 노말 타입 → 헤어스타일 포니테일 · 키 3.2m → 머리 길이 매우 긴 머리 · ‘eight dark brown and yellow spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** ‘long, brown neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, brown neck’ → 얼굴 길이 긴 얼굴 · ‘long, brown neck’ → 얼굴 폭 좁은 얼굴 · ‘eight dark brown and yellow spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, brown neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘long, brown neck’ → 얼굴형 길고 세련된 얼굴형 · ‘long, brown neck’ → 얼굴 길이 긴 얼굴 · ‘eight dark brown and yellow spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long, brown neck’ → 눈매 아몬드형 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘long, brown neck’ → 눈썹 가늘고 곧은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; thin straight brows; straight slender bridge nose; medium lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; angular defined jaw; almond eyes, medium size, level outer corners, wide-set; thin straight brows; straight slender bridge nose; medium lips.
 ```
 
 ```text
@@ -28320,7 +28378,7 @@ HAIR: very long ponytail, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 보통 |
 | 눈 | 큰 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 가늘고 완만한 곡선 |
 | 코 | 코끝이 둥근 |
@@ -28332,12 +28390,12 @@ HAIR: very long ponytail, choppy bangs.
 
 **머리 단서:** ‘blue underside and blue and cream stripes’ → 헤어스타일 두피에 붙여 땋은 콘로
 
-**원작 단서:** 몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형 · 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
+**원작 단서:** 몸 형태 squiggle → 얼굴 길이 긴 얼굴 · 몸 형태 squiggle → 얼굴 폭 좁은 얼굴
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; open rounded eyes, medium size, level outer corners, close-set; fine soft arches; rounded soft tip nose; medium lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; balanced jawline; open rounded eyes, medium size, level outer corners, close-set; fine soft arches; rounded soft tip nose; medium lips.
 ```
 
 ```text
@@ -28446,7 +28504,7 @@ HAIR: medium afro puffs, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 보통 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -28462,10 +28520,10 @@ HAIR: medium afro puffs, straight bangs.
 
 **원작 단서:** 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · 악 타입 → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; balanced jawline; narrow eyes, small size, level outer corners, wide-set; angled brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -28638,7 +28696,7 @@ HAIR: medium chignon, straight bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 균형 잡힌 타원형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 가늘고 날카로운 눈 · 크기 보통 · 수평 · 눈 사이가 가까운 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 길고 코끝이 내려온 |
@@ -28652,10 +28710,10 @@ HAIR: medium chignon, straight bangs.
 
 **머리 단서:** ‘head crest’ → 헤어스타일 정수리에 묶어 올린 번 · 키 1.8m → 머리 길이 긴 머리
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): oval face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): oval face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, medium size, level outer corners, close-set; straight medium brows; long nose with low tip; thin lips.
 ```
 
 ```text
@@ -28668,7 +28726,7 @@ HAIR: long top knot, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 중간 두께의 직선 |
 | 코 | 보통 |
@@ -28682,12 +28740,12 @@ HAIR: long top knot, no bangs.
 
 **머리 단서:** ‘black plate’ → 헤어스타일 한쪽만 밀고 나머지는 긴 머리
 
-**원작 단서:** ‘black plate’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘black plate’ → 눈매 가늘고 날카로운 눈 · ‘black plate’ → 입술 얇은 입술
+**원작 단서:** ‘black plate’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · ‘black plate’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘black plate’ → 눈매 가늘고 날카로운 눈 · ‘black plate’ → 입술 얇은 입술
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱
 
 ```text
-FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; narrow eyes, small size, level outer corners, wide-set; straight medium brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; straight medium brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -29036,7 +29094,7 @@ HAIR: very long fishtail braid, side-swept bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 턱끝이 길고 턱선이 또렷한 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -29052,10 +29110,10 @@ HAIR: very long fishtail braid, side-swept bangs.
 
 **원작 단서:** ‘light blue spikes’ → 얼굴형 각지고 선명한 얼굴형 · ‘light blue spikes’ → 눈매 강하게 치켜올라간 눈 · ‘light blue spikes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은 · ‘light blue spikes’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통
 
 ```text
-FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): angular face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; sharp eyes, medium size, upturned outer corners, wide-set; angled brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -29068,7 +29126,7 @@ HAIR: long feathered, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 넓고 각진 사각 턱 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 수평 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 보통 |
@@ -29082,12 +29140,12 @@ HAIR: long feathered, choppy bangs.
 
 **머리 단서:** 페어리 타입 → 헤어스타일 세로로 말린 드릴 컬
 
-**원작 단서:** 페어리 타입 → 입술 윗입술이 활 모양인
+**원작 단서:** 격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱 · 페어리 타입 → 입술 윗입술이 활 모양인
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 세로로 말린 드릴 컬
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 세로로 말린 드릴 컬 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; bow-shaped upper lip.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; square broad jaw; almond eyes, medium size, level outer corners, average spacing; angled brows; balanced nose; bow-shaped upper lip.
 ```
 
 ```text
@@ -29164,7 +29222,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 턱선과 골격이 날카로운 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 바깥에서 꺾이는 사선 |
 | 코 | 길고 코끝이 내려온 |
@@ -29178,12 +29236,12 @@ HAIR: side-shaved long hair, asymmetric bangs.
 
 **머리 단서:** ‘thick, large purple mane’ → 헤어스타일 층감이 강한 울프컷 · ‘eight blue spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** 키 3.5m → 얼굴형 길고 세련된 얼굴형 · 키 3.5m → 얼굴 길이 긴 얼굴 · ‘blue horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘blue horn’ → 눈매 강하게 치켜올라간 눈 · ‘blue horn’ → 눈꼬리 각도 올라간 눈꼬리 · ‘blue horn’ → 눈썹 바깥에서 꺾이는 사선
+**원작 단서:** ‘blue horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형 · 키 3.5m → 얼굴 길이 긴 얼굴 · ‘blue horn’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘blue horn’ → 눈매 강하게 치켜올라간 눈 · ‘blue horn’ → 눈꼬리 각도 올라간 눈꼬리 · ‘blue horn’ → 눈썹 바깥에서 꺾이는 사선
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; long nose with low tip; wide mouth.
+FACE (her own structure, not the style's default face): sharp face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, average spacing; angled brows; long nose with low tip; wide mouth.
 ```
 
 ```text
@@ -29196,7 +29254,7 @@ HAIR: long wolf cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 가늘고 날카로운 눈 · 크기 작은 눈 · 수평 · 눈 사이가 넓은 |
 | 눈썹 | 가늘고 곧은 |
 | 코 | 보통 |
@@ -29210,12 +29268,12 @@ HAIR: long wolf cut, choppy bangs.
 
 **머리 단서:** ‘medium-long tail’ → 헤어스타일 포니테일 · ‘medium-long tail’ → 머리 길이 긴 머리 · ‘long metal horns’ → 앞머리 가운데를 가른 앞머리
 
-**원작 단서:** ‘long metal horns’ → 얼굴형 길고 세련된 얼굴형 · ‘long metal horns’ → 얼굴 길이 긴 얼굴 · ‘long metal horns’ → 얼굴 폭 좁은 얼굴 · ‘long metal horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long metal horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘long metal horns’ → 얼굴형 각지고 선명한 얼굴형 · ‘long metal horns’ → 얼굴 길이 긴 얼굴 · ‘long metal horns’ → 얼굴 폭 좁은 얼굴 · ‘long metal horns’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘long metal horns’ → 눈매 가늘고 날카로운 눈 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈썹 중간 두께의 직선 → 가늘고 곧은
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈썹 중간 두께의 직선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; thin straight brows; balanced nose; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; narrow eyes, small size, level outer corners, wide-set; thin straight brows; balanced nose; thin lips.
 ```
 
 ```text
@@ -29356,7 +29414,7 @@ HAIR: very long high ponytail, no bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 살짝 처진 부드러운 눈 · 크기 보통 · 처진 눈꼬리 · 눈 하나 너비 안팎 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 크고 또렷한 코 |
@@ -29370,12 +29428,12 @@ HAIR: very long high ponytail, no bangs.
 
 **머리 단서:** 에스퍼 타입 → 헤어스타일 히메컷
 
-**원작 단서:** ‘long black fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long black fur’ → 얼굴 길이 긴 얼굴 · ‘long black fur’ → 얼굴 폭 좁은 얼굴 · ‘long black fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long black fur’ → 눈썹 길고 바깥 아치가 선명한
+**원작 단서:** ‘long black fur’ → 얼굴형 길고 세련된 얼굴형 · ‘long black fur’ → 얼굴 길이 긴 얼굴 · ‘long black fur’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long black fur’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; drooping eyes, medium size, downturned outer corners, average spacing; long arched brows; prominent defined nose; thin lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; drooping eyes, medium size, downturned outer corners, average spacing; long arched brows; prominent defined nose; thin lips.
 ```
 
 ```text
@@ -29482,7 +29540,7 @@ HAIR: long twin braids, asymmetric bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 턱끝이 길고 턱선이 또렷한 |
+| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 보통 · 아래로 갈수록 좁아지는 턱끝 |
 | 눈 | 아몬드형 눈 · 크기 보통 · 처진 눈꼬리 · 눈 사이가 가까운 |
 | 눈썹 | 길고 바깥 아치가 선명한 |
 | 코 | 길고 코끝이 내려온 |
@@ -29494,12 +29552,12 @@ HAIR: long twin braids, asymmetric bangs.
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 머리를 둘러 땋은 왕관형(땋은 머리) · 매우 긴 머리 · 긴 사이드뱅 — 과미르에서 이어 같은 묶음
 
-**원작 단서:** ‘long green body’ → 얼굴형 길고 세련된 얼굴형 · ‘long green body’ → 얼굴 길이 긴 얼굴 · ‘long green body’ → 얼굴 폭 좁은 얼굴 · ‘long green body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 · ‘long green body’ → 눈매 아몬드형 눈 · 몸 형태 heads → 눈 간격 눈 사이가 가까운
+**원작 단서:** ‘long green body’ → 얼굴형 길고 세련된 얼굴형 · ‘long green body’ → 얼굴 길이 긴 얼굴 · ‘long green body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝 · ‘long green body’ → 눈매 아몬드형 눈 · 몸 형태 heads → 눈 간격 눈 사이가 가까운 · ‘long green body’ → 눈썹 길고 바깥 아치가 선명한
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 보통 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 머리를 둘러 땋은 왕관형
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 보통 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 머리를 둘러 땋은 왕관형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; defined jaw with a slightly longer chin; almond eyes, medium size, downturned outer corners, close-set; long arched brows; long nose with low tip; full lips.
+FACE (her own structure, not the style's default face): softly elongated face, slightly long length, medium width — only gently longer than average, never stretched or gaunt; narrow tapered chin; almond eyes, medium size, downturned outer corners, close-set; long arched brows; long nose with low tip; full lips.
 ```
 
 ```text
@@ -29544,7 +29602,7 @@ HAIR: long wolf cut, choppy bangs.
 
 | 묶음 | 설계 |
 |---|---|
-| 윤곽 | 길고 세련된 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
+| 윤곽 | 각지고 선명한 얼굴형 · 길이 긴 얼굴 · 폭 좁은 얼굴 · 각지고 또렷한 턱 |
 | 눈 | 강하게 치켜올라간 눈 · 크기 보통 · 올라간 눈꼬리 · 눈 사이가 넓은 |
 | 눈썹 | 굵고 눈 가까이 낮은 |
 | 코 | 길고 코끝이 내려온 |
@@ -29558,12 +29616,12 @@ HAIR: long wolf cut, choppy bangs.
 
 **머리 단서:** ‘dull purple rain clouds’ → 헤어스타일 둥글게 부풀린 아프로 · ‘three blue triangle spikes’ → 앞머리 끝을 불규칙하게 친 앞머리
 
-**원작 단서:** 키 5.2m → 얼굴형 길고 세련된 얼굴형 · 키 5.2m → 얼굴 길이 긴 얼굴 · ‘three blue triangle spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘three blue triangle spikes’ → 눈매 강하게 치켜올라간 눈 · ‘three blue triangle spikes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
+**원작 단서:** ‘three blue triangle spikes’ → 얼굴형 각지고 선명한 얼굴형 · 키 5.2m → 얼굴 길이 긴 얼굴 · ‘three blue triangle spikes’ → 턱선 · 턱끝 각지고 또렷한 턱 · ‘three blue triangle spikes’ → 눈매 강하게 치켜올라간 눈 · ‘three blue triangle spikes’ → 눈꼬리 각도 올라간 눈꼬리 · 몸 형태 quadruped → 눈 간격 눈 사이가 넓은
 
-**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로
+**조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형
 
 ```text
-FACE (her own structure, not the style's default face): softly elongated face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, wide-set; thick low brows; long nose with low tip; thin lips.
+FACE (her own structure, not the style's default face): angular face, slightly long length, narrow width — only gently longer than average, never stretched or gaunt; angular defined jaw; sharp eyes, medium size, upturned outer corners, wide-set; thick low brows; long nose with low tip; thin lips.
 ```
 
 ```text

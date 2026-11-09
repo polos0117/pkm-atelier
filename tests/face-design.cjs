@@ -73,9 +73,15 @@ assert(!P.buildPrompt(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts
 
 /* 2-0. 긴 얼굴은 「살짝」(2026-11-09 사용자 「너무 긴 얼굴은 길이를 좀 줄이자」) — 자료 값은 그대로, FACE 줄 낱말만 누그러뜨리고 늘어나지 않게 */
 {
-  const lf = cards.find(c => F[c.no].face['face shape'] === 'elongated' && F[c.no].face['face length'] === 'long' && F[c.no].face['jaw & chin'] === 'long chin with defined jaw');
+  /* 설계표도(2026-11-09 「설계표도 다시 짜줘」) — 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 둘까지 */
+  const longN = t => (t['face shape'] === 'elongated') + (t['face length'] === 'long') + (t['jaw & chin'] === 'long chin with defined jaw') + (t['face width'] === 'narrow');
+  const over = cards.filter(c => longN(F[c.no].face) > 2).map(c => c.name);
+  assert.deepEqual(over, [], '긴 얼굴 특징 셋 이상: ' + over.slice(0, 10).join(' '));
+  const lf = cards.find(c => F[c.no].face['face shape'] === 'elongated' && F[c.no].face['face length'] === 'long');
   const b = block(P.buildPrompt(input(lf.name)));
-  assert(b.includes('softly elongated face, slightly long length') && b.includes('defined jaw with a slightly longer chin') && b.includes(S.FACE_LONG_NOTE), lf.name + ' 긴 얼굴 누그러뜨림: ' + b);
+  assert(b.includes('softly elongated face, slightly long length') && b.includes(S.FACE_LONG_NOTE), lf.name + ' 긴 얼굴 누그러뜨림: ' + b);
+  const lc = cards.find(c => F[c.no].face['jaw & chin'] === 'long chin with defined jaw');
+  assert(block(P.buildPrompt(input(lc.name))).includes('defined jaw with a slightly longer chin'), lc.name + ' 긴 턱끝 누그러뜨림');
   assert(!/(^|[^y] )elongated face|, long length|long chin with defined jaw/.test(b), lf.name + ' 날것 낱말이 남았다');
   assert(!block(sq).includes(S.FACE_LONG_NOTE), '긴 얼굴이 아니면 덧말 없음');
 }

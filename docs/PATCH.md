@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 얼굴 설계표 — 긴 얼굴 특징은 둘까지(159종 다시 고름)
+- 사용자 「설계표도 다시 짜줘」 — tools/face-design.py compatible: 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 둘까지(LONG_MAX). relong 명령 — 셋 이상 겹친 종만 build 와 같은 점수(원작 단서 + 지금 값 가산점) · 같은 겹침 규칙(같은 계열 셋 이상 · 전체 둘 이상 다름)으로 가장 덜 옮기는 얼굴로. 머리 · 인상 · 다른 종은 그대로(그림 저장소 2 의 작업 트리에 기록이 없어 build 대신)
+- data/face-design.json — 159종 다시 고름(adjusted 에 무엇을 옮겼는지). 길쭉한 얼굴형 138 → 71 · 긴 턱끝 142 → 52 · 긴 길이 210 → 198. docs/CHARACTER_FACE_DESIGNS.md 다시 그림(원칙 한 줄). tests/face-design.cjs 긴 얼굴 특징 둘까지
+
 ## 2026-11-09 · claude · 긴 얼굴 누그러뜨리기 — FACE 줄 「살짝 긴」 · 「늘어나지 않게」
 - 사용자 「너무 긴 얼굴은 길이를 좀 줄이자. 약간 기괴해지네」 — 1,025종 중 159종이 긴 길이 · 길쭉한 얼굴형 · 긴 턱끝(· 좁은 폭)을 셋 이상 겹쳐 받았다
 - lib/prompt-spec.js FACE_SOFT · FACE_LONG_NOTE, lib/prompt-anthro.js faceItems — 자료 값은 그대로 두고 FACE 줄 낱말만 elongated → softly elongated · long → slightly long · long chin with defined jaw → defined jaw with a slightly longer chin, 하나라도 있으면 첫 묶음 뒤 「only gently longer than average, never stretched or gaunt」. tools/face-design.py face_line 같은 줄 · 원칙 한 줄 · docs/CHARACTER_FACE_DESIGNS.md 다시 그림. prompt.html 스크립트 판(face2)

@@ -570,10 +570,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -584,13 +584,14 @@
 },
 "why":"긴 주둥이와 고조되는 싸움의 기질을 긴 중안부와 날카로운 눈꼬리로 해석한다.",
 "cues":[
+"‘single horn-like protrusion’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "‘long snout’ → 얼굴 길이 긴 얼굴",
+"‘single horn-like protrusion’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘slightly hooked tip’ → 눈매 강하게 치켜올라간 눈",
 "‘single horn-like protrusion’ → 눈꼬리 각도 올라간 눈꼬리",
-"‘slightly hooked tip’ → 눈썹 바깥에서 꺾이는 사선",
-"‘single horn-like protrusion’ → 입술 얇은 입술"
+"‘slightly hooked tip’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -1007,8 +1008,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -1018,8 +1019,10 @@
 "lips":"thin lips"
 },
 "why":"독침과 분할 날개의 날카로운 선을 긴 눈과 좁은 턱끝으로 반복한다.",
-"cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"cues":[
+"몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝"
+],
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -1125,8 +1128,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -1139,7 +1142,7 @@
 "cues":[
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -1289,8 +1292,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -1303,12 +1306,11 @@
 "cues":[
 "‘vulturine neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘vulturine neck’ → 얼굴 길이 긴 얼굴",
-"‘vulturine neck’ → 얼굴 폭 좁은 얼굴",
-"‘vulturine neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘vulturine neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘vulturine neck’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"high ponytail"
 },
@@ -1341,8 +1343,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -1355,10 +1357,9 @@
 "cues":[
 "몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
-"몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
 "‘slit-pupil eye’ → 눈매 가늘고 날카로운 눈"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -1765,7 +1766,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -1779,12 +1780,12 @@
 "cues":[
 "‘long, pointed horn’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, pointed horn’ → 얼굴 길이 긴 얼굴",
-"‘long, pointed horn’ → 얼굴 폭 좁은 얼굴",
 "‘long, pointed horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long, pointed horn’ → 눈매 가늘고 날카로운 눈",
-"몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
+"몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
+"‘long, pointed horn’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"bob"
 },
@@ -1999,10 +2000,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -2013,14 +2014,14 @@
 },
 "why":"길게 흐르는 아홉 꼬리와 신비로운 분위기를 긴 윤곽과 가늘고 긴 눈으로 해석한다.",
 "cues":[
-"‘long, fluffy crest’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, fluffy crest’ → 얼굴 길이 긴 얼굴",
 "‘long, fluffy crest’ → 얼굴 폭 좁은 얼굴",
-"‘long, fluffy crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, fluffy crest’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
-"‘long, fluffy crest’ → 눈썹 길고 바깥 아치가 선명한"
+"‘long, fluffy crest’ → 눈썹 길고 바깥 아치가 선명한",
+"‘long, fluffy crest’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/나인테일-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -2144,8 +2145,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -2156,11 +2157,12 @@
 },
 "why":"박쥐 날개의 예리한 펼침을 긴 눈매로 옮긴다. 원작의 눈 부재를 사람 얼굴에 복제하지 않는다.",
 "cues":[
+"‘two fangs on each jaw’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "몸 형태 wings → 코 곧고 가는 콧대",
 "‘two fangs on each jaw’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/주뱃-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -2594,8 +2596,8 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"large",
@@ -2611,7 +2613,7 @@
 "몸 형태 heads → 얼굴 폭 좁은 얼굴",
 "몸 형태 heads → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dugtrio-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -2683,8 +2685,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -2695,7 +2697,7 @@
 },
 "why":"샴고양이의 매끈하고 길쭉한 실루엣을 긴 얼굴과 가는 눈매로 옮긴다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/persian-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -2766,10 +2768,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -2780,10 +2782,12 @@
 },
 "why":"골덕의 유선형 몸과 날카로운 시선을 긴 얼굴과 수평으로 긴 눈으로 구분한다.",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
+"‘four horns’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘four horns’ → 눈매 가늘고 날카로운 눈",
 "‘four horns’ → 입술 얇은 입술"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/golduck-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3170,7 +3174,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -3184,7 +3188,7 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/kadabra-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3211,10 +3215,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -3225,12 +3229,14 @@
 },
 "why":"길고 얇은 주둥이와 좁은 눈을 긴 콧대와 가늘고 긴 사람 눈으로 해석한다.",
 "cues":[
+"‘ear-like spikes’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "‘long, thin snout’ → 얼굴 길이 긴 얼굴",
+"‘ear-like spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘ear-like spikes’ → 눈매 가늘고 날카로운 눈",
 "‘long, thin snout’ → 코 길고 코끝이 내려온",
 "‘ear-like spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/alakazam-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3409,9 +3415,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"large",
 "eye size":"small",
@@ -3425,7 +3431,7 @@
 "cues":[
 "‘beady black eyes’ → 눈 크기 작은 눈"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/bellsprout-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3497,10 +3503,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -3511,10 +3517,11 @@
 },
 "why":"식충식물의 큰 입과 팽팽한 윤곽을 긴 얼굴과 넓고 도톰한 입술로 해석한다.",
 "cues":[
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "몸 형태 blob → 눈 간격 눈 사이가 넓은",
 "‘swollen pink lip’ → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/victreebel-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3591,9 +3598,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -3607,7 +3614,7 @@
 "cues":[
 "‘two blue, beak-like appendages’ → 코 크고 또렷한 코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 보통 → 크고 또렷한 코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long"
@@ -3780,8 +3787,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -3794,7 +3801,7 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ponyta-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -3821,10 +3828,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -3835,14 +3842,14 @@
 },
 "why":"긴 뿔과 질주하는 말의 선을 긴 콧대와 더 선명한 눈매로 구분한다.",
 "cues":[
-"‘long, flowing mane’ → 얼굴형 길고 세련된 얼굴형",
+"‘pointed horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "‘long, flowing mane’ → 얼굴 길이 긴 얼굴",
 "‘long, flowing mane’ → 얼굴 폭 좁은 얼굴",
-"‘long, flowing mane’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘pointed horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘pointed horn’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"같은 계열 포니타와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 바깥에서 꺾이는 사선",
+"adjusted":"같은 계열 포니타와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 바깥에서 꺾이는 사선 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/rapidash-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -4090,8 +4097,8 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"large",
@@ -4109,7 +4116,7 @@
 "몸 형태 legs → 눈 간격 눈 사이가 가까운",
 "‘long sharp beak’ → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -4564,7 +4571,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -4578,12 +4585,11 @@
 "cues":[
 "몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
-"몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
 "‘rocky spine’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘rocky spine’ → 눈매 가늘고 날카로운 눈",
 "‘rocky spine’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -4655,9 +4661,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"drooping",
 "eye size":"medium",
@@ -4673,7 +4679,7 @@
 "‘sleepy-looking eyes’ → 눈꼬리 각도 처진 눈꼬리",
 "‘large nose’ → 코 코끝이 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 코끝이 둥근",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/hypno-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -5071,10 +5077,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -5085,9 +5091,10 @@
 },
 "why":"길게 늘어나는 다리와 킥의 직선성을 긴 얼굴과 가늘고 긴 눈으로 해석한다.",
 "cues":[
+"‘ovoid body’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "‘ovoid body’ → 눈썹 짧고 둥근"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -5595,10 +5602,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -5609,9 +5616,10 @@
 },
 "why":"날카로워진 지느러미와 해마의 긴 선을 긴 얼굴과 좁은 눈매로 구분한다.",
 "cues":[
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "몸 형태 blob → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{
 "hairstyle":"wavy"
 },
@@ -6744,7 +6752,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -6758,7 +6766,7 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/kabutops-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -6882,8 +6890,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -6898,7 +6906,7 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘short gray beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 곧고 가는 콧대",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 곧고 가는 콧대 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long"
@@ -6987,7 +6995,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -7000,12 +7008,12 @@
 "cues":[
 "‘long, flowing head crest’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, flowing head crest’ → 얼굴 길이 긴 얼굴",
-"‘long, flowing head crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, flowing head crest’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘long, flowing head crest’ → 눈썹 길고 바깥 아치가 선명한",
 "‘pointed, brown beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"long"
@@ -7083,10 +7091,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -7097,12 +7105,13 @@
 },
 "why":"길게 흐르는 몸과 구슬의 곡선을 긴 타원 얼굴과 고요한 눈매로 구분한다.",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
+"‘small, white horn’ → 얼굴형 각지고 선명한 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
+"‘small, white horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘rounded snout’ → 코 코끝이 둥근"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dragonair-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -7178,7 +7187,7 @@
 "face":{
 "face shape":"angular",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -7194,7 +7203,7 @@
 "‘two short, blunt, ear-like horns’ → 눈매 가늘고 날카로운 눈",
 "‘two short, blunt, ear-like horns’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/mewtwo-20261013/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -7462,8 +7471,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -7476,12 +7485,12 @@
 "cues":[
 "‘long and slender body’ → 얼굴형 길고 세련된 얼굴형",
 "‘long and slender body’ → 얼굴 길이 긴 얼굴",
-"‘long and slender body’ → 얼굴 폭 좁은 얼굴",
-"‘long and slender body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long and slender body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘triangular red eyes’ → 눈매 강하게 치켜올라간 눈",
-"‘triangular red eyes’ → 눈꼬리 각도 올라간 눈꼬리"
+"‘triangular red eyes’ → 눈꼬리 각도 올라간 눈꼬리",
+"몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/generation/quilava-20261010.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -7754,8 +7763,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -7766,7 +7775,7 @@
 },
 "why":"길고 부드러운 몸통을 긴 타원 윤곽과 완만한 눈매로 구분한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/furret-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -7843,7 +7852,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -7861,7 +7870,7 @@
 "‘bushy, cream-colored feather horns’ → 눈썹 바깥에서 꺾이는 사선",
 "‘bushy, cream-colored feather horns’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/noctowl-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -8019,7 +8028,7 @@
 "face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -8031,13 +8040,13 @@
 "why":"긴 다리와 예리한 거미 윤곽을 긴 얼굴과 치켜올라간 눈매로 구분한다.",
 "cues":[
 "‘white horn’ → 얼굴형 각지고 선명한 얼굴형",
+"‘white horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘white horn’ → 눈매 강하게 치켜올라간 눈",
 "‘white horn’ → 눈꼬리 각도 올라간 눈꼬리",
 "‘white horn’ → 눈썹 바깥에서 꺾이는 사선",
-"‘white horn’ → 코 크고 또렷한 코",
-"‘white horn’ → 입술 얇은 입술"
+"‘white horn’ → 코 크고 또렷한 코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 크고 또렷한 코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -8475,8 +8484,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -8489,12 +8498,11 @@
 "cues":[
 "‘two long, red feather crests’ → 얼굴형 길고 세련된 얼굴형",
 "‘two long, red feather crests’ → 얼굴 길이 긴 얼굴",
-"‘two long, red feather crests’ → 얼굴 폭 좁은 얼굴",
-"‘two long, red feather crests’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘two long, red feather crests’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘long, slightly hooked beak’ → 코 콧대가 볼록한 매부리코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 볼록한 매부리코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 볼록한 매부리코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/xatu-20261011/prompts/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -8607,9 +8615,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -8620,8 +8628,10 @@
 "lips":"medium lips"
 },
 "why":"길어진 목과 등대 같은 발광 특징을 긴 윤곽과 안정적인 눈매로 해석한다.",
-"cues":[],
-"adjusted":"",
+"cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형"
+],
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ampharos-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -8797,7 +8807,7 @@
 "registered":true,
 "face":{
 "face shape":"oval",
-"face length":"long",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"drooping",
@@ -8810,7 +8820,7 @@
 },
 "why":"나무를 흉내 내는 뻣뻣한 가지 실루엣을 긴 얼굴과 정돈된 직선 눈썹으로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"braid"
 },
@@ -9168,7 +9178,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"narrow tapered chin",
@@ -9182,11 +9192,12 @@
 },
 "why":"잠자리의 큰 눈과 긴 몸을 긴 얼굴과 큰 사람 눈으로 해석한다.",
 "cues":[
+"‘two gray spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 bug-wings → 눈 크기 큰 눈",
 "‘two gray spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"high ponytail"
 },
@@ -9590,10 +9601,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"softly rounded",
+"face length":"short",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -9604,10 +9615,13 @@
 },
 "why":"부드러운 몸과 먼저 공격하지 않는 특징을 긴 얼굴과 낮은 눈꺼풀로 해석한다.",
 "cues":[
+"‘soft body’ → 얼굴형 부드럽고 둥근 얼굴형",
+"‘soft body’ → 얼굴 길이 짧은 얼굴",
+"‘soft body’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "‘soft body’ → 눈썹 가늘고 완만한 곡선",
 "‘soft body’ → 코 코끝이 둥근"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 부드럽고 둥근 얼굴형, 얼굴 길이 긴 얼굴 → 짧은 얼굴, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/wobbuffet-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -9634,10 +9648,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -9648,14 +9662,14 @@
 },
 "why":"긴 목과 둥근 코를 긴 윤곽 및 둥근 코끝을 가진 긴 콧대로 옮긴다.",
 "cues":[
-"‘long neck’ → 얼굴형 길고 세련된 얼굴형",
+"‘many, pink spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long neck’ → 얼굴 길이 긴 얼굴",
 "‘long neck’ → 얼굴 폭 좁은 얼굴",
-"‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘many, pink spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long neck’ → 눈매 아몬드형 눈",
 "‘long neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"high ponytail",
 "hair length":"long"
@@ -9791,10 +9805,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -9805,14 +9819,14 @@
 },
 "why":"둥근 머리와 넓은 입 및 땅뱀의 긴 몸을 긴 얼굴과 넓은 입으로 해석한다.",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
+"‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "‘round head’ → 눈썹 짧고 둥근",
 "‘round head’ → 코 코끝이 둥근",
 "‘wide mouth’ → 입술 입이 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 짧고 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{
 "hairstyle":"braid",
 "hair length":"long"
@@ -10818,7 +10832,7 @@
 "face":{
 "face shape":"angular",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -10832,12 +10846,12 @@
 "cues":[
 "‘triangular crest’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long, metallic blue neck’ → 얼굴 길이 긴 얼굴",
-"‘long, metallic blue neck’ → 얼굴 폭 좁은 얼굴",
 "‘long, metallic blue neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
 "‘triangular crest’ → 눈매 가늘고 날카로운 눈",
-"‘triangular crest’ → 눈썹 바깥에서 꺾이는 사선"
+"‘triangular crest’ → 눈썹 바깥에서 꺾이는 사선",
+"‘pointed beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"bob"
 },
@@ -10919,10 +10933,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -10933,14 +10947,14 @@
 },
 "why":"큰 뿔과 사냥개의 긴 주둥이를 긴 얼굴과 굵은 사선 눈썹으로 구분한다.",
 "cues":[
-"‘long, curved gray horns’ → 얼굴형 길고 세련된 얼굴형",
+"‘long, curved gray horns’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long, curved gray horns’ → 얼굴 길이 긴 얼굴",
 "‘long, curved gray horns’ → 얼굴 폭 좁은 얼굴",
-"‘long, curved gray horns’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, curved gray horns’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long, curved gray horns’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long"
@@ -10972,10 +10986,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -10986,14 +11000,13 @@
 },
 "why":"가늘고 긴 해마 주둥이와 용의 절제된 선을 긴 중안부와 가는 눈으로 구분한다.",
 "cues":[
-"‘thin, blue spines’ → 얼굴형 길고 세련된 얼굴형",
 "‘thin, blue spines’ → 얼굴 길이 긴 얼굴",
 "‘thin, blue spines’ → 얼굴 폭 좁은 얼굴",
-"‘thin, blue spines’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "몸 형태 blob → 눈 간격 눈 사이가 넓은",
 "‘thin, blue spines’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img-2/records/kingdra-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -11165,8 +11178,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -11179,7 +11192,7 @@
 "cues":[
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img-2/records/stantler-20261014/light-ui.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -11676,8 +11689,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -11688,10 +11701,11 @@
 },
 "why":"오로라처럼 흐르는 선과 긴 주둥이를 긴 얼굴 및 완만한 긴 눈매로 해석한다.",
 "cues":[
+"무게 187kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘thick, purple mane’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"long",
@@ -11889,10 +11903,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -11903,14 +11917,14 @@
 },
 "why":"잠수와 거대한 유선형 날개를 긴 얼굴 및 안정적인 수평 눈매로 해석한다.",
 "cues":[
-"‘long, slender neck’ → 얼굴형 길고 세련된 얼굴형",
+"‘blue or black spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long, slender neck’ → 얼굴 길이 긴 얼굴",
 "‘long, slender neck’ → 얼굴 폭 좁은 얼굴",
-"‘long, slender neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘blue or black spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long, slender neck’ → 눈매 아몬드형 눈",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"straight"
 },
@@ -12085,9 +12099,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -12098,8 +12112,10 @@
 "lips":"medium lips"
 },
 "why":"날카로운 잎과 길어진 몸을 긴 얼굴과 선명한 긴 눈으로 구분한다.",
-"cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통",
+"cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형"
+],
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/grovyle-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
@@ -12274,8 +12290,8 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
@@ -12288,10 +12304,11 @@
 },
 "why":"V형 볏과 격투의 긴 선을 긴 윤곽과 날카로운 눈썹으로 옮긴다.",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘hooked beak’ → 눈썹 바깥에서 꺾이는 사선",
 "‘hooked beak’ → 코 콧대가 볼록한 매부리코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 콧대가 볼록한 매부리코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 콧대가 볼록한 매부리코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
 "hair":{},
 "hair_locked":true,
 "hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
@@ -12500,8 +12517,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -12515,7 +12532,7 @@
 "‘dark triangular eye markings’ → 눈매 강하게 치켜올라간 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"long"
@@ -12598,7 +12615,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -12611,12 +12628,12 @@
 "cues":[
 "‘long cheek fur’ → 얼굴형 길고 세련된 얼굴형",
 "‘long cheek fur’ → 얼굴 길이 긴 얼굴",
-"‘long cheek fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘small pointed teeth’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long cheek fur’ → 눈매 아몬드형 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘small, tuft-like ears’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long"
@@ -13259,8 +13276,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"upturned outer corners",
@@ -13275,7 +13292,7 @@
 "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
 "‘pointed, yellow beak’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"high ponytail",
 "hair length":"long"
@@ -13508,7 +13525,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -13522,11 +13539,12 @@
 },
 "why":"드레스처럼 흐르는 긴 선과 보호하는 특징을 긴 얼굴과 고요한 눈매로 해석한다.",
 "cues":[
+"‘short spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "‘short spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "‘short spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long"
@@ -14804,7 +14822,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -14816,7 +14834,7 @@
 },
 "why":"명상의 긴 직립 선과 큰 집중 눈을 긴 윤곽과 정돈된 긴 눈매로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long"
@@ -15349,7 +15367,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -15366,7 +15384,7 @@
 "악 타입 → 눈썹 바깥에서 꺾이는 사선",
 "‘large mouth’ → 입술 입이 넓은"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"slicked back",
 "hair length":"long"
@@ -15847,10 +15865,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"large",
 "eye size":"large",
 "eye tilt":"level outer corners",
@@ -15861,10 +15879,12 @@
 },
 "why":"마름모 날개와 가는 몸을 긴 윤곽과 큰 사람 눈으로 구분한다.",
 "cues":[
+"드래곤 타입 → 얼굴형 각지고 선명한 얼굴형",
+"몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 bug-wings → 눈 크기 큰 눈",
 "‘two large white teeth’ → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"twin tail",
 "hair length":"long",
@@ -15895,7 +15915,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"medium",
 "jaw & chin":"long chin with defined jaw",
@@ -15911,7 +15931,7 @@
 "cues":[
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형",
 "hair":{
 "hairstyle":"ponytail",
 "hair length":"long",
@@ -16197,8 +16217,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -16210,10 +16230,9 @@
 "why":"",
 "cues":[
 "몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
-"몸 형태 squiggle → 얼굴 길이 긴 얼굴",
-"몸 형태 squiggle → 얼굴 폭 좁은 얼굴"
+"몸 형태 squiggle → 얼굴 길이 긴 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 작은 눈 → 보통, 입술 얇은 입술 → 도톰한 입술",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 크기 작은 눈 → 보통, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"straight",
 "hair length":"very long",
@@ -16894,7 +16913,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -16908,12 +16927,12 @@
 },
 "why":"길게 흐르는 수중 몸과 우아한 머리 지느러미를 긴 얼굴과 길고 완만한 눈으로 해석한다.",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
+"‘straight spike’ → 얼굴형 각지고 선명한 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
 "‘straight spike’ → 턱선 · 턱끝 각지고 또렷한 턱"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"very long",
@@ -17245,7 +17264,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -17258,12 +17277,12 @@
 "cues":[
 "‘long neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long neck’ → 얼굴 길이 긴 얼굴",
-"‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long neck’ → 눈매 아몬드형 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘long neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"half-up",
 "hair length":"long",
@@ -17739,8 +17758,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -17753,11 +17772,10 @@
 "cues":[
 "‘serpentine body’ → 얼굴형 길고 세련된 얼굴형",
 "‘serpentine body’ → 얼굴 길이 긴 얼굴",
-"‘serpentine body’ → 얼굴 폭 좁은 얼굴",
-"‘serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘serpentine body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘serpentine body’ → 눈매 아몬드형 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
@@ -18437,8 +18455,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -18451,11 +18469,10 @@
 "cues":[
 "‘thick neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘thick neck’ → 얼굴 길이 긴 얼굴",
-"‘thick neck’ → 얼굴 폭 좁은 얼굴",
-"‘thick neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘thick neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"chignon",
 "hair length":"long",
@@ -18595,8 +18612,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -18609,11 +18626,11 @@
 "cues":[
 "몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
-"몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
+"‘two white fangs’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "드래곤 타입 → 눈썹 바깥에서 꺾이는 사선",
 "‘two white fangs’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"braid",
 "hair length":"very long",
@@ -18692,9 +18709,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -18706,7 +18723,7 @@
 },
 "why":"DNA의 반복 대칭과 수정 중심을 정돈된 긴 얼굴과 일정한 눈 간격으로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 윗입술이 활 모양인",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 윗입술이 활 모양인 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"chignon",
 "hair length":"long",
@@ -19110,7 +19127,7 @@
 "face":{
 "face shape":"angular",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -19126,7 +19143,7 @@
 "‘three pointed horns’ → 눈매 가늘고 날카로운 눈",
 "‘three pointed horns’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"slicked back",
 "hair length":"long"
@@ -19462,7 +19479,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"small",
@@ -19477,7 +19494,7 @@
 "몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘dark red, round nose’ → 코 코끝이 둥근"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"long"
@@ -20845,7 +20862,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -20858,12 +20875,12 @@
 "cues":[
 "‘broad, short neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘broad, short neck’ → 얼굴 길이 긴 얼굴",
-"‘broad, short neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘broad, short neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘broad, short neck’ → 눈매 아몬드형 눈",
 "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -21527,9 +21544,9 @@
 "how":"draft",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -21541,10 +21558,11 @@
 },
 "why":"",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "드래곤 타입 → 눈썹 바깥에서 꺾이는 사선",
 "땅 타입 → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"같은 계열 딥상어동와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은",
+"adjusted":"같은 계열 딥상어동와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"braid",
 "hair length":"long",
@@ -21726,7 +21744,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -21744,7 +21762,7 @@
 "‘long snout’ → 코 길고 코끝이 내려온",
 "‘short, round spike’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 보통 → 길고 코끝이 내려온",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 보통 → 길고 코끝이 내려온 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -23044,10 +23062,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -23058,14 +23076,14 @@
 },
 "why":"칼날 팔과 기사의 절제된 선을 긴 얼굴과 깊은 수평 눈매로 구분한다.",
 "cues":[
-"‘thin green torso’ → 얼굴형 길고 세련된 얼굴형",
+"‘sharp red plate’ → 얼굴형 각지고 선명한 얼굴형",
 "‘thin green torso’ → 얼굴 길이 긴 얼굴",
 "‘thin green torso’ → 얼굴 폭 좁은 얼굴",
-"‘thin green torso’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘sharp red plate’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘sharp red plate’ → 눈매 가늘고 날카로운 눈",
 "‘sharp red plate’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 얇은 입술 → 굴곡 없이 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -23148,10 +23166,10 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"balanced jawline",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -23162,9 +23180,10 @@
 },
 "why":"움켜쥐는 큰 몸과 높은 칼라의 수직선을 긴 얼굴와 낮은 눈꺼풀로 해석한다.",
 "cues":[
+"몸 형태 arms → 턱선 · 턱끝 보통",
 "고스트 타입 → 눈매 살짝 처진 부드러운 눈"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"long",
@@ -23642,8 +23661,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -23656,12 +23675,12 @@
 "cues":[
 "‘long neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long neck’ → 얼굴 길이 긴 얼굴",
-"‘long neck’ → 얼굴 폭 좁은 얼굴",
-"‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘two large horns’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘two large horns’ → 눈매 가늘고 날카로운 눈",
-"‘two large horns’ → 눈썹 바깥에서 꺾이는 사선"
+"‘two large horns’ → 눈썹 바깥에서 꺾이는 사선",
+"‘long neck’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"crown braid",
 "hair length":"very long",
@@ -23842,7 +23861,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -23856,7 +23875,7 @@
 },
 "why":"어둠 속에 흐르는 머리와 악몽의 절제된 긴장을 긴 얼굴 및 낮은 눈꺼풀로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"very long",
@@ -23941,8 +23960,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -23955,10 +23974,11 @@
 "cues":[
 "키 3.2m → 얼굴형 길고 세련된 얼굴형",
 "키 3.2m → 얼굴 길이 긴 얼굴",
+"무게 320kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "무게 320kg → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"ringlet curls",
 "hair length":"very long",
@@ -24040,7 +24060,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"drooping",
 "eye size":"medium",
@@ -24054,7 +24074,7 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"medium",
@@ -24132,7 +24152,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -24146,11 +24166,10 @@
 },
 "why":"왕 같은 긴 뱀 실루엣을 긴 중안부와 가늘고 긴 눈으로 해석한다.",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"half-up",
 "hair length":"very long",
@@ -24428,7 +24447,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -24442,12 +24461,13 @@
 },
 "why":"갑옷 수달의 긴 선과 무사의 인상을 긴 얼굴와 단단한 눈썹으로 해석한다.",
 "cues":[
+"‘spear-like horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "‘spear-like horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘spear-like horn’ → 눈매 가늘고 날카로운 눈",
 "‘spear-like horn’ → 눈썹 굵고 눈 가까이 낮은",
 "‘spear-like horn’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -24625,8 +24645,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -24639,12 +24659,12 @@
 "cues":[
 "‘long, cream fur’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, cream fur’ → 얼굴 길이 긴 얼굴",
-"‘long, cream fur’ → 얼굴 폭 좁은 얼굴",
-"‘long, cream fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, cream fur’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long, cream fur’ → 눈매 아몬드형 눈",
-"몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
+"몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
+"‘long, cream fur’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 길고 바깥 아치가 선명한",
+"adjusted":"같은 계열 요테리와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 길고 바깥 아치가 선명한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"high ponytail",
 "hair length":"medium",
@@ -25353,7 +25373,7 @@
 "face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"large",
 "eye tilt":"level outer corners",
@@ -25365,11 +25385,12 @@
 "why":"작은 얼룩말의 번개 갈기를 긴 중안부와 열린 눈매로 해석한다.",
 "cues":[
 "‘spiky, white mane’ → 얼굴형 각지고 선명한 얼굴형",
+"‘spiky, white mane’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘spiky, white mane’ → 눈썹 바깥에서 꺾이는 사선",
 "‘spiky, white mane’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"medium",
@@ -25402,8 +25423,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -25414,7 +25435,7 @@
 },
 "why":"큰 얼룩말의 날카로운 갈기와 강한 체적을 긴 얼굴와 굵은 눈썹으로 구분한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"long",
@@ -26490,8 +26511,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -26504,9 +26525,10 @@
 "cues":[
 "키 2.5m → 얼굴형 길고 세련된 얼굴형",
 "키 2.5m → 얼굴 길이 긴 얼굴",
+"몸 형태 armor → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 armor → 눈썹 굵고 눈 가까이 낮은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 굵고 눈 가까이 낮은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"braid",
 "hair length":"very long",
@@ -27237,7 +27259,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"drooping",
 "eye size":"medium",
@@ -27252,7 +27274,7 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -27582,8 +27604,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -27596,12 +27618,12 @@
 "cues":[
 "‘scaly snake-like head’ → 얼굴형 길고 세련된 얼굴형",
 "‘scaly snake-like head’ → 얼굴 길이 긴 얼굴",
-"‘scaly snake-like head’ → 얼굴 폭 좁은 얼굴",
-"‘scaly snake-like head’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘scaly snake-like head’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘scaly snake-like head’ → 눈매 아몬드형 눈",
-"몸 형태 wings → 눈 간격 눈 사이가 가까운"
+"몸 형태 wings → 눈 간격 눈 사이가 가까운",
+"‘scaly snake-like head’ → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -27772,9 +27794,9 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
@@ -27786,10 +27808,11 @@
 },
 "why":"환영 여우의 긴 갈기와 날카로운 선을 긴 얼굴 및 올라간 눈매로 옮긴다.",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘pointed snout’ → 얼굴 길이 긴 얼굴",
 "악 타입 → 눈매 강하게 치켜올라간 눈"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 덥수룩하게 흐트러진 컷 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"shaggy",
 "hair length":"long",
@@ -27912,7 +27935,7 @@
 "registered":false,
 "face":{
 "face shape":"oval",
-"face length":"long",
+"face length":"short",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"large",
@@ -27925,10 +27948,11 @@
 },
 "why":"",
 "cues":[
+"키 0.4m → 얼굴 길이 짧은 얼굴",
 "‘two large blue eyes’ → 눈매 큰 눈",
 "‘two large blue eyes’ → 눈 크기 큰 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 짧은 얼굴",
 "hair":{
 "hairstyle":"twin tail",
 "hair length":"short",
@@ -27958,7 +27982,7 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -27974,7 +27998,7 @@
 "cues":[
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈매 가늘고 날카로운 눈 → 아몬드형 눈 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 사이드 포니테일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈매 가늘고 날카로운 눈 → 아몬드형 눈 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 사이드 포니테일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"side ponytail",
 "hair length":"medium",
@@ -28002,7 +28026,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -28016,7 +28040,7 @@
 "cues":[
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"같은 계열 고디보미와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 히메컷 → 사이드 포니테일",
+"adjusted":"같은 계열 고디보미와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 히메컷 → 사이드 포니테일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"side ponytail",
 "hair length":"long",
@@ -28237,7 +28261,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -28250,12 +28274,12 @@
 "cues":[
 "‘long, curving neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, curving neck’ → 얼굴 길이 긴 얼굴",
-"‘long, curving neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, curving neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long, curving neck’ → 눈매 아몬드형 눈",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘strong bill’ → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 끝을 가볍게 친 페더컷",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 끝을 가볍게 친 페더컷 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -29213,8 +29237,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -29227,12 +29251,12 @@
 "cues":[
 "‘white tapered eel body’ → 얼굴형 길고 세련된 얼굴형",
 "‘white tapered eel body’ → 얼굴 길이 긴 얼굴",
-"‘white tapered eel body’ → 얼굴 폭 좁은 얼굴",
-"‘white tapered eel body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘white tapered eel body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘white tapered eel body’ → 눈매 아몬드형 눈",
-"몸 형태 fish → 눈 간격 눈 사이가 넓은"
+"몸 형태 fish → 눈 간격 눈 사이가 넓은",
+"‘white tapered eel body’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 레트로 웨이브 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"short",
@@ -29263,7 +29287,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"large",
 "eye size":"small",
@@ -29279,7 +29303,7 @@
 "‘small pupils’ → 눈 크기 작은 눈",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"[머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브",
+"adjusted":"[머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 레트로 웨이브 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"medium",
@@ -29355,9 +29379,9 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -29369,10 +29393,11 @@
 },
 "why":"",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"pixie cut",
 "hair length":"short",
@@ -29402,7 +29427,7 @@
 "registered":false,
 "face":{
 "face shape":"oval",
-"face length":"long",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
@@ -29417,7 +29442,7 @@
 "cues":[
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
-"adjusted":"같은 계열 리그레와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 작고 여린 코 → 보통",
+"adjusted":"같은 계열 리그레와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 작고 여린 코 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"hime cut",
 "hair length":"long",
@@ -29544,10 +29569,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -29558,11 +29583,13 @@
 },
 "why":"촛대의 긴 곡선과 유령 불빛을 긴 윤곽과 낮은 눈꺼풀로 해석한다.",
 "cues":[
+"‘small, black spikes’ → 얼굴형 각지고 선명한 얼굴형",
+"‘small, black spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "고스트 타입 → 눈매 살짝 처진 부드러운 눈",
 "‘striped, round head’ → 눈썹 짧고 둥근",
 "‘small, black spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로",
+"adjusted":"같은 계열 램프라와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 짧고 둥근 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 바람에 날린 듯한 스타일 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"cornrows",
 "hair length":"long",
@@ -30051,9 +30078,9 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -30064,8 +30091,10 @@
 "lips":"fuller lower lip"
 },
 "why":"흐르는 소매와 무술의 유연한 선을 긴 얼굴와 완만한 긴 눈으로 구분한다.",
-"cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형"
+],
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -30567,9 +30596,9 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"drooping",
 "eye size":"medium",
@@ -30580,8 +30609,10 @@
 "lips":"full lips"
 },
 "why":"개미핥기의 긴 주둥이와 관형 입을 긴 콧대와 중앙이 도톰한 입술로 해석한다.",
-"cues":[],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
+"cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형"
+],
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 양갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"cornrows",
 "hair length":"medium",
@@ -30898,8 +30929,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -30910,10 +30941,11 @@
 },
 "why":"철심의 단단함과 긴 뿔을 긴 윤곽과 곧은 콧대로 해석한다.",
 "cues":[
+"격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "강철 타입 → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"cornrows",
 "hair length":"long",
@@ -31141,8 +31173,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -31155,12 +31187,12 @@
 "cues":[
 "‘long and slender neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long and slender neck’ → 얼굴 길이 긴 얼굴",
-"‘long and slender neck’ → 얼굴 폭 좁은 얼굴",
-"‘long and slender neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"무게 330kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "‘long and slender neck’ → 눈매 아몬드형 눈",
-"‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한"
+"‘long and slender neck’ → 눈썹 길고 바깥 아치가 선명한",
+"‘long and slender neck’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 곧고 가는 콧대 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"cornrows",
 "hair length":"long",
@@ -31287,8 +31319,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -31301,12 +31333,12 @@
 "cues":[
 "‘long, gray neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, gray neck’ → 얼굴 길이 긴 얼굴",
-"‘long, gray neck’ → 얼굴 폭 좁은 얼굴",
-"‘long, gray neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘two spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘two spikes’ → 눈매 가늘고 날카로운 눈",
-"‘two spikes’ → 눈썹 바깥에서 꺾이는 사선"
+"‘two spikes’ → 눈썹 바깥에서 꺾이는 사선",
+"‘two spikes’ → 코 크고 또렷한 코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 곧은 생머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 크고 또렷한 코 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"straight",
 "hair length":"very long",
@@ -31387,9 +31419,9 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -31403,7 +31435,7 @@
 "cues":[
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"straight",
 "hair length":"very long",
@@ -31722,7 +31754,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -31737,7 +31769,7 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"long",
@@ -31866,7 +31898,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -31880,7 +31912,7 @@
 "cues":[
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"long",
@@ -32752,7 +32784,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -32768,7 +32800,7 @@
 "‘long rectangular ears’ → 눈썹 길고 바깥 아치가 선명한",
 "‘pointed snout’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"twin tail",
 "hair length":"long",
@@ -32899,7 +32931,7 @@
 "registered":true,
 "face":{
 "face shape":"angular",
-"face length":"long",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
@@ -32916,7 +32948,7 @@
 "몸 형태 blob → 눈 간격 눈 사이가 넓은",
 "몸 형태 blob → 입술 도톰한 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 도톰한 입술",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 도톰한 입술 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"asymmetric cut",
 "hair length":"medium",
@@ -33671,10 +33703,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -33685,11 +33717,13 @@
 },
 "why":"펼친 목도리와 길어진 도마뱀의 선을 긴 윤곽과 날카로운 눈으로 구분한다.",
 "cues":[
+"‘orange spikes’ → 얼굴형 각지고 선명한 얼굴형",
+"‘orange spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘orange spikes’ → 눈매 가늘고 날카로운 눈",
 "‘orange spikes’ → 눈썹 바깥에서 꺾이는 사선",
 "‘orange spikes’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 짧고 코끝이 들린",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 코 길고 코끝이 내려온 → 짧고 코끝이 들린 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"asymmetric cut",
 "hair length":"long",
@@ -33819,7 +33853,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -33832,12 +33866,12 @@
 "cues":[
 "‘long neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long neck’ → 얼굴 길이 긴 얼굴",
-"‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long neck’ → 눈매 아몬드형 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘long neck’ → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"straight",
 "hair length":"medium",
@@ -34443,10 +34477,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -34457,11 +34491,12 @@
 },
 "why":"길게 뻗은 호박 줄기와 머리의 흐름을 긴 윤곽과 낮은 눈꺼풀로 구분한다.",
 "cues":[
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "고스트 타입 → 눈매 살짝 처진 부드러운 눈",
 "몸 형태 blob → 눈 간격 눈 사이가 넓은",
 "‘crescent-shaped tuft’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 흐트러진 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 곧은 생머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"long",
@@ -34686,7 +34721,7 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -34700,11 +34735,11 @@
 },
 "why":"나뭇가지 같은 큰 뿔과 사슴의 긴 선을 긴 얼굴와 완만한 눈매로 옮긴다.",
 "cues":[
-"키 3m → 얼굴형 길고 세련된 얼굴형",
+"‘upward curving horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "키 3m → 얼굴 길이 긴 얼굴",
 "‘upward curving horn’ → 턱선 · 턱끝 각지고 또렷한 턱"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 머리를 둘러 땋은 왕관형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 세로로 말린 드릴 컬 → 머리를 둘러 땋은 왕관형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형",
 "hair":{
 "hairstyle":"crown braid",
 "hair length":"very long",
@@ -34788,8 +34823,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -34802,12 +34837,11 @@
 "cues":[
 "‘black serpentine body’ → 얼굴형 길고 세련된 얼굴형",
 "‘black serpentine body’ → 얼굴 길이 긴 얼굴",
-"‘black serpentine body’ → 얼굴 폭 좁은 얼굴",
-"‘black serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"무게 305kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "‘black serpentine body’ → 눈썹 길고 바깥 아치가 선명한",
 "땅 타입 → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한, 코 보통 → 콧대가 낮고 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한, 코 보통 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"braid",
 "hair length":"very long",
@@ -35080,8 +35114,8 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
@@ -35097,7 +35131,7 @@
 "‘hooked dark green beak’ → 코 콧대가 볼록한 매부리코",
 "‘hooked dark green beak’ → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 보통 → 콧대가 볼록한 매부리코, 입술 얇은 입술 → 입이 작은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 보통 → 콧대가 볼록한 매부리코, 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -35372,9 +35406,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -35386,10 +35420,11 @@
 },
 "why":"바다의 가수와 길게 흐르는 지느러미를 긴 얼굴와 완만한 긴 눈으로 해석한다.",
 "cues":[
+"몸 형태 fish → 얼굴형 균형 잡힌 타원형",
 "몸 형태 fish → 눈 간격 눈 사이가 넓은",
 "페어리 타입 → 눈썹 가늘고 완만한 곡선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 완만한 곡선 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"wavy",
 "hair length":"very long",
@@ -35569,8 +35604,8 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"short",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
@@ -35583,9 +35618,10 @@
 },
 "why":"작은 몽구스의 긴 몸과 큰 이빨을 긴 얼굴와 넓은 입으로 해석한다.",
 "cues":[
+"키 0.4m → 얼굴 길이 짧은 얼굴",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 짧은 얼굴",
 "hair":{
 "hairstyle":"layered",
 "hair length":"short",
@@ -36326,8 +36362,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -36340,10 +36376,11 @@
 "cues":[
 "키 2.5m → 얼굴형 길고 세련된 얼굴형",
 "키 2.5m → 얼굴 길이 긴 얼굴",
+"무게 920kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "땅 타입 → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 층감이 강한 울프컷 → 목덜미 낮은 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 층감이 강한 울프컷 → 목덜미 낮은 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
@@ -36556,7 +36593,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"large",
 "eye tilt":"level outer corners",
@@ -36569,12 +36606,12 @@
 "cues":[
 "‘thin, stem-like body’ → 얼굴형 길고 세련된 얼굴형",
 "‘thin, stem-like body’ → 얼굴 길이 긴 얼굴",
-"‘thin, stem-like body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘thin, stem-like body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘thin, stem-like body’ → 눈매 아몬드형 눈",
 "‘thin, stem-like body’ → 눈썹 길고 바깥 아치가 선명한",
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 가는 박스 브레이드 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"box braids",
 "hair length":"long",
@@ -36653,8 +36690,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -36668,7 +36705,7 @@
 "‘slit pupils’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 윗입술이 활 모양인 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"medium",
@@ -36700,8 +36737,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -36714,12 +36751,11 @@
 "cues":[
 "‘thin body’ → 얼굴형 길고 세련된 얼굴형",
 "‘thin body’ → 얼굴 길이 긴 얼굴",
-"‘thin body’ → 얼굴 폭 좁은 얼굴",
-"‘thin body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
 "‘thin body’ → 눈매 아몬드형 눈",
-"‘thin body’ → 눈썹 길고 바깥 아치가 선명한"
+"‘thin body’ → 눈썹 길고 바깥 아치가 선명한",
+"‘thin body’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 바람에 날린 듯한 스타일",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 바람에 날린 듯한 스타일 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"long",
@@ -36928,7 +36964,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
@@ -36940,7 +36976,7 @@
 },
 "why":"열매의 둥근 체적과 여왕 같은 긴 선을 긴 얼굴와 선명한 입술로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"half-up",
 "hair length":"very long",
@@ -37783,10 +37819,10 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -37797,12 +37833,12 @@
 },
 "why":"",
 "cues":[
-"키 3.9m → 얼굴형 길고 세련된 얼굴형",
 "키 3.9m → 얼굴 길이 긴 얼굴",
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "무게 210kg → 코 콧대가 낮고 넓은",
 "‘sharp teeth’ → 입술 굴곡 없이 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 콧대가 낮고 넓은, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 흐트러진 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 콧대가 낮고 넓은, 입술 얇은 입술 → 굴곡 없이 곧은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"long",
@@ -38320,10 +38356,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -38334,14 +38370,14 @@
 },
 "why":"초승달 같은 거대한 날개를 긴 얼굴와 완만한 눈썹 곡선으로 해석한다.",
 "cues":[
-"키 4m → 얼굴형 길고 세련된 얼굴형",
+"‘slightly curved spike’ → 얼굴형 각지고 선명한 얼굴형",
 "키 4m → 얼굴 길이 긴 얼굴",
+"‘slightly curved spike’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "에스퍼 타입 → 눈매 아몬드형 눈",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
-"‘short snout’ → 코 짧고 코끝이 들린",
-"‘slightly curved spike’ → 입술 얇은 입술"
+"‘short snout’ → 코 짧고 코끝이 들린"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 곧은 생머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 짧고 코끝이 들린 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"straight",
 "hair length":"very long",
@@ -38373,8 +38409,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"large",
 "eye size":"large",
 "eye tilt":"level outer corners",
@@ -38384,8 +38420,10 @@
 "lips":"thin lips"
 },
 "why":"반투명 종과 긴 촉수의 흐름을 긴 얼굴와 큰 맑은 눈으로 해석한다.",
-"cues":[],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드",
+"cues":[
+"바위 타입 → 턱선 · 턱끝 넓고 각진 사각 턱"
+],
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 로크스 / 드레드풍 → 가는 박스 브레이드 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"box braids",
 "hair length":"very long",
@@ -38465,7 +38503,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -38478,11 +38516,11 @@
 "cues":[
 "‘long, thin neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, thin neck’ → 얼굴 길이 긴 얼굴",
-"‘long, thin neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, thin neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long, thin neck’ → 눈매 아몬드형 눈",
 "‘long, thin neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"crown braid",
 "hair length":"very long",
@@ -38556,7 +38594,7 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -38570,14 +38608,14 @@
 },
 "why":"대나무와 긴 뿔의 수직선을 긴 윤곽과 길고 곧은 콧대로 해석한다.",
 "cues":[
-"‘long gray horn’ → 얼굴형 길고 세련된 얼굴형",
+"‘four white spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long gray horn’ → 얼굴 길이 긴 얼굴",
 "‘long gray horn’ → 얼굴 폭 좁은 얼굴",
 "‘four white spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long gray horn’ → 눈매 아몬드형 눈",
 "‘four white spikes’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"braid",
 "hair length":"very long",
@@ -38903,8 +38941,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"angular defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -38917,12 +38955,12 @@
 "cues":[
 "‘long gray spike’ → 얼굴형 길고 세련된 얼굴형",
 "‘long gray spike’ → 얼굴 길이 긴 얼굴",
-"‘long gray spike’ → 얼굴 폭 좁은 얼굴",
-"‘long gray spike’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long gray spike’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long gray spike’ → 눈매 강하게 치켜올라간 눈",
-"‘long gray spike’ → 눈꼬리 각도 올라간 눈꼬리"
+"‘long gray spike’ → 눈꼬리 각도 올라간 눈꼬리",
+"몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"long",
@@ -39001,8 +39039,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"large",
 "eye size":"large",
 "eye tilt":"level outer corners",
@@ -39015,11 +39053,10 @@
 "cues":[
 "‘slender torso’ → 얼굴형 길고 세련된 얼굴형",
 "‘slender torso’ → 얼굴 길이 긴 얼굴",
-"‘slender torso’ → 얼굴 폭 좁은 얼굴",
-"‘slender torso’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘slender torso’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘slender torso’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"",
+"adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long",
@@ -39424,7 +39461,7 @@
 "registered":true,
 "face":{
 "face shape":"oval",
-"face length":"long",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
@@ -39439,7 +39476,7 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"twin tail",
 "hair length":"long",
@@ -39567,9 +39604,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -39581,14 +39618,13 @@
 },
 "why":"비밀 요원의 길고 가는 선을 긴 중안부와 절제된 긴 눈으로 해석한다.",
 "cues":[
-"‘thin, wavy, fin-like crest’ → 얼굴형 길고 세련된 얼굴형",
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘thin, wavy, fin-like crest’ → 얼굴 길이 긴 얼굴",
-"‘thin, wavy, fin-like crest’ → 얼굴 폭 좁은 얼굴",
 "‘thin, wavy, fin-like crest’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
 "‘thin, wavy, fin-like crest’ → 눈썹 길고 바깥 아치가 선명한",
 "‘thin, wavy, fin-like crest’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"finger waves",
 "hair length":"medium",
@@ -40781,7 +40817,7 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"narrow tapered chin",
@@ -40795,13 +40831,12 @@
 },
 "why":"",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴",
 "‘oval green eyes’ → 눈매 큰 눈",
 "‘oval green eyes’ → 눈꼬리 각도 수평"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 목덜미 낮은 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 목덜미 낮은 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"low bun",
 "hair length":"long",
@@ -40831,7 +40866,7 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -40845,11 +40880,10 @@
 },
 "why":"",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴"
 ],
-"adjusted":"같은 계열 모래뱀와 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 입술 얇은 입술 → 보통 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 흐트러진 번",
+"adjusted":"같은 계열 모래뱀와 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 입술 얇은 입술 → 보통 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"long",
@@ -41118,8 +41152,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -41132,12 +41166,11 @@
 "cues":[
 "‘long, flat body’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, flat body’ → 얼굴 길이 긴 얼굴",
-"‘long, flat body’ → 얼굴 폭 좁은 얼굴",
-"‘long, flat body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long, flat body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long, flat body’ → 코 길고 코끝이 내려온",
 "몸 형태 tentacles → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 입이 작은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"medium",
@@ -41167,8 +41200,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"sharp",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -41184,7 +41217,7 @@
 "불꽃 타입 → 눈꼬리 각도 올라간 눈꼬리",
 "몸 형태 tentacles → 입술 입이 작은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 입이 작은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"windswept",
 "hair length":"long",
@@ -41491,10 +41524,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -41505,14 +41538,13 @@
 },
 "why":"길게 흐르는 마녀의 실루엣을 긴 윤곽과 낮고 고요한 눈매로 해석한다.",
 "cues":[
-"‘thin, white body’ → 얼굴형 길고 세련된 얼굴형",
 "‘thin, white body’ → 얼굴 길이 긴 얼굴",
 "‘thin, white body’ → 얼굴 폭 좁은 얼굴",
-"‘thin, white body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "‘thin, white body’ → 눈매 아몬드형 눈",
 "‘thin, white body’ → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{
 "hairstyle":"ringlet curls",
 "hair length":"long",
@@ -41681,7 +41713,7 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"medium",
 "jaw & chin":"long chin with defined jaw",
@@ -41695,13 +41727,13 @@
 },
 "why":"",
 "cues":[
-"‘long thick forward-leaning neck’ → 얼굴형 길고 세련된 얼굴형",
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘long thick forward-leaning neck’ → 얼굴 길이 긴 얼굴",
 "‘long thick forward-leaning neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
 "‘long thick forward-leaning neck’ → 눈매 아몬드형 눈",
 "‘long thick forward-leaning neck’ → 코 길고 코끝이 내려온"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 한쪽만 밀고 나머지는 긴 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 굵고 눈 가까이 낮은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 층감이 강한 울프컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"long",
@@ -42634,13 +42666,13 @@
 "face shape":"angular",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"large",
 "eye size":"medium",
 "eye tilt":"level outer corners",
 "eye spacing":"close-set eyes",
 "eyebrows":"angled brows",
-"nose character":"long nose with low tip",
+"nose character":"straight slender bridge",
 "lips":"full lips"
 },
 "why":"긴 목과 둥근 물고기 머리의 대비를 긴 중안부와 둥근 눈으로 해석한다.",
@@ -42648,11 +42680,11 @@
 "‘three curved spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "‘green neck’ → 얼굴 길이 긴 얼굴",
 "‘green neck’ → 얼굴 폭 좁은 얼굴",
-"‘green neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘three curved spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘rounded triangular plate’ → 눈매 큰 눈",
 "몸 형태 legs → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 양쪽 동그란 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 양쪽 동그란 번 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 코 길고 코끝이 내려온 → 곧고 가는 콧대",
 "hair":{
 "hairstyle":"space buns",
 "hair length":"long",
@@ -42779,8 +42811,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -42793,12 +42825,11 @@
 "cues":[
 "‘serpentine body’ → 얼굴형 길고 세련된 얼굴형",
 "‘serpentine body’ → 얼굴 길이 긴 얼굴",
-"‘serpentine body’ → 얼굴 폭 좁은 얼굴",
-"‘serpentine body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘serpentine body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘serpentine body’ → 눈매 아몬드형 눈",
 "‘serpentine body’ → 코 곧고 가는 콧대"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 곧은 생머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 도감 바로 옆 다른 계열과 헤어스타일이 겹쳐 한 갈래 땋은 머리 → 곧은 생머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"straight",
 "hair length":"long",
@@ -42880,8 +42911,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -42895,7 +42926,7 @@
 "키 3m → 얼굴형 길고 세련된 얼굴형",
 "키 3m → 얼굴 길이 긴 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"high ponytail",
 "hair length":"long",
@@ -42926,8 +42957,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -42941,7 +42972,7 @@
 "키 2.8m → 얼굴형 길고 세련된 얼굴형",
 "키 2.8m → 얼굴 길이 긴 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 굴곡 없이 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"ringlet curls",
 "hair length":"very long",
@@ -43024,8 +43055,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -43038,11 +43069,12 @@
 "cues":[
 "키 20m → 얼굴형 길고 세련된 얼굴형",
 "키 20m → 얼굴 길이 긴 얼굴",
+"무게 950kg → 턱선 · 턱끝 넓고 각진 사각 턱",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "드래곤 타입 → 눈썹 바깥에서 꺾이는 사선",
 "무게 950kg → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"braid",
 "hair length":"very long",
@@ -43168,7 +43200,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -43182,7 +43214,7 @@
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 양갈래 땋은 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"twin braids",
 "hair length":"long",
@@ -43267,7 +43299,7 @@
 "face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -43281,7 +43313,7 @@
 "드래곤 타입 → 눈썹 바깥에서 꺾이는 사선",
 "무게 200kg → 코 콧대가 낮고 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 한쪽만 밀고 나머지는 긴 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 코 길고 코끝이 내려온 → 콧대가 낮고 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"long",
@@ -43362,8 +43394,8 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
-"face length":"long",
+"face shape":"oval",
+"face length":"balanced",
 "face width":"narrow",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
@@ -43379,7 +43411,7 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘wavy purple mane’ → 눈썹 숱 많고 결이 보이는"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 숱 많고 결이 보이는 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"long",
@@ -43699,7 +43731,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -43713,12 +43745,12 @@
 "cues":[
 "‘two very long spikes’ → 얼굴형 길고 세련된 얼굴형",
 "‘two very long spikes’ → 얼굴 길이 긴 얼굴",
-"‘two very long spikes’ → 얼굴 폭 좁은 얼굴",
 "‘two very long spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘two very long spikes’ → 눈매 가늘고 날카로운 눈",
-"‘small light-yellow eyes’ → 눈 크기 작은 눈"
+"‘small light-yellow eyes’ → 눈 크기 작은 눈",
+"몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"[머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 흐트러진 번",
+"adjusted":"[머리] 진화 계열의 머리 잇기 규칙에 맞추려고 웨이브 헤어 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"long",
@@ -43893,7 +43925,7 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -43907,9 +43939,10 @@
 },
 "why":"가면과 마술사의 길고 예리한 선을 긴 얼굴와 또렷한 눈꼬리로 해석한다.",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "악 타입 → 눈매 강하게 치켜올라간 눈"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"half-up",
 "hair length":"long",
@@ -44136,7 +44169,7 @@
 "face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -44148,9 +44181,10 @@
 "why":"정돈된 깃과 춤의 직선 리듬을 긴 얼굴와 집중된 눈으로 구분한다.",
 "cues":[
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형",
+"‘round blue crest’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "‘pointed yellow beak’ → 입술 아랫입술이 더 도톰한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 입술 얇은 입술 → 아랫입술이 더 도톰한 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{
 "hairstyle":"tight curls",
 "hair length":"medium",
@@ -44181,9 +44215,9 @@
 "how":"species",
 "registered":true,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -44195,14 +44229,14 @@
 },
 "why":"무용수의 긴 곡선과 화려한 깃을 긴 윤곽 및 도톰한 입술로 해석한다.",
 "cues":[
-"‘long light blue and orange-red feathers’ → 얼굴형 길고 세련된 얼굴형",
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "‘long light blue and orange-red feathers’ → 얼굴 길이 긴 얼굴",
-"‘long light blue and orange-red feathers’ → 얼굴 폭 좁은 얼굴",
 "‘long light blue and orange-red feathers’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
 "‘long light blue and orange-red feathers’ → 눈매 아몬드형 눈",
-"‘long light blue and orange-red feathers’ → 눈썹 길고 바깥 아치가 선명한"
+"‘long light blue and orange-red feathers’ → 눈썹 길고 바깥 아치가 선명한",
+"‘pointed yellow beak’ → 코 크고 또렷한 코"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -45275,10 +45309,10 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -45289,10 +45323,12 @@
 },
 "why":"불꽃 칼날과 기사형 갑옷의 긴 선을 긴 얼굴와 절제된 날카로운 눈으로 해석한다.",
 "cues":[
+"‘sharp pale blue protrusion’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
+"‘sharp pale blue protrusion’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘sharp pale blue protrusion’ → 눈매 가늘고 날카로운 눈",
 "‘sharp pale blue protrusion’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"long",
@@ -46164,9 +46200,9 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
@@ -46178,9 +46214,10 @@
 },
 "why":"타조의 긴 머리와 삼각 무늬 및 긴 주둥이를 긴 중안부와 가는 눈으로 구분한다.",
 "cues":[
+"몸 형태 upright → 얼굴형 균형 잡힌 타원형",
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은, 눈썹 길고 바깥 아치가 선명한 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -46352,10 +46389,10 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"receding soft chin",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -46366,14 +46403,14 @@
 },
 "why":"",
 "cues":[
-"‘long white worm-like body’ → 얼굴형 길고 세련된 얼굴형",
 "‘long white worm-like body’ → 얼굴 길이 긴 얼굴",
 "‘long white worm-like body’ → 얼굴 폭 좁은 얼굴",
-"‘long white worm-like body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"몸 형태 blob → 턱선 · 턱끝 턱끝이 뒤로 물러난",
 "‘long white worm-like body’ → 눈매 아몬드형 눈",
-"‘small dark-blue eyes’ → 눈 크기 작은 눈"
+"‘small dark-blue eyes’ → 눈 크기 작은 눈",
+"몸 형태 blob → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 흐트러진 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 도톰한 입술 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 웨이브 헤어 → 흐트러진 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
 "hair":{
 "hairstyle":"messy bun",
 "hair length":"medium",
@@ -46451,7 +46488,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"upturned outer corners",
@@ -46464,12 +46501,12 @@
 "cues":[
 "‘long neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long neck’ → 얼굴 길이 긴 얼굴",
-"‘long neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
 "몸 형태 wings → 눈 간격 눈 사이가 가까운",
 "‘long neck’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 아몬드형 눈 → 가늘고 날카로운 눈, 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"medium",
@@ -46690,8 +46727,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"narrow",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -46704,11 +46741,10 @@
 "cues":[
 "‘black neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘black neck’ → 얼굴 길이 긴 얼굴",
-"‘black neck’ → 얼굴 폭 좁은 얼굴",
-"‘black neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘black neck’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘black neck’ → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 한쪽만 밀고 나머지는 긴 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운, 눈썹 중간 두께의 직선 → 가늘고 곧은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 포니테일 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"long",
@@ -46968,10 +47004,10 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"soft rounded jaw",
 "eye shape":"almond",
 "eye size":"small",
 "eye tilt":"upturned outer corners",
@@ -46982,14 +47018,14 @@
 },
 "why":"",
 "cues":[
-"‘long serpentine neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long serpentine neck’ → 얼굴 길이 긴 얼굴",
 "‘long serpentine neck’ → 얼굴 폭 좁은 얼굴",
-"‘long serpentine neck’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘rounded body’ → 턱선 · 턱끝 부드럽고 둥근 턱",
 "‘long serpentine neck’ → 눈매 아몬드형 눈",
-"몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리"
+"몸 형태 wings → 눈꼬리 각도 올라간 눈꼬리",
+"몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
-"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 양쪽 동그란 번",
+"adjusted":"[머리] 많이 쓴 헤어스타일이라 고르게 나누려고 끝을 가볍게 친 페더컷 → 양쪽 동그란 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
 "hair":{
 "hairstyle":"space buns",
 "hair length":"long",
@@ -47359,7 +47395,7 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"angular defined jaw",
 "eye shape":"almond",
 "eye size":"medium",
@@ -47373,12 +47409,12 @@
 "cues":[
 "‘long, brown neck’ → 얼굴형 길고 세련된 얼굴형",
 "‘long, brown neck’ → 얼굴 길이 긴 얼굴",
-"‘long, brown neck’ → 얼굴 폭 좁은 얼굴",
 "‘eight dark brown and yellow spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long, brown neck’ → 눈매 아몬드형 눈",
-"몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
+"몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
+"‘long, brown neck’ → 눈썹 가늘고 곧은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"ponytail",
 "hair length":"very long",
@@ -47408,7 +47444,7 @@
 "how":"draft",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"oval",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"balanced jawline",
@@ -47422,11 +47458,10 @@
 },
 "why":"",
 "cues":[
-"몸 형태 squiggle → 얼굴형 길고 세련된 얼굴형",
 "몸 형태 squiggle → 얼굴 길이 긴 얼굴",
 "몸 형태 squiggle → 얼굴 폭 좁은 얼굴"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 입술 도톰한 입술 → 보통 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 두피에 붙여 땋은 콘로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형",
 "hair":{
 "hairstyle":"cornrows",
 "hair length":"long",
@@ -47602,7 +47637,7 @@
 "face shape":"elongated",
 "face length":"long",
 "face width":"medium",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"balanced jawline",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -47616,7 +47651,7 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "악 타입 → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 좁은 얼굴 → 보통 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"medium",
@@ -47890,7 +47925,7 @@
 "face":{
 "face shape":"oval",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"narrow",
 "eye size":"medium",
@@ -47902,7 +47937,7 @@
 },
 "why":"기계 격투자의 길고 단단한 선을 긴 얼굴와 수평적인 눈매로 해석한다.",
 "cues":[],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 정수리에 묶어 올린 번 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"top knot",
 "hair length":"long",
@@ -47934,7 +47969,7 @@
 "face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"jaw & chin":"angular defined jaw",
 "eye shape":"narrow",
 "eye size":"small",
 "eye tilt":"level outer corners",
@@ -47946,10 +47981,11 @@
 "why":"금속 용의 분절된 대칭을 긴 윤곽과 정돈된 이목구비로 해석한다.",
 "cues":[
 "‘black plate’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
+"‘black plate’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘black plate’ → 눈매 가늘고 날카로운 눈",
 "‘black plate’ → 입술 얇은 입술"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 좌우 길이가 다른 비대칭컷 → 한쪽만 밀고 나머지는 긴 머리 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
 "hair":{
 "hairstyle":"side-shaved long hair",
 "hair length":"very long",
@@ -48503,7 +48539,7 @@
 "face":{
 "face shape":"angular",
 "face length":"long",
-"face width":"narrow",
+"face width":"medium",
 "jaw & chin":"long chin with defined jaw",
 "eye shape":"sharp",
 "eye size":"medium",
@@ -48521,7 +48557,7 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은",
 "‘light blue spikes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
 "hair":{
 "hairstyle":"feathered",
 "hair length":"long",
@@ -48553,8 +48589,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"square broad jaw",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"level outer corners",
@@ -48565,9 +48601,10 @@
 },
 "why":"쌍날 격투자의 날카로운 직선을 긴 윤곽과 각진 눈썹으로 해석한다.",
 "cues":[
+"격투 타입 → 턱선 · 턱끝 넓고 각진 사각 턱",
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 세로로 말린 드릴 컬",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈매 가늘고 날카로운 눈 → 아몬드형 눈, 입술 얇은 입술 → 윗입술이 활 모양인 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 높이 묶은 포니테일 → 세로로 말린 드릴 컬 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 넓고 각진 사각 턱",
 "hair":{
 "hairstyle":"ringlet curls",
 "hair length":"very long",
@@ -48694,7 +48731,7 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"sharp",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -48708,14 +48745,14 @@
 },
 "why":"거대한 수중 용의 긴 주둥이와 거친 선을 긴 윤곽과 날카로운 눈으로 해석한다.",
 "cues":[
-"키 3.5m → 얼굴형 길고 세련된 얼굴형",
+"‘blue horn’ → 얼굴형 턱선과 골격이 날카로운 얼굴형",
 "키 3.5m → 얼굴 길이 긴 얼굴",
 "‘blue horn’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘blue horn’ → 눈매 강하게 치켜올라간 눈",
 "‘blue horn’ → 눈꼬리 각도 올라간 눈꼬리",
 "‘blue horn’ → 눈썹 바깥에서 꺾이는 사선"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 길고 세련된 얼굴형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형",
 "hair":{
 "hairstyle":"wolf cut",
 "hair length":"long",
@@ -48744,7 +48781,7 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -48758,14 +48795,14 @@
 },
 "why":"금속 뿔과 칼날 잎의 직선을 긴 얼굴와 가늘고 긴 수평 눈으로 해석한다.",
 "cues":[
-"‘long metal horns’ → 얼굴형 길고 세련된 얼굴형",
+"‘long metal horns’ → 얼굴형 각지고 선명한 얼굴형",
 "‘long metal horns’ → 얼굴 길이 긴 얼굴",
 "‘long metal horns’ → 얼굴 폭 좁은 얼굴",
 "‘long metal horns’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘long metal horns’ → 눈매 가늘고 날카로운 눈",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈썹 중간 두께의 직선 → 가늘고 곧은",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱, 눈썹 중간 두께의 직선 → 가늘고 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"ponytail",
 "hair length":"long",
@@ -48986,8 +49023,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"drooping",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -49000,11 +49037,10 @@
 "cues":[
 "‘long black fur’ → 얼굴형 길고 세련된 얼굴형",
 "‘long black fur’ → 얼굴 길이 긴 얼굴",
-"‘long black fur’ → 얼굴 폭 좁은 얼굴",
-"‘long black fur’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long black fur’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long black fur’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"hime cut",
 "hair length":"very long",
@@ -49173,8 +49209,8 @@
 "face":{
 "face shape":"elongated",
 "face length":"long",
-"face width":"narrow",
-"jaw & chin":"long chin with defined jaw",
+"face width":"medium",
+"jaw & chin":"narrow tapered chin",
 "eye shape":"almond",
 "eye size":"medium",
 "eye tilt":"downturned outer corners",
@@ -49187,12 +49223,12 @@
 "cues":[
 "‘long green body’ → 얼굴형 길고 세련된 얼굴형",
 "‘long green body’ → 얼굴 길이 긴 얼굴",
-"‘long green body’ → 얼굴 폭 좁은 얼굴",
-"‘long green body’ → 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한",
+"‘long green body’ → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝",
 "‘long green body’ → 눈매 아몬드형 눈",
-"몸 형태 heads → 눈 간격 눈 사이가 가까운"
+"몸 형태 heads → 눈 간격 눈 사이가 가까운",
+"‘long green body’ → 눈썹 길고 바깥 아치가 선명한"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 보통 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 머리를 둘러 땋은 왕관형",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 보통 → 도톰한 입술 [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 한 갈래 땋은 머리 → 머리를 둘러 땋은 왕관형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
 "hair":{
 "hairstyle":"crown braid",
 "hair length":"very long",
@@ -49268,7 +49304,7 @@
 "how":"species",
 "registered":false,
 "face":{
-"face shape":"elongated",
+"face shape":"angular",
 "face length":"long",
 "face width":"narrow",
 "jaw & chin":"angular defined jaw",
@@ -49282,14 +49318,14 @@
 },
 "why":"긴 목과 번개 모양 가시의 선을 긴 얼굴와 날카로운 긴 눈으로 해석한다.",
 "cues":[
-"키 5.2m → 얼굴형 길고 세련된 얼굴형",
+"‘three blue triangle spikes’ → 얼굴형 각지고 선명한 얼굴형",
 "키 5.2m → 얼굴 길이 긴 얼굴",
 "‘three blue triangle spikes’ → 턱선 · 턱끝 각지고 또렷한 턱",
 "‘three blue triangle spikes’ → 눈매 강하게 치켜올라간 눈",
 "‘three blue triangle spikes’ → 눈꼬리 각도 올라간 눈꼬리",
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
-"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로",
+"adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 [머리] 많이 쓴 헤어스타일이라 고르게 나누려고 한 갈래 땋은 머리 → 둥글게 부풀린 아프로 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형",
 "hair":{
 "hairstyle":"afro",
 "hair length":"medium",

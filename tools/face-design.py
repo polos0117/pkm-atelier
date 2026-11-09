@@ -4,6 +4,7 @@
     python3 tools/face-design.py build [--seed-doc <옛 설계표.md>]   # 고르고 겹침을 풀어 json 을 쓴다
     python3 tools/face-design.py render                             # json → 설계표 문서
     python3 tools/face-design.py impression                         # 인상(나이감 · 분위기 · 눈 색)만 고쳐 쓴다(2026-11-09)
+    python3 tools/face-design.py relong                             # 긴 얼굴 특징을 셋 이상 겹친 종만 얼굴 값을 다시 고른다(2026-11-09)
     python3 tools/face-design.py --check                            # 쓰지 않고 규칙만 본다(검사가 부른다)
 
 값은 생성기의 얼굴 항목(lib/prompt-spec.js 의 PARAM_DEFS, group face)의 열쇠 그대로다 — 생성기가 그대로 싣는다.
@@ -746,6 +747,8 @@ def compatible(t):
     if ln == 'short' and s not in (R, 'compact', 'heart-shaped', 'oval'): return False
     if w == 'narrow' and j in ('square broad jaw', 'wide heavy chin'): return False
     if w == 'wide' and j in ('narrow tapered chin', 'long chin with defined jaw'): return False
+    # 긴 얼굴 겹침(2026-11-09 사용자 「너무 긴 얼굴은 길이를 좀 줄이자」 → 「설계표도 다시 짜줘」) — 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 둘까지
+    if (s == L) + (ln == 'long') + (j == 'long chin with defined jaw') + (w == 'narrow') > LONG_MAX: return False
     e, z, tl = t['eye shape'], t['eye size'], t['eye tilt']
     if e == 'upturned' and tl != 'upturned outer corners': return False
     if e == 'drooping' and tl != 'downturned outer corners': return False
@@ -753,6 +756,64 @@ def compatible(t):
     if e == 'large' and z == 'small' and tl != 'level outer corners': return False
     if e == 'narrow' and z == 'large': return False
     return True
+
+
+LONG_MAX = 2
+
+
+def relong():
+    """긴 얼굴 특징을 셋 이상 겹친 종만 얼굴 값을 다시 고른다(2026-11-09). 머리 · 인상 · 다른 종은 그대로.
+    build 와 같은 점수(원작 단서 + 지금 값 가산점)와 같은 겹침 규칙(같은 계열 셋 이상 · 전체 둘 이상 다름)으로, 지금 값에서 가장 덜 옮기는 얼굴"""
+    keys, opts, ko, name = spec()
+    cards, app, img = load_inputs()
+    data = json.load(open(DATA)); faces = data['faces']
+    root = lines_of(cards)
+    bad = [c for c in sorted(cards, key=lambda c: c['no']) if not compatible(faces[str(c['no'])]['face'])]
+    moved_n = 0
+    for c in bad:
+        no = str(c['no']); f = faces[no]
+        others = {k: v for k, v in faces.items() if k != no}
+        taken = {groups(v['face']) for v in others.values()}
+        four = [set() for _ in GROUPS]
+        for v in others.values():
+            g = groups(v['face'])
+            for i in range(len(GROUPS)): four[i].add(tuple(x for j, x in enumerate(g) if j != i))
+        mates = [faces[str(x['no'])] for x in cards if x['name'] != c['name'] and root[x['name']] == root[c['name']]]
+        sc, why = score(c, app.get(no), keys, opts)
+        for k, o in f['face'].items():
+            if k in sc and o in sc[k]: sc[k][o] += KEEP_W
+        ranked = {k: sorted(opts[k], key=lambda o: -sc[k][o])[:6] for k in keys}
+        best = {k: sc[k][ranked[k][0]] for k in keys}
+        def ok(t):
+            g = groups(t)
+            if g in taken: return False
+            if any(tuple(x for j, x in enumerate(g) if j != i) in four[i] for i in range(len(GROUPS))): return False
+            return all(diff(g, groups(m['face'])) >= LINE_MIN for m in mates)
+        heap, seen, chosen = [(0.0, (0,) * len(keys))], set(), None
+        while heap and len(seen) < 60000:
+            cost, idx = heapq.heappop(heap)
+            if idx in seen: continue
+            seen.add(idx)
+            t = {k: ranked[k][i] for k, i in zip(keys, idx)}
+            if compatible(t) and ok(t): chosen = t; break
+            for a in range(len(keys)):
+                if idx[a] + 1 < len(ranked[keys[a]]):
+                    n = list(idx); n[a] += 1; n = tuple(n)
+                    if n not in seen: heapq.heappush(heap, (sum(best[keys[b]] - sc[keys[b]][ranked[keys[b]][n[b]]] for b in range(len(keys))), n))
+        assert chosen, c['name']
+        moved = [k for k in keys if chosen[k] != f['face'][k]]
+        if moved:
+            moved_n += 1
+            note = '긴 얼굴 겹침을 줄임(2026-11-09) — ' + ', '.join(f"{name[k]} {ko[k][f['face'][k]]} → {ko[k][chosen[k]]}" for k in moved)
+            f['adjusted'] = (f['adjusted'] + ' ' if f.get('adjusted') else '') + note
+            f['face'] = chosen
+            cues = []
+            for k in keys:
+                for lab in why[k][chosen[k]][:1]: cues.append(f"{lab} → {name[k]} {ko[k][chosen[k]]}")
+            if cues: f['cues'] = cues[:6]
+    with open(DATA, 'w', encoding='utf-8') as fh:   # build 와 같은 꼴
+        json.dump(data, fh, ensure_ascii=False, indent=0, separators=(',', ':')); fh.write('\n')
+    print(f'[긴 얼굴] 셋 이상 겹친 종 {len(bad)} · 다시 고른 종 {moved_n}')
 
 
 def groups(t):
@@ -1151,7 +1212,7 @@ def render():
         '- 이미 확정한 경장 ①이 있으면 그 그림이 정본이다. 이 표와 달라도 다시 그리지 않는다(`registered` — 지금 그림이 등록된 종).',
         '- 고르는 법은 무작위가 아니다. 원작 외형 특징·몸 형태·타입·키와 무게에 낱말 표로 점수를 주고(`tools/face-design.py` 의 CUES), 앞서 직접 쓴 설계에 가산점을 준다. 그러고 나서 도감 번호 차례로 겹침을 푼다.',
         f'- 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **{LINE_MIN}개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**{GLOBAL_MIN}개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.',
-        '- 긴 얼굴(길쭉한 얼굴형 · 긴 길이 · 긴 턱끝)은 FACE 줄에서 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다(2026-11-09 — 셋이 겹친 159종이 기괴하게 길어졌다). 자료 값은 그대로다.',
+        '- 긴 얼굴 — 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 **둘까지만** 고른다(2026-11-09 — 셋 이상 겹친 159종이 기괴하게 길어져 `relong` 으로 다시 골랐다). FACE 줄에서는 그 낱말을 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다.',
         '- 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.',
         '- 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.',
         '',
@@ -1224,13 +1285,14 @@ def render():
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression'])
+    ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression', 'relong'])
     ap.add_argument('--seed-doc')
     ap.add_argument('--check', action='store_true')
     a = ap.parse_args()
     if a.cmd == 'build': build(a.seed_doc)
     elif a.cmd == 'render': render()
     elif a.cmd == 'impression': impression()
+    elif a.cmd == 'relong': relong()
     if a.check or not a.cmd:
         bad, _ = check()
         sys.exit(1 if bad else 0)
