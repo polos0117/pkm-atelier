@@ -981,12 +981,12 @@ def check(data=None, quiet=False):
 IMP_TYPE = {
     'normal': {'cheerful': 1, 'gentle': 1, 'playful': .6}, 'fire': {'passionate': 2, 'fierce': 1, 'cheerful': .5},
     'water': {'gentle': 1, 'cool': 1, 'cheerful': .5, 'elegant': .5}, 'grass': {'gentle': 1.3, 'shy': .8, 'sleepy': .8, 'cheerful': .5},
-    'electric': {'playful': 1.5, 'cheerful': 1, 'passionate': .6}, 'ice': {'cool': 1.6, 'elegant': 1, 'melancholic': .8},
+    'electric': {'playful': 1.5, 'cheerful': 1, 'passionate': .6}, 'ice': {'cool': 1.5, 'elegant': 1, 'melancholic': 1.2},
     'fighting': {'fierce': 1.5, 'passionate': 1, 'stoic': 1}, 'poison': {'mysterious': 1, 'playful': 1, 'cool': .6},
     'ground': {'stoic': 1.5, 'cool': .5, 'fierce': .5}, 'flying': {'cheerful': .8, 'playful': .8, 'fierce': .6, 'elegant': .6},
     'psychic': {'clever': 1.5, 'mysterious': 1, 'elegant': .6}, 'bug': {'shy': 1, 'playful': .8, 'cheerful': .6},
-    'rock': {'stoic': 2, 'fierce': .5}, 'ghost': {'mysterious': 1.5, 'melancholic': 1.2, 'playful': .6},
-    'dragon': {'regal': 1.5, 'fierce': 1, 'passionate': .5}, 'dark': {'cool': 1.1, 'mysterious': 1, 'fierce': .8, 'melancholic': .5},
+    'rock': {'stoic': 2, 'fierce': .5}, 'ghost': {'mysterious': 1.4, 'melancholic': 1.5, 'playful': .6},
+    'dragon': {'regal': 1.5, 'fierce': 1, 'passionate': .5}, 'dark': {'cool': 1.1, 'mysterious': 1, 'fierce': .8, 'melancholic': 1},
     'steel': {'cool': 1.2, 'stoic': 1, 'clever': .6}, 'fairy': {'cheerful': 1, 'gentle': .9, 'elegant': 1, 'playful': .6},
 }
 IMP_STAT = [  # 가장 높은 능력치(hp, 공격, 방어, 특공, 특방, 스피드)
@@ -996,7 +996,7 @@ IMP_TEXT = [  # 도감 글(한글) 낱말 — (정규식, 단서 이름, {분위
     (r'잠|졸|느긋|하품', '잠 · 느긋함', {'sleepy': 2}), (r'겁|소심|숨어|수줍', '겁 · 소심', {'shy': 2}),
     (r'난폭|사납|공격적|흉포|거칠|맹렬|영역', '사나움', {'fierce': 2}), (r'장난', '장난', {'playful': 2}),
     (r'우아|아름답|기품', '우아함', {'elegant': 1.5}), (r'화가 나|분노|화나', '분노', {'fierce': 1}),
-    (r'지능|영리|똑똑|머리가 좋|지혜', '지능', {'clever': 1.5}), (r'슬프|외로|울음|눈물', '슬픔', {'melancholic': 1.5}),
+    (r'지능|영리|똑똑|머리가 좋|지혜', '지능', {'clever': 1.5}), (r'슬프|슬픔|외로|고독|눈물', '슬픔', {'melancholic': 1.5}),
     (r'상냥|온순|다정|얌전|친절', '상냥함', {'gentle': 1.5}), (r'쾌활|명랑|활발|밝은 성격', '명랑', {'cheerful': 1.5}),
     (r'차분|냉정|침착', '침착', {'cool': 1.5}), (r'자존심|거만|오만|위엄', '자존심', {'regal': 1}),
     (r'신비|수수께끼|정체', '신비', {'mysterious': 1.5}), (r'열정|불타오|투지|뜨거운', '열정', {'passionate': 1.5}),
