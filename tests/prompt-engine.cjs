@@ -24,6 +24,9 @@ assert(!S.PROMPT_LINES.anatomy.includes('enlargement'),'ANATOMY 에 신체 과�
 assert.equal(S.DEFAULT_STYLE,'anime_25d_gloss','기본 화풍은 애니 2.5D 광택(IMAGE_RULES 와 같이 — 2026-11-08)');
 assert(/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d_gloss)&&/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d_gloss)&&!/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d)&&!/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d),'피부 광택은 새 키에만 — anime_25d 는 광택 전 그대로');
 assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.anime_25d_gloss),'화풍을 안 고르면 애니 2.5D 광택');
+/* 2026-11-09 — 애니 2.5D 광택 화풍 문장은 얼굴을 정하지 않는다(큰 눈 · 작은 코 · 좁은 턱이 모든 종의 FACE 줄을 이겼다). 얼굴은 FACE · IMPRESSION 줄 */
+for(const C of [S.ACTION_STYLE_CORES.anime_25d_gloss,S.CASUAL_STYLE_CORES.anime_25d_gloss]) assert(!/large expressive eyes|compact tapered jaw|small simplified nose/.test(C)&&C.includes('drawn to her own FACE line'),'anime_25d_gloss 얼굴 묘사 없음');
+assert(/large expressive eyes/.test(S.ACTION_STYLE_CORES.anime_25d),'anime_25d 는 그대로');
 for(const [k] of S.ART_STYLES) assert(S.ACTION_STYLE_CORES[k]&&S.CASUAL_STYLE_CORES[k],'style lines: '+k);
 
 /* 옛 법조문이 돌아오면 실패 — 이 문단들이 "보여 주려고 옮기는" 그림을 만들었다 */

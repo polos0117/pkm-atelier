@@ -3,6 +3,7 @@
 
     python3 tools/face-design.py build [--seed-doc <옛 설계표.md>]   # 고르고 겹침을 풀어 json 을 쓴다
     python3 tools/face-design.py render                             # json → 설계표 문서
+    python3 tools/face-design.py impression                         # 인상(나이감 · 분위기 · 눈 색)만 고쳐 쓴다(2026-11-09)
     python3 tools/face-design.py --check                            # 쓰지 않고 규칙만 본다(검사가 부른다)
 
 값은 생성기의 얼굴 항목(lib/prompt-spec.js 의 PARAM_DEFS, group face)의 열쇠 그대로다 — 생성기가 그대로 싣는다.
@@ -919,8 +920,9 @@ def build(seed_doc=None):
         f['hair_cues'] = r['cues']
         if f['hair_locked']: f['hair_record'] = r['record']
         if r['adjusted']: f['adjusted'] = (f['adjusted'] + ' ' if f['adjusted'] else '') + HAIR_ADJ + r['adjusted']
+    for no, m in design_impression(cards, imp_spec()).items(): faces[no]['impression'] = m   # 인상(2026-11-09)
     out = {'version': 1,
-           'note': 'tools/face-design.py 가 만든다. 값은 생성기 얼굴 항목(lib/prompt-spec.js)의 열쇠 그대로이고, 새 인물(경장 ①)에만 FACE 줄로 실린다. 손으로 고치면 build 를 다시 돌려 겹침 검사를 받는다. faces: 번호 → {name,en,line,how,registered,face:{얼굴 항목: 값},why,cues,adjusted,hair:{hairstyle,hair length,bangs},hair_locked,hair_why,hair_cues,hair_record?}. hair 는 생성기 머리 항목 열쇠 그대로이고 FACE 뒤 HAIR 줄로 실린다. hair_locked 는 경장 ①이 등록된 종 — 그림 저장소 기록의 값(없으면 빈 hair)을 따른다.',
+           'note': 'tools/face-design.py 가 만든다. 값은 생성기 얼굴 항목(lib/prompt-spec.js)의 열쇠 그대로이고, 새 인물(경장 ①)에만 FACE 줄로 실린다. 손으로 고치면 build 를 다시 돌려 겹침 검사를 받는다. faces: 번호 → {name,en,line,how,registered,face:{얼굴 항목: 값},why,cues,adjusted,hair:{hairstyle,hair length,bangs},hair_locked,hair_why,hair_cues,hair_record?}. hair 는 생성기 머리 항목 열쇠 그대로이고 FACE 뒤 HAIR 줄로 실린다. impression {age, vibe, eyes, cues}(2026-11-09) 는 HAIR 뒤 IMPRESSION 줄 — 낱말은 lib/prompt-spec.js IMPRESSION_AGES · IMPRESSION_VIBES. hair_locked 는 경장 ①이 등록된 종 — 그림 저장소 기록의 값(없으면 빈 hair)을 따른다.',
            'rules': {'lineMin': LINE_MIN, 'globalMin': GLOBAL_MIN, 'groups': [g for g, _ in GROUPS],
                      'hair': {'keys': HAIR_KEYS, 'cap': HAIR_CAP, 'bobCap': BOB_CAP, 'lengths': LENGTHS, 'length': HAIR_LEN, 'bangs': BANGS_OK,
                               'family': FAMILY, 'familyLocked': FAM_EXTRA, 'grow': {k: sorted(v) for k, v in GROW.items()}, 'elab': ELAB}},
@@ -968,10 +970,130 @@ def check(data=None, quiet=False):
             if k in seen[i]: near += 1
             seen[i].setdefault(k, no)
     bad += check_hair(faces, cards, img, hair_spec(), quiet)
+    bad += check_impression(faces, quiet)
     if not quiet:
         print(f'[검사] {len(faces)}종 · 서로 다른 얼굴 {len(set(G.values()))} · 넷 이상 같은 쌍 {near} · 문제 {len(bad)}')
         for b in bad[:30]: print('  ' + b)
     return bad, near
+
+
+# ── 인상(2026-11-09) — 나이감 · 분위기 · 눈 색. 전신 카드 크기에서도 보이는 얼굴 차이 ─────────────────────────
+IMP_TYPE = {
+    'normal': {'cheerful': 1, 'gentle': 1, 'playful': .6}, 'fire': {'passionate': 2, 'fierce': 1, 'cheerful': .5},
+    'water': {'gentle': 1, 'cool': 1, 'cheerful': .5, 'elegant': .5}, 'grass': {'gentle': 1.3, 'shy': .8, 'sleepy': .8, 'cheerful': .5},
+    'electric': {'playful': 1.5, 'cheerful': 1, 'passionate': .6}, 'ice': {'cool': 1.6, 'elegant': 1, 'melancholic': .8},
+    'fighting': {'fierce': 1.5, 'passionate': 1, 'stoic': 1}, 'poison': {'mysterious': 1, 'playful': 1, 'cool': .6},
+    'ground': {'stoic': 1.5, 'cool': .5, 'fierce': .5}, 'flying': {'cheerful': .8, 'playful': .8, 'fierce': .6, 'elegant': .6},
+    'psychic': {'clever': 1.5, 'mysterious': 1, 'elegant': .6}, 'bug': {'shy': 1, 'playful': .8, 'cheerful': .6},
+    'rock': {'stoic': 2, 'fierce': .5}, 'ghost': {'mysterious': 1.5, 'melancholic': 1.2, 'playful': .6},
+    'dragon': {'regal': 1.5, 'fierce': 1, 'passionate': .5}, 'dark': {'cool': 1.1, 'mysterious': 1, 'fierce': .8, 'melancholic': .5},
+    'steel': {'cool': 1.2, 'stoic': 1, 'clever': .6}, 'fairy': {'cheerful': 1, 'gentle': .9, 'elegant': 1, 'playful': .6},
+}
+IMP_STAT = [  # 가장 높은 능력치(hp, 공격, 방어, 특공, 특방, 스피드)
+    {'gentle': .3, 'sleepy': .5}, {'fierce': .8, 'passionate': .4}, {'stoic': .8}, {'clever': .6, 'mysterious': .3},
+    {'gentle': .5, 'elegant': .3}, {'playful': .6, 'cheerful': .3}]
+IMP_TEXT = [  # 도감 글(한글) 낱말 — (정규식, 단서 이름, {분위기: 점수})
+    (r'잠|졸|느긋|하품', '잠 · 느긋함', {'sleepy': 2}), (r'겁|소심|숨어|수줍', '겁 · 소심', {'shy': 2}),
+    (r'난폭|사납|공격적|흉포|거칠|맹렬|영역', '사나움', {'fierce': 2}), (r'장난', '장난', {'playful': 2}),
+    (r'우아|아름답|기품', '우아함', {'elegant': 1.5}), (r'화가 나|분노|화나', '분노', {'fierce': 1}),
+    (r'지능|영리|똑똑|머리가 좋|지혜', '지능', {'clever': 1.5}), (r'슬프|외로|울음|눈물', '슬픔', {'melancholic': 1.5}),
+    (r'상냥|온순|다정|얌전|친절', '상냥함', {'gentle': 1.5}), (r'쾌활|명랑|활발|밝은 성격', '명랑', {'cheerful': 1.5}),
+    (r'차분|냉정|침착', '침착', {'cool': 1.5}), (r'자존심|거만|오만|위엄', '자존심', {'regal': 1}),
+    (r'신비|수수께끼|정체', '신비', {'mysterious': 1.5}), (r'열정|불타오|투지|뜨거운', '열정', {'passionate': 1.5}),
+]
+IMP_EYES = {'red': ['crimson red', 'garnet red'], 'blue': ['sapphire blue', 'deep navy-blue'], 'yellow': ['amber gold', 'honey-gold'],
+            'green': ['emerald green', 'jade green'], 'black': ['charcoal grey', 'dark violet-grey'], 'brown': ['warm hazel', 'chestnut brown'],
+            'purple': ['violet', 'amethyst purple'], 'gray': ['silver grey', 'steel blue'], 'white': ['pale ice-blue', 'silver'],
+            'pink': ['rose pink', 'soft magenta']}
+IMP_CAP = 0.12   # 한 분위기는 1,025종의 12% 까지
+
+
+def imp_spec():
+    out = subprocess.run(['node', '-e', "global.window={};require('./lib/prompt-spec.js');const S=window.AtelierSpec;"
+                          "process.stdout.write(JSON.stringify({ages:S.IMPRESSION_AGES,vibes:S.IMPRESSION_VIBES}))"],
+                         cwd=ROOT, capture_output=True, text=True, check=True).stdout
+    j = json.loads(out)
+    assert set(IMP_TYPE) <= {'normal', 'fire', 'water', 'grass', 'electric', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy'}
+    for t in IMP_TYPE.values(): assert set(t) <= set(j['vibes']), t
+    return j
+
+
+def stage_of(c, by):
+    """진화 단계 — 처음 · 가운데 · 마지막 · 홀로(진화 없음)"""
+    has_from, has_to = c.get('from') in by, any(x in by for x in (c.get('to') or []))
+    return 'single' if not has_from and not has_to else 'basic' if not has_from else 'middle' if has_to else 'final'
+
+
+def h01(s):
+    h = 2166136261
+    for ch in s.encode('utf-8'): h = ((h ^ ch) * 16777619) & 0xffffffff
+    return h / 0xffffffff
+
+
+def design_impression(cards, J):
+    """종마다 {age, vibe, eyes, cues}. 점수 — 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글. 한 분위기 12% 상한(도감 번호 차례로 다음 후보)"""
+    by = {c['name']: c for c in cards}
+    vibes = list(J['vibes'])
+    cap = int(len(cards) * IMP_CAP)
+    used = {v: 0 for v in vibes}
+    out = {}
+    for c in sorted(cards, key=lambda x: x['no']):
+        sc = {v: 0.0 for v in vibes}; cues = []
+        for i, t in enumerate([c.get('element'), c.get('element2')]):
+            for v, w in IMP_TYPE.get(t or '', {}).items(): sc[v] += w * (1 if i == 0 else .5)
+        if c.get('element'): cues.append('타입 ' + c['element'] + ('/' + c['element2'] if c.get('element2') else ''))
+        st = c.get('stats') or []
+        if len(st) == 6:
+            k = max(range(6), key=lambda i: st[i])
+            for v, w in IMP_STAT[k].items(): sc[v] += w
+            cues.append('능력치 ' + ['HP', '공격', '방어', '특공', '특방', '스피드'][k])
+        stage = stage_of(c, by)
+        if stage in ('final',): sc['regal'] += .6; sc['elegant'] += .6; sc['cool'] += .2
+        if stage == 'basic': sc['cheerful'] += .4; sc['shy'] += .3; sc['playful'] += .3
+        if c.get('rare'): sc['regal'] += 1.5; cues.append('희귀')
+        for rx, name, w in IMP_TEXT:
+            if re.search(rx, c.get('text') or ''):
+                for v, x in w.items(): sc[v] += x
+                cues.append('도감 글 ' + name)
+        for v in vibes: sc[v] += h01(c['name'] + '|' + v) * .3   # 같은 점수를 고르게 가른다
+        order = sorted(vibes, key=lambda v: -sc[v])
+        vibe = next((v for v in order if used[v] < cap), order[0])
+        used[vibe] += 1
+        total = sum(st) if len(st) == 6 else 400
+        age = {'basic': 'early', 'middle': 'mid', 'final': 'late'}.get(stage) or ('late' if c.get('rare') or total >= 500 else 'mid' if total >= 400 else 'early')
+        cols = IMP_EYES.get(c.get('color') or '', ['warm hazel', 'amber gold'])
+        eyes = cols[0] if h01(c['name'] + '|eyes') < .5 else cols[1]
+        out[str(c['no'])] = {'age': age, 'vibe': vibe, 'eyes': eyes, 'cues': cues}
+    return out
+
+
+def impression():
+    J = imp_spec()
+    cards, app, img = load_inputs()
+    data = json.load(open(DATA))
+    imp = design_impression(cards, J)
+    for no, m in imp.items(): data['faces'][no]['impression'] = m
+    with open(DATA, 'w', encoding='utf-8') as fh:   # build 와 같은 꼴
+        json.dump(data, fh, ensure_ascii=False, indent=0, separators=(',', ':')); fh.write('\n')
+    cnt = {}
+    for m in imp.values(): cnt[m['vibe']] = cnt.get(m['vibe'], 0) + 1
+    print('[인상] ' + ' · '.join(f"{J['vibes'][v][0]} {n}" for v, n in sorted(cnt.items(), key=lambda x: -x[1])))
+
+
+def check_impression(faces, quiet=False):
+    J = imp_spec(); bad = []
+    cnt = {}
+    for no, f in faces.items():
+        m = f.get('impression')
+        if not m: bad.append(f"{f['name']} 인상 없음"); continue
+        if m.get('age') not in J['ages']: bad.append(f"{f['name']} 나이 {m.get('age')}")
+        if m.get('vibe') not in J['vibes']: bad.append(f"{f['name']} 분위기 {m.get('vibe')}")
+        if not m.get('eyes'): bad.append(f"{f['name']} 눈 색 없음")
+        cnt[m.get('vibe')] = cnt.get(m.get('vibe'), 0) + 1
+    cap = int(len(faces) * IMP_CAP)
+    for v, n in cnt.items():
+        if n > cap: bad.append(f'분위기 {v} {n}종 > {cap}')
+    return bad
 
 
 def face_line(f, keys, opts):
@@ -985,12 +1107,18 @@ def face_line(f, keys, opts):
     return "FACE (her own structure, not the style's default face): " + '; '.join(part) + '.'
 
 
+def imp_row(m, J):
+    if not m: return '| 인상 | 정하지 않음 |'
+    return f"| 인상 | {J['ages'][m['age']][0]} · {J['vibes'][m['vibe']][0]} · 눈 {m['eyes']} · {J['vibes'][m['vibe']][3]} |"
+
+
 def render():
     keys, opts, ko, name = spec()
     data = json.load(open(DATA))
     faces = data['faces']
     bad, near = check(data, quiet=True)
     H = hair_spec()
+    J = imp_spec()
     hcount = {}
     for f in faces.values():
         if f['hair'].get(HS): hcount[f['hair'][HS]] = hcount.get(f['hair'][HS], 0) + 1
@@ -1012,7 +1140,7 @@ def render():
         '- 고르는 법은 무작위가 아니다. 원작 외형 특징·몸 형태·타입·키와 무게에 낱말 표로 점수를 주고(`tools/face-design.py` 의 CUES), 앞서 직접 쓴 설계에 가산점을 준다. 그러고 나서 도감 번호 차례로 겹침을 푼다.',
         f'- 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **{LINE_MIN}개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**{GLOBAL_MIN}개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.',
         '- 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.',
-        '- 머리색·눈색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로 정한다.',
+        '- 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.',
         '',
         '## 머리',
         '',
@@ -1025,6 +1153,16 @@ def render():
         f'- 한 헤어스타일은 1,025종의 {int(HAIR_CAP * 100)}%(={hair_caps(len(faces))["all"]}종), 보브는 {int(BOB_CAP * 100)}%(={hair_caps(len(faces))["bob"]}종)를 넘지 않는다. 확정한 그림이 이미 그보다 많으면 새로 고르지 않는다.',
         '- 같은 진화 계열은 같은 묶음(' + ' · '.join(f'{FAM_KO[k]}' for k in FAMILY) + ') 안에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽으로 간다. 계열 안 두 종이 똑같지는 않고, 도감 바로 옆 번호의 다른 계열과는 헤어스타일이 다르다.',
         '- **경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다.',
+        '',
+        '## 인상',
+        '',
+        '전신 카드 크기에서는 턱 · 코 같은 구조 차이가 잘 안 보여 얼굴이 닮아 갔다(2026-11-09 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화」). 그래서 종마다',
+        '나이감(20대 초 · 중 · 후반) · 분위기 열넷(눈빛 · 아이라인이 따라온다) · 눈 색을 고르고, **생성기가 새 인물(경장 ①)에만 HAIR 뒤에 `IMPRESSION:` 줄로 싣는다**.',
+        '',
+        '- 나이감은 진화 단계 — 처음 초반 · 가운데 중반 · 마지막 후반, 진화 없는 종은 희귀 · 능력치 합 500 이상 후반, 400 이상 중반.',
+        '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를 넘지 않는다.',
+        '- 눈 색은 도감 색에서 두 가지 중 하나. 생성기에서 눈 색을 직접 고르면 그 값이 이긴다(IMPRESSION 줄에서 눈 색만 빠진다).',
+        '- 이미 등록된 그림은 그대로다 — 새로 그리는 ① 부터.',
         '',
         '## 지금 상태',
         '',
@@ -1057,7 +1195,8 @@ def render():
                     f"| 코 | {ko['nose character'][t['nose character']]} |",
                     f"| 입 | {ko['lips'][t['lips']]} |",
                     '| 머리 | ' + (' · '.join(f"{H['name'][k]} {H['ko'][k][f['hair'][k]]}" for k in HAIR_KEYS if f['hair'].get(k)) or '정하지 않음') +
-                    (' (확정 그림으로 잠금)' if f.get('hair_locked') else '') + ' |', '']
+                    (' (확정 그림으로 잠금)' if f.get('hair_locked') else '') + ' |',
+                    imp_row(f.get('impression'), J), '']
             if f['why']: out += [f"**이유:** {f['why']}", '']
             if f.get('hair_why'): out += [f"**머리:** {f['hair_why']}", '']
             if f.get('hair_cues'): out += ['**머리 단서:** ' + ' · '.join(f['hair_cues']), '']
@@ -1072,12 +1211,13 @@ def render():
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('cmd', nargs='?', choices=['build', 'render'])
+    ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression'])
     ap.add_argument('--seed-doc')
     ap.add_argument('--check', action='store_true')
     a = ap.parse_args()
     if a.cmd == 'build': build(a.seed_doc)
     elif a.cmd == 'render': render()
+    elif a.cmd == 'impression': impression()
     if a.check or not a.cmd:
         bad, _ = check()
         sys.exit(1 if bad else 0)

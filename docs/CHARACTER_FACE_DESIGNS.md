@@ -13,7 +13,7 @@
 - 고르는 법은 무작위가 아니다. 원작 외형 특징·몸 형태·타입·키와 무게에 낱말 표로 점수를 주고(`tools/face-design.py` 의 CUES), 앞서 직접 쓴 설계에 가산점을 준다. 그러고 나서 도감 번호 차례로 겹침을 푼다.
 - 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **3개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**2개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.
 - 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.
-- 머리색·눈색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로 정한다.
+- 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.
 
 ## 머리
 
@@ -27,9 +27,19 @@
 - 같은 진화 계열은 같은 묶음(짧은 컷 · 곧은 결 · 층 낸 컷 · 웨이브·곱슬 · 묶은 꼬리 · 땋은 머리 · 올림머리) 안에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽으로 간다. 계열 안 두 종이 똑같지는 않고, 도감 바로 옆 번호의 다른 계열과는 헤어스타일이 다르다.
 - **경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다.
 
+## 인상
+
+전신 카드 크기에서는 턱 · 코 같은 구조 차이가 잘 안 보여 얼굴이 닮아 갔다(2026-11-09 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화」). 그래서 종마다
+나이감(20대 초 · 중 · 후반) · 분위기 열넷(눈빛 · 아이라인이 따라온다) · 눈 색을 고르고, **생성기가 새 인물(경장 ①)에만 HAIR 뒤에 `IMPRESSION:` 줄로 싣는다**.
+
+- 나이감은 진화 단계 — 처음 초반 · 가운데 중반 · 마지막 후반, 진화 없는 종은 희귀 · 능력치 합 500 이상 후반, 400 이상 중반.
+- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를 넘지 않는다.
+- 눈 색은 도감 색에서 두 가지 중 하나. 생성기에서 눈 색을 직접 고르면 그 값이 이긴다(IMPRESSION 줄에서 눈 색만 빠진다).
+- 이미 등록된 그림은 그대로다 — 새로 그리는 ① 부터.
+
 ## 지금 상태
 
-- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 603
+- 서로 다른 얼굴 1025 / 1025 · 넷 이상 같은 쌍 0 · 규칙 위반 601
 - 직접 쓴 설계 651종, 원작 단서 규칙으로 고른 것 372종 · 겹침을 풀며 옮긴 종 850 · 머리를 옮긴 종 192
 - 그림이 이미 있는 종(①이 정본) 652
 - 항목별로 쓰인 값의 수: 얼굴형 7/7 · 얼굴 길이 3/3 · 얼굴 폭 3/3 · 턱선 · 턱끝 8/8 · 눈매 6/6 · 눈 크기 3/3 · 눈꼬리 각도 3/3 · 눈 간격 3/3 · 눈썹 8/8 · 코 9/9 · 입술 8/8
@@ -55,6 +65,7 @@
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 씨앗을 품은 낮고 둥근 실루엣을 넓은 볼과 둥근 턱으로 옮긴다.
 
@@ -78,6 +89,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 꽃봉오리의 위로 모이는 형태를 길어진 윤곽과 또렷한 눈매로 옮긴다.
 
@@ -101,6 +113,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 큰 꽃의 넓은 펼침과 향기로 긴장을 달래는 특징을 넓고 완만한 얼굴로 옮긴다.
 
@@ -124,6 +137,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 도롱뇽의 매끈한 윤곽과 꼬리 불꽃의 생동감을 열린 둥근 눈매로 옮긴다.
 
@@ -147,6 +161,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 긴 주둥이와 고조되는 싸움의 기질을 긴 중안부와 날카로운 눈꼬리로 해석한다.
 
@@ -170,6 +185,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 용의 뚜렷한 머리선과 비행하는 위용을 광대와 단단한 턱선으로 옮긴다.
 
@@ -193,6 +209,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 둥근 등껍질과 말린 꼬리를 둥근 볼과 짧은 턱끝의 반복 곡선으로 해석한다.
 
@@ -218,6 +235,7 @@ FACE (her own structure, not the style's default face): oval face, short length,
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 물결 꼬리와 깃털 같은 귀의 유연한 곡선을 타원 윤곽과 긴 눈매로 옮긴다.
 
@@ -241,6 +259,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 거대한 거북의 체적과 강한 수류를 넓은 하관과 안정적인 수평 눈매로 옮긴다.
 
@@ -264,6 +283,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **이유:** 애벌레의 둥근 마디를 부드러운 볼과 둥근 눈의 반복으로 옮긴다.
 
@@ -293,6 +313,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **이유:** 번데기의 접힌 면과 무거운 눈꺼풀을 각진 턱과 낮은 윗눈꺼풀로 옮긴다.
 
@@ -320,6 +341,7 @@ HAIR: straight.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 silver · a small flick of eyeliner |
 
 **이유:** 나비 날개의 펼침과 큰 겹눈을 넓은 상안면과 큰 사람 눈으로 해석한다.
 
@@ -347,6 +369,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 작은 뿔과 둥근 붉은 코를 또렷한 작은 눈과 둥근 사람 코끝으로 옮긴다.
 
@@ -374,6 +397,7 @@ HAIR: high ponytail.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 돔형 머리와 삼각 눈을 관자놀이가 넓고 아래로 좁아지는 얼굴로 옮긴다.
 
@@ -397,6 +421,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 독침과 분할 날개의 날카로운 선을 긴 눈과 좁은 턱끝으로 반복한다.
 
@@ -420,6 +445,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 작고 짧은 부리와 크림색 깃의 부드러움을 짧은 코와 완만한 얼굴로 옮긴다.
 
@@ -443,6 +469,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 새의 정돈된 깃과 비행 실루엣을 길고 수평적인 눈매로 옮긴다.
 
@@ -466,6 +493,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 길게 흐르는 볏과 맹금의 위용을 긴 윤곽과 또렷한 눈매로 옮긴다.
 
@@ -489,6 +517,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 violet · no eyeliner |
 
 **이유:** 쥐의 빠른 움직임과 큰 앞니 인상을 작은 턱과 넓은 입 너비로 해석한다.
 
@@ -512,6 +541,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 좁은 원작 눈과 큰 앞니의 존재감을 넓은 하관과 좁은 눈매로 옮긴다.
 
@@ -535,6 +565,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 갈고리 부리와 좁은 원작 눈을 뾰족한 사람 코끝과 날카로운 눈매로 옮긴다.
 
@@ -558,6 +589,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 길고 뾰족한 부리를 긴 중안부와 길게 뻗은 콧대로 번역한다.
 
@@ -585,6 +617,7 @@ HAIR: high ponytail.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 뱀의 긴 몸과 가는 시선을 길고 좁은 사람 얼굴로 해석한다.
 
@@ -608,6 +641,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 코브라의 펼친 후드와 올라간 입선을 넓은 광대와 긴 입 너비로 옮긴다.
 
@@ -631,6 +665,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 둥근 볼주머니와 전기적인 생동감을 둥근 볼과 열린 눈매로 해석한다.
 
@@ -654,6 +689,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 라이츄의 풍성한 체적과 둥근 볼을 타원 윤곽과 도톰한 입술로 구분한다.
 
@@ -679,6 +715,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 honey-gold · no eyeliner, natural strong brows |
 
 **이유:** 뾰족한 주둥이와 아몬드형 눈을 짧고 뚜렷한 턱끝과 아몬드형 사람 눈으로 옮긴다.
 
@@ -702,6 +739,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 honey-gold · no eyeliner, natural strong brows |
 
 **이유:** 등의 가시와 아몬드형 눈을 각진 광대와 긴 눈매로 옮긴다.
 
@@ -727,6 +765,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **이유:** 큰 귀와 독침의 대비를 넓은 상안면과 작고 또렷한 턱끝으로 해석한다.
 
@@ -754,6 +793,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 deep navy-blue · a small flick of eyeliner |
 
 **이유:** 니드리나의 단단해진 윤곽을 볼의 둥근 체적을 남긴 타원 얼굴로 옮긴다.
 
@@ -779,6 +819,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 뭉툭한 주둥이와 보호적인 체적을 넓고 단단한 하관으로 옮긴다.
 
@@ -802,6 +843,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 독침과 큰 귀의 날카로운 방향을 올라간 눈꼬리와 작은 턱끝으로 옮긴다.
 
@@ -825,6 +867,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 긴 주둥이와 뿔의 전방성을 긴 중안부와 집중된 눈매로 옮긴다.
 
@@ -854,6 +897,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 큰 뿔과 강한 턱의 실루엣을 각진 사람 턱과 넓은 입으로 옮긴다.
 
@@ -877,6 +921,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 우수 · 눈 soft magenta · a soft dark liner |
 
 **이유:** 별 같은 작은 몸과 말린 선을 둥근 얼굴과 작은 곡선 입술로 해석한다.
 
@@ -902,6 +947,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 rose pink · a fine winged eyeliner |
 
 **이유:** 픽시의 완만한 체적과 타원 눈을 길어진 타원 얼굴로 구분한다.
 
@@ -927,6 +973,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **이유:** 여우의 작은 얼굴과 말린 꼬리 곡선을 작은 턱과 곡선 눈썹으로 옮긴다.
 
@@ -952,6 +999,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 길게 흐르는 아홉 꼬리와 신비로운 분위기를 긴 윤곽과 가늘고 긴 눈으로 해석한다.
 
@@ -977,6 +1025,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 나른함 · 눈 soft magenta · a soft smudged liner |
 
 **이유:** 풍선의 원형과 큰 파란 눈을 둥근 볼과 큰 사람 눈으로 옮긴다.
 
@@ -1002,6 +1051,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 길어진 풍선 몸과 큰 파란 눈을 세로로 긴 타원 얼굴과 도톰한 입술로 구분한다.
 
@@ -1025,6 +1075,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 박쥐 날개의 예리한 펼침을 긴 눈매로 옮긴다. 원작의 눈 부재를 사람 얼굴에 복제하지 않는다.
 
@@ -1050,6 +1101,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 작은 원작 눈과 압도적인 입 너비를 작은 사람 눈과 넓은 입으로 해석한다.
 
@@ -1073,6 +1125,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 둥근 몸과 작은 붉은 눈을 짧은 얼굴과 작고 둥근 사람 눈으로 옮긴다.
 
@@ -1102,6 +1155,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 늘어진 표정과 얇은 원작 입술을 낮은 윗눈꺼풀과 얇은 입술로 옮긴다.
 
@@ -1125,6 +1179,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 crimson red · no eyeliner |
 
 **이유:** 크게 펼친 꽃의 둥근 체적을 넓은 얼굴과 완만한 눈썹 곡선으로 해석한다.
 
@@ -1150,6 +1205,7 @@ HAIR: wavy.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 garnet red · no eyeliner |
 
 **이유:** 버섯과 원형 눈의 둥근 반복을 짧은 윤곽과 원형에 가까운 사람 눈으로 옮긴다.
 
@@ -1179,6 +1235,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 garnet red · no eyeliner |
 
 **이유:** 거대한 버섯 아래 작은 머리를 좁은 얼굴과 고요한 수평 눈매로 해석한다. 흰 눈은 옅은 홍채로만 참고한다.
 
@@ -1200,6 +1257,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 보송한 체적과 큰 겹눈을 둥근 얼굴과 큰 사람 눈으로 옮긴다.
 
@@ -1225,6 +1283,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 나방 날개의 부드러운 펼침과 원형 눈을 넓은 상안면과 둥근 눈으로 옮긴다.
 
@@ -1248,6 +1307,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 둥근 큰 코와 작은 눈을 둥근 사람 코끝과 작고 또렷한 눈으로 해석한다.
 
@@ -1271,6 +1331,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 단단한 머리와 반복되는 작은 눈을 긴 윤곽과 정돈된 눈매로 구분한다. 머리는 하나다.
 
@@ -1294,6 +1355,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 honey-gold · no eyeliner |
 
 **이유:** 고양이의 타원 머리와 장난스러운 분위기를 올라간 눈꼬리와 넓은 입으로 해석한다.
 
@@ -1317,6 +1379,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 honey-gold · a fine winged eyeliner |
 
 **이유:** 샴고양이의 매끈하고 길쭉한 실루엣을 긴 얼굴과 가는 눈매로 옮긴다.
 
@@ -1340,6 +1403,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 honey-gold · no eyeliner |
 
 **이유:** 납작하고 넓은 부리와 작은 동공의 멍한 인상을 넓은 입과 열린 둥근 눈으로 해석한다.
 
@@ -1365,6 +1429,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 골덕의 유선형 몸과 날카로운 시선을 긴 얼굴과 수평으로 긴 눈으로 구분한다.
 
@@ -1388,6 +1453,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 털 뭉치 같은 둥근 체적과 급한 기질을 둥근 볼과 굵은 사선 눈썹으로 해석한다.
 
@@ -1411,6 +1477,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 좁은 눈과 거친 체적을 넓은 하관과 깊고 좁은 눈으로 옮긴다.
 
@@ -1436,6 +1503,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **이유:** 강아지의 둥근 주둥이와 풍성한 털을 둥근 코끝과 부드러운 볼로 해석한다.
 
@@ -1459,6 +1527,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **이유:** 큰 갈기와 당당한 체적을 넓은 광대와 단단하면서 완만한 턱으로 옮긴다.
 
@@ -1482,6 +1551,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 둥근 올챙이 몸과 큰 눈 및 분홍 입술을 둥근 얼굴과 도톰한 입술로 옮긴다.
 
@@ -1507,6 +1577,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 팔다리가 발달한 올챙이의 둥근 핵심 윤곽을 길어진 타원 얼굴로 구분한다.
 
@@ -1536,6 +1607,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 강한 상체와 올챙이 계열의 둥근 형태를 넓은 얼굴과 집중된 수평 눈매로 옮긴다.
 
@@ -1565,6 +1637,7 @@ HAIR: high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 chestnut brown · a thin, neat eyeliner |
 
 **이유:** 잠과 초능력의 고요한 인상을 낮은 윗눈꺼풀과 작은 입으로 해석한다.
 
@@ -1590,6 +1663,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 영리함 · 눈 warm hazel · a thin, neat eyeliner |
 
 **이유:** 초능력과 각진 얼굴의 인상을 긴 중안부와 직선적인 눈썹으로 옮긴다.
 
@@ -1615,6 +1689,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 warm hazel · a thin, neat eyeliner |
 
 **이유:** 길고 얇은 주둥이와 좁은 눈을 긴 콧대와 가늘고 긴 사람 눈으로 해석한다.
 
@@ -1640,6 +1715,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 평평한 원작 얼굴과 근력의 체적을 넓은 얼굴과 낮고 짧은 콧대로 옮긴다.
 
@@ -1667,6 +1743,7 @@ HAIR: pixie cut.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 짧은 주둥이와 단단한 근육 윤곽을 각진 턱과 넓은 입으로 구분한다.
 
@@ -1696,6 +1773,7 @@ HAIR: long high ponytail.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 강한 체적과 두드러진 입술을 넓은 하관과 도톰한 사람 입술로 옮긴다.
 
@@ -1725,6 +1803,7 @@ HAIR: long braid.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 종 모양 머리와 분홍 입술을 위가 좁고 아래가 둥근 긴 얼굴과 도톰한 입술로 해석한다.
 
@@ -1748,6 +1827,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 매달린 주머니의 매끈한 윤곽과 분홍 입술을 타원 얼굴과 낮은 눈꺼풀로 옮긴다.
 
@@ -1773,6 +1853,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 식충식물의 큰 입과 팽팽한 윤곽을 긴 얼굴과 넓고 도톰한 입술로 해석한다.
 
@@ -1798,6 +1879,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 투명한 큰 원작 눈과 해파리의 가벼운 윤곽을 넓은 상안면과 큰 맑은 눈으로 옮긴다.
 
@@ -1825,6 +1907,7 @@ HAIR: bob.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 큰 해파리의 늘어진 선과 단단한 머리 윤곽을 긴 얼굴과 수평 눈매로 구분한다.
 
@@ -1854,6 +1937,7 @@ HAIR: long straight.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 암석의 면과 단단한 체적을 각진 턱과 굵은 직선 눈썹으로 해석한다.
 
@@ -1881,6 +1965,7 @@ HAIR: pixie cut.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 겹친 암석의 둔중한 윤곽을 넓은 광대와 낮고 좁은 눈매로 구분한다.
 
@@ -1906,6 +1991,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 구형 암석과 납작한 주둥이를 넓고 둥근 얼굴의 단단한 턱선으로 해석한다.
 
@@ -1931,6 +2017,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 말의 긴 머리와 흐르는 불꽃 갈기를 긴 얼굴과 완만한 긴 눈으로 옮긴다.
 
@@ -1954,6 +2041,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 긴 뿔과 질주하는 말의 선을 긴 콧대와 더 선명한 눈매로 구분한다.
 
@@ -1979,6 +2067,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 멍한 눈과 둥근 체적을 낮은 윗눈꺼풀과 짧고 넓은 얼굴로 옮긴다.
 
@@ -2004,6 +2093,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 soft magenta · a thin, sharp eyeliner |
 
 **이유:** 야돈의 느긋한 눈꺼풀을 남기고 넓어진 체적을 넓은 볼과 도톰한 입술로 구분한다.
 
@@ -2029,6 +2119,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 silver grey · a small flick of eyeliner |
 
 **이유:** 단일 둥근 눈과 자석의 대칭을 균형 잡힌 두 사람 눈과 정돈된 얼굴 비율로 옮긴다.
 
@@ -2052,6 +2143,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 silver grey · a small flick of eyeliner |
 
 **이유:** 자석의 반복 결합을 각진 윤곽과 수평적인 눈매로 구분한다. 눈은 두 개다.
 
@@ -2077,6 +2169,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 납작한 부리와 결연한 인상을 넓은 입과 굵은 직선 눈썹으로 해석한다.
 
@@ -2100,6 +2193,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 길고 날카로운 부리와 작은 눈을 긴 콧대와 작고 또렷한 사람 눈으로 옮긴다.
 
@@ -2125,6 +2219,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 세 방향으로 뻗는 새의 선을 높은 광대와 날카로운 눈매로 해석한다. 인물과 머리는 하나다.
 
@@ -2150,6 +2245,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 강치의 매끈한 둥근 몸과 둥근 주둥이를 둥근 볼과 둥근 코끝으로 옮긴다.
 
@@ -2175,6 +2271,7 @@ FACE (her own structure, not the style's default face): oval face, short length,
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **이유:** 유선형 강치의 길게 흐르는 선을 타원 얼굴과 완만한 눈매로 구분한다.
 
@@ -2198,6 +2295,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 흐르는 진흙과 큰 눈 및 벌어진 입을 부드러운 볼과 넓은 입으로 해석한다.
 
@@ -2223,6 +2321,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 큰 진흙 체적과 작은 눈의 대비를 넓은 얼굴과 작은 사람 눈으로 구분한다.
 
@@ -2246,6 +2345,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 amethyst purple · no eyeliner |
 
 **이유:** 둥근 조개 안의 원형 눈과 닫힌 입을 짧은 얼굴과 작은 입으로 해석한다.
 
@@ -2269,6 +2369,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 amethyst purple · a thin, sharp eyeliner |
 
 **이유:** 가시진 조개와 진주 같은 중심 얼굴을 넓은 광대와 작은 턱끝으로 옮긴다.
 
@@ -2292,6 +2393,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 둥근 가스 덩어리와 넓은 입을 둥근 얼굴과 넓은 입선으로 해석한다.
 
@@ -2317,6 +2419,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 삼각 눈과 뾰족한 윤곽을 넓은 상안면과 치켜올라간 눈매로 옮긴다.
 
@@ -2340,6 +2443,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 둥근 체적과 큰 장난스러운 입을 넓은 볼과 좁은 눈의 대비로 구분한다.
 
@@ -2365,6 +2469,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 길게 이어진 돌 마디를 긴 얼굴과 단단한 직선 턱선으로 옮긴다.
 
@@ -2390,6 +2495,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 나른함 · 눈 amber gold · a soft smudged liner |
 
 **이유:** 지친 원작 눈과 둥근 몸을 낮은 윗눈꺼풀과 부드러운 볼로 옮긴다.
 
@@ -2415,6 +2521,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 honey-gold · a soft smudged liner |
 
 **이유:** 큰 코와 졸린 눈을 긴 사람 코와 길고 낮은 눈매로 구분한다.
 
@@ -2440,6 +2547,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 garnet red · no eyeliner |
 
 **이유:** 게의 넓은 옆 실루엣과 집게의 분명한 윤곽을 넓은 얼굴과 짧은 코로 옮긴다.
 
@@ -2463,6 +2571,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **이유:** 큰 집게의 각진 힘을 각진 하관과 굵은 눈썹으로 구분한다.
 
@@ -2492,6 +2601,7 @@ HAIR: ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 garnet red · a small flick of eyeliner |
 
 **이유:** 구형 몸과 각진 눈의 대비를 둥근 얼굴 안의 날카로운 눈매로 옮긴다.
 
@@ -2521,6 +2631,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **이유:** 구형 몸과 가는 눈 및 큰 웃음선을 둥근 얼굴과 넓은 입 너비로 구분한다.
 
@@ -2550,6 +2661,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 알의 타원형과 삼각 눈을 타원 윤곽과 치켜올라간 눈매로 옮긴다.
 
@@ -2573,6 +2685,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 honey-gold · no eyeliner |
 
 **이유:** 야자 열매의 둥근 반복과 느긋한 체적을 넓은 볼과 둥근 눈으로 해석한다.
 
@@ -2596,6 +2709,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 고독한 전승과 둥근 주둥이를 내려간 눈꼬리와 짧고 둥근 코끝으로 해석한다.
 
@@ -2621,6 +2735,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 뼈의 단단한 면과 성장한 실루엣을 단단한 턱선과 깊은 수평 눈매로 구분한다.
 
@@ -2646,6 +2761,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 길게 늘어나는 다리와 킥의 직선성을 긴 얼굴과 가늘고 긴 눈으로 해석한다.
 
@@ -2671,6 +2787,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 chestnut brown · a soft smudged liner |
 
 **이유:** 권투의 밀도 높은 동작과 머리의 뭉툭한 돌출을 단단한 하관과 굵은 눈썹으로 해석한다.
 
@@ -2696,6 +2813,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 부드러운 둥근 몸과 혀의 큰 존재감을 둥근 볼과 넓고 도톰한 입술로 해석한다.
 
@@ -2725,6 +2843,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 가스 구체와 멍한 눈을 둥근 얼굴과 낮은 윗눈꺼풀로 옮긴다.
 
@@ -2752,6 +2871,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 결합된 두 구체의 둔중함을 넓은 얼굴과 긴 수평 입선으로 구분한다. 머리는 하나다.
 
@@ -2781,6 +2901,7 @@ HAIR: asymmetric cut.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 삼각 머리와 뿔의 전방성을 높은 광대와 좁아지는 턱으로 옮긴다.
 
@@ -2810,6 +2931,7 @@ HAIR: wolf cut.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 드릴 뿔과 단단한 체적을 넓고 각진 턱과 낮은 눈매로 구분한다.
 
@@ -2839,6 +2961,7 @@ HAIR: high ponytail.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 soft magenta · no eyeliner |
 
 **이유:** 알 모양 몸과 작은 눈을 넓고 둥근 얼굴 및 작고 부드러운 눈으로 옮긴다.
 
@@ -2868,6 +2991,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 굵은 곱슬 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 덩굴 사이에 드러난 작은 중심 얼굴을 작은 코와 둥근 눈으로 해석한다.
 
@@ -2895,6 +3019,7 @@ HAIR: curly.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 가족을 지키는 특징과 큰 체적을 넓은 얼굴과 안정적인 수평 눈으로 해석한다.
 
@@ -2924,6 +3049,7 @@ HAIR: high ponytail.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 해마의 관형 입과 말린 곡선을 가는 긴 코와 작은 둥근 입으로 옮긴다.
 
@@ -2951,6 +3077,7 @@ HAIR: bob.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **이유:** 날카로워진 지느러미와 해마의 긴 선을 긴 얼굴과 좁은 눈매로 구분한다.
 
@@ -2980,6 +3107,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 garnet red · no eyeliner |
 
 **이유:** 금붕어의 유연한 지느러미와 두드러진 입술을 곡선 눈썹과 도톰한 입술로 옮긴다.
 
@@ -3009,6 +3137,7 @@ HAIR: straight.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 crimson red · a fine winged eyeliner |
 
 **이유:** 금붕어의 커진 체적과 두드러진 입술을 넓은 볼과 도톰한 입술로 구분한다.
 
@@ -3036,6 +3165,7 @@ HAIR: high ponytail.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 별의 방사 대칭과 중심 보석을 균형 잡힌 광대와 또렷한 중심 비율로 해석한다.
 
@@ -3063,6 +3193,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 amethyst purple · a fine winged eyeliner |
 
 **이유:** 겹친 별의 각진 대칭을 더 각진 윤곽과 가늘고 긴 눈으로 구분한다.
 
@@ -3090,6 +3221,7 @@ HAIR: straight.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 양쪽 동그란 번 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 영리함 · 눈 soft magenta · a thin, neat eyeliner |
 
 **이유:** 마임의 큰 표현과 둥근 머리를 넓은 상안면과 선명한 입술 곡선으로 해석한다.
 
@@ -3119,6 +3251,7 @@ HAIR: space buns.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **이유:** 낫과 사마귀의 날카로운 윤곽을 높은 광대와 치켜올라간 긴 눈으로 옮긴다.
 
@@ -3144,6 +3277,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 garnet red · a fine winged eyeliner |
 
 **이유:** 두드러진 분홍 입술과 풍성한 머리 실루엣을 도톰한 입술과 완만한 타원 얼굴로 옮긴다.
 
@@ -3171,6 +3305,7 @@ HAIR: long straight.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 번개 같은 줄무늬와 힘 있는 체적을 각진 얼굴과 굵은 사선 눈썹으로 해석한다.
 
@@ -3196,6 +3331,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 불꽃의 솟는 선과 오므린 부리를 또렷한 눈매와 중심이 도톰한 사람 입술로 옮긴다.
 
@@ -3219,6 +3355,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 집게뿔의 평행한 날과 삼각 원작 눈을 각진 턱과 삼각 인상의 긴 눈으로 옮긴다.
 
@@ -3244,6 +3381,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 성난 소의 강한 이마와 갈기를 넓은 광대 및 굵고 낮은 눈썹으로 해석한다.
 
@@ -3273,6 +3411,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 garnet red · no eyeliner |
 
 **이유:** 크고 멍한 눈과 두드러진 입술을 큰 둥근 사람 눈과 도톰한 입술로 옮긴다.
 
@@ -3302,6 +3441,7 @@ HAIR: bob.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 흉악한 용의 큰 턱과 긴 선을 각진 하관과 긴 콧대로 구분한다.
 
@@ -3329,6 +3469,7 @@ HAIR: long high ponytail.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 물 위를 운반하는 부드러운 실루엣을 긴 타원 윤곽과 완만한 눈매로 해석한다.
 
@@ -3358,6 +3499,7 @@ HAIR: long wavy.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 amethyst purple · no eyeliner |
 
 **이유:** 단순한 점눈과 부드럽게 변하는 몸을 작은 둥근 사람 눈과 완만한 얼굴로 해석한다.
 
@@ -3383,6 +3525,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 작은 여우형 얼굴과 목의 풍성한 털을 작은 턱과 부드러운 볼로 해석한다.
 
@@ -3406,6 +3549,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 흐르는 지느러미와 물의 선을 길고 완만한 눈매 및 타원 얼굴로 옮긴다.
 
@@ -3431,6 +3575,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 뾰족한 전기 털과 번개의 선을 각진 광대와 날카로운 눈꼬리로 구분한다.
 
@@ -3456,6 +3601,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 풍성한 불꽃색 털을 둥근 볼과 도톰한 입술로 해석한다.
 
@@ -3481,6 +3627,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 다면체 머리와 기하학적 눈을 각진 사람 윤곽과 정돈된 눈 간격으로 옮긴다.
 
@@ -3506,6 +3653,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **이유:** 나선 껍질과 접시 같은 큰 눈을 둥근 얼굴과 큰 둥근 사람 눈으로 옮긴다.
 
@@ -3531,6 +3679,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, short
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **이유:** 나선 껍질과 송곳니 같은 입의 힘을 넓은 턱과 좁은 눈으로 구분한다.
 
@@ -3556,6 +3705,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 낮고 단단한 껍질 아래 눈을 짧은 중안부와 작고 깊은 눈매로 해석한다.
 
@@ -3585,6 +3735,7 @@ HAIR: pixie cut.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 반원형 머리와 낫의 긴 선을 긴 얼굴과 또렷한 턱끝으로 구분한다.
 
@@ -3610,6 +3761,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 amethyst purple · no eyeliner, natural strong brows |
 
 **이유:** 공룡의 능선진 주둥이와 날개의 예리함을 각진 광대와 긴 코로 옮긴다.
 
@@ -3633,6 +3785,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 dark violet-grey · no eyeliner |
 
 **이유:** 잠과 큰 둥근 체적을 넓은 볼과 낮은 윗눈꺼풀로 해석한다.
 
@@ -3662,6 +3815,7 @@ HAIR: medium low bun.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 얼음새의 흐르는 꼬리와 원형 원작 눈을 긴 윤곽과 부드러운 아몬드형 눈으로 해석한다.
 
@@ -3691,6 +3845,7 @@ HAIR: long straight.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 번개 깃과 작은 삼각 눈을 높은 광대와 날카로운 긴 눈으로 옮긴다.
 
@@ -3720,6 +3875,7 @@ HAIR: short wolf cut.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 amber gold · a short flick of eyeliner |
 
 **이유:** 흐르는 불꽃 깃을 타원 얼굴의 긴 곡선과 선명한 입술로 해석한다.
 
@@ -3747,6 +3903,7 @@ HAIR: long wavy.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 매끈하고 둥근 용의 실루엣을 부드러운 타원 얼굴과 짧은 코로 옮긴다.
 
@@ -3770,6 +3927,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 길게 흐르는 몸과 구슬의 곡선을 긴 타원 얼굴과 고요한 눈매로 구분한다.
 
@@ -3793,6 +3951,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 chestnut brown · a bold, defined eyeliner |
 
 **이유:** 친근한 큰 용의 둥근 주둥이와 큰 눈을 넓고 부드러운 얼굴로 옮긴다.
 
@@ -3818,6 +3977,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 violet · a thin, neat eyeliner |
 
 **이유:** 유전 실험에서 태어난 인공적인 긴장을 길고 정돈된 얼굴과 깊은 눈매로 해석한다.
 
@@ -3843,6 +4003,7 @@ FACE (her own structure, not the style's default face): angular face, long lengt
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 soft magenta · a bold, defined eyeliner |
 
 **이유:** 작고 유연한 원형 실루엣과 파란 눈을 작은 턱과 맑은 둥근 눈으로 해석한다.
 
@@ -3872,6 +4033,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 큰 머리와 잎의 둥근 곡선을 둥근 얼굴과 타원 눈으로 옮긴다.
 
@@ -3901,6 +4063,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 길어진 목과 잎의 선을 타원 얼굴과 길어진 아몬드형 눈으로 구분한다.
 
@@ -3928,6 +4091,7 @@ HAIR: long high ponytail.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 넓은 꽃잎과 허브의 부드러운 이미지를 넓고 완만한 얼굴로 옮긴다.
 
@@ -3957,6 +4121,7 @@ HAIR: long wavy.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 긴 주둥이와 가늘게 보이는 눈을 긴 코와 낮은 윗눈꺼풀로 옮긴다.
 
@@ -3982,6 +4147,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 삼각 붉은 눈과 길게 뻗은 몸을 긴 얼굴과 날카로운 눈으로 구분한다.
 
@@ -4007,6 +4173,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 amber gold · a short flick of eyeliner |
 
 **이유:** 짧고 둥근 주둥이와 화산의 힘을 넓은 하관과 작은 날카로운 눈으로 옮긴다.
 
@@ -4032,6 +4199,7 @@ FACE (her own structure, not the style's default face): oval face, long length, 
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 큰 턱과 활발한 악어의 윤곽을 넓은 입과 열린 둥근 눈으로 해석한다.
 
@@ -4059,6 +4227,7 @@ HAIR: high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 강해진 악어 턱과 붉은 눈을 각진 하관과 수평으로 긴 눈으로 구분한다.
 
@@ -4088,6 +4257,7 @@ HAIR: wolf cut.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 거대한 악어 턱을 넓고 단단한 사람 턱과 낮은 눈매로 구분한다.
 
@@ -4117,6 +4287,7 @@ HAIR: braid.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 나른함 · 눈 chestnut brown · a soft smudged liner |
 
 **이유:** 주위를 살피는 망보기 특징을 열린 눈과 또렷한 눈 간격으로 해석한다.
 
@@ -4142,6 +4313,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 길고 부드러운 몸통을 긴 타원 윤곽과 완만한 눈매로 구분한다.
 
@@ -4165,6 +4337,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 부엉이의 둥근 몸과 눈 주위 구조를 둥근 얼굴과 굵은 눈썹으로 옮긴다.
 
@@ -4190,6 +4363,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 길어진 부엉이 몸과 뿔 같은 눈썹 실루엣을 긴 얼굴과 사선 눈썹으로 구분한다.
 
@@ -4215,6 +4389,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 crimson red · no eyeliner |
 
 **이유:** 둥근 무당벌레 몸과 점무늬를 둥근 볼과 큰 사람 눈으로 해석한다.
 
@@ -4240,6 +4415,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 garnet red · a fine winged eyeliner |
 
 **이유:** 정돈된 날개와 성장한 무당벌레 실루엣을 타원 얼굴과 또렷한 눈매로 구분한다.
 
@@ -4265,6 +4441,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 emerald green · a small flick of eyeliner |
 
 **이유:** 작은 거미의 둥근 몸과 작은 눈을 짧은 얼굴과 둥근 사람 눈으로 해석한다.
 
@@ -4290,6 +4467,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **이유:** 긴 다리와 예리한 거미 윤곽을 긴 얼굴과 치켜올라간 눈매로 구분한다.
 
@@ -4315,6 +4493,7 @@ FACE (her own structure, not the style's default face): angular face, long lengt
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 네 날개의 날카로운 방향과 작은 입을 높은 광대와 좁고 긴 눈으로 옮긴다.
 
@@ -4340,6 +4519,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 큰 노란 눈과 유인등의 둥근 반복을 큰 둥근 사람 눈과 짧은 얼굴로 옮긴다.
 
@@ -4365,6 +4545,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 sapphire blue · a fine winged eyeliner |
 
 **이유:** 큰 붉은 눈과 유선형 몸을 긴 타원 얼굴과 부드러운 둥근 눈으로 구분한다.
 
@@ -4390,6 +4571,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 작은 쥐의 날카로운 귀와 둥근 볼을 작은 턱과 열린 눈매로 해석한다. 인물 나이는 성인이다.
 
@@ -4415,6 +4597,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 작은 별 실루엣과 점눈을 둥근 얼굴과 작은 또렷한 사람 눈으로 해석한다.
 
@@ -4440,6 +4623,7 @@ FACE (her own structure, not the style's default face): compact face, short leng
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 풍선 몸과 말린 앞머리를 둥근 볼과 완만한 타원 눈으로 해석한다.
 
@@ -4465,6 +4649,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, short
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 알의 타원형과 가는 타원 눈을 작은 턱과 세로형 타원 눈으로 해석한다.
 
@@ -4490,6 +4675,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 silver · no eyeliner |
 
 **이유:** 행복과 가벼운 날개의 이미지를 길어진 타원 얼굴과 완만한 눈매로 구분한다.
 
@@ -4515,6 +4701,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **이유:** 작은 새의 둥근 몸과 짧은 부리를 둥근 얼굴과 짧은 사람 코로 옮긴다.
 
@@ -4540,6 +4727,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **이유:** 토템 같은 직립 실루엣과 긴 부리를 긴 얼굴과 고요한 수평 눈매로 구분한다.
 
@@ -4565,6 +4753,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 silver · a small flick of eyeliner |
 
 **이유:** 풍성한 솜털을 둥근 볼과 부드러운 코끝으로 해석한다.
 
@@ -4590,6 +4779,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 짧고 코끝이 들린 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 rose pink · a small flick of eyeliner |
 
 **이유:** 줄어든 솜털과 매끈해진 윤곽을 더 긴 타원 얼굴로 구분한다.
 
@@ -4615,6 +4805,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 길어진 목과 등대 같은 발광 특징을 긴 윤곽과 안정적인 눈매로 해석한다.
 
@@ -4636,6 +4827,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 꽃과 춤의 부드러운 원형 리듬을 둥근 얼굴과 둥근 눈으로 해석한다.
 
@@ -4665,6 +4857,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 물쥐의 구형 몸과 둥근 귀를 둥근 볼과 작고 또렷한 눈으로 옮긴다.
 
@@ -4694,6 +4887,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 deep navy-blue · a fine winged eyeliner |
 
 **이유:** 토끼 귀와 큰 물방울 체적을 긴 타원 얼굴과 큰 둥근 눈으로 구분한다.
 
@@ -4723,6 +4917,7 @@ HAIR: high ponytail.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 나무를 흉내 내는 뻣뻣한 가지 실루엣을 긴 얼굴과 정돈된 직선 눈썹으로 해석한다.
 
@@ -4750,6 +4945,7 @@ HAIR: braid.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우수 · 눈 emerald green · a soft dark liner |
 
 **이유:** 개구리의 둥근 얼굴과 말린 머리 선을 둥근 눈과 넓은 입으로 해석한다.
 
@@ -4775,6 +4971,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 가볍게 뜨는 작은 솜풀 실루엣을 작은 턱과 열린 둥근 눈으로 해석한다.
 
@@ -4804,6 +5001,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 꽃과 타원형 원작 눈을 타원 얼굴과 완만한 곡선 눈썹으로 구분한다.
 
@@ -4829,6 +5027,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 둥근 솜뭉치와 작은 붉은 눈을 둥근 얼굴 안의 작은 또렷한 눈으로 구분한다.
 
@@ -4854,6 +5053,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 amethyst purple · no eyeliner |
 
 **이유:** 긴 손꼬리와 장난스러운 기질을 열린 눈매와 넓은 입 너비로 해석한다.
 
@@ -4879,6 +5079,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 amber gold · no eyeliner |
 
 **이유:** 씨앗의 타원형과 작은 원작 눈을 타원 얼굴과 작고 둥근 사람 눈으로 해석한다.
 
@@ -4908,6 +5109,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 honey-gold · no eyeliner |
 
 **이유:** 해바라기의 둥근 중심과 펼친 꽃잎을 둥근 얼굴과 넓고 완만한 입선으로 해석한다.
 
@@ -4937,6 +5139,7 @@ HAIR: wavy.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **이유:** 잠자리의 큰 눈과 긴 몸을 긴 얼굴과 큰 사람 눈으로 해석한다.
 
@@ -4966,6 +5169,7 @@ HAIR: high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 둥근 작은 눈과 부드러운 수어 몸을 둥근 얼굴과 넓은 입으로 옮긴다.
 
@@ -4995,6 +5199,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 넓은 머리와 작은 눈을 넓은 볼과 작고 또렷한 사람 눈으로 구분한다.
 
@@ -5024,6 +5229,7 @@ HAIR: straight.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 violet · a thin, neat eyeliner |
 
 **이유:** 가느다란 몸과 갈라진 꼬리 및 중심 보석을 작은 턱과 정돈된 긴 눈으로 해석한다.
 
@@ -5051,6 +5257,7 @@ HAIR: straight.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 dark violet-grey · a thin, sharp eyeliner |
 
 **이유:** 매끈한 검은 몸과 고리 무늬의 절제된 대비를 긴 윤곽과 낮고 긴 눈으로 구분한다.
 
@@ -5076,6 +5283,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 dark violet-grey · a small flick of eyeliner |
 
 **이유:** 비뚤어진 부리와 모자 같은 볏을 높은 광대와 날카로운 코끝으로 옮긴다.
 
@@ -5101,6 +5309,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 soft magenta · a fine winged eyeliner |
 
 **이유:** 느긋한 계열 얼굴에 왕관의 안정감을 더해 넓은 볼과 고요한 눈매로 구분한다.
 
@@ -5126,6 +5335,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 steel blue · no eyeliner |
 
 **이유:** 흐르는 머리와 큰 붉은 눈 및 놀래키는 기질을 작은 턱과 큰 사람 눈으로 해석한다.
 
@@ -5151,6 +5361,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, short
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 charcoal grey · a dark smoky liner |
 
 **이유:** 문자 실루엣의 대칭과 중심 원형 눈을 정돈된 얼굴과 대칭인 두 원형 사람 눈으로 옮긴다.
 
@@ -5176,6 +5387,7 @@ FACE (her own structure, not the style's default face): softly rounded face, bal
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
 
 **이유:** 부드러운 몸과 먼저 공격하지 않는 특징을 긴 얼굴과 낮은 눈꺼풀로 해석한다.
 
@@ -5199,6 +5411,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 amber gold · a thin, neat eyeliner |
 
 **이유:** 긴 목과 둥근 코를 긴 윤곽 및 둥근 코끝을 가진 긴 콧대로 옮긴다.
 
@@ -5228,6 +5441,7 @@ HAIR: long high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 silver grey · no eyeliner |
 
 **이유:** 겹친 솔방울 껍질 틈의 눈을 각진 광대와 작고 깊은 사람 눈으로 옮긴다.
 
@@ -5255,6 +5469,7 @@ HAIR: pixie cut.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 amethyst purple · no eyeliner, natural strong brows |
 
 **이유:** 단단한 구형 껍질과 층의 수평선을 넓은 얼굴과 긴 수평 눈매로 구분한다.
 
@@ -5284,6 +5499,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 amber gold · no eyeliner |
 
 **이유:** 둥근 머리와 넓은 입 및 땅뱀의 긴 몸을 긴 얼굴과 넓은 입으로 해석한다.
 
@@ -5313,6 +5529,7 @@ HAIR: long braid.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 amethyst purple · no eyeliner, natural strong brows |
 
 **이유:** 둥근 머리와 전갈의 날카로운 갈고리 대비를 작은 턱과 올라간 눈매로 해석한다.
 
@@ -5340,6 +5557,7 @@ HAIR: short asymmetric cut.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 거대한 금속 머리와 강한 턱을 넓고 각진 사람 하관으로 구분한다.
 
@@ -5369,6 +5587,7 @@ HAIR: short slicked back.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 rose pink · no eyeliner |
 
 **이유:** 불독의 처진 얼굴 체적을 넓은 볼과 내려간 눈꼬리로 해석한다.
 
@@ -5398,6 +5617,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 violet · no eyeliner |
 
 **이유:** 강해진 불독의 턱을 각진 하관과 깊은 수평 눈매로 구분한다.
 
@@ -5427,6 +5647,7 @@ HAIR: medium wolf cut.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **이유:** 부풀린 몸과 가시 및 두툼한 입술의 대비를 둥근 얼굴 안의 날카로운 눈으로 해석한다.
 
@@ -5454,6 +5675,7 @@ HAIR: short space buns.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 crimson red · no eyeliner |
 
 **이유:** 금속 집게와 매끈한 장갑의 선을 단단한 윤곽과 정돈된 수평 눈매로 구분한다.
 
@@ -5483,6 +5705,7 @@ HAIR: bob.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 amber gold · no eyeliner, natural strong brows |
 
 **이유:** 껍질에서 뻗은 가는 목과 작은 머리를 긴 콧대와 작은 눈으로 해석한다.
 
@@ -5512,6 +5735,7 @@ HAIR: twin braids.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 외뿔의 강한 중심축과 타원 눈을 넓고 균형 잡힌 얼굴로 옮긴다.
 
@@ -5535,6 +5759,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 charcoal grey · a thin, sharp eyeliner |
 
 **이유:** 갈고리 발톱과 가느다란 몸의 예리함을 작은 턱과 날카로운 긴 눈으로 옮긴다.
 
@@ -5560,6 +5785,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 아기곰의 둥근 귀와 볼을 둥근 얼굴과 작은 곡선 입술로 해석한다. 성인 비율을 유지한다.
 
@@ -5585,6 +5811,7 @@ FACE (her own structure, not the style's default face): oval face, short length,
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 큰 곰의 둔중한 체적과 강한 주둥이를 넓은 하관과 굵은 눈썹으로 구분한다.
 
@@ -5610,6 +5837,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 흐르는 용암과 큰 둥근 눈을 완만한 타원 얼굴과 큰 사람 눈으로 해석한다.
 
@@ -5639,6 +5867,7 @@ HAIR: long wavy.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 달팽이 껍질과 둥근 코 및 넓은 입을 둥근 볼과 넓은 입으로 구분한다.
 
@@ -5666,6 +5895,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **이유:** 털에 묻힌 가는 눈과 둥근 코를 낮은 눈꺼풀과 둥근 사람 코끝으로 옮긴다.
 
@@ -5695,6 +5925,7 @@ HAIR: shaggy.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 멧돼지의 큰 털 체적과 작은 눈을 넓은 얼굴과 작은 깊은 눈으로 구분한다.
 
@@ -5724,6 +5955,7 @@ HAIR: long shaggy.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 rose pink · no eyeliner, natural strong brows |
 
 **이유:** 산호의 갈라진 곡선과 타원 눈을 작은 턱과 완만한 곡선 눈썹으로 해석한다.
 
@@ -5753,6 +5985,7 @@ HAIR: medium curly.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **이유:** 접시 같은 눈과 분사하는 작은 몸을 큰 둥근 사람 눈과 작은 입으로 해석한다.
 
@@ -5780,6 +6013,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **이유:** 단단한 둥근 머리와 포탑 같은 입을 넓은 볼과 중심이 도톰한 입술로 구분한다.
 
@@ -5805,6 +6039,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **이유:** 배달하는 친근함과 둥근 새 실루엣을 완만한 타원 얼굴로 해석한다.
 
@@ -5828,6 +6063,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 violet · a fine winged eyeliner |
 
 **이유:** 가오리의 넓은 날개와 작은 눈 및 입을 넓은 얼굴과 작은 이목구비로 옮긴다.
 
@@ -5851,6 +6087,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 강철 날개와 뾰족한 부리를 긴 윤곽과 긴 직선 콧대로 옮긴다.
 
@@ -5880,6 +6117,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 우수 · 눈 dark violet-grey · a soft dark liner |
 
 **이유:** 작은 사냥개의 날카로운 골격 선을 타원 얼굴와 뾰족한 사람 코끝으로 해석한다.
 
@@ -5909,6 +6147,7 @@ HAIR: short ponytail.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우수 · 눈 dark violet-grey · a soft dark liner |
 
 **이유:** 큰 뿔과 사냥개의 긴 주둥이를 긴 얼굴과 굵은 사선 눈썹으로 구분한다.
 
@@ -5936,6 +6175,7 @@ HAIR: long straight.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 가늘고 긴 해마 주둥이와 용의 절제된 선을 긴 중안부와 가는 눈으로 구분한다.
 
@@ -5961,6 +6201,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **이유:** 작은 코끼리의 둥근 체적을 둥근 볼과 둥근 사람 코끝으로 옮긴다.
 
@@ -5990,6 +6231,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 장갑과 바퀴 같은 단단한 몸을 넓은 하관과 낮고 굵은 눈썹으로 구분한다.
 
@@ -6019,6 +6261,7 @@ HAIR: undercut.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 신비 · 눈 garnet red · a dark smoky liner |
 
 **이유:** 매끈해진 가상 몸의 곡면을 둥근 모서리의 타원 얼굴과 원형 눈으로 구분한다.
 
@@ -6044,6 +6287,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 큰 뿔과 긴 목의 선을 긴 얼굴 및 긴 콧대로 해석한다.
 
@@ -6069,6 +6313,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 그림장이의 느긋하고 유연한 이미지를 완만한 눈매와 넓은 입으로 해석한다.
 
@@ -6092,6 +6337,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 싸움꾼의 짧고 단단한 윤곽을 짧은 중안부와 굵은 직선 눈썹으로 해석한다.
 
@@ -6117,6 +6363,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 회전과 균형의 리듬을 타원 윤곽과 균형 잡힌 눈 간격으로 해석한다.
 
@@ -6142,6 +6389,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 rose pink · a thin, sharp eyeliner |
 
 **이유:** 큰 청록 눈과 두드러진 분홍 입술을 넓은 상안면과 도톰한 입술로 해석한다.
 
@@ -6169,6 +6417,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 전류와 플러그의 각진 중심선을 짧고 각진 얼굴과 열린 눈매로 해석한다.
 
@@ -6192,6 +6441,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 둥근 노란 부리와 작은 불씨의 체적을 둥근 코끝과 도톰한 입술로 해석한다.
 
@@ -6221,6 +6471,7 @@ HAIR: short curly.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 젖소의 둥글고 넉넉한 체적을 넓은 볼과 부드러운 수평 눈매로 해석한다.
 
@@ -6250,6 +6501,7 @@ HAIR: long twin braids.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 rose pink · no eyeliner |
 
 **이유:** 행복과 돌봄의 전승 및 큰 알형 몸을 넓고 완만한 얼굴로 구분한다.
 
@@ -6273,6 +6525,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 amber gold · a bold, defined eyeliner |
 
 **이유:** 번개 줄무늬와 큰 고양잇과의 긴장을 높은 광대와 강한 사선 눈썹으로 해석한다.
 
@@ -6296,6 +6549,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **이유:** 화산 같은 체적과 큰 갈기의 위용을 넓고 단단한 하관으로 해석한다.
 
@@ -6325,6 +6579,7 @@ HAIR: medium wolf cut.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 sapphire blue · a bold, defined eyeliner |
 
 **이유:** 오로라처럼 흐르는 선과 긴 주둥이를 긴 얼굴 및 완만한 긴 눈매로 해석한다.
 
@@ -6354,6 +6609,7 @@ HAIR: long wavy, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
 
 **이유:** 바위 같은 면과 짧은 주둥이를 높은 광대와 짧은 사람 코로 옮긴다.
 
@@ -6383,6 +6639,7 @@ HAIR: short wolf cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 탄환 같은 매끈한 외피를 긴 타원 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -6412,6 +6669,7 @@ HAIR: bob, parted bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
 
 **이유:** 거대한 장갑과 뾰족한 윤곽을 각진 하관과 작고 강한 눈매로 구분한다.
 
@@ -6441,6 +6699,7 @@ HAIR: ponytail.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 곧은 생머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 pale ice-blue · a bold, defined eyeliner |
 
 **이유:** 잠수와 거대한 유선형 날개를 긴 얼굴 및 안정적인 수평 눈매로 해석한다.
 
@@ -6468,6 +6727,7 @@ HAIR: straight.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 무지개 깃의 펼침과 장중한 새의 위용을 긴 곡선 눈썹과 선명한 입술로 해석한다.
 
@@ -6495,6 +6755,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 새싹의 끝과 둥근 머리 및 큰 파란 눈을 작은 턱과 큰 맑은 사람 눈으로 옮긴다.
 
@@ -6526,6 +6787,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 jade green · a thin, sharp eyeliner |
 
 **이유:** 도마뱀의 매끈한 윤곽과 느긋하게 낮아진 시선을 타원 얼굴과 낮은 윗눈꺼풀로 해석한다.
 
@@ -6549,6 +6811,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 날카로운 잎과 길어진 몸을 긴 얼굴과 선명한 긴 눈으로 구분한다.
 
@@ -6572,6 +6835,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 긴 날 같은 잎과 볏을 높은 광대와 가늘고 긴 눈으로 옮긴다.
 
@@ -6599,6 +6863,7 @@ HAIR: medium swept back.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 솜털과 짧은 부리를 둥근 볼과 짧은 사람 코로 해석한다.
 
@@ -6628,6 +6893,7 @@ HAIR: bob.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 짧고 넓은 부리와 강해진 다리의 체적을 넓은 얼굴과 열린 눈매로 구분한다.
 
@@ -6657,6 +6923,7 @@ HAIR: high ponytail.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** V형 볏과 격투의 긴 선을 긴 윤곽과 날카로운 눈썹으로 옮긴다.
 
@@ -6682,6 +6949,7 @@ FACE (her own structure, not the style's default face): elongated face, long len
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 큰 머리와 작은 검은 눈을 넓고 둥근 얼굴과 작은 사람 눈으로 옮긴다.
 
@@ -6707,6 +6975,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 각진 지느러미와 단단한 팔다리를 길어진 얼굴과 선명한 눈매로 구분한다.
 
@@ -6732,6 +7001,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 큰 부채꼴 지느러미와 넓은 체적을 넓은 하관과 안정적인 눈매로 옮긴다.
 
@@ -6757,6 +7027,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 작은 하이에나의 뾰족한 이와 어두운 얼굴 대비를 올라간 눈매와 작은 코끝으로 해석한다.
 
@@ -6786,6 +7057,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 큰 하이에나의 검은 갈기와 마름모 귀를 긴 윤곽과 굵은 눈썹으로 구분한다.
 
@@ -6815,6 +7087,7 @@ HAIR: long wolf cut.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 warm hazel · a small flick of eyeliner |
 
 **이유:** 너구리의 부드러운 체적은 균형 잡힌 타원 윤곽과 둥근 턱으로, 작은 검은 눈 가면의 압축된 대비는 가까운 가는 눈과 굵고 낮은 눈썹으로 해석한다. 사람의 균형 잡힌 코와 중간 두께 입술을 유지해 동물 주둥이를 복제하지 않는다.
 
@@ -6842,6 +7115,7 @@ HAIR: medium shaggy.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/linoone-20261013/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -6869,6 +7143,7 @@ HAIR: long feathered.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 crimson red · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/wurmple-20261013/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -6894,6 +7169,7 @@ HAIR: pixie cut.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/silcoon-20261013/light.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -6919,6 +7195,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 amber gold · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/beautifly-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -6946,6 +7223,7 @@ HAIR: long wavy.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 violet · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/cascoon-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -6973,6 +7251,7 @@ HAIR: medium blunt cut.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 jade green · a soft smudged liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/dustox-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7000,6 +7279,7 @@ HAIR: medium asymmetric cut.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/lotad-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7025,6 +7305,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/lombre-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7050,6 +7331,7 @@ HAIR: bob.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 웨이브 헤어 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/ludicolo-20261014/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7075,6 +7357,7 @@ HAIR: wavy.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 도토리의 짧고 둥근 체적과 큰 검은 눈을 짧고 넓은 윤곽·큰 눈으로 옮기고, 작은 코와 입으로 소박한 숲의 인상을 남긴다.
 
@@ -7104,6 +7387,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 길고 얇은 팔과 한 장의 잎, 베이지 가면의 또렷한 면을 좁은 타원 윤곽과 기민한 아몬드 눈·가느다란 콧대로 옮긴다.
 
@@ -7131,6 +7415,7 @@ HAIR: long high ponytail.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 긴 뾰족한 코와 큰 입, 거친 흰 갈기를 긴 얼굴·각진 턱·또렷한 사람 코와 넓은 입·숱 있는 눈썹으로 해석한다. 코를 주둥이나 텐구 부리로 만들지 않는다.
 
@@ -7160,6 +7445,7 @@ HAIR: long shaggy.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 작고 둥근 제비 체적은 짧은 성인 얼굴과 부드러운 턱, 가는 갈색 눈과 굴하지 않는 기개는 작은 올라간 눈과 사선 눈썹으로 해석했다. 짧은 부리는 짧은 사람 코와 작은 입으로 옮긴다.
 
@@ -7187,6 +7473,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 계열의 가늘고 올라간 눈은 공유하되 길어진 제비 실루엣과 뾰족한 부리는 긴 얼굴·분명한 턱·곧고 긴 콧대로 해석했다. 가는 직선 눈썹과 얇은 입술로 별개의 성인 인물을 구분한다.
 
@@ -7214,6 +7501,7 @@ HAIR: long high ponytail.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 가르마를 탄 단정한 컷 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 silver · no eyeliner |
 
 **이유:** 길고 납작한 날개의 수평선은 넓은 광대·넓은 눈 간격·수평의 가는 눈, 갈고리형 부리 끝은 완만히 볼록한 사람 콧대로 옮긴다. 바닷바람 활공은 긴 곡선 눈썹과 차분한 입술로 해석한다.
 
@@ -7241,6 +7529,7 @@ HAIR: medium side part.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 honey-gold · a fine winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/pelipper-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7268,6 +7557,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 silver · a thin, neat eyeliner |
 
 **이유:** 얼굴을 가리는 둥근 머리 윤곽과 감응하는 특징을 작은 턱과 부드럽게 내려간 눈꼬리로 해석한다.
 
@@ -7297,6 +7587,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 영리함 · 눈 pale ice-blue · a thin, neat eyeliner |
 
 **이유:** 춤추는 가벼운 실루엣을 타원 얼굴과 유연한 눈썹 곡선으로 구분한다.
 
@@ -7326,6 +7617,7 @@ HAIR: medium wavy.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 silver · a thin, neat eyeliner |
 
 **이유:** 드레스처럼 흐르는 긴 선과 보호하는 특징을 긴 얼굴과 고요한 눈매로 해석한다.
 
@@ -7355,6 +7647,7 @@ HAIR: long straight.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/surskit-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7380,6 +7673,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 마름모 날개와 큰 눈처럼 보이는 더듬이를 넓은 상안면과 큰 사람 눈으로 해석한다.
 
@@ -7409,6 +7703,7 @@ HAIR: medium wavy.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/shroomish-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7436,6 +7731,7 @@ HAIR: bob.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/breloom-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7463,6 +7759,7 @@ HAIR: long high ponytail.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 나무늘보의 긴 팔과 게으른 눈매를 긴 타원 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -7488,6 +7785,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 silver · a small flick of eyeliner |
 
 **이유:** 성난 원숭이의 각진 체적을 짧은 중안부와 강한 눈썹으로 구분한다.
 
@@ -7515,6 +7813,7 @@ HAIR: medium high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/slaking-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7542,6 +7841,7 @@ HAIR: long wavy.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 작은 날개와 뾰족한 주둥이를 작은 눈과 선명한 코끝으로 해석한다.
 
@@ -7571,6 +7871,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/ninjask-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7598,6 +7899,7 @@ HAIR: long high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 chestnut brown · a small flick of eyeliner |
 
 **이유:** 속이 빈 허물과 움직이지 않는 실루엣을 고요한 눈매와 절제된 입술로 해석한다. 생기 없는 피부나 빈 눈구멍은 복제하지 않는다.
 
@@ -7627,6 +7929,7 @@ HAIR: long hime cut.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 나른함 · 눈 rose pink · a soft smudged liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/whismur-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7654,6 +7957,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 각진 몸통과 원형 스피커 귀는 짧고 넓은 얼굴·단단한 턱과 대비되는 둥근 눈으로 해석한다. 넓은 입 윤곽은 넓은 사람 입술선, 짧은 코는 둥근 코끝으로 옮긴다.
 
@@ -7681,6 +7985,7 @@ HAIR: bob.
 | 코 | 크고 또렷한 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 길게 솟은 음향관과 큰 울림 체적은 긴 얼굴·뚜렷한 광대와 턱으로 해석한다. 좁은 눈 윤곽은 긴 아몬드 눈, 큰 발성기관은 도톰한 아래 입술로 옮겨 노공룡의 짧은 얼굴과 구분한다.
 
@@ -7708,6 +8013,7 @@ HAIR: long ponytail.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 honey-gold · a crisp winged eyeliner |
 
 **이유:** 둥근 손과 근성의 체적을 넓은 볼과 굵은 낮은 눈썹으로 해석한다.
 
@@ -7737,6 +8043,7 @@ HAIR: medium top knot.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 거대한 손바닥과 삼각 볏의 둔중한 힘을 넓은 하관과 작은 깊은 눈으로 구분한다.
 
@@ -7766,6 +8073,7 @@ HAIR: short slicked back.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 원형 귀와 물방울 같은 몸의 원형 반복을 짧고 넓은 얼굴·부드러운 볼과 턱으로, 작고 떨어진 검은 눈을 작고 넓게 떨어진 사람 눈으로 옮긴다. 콧대와 입은 짧고 부드럽게 하여 20대 성인 인물의 비율을 유지한다.
 
@@ -7795,6 +8103,7 @@ HAIR: bob.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 각진 화산암 체적은 넓고 각진 턱과 뚜렷한 광대로, 가느다란 눈 틈은 작은 수평 눈매로 해석한다. 큰 삼각형 나침반 코는 또렷한 사람 콧대와 코끝으로 옮기고 원작의 붉은 삼각형은 흉갑에만 남긴다.
 
@@ -7824,6 +8133,7 @@ HAIR: medium straight.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 분홍색의 짧고 둥근 체적과 slit-like eyes를 짧은 둥근 윤곽·작고 가는 수평 눈으로 해석한다. 크림색 초승달의 부드러운 곡선은 완만한 눈썹과 둥근 코끝으로 남긴다. 성인 얼굴 비율을 유지한다.
 
@@ -7853,6 +8163,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 violet · a soft smudged liner |
 
 **이유:** 얇게 흐르는 꼬리와 뾰족한 수염 돌기에서 균형 길이의 타원 윤곽·가느다란 직선 콧대를 해석하고, 보라색 러프의 풍성한 결은 숱 있는 눈썹으로 남긴다. 에나비의 가는 눈과 달리 넓게 열린 성인 눈으로 구분한다.
 
@@ -7880,6 +8191,7 @@ HAIR: long wavy.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 보석 눈과 예리한 귀의 대비를 작은 턱과 큰 선명한 사람 눈으로 해석한다.
 
@@ -7905,6 +8217,7 @@ FACE (her own structure, not the style's default face): sharp face, balanced len
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 charcoal grey · a thin, sharp eyeliner |
 
 **이유:** 작은 본체와 큰 뒤쪽 턱의 대비를 작은 턱끝과 선명한 입술 윤곽으로 해석한다. 사람 얼굴에 두 번째 입을 붙이지 않는다.
 
@@ -7930,6 +8243,7 @@ FACE (her own structure, not the style's default face): heart-shaped face, balan
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/aron-20261019/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7955,6 +8269,7 @@ HAIR: bob.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/lairon-20261019/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -7982,6 +8297,7 @@ HAIR: long high ponytail.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 거대한 강철 갑옷과 단단한 뿔을 넓고 각진 하관으로 옮긴다.
 
@@ -8011,6 +8327,7 @@ HAIR: long high ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/meditite-20261019/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8038,6 +8355,7 @@ HAIR: medium top knot.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **이유:** 명상의 긴 직립 선과 큰 집중 눈을 긴 윤곽과 정돈된 긴 눈매로 해석한다.
 
@@ -8065,6 +8383,7 @@ HAIR: long top knot.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **이유:** 번개형 무늬·뾰족한 볏의 직선을 각진 턱, 가늘고 수평인 눈과 곧은 눈썹으로 해석한다. 낮게 뻗는 머리의 폭은 넓은 눈 간격에 남기고, 코와 입은 사람의 비례를 유지한다.
 
@@ -8094,6 +8413,7 @@ HAIR: short windswept.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 뒤로 넘긴 볼륨 있는 스타일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 뾰족한 노란 갈기의 꺾이는 면을 각진 턱과 올라간 좁은 눈매로 해석한다. 전기 방전의 단단한 인상을 결이 보이는 눈썹과 균형 잡힌 콧대로 옮긴다.
 
@@ -8123,6 +8443,7 @@ HAIR: long swept back.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 플러스 문양의 바깥으로 열리는 선과 응원을 열린 눈매와 곡선 입술로 해석한다.
 
@@ -8150,6 +8471,7 @@ HAIR: long twin tail.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 마이너스 문양의 수평선과 응원을 완만한 수평 눈매와 작은 입으로 구분한다.
 
@@ -8179,6 +8501,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 steel blue · no eyeliner |
 
 **이유:** 발광하는 구형 꼬리와 반복 줄을 둥근 얼굴와 넓은 입선으로 해석한다.
 
@@ -8208,6 +8531,7 @@ HAIR: medium wavy.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 amethyst purple · no eyeliner |
 
 **이유:** 반딧불의 보라색 말린 곡선을 작은 턱과 곡선 눈썹으로 구분한다.
 
@@ -8235,6 +8559,7 @@ HAIR: short wavy.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 매우 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 긴 속눈썹과 세 가시의 가늘고 곡선적인 선을 수평 아몬드 눈·긴 아치 눈썹·활 모양 윗입술로 옮긴다. 꽃잎의 둥근 윤곽은 타원형 얼굴과 부드러운 턱으로 해석하며 꼬몽울·로즈레이드와 별개 성인 인물을 유지한다.
 
@@ -8262,6 +8587,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **이유:** 밥통 같은 체적과 오므린 입술 및 사선 눈을 둥근 볼과 도톰한 입술로 옮긴다.
 
@@ -8291,6 +8617,7 @@ HAIR: bob.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 작은 붉은 구슬눈은 사람의 작고 수평으로 긴 눈으로, 유연하고 둥근 체적은 타원형 윤곽과 둥근 턱으로 해석한다. 꼴깍몬의 짧고 넓은 하트형 얼굴·치켜올라간 눈꼬리와 구분하며, 같은 계열의 도톰한 입술은 남긴다.
 
@@ -8320,6 +8647,7 @@ HAIR: long wavy.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 crimson red · a thin, sharp eyeliner |
 
 **이유:** 원작의 구형 몸통과 강한 턱을 넓은 볼·둥근 턱과 코끝, 도톰한 사람 입술로 해석했다. 악 타입의 단호한 사선 눈썹을 남겨, 길고 좁은 샤크니아의 윤곽과 구분한다. 확정한 경장 ①이 이후 외형의 정본이다.
 
@@ -8349,6 +8677,7 @@ HAIR: bob.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 어뢰처럼 긴 상어 체적을 길고 좁은 얼굴·긴 턱과 코로, 큰 입을 넓은 사람 입으로 해석했다. 가늘고 긴 눈과 사선 눈썹을 남겨 샤프니아의 넓고 둥근 윤곽과 구분한다. 확정한 경장 ①이 이후 외형의 정본이다.
 
@@ -8376,6 +8705,7 @@ HAIR: long slicked back.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 도감의 둥근고래·공처럼 튀는 체적과 넓은 수염판 입을 짧고 넓은 얼굴, 둥근 턱, 수평으로 떨어진 눈과 넓은 사람 입으로 옮긴다. 작은 코끝과 둥근 눈썹은 둥근 체적의 곡선을 잇되 20대 성인 비율을 유지한다.
 
@@ -8405,6 +8735,7 @@ HAIR: bob.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 긴 고래 체적과 작은 눈, 넓은 입의 대비를 긴 타원 얼굴, 길게 이어지는 턱선, 작고 넓게 떨어진 눈, 낮고 넓은 콧대와 수평 입술로 옮긴다. 고래왕자의 둥근 턱과 짧은 코와 구별하며 무늬는 의상에만 둔다.
 
@@ -8432,6 +8763,7 @@ HAIR: long straight.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 낙타의 완만한 등과 둔감한 분위기를 완만한 타원 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -8461,6 +8793,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 분화하는 큰 혹과 둔중한 몸을 넓은 하관 및 굵은 눈썹으로 구분한다.
 
@@ -8490,6 +8823,7 @@ HAIR: long wolf cut, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/torkoal-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8517,6 +8851,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 charcoal grey · a thin, neat eyeliner |
 
 **이유:** 큰 둥근 돼지 코와 원형 눈을 둥근 사람 코끝과 둥근 눈으로 해석한다.
 
@@ -8546,6 +8881,7 @@ HAIR: medium chignon, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 amethyst purple · a fine winged eyeliner |
 
 **이유:** 커진 돼지의 체적과 구슬의 원형을 넓은 볼과 타원 눈으로 구분한다.
 
@@ -8575,6 +8911,7 @@ HAIR: long chignon, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 흔들리는 몸과 소용돌이 무늬를 둥근 윤곽과 낮은 눈꺼풀로 해석한다. 나선 동공은 복제하지 않는다.
 
@@ -8602,6 +8939,7 @@ HAIR: long braid, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 큰 머리와 턱 및 작은 눈의 대비를 넓은 하관과 작은 사람 눈으로 옮긴다.
 
@@ -8631,6 +8969,7 @@ HAIR: medium curly, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **이유:** 마름모 날개와 가는 몸을 긴 윤곽과 큰 사람 눈으로 구분한다.
 
@@ -8660,6 +8999,7 @@ HAIR: long twin tail, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 emerald green · a crisp winged eyeliner |
 
 **이유:** 큰 눈 덮개와 긴 사막용 실루엣을 큰 눈과 길고 매끈한 사람 얼굴로 해석한다.
 
@@ -8689,6 +9029,7 @@ HAIR: long ponytail, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 우아함 · 눈 emerald green · a fine winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/cacnea-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8714,6 +9055,7 @@ HAIR: long crown braid, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/cacturne-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8739,6 +9081,7 @@ HAIR: long braid, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 sapphire blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/swablu-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8766,6 +9109,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 구름 같은 날개와 긴 목의 선을 완만한 타원 얼굴로 해석한다.
 
@@ -8795,6 +9139,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 pale ice-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/zangoose-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8822,6 +9167,7 @@ HAIR: long twin tail, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 charcoal grey · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/seviper-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8849,6 +9195,7 @@ HAIR: very long straight, asymmetric bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 honey-gold · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/lunatone-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8874,6 +9221,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
 
 **이유:** 태양 광선의 직선과 넓고 둥근 암석 체적을 넓은 각진 윤곽, 좁은 눈과 사선 눈썹으로 해석. 경장 정본 확정.
 
@@ -8903,6 +9251,7 @@ HAIR: long asymmetric cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **이유:** 작은 눈·둥근 물고기 체적·낮은 코를 사람의 작은 둥근 눈, 넓은 눈 간격, 부드러운 타원 턱과 낮은 콧대로 해석. 아랫입술의 도톰함으로 다른 인물과 구분하며 경장 ①을 정본으로 확정.
 
@@ -8932,6 +9281,7 @@ HAIR: medium wavy, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/whiscash-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -8959,6 +9309,7 @@ HAIR: medium wavy, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 garnet red · no eyeliner |
 
 **이유:** 작은 가재의 가시와 둥근 체적을 둥근 얼굴 안의 선명한 눈매로 해석한다.
 
@@ -8986,6 +9337,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/crawdaunt-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9011,6 +9363,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 회전하는 점토 인형의 중심 대칭을 정돈된 타원 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -9040,6 +9393,7 @@ HAIR: short finger waves, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 dark violet-grey · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/claydol-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9067,6 +9421,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 amethyst purple · no eyeliner, natural strong brows |
 
 **이유:** 바다나리의 가는 줄기와 빛나는 눈을 가벼운 타원 얼굴와 큰 맑은 눈으로 해석한다.
 
@@ -9096,6 +9451,7 @@ HAIR: long braid, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
 
 **이유:** 바위단지의 큰 체적과 촉수의 곡선을 넓은 볼과 곡선 눈썹으로 구분한다.
 
@@ -9125,6 +9481,7 @@ HAIR: long twin braids, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/anorith-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9152,6 +9509,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/armaldo-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9179,6 +9537,7 @@ HAIR: long feathered, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/feebas-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9206,6 +9565,7 @@ HAIR: medium wavy, curtain bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 soft magenta · no eyeliner |
 
 **이유:** 길게 흐르는 수중 몸과 우아한 머리 지느러미를 긴 얼굴과 길고 완만한 눈으로 해석한다.
 
@@ -9233,6 +9593,7 @@ HAIR: very long wavy, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **이유:** 구름 몸과 구형 머리를 둥근 볼과 둥근 사람 눈으로 해석한다.
 
@@ -9262,6 +9623,7 @@ HAIR: short curly, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 카멜레온의 매끈한 얼굴과 지그재그의 꺾임을 낮은 눈꺼풀과 선명한 입선으로 해석한다.
 
@@ -9289,6 +9651,7 @@ HAIR: long ponytail, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 charcoal grey · a dark smoky liner |
 
 **이유:** 늘어진 천 인형과 긴 뿔을 작은 턱과 낮고 긴 눈으로 해석한다.
 
@@ -9318,6 +9681,7 @@ HAIR: medium space buns, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 dark violet-grey · a dark smoky liner |
 
 **이유:** 봉제 인형의 예리한 윤곽과 지퍼 입을 작은 턱과 긴 입선으로 해석한다. 실제 지퍼는 사람 입에 붙이지 않는다.
 
@@ -9347,6 +9711,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 dark violet-grey · a dark smoky liner |
 
 **이유:** 단일 눈과 검은 로브의 중심을 정돈된 타원 얼굴와 대칭인 두 둥근 눈으로 해석한다.
 
@@ -9376,6 +9741,7 @@ HAIR: medium chignon, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 신비 · 눈 dark violet-grey · a dark smoky liner |
 
 **이유:** 미라의 두터운 둥근 체적을 넓은 얼굴와 낮은 눈꺼풀로 구분한다. 단안은 복제하지 않는다.
 
@@ -9403,6 +9769,7 @@ HAIR: long space buns, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tropius-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9428,6 +9795,7 @@ HAIR: long half-up, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/chimecho-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9455,6 +9823,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **이유:** 초승달처럼 휘어진 뿔과 매끈한 실루엣을 긴 윤곽과 가늘고 긴 눈으로 해석한다.
 
@@ -9484,6 +9853,7 @@ HAIR: long asymmetric cut, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 나른함 · 눈 sapphire blue · a soft smudged liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/wynaut-20261023-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9511,6 +9881,7 @@ HAIR: medium windswept, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **이유:** 삼각 망토와 작은 타원 몸을 높은 광대와 좁은 턱으로 해석한다.
 
@@ -9538,6 +9909,7 @@ HAIR: medium chignon, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/glalie-20261024/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9565,6 +9937,7 @@ HAIR: long top knot, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 둥근 물개 몸과 푹신한 털을 둥근 볼과 도톰한 입술로 해석한다.
 
@@ -9594,6 +9967,7 @@ HAIR: medium wavy, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 바다사자의 커진 체적과 두꺼운 수염을 넓은 볼과 부드러운 타원 눈으로 구분한다.
 
@@ -9621,6 +9995,7 @@ HAIR: long wavy, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 큰 흰 갈기와 둥근 주둥이의 무게감은 부드러운 타원 턱·결이 굵은 눈썹·둥근 코끝·도톰한 입술로 옮기고, 씨레오의 넓고 처진 큰 눈과 달리 수평 아몬드 눈과 중간 폭 얼굴로 구분한다.
 
@@ -9650,6 +10025,7 @@ HAIR: long curly, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/clamperl-20261024-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9677,6 +10053,7 @@ HAIR: medium space buns, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/huntail-20261024-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9704,6 +10081,7 @@ HAIR: long low bun, curtain bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 rose pink · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gorebyss-20261024-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9731,6 +10109,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/relicanth-20261024-automation-partial/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9758,6 +10137,7 @@ HAIR: long wavy, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 soft magenta · no eyeliner |
 
 **이유:** 하트형 몸과 입술을 작은 턱과 도톰한 입술로 해석한다.
 
@@ -9787,6 +10167,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 단단한 머리와 큰 둥근 주둥이를 넓은 얼굴와 둥근 사람 코끝으로 해석한다.
 
@@ -9816,6 +10197,7 @@ HAIR: medium layered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 인내하는 둥근 갑각의 매끈한 선을 타원 윤곽과 낮은 눈꺼풀로 구분한다.
 
@@ -9845,6 +10227,7 @@ HAIR: side-shaved long hair, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 큰 용의 턱과 날개 힘을 각진 하관과 강한 수평 눈매로 옮긴다.
 
@@ -9874,6 +10257,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/beldum-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9899,6 +10283,7 @@ HAIR: medium curly, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/metang-20261025-automation/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9926,6 +10311,7 @@ HAIR: long locs, straight bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 금속 면과 중심 대칭을 넓고 각진 얼굴 및 정돈된 이목구비로 해석한다.
 
@@ -9955,6 +10341,7 @@ HAIR: long twin tail, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/regirock-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -9982,6 +10369,7 @@ HAIR: long blunt cut, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/regice-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10009,6 +10397,7 @@ HAIR: long chignon, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/registeel-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10036,6 +10425,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 crimson red · a bold, defined eyeliner |
 
 **이유:** 작고 날렵한 유선형을 작은 턱과 길고 부드러운 눈으로 해석한다.
 
@@ -10065,6 +10455,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 sapphire blue · a bold, defined eyeliner |
 
 **이유:** 더 긴 유선형 실루엣을 긴 얼굴과 수평적인 집중 눈매로 구분한다.
 
@@ -10094,6 +10485,7 @@ HAIR: long chignon, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 거대한 해양 실루엣과 넓은 지느러미를 넓은 얼굴과 안정적인 눈매로 옮긴다.
 
@@ -10123,6 +10515,7 @@ HAIR: very long wavy, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
 
 **이유:** 대지의 분절된 갑옷과 큰 발톱을 각진 하관과 강한 사선 눈썹으로 옮긴다.
 
@@ -10152,6 +10545,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **이유:** 하늘을 가르는 긴 용의 몸을 긴 얼굴과 날카로운 긴 눈으로 해석한다.
 
@@ -10181,6 +10575,7 @@ HAIR: very long braid, parted bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 amber gold · a soft smudged liner |
 
 **이유:** 별 모양 머리와 둥근 중심을 작은 턱과 큰 맑은 눈으로 해석한다.
 
@@ -10208,6 +10603,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 crimson red · a thin, neat eyeliner |
 
 **이유:** DNA의 반복 대칭과 수정 중심을 정돈된 긴 얼굴과 일정한 눈 간격으로 해석한다.
 
@@ -10237,6 +10633,7 @@ HAIR: long chignon, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 거북의 둥근 등과 작은 새싹을 둥근 얼굴과 작은 입으로 옮긴다.
 
@@ -10262,6 +10659,7 @@ FACE (her own structure, not the style's default face): softly rounded face, sho
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 덤불과 단단해진 거북의 실루엣을 길어진 타원 얼굴로 구분한다.
 
@@ -10287,6 +10685,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 대지와 큰 거북의 넓은 등판을 넓은 볼 및 단단한 하관으로 해석한다.
 
@@ -10312,6 +10711,7 @@ FACE (her own structure, not the style's default face): angular face, balanced l
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **이유:** 원숭이의 가벼운 움직임과 불꽃 꼬리를 열린 눈매와 넓은 입으로 해석한다.
 
@@ -10341,6 +10741,7 @@ HAIR: pixie cut.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **이유:** 더 민첩해진 원숭이의 선을 타원 윤곽과 올라간 눈으로 구분한다.
 
@@ -10370,6 +10771,7 @@ HAIR: medium high ponytail.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **이유:** 불꽃 볏과 격투의 예리한 리듬을 높은 광대와 강한 수평 눈으로 해석한다.
 
@@ -10399,6 +10801,7 @@ HAIR: pixie cut.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 작은 펭귄의 둥근 몸을 둥근 얼굴과 짧은 코로 옮긴다.
 
@@ -10428,6 +10831,7 @@ HAIR: short blunt cut.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 정하지 않음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 성장한 펭귄의 정돈된 선을 타원 얼굴과 직선 눈썹으로 구분한다.
 
@@ -10453,6 +10857,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 왕관 같은 삼지창 머리와 강철 선을 긴 윤곽과 단단한 직선 콧대로 옮긴다.
 
@@ -10482,6 +10887,7 @@ HAIR: long slicked back.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/starly-20261015/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10509,6 +10915,7 @@ HAIR: bob.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 검정·흰색의 대비와 영역을 지키는 찌르레기 인상을, 균형 잡힌 타원 윤곽·좁고 올라간 눈·곧은 중간 두께 눈썹으로 해석. 길고 가는 주황 부리는 사람의 곧고 가는 콧대와 얇은 입술로 옮겼다. 2026-10-15 경장 ①이 확정 정본이며 후속은 그 그림을 첨부한다.
 
@@ -10538,6 +10945,7 @@ HAIR: medium ponytail.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 붉은 끝의 검정 볏과 힘센 날개의 맹금 이미지를, 올라간 좁은 눈매와 가는 직선 눈썹·얇은 입으로 해석했다. 찌르버드와는 부드러운 둥근 턱·보통 높이의 사람 코·가는 눈썹을 구분점으로 삼았다. 2026-10-15 확정 경장 ①이 정본이며 후속은 그 그림을 첨부한다.
 
@@ -10567,6 +10975,7 @@ HAIR: long layered.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/bidoof-20261020/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10594,6 +11003,7 @@ HAIR: short wavy.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/bibarel-20261020/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10621,6 +11031,7 @@ HAIR: medium ponytail.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정한 보브컷 · 머리 길이 짧은 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 garnet red · no eyeliner |
 
 **이유:** 작은 귀뚜라미의 둥근 마디와 말린 더듬이를 둥근 볼과 작은 눈으로 해석한다.
 
@@ -10650,6 +11061,7 @@ HAIR: bob.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 crimson red · no eyeliner |
 
 **이유:** 길게 늘어진 날개형 몸선은 길고 좁은 얼굴과 모아지는 턱으로, 검은 더듬이의 직선은 수평의 작은 눈과 곧은 눈썹으로 해석한다. 둥근 붉은 코의 단서는 사람의 부드러운 코끝에만 남기고, 얇은 입술로 귀뚤뚜기의 짧고 둥근 얼굴·작은 입과 구분한다.
 
@@ -10677,6 +11089,7 @@ HAIR: long wavy.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **이유:** 작은 전기 고양이의 큰 귀와 별무늬를 작은 턱과 열린 눈매로 해석한다.
 
@@ -10706,6 +11119,7 @@ HAIR: long braid, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 deep navy-blue · a small flick of eyeliner |
 
 **이유:** 검은 갈기와 전광의 선을 길어진 타원 윤곽과 선명한 눈으로 구분한다.
 
@@ -10735,6 +11149,7 @@ HAIR: long twin braids, choppy bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **이유:** 큰 검은 갈기와 꿰뚫는 시선의 특징을 높은 광대와 낮고 굵은 눈썹으로 구분한다.
 
@@ -10764,6 +11179,7 @@ HAIR: long crown braid, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 매우 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 닫힌 꽃봉오리와 작은 눈을 작은 턱과 낮은 눈꺼풀로 해석한다.
 
@@ -10793,6 +11209,7 @@ HAIR: pixie cut, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 잎 망토의 유려한 곡선과 가면을 이루는 매끈한 윤곽을 균형 잡힌 타원형·수평 아몬드 눈으로, 꽃잎의 정교한 굴곡을 작은 사람 코와 활 모양 윗입술로 해석한다. 로젤리아의 부드러운 턱·긴 아치 눈썹과 구분되는 보통 턱·가는 완만한 눈썹을 유지한다.
 
@@ -10820,6 +11237,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **이유:** 단단한 돔 머리의 넓은 체적과 네 가시의 각을 넓은 각진 얼굴·명확한 턱으로, 갈고리 부리의 굴곡은 사람의 볼록한 콧대와 얇은 입술로 옮긴다. 붉은 눈의 긴장감을 날카로운 눈과 꺾인 눈썹으로 남기되 동물 부리는 복제하지 않는다.
 
@@ -10847,6 +11265,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/rampardos-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10874,6 +11293,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 타원 방패 얼굴과 두드러진 눈썹을 넓은 윤곽과 굵은 낮은 눈썹으로 옮긴다.
 
@@ -10903,6 +11323,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 사각 방패 머리·삼각 코·등의 세 가시를 각진 하관, 위로 뻗는 가는 눈매와 사선 눈썹, 곧은 콧대로 해석했다. 방패톱스의 넓은 타원 얼굴·낮은 눈썹·둥근 코끝과 구분되는 별개의 성인 인물이다.
 
@@ -10932,6 +11353,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **이유:** 둥근 검은 분절 몸은 부드러운 둥근 윤곽과 턱으로, 노란 눈은 수평의 가는 눈으로, 부리 같은 입의 돌출감은 또렷한 사람 코로 옮겼다. 말린 더듬이는 짧은 양갈래와 작은 말림 장식으로 해석하며 유아형 얼굴은 쓰지 않는다.
 
@@ -10961,6 +11383,7 @@ HAIR: short twin tail, parted bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/wormadam-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -10986,6 +11409,7 @@ HAIR: long twin tail, parted bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 amber gold · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/mothim-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11013,6 +11437,7 @@ HAIR: medium twin tail, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/combee-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11038,6 +11463,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/vespiquen-20261021/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11065,6 +11491,7 @@ HAIR: long layered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 silver · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/pachirisu-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11090,6 +11517,7 @@ HAIR: short asymmetric cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/buizel-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11117,6 +11545,7 @@ HAIR: medium wavy, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/floatzel-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11142,6 +11571,7 @@ HAIR: very long wavy, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 rose pink · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/cherubi-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11167,6 +11597,7 @@ HAIR: long braid, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 violet · no eyeliner |
 
 **이유:** 보라색으로 감싸는 꽃잎과 체리버 계열의 선을 왕관 땋기·좁고 가까운 눈과 균형 타원형으로 해석. 체리버의 둥근 볼·둥근 코·활 모양 입과 구분.
 
@@ -11196,6 +11627,7 @@ HAIR: long crown braid, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 amethyst purple · a dark smoky liner |
 
 **이유:** 유연하게 긴 민달팽이 체적은 긴 타원, 둥근 머리는 둥근 턱·코끝과 짧고 둥근 눈썹, 넓은 입은 넓은 사람 입으로 해석. 짧은 곱슬과 커튼뱅 유지.
 
@@ -11225,6 +11657,7 @@ HAIR: short curly, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 violet · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/gastrodon-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11252,6 +11685,7 @@ HAIR: long locs, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 violet · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/ambipom-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11279,6 +11713,7 @@ HAIR: long twin tail, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 violet · a dark smoky liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/drifloon-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11306,6 +11741,7 @@ HAIR: short tight curls, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/drifblim-20261022/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11333,6 +11769,7 @@ HAIR: long curly, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/buneary-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11360,6 +11797,7 @@ HAIR: short layered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 토끼의 긴 귀와 부드러운 털 곡선을 긴 타원 얼굴와 도톰한 입술로 해석한다.
 
@@ -11389,6 +11827,7 @@ HAIR: long layered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 둥근 머리와 가늘고 붉은 입을 짧고 부드러운 윤곽·가느다란 입술로, 주문을 거는 인상을 올라간 눈매와 긴 아치 눈썹으로 옮긴다.
 
@@ -11416,6 +11855,7 @@ HAIR: long space buns, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 charcoal grey · a crisp winged eyeliner |
 
 **이유:** 큰 부리의 길고 선명한 선을 긴 윤곽과 가는 직선 콧대로, 날카로운 시선을 가까운 아몬드 눈과 곧은 눈썹으로 옮긴다. 사람 코와 입을 유지한다.
 
@@ -11443,6 +11883,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 작은 검은 코와 날렵한 고양이 인상을 작은 사람 코·들린 눈꼬리·넓은 눈 간격으로 옮기고, 용수철 꼬리를 짧은 곱슬머리와 나선형 허리 자락으로 반영.
 
@@ -11472,6 +11913,7 @@ HAIR: short curly, curtain bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 초승달형 머리의 양쪽으로 벌어지는 선을 커튼뱅과 긴 링렛 컬로 옮김. 나옹마의 작은 코와 넓은 눈 간격에 비해 보통 길이의 코와 표준 눈 간격, 더 좁은 턱끝으로 별도의 성인 인물을 구분. 흰 털과 지그재그 무늬는 은색 머리와 흰 회색 장갑에 반영.
 
@@ -11499,6 +11941,7 @@ HAIR: long ringlet curls, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 amber gold · a thin, neat eyeliner |
 
 **이유:** 작은 방울과 붉은 구슬의 원형 반복을 둥근 얼굴와 작은 입으로 해석한다.
 
@@ -11528,6 +11971,7 @@ HAIR: pixie cut, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 둥근 몸통과 짧은 얼굴 덩어리는 넓고 부드러운 윤곽으로, 큰 눈과 크림색 V형 볼무늬는 가까운 눈 간격과 도톰한 입술로, 뾰족한 귀와 솟은 털은 긴 아치 눈썹과 층진 울프컷으로 해석한다. 진화형 스컹탱크의 긴 얼굴·날카로운 눈매와 구분한다.
 
@@ -11557,6 +12001,7 @@ HAIR: short wolf cut, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skuntank-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11582,6 +12027,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/bronzor-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11607,6 +12053,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
 
 **이유:** 청동 종의 사각 무늬와 네모 이빨의 직선을 날렵한 얼굴 윤곽·각진 눈썹·얇은 입술로, 무거운 속 빈 종의 안정감을 넓고 낮은 콧대로 해석했다. 청록 홍채는 사람의 녹색 눈으로 옮기며 사람 코·입을 유지한다.
 
@@ -11636,6 +12083,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 분재의 작은 둥근 몸과 눈물 같은 인상을 타원 얼굴와 내려간 눈꼬리로 해석한다.
 
@@ -11665,6 +12113,7 @@ HAIR: short twin tail, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 soft magenta · a thin, neat eyeliner |
 
 **이유:** 흉내 내는 작은 몸의 표현성을 넓은 상안면과 선명한 입술 곡선으로 해석한다.
 
@@ -11694,6 +12143,7 @@ HAIR: medium chignon, straight bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 rose pink · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/happiny-20261024/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11721,6 +12171,7 @@ HAIR: medium finger waves, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 charcoal grey · no eyeliner |
 
 **이유:** 음표 머리와 노래하는 특징을 타원 윤곽과 열린 눈매 및 넓은 입으로 해석한다.
 
@@ -11748,6 +12199,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 초승달 눈과 들쭉날쭉한 입 및 봉인된 구체를 넓은 얼굴와 날카로운 눈으로 해석한다.
 
@@ -11777,6 +12229,7 @@ HAIR: long asymmetric cut, long side bangs covering one eye.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gible-20261024/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11802,6 +12255,7 @@ HAIR: medium high ponytail, parted bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gabite-20261024/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11829,6 +12283,7 @@ HAIR: long braid, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 상어형 용의 큰 턱과 삼각 지느러미를 각진 하관과 날카로운 긴 눈으로 해석한다.
 
@@ -11858,6 +12313,7 @@ HAIR: long braid, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 charcoal grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/munchlax-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -11885,6 +12341,7 @@ HAIR: medium space buns, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 작은 파동 수행자의 또렷한 실루엣을 작은 턱과 열린 눈매로 해석한다.
 
@@ -11912,6 +12369,7 @@ HAIR: medium chignon, no bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 긴 주둥이와 파동을 읽는 집중을 긴 중안부와 또렷한 수평 눈으로 옮긴다.
 
@@ -11941,6 +12399,7 @@ HAIR: long top knot, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 하마의 큰 주둥이와 둥근 귀를 넓은 하관 및 둥근 코끝으로 옮긴다.
 
@@ -11970,6 +12429,7 @@ HAIR: medium low bun, side-swept bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 더 큰 하마의 무게감과 강한 앞니를 넓고 단단한 턱과 작은 깊은 눈으로 구분한다.
 
@@ -11999,6 +12459,7 @@ HAIR: long low bun, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 작은 전갈의 집게와 마디를 좁은 턱과 선명한 눈꺼풀로 해석한다.
 
@@ -12028,6 +12489,7 @@ HAIR: medium undercut, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 거대한 전갈 집게와 각진 마디를 각진 턱과 강한 사선 눈썹으로 구분한다.
 
@@ -12057,6 +12519,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/croagunk-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12084,6 +12547,7 @@ HAIR: medium top knot, no bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/toxicroak-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12111,6 +12575,7 @@ HAIR: long top knot, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/carnivine-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12138,6 +12603,7 @@ HAIR: long braid, choppy bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/finneon-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12165,6 +12631,7 @@ HAIR: short finger waves, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/lumineon-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12192,6 +12659,7 @@ HAIR: medium finger waves, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/mantyke-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12217,6 +12685,7 @@ HAIR: medium space buns, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 silver · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/snover-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12242,6 +12711,7 @@ HAIR: medium straight, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 silver · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/abomasnow-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12269,6 +12739,7 @@ HAIR: long crown braid, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 charcoal grey · a thin, sharp eyeliner |
 
 **이유:** 갈고리 발톱과 날카로운 볏을 높은 광대와 치켜올라간 눈으로 구분한다.
 
@@ -12298,6 +12769,7 @@ HAIR: long chignon, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 steel blue · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/magnezone-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12325,6 +12797,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 soft magenta · no eyeliner |
 
 **이유:** 말린 볏과 넉넉한 둥근 몸 및 긴 혀의 존재감을 넓은 볼과 도톰한 입술로 해석한다.
 
@@ -12352,6 +12825,7 @@ HAIR: long ringlet curls, side-swept bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/rhyperior-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12379,6 +12853,7 @@ HAIR: long high ponytail, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tangrowth-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12404,6 +12879,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/electivire-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12431,6 +12907,7 @@ HAIR: very long twin tail, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/magmortar-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12458,6 +12935,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 pale ice-blue · a fine winged eyeliner |
 
 **이유:** 넓고 둥근 날개와 행복의 특징을 넓은 볼과 완만한 눈매로 해석한다.
 
@@ -12487,6 +12965,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 emerald green · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/yanmega-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12514,6 +12993,7 @@ HAIR: long twin tail, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 잎의 가늘고 부드러운 선을 타원 얼굴과 긴 아몬드형 눈으로 해석한다.
 
@@ -12541,6 +13021,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 얼음 결정의 각진 선을 높은 광대와 직선적인 긴 눈으로 해석한다.
 
@@ -12568,6 +13049,7 @@ HAIR: medium high ponytail, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 amethyst purple · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gliscor-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12595,6 +13077,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **이유:** 두 송곳니와 큰 털 체적을 넓은 얼굴와 작고 깊은 눈으로 해석한다.
 
@@ -12624,6 +13107,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 garnet red · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/porygon-z-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12651,6 +13135,7 @@ HAIR: medium ponytail, parted bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **이유:** 칼날 팔과 기사의 절제된 선을 긴 얼굴과 깊은 수평 눈매로 구분한다.
 
@@ -12680,6 +13165,7 @@ HAIR: long top knot, straight bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/probopass-20261026/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12707,6 +13193,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 dark violet-grey · a dark smoky liner |
 
 **이유:** 움켜쥐는 큰 몸과 높은 칼라의 수직선을 긴 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -12734,6 +13221,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 silver · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/눈여아-2026-10-26/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12761,6 +13249,7 @@ HAIR: long chignon, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **이유:** 플라스마의 번쩍이는 예리함과 장난스러운 실루엣을 작은 턱과 열린 눈으로 해석한다.
 
@@ -12790,6 +13279,7 @@ HAIR: short asymmetric cut, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 honey-gold · a thin, neat eyeliner |
 
 **이유:** 지식과 둥근 투구의 고요한 중심을 낮은 눈꺼풀과 정돈된 타원 얼굴로 해석한다.
 
@@ -12819,6 +13309,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 soft magenta · a soft smudged liner |
 
 **이유:** 감정과 펼쳐진 머리 장식의 유연함을 작은 턱과 큰 사람 눈으로 해석한다.
 
@@ -12848,6 +13339,7 @@ HAIR: very long twin tail, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
 
 **이유:** 의지와 원뿔형 머리의 뾰족한 선을 높은 광대와 집중된 긴 눈으로 해석한다.
 
@@ -12877,6 +13369,7 @@ HAIR: very long ringlet curls, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 pale ice-blue · a bold, defined eyeliner |
 
 **이유:** 강철 용의 긴 면과 시간의 정돈된 이미지를 각진 긴 얼굴로 해석한다.
 
@@ -12904,6 +13397,7 @@ HAIR: long blunt cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 amethyst purple · a bold, defined eyeliner |
 
 **이유:** 공간 용의 큰 체적과 둥근 장갑을 넓은 하관과 깊은 눈매로 해석한다.
 
@@ -12933,6 +13427,7 @@ HAIR: very long high ponytail, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/heatran-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -12960,6 +13455,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 거대한 체적과 반복된 보석을 넓고 정돈된 얼굴로 해석한다. 일곱 눈은 사람의 두 눈으로 번역한다.
 
@@ -12989,6 +13485,7 @@ HAIR: very long braid, curtain bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 dark violet-grey · a crisp winged eyeliner |
 
 **이유:** 거꾸로 된 세계의 길고 분절된 용을 긴 얼굴과 날카로운 눈매로 해석한다.
 
@@ -13018,6 +13515,7 @@ HAIR: very long crown braid, long side bangs covering one eye.
 | 코 | 크고 또렷한 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 amber gold · a bold, defined eyeliner |
 
 **이유:** 초승달과 길게 흐르는 곡선을 타원 얼굴과 완만한 긴 눈매로 옮긴다.
 
@@ -13047,6 +13545,7 @@ HAIR: very long straight, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 둥근 머리와 작은 해양 몸을 둥근 볼과 부드러운 타원 눈으로 해석한다.
 
@@ -13076,6 +13575,7 @@ HAIR: short tight curls, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 긴 더듬이와 속눈썹 무늬를 넓은 상안면과 큰 선명한 사람 눈으로 구분한다.
 
@@ -13103,6 +13603,7 @@ HAIR: short twin tail, parted bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 charcoal grey · a soft smudged liner |
 
 **이유:** 어둠 속에 흐르는 머리와 악몽의 절제된 긴장을 긴 얼굴 및 낮은 눈꺼풀로 해석한다.
 
@@ -13130,6 +13631,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 작은 풀뭉치의 둥근 핵심을 둥근 볼과 작고 부드러운 이목구비로 해석한다.
 
@@ -13159,6 +13661,7 @@ HAIR: very long half-up, curtain bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 고리의 대칭과 신성한 긴 실루엣을 정돈된 긴 얼굴과 고요한 눈매로 해석한다.
 
@@ -13190,6 +13693,7 @@ HAIR: very long ringlet curls, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 위엄 · 눈 honey-gold · a bold, defined eyeliner |
 
 **이유:** V형 머리와 승리의 생동감을 작은 턱과 열린 눈매로 해석한다.
 
@@ -13217,6 +13721,7 @@ HAIR: very long twin tail, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 jade green · no eyeliner |
 
 **이유:** 풀뱀의 긴 선과 낮은 눈꺼풀을 길고 좁은 사람 얼굴로 옮긴다.
 
@@ -13246,6 +13751,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 부채처럼 펼친 잎과 가벼운 몸을 타원 얼굴과 올라간 긴 눈으로 구분한다.
 
@@ -13273,6 +13779,7 @@ HAIR: medium half-up, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 왕 같은 긴 뱀 실루엣을 긴 중안부와 가늘고 긴 눈으로 해석한다.
 
@@ -13302,6 +13809,7 @@ HAIR: very long half-up, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 작은 돼지의 둥근 주둥이를 둥근 코끝과 둥근 볼로 옮긴다.
 
@@ -13331,6 +13839,7 @@ HAIR: short windswept, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 넓어진 격투 몸을 넓은 하관과 굵은 직선 눈썹으로 구분한다.
 
@@ -13360,6 +13869,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 큰 체적과 불꽃 수염의 위용을 단단한 넓은 턱과 낮은 눈썹으로 해석한다.
 
@@ -13389,6 +13899,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 작은 수달의 둥근 얼굴과 조개를 둥근 볼과 짧은 코로 옮긴다.
 
@@ -13418,6 +13929,7 @@ HAIR: short tight curls, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 쌍조개와 수행자의 정돈된 인상을 타원 얼굴과 집중 눈매로 구분한다.
 
@@ -13447,6 +13959,7 @@ HAIR: medium top knot, curtain bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 갑옷 수달의 긴 선과 무사의 인상을 긴 얼굴와 단단한 눈썹으로 해석한다.
 
@@ -13476,6 +13989,7 @@ HAIR: long top knot, curtain bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 망보기와 큰 앞니의 특징을 열린 눈매 및 넓은 입 너비로 해석한다.
 
@@ -13505,6 +14019,7 @@ HAIR: long ponytail, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/watchog-20261022/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -13532,6 +14047,7 @@ HAIR: long ponytail, curtain bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 chestnut brown · a thin, neat eyeliner |
 
 **이유:** 둥근 얼굴의 크림색 털과 짧고 응축된 체구를 성인의 짧고 넓은 윤곽·부드러운 턱·둥글고 큰 눈으로 옮긴다. 짧게 묶은 트윈테일로 요테리 계열의 묶은 머리를 시작한다.
 
@@ -13561,6 +14077,7 @@ HAIR: short twin tail, choppy bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 길게 흐르는 크림색 얼굴 털과 충견의 또렷한 인상을 성인의 긴 윤곽·또렷한 턱·좁은 아몬드 눈·긴 바깥 아치 눈썹으로 옮긴다. 세 갈래 볏은 높이 묶은 포니테일로 해석해 요테리 계열의 묶은 머리를 잇는다.
 
@@ -13590,6 +14107,7 @@ HAIR: medium high ponytail, side-swept bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 silver grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/stoutland-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -13615,6 +14133,7 @@ HAIR: long high ponytail, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 amethyst purple · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-2/records/purrloin-20261023/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -13642,6 +14161,7 @@ HAIR: short asymmetric cut, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 도감의 소리 없는 접근이라는 집중감과 분홍 마스크·가느다란 수염 장식선을 성인 여성의 부드러운 볼·입 윤곽 및 집중한 눈으로 해석. 원작 동물의 코나 수염을 인체에 복제하지 않음.
 
@@ -13669,6 +14189,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 직립형 몸·작은 코·검은 눈과 동료에게 열매를 나누는 성격을 타원형 윤곽·온화한 눈매와 입술로 성인화. 먹을 수 있는 잎은 반묶음 머리 주변의 잎 장식과 장갑 판으로 해석.
 
@@ -13698,6 +14219,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 곧게 선 수풀 볏과 풍성한 어깨 털의 체적을 넓고 짧은 타원 윤곽과 둥근 턱으로, 흰 눈썹의 뚜렷한 존재감을 결이 풍성한 눈썹으로 해석한다. 야나프 계열의 친근한 눈을 이어가되 도톰한 입술과 넓은 얼굴로 성숙한 인상을 구분한다.
 
@@ -13727,6 +14249,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 불꽃처럼 말린 머리털과 작은 원숭이의 생동감을 작은 턱과 열린 눈으로 해석한다.
 
@@ -13756,6 +14279,7 @@ HAIR: long ponytail, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 흰색의 부드러운 어깨 러프와 넓은 귀에서 짧고 폭이 있는 타원 윤곽과 둥근 턱, 넓은 눈 간격을 택한다. 작은 검은 코는 사람의 작고 여린 코로, 불티가 튀는 명랑한 분위기는 도톰한 입술로 해석한다. 바오프의 하트형 얼굴·뾰족한 턱·큰 아몬드 눈·넓은 입과 구분한다.
 
@@ -13785,6 +14309,7 @@ HAIR: long side ponytail, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 물결 같은 볏과 원숭이의 가벼운 곡선을 타원 얼굴와 완만한 눈으로 구분한다.
 
@@ -13814,6 +14339,7 @@ HAIR: medium high ponytail, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 넓은 귀·타원 눈·작은 코를 짧고 넓은 타원형 얼굴, 수평의 열린 눈, 작은 코와 도톰한 아랫입술로 해석한다. 확정 ①은 앗차프·바오키·바오프·야나키 실제 이미지와 대조했다.
 
@@ -13843,6 +14369,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 rose pink · a thin, neat eyeliner |
 
 **이유:** 둥근 꿈먹기 몸과 가는 주둥이를 둥근 볼과 낮은 눈꺼풀로 해석한다.
 
@@ -13870,6 +14397,7 @@ HAIR: medium chignon, parted bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 rose pink · a soft smudged liner |
 
 **이유:** 맥의 큰 몸과 꿈결의 흐르는 곡선을 넓은 볼과 도톰한 입술로 구분한다.
 
@@ -13897,6 +14425,7 @@ HAIR: long chignon, parted bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 작은 비둘기의 타원형 머리와 착실한 인상을 부드러운 턱으로, 짧고 검은 부리의 또렷한 중심선을 사람의 선명한 코와 작은 입으로 해석한다. 날개의 뻗는 선은 가늘고 올라간 눈꼬리와 짧은 페더컷으로 옮긴다.
 
@@ -13926,6 +14455,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 silver grey · no eyeliner |
 
 **이유:** 들비둘기의 날렵한 날개 선을 가늘고 올라간 눈꼬리로, 검은 털 다발을 결이 드러나는 눈썹으로, 노란 부리의 중심선을 사람의 곧고 가는 콧대로 해석했다. 콩둘기 계열의 부드러운 턱은 잇되 눈 간격과 코·입을 구분한다.
 
@@ -13955,6 +14485,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 silver grey · a thin, neat eyeliner |
 
 **이유:** 가슴의 하트형 무늬를 넓은 이마와 좁아지는 턱의 사람 얼굴로, 날개 선을 가늘고 올라간 눈매로 해석했다. 유토브보다 긴 페더컷과 곧은 눈썹, 균형 잡힌 코를 써서 자부심 강한 최종 진화 인상을 구분한다.
 
@@ -13984,6 +14515,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 dark violet-grey · a small flick of eyeliner |
 
 **이유:** 작은 얼룩말의 번개 갈기를 긴 중안부와 열린 눈매로 해석한다.
 
@@ -14013,6 +14545,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 dark violet-grey · a small flick of eyeliner |
 
 **이유:** 큰 얼룩말의 날카로운 갈기와 강한 체적을 긴 얼굴와 굵은 눈썹으로 구분한다.
 
@@ -14040,6 +14573,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/roggenrola-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14067,6 +14601,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/boldore-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14094,6 +14629,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gigalith-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14121,6 +14657,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/woobat-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14148,6 +14685,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/swoobat-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14175,6 +14713,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/drilbur-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14202,6 +14741,7 @@ HAIR: short wolf cut, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 드릴 날과 땅밑을 파는 단단한 힘을 각진 하관과 작은 깊은 눈으로 해석한다.
 
@@ -14231,6 +14771,7 @@ HAIR: medium asymmetric cut, long side bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 soft magenta · no eyeliner |
 
 **이유:** 소리를 듣는 큰 귀와 부드러운 체적을 완만한 타원 얼굴와 둥근 코끝으로 해석한다.
 
@@ -14260,6 +14801,7 @@ HAIR: medium twin braids, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/으랏차-2026-10-26/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14287,6 +14829,7 @@ HAIR: medium curly, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/토쇠골-2026-10-26/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14314,6 +14857,7 @@ HAIR: medium locs, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/노보청-2026-10-26/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14339,6 +14883,7 @@ HAIR: long braid, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 우수 · 눈 deep navy-blue · a soft dark liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/동챙이-2026-10-26/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14366,6 +14911,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/palpitoad-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14393,6 +14939,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/seismitoad-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14418,6 +14965,7 @@ HAIR: medium finger waves, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/throh-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14445,6 +14993,7 @@ HAIR: medium undercut, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sawk-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14472,6 +15021,7 @@ HAIR: medium blunt cut, no bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 honey-gold · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sewaddle-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14499,6 +15049,7 @@ HAIR: medium space buns, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/swadloon-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14526,6 +15077,7 @@ HAIR: medium messy bun, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 honey-gold · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/leavanny-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14553,6 +15105,7 @@ HAIR: long space buns, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **이유:** 지네의 둥근 마디와 날카로운 뿔을 둥근 얼굴 안의 선명한 눈매로 해석한다.
 
@@ -14582,6 +15135,7 @@ HAIR: short undercut, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 silver grey · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/whirlipede-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14609,6 +15163,7 @@ HAIR: long twin tail, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 거대한 지네의 긴 몸과 뿔을 긴 윤곽과 날카로운 긴 눈으로 구분한다.
 
@@ -14638,6 +15193,7 @@ HAIR: very long braid, asymmetric bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/cottonee-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14665,6 +15221,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/whimsicott-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14692,6 +15249,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/petilil-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14719,6 +15277,7 @@ HAIR: medium messy bun, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 큰 꽃과 드레스 같은 실루엣을 완만한 타원 얼굴과 곡선 입술로 해석한다.
 
@@ -14748,6 +15307,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 jade green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/basculin-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14775,6 +15335,7 @@ HAIR: medium wavy, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sandile-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14800,6 +15361,7 @@ HAIR: medium low bun, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/krokorok-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14825,6 +15387,7 @@ HAIR: long low bun, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/krookodile-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14852,6 +15415,7 @@ HAIR: long low bun, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 달마의 둥근 체적과 힘 있는 이목구비를 둥근 볼과 굵은 눈썹으로 해석한다.
 
@@ -14881,6 +15445,7 @@ HAIR: medium ringlet curls, side-swept bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 불꽃 고릴라의 큰 체적을 넓은 하관과 굵고 낮은 눈썹으로 구분한다.
 
@@ -14910,6 +15475,7 @@ HAIR: medium afro, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/maractus-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -14935,6 +15501,7 @@ HAIR: long crown braid, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 garnet red · no eyeliner, natural strong brows |
 
 **이유:** 작은 돌집과 갑각류의 중심 몸을 작은 눈과 정돈된 타원 얼굴로 해석한다.
 
@@ -14964,6 +15531,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
 
 **이유:** 거대한 바위집의 무게를 넓은 하관과 굵은 눈썹으로 구분한다.
 
@@ -14993,6 +15561,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 amber gold · a crisp winged eyeliner |
 
 **이유:** 느슨한 탈피 피부와 작은 도마뱀의 큰 입을 타원 윤곽과 도톰한 입술로 해석한다.
 
@@ -15020,6 +15589,7 @@ HAIR: medium top knot, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 늘어진 피부와 악당의 낮은 시선을 긴 윤곽과 낮은 눈꺼풀로 구분한다.
 
@@ -15049,6 +15619,7 @@ HAIR: long top knot, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 영리함 · 눈 charcoal grey · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/sigilyph-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15076,6 +15647,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 신비 · 눈 dark violet-grey · a dark smoky liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/yamask-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15103,6 +15675,7 @@ HAIR: long ponytail, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 신비 · 눈 amber gold · a dark smoky liner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/cofagrigus-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15130,6 +15703,7 @@ HAIR: long side ponytail, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tirtouga-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15155,6 +15729,7 @@ HAIR: medium low bun, curtain bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/carracosta-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15182,6 +15757,7 @@ HAIR: long low bun, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 amber gold · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/archen-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15209,6 +15785,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 과묵 · 눈 amber gold · no eyeliner, natural strong brows |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/archeops-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -15236,6 +15813,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 장난기 · 눈 emerald green · a small flick of eyeliner |
 
 **머리:** 독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -15265,6 +15843,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **머리:** ‘round, lumpy body’·키 1.9m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 앞머리 없음 — 깨봉이에서 이어 더 공들인 묶음
 
@@ -15294,6 +15873,7 @@ HAIR: long afro puffs, no bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 신비 · 눈 steel blue · a dark smoky liner |
 
 **머리:** ‘large tuft’·악 타입에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 좌우 길이가 다른 앞머리
 
@@ -15323,6 +15903,7 @@ HAIR: medium wolf cut, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 우수 · 눈 steel blue · a soft dark liner |
 
 **이유:** 환영 여우의 긴 갈기와 날카로운 선을 긴 얼굴 및 올라간 눈매로 옮긴다.
 
@@ -15354,6 +15935,7 @@ HAIR: long shaggy, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 silver grey · no eyeliner |
 
 **이유:** 친칠라의 큰 귀와 보드라운 체적을 둥근 볼과 짧은 코로 해석한다.
 
@@ -15385,6 +15967,7 @@ HAIR: short twin tail, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 스카프처럼 흐르는 털을 더 긴 타원 윤곽과 완만한 눈매로 구분한다.
 
@@ -15416,6 +15999,7 @@ HAIR: long ponytail, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 amethyst purple · a thin, neat eyeliner |
 
 **머리:** ‘two white, bow-shaped feelers’·‘white zigzagging line’·키 0.4m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -15445,6 +16029,7 @@ HAIR: short twin tail, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 중반 · 영리함 · 눈 amethyst purple · a thin, neat eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 사이드 포니테일(묶은 꼬리) · 중간 길이 · 가운데를 가른 앞머리 — 고디탱에서 이어 같은 묶음
 
@@ -15472,6 +16057,7 @@ HAIR: medium side ponytail, parted bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 violet · a fine winged eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 사이드 포니테일(묶은 꼬리) · 긴 머리 · 가운데를 가른 앞머리 — 고디보미에서 이어 같은 묶음
 
@@ -15499,6 +16085,7 @@ HAIR: long side ponytail, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **이유:** 세포의 작은 원형 중심을 둥근 얼굴와 작은 사람 눈으로 해석한다.
 
@@ -15530,6 +16117,7 @@ HAIR: pixie cut, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 중반 · 영리함 · 눈 emerald green · a thin, neat eyeliner |
 
 **이유:** 분할된 세포의 겹친 타원형을 길어진 타원 얼굴로 구분한다.
 
@@ -15561,6 +16149,7 @@ HAIR: medium curly, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **머리:** ‘large, round head’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리 — 듀란에서 이어 더 공들인 묶음
 
@@ -15590,6 +16179,7 @@ HAIR: long afro puffs, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 나른함 · 눈 deep navy-blue · a soft smudged liner |
 
 **머리:** ‘two tufts forming a V’·‘darker-blue feathery underside’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -15619,6 +16209,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 silver · a fine winged eyeliner |
 
 **머리:** 몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 꼬지보리에서 이어 같은 묶음
 
@@ -15648,6 +16239,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver · a thin, sharp eyeliner |
 
 **머리:** ‘light blue crystals’·얼음 타입에서 곧은 생머리(곧은 결) · 중간 길이 · 일자 앞머리
 
@@ -15677,6 +16269,7 @@ HAIR: medium straight, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** ‘small ice crystals’·얼음 타입에서 곧은 생머리(곧은 결) · 긴 머리 · 일자 앞머리 — 바닐프티에서 이어 같은 묶음
 
@@ -15706,6 +16299,7 @@ HAIR: long straight, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **머리:** ‘light blue ice crystals’에서 히메컷(곧은 결) · 긴 머리 · 일자 앞머리 — 바닐리치에서 이어 같은 묶음
 
@@ -15735,6 +16329,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 작은 사슴의 계절 털과 완만한 윤곽을 타원 얼굴와 둥근 눈으로 해석한다.
 
@@ -15766,6 +16361,7 @@ HAIR: medium ponytail, curtain bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **머리:** 풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 사철록에서 이어 같은 묶음
 
@@ -15793,6 +16389,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 장난기 · 눈 pale ice-blue · a small flick of eyeliner |
 
 **머리:** ‘yellow electric sacs’·전기 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -15822,6 +16419,7 @@ HAIR: short windswept, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 물어붙잡는 작은 갑각의 체적을 정돈된 눈매와 넓은 입으로 해석한다.
 
@@ -15851,6 +16449,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 수줍음 · 눈 steel blue · no eyeliner |
 
 **머리:** ‘large, round metal ridges’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 딱정곤에서 이어 더 공들인 묶음
 
@@ -15880,6 +16479,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 키 0.2m에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -15909,6 +16509,7 @@ HAIR: short undercut, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 좌우 길이가 다른 앞머리 — 깜놀버슬에서 이어 같은 묶음
 
@@ -15936,6 +16537,7 @@ HAIR: medium undercut, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 온화 · 눈 silver · no eyeliner |
 
 **머리:** ‘five tentacle-like appendages’·‘invisible poison spikes’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -15965,6 +16567,7 @@ HAIR: long box braids, choppy bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** ‘five tentacles’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 탱그릴에서 이어 같은 묶음
 
@@ -15994,6 +16597,7 @@ HAIR: long box braids, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 온화 · 눈 rose pink · no eyeliner |
 
 **머리:** ‘ventral fins’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -16023,6 +16627,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 작은 거미의 털 체적과 큰 눈을 둥근 볼과 큰 사람 눈으로 해석한다.
 
@@ -16054,6 +16659,7 @@ HAIR: short tight curls, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 로크스 / 드레드풍(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 파쪼옥에서 이어 같은 묶음
 
@@ -16081,6 +16687,7 @@ HAIR: medium locs, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** ‘big spikes’·‘metallic body’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
@@ -16110,6 +16717,7 @@ HAIR: medium asymmetric cut, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **머리:** ‘vine-like, long green appendages’·‘green spike’·몸 형태 tentacles에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 철시드에서 이어 더 공들인 묶음
 
@@ -16139,6 +16747,7 @@ HAIR: long box braids, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 작은 톱니바퀴의 원형 중심과 정렬을 둥근 얼굴와 대칭적인 두 눈으로 해석한다.
 
@@ -16168,6 +16777,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 크기가 다른 톱니의 맞물림을 타원 윤곽과 정돈된 수평 눈으로 구분한다.
 
@@ -16199,6 +16809,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 여러 톱니와 링의 단단한 결합을 각진 윤곽과 낮은 긴 눈으로 구분한다.
 
@@ -16230,6 +16841,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 초반 · 장난기 · 눈 pale ice-blue · a small flick of eyeliner |
 
 **머리:** ‘wavy yellow side stripe’·‘long fin membrane’·키 0.2m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅
 
@@ -16259,6 +16871,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 중반 · 장난기 · 눈 deep navy-blue · a small flick of eyeliner |
 
 **머리:** ‘beige fins’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 저리어에서 이어 같은 묶음
 
@@ -16288,6 +16901,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **머리:** ‘long, tentacle-like limb’·키 2.1m에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 긴 사이드뱅 — 저리릴에서 이어 더 공들인 묶음
 
@@ -16317,6 +16931,7 @@ HAIR: long locs, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
 
 **머리:** 키 0.5m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 가운데를 가른 앞머리
 
@@ -16346,6 +16961,7 @@ HAIR: pixie cut, parted bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 warm hazel · a thin, neat eyeliner |
 
 **머리:** 에스퍼 타입에서 히메컷(곧은 결) · 긴 머리 · 일자 앞머리 — 리그레에서 이어 더 공들인 묶음
 
@@ -16375,6 +16991,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 pale ice-blue · a dark smoky liner |
 
 **이유:** 작은 양초의 둥근 체적과 녹은 곡선을 둥근 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -16406,6 +17023,7 @@ HAIR: short windswept, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 중반 · 수줍음 · 눈 charcoal grey · no eyeliner |
 
 **이유:** 램프의 정돈된 중심과 금속 곡선을 타원 얼굴와 곡선 눈썹으로 구분한다.
 
@@ -16437,6 +17055,7 @@ HAIR: medium windswept, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 신비 · 눈 charcoal grey · a dark smoky liner |
 
 **이유:** 촛대의 긴 곡선과 유령 불빛을 긴 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -16468,6 +17087,7 @@ HAIR: long cornrows, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **이유:** 작은 용의 크게 돌출한 이빨을 넓은 입 너비와 선명한 눈매로 해석한다.
 
@@ -16499,6 +17119,7 @@ HAIR: medium high ponytail, parted bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 emerald green · a crisp winged eyeliner |
 
 **머리:** ‘long, gray tusks’·드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 가운데를 가른 앞머리 — 터검니에서 이어 같은 묶음
 
@@ -16528,6 +17149,7 @@ HAIR: long high ponytail, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 honey-gold · a crisp winged eyeliner |
 
 **이유:** 도끼 같은 큰 턱을 각진 하관과 넓은 입으로 구분한다.
 
@@ -16559,6 +17181,7 @@ HAIR: long high ponytail, long side bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver · a thin, sharp eyeliner |
 
 **머리:** ‘light-blue head with round ears’·키 0.5m에서 잔곱슬 / 아프로(웨이브·곱슬) · 짧은 머리 · 일자 앞머리
 
@@ -16588,6 +17211,7 @@ HAIR: short tight curls, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **머리:** 키 2.6m에서 로크스 / 드레드풍(웨이브·곱슬) · 매우 긴 머리 · 일자 앞머리 — 코고미에서 이어 같은 묶음
 
@@ -16617,6 +17241,7 @@ HAIR: very long locs, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 눈 결정의 방사 대칭을 높은 광대와 정돈된 긴 눈으로 해석한다.
 
@@ -16648,6 +17273,7 @@ HAIR: medium space buns, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 신비 · 눈 garnet red · a dark smoky liner |
 
 **이유:** 작은 달팽이 껍질과 부드러운 중심을 타원 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -16679,6 +17305,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 장난기 · 눈 crimson red · a small flick of eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 쪼마리에서 이어 같은 묶음
 
@@ -16706,6 +17333,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘two small, flimsy fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 긴 사이드뱅
 
@@ -16735,6 +17363,7 @@ HAIR: very long fishtail braid, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 사나움 · 눈 honey-gold · a crisp winged eyeliner |
 
 **이유:** 작은 무술가의 가벼운 선을 작은 턱과 집중된 수평 눈으로 해석한다.
 
@@ -16764,6 +17393,7 @@ HAIR: medium cornrows, no bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 amethyst purple · a crisp winged eyeliner |
 
 **이유:** 흐르는 소매와 무술의 유연한 선을 긴 얼굴와 완만한 긴 눈으로 구분한다.
 
@@ -16793,6 +17423,7 @@ HAIR: long top knot, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **머리:** ‘medium-sized wings’·‘thistle leaves’·키 1.6m에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -16822,6 +17453,7 @@ HAIR: long layered, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
 
 **머리:** ‘two rectangular eyes’·고스트 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -16851,6 +17483,7 @@ HAIR: long asymmetric cut, long side bangs covering one eye.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
 
 **머리:** 키 2.8m에서 한쪽만 밀고 나머지는 긴 머리(층 낸 컷) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 골비람에서 이어 같은 묶음
 
@@ -16880,6 +17513,7 @@ HAIR: side-shaved long hair, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **이유:** 작은 날붙이의 뾰족한 선을 높은 광대와 작고 선명한 코끝으로 해석한다.
 
@@ -16911,6 +17545,7 @@ HAIR: short asymmetric cut, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
 
 **머리:** ‘golden, double-headed axe blade’·‘white, metallic hands’·악 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 좌우 길이가 다른 앞머리 — 자망칼에서 이어 같은 묶음
 
@@ -16938,6 +17573,7 @@ HAIR: long asymmetric cut, asymmetric bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **이유:** 박치기 소의 큰 머리털과 뿔을 넓은 이마와 굵은 낮은 눈썹으로 해석한다.
 
@@ -16967,6 +17603,7 @@ HAIR: long layered, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 silver · no eyeliner |
 
 **머리:** ‘feathery ruff’·‘white feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -16996,6 +17633,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **머리:** ‘large mane’·‘dark red feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 수리둥보에서 이어 같은 묶음
 
@@ -17025,6 +17663,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **머리:** ‘tiny wings’·‘dark gray feathers’·몸 형태 wings에서 바람에 날린 듯한 스타일(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -17054,6 +17693,7 @@ HAIR: short windswept, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 warm hazel · a thin, sharp eyeliner |
 
 **머리:** ‘shaggy darker brown wings’·‘tan ruff’에서 덥수룩하게 흐트러진 컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 벌차이에서 이어 같은 묶음
 
@@ -17083,6 +17723,7 @@ HAIR: long shaggy, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 개미핥기의 긴 주둥이와 관형 입을 긴 콧대와 중앙이 도톰한 입술로 해석한다.
 
@@ -17112,6 +17753,7 @@ HAIR: medium cornrows, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **머리:** ‘two long antennae’·키 0.3m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 일자 앞머리
 
@@ -17141,6 +17783,7 @@ HAIR: short twin tail, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 눈을 덮은 작은 용의 앞머리와 큰 입을 낮은 눈꺼풀과 넓은 입으로 해석한다.
 
@@ -17172,6 +17815,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 거칠어진 두 머리 용의 체적을 넓은 하관과 집중된 눈매로 구분한다. 인물 머리는 하나다.
 
@@ -17203,6 +17847,7 @@ HAIR: long layered, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 거친 다두 용의 강한 턱을 각진 하관과 깊은 눈매로 해석한다. 사람 머리는 하나다.
 
@@ -17234,6 +17879,7 @@ HAIR: long feathered, asymmetric bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 열정 · 눈 pale ice-blue · a short flick of eyeliner |
 
 **머리:** ‘five red, slightly whorled horns’에서 세로로 말린 드릴 컬(웨이브·곱슬) · 중간 길이 · 가운데를 가른 앞머리
 
@@ -17263,6 +17909,7 @@ HAIR: medium ringlet curls, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 열정 · 눈 silver · a short flick of eyeliner |
 
 **머리:** ‘red horn-like structure’·키 1.6m에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 가운데를 가른 앞머리 — 활화르바에서 이어 같은 묶음
 
@@ -17292,6 +17939,7 @@ HAIR: long locs, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 철심의 단단함과 긴 뿔을 긴 윤곽과 곧은 콧대로 해석한다.
 
@@ -17323,6 +17971,7 @@ HAIR: long cornrows, no bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 암굴의 큰 체적과 둥근 뿔을 넓은 하관과 굵은 눈썹으로 해석한다.
 
@@ -17354,6 +18003,7 @@ HAIR: very long high ponytail, no bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 초원의 잎이 흐르는 선을 타원 윤곽·수평 아몬드 눈매로 옮기고, 뿔의 각은 얼굴 골격 대신 장식에 둔다.
 
@@ -17385,6 +18035,7 @@ HAIR: long ponytail, no bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 사용자 요청으로 과도한 긴 얼굴·턱·눈 간격을 균형 있는 성인 미형으로 재설계. 바람의 경쾌함은 완만한 하트형 윤곽·살짝 올라간 눈매로 남기고, 굵은 눈썹·밀집한 눈·긴 턱의 과장을 줄인다.
 
@@ -17416,6 +18067,7 @@ HAIR: very long wavy, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **이유:** 번개 꼬리의 각과 강한 상체를 각진 하관과 굵은 눈썹으로 구분한다.
 
@@ -17447,6 +18099,7 @@ HAIR: medium windswept, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 흰 깃과 긴 용의 곡선을 긴 얼굴와 완만한 눈매로 옮긴다.
 
@@ -17478,6 +18131,7 @@ HAIR: long cornrows, no bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 dark violet-grey · a bold, defined eyeliner |
 
 **이유:** 검은 용의 금속 같은 각과 전기적 선을 각진 얼굴과 수평 눈으로 해석한다.
 
@@ -17509,6 +18163,7 @@ HAIR: long slicked back, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 풍요의 둥근 구름과 안정적인 체적을 넓은 볼과 안정적인 눈매로 해석한다.
 
@@ -17540,6 +18195,7 @@ HAIR: long twin braids, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
 
 **이유:** 비대칭 얼음 용의 날카로운 선을 긴 윤곽과 작은 턱끝으로 해석한다. 눈의 수나 얼굴 골격을 왜곡하지 않는다.
 
@@ -17571,6 +18227,7 @@ HAIR: very long straight, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 honey-gold · a bold, defined eyeliner |
 
 **머리:** ‘large, feathery red mane’·‘fluffy, light blue fur’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 앞머리 없음
 
@@ -17600,6 +18257,7 @@ HAIR: medium afro, no bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 선율과 길게 흐르는 머리의 곡선을 긴 윤곽과 곡선 눈썹으로 해석한다.
 
@@ -17631,6 +18289,7 @@ HAIR: very long straight, parted bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 violet · a bold, defined eyeliner |
 
 **머리:** ‘purple segmented metal body’·‘gray shoulder circles and abdomen band’에서 두피에 붙여 땋은 콘로(땋은 머리) · 중간 길이 · 앞머리 없음
 
@@ -17662,6 +18321,7 @@ HAIR: medium cornrows, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 emerald green · no eyeliner |
 
 **이유:** 밤송이의 둥근 중심과 작은 가시를 둥근 얼굴 안의 또렷한 눈으로 해석한다.
 
@@ -17691,6 +18351,7 @@ HAIR: medium half-up, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 두꺼운 밤송이 체적을 넓은 볼과 굵은 눈썹으로 구분한다.
 
@@ -17720,6 +18381,7 @@ HAIR: medium side ponytail, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 jade green · no eyeliner |
 
 **이유:** 큰 갑옷과 가시의 힘을 각진 하관과 안정적인 눈매로 해석한다.
 
@@ -17749,6 +18411,7 @@ HAIR: long half-up, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 여우의 큰 귀와 작은 얼굴을 작은 턱과 큰 맑은 눈으로 해석한다.
 
@@ -17778,6 +18441,7 @@ HAIR: short windswept, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 성장한 여우의 길어진 선과 마법 이미지를 타원 얼굴과 올라간 긴 눈으로 구분한다.
 
@@ -17807,6 +18471,7 @@ HAIR: long wolf cut, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 마법사 같은 긴 털과 여우의 선을 긴 얼굴와 고요한 긴 눈으로 해석한다.
 
@@ -17836,6 +18501,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 deep navy-blue · no eyeliner |
 
 **이유:** 작은 개구리의 둥근 눈과 거품을 둥근 얼굴와 넓은 입으로 옮긴다.
 
@@ -17865,6 +18531,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 민첩해진 개구리의 유선형을 타원 얼굴와 집중된 눈매로 구분한다.
 
@@ -17894,6 +18561,7 @@ HAIR: medium undercut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 닌자의 기동성과 날카로운 지느러미를 긴 얼굴와 절제된 긴 눈으로 해석한다.
 
@@ -17923,6 +18591,7 @@ HAIR: long wavy, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/bunnelby-20261025/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -17950,6 +18619,7 @@ HAIR: short twin tail, curtain bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/diggersby-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -17977,6 +18647,7 @@ HAIR: long ponytail, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 crimson red · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/fletchling-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18004,6 +18675,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/fletchinder-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18031,6 +18703,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/talonflame-20261026/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18058,6 +18731,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 charcoal grey · no eyeliner |
 
 **이유:** 작은 애벌레의 둥근 마디를 둥근 볼과 작은 눈으로 해석한다.
 
@@ -18087,6 +18761,7 @@ HAIR: short layered, straight bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 dark violet-grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/spewpa-20261026/light-prompt.txt)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18114,6 +18789,7 @@ HAIR: short curly, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 silver · a small flick of eyeliner |
 
 **이유:** 크게 펼친 나비 날개와 선명한 무늬를 넓은 상안면과 큰 사람 눈으로 해석한다.
 
@@ -18143,6 +18819,7 @@ HAIR: long curly, straight bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 chestnut brown · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/litleo-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18170,6 +18847,7 @@ HAIR: medium ponytail, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pyroar-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18197,6 +18875,7 @@ HAIR: long ponytail, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/flab-b-20261027/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18224,6 +18903,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 온화 · 눈 silver · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/floette-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18251,6 +18931,7 @@ HAIR: very long half-up, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 pale ice-blue · a fine winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/florges-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18278,6 +18959,7 @@ HAIR: very long half-up, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 온화 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skiddo-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18303,6 +18985,7 @@ HAIR: medium shaggy, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 덥수룩하게 흐트러진 컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 온화 · 눈 warm hazel · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/gogoat-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18330,6 +19013,7 @@ HAIR: long shaggy, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pancham-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18357,6 +19041,7 @@ HAIR: medium high ponytail, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 pale ice-blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pangoro-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18384,6 +19069,7 @@ HAIR: long space buns, no bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 silver · no eyeliner |
 
 **이유:** 푸들의 긴 주둥이와 정돈된 털의 곡선을 긴 중안부와 곡선 눈썹으로 해석한다.
 
@@ -18413,6 +19099,7 @@ HAIR: long twin tail, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 영리함 · 눈 steel blue · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/espurr-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18440,6 +19127,7 @@ HAIR: short curly, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/meowstic-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -18467,6 +19155,7 @@ HAIR: very long twin braids, parted bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 한 자루 검의 긴 중심선과 눈을 긴 윤곽과 정돈된 두 사람 눈으로 해석한다.
 
@@ -18496,6 +19185,7 @@ HAIR: medium asymmetric cut, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 쌍검의 반복과 대칭을 각진 윤곽과 수평적인 두 눈으로 구분한다.
 
@@ -18527,6 +19217,7 @@ HAIR: long asymmetric cut, asymmetric bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘golden sword’·‘steel blade’·강철 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 긴 사이드뱅 — 쌍검킬에서 이어 같은 묶음
 
@@ -18556,6 +19247,7 @@ HAIR: long asymmetric cut, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 rose pink · no eyeliner |
 
 **이유:** 향수의 구름 같은 곡선과 짧은 부리를 둥근 볼과 도톰한 입술로 해석한다.
 
@@ -18587,6 +19279,7 @@ HAIR: short curly, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 soft magenta · a fine winged eyeliner |
 
 **머리:** ‘fluffy purple fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 슈쁘에서 이어 더 공들인 묶음
 
@@ -18616,6 +19309,7 @@ HAIR: medium afro puffs, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** ‘fluffy white fur’·키 0.4m에서 잔곱슬 / 아프로(웨이브·곱슬) · 짧은 머리 · 일자 앞머리
 
@@ -18645,6 +19339,7 @@ HAIR: short tight curls, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 pale ice-blue · a fine winged eyeliner |
 
 **머리:** ‘fluffy pink fur’에서 양쪽 아프로 퍼프(올림머리) · 중간 길이 · 일자 앞머리 — 나룸퍼프에서 이어 더 공들인 묶음
 
@@ -18674,6 +19369,7 @@ HAIR: medium afro puffs, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** ‘two transparent tentacles’·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 중간 길이 · 일자 앞머리
 
@@ -18701,6 +19397,7 @@ HAIR: medium locs, straight bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** ‘long tentacle’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 오케이징에서 이어 더 공들인 묶음
 
@@ -18730,6 +19427,7 @@ HAIR: long box braids, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 두 손 같은 넓은 갑각의 체적을 넓은 얼굴와 열린 눈매로 해석한다.
 
@@ -18761,6 +19459,7 @@ HAIR: short twin tail, curtain bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **머리:** 몸 형태 heads에서 트윈테일(묶은 꼬리) · 긴 머리 · 커튼뱅 — 거북손손에서 이어 같은 묶음
 
@@ -18790,6 +19489,7 @@ HAIR: long twin tail, curtain bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 수줍음 · 눈 warm hazel · no eyeliner |
 
 **머리:** ‘rounded, light blue fin’·독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -18819,6 +19519,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 chestnut brown · a bold, defined eyeliner |
 
 **머리:** ‘red, leaf-like crest’·‘large leaf’·키 1.8m에서 반묶음(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 수레기에서 이어 더 공들인 묶음
 
@@ -18848,6 +19549,7 @@ HAIR: long half-up, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 온화 · 눈 sapphire blue · no eyeliner |
 
 **머리:** ‘two black, rectangular fins’·‘simple blue spikes’·몸 형태 armor에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 짧은 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -18877,6 +19579,7 @@ HAIR: short undercut, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 온화 · 눈 deep navy-blue · no eyeliner |
 
 **머리:** ‘three pointed fins’·‘four black spikes’·몸 형태 squiggle에서 곧은 생머리(곧은 결) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 완철포에서 이어 더 공들인 묶음
 
@@ -18906,6 +19609,7 @@ HAIR: long straight, choppy bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 작은 도마뱀의 넓은 귀와 좁은 중심 얼굴을 작은 턱과 열린 눈으로 해석한다.
 
@@ -18937,6 +19641,7 @@ HAIR: pixie cut, choppy bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 펼친 목도리와 길어진 도마뱀의 선을 긴 윤곽과 날카로운 눈으로 구분한다.
 
@@ -18968,6 +19673,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 chestnut brown · a small flick of eyeliner |
 
 **이유:** 작은 공룡의 큰 머리와 턱을 넓은 얼굴와 열린 눈매로 해석한다.
 
@@ -18999,6 +19705,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 폭군 공룡의 큰 턱과 날카로운 능선을 각진 하관과 작은 깊은 눈으로 구분한다.
 
@@ -19030,6 +19737,7 @@ HAIR: long feathered, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** ‘dark blue crystal’·얼음 타입에서 곧은 생머리(곧은 결) · 중간 길이 · 일자 앞머리
 
@@ -19059,6 +19767,7 @@ HAIR: medium straight, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **머리:** ‘single, light blue crystal’·얼음 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 일자 앞머리 — 아마루스에서 이어 같은 묶음
 
@@ -19088,6 +19797,7 @@ HAIR: very long straight, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 rose pink · a fine winged eyeliner |
 
 **이유:** 리본과 부드러운 요정 실루엣을 작은 턱과 큰 사람 눈으로 해석한다.
 
@@ -19119,6 +19829,7 @@ HAIR: long twin tail, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 emerald green · a crisp winged eyeliner |
 
 **이유:** 레슬링 새의 가면 같은 선과 날개를 높은 광대와 선명한 긴 눈으로 해석한다.
 
@@ -19150,6 +19861,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 작은 설치류의 둥근 귀와 볼 및 안테나 수염을 둥근 얼굴와 작은 눈으로 해석한다.
 
@@ -19181,6 +19893,7 @@ HAIR: long side ponytail, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** 키 0.3m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 일자 앞머리
 
@@ -19210,6 +19923,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 amethyst purple · no eyeliner |
 
 **머리:** ‘antenna-like horns’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 가운데를 가른 앞머리
 
@@ -19237,6 +19951,7 @@ HAIR: very long braid, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 위엄 · 눈 amethyst purple · a bold, defined eyeliner |
 
 **머리:** 몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 앞머리 없음 — 미끄메라에서 이어 같은 묶음
 
@@ -19264,6 +19979,7 @@ HAIR: very long braid, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 violet · a bold, defined eyeliner |
 
 **머리:** ‘antenna-like horns’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 매우 긴 머리 · 가운데를 가른 앞머리 — 미끄네일에서 이어 같은 묶음
 
@@ -19293,6 +20009,7 @@ HAIR: very long crown braid, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 열쇠의 고리와 작은 중심 얼굴을 타원 윤곽과 정돈된 원형 눈으로 해석한다.
 
@@ -19324,6 +20041,7 @@ HAIR: medium afro puffs, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 warm hazel · a dark smoky liner |
 
 **머리:** ‘two small, green leaves’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -19351,6 +20069,7 @@ HAIR: long half-up, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 chestnut brown · a dark smoky liner |
 
 **머리:** ‘wavy, horn-like branch’에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 긴 사이드뱅 — 나목령에서 이어 더 공들인 묶음
 
@@ -19380,6 +20099,7 @@ HAIR: long fishtail braid, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 warm hazel · a dark smoky liner |
 
 **이유:** 호박의 둥근 체적과 작은 어둠의 중심을 둥근 볼과 큰 사람 눈으로 해석한다.
 
@@ -19411,6 +20131,7 @@ HAIR: medium messy bun, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 chestnut brown · a dark smoky liner |
 
 **이유:** 길게 뻗은 호박 줄기와 머리의 흐름을 긴 윤곽과 낮은 눈꺼풀로 구분한다.
 
@@ -19442,6 +20163,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 작은 얼음덩이의 평평한 면을 각진 윤곽 안의 둥근 눈으로 해석한다.
 
@@ -19473,6 +20195,7 @@ HAIR: medium tight curls, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 빙산의 넓고 평평한 덩어리를 넓고 단단한 하관으로 구분한다.
 
@@ -19504,6 +20227,7 @@ HAIR: long ringlet curls, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **머리:** 몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -19533,6 +20257,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 amethyst purple · a bold, defined eyeliner |
 
 **머리:** ‘fluffy mane’·‘two spines’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 음뱃에서 이어 더 공들인 묶음
 
@@ -19562,6 +20287,7 @@ HAIR: medium afro, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 나뭇가지 같은 큰 뿔과 사슴의 긴 선을 긴 얼굴와 완만한 눈매로 옮긴다.
 
@@ -19593,6 +20319,7 @@ HAIR: very long crown braid, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **이유:** Y형 날개와 예리한 파괴의 실루엣을 각진 광대와 긴 눈으로 해석한다.
 
@@ -19624,6 +20351,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 반복되는 육각형과 길게 이어진 몸을 정돈된 긴 얼굴로 해석한다.
 
@@ -19655,6 +20383,7 @@ HAIR: very long braid, no bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 rose pink · no eyeliner, natural strong brows |
 
 **머리:** ‘conical, gray rock’·‘pink crystals’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리
 
@@ -19684,6 +20413,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 영리함 · 눈 amethyst purple · a thin, neat eyeliner |
 
 **이유:** 고리와 장난의 유연한 곡선을 작은 턱과 긴 입선으로 해석한다.
 
@@ -19715,6 +20445,7 @@ HAIR: short asymmetric cut, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **이유:** 증기 고리와 둔중한 몸을 넓은 얼굴와 안정적인 눈매로 해석한다.
 
@@ -19748,6 +20479,7 @@ HAIR: long windswept, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 나른함 · 눈 chestnut brown · a soft smudged liner |
 
 **이유:** 작은 부엉이의 둥근 얼굴과 잎 장식을 둥근 볼과 짧은 코로 옮긴다.
 
@@ -19777,6 +20509,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 나른함 · 눈 chestnut brown · a soft smudged liner |
 
 **이유:** 정돈된 깃과 가려진 시선을 타원 얼굴와 낮은 눈꺼풀로 구분한다.
 
@@ -19806,6 +20539,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 궁수의 후드와 조준하는 선을 긴 얼굴와 집중된 수평 눈으로 해석한다.
 
@@ -19835,6 +20569,7 @@ HAIR: long feathered, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 작은 고양이의 귀와 가는 눈을 작은 턱과 올라간 눈매로 옮긴다.
 
@@ -19864,6 +20599,7 @@ HAIR: short wolf cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 성장한 고양이의 강해진 체적을 타원 얼굴와 굵은 눈썹으로 구분한다.
 
@@ -19893,6 +20629,7 @@ HAIR: medium windswept, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 큰 호랑이와 레슬링의 위압을 넓은 하관 및 굵고 낮은 눈썹으로 해석한다.
 
@@ -19922,6 +20659,7 @@ HAIR: long wolf cut, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 물개의 둥근 코와 거품의 곡선을 둥근 볼과 둥근 사람 코끝으로 옮긴다.
 
@@ -19951,6 +20689,7 @@ HAIR: short layered, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 춤추는 물개의 리본 같은 곡선을 타원 얼굴와 곡선 입술로 구분한다.
 
@@ -19980,6 +20719,7 @@ HAIR: medium wavy, curtain bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 deep navy-blue · a fine winged eyeliner |
 
 **이유:** 바다의 가수와 길게 흐르는 지느러미를 긴 얼굴와 완만한 긴 눈으로 해석한다.
 
@@ -20009,6 +20749,7 @@ HAIR: very long wavy, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 charcoal grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pikipek-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -20036,6 +20777,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 밝음 · 눈 dark violet-grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/trumbeak-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -20063,6 +20805,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 dark violet-grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/toucannon-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -20090,6 +20833,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **이유:** 작은 몽구스의 긴 몸과 큰 이빨을 긴 얼굴와 넓은 입으로 해석한다.
 
@@ -20117,6 +20861,7 @@ HAIR: short layered, curtain bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **이유:** 잠복하는 몽구스의 큰 얼굴와 낮은 시선을 넓은 하관과 낮은 눈꺼풀로 구분한다.
 
@@ -20146,6 +20891,7 @@ HAIR: medium layered, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 silver grey · no eyeliner |
 
 **이유:** 애벌레의 둥근 몸과 턱을 둥근 볼과 중앙이 도톰한 입술로 해석한다.
 
@@ -20175,6 +20921,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **이유:** 각진 배터리 마디와 네모 입을 각진 윤곽과 정돈된 입술로 구분한다.
 
@@ -20204,6 +20951,7 @@ HAIR: short asymmetric cut, straight bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/vikavolt-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -20231,6 +20979,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 큰 권투 집게와 솟은 더듬이를 넓은 하관과 굵은 눈썹으로 해석한다.
 
@@ -20260,6 +21009,7 @@ HAIR: medium undercut, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/crabominable-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -20285,6 +21035,7 @@ HAIR: long blunt cut, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 중반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 플라멩코 깃과 춤의 곡선을 타원 윤곽과 선명한 입술로 해석한다. 다른 폼에서는 의상만 바꾸고 정본 얼굴을 유지한다.
 
@@ -20316,6 +21067,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 작은 털뭉치와 넓은 흰 날개를 작은 턱과 큰 맑은 사람 눈으로 해석한다.
 
@@ -20347,6 +21099,7 @@ HAIR: short twin tail, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** ‘two black antennae’·몸 형태 bug-wings에서 트윈테일(묶은 꼬리) · 매우 긴 머리 · 일자 앞머리 — 에블리에서 이어 같은 묶음
 
@@ -20376,6 +21129,7 @@ HAIR: very long twin tail, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** 키 0.5m에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 짧은 머리 · 앞머리 없음
 
@@ -20405,6 +21159,7 @@ HAIR: short undercut, no bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘long fluffy white tail’에서 포니테일(묶은 꼬리) · 긴 머리 · 앞머리 없음 — 암멍이에서 이어 더 공들인 묶음
 
@@ -20434,6 +21189,7 @@ HAIR: long ponytail, no bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 우수 · 눈 deep navy-blue · a soft dark liner |
 
 **머리:** ‘rounded dorsal fin’·몸 형태 fish에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -20463,6 +21219,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 deep navy-blue · a small flick of eyeliner |
 
 **이유:** 가시 돋친 촉수와 작은 중심 몸을 작은 턱과 낮은 눈꺼풀로 해석한다.
 
@@ -20494,6 +21251,7 @@ HAIR: long locs, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **머리:** ‘orange spines’·몸 형태 tentacles에서 로크스 / 드레드풍(웨이브·곱슬) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리 — 시마사리에서 이어 같은 묶음
 
@@ -20521,6 +21279,7 @@ HAIR: very long locs, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **머리:** 땅 타입에서 목덜미 낮은 번(올림머리) · 중간 길이 · 옆으로 넘긴 앞머리
 
@@ -20550,6 +21309,7 @@ HAIR: medium low bun, side-swept bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **이유:** 큰 말의 갈기와 강한 다리 체적을 긴 얼굴와 굵은 눈썹으로 해석한다.
 
@@ -20581,6 +21341,7 @@ HAIR: long low bun, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 emerald green · no eyeliner |
 
 **이유:** 물거품 머리와 큰 눈을 둥근 얼굴와 큰 사람 눈으로 해석한다.
 
@@ -20612,6 +21373,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 우아함 · 눈 emerald green · a fine winged eyeliner |
 
 **머리:** ‘paler wavy line’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 물거미에서 이어 같은 묶음
 
@@ -20641,6 +21403,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 나른함 · 눈 rose pink · a soft smudged liner |
 
 **머리:** ‘light green leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅
 
@@ -20670,6 +21433,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 나른함 · 눈 rose pink · a soft smudged liner |
 
 **머리:** 풀 타입에서 반묶음(묶은 꼬리) · 매우 긴 머리 · 커튼뱅 — 짜랑랑에서 이어 같은 묶음
 
@@ -20697,6 +21461,7 @@ HAIR: very long half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 나른함 · 눈 amethyst purple · a soft smudged liner |
 
 **머리:** ‘thin white stem’·‘thin, stem-like body’에서 가는 박스 브레이드(땋은 머리) · 긴 머리 · 일자 앞머리
 
@@ -20726,6 +21491,7 @@ HAIR: long box braids, straight bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 나른함 · 눈 violet · a soft smudged liner |
 
 **머리:** ‘large mushroom’·‘large purple mushroom cap’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 긴 머리 · 일자 앞머리 — 자마슈에서 이어 같은 묶음
 
@@ -20755,6 +21521,7 @@ HAIR: long crown braid, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 dark violet-grey · no eyeliner |
 
 **머리:** ‘two short, flat spines’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
@@ -20784,6 +21551,7 @@ HAIR: medium windswept, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 charcoal grey · a small flick of eyeliner |
 
 **머리:** 불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 야도뇽에서 이어 같은 묶음
 
@@ -20813,6 +21581,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 rose pink · a crisp winged eyeliner |
 
 **이유:** 작은 곰의 둥근 체적과 보드라운 주둥이를 둥근 볼과 내려간 눈꼬리로 해석한다.
 
@@ -20844,6 +21613,7 @@ HAIR: medium ponytail, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 soft magenta · a crisp winged eyeliner |
 
 **머리:** ‘white band’·‘dark pink rings’·격투 타입에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 포곰곰에서 이어 더 공들인 묶음
 
@@ -20873,6 +21643,7 @@ HAIR: long cornrows, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 나른함 · 눈 violet · a soft smudged liner |
 
 **이유:** 망고스틴의 둥근 열매와 작은 눈을 둥근 얼굴와 작은 또렷한 눈으로 해석한다.
 
@@ -20904,6 +21675,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 나른함 · 눈 violet · a soft smudged liner |
 
 **머리:** ‘short leaves’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 달콤아에서 이어 같은 묶음
 
@@ -20931,6 +21703,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 수줍음 · 눈 amethyst purple · no eyeliner |
 
 **이유:** 열매의 둥근 체적과 여왕 같은 긴 선을 긴 얼굴와 선명한 입술로 해석한다.
 
@@ -20960,6 +21733,7 @@ HAIR: very long half-up, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 우아함 · 눈 jade green · a fine winged eyeliner |
 
 **머리:** ‘long, fluffy green crest’에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리
 
@@ -20989,6 +21763,7 @@ HAIR: long afro puffs, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 중반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 큰 원숭이의 넓은 코와 현자의 고요함을 넓은 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -21020,6 +21795,7 @@ HAIR: medium chignon, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 중반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **머리:** ‘wavy white ring’·격투 타입에서 한 갈래 땋은 머리 · 긴 머리 · 긴 사이드뱅
 
@@ -21049,6 +21825,7 @@ HAIR: long braid, long side bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 silver grey · a small flick of eyeliner |
 
 **이유:** 작고 낮은 갑각과 길게 뻗은 가시를 작은 눈과 선명한 코끝으로 해석한다.
 
@@ -21080,6 +21857,7 @@ HAIR: short asymmetric cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 steel blue · a fine winged eyeliner |
 
 **이유:** 겹친 큰 갑각과 무사의 단단함을 각진 하관과 굵은 눈썹으로 구분한다.
 
@@ -21111,6 +21889,7 @@ HAIR: long layered, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 작은 모래산의 둥근 핵심을 둥근 얼굴와 작은 눈으로 해석한다.
 
@@ -21142,6 +21921,7 @@ HAIR: very long straight, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
 
 **이유:** 큰 모래성의 넓은 기반과 수직 탑을 넓은 하관과 낮은 눈꺼풀로 구분한다.
 
@@ -21173,6 +21953,7 @@ HAIR: very long braid, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 쿨함 · 눈 charcoal grey · a thin, sharp eyeliner |
 
 **이유:** 해삼의 타원 몸과 작은 눈을 완만한 타원 윤곽과 작은 이목구비로 해석한다.
 
@@ -21204,6 +21985,7 @@ HAIR: short tight curls, choppy bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
 
 **머리:** ‘small, silver spike’·‘two dark blue spines’·키 1.9m에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -21231,6 +22013,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
 
 **머리:** ‘feather crest’·키 2.3m에서 층을 살린 레이어드(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 타입:널에서 이어 같은 묶음
 
@@ -21260,6 +22043,7 @@ HAIR: long layered, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘rocky sphere divided into four plates’·‘five white spikes’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -21289,6 +22073,7 @@ HAIR: short blunt cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 나른함 · 눈 deep navy-blue · a soft smudged liner |
 
 **머리:** ‘small ruff’·키 0.4m에서 층감이 강한 울프컷(층 낸 컷) · 짧은 머리 · 커튼뱅
 
@@ -21318,6 +22103,7 @@ HAIR: short wolf cut, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **머리:** ‘spiny shell’·‘several spikes’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -21347,6 +22133,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 장난기 · 눈 silver grey · a small flick of eyeliner |
 
 **이유:** 둥근 몸과 털 가시의 대비를 둥근 얼굴 안의 선명한 눈매로 해석한다.
 
@@ -21376,6 +22163,7 @@ HAIR: short asymmetric cut, choppy bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 중반 · 신비 · 눈 honey-gold · a dark smoky liner |
 
 **이유:** 누더기로 모습을 감춘 특징을 작은 턱과 부드럽게 내려간 눈꼬리로 해석한다. 천의 가짜 눈과 입을 사람 얼굴에 복제하지 않는다.
 
@@ -21407,6 +22195,7 @@ HAIR: very long straight, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 쿨함 · 눈 soft magenta · a thin, sharp eyeliner |
 
 **머리:** ‘pectoral fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
@@ -21436,6 +22225,7 @@ HAIR: medium beach waves, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **머리:** 몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 커튼뱅
 
@@ -21465,6 +22255,7 @@ HAIR: very long braid, curtain bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 emerald green · a dark smoky liner |
 
 **머리:** 몸 형태 blob에서 흐트러진 번(올림머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -21494,6 +22285,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 크고 또렷한 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
 
 **머리:** ‘small, tooth-like spike’·드래곤 타입에서 층감이 강한 울프컷(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
@@ -21523,6 +22315,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **머리:** ‘small, white crest’·‘small spike’·드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 짜랑꼬에서 이어 더 공들인 묶음
 
@@ -21552,6 +22345,7 @@ HAIR: long high ponytail, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
 
 **머리:** 드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 앞머리 없음 — 짜랑고우에서 이어 같은 묶음
 
@@ -21581,6 +22375,7 @@ HAIR: long high ponytail, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** ‘round, yellow structures’·키 1.8m에서 양쪽 아프로 퍼프(올림머리) · 긴 머리 · 일자 앞머리
 
@@ -21610,6 +22405,7 @@ HAIR: long afro puffs, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 rose pink · a thin, neat eyeliner |
 
 **머리:** 에스퍼 타입에서 히메컷(곧은 결) · 매우 긴 머리 · 일자 앞머리
 
@@ -21639,6 +22435,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 garnet red · a bold, defined eyeliner |
 
 **이유:** 큰 소뿔과 나무 껍질의 안정적인 체적을 넓은 하관과 굵은 눈썹으로 해석한다.
 
@@ -21668,6 +22465,7 @@ HAIR: very long crown braid, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 웨이브 헤어 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 violet · a bold, defined eyeliner |
 
 **머리:** ‘light blue fins’·‘flowing hair’(원작의 머리칼)·물 타입에서 웨이브 헤어(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅
 
@@ -21697,6 +22495,7 @@ HAIR: very long wavy, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 성운의 부드러운 외곽과 작은 눈을 둥근 얼굴와 작은 눈으로 해석한다.
 
@@ -21728,6 +22527,7 @@ HAIR: pixie cut, parted bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
 
 **이유:** 단단한 원시성 껍질 안의 작은 중심을 정돈된 타원 윤곽과 낮은 눈꺼풀로 구분한다.
 
@@ -21759,6 +22559,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver · a bold, defined eyeliner |
 
 **이유:** 태양 사자의 큰 갈기와 금속 선을 넓은 얼굴와 깊은 눈매로 해석한다.
 
@@ -21790,6 +22591,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 amethyst purple · a bold, defined eyeliner |
 
 **이유:** 초승달 같은 거대한 날개를 긴 얼굴와 완만한 눈썹 곡선으로 해석한다.
 
@@ -21821,6 +22623,7 @@ HAIR: very long straight, parted bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver · no eyeliner, natural strong brows |
 
 **이유:** 반투명 종과 긴 촉수의 흐름을 긴 얼굴와 큰 맑은 눈으로 해석한다.
 
@@ -21850,6 +22653,7 @@ HAIR: very long box braids, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 팽창한 근육과 긴 바늘 입을 넓은 하관과 긴 사람 콧대로 해석한다.
 
@@ -21881,6 +22685,7 @@ HAIR: very long ringlet curls, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 pale ice-blue · a small flick of eyeliner |
 
 **머리:** ‘yellow, crown-like structure’에서 머리를 둘러 땋은 왕관형(땋은 머리) · 매우 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -21910,6 +22715,7 @@ HAIR: very long crown braid, side-swept bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 dark violet-grey · a small flick of eyeliner |
 
 **머리:** 전기 타입에서 사이드 포니테일(묶은 꼬리) · 매우 긴 머리 · 좌우 길이가 다른 앞머리
 
@@ -21939,6 +22745,7 @@ HAIR: very long side ponytail, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 jade green · a thin, sharp eyeliner |
 
 **이유:** 대나무와 긴 뿔의 수직선을 긴 윤곽과 길고 곧은 콧대로 해석한다.
 
@@ -21970,6 +22777,7 @@ HAIR: very long braid, choppy bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 나른함 · 눈 pale ice-blue · a soft smudged liner |
 
 **이유:** 접힌 종이의 날카로운 면과 칼날 선을 높은 광대와 가는 눈으로 해석한다.
 
@@ -22001,6 +22809,7 @@ HAIR: short asymmetric cut, long side bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 charcoal grey · a crisp winged eyeliner |
 
 **이유:** 엄청난 입과 큰 몸의 체적을 넓은 하관 및 작은 깊은 눈으로 해석한다. 두 번째 입은 복제하지 않는다.
 
@@ -22032,6 +22841,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 dark violet-grey · a thin, neat eyeliner |
 
 **이유:** 검은 프리즘의 예리한 면을 각진 윤곽과 절제된 이목구비로 해석한다.
 
@@ -22063,6 +22873,7 @@ HAIR: long chignon, choppy bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
 
 **이유:** 인조 몸의 정돈된 대칭과 장식 곡선을 타원 윤곽과 둥근 두 눈으로 해석한다.
 
@@ -22094,6 +22905,7 @@ HAIR: very long ringlet curls, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** ‘two curled horns’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -22123,6 +22935,7 @@ HAIR: medium top knot, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 작은 독침과 타원 눈을 작은 턱과 또렷한 타원 눈으로 해석한다.
 
@@ -22152,6 +22965,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 violet · a bold, defined eyeliner |
 
 **이유:** 길고 가는 독침과 뾰족한 볏을 긴 얼굴와 날카로운 눈매로 구분한다.
 
@@ -22183,6 +22997,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** ‘darker stones’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리
 
@@ -22212,6 +23027,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 열정 · 눈 silver · a short flick of eyeliner |
 
 **이유:** 불꽃놀이 구체와 가는 몸의 대비를 긴 얼굴와 큰 눈 및 넓은 입으로 해석한다.
 
@@ -22241,6 +23057,7 @@ HAIR: long straight, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 번개 수염과 고양잇과의 예리한 선을 높은 광대와 긴 눈으로 해석한다.
 
@@ -22270,6 +23087,7 @@ HAIR: long asymmetric cut, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
 
 **이유:** 작은 너트의 육각형과 중심 구체를 각진 윤곽 안의 둥근 두 눈으로 해석한다.
 
@@ -22301,6 +23119,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
 
 **이유:** 큰 너트 팔과 단단한 체적을 넓은 하관과 정돈된 눈으로 구분한다.
 
@@ -22334,6 +23153,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **이유:** 작은 원숭이의 리듬과 둥근 윤곽을 둥근 볼과 열린 눈으로 해석한다.
 
@@ -22363,6 +23183,7 @@ HAIR: short tight curls, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **이유:** 드럼의 반복 리듬과 성장한 원숭이 윤곽을 타원 얼굴와 선명한 눈매로 구분한다.
 
@@ -22392,6 +23213,7 @@ HAIR: medium tight curls, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 나른함 · 눈 jade green · a soft smudged liner |
 
 **이유:** 큰 고릴라의 이마와 체적을 넓은 하관 및 굵은 직선 눈썹으로 옮긴다.
 
@@ -22419,6 +23241,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 silver · a short flick of eyeliner |
 
 **이유:** 토끼의 큰 귀와 탄력 있는 실루엣을 작은 턱과 열린 눈매로 해석한다.
 
@@ -22446,6 +23269,7 @@ HAIR: short windswept, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 silver grey · a short flick of eyeliner |
 
 **이유:** 옷깃에 감춘 절제된 시선을 낮은 윗눈꺼풀과 타원 얼굴로 구분한다.
 
@@ -22475,6 +23299,7 @@ HAIR: medium twin tail, side-swept bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 축구 선수 같은 길고 민첩한 선을 긴 얼굴와 집중된 눈매로 해석한다.
 
@@ -22504,6 +23329,7 @@ HAIR: long twin tail, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 겁을 먹고 숨는 특징과 큰 눈을 작은 턱과 큰 맑은 눈으로 해석한다.
 
@@ -22533,6 +23359,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
 
 **이유:** 가늘어진 도마뱀의 선과 낮은 시선을 타원 얼굴와 낮은 눈꺼풀로 구분한다.
 
@@ -22562,6 +23389,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 비밀 요원의 길고 가는 선을 긴 중안부와 절제된 긴 눈으로 해석한다.
 
@@ -22591,6 +23419,7 @@ HAIR: medium finger waves, side-swept bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 warm hazel · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/skwovet-20261028/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22618,6 +23447,7 @@ HAIR: short curly, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/greedent-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22645,6 +23475,7 @@ HAIR: medium afro, curtain bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 deep navy-blue · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/rookidee-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22672,6 +23503,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/corvisquire-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22699,6 +23531,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 영리함 · 눈 amethyst purple · a thin, neat eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/corviknight-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22726,6 +23559,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 sapphire blue · no eyeliner |
 
 **이유:** 타원 머리와 큰 반사 눈을 타원 얼굴와 큰 사람 눈으로 해석한다.
 
@@ -22755,6 +23589,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 수줍음 · 눈 honey-gold · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/dottler-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22780,6 +23615,7 @@ HAIR: short twin tail, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 우아함 · 눈 garnet red · a fine winged eyeliner |
 
 **이유:** 무당벌레의 둥근 껍질과 정돈된 점무늬를 둥근 얼굴와 집중된 눈으로 해석한다.
 
@@ -22807,6 +23643,7 @@ HAIR: short twin tail, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/nickit-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -22834,6 +23671,7 @@ HAIR: medium ponytail, asymmetric bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** ‘long tail’·‘two long black ears’·악 타입에서 포니테일(묶은 꼬리) · 긴 머리 · 좌우 길이가 다른 앞머리 — 훔처우에서 이어 같은 묶음
 
@@ -22863,6 +23701,7 @@ HAIR: long ponytail, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **머리:** ‘green stripe’·‘green stem-like body’에서 한 갈래 땋은 머리 · 긴 머리 · 커튼뱅
 
@@ -22892,6 +23731,7 @@ HAIR: long braid, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 우아함 · 눈 emerald green · a fine winged eyeliner |
 
 **머리:** ‘tiny brown seeds’·몸 형태 blob에서 흐트러진 번(올림머리) · 긴 머리 · 커튼뱅 — 꼬모카에서 이어 더 공들인 묶음
 
@@ -22921,6 +23761,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 두꺼운 양털과 둥근 몸을 둥근 볼과 부드러운 타원 눈으로 해석한다. 수평 동공은 복제하지 않는다.
 
@@ -22952,6 +23793,7 @@ HAIR: medium twin tail, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **이유:** 큰 양뿔과 두꺼운 털의 체적을 넓은 하관과 굵은 눈썹으로 구분한다.
 
@@ -22983,6 +23825,7 @@ HAIR: long ponytail, curtain bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 쿨함 · 눈 emerald green · a thin, sharp eyeliner |
 
 **머리:** ‘short rock-hard orange horn’·키 0.3m에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 짧은 머리 · 앞머리 없음
 
@@ -23012,6 +23855,7 @@ HAIR: short undercut, no bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **머리:** ‘long tail’에서 포니테일(묶은 꼬리) · 긴 머리 · 앞머리 없음 — 깨물부기에서 이어 더 공들인 묶음
 
@@ -23041,6 +23885,7 @@ HAIR: long ponytail, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **머리:** ‘yellow bolt-shaped tail’·전기 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 짧은 머리 · 앞머리 없음
 
@@ -23070,6 +23915,7 @@ HAIR: short asymmetric cut, no bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** ‘two spikes’·전기 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 멍파치에서 이어 같은 묶음
 
@@ -23099,6 +23945,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 과묵 · 눈 charcoal grey · no eyeliner, natural strong brows |
 
 **머리:** 키 0.3m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 앞머리 없음
 
@@ -23128,6 +23975,7 @@ HAIR: pixie cut, no bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 과묵 · 눈 dark violet-grey · no eyeliner, natural strong brows |
 
 **머리:** ‘black rocky minecart body’에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 앞머리 없음 — 탄동에서 이어 같은 묶음
 
@@ -23157,6 +24005,7 @@ HAIR: medium undercut, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 dark violet-grey · no eyeliner, natural strong brows |
 
 **머리:** ‘two massive spikes’·불꽃 타입에서 바람에 날린 듯한 스타일(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 탄차곤에서 이어 더 공들인 묶음
 
@@ -23186,6 +24035,7 @@ HAIR: long windswept, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **머리:** 몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 커튼뱅
 
@@ -23215,6 +24065,7 @@ HAIR: very long braid, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 머리를 둘러 땋은 왕관형(땋은 머리) · 매우 긴 머리 · 커튼뱅 — 과사삭벌레에서 이어 같은 묶음
 
@@ -23242,6 +24093,7 @@ HAIR: very long crown braid, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 양갈래 땋은 머리 · 매우 긴 머리 · 커튼뱅 — 과사삭벌레에서 이어 같은 묶음
 
@@ -23269,6 +24121,7 @@ HAIR: very long twin braids, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **머리:** 땅 타입에서 목덜미 낮은 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -23298,6 +24151,7 @@ HAIR: long low bun, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 흐트러진 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리 — 모래뱀에서 이어 같은 묶음
 
@@ -23325,6 +24179,7 @@ HAIR: long messy bun, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 중반 · 우아함 · 눈 deep navy-blue · a fine winged eyeliner |
 
 **머리:** ‘light gray feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리
 
@@ -23354,6 +24209,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** ‘five fins’·키 0.5m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅
 
@@ -23383,6 +24239,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** ‘two dark spiral markings’·‘ventral fins’에서 레트로 웨이브(짧은 컷) · 중간 길이 · 긴 사이드뱅 — 찌로꼬치에서 이어 같은 묶음
 
@@ -23412,6 +24269,7 @@ HAIR: medium finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 amethyst purple · a small flick of eyeliner |
 
 **이유:** 작은 몸과 원뿔 가시의 대비를 둥근 볼과 낮은 눈꺼풀로 해석한다. 성인 비율을 유지한다.
 
@@ -23443,6 +24301,7 @@ HAIR: short asymmetric cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **이유:** 전기와 펑크의 뾰족한 선을 긴 얼굴와 사선 눈썹으로 해석한다.
 
@@ -23472,6 +24331,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 지네의 길고 납작한 몸과 불 수염을 긴 얼굴와 낮은 긴 눈으로 해석한다.
 
@@ -23503,6 +24363,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
 
 **이유:** 큰 지네의 불꽃 능선과 삼각 동공 단서를 강한 사선 눈썹으로 구분한다. 동공은 사람 형태다.
 
@@ -23534,6 +24395,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **이유:** 작은 문어 머리와 권투 장갑의 체적을 둥근 볼과 열린 눈으로 해석한다.
 
@@ -23565,6 +24427,7 @@ HAIR: medium ringlet curls, no bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 큰 문어의 얽힌 촉수와 유술의 힘을 넓은 하관과 깊은 눈매로 구분한다.
 
@@ -23596,6 +24459,7 @@ HAIR: long box braids, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 amethyst purple · a dark smoky liner |
 
 **이유:** 찻잔의 둥근 체적과 흐르는 홍차를 둥근 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -23627,6 +24491,7 @@ HAIR: medium space buns, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 찻주전자의 긴 손잡이와 소용돌이를 타원 얼굴와 긴 곡선 눈썹으로 구분한다.
 
@@ -23658,6 +24523,7 @@ HAIR: long space buns, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 rose pink · a thin, neat eyeliner |
 
 **이유:** 차분한 둥근 몸과 긴 모자 꼬리를 작은 턱과 낮은 눈꺼풀로 해석한다.
 
@@ -23689,6 +24555,7 @@ HAIR: short tight curls, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 영리함 · 눈 rose pink · a thin, neat eyeliner |
 
 **이유:** 정숙하고 길어진 곡선을 타원 얼굴와 완만한 긴 눈으로 구분한다.
 
@@ -23718,6 +24585,7 @@ HAIR: medium ringlet curls, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 soft magenta · a thin, neat eyeliner |
 
 **이유:** 길게 흐르는 마녀의 실루엣을 긴 윤곽과 낮고 고요한 눈매로 해석한다.
 
@@ -23749,6 +24617,7 @@ HAIR: long ringlet curls, straight bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 rose pink · no eyeliner |
 
 **머리:** ‘prominent pointed ears’·페어리 타입에서 트윈테일(묶은 꼬리) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -23778,6 +24647,7 @@ HAIR: short twin tail, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 쿨함 · 눈 rose pink · a thin, sharp eyeliner |
 
 **머리:** ‘long, black hair’(원작의 머리칼)·악 타입에서 사이드 포니테일(묶은 꼬리) · 매우 긴 머리 · 좌우 길이가 다른 앞머리 — 메롱꿍에서 이어 같은 묶음
 
@@ -23807,6 +24677,7 @@ HAIR: very long side ponytail, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 violet · a crisp winged eyeliner |
 
 **이유:** 털로 짠 거대한 체적과 도깨비의 각을 넓고 단단한 턱으로 해석한다.
 
@@ -23838,6 +24709,7 @@ HAIR: very long twin tail, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **머리:** 악 타입에서 한쪽만 밀고 나머지는 긴 머리(층 낸 컷) · 긴 머리 · 좌우 길이가 다른 앞머리 — 직구리에서 이어 같은 묶음
 
@@ -23867,6 +24739,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** ‘horned helmet-shaped hardened hair’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리
 
@@ -23896,6 +24769,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 silver · a dark smoky liner |
 
 **머리:** ‘round face-bearing core’·고스트 타입에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 코산호에서 이어 같은 묶음
 
@@ -23925,6 +24799,7 @@ HAIR: long curly, long side bangs covering one eye.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 silver · a crisp winged eyeliner |
 
 **머리:** ‘three upright head feathers’·격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -23954,6 +24829,7 @@ HAIR: long top knot, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 violet · a thin, sharp eyeliner |
 
 **이유:** 코미디언의 둥근 코와 표현적인 중심을 넓은 얼굴와 넓은 입으로 해석한다.
 
@@ -23985,6 +24861,7 @@ HAIR: long chignon, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** ‘single purple eye’·몸 형태 blob에서 흐트러진 번(올림머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 데스마스에서 이어 더 공들인 묶음
 
@@ -24012,6 +24889,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 silver · no eyeliner |
 
 **머리:** ‘droplet-shaped body’·키 0.2m에서 레트로 웨이브(짧은 컷) · 짧은 머리 · 긴 사이드뱅
 
@@ -24041,6 +24919,7 @@ HAIR: short finger waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 우아함 · 눈 silver · a fine winged eyeliner |
 
 **이유:** 휘핑크림의 말린 곡선을 둥근 볼과 선명한 곡선 입술로 해석한다.
 
@@ -24072,6 +24951,7 @@ HAIR: short undercut, long side bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 honey-gold · a crisp winged eyeliner |
 
 **이유:** 작은 병사들의 투구와 방패의 반복을 정돈된 각진 얼굴로 해석한다. 인물은 하나다.
 
@@ -24103,6 +24983,7 @@ HAIR: long top knot, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 장난기 · 눈 violet · a small flick of eyeliner |
 
 **머리:** ‘sharp spines’·전기 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 짧은 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -24132,6 +25013,7 @@ HAIR: short asymmetric cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 silver · a thin, sharp eyeliner |
 
 **머리:** ‘icy spikes’·몸 형태 squiggle에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 일자 앞머리
 
@@ -24159,6 +25041,7 @@ HAIR: very long straight, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **머리:** ‘blue jewel’에서 히메컷(곧은 결) · 매우 긴 머리 · 일자 앞머리 — 누니머기에서 이어 같은 묶음
 
@@ -24188,6 +25071,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **머리:** ‘gray, rectangular body’·‘smaller rectangular stones’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리
 
@@ -24217,6 +25101,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **머리:** ‘large ice cube’·‘long, antennae-like hair’(원작의 머리칼)·얼음 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 일자 앞머리
 
@@ -24246,6 +25131,7 @@ HAIR: very long straight, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 영리함 · 눈 amethyst purple · a thin, neat eyeliner |
 
 **이유:** 배 모양 몸과 둥근 얼굴 및 나선 뿔을 완만한 타원 윤곽과 곡선 눈썹으로 해석한다.
 
@@ -24277,6 +25163,7 @@ HAIR: medium afro, no bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 중반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 전기 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -24306,6 +25193,7 @@ HAIR: short asymmetric cut, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 쿨함 · 눈 amber gold · a thin, sharp eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -24333,6 +25221,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 쿨함 · 눈 emerald green · a thin, sharp eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 뒤로 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음 — 끼리동에서 이어 같은 묶음
 
@@ -24360,6 +25249,7 @@ HAIR: long slicked back, no bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 emerald green · a small flick of eyeliner |
 
 **이유:** 화석의 강한 아래 몸과 작은 위 몸의 대비를 넓은 하관과 선명한 눈매로 해석한다.
 
@@ -24391,6 +25281,7 @@ HAIR: long high ponytail, side-swept bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 장난기 · 눈 sapphire blue · a small flick of eyeliner |
 
 **머리:** ‘blue fins’·얼음 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 긴 사이드뱅
 
@@ -24420,6 +25311,7 @@ HAIR: very long straight, long side bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 jade green · a thin, sharp eyeliner |
 
 **이유:** 긴 목과 둥근 물고기 머리의 대비를 긴 중안부와 둥근 눈으로 해석한다.
 
@@ -24451,6 +25343,7 @@ HAIR: long space buns, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **머리:** ‘white fins’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 매우 긴 머리 · 커튼뱅
 
@@ -24480,6 +25373,7 @@ HAIR: very long beach waves, curtain bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 pale ice-blue · a thin, neat eyeliner |
 
 **머리:** ‘gray bands’·‘zigzag patterns’·드래곤 타입에서 한 갈래 땋은 머리 · 긴 머리 · 좌우 길이가 다른 앞머리
 
@@ -24509,6 +25403,7 @@ HAIR: long braid, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **머리:** ‘three fins’·몸 형태 squiggle에서 곧은 생머리(곧은 결) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -24538,6 +25433,7 @@ HAIR: long straight, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 중반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **머리:** ‘long tail’·고스트 타입에서 포니테일(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 드라꼰에서 이어 더 공들인 묶음
 
@@ -24567,6 +25463,7 @@ HAIR: long ponytail, long side bangs covering one eye.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **이유:** 전투기 같은 납작한 머리와 유령 용의 긴 선을 긴 윤곽과 좁은 눈으로 해석한다.
 
@@ -24598,6 +25495,7 @@ HAIR: long high ponytail, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 나른함 · 눈 sapphire blue · a soft smudged liner |
 
 **이유:** 검을 연상시키는 왕의 길고 날카로운 선을 긴 얼굴와 또렷한 눈매로 해석한다.
 
@@ -24629,6 +25527,7 @@ HAIR: very long ringlet curls, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 나른함 · 눈 garnet red · a soft smudged liner |
 
 **이유:** 방패 같은 갈기와 왕의 안정감을 넓은 얼굴와 굵은 눈썹으로 해석한다.
 
@@ -24660,6 +25559,7 @@ HAIR: very long crown braid, no bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
 
 **이유:** 분절된 긴 외골격을 긴 얼굴와 예리한 광대로 해석한다. 해골 얼굴은 복제하지 않는다.
 
@@ -24691,6 +25591,7 @@ HAIR: very long braid, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **이유:** 권법 수행자의 작은 단단한 몸과 내려간 눈썹을 굵은 낮은 눈썹으로 해석한다.
 
@@ -24722,6 +25623,7 @@ HAIR: medium twin tail, no bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **이유:** 권법 곰의 강한 체적과 뻗은 머리띠를 넓은 하관과 굵은 눈썹으로 구분한다.
 
@@ -24753,6 +25655,7 @@ HAIR: long side ponytail, no bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 emerald green · a crisp winged eyeliner |
 
 **이유:** 거친 원숭이의 긴 팔과 검은 털 및 덩굴을 긴 윤곽과 깊은 눈매로 해석한다.
 
@@ -24784,6 +25687,7 @@ HAIR: long twin braids, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **이유:** 둥근 전기 중심과 반복 링을 둥근 얼굴와 정돈된 열린 두 눈으로 해석한다.
 
@@ -24815,6 +25719,7 @@ HAIR: medium space buns, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **머리:** 키 2.1m에서 한쪽만 밀고 나머지는 긴 머리(층 낸 컷) · 긴 머리 · 긴 사이드뱅
 
@@ -24844,6 +25749,7 @@ HAIR: side-shaved long hair, long side bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **머리:** ‘thin tail’·‘ice spikes’·키 2.2m에서 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -24873,6 +25779,7 @@ HAIR: long ponytail, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 나른함 · 눈 dark violet-grey · a soft smudged liner |
 
 **머리:** ‘wavy purple mane’·키 2m에서 층감이 강한 울프컷(층 낸 컷) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -24902,6 +25809,7 @@ HAIR: long wolf cut, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **이유:** 큰 왕관과 왕의 고요한 중심을 정돈된 타원 얼굴와 차분한 수평 눈으로 해석한다.
 
@@ -24933,6 +25841,7 @@ HAIR: very long crown braid, curtain bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 밝음 · 눈 silver grey · no eyeliner |
 
 **머리:** 에스퍼 타입에서 단정하게 말아 올린 시뇽(올림머리) · 긴 머리 · 가운데를 가른 앞머리
 
@@ -24962,6 +25871,7 @@ HAIR: long chignon, parted bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** ‘large axe-like appendages’·‘numerous black rocky protrusions’에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 앞머리 없음
 
@@ -24991,6 +25901,7 @@ HAIR: medium undercut, no bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘nine rectangular brown spikes’·땅 타입에서 목덜미 낮은 번(올림머리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -25020,6 +25931,7 @@ HAIR: long low bun, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 emerald green · a thin, sharp eyeliner |
 
 **머리:** ‘white pectoral fins’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 배쓰나이에서 이어 더 공들인 묶음
 
@@ -25049,6 +25961,7 @@ HAIR: very long fishtail braid, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** 격투 타입에서 정수리에 묶어 올린 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -25078,6 +25991,7 @@ HAIR: long top knot, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 charcoal grey · a crisp winged eyeliner |
 
 **머리:** 악 타입에서 흐트러진 번(올림머리) · 긴 머리 · 좌우 길이가 다른 앞머리 — 침바루에서 이어 같은 묶음
 
@@ -25107,6 +26021,7 @@ HAIR: long messy bun, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 밝음 · 눈 soft magenta · no eyeliner |
 
 **이유:** 하트 문양과 구름 및 두드러진 입술을 작은 턱과 도톰한 사람 입술로 해석한다.
 
@@ -25140,6 +26055,7 @@ HAIR: very long ringlet curls, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 emerald green · no eyeliner |
 
 **이유:** 풀고양이의 작은 얼굴과 잎 같은 눈 주변 선을 작은 턱과 아몬드형 눈으로 해석한다.
 
@@ -25169,6 +26085,7 @@ HAIR: short layered, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 나른함 · 눈 emerald green · a soft smudged liner |
 
 **이유:** 날렵해진 고양이와 장난스러운 꽃의 연출을 타원 얼굴와 올라간 긴 눈으로 구분한다.
 
@@ -25198,6 +26115,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **이유:** 가면과 마술사의 길고 예리한 선을 긴 얼굴와 또렷한 눈꼬리로 해석한다.
 
@@ -25227,6 +26145,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 작은 악어의 둥근 체적과 큰 입을 둥근 얼굴와 넓은 입으로 옮긴다.
 
@@ -25254,6 +26173,7 @@ HAIR: short windswept, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 둥근 머리와 불꽃 둥지의 둔중한 체적을 넓은 볼과 낮은 눈꺼풀로 구분한다.
 
@@ -25281,6 +26201,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 노래하는 큰 악어의 긴 턱과 단단한 면을 각진 하관 및 넓은 입으로 해석한다.
 
@@ -25310,6 +26231,7 @@ HAIR: long windswept, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 silver · no eyeliner |
 
 **이유:** 오리의 둥근 머리와 단정한 머리깃을 타원 얼굴와 둥근 눈으로 해석한다.
 
@@ -25339,6 +26261,7 @@ HAIR: medium beach waves, curtain bangs.
 | 코 | 보통 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **이유:** 정돈된 깃과 춤의 직선 리듬을 긴 얼굴와 집중된 눈으로 구분한다.
 
@@ -25368,6 +26291,7 @@ HAIR: medium tight curls, side-swept bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
 
 **이유:** 무용수의 긴 곡선과 화려한 깃을 긴 윤곽 및 도톰한 입술로 해석한다.
 
@@ -25397,6 +26321,7 @@ HAIR: long top knot, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 작은 돼지의 삼각 코와 처진 귀를 둥근 볼과 작은 눈으로 해석한다.
 
@@ -25426,6 +26351,7 @@ HAIR: short layered, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 밝음 · 눈 steel blue · no eyeliner |
 
 **이유:** 매끈한 돼지 몸과 말린 꼬리를 타원 윤곽과 낮은 눈꺼풀로 구분한다.
 
@@ -25455,6 +26381,7 @@ HAIR: long ponytail, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 silver · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/tarountula-20261029/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25482,6 +26409,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/spidops-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25509,6 +26437,7 @@ HAIR: medium undercut, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 수줍음 · 눈 silver grey · no eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/nymble-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25536,6 +26465,7 @@ HAIR: short twin tail, parted bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/lokix-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25563,6 +26493,7 @@ HAIR: long twin tail, parted bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 초반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmi-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25590,6 +26521,7 @@ HAIR: short layered, asymmetric bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 중반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmo-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25617,6 +26549,7 @@ HAIR: short windswept, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 (확정 그림으로 잠금) |
+| 인상 | 20대 후반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **머리:** 확정한 ① 그림의 기록값(pkm-atelier-img-3/records/pawmot-20261030/light-ui.json)을 그대로 따른다 — 표가 그림과 어긋나지 않게 잠금
 
@@ -25644,6 +26577,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 작고 여린 코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** ‘spherical head’·키 0.3m에서 둥글게 부풀린 아프로(웨이브·곱슬) · 짧은 머리 · 커튼뱅
 
@@ -25673,6 +26607,7 @@ HAIR: short afro, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 밝음 · 눈 silver · no eyeliner |
 
 **머리:** ‘spherical head’·‘long tail’·몸 형태 heads에서 양쪽 동그란 번(올림머리) · 긴 머리 · 일자 앞머리 — 두리쥐에서 이어 더 공들인 묶음
 
@@ -25702,6 +26637,7 @@ HAIR: long space buns, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 honey-gold · no eyeliner |
 
 **머리:** 키 0.3m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 일자 앞머리
 
@@ -25731,6 +26667,7 @@ HAIR: pixie cut, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 chestnut brown · a fine winged eyeliner |
 
 **머리:** ‘shaggy tufts’·키 0.5m에서 짧고 가벼운 픽시컷(짧은 컷) · 짧은 머리 · 끝을 불규칙하게 친 앞머리 — 쫀도기에서 이어 같은 묶음
 
@@ -25760,6 +26697,7 @@ HAIR: pixie cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 emerald green · no eyeliner |
 
 **머리:** ‘round green body’·‘jagged mouth’에서 둥글게 부풀린 아프로(웨이브·곱슬) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
@@ -25789,6 +26727,7 @@ HAIR: medium afro, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 중반 · 밝음 · 눈 emerald green · no eyeliner |
 
 **머리:** ‘several leaves’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 커튼뱅 — 미니브에서 이어 더 공들인 묶음
 
@@ -25816,6 +26755,7 @@ HAIR: medium half-up, curtain bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 밝음 · 눈 jade green · no eyeliner |
 
 **머리:** 풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 커튼뱅 — 올리뇨에서 이어 같은 묶음
 
@@ -25843,6 +26783,7 @@ HAIR: long half-up, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 중반 · 밝음 · 눈 emerald green · no eyeliner |
 
 **머리:** ‘white feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 중간 길이 · 옆으로 넘긴 앞머리
 
@@ -25872,6 +26813,7 @@ HAIR: medium feathered, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘white salt cube’·‘rock salt’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
 
@@ -25901,6 +26843,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘rugged, dark brown rock’·‘brown cuboid stone’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 베베솔트에서 이어 같은 묶음
 
@@ -25930,6 +26873,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
 
 **머리:** ‘rock salt’·바위 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 스태솔트에서 이어 같은 묶음
 
@@ -25959,6 +26903,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 바람에 날린 듯한 스타일 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 열정 · 눈 garnet red · a short flick of eyeliner |
 
 **이유:** 큰 머리와 작은 몸 및 불꽃 망토를 둥근 상안면과 열린 눈으로 해석한다. 인물 나이는 성인이다.
 
@@ -25990,6 +26935,7 @@ HAIR: medium windswept, side-swept bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 열정 · 눈 crimson red · a short flick of eyeliner |
 
 **이유:** 각진 불꽃 장갑과 전사의 직선성을 각진 하관과 정돈된 긴 눈으로 구분한다.
 
@@ -26021,6 +26967,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 열정 · 눈 sapphire blue · a short flick of eyeliner |
 
 **이유:** 불꽃 칼날과 기사형 갑옷의 긴 선을 긴 얼굴와 절제된 날카로운 눈으로 해석한다.
 
@@ -26052,6 +26999,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 중간 길이 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **머리:** ‘spherical yellow head’·몸 형태 ball에서 양쪽 동그란 번(올림머리) · 중간 길이 · 좌우 길이가 다른 앞머리
 
@@ -26081,6 +27029,7 @@ HAIR: medium space buns, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 목덜미 낮은 번 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 jade green · a small flick of eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 목덜미 낮은 번(올림머리) · 긴 머리 · 좌우 길이가 다른 앞머리 — 빈나두에서 이어 같은 묶음
 
@@ -26106,6 +27055,7 @@ HAIR: long low bun, asymmetric bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 charcoal grey · a small flick of eyeliner |
 
 **머리:** ‘grayish light-blue feathers’·‘able wings’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -26135,6 +27085,7 @@ HAIR: short feathered, side-swept bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 amber gold · a small flick of eyeliner |
 
 **머리:** ‘black feathers’·몸 형태 wings에서 끝을 가볍게 친 페더컷(층 낸 컷) · 긴 머리 · 옆으로 넘긴 앞머리 — 찌리비에서 이어 같은 묶음
 
@@ -26164,6 +27115,7 @@ HAIR: long feathered, side-swept bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 warm hazel · a crisp winged eyeliner |
 
 **이유:** 강한 작은 개의 턱과 넓은 입을 선명한 턱끝과 굵은 눈썹으로 해석한다.
 
@@ -26193,6 +27145,7 @@ HAIR: pixie cut, asymmetric bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 silver grey · a crisp winged eyeliner |
 
 **이유:** 두목 개의 큰 털 체적과 낮은 시선을 넓은 하관과 낮은 눈꺼풀로 구분한다.
 
@@ -26224,6 +27177,7 @@ HAIR: long layered, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 초반 · 장난기 · 눈 steel blue · a small flick of eyeliner |
 
 **머리:** 키 0.2m에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 짧은 머리 · 좌우 길이가 다른 앞머리
 
@@ -26253,6 +27207,7 @@ HAIR: short undercut, asymmetric bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 steel blue · a small flick of eyeliner |
 
 **머리:** ‘large ears’에서 트윈테일(묶은 꼬리) · 매우 긴 머리 · 좌우 길이가 다른 앞머리 — 땃쭈르에서 이어 더 공들인 묶음
 
@@ -26282,6 +27237,7 @@ HAIR: very long twin tail, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 중간 길이 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** ‘small, rhombic, black, leaf-like eyes’·풀 타입에서 반묶음(묶은 꼬리) · 중간 길이 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -26311,6 +27267,7 @@ HAIR: medium half-up, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 반묶음 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 chestnut brown · a crisp winged eyeliner |
 
 **머리:** ‘small, diamond-shaped, leaf-like eyes’·풀 타입에서 반묶음(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 그푸리에서 이어 같은 묶음
 
@@ -26338,6 +27295,7 @@ HAIR: long half-up, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 과묵 · 눈 honey-gold · no eyeliner, natural strong brows |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 흐트러진 번(올림머리) · 중간 길이 · 커튼뱅
 
@@ -26365,6 +27323,7 @@ HAIR: medium messy bun, curtain bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 과묵 · 눈 dark violet-grey · no eyeliner, natural strong brows |
 
 **머리:** 키 1.9m에서 흐트러진 번(올림머리) · 긴 머리 · 커튼뱅 — 들눈해에서 이어 같은 묶음
 
@@ -26394,6 +27353,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
 
 **이유:** 매복하는 큰 갑각과 네모 이빨을 넓은 하관과 긴 입선으로 해석한다.
 
@@ -26425,6 +27385,7 @@ HAIR: medium blunt cut, no bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 잔곱슬 / 아프로 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **머리:** ‘white, round cap’·키 0.3m에서 잔곱슬 / 아프로(웨이브·곱슬) · 짧은 머리 · 일자 앞머리
 
@@ -26454,6 +27415,7 @@ HAIR: short tight curls, straight bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 로크스 / 드레드풍 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 열정 · 눈 emerald green · a short flick of eyeliner |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 로크스 / 드레드풍(웨이브·곱슬) · 긴 머리 · 일자 앞머리 — 캡싸이에서 이어 같은 묶음
 
@@ -26481,6 +27443,7 @@ HAIR: long locs, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 수줍음 · 눈 chestnut brown · no eyeliner |
 
 **머리:** 키 0.2m에서 뒤로 넘긴 스타일(곧은 결) · 짧은 머리 · 앞머리 없음
 
@@ -26510,6 +27473,7 @@ HAIR: short slicked back, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 jade green · a thin, neat eyeliner |
 
 **머리:** ‘long, prominent white hairs’(원작의 머리칼)·에스퍼 타입에서 곧은 생머리(곧은 결) · 매우 긴 머리 · 가운데를 가른 앞머리 — 구르데에서 이어 같은 묶음
 
@@ -26539,6 +27503,7 @@ HAIR: very long straight, parted bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 짧고 가벼운 픽시컷 · 머리 길이 짧은 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 초반 · 영리함 · 눈 amber gold · a thin, neat eyeliner |
 
 **이유:** 큰 파란 눈과 흰 프릴의 펼침을 넓은 상안면과 큰 사람 눈으로 해석한다.
 
@@ -26570,6 +27535,7 @@ HAIR: pixie cut, parted bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 honey-gold · a thin, neat eyeliner |
 
 **이유:** 타조의 긴 머리와 삼각 무늬 및 긴 주둥이를 긴 중안부와 가는 눈으로 구분한다.
 
@@ -26601,6 +27567,7 @@ HAIR: long feathered, parted bangs.
 | 코 | 보통 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 밝음 · 눈 soft magenta · no eyeliner |
 
 **머리:** ‘light pink cap’·‘pyramidal diamond-shaped steel plate’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
 
@@ -26630,6 +27597,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 우아함 · 눈 soft magenta · a fine winged eyeliner |
 
 **머리:** ‘steel plates’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 어리짱에서 이어 같은 묶음
 
@@ -26659,6 +27627,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 soft magenta · a fine winged eyeliner |
 
 **이유:** 작은 본체와 거대한 망치의 대비를 작은 턱과 넓고 선명한 입으로 해석한다.
 
@@ -26690,6 +27659,7 @@ HAIR: medium asymmetric cut, straight bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 pale ice-blue · no eyeliner |
 
 **머리:** 몸 형태 blob에서 흐트러진 번(올림머리) · 중간 길이 · 커튼뱅
 
@@ -26719,6 +27689,7 @@ HAIR: medium messy bun, curtain bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 우아함 · 눈 crimson red · a fine winged eyeliner |
 
 **머리:** 몸 형태 blob에서 흐트러진 번(올림머리) · 긴 머리 · 커튼뱅 — 바다그다에서 이어 같은 묶음
 
@@ -26748,6 +27719,7 @@ HAIR: long messy bun, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 중간 길이 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 pale ice-blue · a crisp winged eyeliner |
 
 **머리:** ‘small fan-like crest’에서 정수리에 묶어 올린 번(올림머리) · 중간 길이 · 옆으로 넘긴 앞머리
 
@@ -26777,6 +27749,7 @@ HAIR: medium top knot, side-swept bangs.
 | 코 | 짧고 코끝이 들린 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 초반 · 밝음 · 눈 sapphire blue · no eyeliner |
 
 **머리:** ‘dorsal fin’·‘pale bluish white wave patterns’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 커튼뱅
 
@@ -26806,6 +27779,7 @@ HAIR: medium beach waves, curtain bangs.
 | 코 | 작고 여린 코 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 긴 머리 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **머리:** ‘white flank waves’·‘split tailfin with water ring’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 긴 머리 · 커튼뱅 — 맨돌핀에서 이어 더 공들인 묶음
 
@@ -26835,6 +27809,7 @@ HAIR: long fishtail braid, curtain bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 쿨함 · 눈 steel blue · a thin, sharp eyeliner |
 
 **머리:** ‘metal engine-shaped body’·‘four black upper-block stripes’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리
 
@@ -26864,6 +27839,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **머리:** ‘metallic body’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 긴 머리 · 일자 앞머리 — 부르롱에서 이어 같은 묶음
 
@@ -26893,6 +27869,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 탑승용 용의 매끈한 흐름을 긴 윤곽과 안정적인 수평 눈으로 해석한다.
 
@@ -26924,6 +27901,7 @@ HAIR: side-shaved long hair, long side bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 가는 박스 브레이드 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 중반 · 과묵 · 눈 soft magenta · no eyeliner, natural strong brows |
 
 **머리:** ‘parapodia-like tendrils’·몸 형태 squiggle에서 가는 박스 브레이드(땋은 머리) · 매우 긴 머리 · 일자 앞머리
 
@@ -26953,6 +27931,7 @@ HAIR: very long box braids, straight bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
 
 **머리:** 독 타입에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -26982,6 +27961,7 @@ HAIR: medium wet-look slick, no bangs.
 | 코 | 보통 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
 
 **이유:** 결정 꽃의 방사 대칭을 높은 광대와 정돈된 작은 이목구비로 해석한다.
 
@@ -27013,6 +27993,7 @@ HAIR: long wet-look slick, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 pale ice-blue · a dark smoky liner |
 
 **머리:** ‘long, shaggy pale grey hair’(원작의 머리칼)·‘thin wispy tail’·고스트 타입에서 곧은 생머리(곧은 결) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -27040,6 +28021,7 @@ HAIR: long straight, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 silver · a dark smoky liner |
 
 **머리:** ‘shaggy gray-white fur’·키 2m에서 흐트러진 번(올림머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 망망이에서 이어 더 공들인 묶음
 
@@ -27069,6 +28051,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 양쪽 동그란 번 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 soft magenta · a crisp winged eyeliner |
 
 **머리:** ‘rounded body’·키 1.6m에서 양쪽 동그란 번(올림머리) · 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -27098,6 +28081,7 @@ HAIR: long space buns, side-swept bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 초반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **이유:** 작은 육지고래의 둥근 몸과 큰 곡선 입을 둥근 얼굴와 넓은 입으로 해석한다.
 
@@ -27127,6 +28111,7 @@ HAIR: medium slicked back, no bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 쿨함 · 눈 silver · a thin, sharp eyeliner |
 
 **이유:** 큰 육지고래의 뿔과 넓은 물결 입을 넓은 하관과 작은 깊은 눈으로 구분한다.
 
@@ -27158,6 +28143,7 @@ HAIR: very long straight, no bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
 
 **머리:** ‘translucent, bright magenta fins’·‘diamond-shaped spikes’·몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -27187,6 +28173,7 @@ HAIR: very long fishtail braid, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 느슨한 해변 웨이브 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
 
 **머리:** ‘pectoral fins’·‘three gills’·물 타입에서 느슨한 해변 웨이브(웨이브·곱슬) · 중간 길이 · 긴 사이드뱅
 
@@ -27216,6 +28203,7 @@ HAIR: medium beach waves, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 중반 · 위엄 · 눈 rose pink · a bold, defined eyeliner |
 
 **이유:** 작은 물고기의 매끈한 윤곽과 영리한 특징을 타원 얼굴와 낮은 눈꺼풀로 해석한다.
 
@@ -27247,6 +28235,7 @@ HAIR: long fishtail braid, no bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 흐트러진 번 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** ‘shaggy grey fur’·고스트 타입에서 흐트러진 번(올림머리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅
 
@@ -27276,6 +28265,7 @@ HAIR: long messy bun, long side bangs covering one eye.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 chestnut brown · a thin, sharp eyeliner |
 
 **머리:** ‘rounded body’·키 1.8m에서 굵은 곱슬(웨이브·곱슬) · 긴 머리 · 긴 사이드뱅 — 우파에서 이어 더 공들인 묶음
 
@@ -27305,6 +28295,7 @@ HAIR: long curly, long side bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 chestnut brown · a fine winged eyeliner |
 
 **머리:** ‘eight dark brown and yellow spikes’·노말 타입에서 포니테일(묶은 꼬리) · 매우 긴 머리 · 끝을 불규칙하게 친 앞머리 — 키링키에서 이어 같은 묶음
 
@@ -27334,6 +28325,7 @@ HAIR: very long ponytail, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 밝음 · 눈 honey-gold · no eyeliner |
 
 **머리:** ‘blue underside and blue and cream stripes’·‘first body segment’에서 두피에 붙여 땋은 콘로(땋은 머리) · 긴 머리 · 앞머리 없음 — 노고치에서 이어 같은 묶음
 
@@ -27363,6 +28355,7 @@ HAIR: long cornrows, no bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 dark violet-grey · a thin, sharp eyeliner |
 
 **이유:** 장기 말 같은 겹친 갑옷과 지휘자의 무게를 각진 하관 및 낮은 눈썹으로 해석한다.
 
@@ -27394,6 +28387,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 violet · no eyeliner, natural strong brows |
 
 **이유:** 고대 코끼리의 큰 어금니와 육중함을 넓은 하관 및 긴 콧대로 해석한다.
 
@@ -27425,6 +28419,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 양쪽 아프로 퍼프 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 우아함 · 눈 rose pink · a fine winged eyeliner |
 
 **이유:** 풍선 같은 큰 체적과 둥근 눈의 대비를 넓은 볼과 큰 사람 눈으로 해석한다.
 
@@ -27456,6 +28451,7 @@ HAIR: medium afro puffs, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **이유:** 버섯과 용을 합친 긴 선 및 날카로운 윤곽을 긴 얼굴로 해석한다.
 
@@ -27487,6 +28483,7 @@ HAIR: medium wolf cut, choppy bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 steel blue · a dark smoky liner |
 
 **이유:** 크게 흐르는 머리와 붉은 눈의 원형을 작은 턱과 큰 사람 눈으로 해석한다.
 
@@ -27518,6 +28515,7 @@ HAIR: long ringlet curls, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 crimson red · a crisp winged eyeliner |
 
 **이유:** 땅을 걷는 큰 나방의 둔중한 체적을 넓은 얼굴와 작은 깊은 눈으로 해석한다.
 
@@ -27549,6 +28547,7 @@ HAIR: very long high ponytail, choppy bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 steel blue · a small flick of eyeliner |
 
 **이유:** 고대 자석의 거친 면과 중심 대칭을 각진 윤곽 및 정돈된 두 눈으로 해석한다.
 
@@ -27580,6 +28579,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
 
 **이유:** 금속 코끼리의 반복 분절과 단단한 체적을 각진 하관과 수평 눈매로 해석한다.
 
@@ -27611,6 +28611,7 @@ HAIR: medium blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 crimson red · a thin, sharp eyeliner |
 
 **이유:** 기계 새의 둥근 머리와 정돈된 광원을 타원 얼굴와 원형 사람 눈으로 해석한다.
 
@@ -27642,6 +28643,7 @@ HAIR: medium chignon, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 정수리에 묶어 올린 번 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **이유:** 기계 격투자의 길고 단단한 선을 긴 얼굴와 수평적인 눈매로 해석한다.
 
@@ -27671,6 +28673,7 @@ HAIR: long top knot, no bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 사나움 · 눈 sapphire blue · a crisp winged eyeliner |
 
 **이유:** 금속 용의 분절된 대칭을 긴 윤곽과 정돈된 이목구비로 해석한다.
 
@@ -27702,6 +28705,7 @@ HAIR: side-shaved long hair, long side bangs.
 | 코 | 코끝이 둥근 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 열정 · 눈 honey-gold · a short flick of eyeliner |
 
 **이유:** 기계 나방의 방사형 날개를 균형 잡힌 타원 얼굴와 수평 눈매로 해석한다.
 
@@ -27733,6 +28737,7 @@ HAIR: medium undercut, no bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
 
 **이유:** 기계 장갑의 육중한 체적을 넓은 하관 및 작은 깊은 눈으로 해석한다.
 
@@ -27764,6 +28769,7 @@ HAIR: very long side ponytail, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 초반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** ‘singular, square-shaped ice crystal’·키 0.5m에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
 
@@ -27793,6 +28799,7 @@ HAIR: short blunt cut, straight bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 중반 · 사나움 · 눈 steel blue · a crisp winged eyeliner |
 
 **머리:** ‘large, triangular, dark gray dorsal fin’·‘ice mask’·얼음 타입에서 곧은 생머리(곧은 결) · 중간 길이 · 끝을 불규칙하게 친 앞머리 — 드니차에서 이어 같은 묶음
 
@@ -27822,6 +28829,7 @@ HAIR: medium straight, choppy bangs.
 | 코 | 콧대가 낮고 넓은 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
 
 **머리:** 키 2.1m에서 히메컷(곧은 결) · 긴 머리 · 일자 앞머리 — 드니꽁에서 이어 같은 묶음
 
@@ -27851,6 +28859,7 @@ HAIR: long hime cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 신비 · 눈 warm hazel · a dark smoky liner |
 
 **이유:** 상자 속 작은 몸과 금빛 원형 눈을 둥근 얼굴와 둥근 두 눈으로 해석한다.
 
@@ -27882,6 +28891,7 @@ HAIR: short twin tail, long side bangs covering one eye.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 사이드 포니테일 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 쿨함 · 눈 honey-gold · a thin, sharp eyeliner |
 
 **머리:** 고스트 타입에서 사이드 포니테일(묶은 꼬리) · 긴 머리 · 한쪽 눈을 덮는 긴 사이드뱅 — 모으령에서 이어 같은 묶음
 
@@ -27911,6 +28921,7 @@ HAIR: long side ponytail, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 chestnut brown · a bold, defined eyeliner |
 
 **머리:** ‘curling vines’·몸 형태 squiggle에서 한 갈래 땋은 머리 · 매우 긴 머리 · 좌우 길이가 다른 앞머리
 
@@ -27940,6 +28951,7 @@ HAIR: very long braid, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
 
 **머리:** ‘broken, ornately patterned sword’·악 타입에서 한쪽만 밀고 나머지는 긴 머리(층 낸 컷) · 매우 긴 머리 · 좌우 길이가 다른 앞머리
 
@@ -27969,6 +28981,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 warm hazel · a bold, defined eyeliner |
 
 **머리:** 키 2.7m에서 머리를 둘러 땋은 왕관형(땋은 머리) · 매우 긴 머리 · 좌우 길이가 다른 앞머리
 
@@ -27998,6 +29011,7 @@ HAIR: very long crown braid, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 한쪽으로 넘긴 피시테일 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 garnet red · a bold, defined eyeliner |
 
 **머리:** 몸 형태 fish에서 한쪽으로 넘긴 피시테일(땋은 머리) · 매우 긴 머리 · 옆으로 넘긴 앞머리
 
@@ -28027,6 +29041,7 @@ HAIR: very long fishtail braid, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 사나움 · 눈 jade green · a crisp winged eyeliner |
 
 **이유:** 거대한 초승달 날개와 고대 용의 긴 선을 긴 얼굴와 날카로운 눈으로 해석한다.
 
@@ -28058,6 +29073,7 @@ HAIR: long feathered, choppy bangs.
 | 코 | 보통 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 밝음 · 눈 silver · no eyeliner |
 
 **이유:** 쌍날 격투자의 날카로운 직선을 긴 윤곽과 각진 눈썹으로 해석한다.
 
@@ -28089,6 +29105,7 @@ HAIR: very long ringlet curls, long side bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 garnet red · a bold, defined eyeliner |
 
 **이유:** 고대 용의 강한 몸과 큰 볏을 넓은 하관 및 굵은 눈썹으로 해석한다.
 
@@ -28120,6 +29137,7 @@ HAIR: very long high ponytail, side-swept bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 한쪽만 밀고 나머지는 긴 머리 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 deep navy-blue · a bold, defined eyeliner |
 
 **이유:** 미래 용의 매끈한 유선형을 긴 얼굴와 정돈된 긴 눈으로 해석한다.
 
@@ -28151,6 +29169,7 @@ HAIR: side-shaved long hair, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 쿨함 · 눈 deep navy-blue · a thin, sharp eyeliner |
 
 **이유:** 거대한 수중 용의 긴 주둥이와 거친 선을 긴 윤곽과 날카로운 눈으로 해석한다.
 
@@ -28182,6 +29201,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 가운데를 가른 앞머리 |
+| 인상 | 20대 후반 · 수줍음 · 눈 jade green · no eyeliner |
 
 **이유:** 금속 뿔과 칼날 잎의 직선을 긴 얼굴와 가늘고 긴 수평 눈으로 해석한다.
 
@@ -28213,6 +29233,7 @@ HAIR: long ponytail, parted bangs.
 | 코 | 곧고 가는 콧대 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 한 갈래 땋은 머리 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 중반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 길쭉한 사과 돌출과 작은 동공을 타원 얼굴와 작은 또렷한 눈으로 해석한다.
 
@@ -28244,6 +29265,7 @@ HAIR: very long braid, long side bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 초반 · 수줍음 · 눈 emerald green · no eyeliner |
 
 **이유:** 말차와 소용돌이 무늬의 둥근 반복을 둥근 얼굴와 완만한 눈썹으로 해석한다.
 
@@ -28275,6 +29297,7 @@ HAIR: short curly, long side bangs covering one eye.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 emerald green · a dark smoky liner |
 
 **이유:** 찻잔의 흐르는 소용돌이 얼굴을 타원 윤곽과 낮은 눈꺼풀로 구분한다. 나선 동공은 복제하지 않는다.
 
@@ -28306,6 +29329,7 @@ HAIR: long curly, long side bangs covering one eye.
 | 코 | 코끝이 둥근 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
+| 인상 | 20대 후반 · 위엄 · 눈 dark violet-grey · a bold, defined eyeliner |
 
 **이유:** 큰 개의 체적과 둥근 코를 넓은 하관 및 둥근 코끝으로 옮긴다.
 
@@ -28337,6 +29361,7 @@ HAIR: very long high ponytail, no bangs.
 | 코 | 크고 또렷한 코 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 히메컷 · 머리 길이 매우 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 신비 · 눈 charcoal grey · a dark smoky liner |
 
 **이유:** 긴 검은 털과 화살촉 무늬를 긴 윤곽과 가늘고 낮은 눈매로 해석한다.
 
@@ -28368,6 +29393,7 @@ HAIR: very long hime cut, straight bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 세로로 말린 드릴 컬 · 머리 길이 매우 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 charcoal grey · a bold, defined eyeliner |
 
 **이유:** 작은 새 머리와 긴 목 및 화려한 끝선을 작은 턱과 올라간 눈매로 해석한다.
 
@@ -28399,6 +29425,7 @@ HAIR: very long ringlet curls, asymmetric bangs.
 | 코 | 작고 여린 코 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 단정하게 말아 올린 시뇽 · 머리 길이 중간 길이 · 앞머리 커튼뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 jade green · a bold, defined eyeliner |
 
 **이유:** 가면 아래 작은 얼굴과 잎의 생동감을 작은 턱과 열린 눈매로 해석한다. 가면의 표정은 사람 골격을 바꾸지 않는다.
 
@@ -28428,6 +29455,7 @@ HAIR: medium chignon, curtain bangs.
 | 코 | 콧대가 볼록한 매부리코 |
 | 입 | 보통 |
 | 머리 | 헤어스타일 양갈래 땋은 머리 · 머리 길이 긴 머리 · 앞머리 좌우 길이가 다른 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver · no eyeliner, natural strong brows |
 
 **이유:** 합금 다리와 지그재그 면을 각진 윤곽과 정돈된 이목구비로 해석한다.
 
@@ -28459,6 +29487,7 @@ HAIR: long twin braids, asymmetric bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 머리를 둘러 땋은 왕관형 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
+| 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
 
 **이유:** 사과와 길게 이어진 이무기 몸을 긴 타원 얼굴와 완만한 눈매로 해석한다.
 
@@ -28488,6 +29517,7 @@ HAIR: very long crown braid, long side bangs.
 | 코 | 보통 |
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 열정 · 눈 warm hazel · a short flick of eyeliner |
 
 **이유:** 고대 화산 짐승의 큰 뿔과 갈기를 넓은 광대 및 강한 눈썹으로 해석한다.
 
@@ -28519,6 +29549,7 @@ HAIR: long wolf cut, choppy bangs.
 | 코 | 길고 코끝이 내려온 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 둥글게 부풀린 아프로 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 장난기 · 눈 honey-gold · a small flick of eyeliner |
 
 **이유:** 긴 목과 번개 모양 가시의 선을 긴 얼굴와 날카로운 긴 눈으로 해석한다.
 
@@ -28550,6 +29581,7 @@ HAIR: medium afro, choppy bangs.
 | 코 | 보통 |
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
+| 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
 
 **이유:** 회전하는 도끼 뿔과 금속 능선을 각진 하관과 정돈된 수평 눈매로 해석한다.
 
@@ -28581,6 +29613,7 @@ HAIR: medium asymmetric cut, choppy bangs.
 | 코 | 보통 |
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
+| 인상 | 20대 후반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
 
 **이유:** 금속 염소의 뿔과 칼날 어깨의 긴 선을 긴 윤곽과 선명한 눈매로 해석한다.
 
@@ -28612,6 +29645,7 @@ HAIR: long blunt cut, straight bangs.
 | 코 | 작고 여린 코 |
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
+| 인상 | 20대 후반 · 위엄 · 눈 sapphire blue · a bold, defined eyeliner |
 
 **이유:** 작은 거북과 보석 껍질의 둥근 중심을 둥근 얼굴와 큰 맑은 눈으로 해석한다.
 
@@ -28643,6 +29677,7 @@ HAIR: short undercut, side-swept bangs.
 | 코 | 작고 여린 코 |
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
+| 인상 | 20대 후반 · 신비 · 눈 amethyst purple · a dark smoky liner |
 
 **이유:** 복숭아 껍질의 하트 같은 윤곽과 반원 눈을 작은 턱과 둥근 상안면으로 해석한다. 검은 원작 얼굴색은 사람 피부에 복제하지 않는다.
 

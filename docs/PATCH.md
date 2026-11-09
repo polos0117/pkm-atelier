@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 얼굴 다양화 — 화풍 문장의 얼굴 묘사 빼기 · 인상(나이감 · 분위기 · 눈 색) 자동
+- 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화 할 수 없을까?」 → 「문장은 지금 화풍키에 넣어줘. 인상은 자동으로 해줘」 — 등록 ① 열두 명이 머리색 말고는 같은 얼굴이었다
+- lib/prompt-spec.js — anime_25d_gloss 화풍 문장(메카 · 일상)의 「large expressive eyes … small simplified nose and mouth … compact tapered jaw」 를 「her own FACE line — not one shared default face」 로(그 말이 모든 종의 FACE 줄을 이겼다). IMPRESSION_AGES · IMPRESSION_VIBES(분위기 열넷 — 눈빛 · 아이라인), PROMPT_LINES.impression
+- lib/prompt-anthro.js — impressionLine: 새 인물(경장 ①)에만 FACE · HAIR 뒤 IMPRESSION 줄, 얼굴 설계를 끄면 빠지고 눈 색을 직접 고르면 눈 색만 빠진다
+- tools/face-design.py — impression(종의 타입 · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말 → 분위기, 한 분위기 12% 상한 · 진화 단계 → 나이감 · 도감 색 → 눈 색), build 도 같이, check · 문서에 인상 칸. data/face-design.json faces[].impression · docs/CHARACTER_FACE_DESIGNS.md 다시 그림
+- IMAGE_RULES.md — 얼굴 설계 절에 인상 줄. prompt.html — 스크립트 판(face1). tests/face-design.cjs(인상 자료 · 줄 자리 · 끄기 · 눈 색) · prompt-engine.cjs(화풍 문장에 얼굴 묘사 없음)
+- 거북왕(온화 · 20대 후반) · 깨비참(사나움 · 초반) · 꼬부기(쿨함 · 초반)로 확인 — 등록 ① 과 견줘 얼굴 인상이 갈렸다. 이미 등록된 그림은 그대로
+
 ## 2026-11-09 · claude · 일상컷 옷 자유 컷 — 우리 옷 목록(outfit-catalog.md) 밖으로
 - 사용자 「일상컷도 우리쪽 의상자료를 참고하라고해서 여기 없는걸 선택하라고 하자」 — lib/prompt-spec.js OUTFIT_FREE(삼국지와 같은 글 — 묶음의 outfit-catalog.md 를 읽고 거기 없는 옷을 Outfit 줄에 써 넣는다), tools/prompt-pack.cjs 가 outfit-catalog.md(옷 계열 · 옷 전부)를 쓰고 INDEX 안내. IMAGE_RULES. prompt.html 판 ofree2
 

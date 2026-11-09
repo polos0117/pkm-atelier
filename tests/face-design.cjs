@@ -71,6 +71,32 @@ assert(block(mine).includes(own['face shape']), '안 고른 항목은 남는다'
 /* 얼굴 항목을 다 고르면 FACE 줄이 없다 */
 assert(!P.buildPrompt(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts[k][0]]) })).includes('FACE ('), '다 고르면 FACE 줄 없음');
 
+/* 2-1. 인상(2026-11-09 — 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화」 → 「인상은 자동으로」) — 나이감 · 분위기 · 눈 색. 전신 카드에서도 보이는 차이
+   - 1025종 모두, 값은 생성기 표(IMPRESSION_AGES · IMPRESSION_VIBES), 한 분위기 12% 상한, 분위기는 열 가지 넘게 쓰인다
+   - 새 인물(경장 ①)에만 HAIR 뒤 IMPRESSION 줄 — 이어가기 · 개방 · 일상 · 끈 경우엔 없다. 눈 색을 직접 고르면 눈 색만 빠진다 */
+{
+  const vc = {};
+  for (const c of cards) {
+    const m = F[c.no].impression; assert(m, c.name + ' 인상 없음');
+    assert(S.IMPRESSION_AGES[m.age] && S.IMPRESSION_VIBES[m.vibe] && m.eyes, c.name + ' 인상 값 ' + JSON.stringify(m));
+    vc[m.vibe] = (vc[m.vibe] || 0) + 1;
+  }
+  assert(Object.values(vc).every(n => n <= Math.floor(cards.length * 0.12)), '한 분위기 12% 상한 ' + JSON.stringify(vc));
+  assert(Object.keys(vc).length >= 10, '분위기가 고루 쓰인다 ' + Object.keys(vc).length);
+  const sqm = F[card('꼬부기').no].impression, v = S.IMPRESSION_VIBES[sqm.vibe];
+  const ib = t => t.split('\n\n').find(x => x.startsWith('IMPRESSION ('));
+  assert(ib(sq) && ib(sq).includes(v[1]) && ib(sq).includes(S.IMPRESSION_AGES[sqm.age][1]) && ib(sq).includes(sqm.eyes + ' eyes') && ib(sq).includes(v[3]), '새 인물에 IMPRESSION 줄: ' + ib(sq));
+  assert(/^IMPRESSION \(reads even at card size\): an? /.test(ib(sq)), '관사');
+  const paras = sq.split('\n\n'), fi = paras.findIndex(x => x.startsWith('FACE (')), ii = paras.findIndex(x => x.startsWith('IMPRESSION ('));
+  assert(ii > fi && ii <= fi + 2, 'IMPRESSION 은 FACE · HAIR 바로 뒤');
+  for (const [why, extra] of [['이어가기', { identityMode: 'reference', form: 'heavy' }], ['개방', { form: 'overdrive', baseForm: 'light' }], ['끔', { faceDesignOn: false }], ['자료 없음', { faceDesign: null }]])
+    assert(!P.buildPrompt(input('꼬부기', extra)).includes('IMPRESSION ('), why + '에 IMPRESSION 줄이 실렸다');
+  for (const sc of [CASUAL, CASUAL2]) assert(!L.buildSingle(input('꼬부기', { ...sc, outputMode: 'casual', identityMode: 'reference' })).includes('IMPRESSION ('), '일상에 IMPRESSION 줄');
+  const eyeMine = P.buildPrompt(input('꼬부기', { params: [['eye color', 'gold']] }));
+  assert(ib(eyeMine) && !ib(eyeMine).includes(sqm.eyes + ' eyes') && ib(eyeMine).includes(v[2]), '눈 색을 고르면 눈 색만 빠진다');
+  assert(doc.includes('| 인상 | '), '문서에 인상 칸');
+}
+
 /* 3. 머리 — 종마다 헤어스타일·길이·앞머리. 생성기가 스스로 고르면 보브·웨이브 몇 가지로 몰렸다(2026-10-20)
    - 값은 생성기 열쇠, 여성 인물이라 남성 전용 값 없음, 길이는 컷에 맞음(HAIR_LENGTH_LIMITS)
    - 한 헤어스타일 8% · 보브 4% 를 넘지 않는다(확정 그림이 이미 넘으면 그 수까지 — 새로 고르지 않는다)
@@ -179,7 +205,7 @@ for (const c of cards) {
   const w = P.words(t); if (w > most[0]) most = [w, c.en];
 }
 // BODY 줄(2026-10-27, 약 40낱말)로 440 → 460 · 카메라 수평 3/4 줄(2026-11-06, 약 20낱말 늘었다)로 460 → 480 · 경장 폼 줄 「몸을 가늘게 하지 않는다」(2026-11-07, +7)로 480 → 490 · ANATOMY 7.5등신(+14)로 → 505
-assert(most[0] <= 645, '얼굴·머리 줄을 더한 앵커 예산: ' + most.join(' '));   // 2026-11-08 +105 — 경장 판 · ARMOR 줄 · 2026-11-08 +30 — 메카 노출 줄(두 곳만 열린 장갑)
+assert(most[0] <= 680, '얼굴·머리 줄을 더한 앵커 예산: ' + most.join(' '));   // 2026-11-09 +30 — IMPRESSION 줄 · 2026-11-08 +105 — 경장 판 · ARMOR 줄 · 2026-11-08 +30 — 메카 노출 줄(두 곳만 열린 장갑)
 const top = Object.entries(count).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([s, k]) => s + ' ' + k).join(', ');
 console.log(`PASS 얼굴 설계: 1025종 서로 다름 · 계열 ${Object.values(lines).filter(x => x.length > 1).length}개 ${pairs}쌍 셋 이상 다름 · 전체 둘 이상 다름 · 새 인물에만 FACE · 직접 고른 항목 우선 · 문서=엔진 · 최대 ${most[0]}낱말(${most[1]})`);
 console.log(`PASS 머리 설계: 헤어스타일 ${Object.keys(count).length}가지(많은 순 ${top}) · 8%·보브 4% 상한 · 계열 잇기 · 옆 번호 다름 · 잠금 ${locked}(기록값 ${lockedWith}, 기록 대조 ${checkedRecords}) · 새 인물에만 HAIR · 직접 고른 머리 우선`);
