@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 일상컷 옷 자유 컷 — 우리 옷 목록(outfit-catalog.md) 밖으로
+- 사용자 「일상컷도 우리쪽 의상자료를 참고하라고해서 여기 없는걸 선택하라고 하자」 — lib/prompt-spec.js OUTFIT_FREE(삼국지와 같은 글 — 묶음의 outfit-catalog.md 를 읽고 거기 없는 옷을 Outfit 줄에 써 넣는다), tools/prompt-pack.cjs 가 outfit-catalog.md(옷 계열 · 옷 전부)를 쓰고 INDEX 안내. IMAGE_RULES. prompt.html 판 ofree2
+
 ## 2026-11-09 · claude · 일상컷 옷 자유 컷 두 장 — 우리 옷 계열에 없는 것 위주로
 - 사용자 「element, pkm 쪽도 넣어주고. 포켓몬은 지금 일상9장이니까 2장정도 분배해줘도 되겠다」 · 「포켓몬쪽은 일상컷만」 · 「gpt나 너한테 맡긴다면 지금 우리쪽 갈래나 의상 등 없는거 위주로 … 최대한 없는걸로」 — ① 은 그대로(우리 설계 한 장)
 - lib/prompt-spec.js OUTFIT_FREE(삼국지와 같은 글 — 노출 의상 주문 · 우리 계열 목록에 없는 꼴 먼저). lib/prompt-anthro.js 장면 칸 ofree 면 Outfit 줄이 그 주문, Outfit colours · Cut 줄 없음. lib/prompt-state.js PLAN_V2 ofree

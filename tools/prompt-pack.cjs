@@ -342,6 +342,8 @@ function build(o) {
   if (bad.length) { console.error('고칠 칸 ' + bad.length + '개 — 아무것도 쓰지 않았다:\n  ' + bad.join('\n  ')); process.exit(1); }
   let rev = '';
   try { rev = cp.execFileSync('git', ['-C', ROOT, 'rev-parse', '--short', 'HEAD']).toString().trim(); } catch (e) { /* git 이 없는 곳 */ }
+  /* 옷 목록(2026-11-09 「일상컷도 우리쪽 의상자료를 참고하라고해서 여기 없는걸 선택하라고 하자」) — 옷 자유 컷은 이 목록에 없는 옷을 짓는다 */
+  fs.writeFileSync(path.join(o.dir, 'outfit-catalog.md'), '# Our outfit catalog — every outfit type we already use for casual cuts\n\nFor a free-outfit cut, design an outfit that is NOT on this list.\n\n' + (d.tree.outfits || []).map(f => '## ' + f.key + ' — ' + String(f.en).replace('{costume}', 'her creature') + '\n' + (f.items || []).map(i => '- ' + String(i.en).replace('{costume}', 'her creature')).join('\n')).join('\n\n') + '\n');
   for (const r of out) {
     fs.writeFileSync(path.join(o.dir, r.slot + '-prompt.txt'), r.text + '\n');
     fs.writeFileSync(path.join(o.dir, r.slot + '-ui.json'), JSON.stringify(r.ui, null, 1) + '\n');
@@ -352,7 +354,7 @@ function build(o) {
   const lines = ['# ' + c.name + ' (' + String(c.no).padStart(4, '0') + ' · ' + c.en + ') — 지시문 묶음', '',
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
     '자리마다 `<자리>-prompt.txt` 를 **고치지 않고 그대로** 제출하고, 첨부 칸의 그림을 붙인다. 고칠 것이 있으면 settings.json 을 고쳐 build 를 다시 돌린다.', '',
-    '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷은 Outfit 줄이 「노출 의상을 네가 지어라」 다(우리 옷 계열에 없는 것 위주로).', '',
+    '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷은 Outfit 줄이 「노출 의상을 네가 지어라」 다 — 이 묶음의 `outfit-catalog.md`(우리가 쓰는 옷 전부)를 읽고 **거기 없는 옷**을 지어 그 줄에만 써 넣는다(실제로 넘긴 글은 기록에).', '',
     '**프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다(2026-11-08).** IMAGE_RULES.md 1절의 변경 사유(settings 고친 뒤 build · 막혔을 때 계획기 다시 계획 · 같은 지시문 재생성 · 사용자가 시킨 부분 고치기) 말고는 낱말 하나도 고치지 않는다. image_gen 에도 이 글 그대로 넘기고(`submitted` 0 일 때만) 고쳐 쓰지 말고 그대로 그리게 한다.', '',
     '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
