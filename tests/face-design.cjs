@@ -71,6 +71,15 @@ assert(block(mine).includes(own['face shape']), '안 고른 항목은 남는다'
 /* 얼굴 항목을 다 고르면 FACE 줄이 없다 */
 assert(!P.buildPrompt(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts[k][0]]) })).includes('FACE ('), '다 고르면 FACE 줄 없음');
 
+/* 2-0. 긴 얼굴은 「살짝」(2026-11-09 사용자 「너무 긴 얼굴은 길이를 좀 줄이자」) — 자료 값은 그대로, FACE 줄 낱말만 누그러뜨리고 늘어나지 않게 */
+{
+  const lf = cards.find(c => F[c.no].face['face shape'] === 'elongated' && F[c.no].face['face length'] === 'long' && F[c.no].face['jaw & chin'] === 'long chin with defined jaw');
+  const b = block(P.buildPrompt(input(lf.name)));
+  assert(b.includes('softly elongated face, slightly long length') && b.includes('defined jaw with a slightly longer chin') && b.includes(S.FACE_LONG_NOTE), lf.name + ' 긴 얼굴 누그러뜨림: ' + b);
+  assert(!/(^|[^y] )elongated face|, long length|long chin with defined jaw/.test(b), lf.name + ' 날것 낱말이 남았다');
+  assert(!block(sq).includes(S.FACE_LONG_NOTE), '긴 얼굴이 아니면 덧말 없음');
+}
+
 /* 2-1. 인상(2026-11-09 — 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화」 → 「인상은 자동으로」) — 나이감 · 분위기 · 눈 색. 전신 카드에서도 보이는 차이
    - 1025종 모두, 값은 생성기 표(IMPRESSION_AGES · IMPRESSION_VIBES), 한 분위기 12% 상한, 분위기는 열 가지 넘게 쓰인다
    - 새 인물(경장 ①)에만 HAIR 뒤 IMPRESSION 줄 — 이어가기 · 개방 · 일상 · 끈 경우엔 없다. 눈 색을 직접 고르면 눈 색만 빠진다 */

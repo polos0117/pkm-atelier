@@ -1106,10 +1106,14 @@ def check_impression(faces, quiet=False):
 
 def face_line(f, keys, opts):
     """생성기와 같은 FACE 줄(lib/prompt-anthro.js faceLine) — 문서에 그대로 보인다"""
-    t = f['face']
+    t = dict(f['face'])
+    soft = {'face shape': {'elongated': 'softly elongated'}, 'face length': {'long': 'slightly long'},
+            'jaw & chin': {'long chin with defined jaw': 'defined jaw with a slightly longer chin'}}   # lib/prompt-spec.js FACE_SOFT 와 같다(2026-11-09)
+    long_face = any(soft[k].get(t[k]) for k in soft)
+    for k in soft: t[k] = soft[k].get(t[k], t[k])
     eye = 'open rounded' if t['eye shape'] == 'large' else t['eye shape']
     space = {'close-set eyes': 'close-set', 'average eye spacing': 'average spacing', 'wide-set eyes': 'wide-set'}[t['eye spacing']]
-    part = [f"{t['face shape']} face, {t['face length']} length, {t['face width']} width", t['jaw & chin'],
+    part = [f"{t['face shape']} face, {t['face length']} length, {t['face width']} width" + (' — only gently longer than average, never stretched or gaunt' if long_face else ''), t['jaw & chin'],
             f"{eye} eyes, {t['eye size']} size, {t['eye tilt']}, {space}", t['eyebrows'],
             t['nose character'] if 'nose' in t['nose character'] else t['nose character'] + ' nose', t['lips']]
     return "FACE (her own structure, not the style's default face): " + '; '.join(part) + '.'
@@ -1147,6 +1151,7 @@ def render():
         '- 이미 확정한 경장 ①이 있으면 그 그림이 정본이다. 이 표와 달라도 다시 그리지 않는다(`registered` — 지금 그림이 등록된 종).',
         '- 고르는 법은 무작위가 아니다. 원작 외형 특징·몸 형태·타입·키와 무게에 낱말 표로 점수를 주고(`tools/face-design.py` 의 CUES), 앞서 직접 쓴 설계에 가산점을 준다. 그러고 나서 도감 번호 차례로 겹침을 푼다.',
         f'- 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **{LINE_MIN}개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**{GLOBAL_MIN}개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.',
+        '- 긴 얼굴(길쭉한 얼굴형 · 긴 길이 · 긴 턱끝)은 FACE 줄에서 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다(2026-11-09 — 셋이 겹친 159종이 기괴하게 길어졌다). 자료 값은 그대로다.',
         '- 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.',
         '- 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.',
         '',

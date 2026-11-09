@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 긴 얼굴 누그러뜨리기 — FACE 줄 「살짝 긴」 · 「늘어나지 않게」
+- 사용자 「너무 긴 얼굴은 길이를 좀 줄이자. 약간 기괴해지네」 — 1,025종 중 159종이 긴 길이 · 길쭉한 얼굴형 · 긴 턱끝(· 좁은 폭)을 셋 이상 겹쳐 받았다
+- lib/prompt-spec.js FACE_SOFT · FACE_LONG_NOTE, lib/prompt-anthro.js faceItems — 자료 값은 그대로 두고 FACE 줄 낱말만 elongated → softly elongated · long → slightly long · long chin with defined jaw → defined jaw with a slightly longer chin, 하나라도 있으면 첫 묶음 뒤 「only gently longer than average, never stretched or gaunt」. tools/face-design.py face_line 같은 줄 · 원칙 한 줄 · docs/CHARACTER_FACE_DESIGNS.md 다시 그림. prompt.html 스크립트 판(face2)
+- 깨비드릴조 · 나인테일로 확인 — 등록 ① 보다 턱끝 · 아래 얼굴이 짧아졌다
+
 ## 2026-11-09 · claude · 인상 — 우수 낱말에서 「울음」 빼기 · 고스트 · 얼음 · 악 타입 쪽으로
 - tools/face-design.py — 사용자 「우수는 누구야?」 → 「응 고쳐줘」: 도감 글 낱말 「울음」이 울음소리(삐삐 · 왕구리 · 델빌 · 헬가 · 동챙이)를 슬픔으로 잡았다. 슬픔 낱말은 슬프 · 슬픔 · 외로 · 고독 · 눈물만. 우수 타입 점수 고스트 1.2 → 1.5 · 얼음 .8 → 1.2 · 악 .5 → 1
 - 우수 7종 → 24종(대부분 고스트, 약어리 · 조로아크는 도감 글). data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md 다시 고름 · 그림
