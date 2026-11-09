@@ -438,7 +438,7 @@
 "hair_record":null,
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"shy",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/poison",
@@ -679,7 +679,7 @@
 "hair_record":null,
 "impression":{
 "age":"early",
-"vibe":"cool",
+"vibe":"cheerful",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -757,7 +757,7 @@
 "hair_record":null,
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"elegant",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water",
@@ -1107,7 +1107,7 @@
 "hair_record":null,
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"warm hazel",
 "cues":[
 "타입 normal/flying",
@@ -1271,7 +1271,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"chestnut brown",
 "cues":[
 "타입 normal/flying",
@@ -1704,7 +1704,7 @@
 "hair_record":null,
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 poison/ground",
@@ -1846,7 +1846,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"violet",
 "cues":[
 "타입 poison/ground",
@@ -2128,7 +2128,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"rose pink",
 "cues":[
 "타입 normal/fairy",
@@ -3061,7 +3061,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water",
@@ -3110,7 +3110,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"elegant",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water/fighting",
@@ -4970,7 +4970,7 @@
 "hair_record":null,
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"clever",
 "eyes":"honey-gold",
 "cues":[
 "타입 grass/psychic",
@@ -5056,7 +5056,7 @@
 "hair_record":null,
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"chestnut brown",
 "cues":[
 "타입 ground",
@@ -5188,7 +5188,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"rose pink",
 "cues":[
 "타입 normal",
@@ -5581,7 +5581,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -5628,7 +5628,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"stoic",
+"vibe":"cheerful",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -5678,7 +5678,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"garnet red",
 "cues":[
 "타입 water",
@@ -6456,7 +6456,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -7070,7 +7070,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dragon",
@@ -7116,7 +7116,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 dragon",
@@ -7591,7 +7591,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water",
@@ -7876,7 +7876,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"warm hazel",
 "cues":[
 "타입 normal/flying",
@@ -9253,7 +9253,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water/ground",
@@ -9834,7 +9834,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"amber gold",
 "cues":[
 "타입 normal",
@@ -10233,7 +10233,7 @@
 "hair_record":null,
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"shy",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 bug/fighting",
@@ -10567,7 +10567,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"chestnut brown",
 "cues":[
 "타입 ice/ground",
@@ -11288,7 +11288,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"violet",
 "cues":[
 "타입 fighting",
@@ -11333,7 +11333,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"warm hazel",
 "cues":[
 "타입 fighting",
@@ -11881,7 +11881,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"stoic",
+"vibe":"regal",
 "eyes":"emerald green",
 "cues":[
 "타입 rock/dark",
@@ -12491,7 +12491,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"silver grey",
 "cues":[
 "타입 dark",
@@ -12541,7 +12541,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"silver grey",
 "cues":[
 "타입 dark",
@@ -13098,7 +13098,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"shy",
 "eyes":"warm hazel",
 "cues":[
 "타입 grass",
@@ -13759,7 +13759,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass/fighting",
@@ -13798,7 +13798,7 @@
 "hair_record":null,
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"warm hazel",
 "cues":[
 "타입 normal",
@@ -13943,7 +13943,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"stoic",
+"vibe":"shy",
 "eyes":"silver grey",
 "cues":[
 "타입 bug/ground",
@@ -14245,7 +14245,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"honey-gold",
 "cues":[
 "타입 fighting",
@@ -14298,7 +14298,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"warm hazel",
 "cues":[
 "타입 fighting",
@@ -14796,7 +14796,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 fighting/psychic",
@@ -14843,7 +14843,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"garnet red",
 "cues":[
 "타입 fighting/psychic",
@@ -15889,7 +15889,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"jade green",
 "cues":[
 "타입 ground/dragon",
@@ -15936,7 +15936,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"emerald green",
 "cues":[
 "타입 ground/dragon",
@@ -16035,7 +16035,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/dark",
@@ -16138,7 +16138,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dragon/flying",
@@ -16189,7 +16189,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 normal",
@@ -16291,7 +16291,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"stoic",
+"vibe":"sleepy",
 "eyes":"honey-gold",
 "cues":[
 "타입 rock/psychic",
@@ -16444,7 +16444,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water/ground",
@@ -16939,7 +16939,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"elegant",
 "eyes":"soft magenta",
 "cues":[
 "타입 water",
@@ -16991,7 +16991,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"steel blue",
 "cues":[
 "타입 normal",
@@ -17387,7 +17387,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"silver",
 "cues":[
 "타입 dark",
@@ -17974,7 +17974,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dragon",
@@ -18866,7 +18866,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"sleepy",
 "eyes":"jade green",
 "cues":[
 "타입 grass/ground",
@@ -19103,7 +19103,7 @@
 "hair_record":null,
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -19256,7 +19256,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"chestnut brown",
 "cues":[
 "타입 normal/flying",
@@ -19356,7 +19356,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"chestnut brown",
 "cues":[
 "타입 normal",
@@ -20293,7 +20293,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"warm hazel",
 "cues":[
 "타입 water",
@@ -20890,7 +20890,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"charcoal grey",
 "cues":[
 "타입 dark/flying",
@@ -21375,7 +21375,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"rose pink",
 "cues":[
 "타입 normal",
@@ -21523,7 +21523,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 dragon/ground",
@@ -21571,7 +21571,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 dragon/ground",
@@ -21623,7 +21623,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dragon/ground",
@@ -21771,7 +21771,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"clever",
 "eyes":"sapphire blue",
 "cues":[
 "타입 fighting/steel",
@@ -22016,7 +22016,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"playful",
 "eyes":"sapphire blue",
 "cues":[
 "타입 poison/fighting",
@@ -22067,7 +22067,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 poison/fighting",
@@ -23092,7 +23092,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"clever",
 "eyes":"silver",
 "cues":[
 "타입 psychic/fighting",
@@ -23688,7 +23688,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"dark violet-grey",
 "cues":[
 "타입 ghost/dragon",
@@ -24377,7 +24377,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -24424,7 +24424,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water",
@@ -24716,7 +24716,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"silver grey",
 "cues":[
 "타입 normal",
@@ -25540,7 +25540,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"sapphire blue",
 "cues":[
 "타입 rock",
@@ -25887,7 +25887,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"steel blue",
 "cues":[
 "타입 fighting",
@@ -26132,7 +26132,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water/ground",
@@ -26184,7 +26184,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"crimson red",
 "cues":[
 "타입 fighting",
@@ -26534,7 +26534,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"playful",
 "eyes":"crimson red",
 "cues":[
 "타입 bug/poison",
@@ -26587,7 +26587,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/fairy",
@@ -26834,7 +26834,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"warm hazel",
 "cues":[
 "타입 ground/dark",
@@ -26885,7 +26885,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"chestnut brown",
 "cues":[
 "타입 ground/dark",
@@ -28371,7 +28371,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 ice",
@@ -28836,7 +28836,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"elegant",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 water/ghost",
@@ -29076,7 +29076,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"stoic",
+"vibe":"shy",
 "eyes":"silver grey",
 "cues":[
 "타입 grass/steel",
@@ -29681,7 +29681,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"emerald green",
 "cues":[
 "타입 dragon",
@@ -29726,7 +29726,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"honey-gold",
 "cues":[
 "타입 dragon",
@@ -30372,7 +30372,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"cheerful",
 "eyes":"warm hazel",
 "cues":[
 "타입 normal",
@@ -30518,7 +30518,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"warm hazel",
 "cues":[
 "타입 dark/flying",
@@ -30655,7 +30655,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"stoic",
+"vibe":"shy",
 "eyes":"silver grey",
 "cues":[
 "타입 bug/steel",
@@ -30794,7 +30794,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"cool",
+"vibe":"regal",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dark/dragon",
@@ -30939,7 +30939,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"stoic",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 steel/fighting",
@@ -31622,7 +31622,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"stoic",
 "eyes":"jade green",
 "cues":[
 "타입 grass/fighting",
@@ -32449,7 +32449,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"gentle",
+"vibe":"elegant",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 fairy",
@@ -32497,7 +32497,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"gentle",
+"vibe":"elegant",
 "eyes":"silver",
 "cues":[
 "타입 fairy",
@@ -32694,7 +32694,7 @@
 },
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"silver",
 "cues":[
 "타입 fighting",
@@ -33287,7 +33287,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 dark/psychic",
@@ -33334,7 +33334,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 dark/psychic",
@@ -33622,7 +33622,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"gentle",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water",
@@ -33813,7 +33813,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"crimson red",
 "cues":[
 "타입 rock/dragon",
@@ -34009,7 +34009,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"playful",
 "eyes":"emerald green",
 "cues":[
 "타입 fighting/flying",
@@ -34782,7 +34782,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"garnet red",
 "cues":[
 "타입 dark/flying",
@@ -35077,7 +35077,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"chestnut brown",
 "cues":[
 "타입 grass/flying",
@@ -35125,7 +35125,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"warm hazel",
 "cues":[
 "타입 grass/ghost",
@@ -35369,7 +35369,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"cool",
+"vibe":"gentle",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -35906,7 +35906,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"silver",
 "cues":[
 "타입 fighting/ice",
@@ -36417,7 +36417,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 water/bug",
@@ -36550,7 +36550,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"rose pink",
 "cues":[
 "타입 grass",
@@ -36789,7 +36789,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"rose pink",
 "cues":[
 "타입 normal/fighting",
@@ -36835,7 +36835,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"soft magenta",
 "cues":[
 "타입 normal/fighting",
@@ -36881,7 +36881,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"violet",
 "cues":[
 "타입 grass",
@@ -36923,7 +36923,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"violet",
 "cues":[
 "타입 grass",
@@ -36965,7 +36965,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"amethyst purple",
 "cues":[
 "타입 grass",
@@ -37058,7 +37058,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 normal/psychic",
@@ -37105,7 +37105,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"silver",
 "cues":[
 "타입 fighting",
@@ -37779,7 +37779,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"cheerful",
 "eyes":"silver",
 "cues":[
 "타입 normal/dragon",
@@ -37927,7 +37927,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"silver grey",
 "cues":[
 "타입 dragon/fighting",
@@ -38168,7 +38168,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"regal",
+"vibe":"gentle",
 "eyes":"violet",
 "cues":[
 "타입 water/fairy",
@@ -38459,7 +38459,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"shy",
 "eyes":"crimson red",
 "cues":[
 "타입 bug/fighting",
@@ -38604,7 +38604,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"cool",
+"vibe":"clever",
 "eyes":"jade green",
 "cues":[
 "타입 steel/flying",
@@ -38654,7 +38654,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"pale ice-blue",
 "cues":[
 "타입 grass/steel",
@@ -38705,7 +38705,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"charcoal grey",
 "cues":[
 "타입 dark/dragon",
@@ -38850,7 +38850,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"shy",
 "eyes":"steel blue",
 "cues":[
 "타입 fighting/ghost",
@@ -39280,7 +39280,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass",
@@ -39325,7 +39325,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass",
@@ -40398,7 +40398,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"elegant",
 "eyes":"jade green",
 "cues":[
 "타입 water/rock",
@@ -40778,7 +40778,7 @@
 "hair_cues":[],
 "impression":{
 "age":"late",
-"vibe":"regal",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/dragon",
@@ -41254,7 +41254,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"clever",
 "eyes":"chestnut brown",
 "cues":[
 "타입 fighting",
@@ -41678,7 +41678,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"violet",
 "cues":[
 "타입 dark/fairy",
@@ -43162,7 +43162,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"steel blue",
 "cues":[
 "타입 fighting/dark",
@@ -43209,7 +43209,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"emerald green",
 "cues":[
 "타입 dark/grass",
@@ -43742,7 +43742,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"charcoal grey",
 "cues":[
 "타입 dark/poison",
@@ -43889,7 +43889,7 @@
 },
 "impression":{
 "age":"mid",
-"vibe":"sleepy",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass",
@@ -43936,7 +43936,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass/dark",
@@ -44229,7 +44229,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"deep navy-blue",
 "cues":[
 "타입 water/fighting",
@@ -44325,7 +44325,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"steel blue",
 "cues":[
 "타입 normal",
@@ -44522,7 +44522,7 @@
 },
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"shy",
 "eyes":"steel blue",
 "cues":[
 "타입 bug/dark",
@@ -44911,7 +44911,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/normal",
@@ -44955,7 +44955,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/normal",
@@ -44997,7 +44997,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"cheerful",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass/normal",
@@ -45549,7 +45549,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"warm hazel",
 "cues":[
 "타입 dark",
@@ -45594,7 +45594,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"cool",
 "eyes":"silver grey",
 "cues":[
 "타입 dark",
@@ -45733,7 +45733,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"chestnut brown",
 "cues":[
 "타입 grass/ghost",
@@ -45783,7 +45783,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"gentle",
 "eyes":"chestnut brown",
 "cues":[
 "타입 grass/ghost",
@@ -45970,7 +45970,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass",
@@ -46585,7 +46585,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"cool",
+"vibe":"gentle",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -47208,7 +47208,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"cool",
+"vibe":"gentle",
 "eyes":"sapphire blue",
 "cues":[
 "타입 water",
@@ -47404,7 +47404,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"elegant",
+"vibe":"gentle",
 "eyes":"chestnut brown",
 "cues":[
 "타입 normal/psychic",
@@ -47641,7 +47641,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"sleepy",
 "eyes":"steel blue",
 "cues":[
 "타입 grass/dark",
@@ -47741,7 +47741,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"shy",
 "eyes":"crimson red",
 "cues":[
 "타입 bug/fighting",
@@ -47927,7 +47927,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"passionate",
 "eyes":"steel blue",
 "cues":[
 "타입 fighting/electric",
@@ -47973,7 +47973,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"mysterious",
 "eyes":"sapphire blue",
 "cues":[
 "타입 dark/flying",
@@ -48111,7 +48111,7 @@
 ],
 "impression":{
 "age":"early",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"steel blue",
 "cues":[
 "타입 dragon/ice",
@@ -48160,7 +48160,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"steel blue",
 "cues":[
 "타입 dragon/ice",
@@ -48547,7 +48547,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"fierce",
+"vibe":"regal",
 "eyes":"jade green",
 "cues":[
 "타입 dragon/dark",
@@ -48791,7 +48791,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"shy",
+"vibe":"gentle",
 "eyes":"jade green",
 "cues":[
 "타입 grass/psychic",
@@ -48837,7 +48837,7 @@
 ],
 "impression":{
 "age":"mid",
-"vibe":"regal",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/dragon",
@@ -48934,7 +48934,7 @@
 ],
 "impression":{
 "age":"late",
-"vibe":"mysterious",
+"vibe":"gentle",
 "eyes":"emerald green",
 "cues":[
 "타입 grass/ghost",

@@ -82,6 +82,7 @@ assert(!P.buildPrompt(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts
     vc[m.vibe] = (vc[m.vibe] || 0) + 1;
   }
   assert(Object.values(vc).every(n => n <= Math.floor(cards.length * 0.12)), '한 분위기 12% 상한 ' + JSON.stringify(vc));
+  assert((vc.fierce || 0) <= Math.floor(cards.length * 0.04), '사나움 4% 상한(2026-11-09 「사나움을 많이 줄여줘」) ' + vc.fierce);
   assert(Object.keys(vc).length >= 10, '분위기가 고루 쓰인다 ' + Object.keys(vc).length);
   const sqm = F[card('꼬부기').no].impression, v = S.IMPRESSION_VIBES[sqm.vibe];
   const ib = t => t.split('\n\n').find(x => x.startsWith('IMPRESSION ('));

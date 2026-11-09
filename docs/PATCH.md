@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-09 · claude · 인상 — 사나움 줄이기(4% 상한) · 점수 차 큰 종부터
+- tools/face-design.py — 사용자 「사나움을 많이 줄여줘」: 분위기 사나움 상한 12% → 4%(IMP_CAP_VIBE, 123종 → 41종). 상한이 있는 분위기는 도감 번호 차례가 아니라 그 분위기가 가장 뚜렷한 종(첫째 · 둘째 점수 차)부터 자리를 준다 — 번호 차례면 사나움 41자리가 1~4세대에 몰렸다(지금 1~9세대에 퍼짐). 다른 종 분위기도 일부 바뀌었다(거북왕 우아함 · 꼬부기 · 깨비참 밝음)
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md 다시 고름 · 그림. tests/face-design.cjs 사나움 4% 상한
+
 ## 2026-11-09 · claude · 얼굴 다양화 — 화풍 문장의 얼굴 묘사 빼기 · 인상(나이감 · 분위기 · 눈 색) 자동
 - 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화 할 수 없을까?」 → 「문장은 지금 화풍키에 넣어줘. 인상은 자동으로 해줘」 — 등록 ① 열두 명이 머리색 말고는 같은 얼굴이었다
 - lib/prompt-spec.js — anime_25d_gloss 화풍 문장(메카 · 일상)의 「large expressive eyes … small simplified nose and mouth … compact tapered jaw」 를 「her own FACE line — not one shared default face」 로(그 말이 모든 종의 FACE 줄을 이겼다). IMPRESSION_AGES · IMPRESSION_VIBES(분위기 열넷 — 눈빛 · 아이라인), PROMPT_LINES.impression

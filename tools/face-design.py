@@ -1006,6 +1006,7 @@ IMP_EYES = {'red': ['crimson red', 'garnet red'], 'blue': ['sapphire blue', 'dee
             'purple': ['violet', 'amethyst purple'], 'gray': ['silver grey', 'steel blue'], 'white': ['pale ice-blue', 'silver'],
             'pink': ['rose pink', 'soft magenta']}
 IMP_CAP = 0.12   # 한 분위기는 1,025종의 12% 까지
+IMP_CAP_VIBE = {'fierce': 0.04}   # 사나움은 4% 까지(2026-11-09 사용자 「사나움을 많이 줄여줘」 — 12% 에서)
 
 
 def imp_spec():
@@ -1031,12 +1032,12 @@ def h01(s):
 
 
 def design_impression(cards, J):
-    """종마다 {age, vibe, eyes, cues}. 점수 — 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글. 한 분위기 12% 상한(도감 번호 차례로 다음 후보)"""
+    """종마다 {age, vibe, eyes, cues}. 점수 — 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글. 한 분위기 12% 상한(사나움 4%) — 점수 차가 큰 종부터 자리를 주고, 넘치면 다음 후보"""
     by = {c['name']: c for c in cards}
     vibes = list(J['vibes'])
-    cap = int(len(cards) * IMP_CAP)
+    caps = {v: int(len(cards) * IMP_CAP_VIBE.get(v, IMP_CAP)) for v in vibes}
     used = {v: 0 for v in vibes}
-    out = {}
+    out, pre = {}, []
     for c in sorted(cards, key=lambda x: x['no']):
         sc = {v: 0.0 for v in vibes}; cues = []
         for i, t in enumerate([c.get('element'), c.get('element2')]):
@@ -1057,8 +1058,15 @@ def design_impression(cards, J):
                 cues.append('도감 글 ' + name)
         for v in vibes: sc[v] += h01(c['name'] + '|' + v) * .3   # 같은 점수를 고르게 가른다
         order = sorted(vibes, key=lambda v: -sc[v])
-        vibe = next((v for v in order if used[v] < cap), order[0])
-        used[vibe] += 1
+        pre.append((c, sc, order, cues, stage))
+    # 상한이 있는 분위기는 그 분위기가 가장 뚜렷한 종(첫째 · 둘째 점수 차가 큰 종)부터 자리를 준다 — 도감 번호 차례면 앞 세대가 자리를 다 썼다
+    pick = {}
+    for c, sc, order, cues, stage in sorted(pre, key=lambda x: -(x[1][x[2][0]] - x[1][x[2][1]])):
+        vibe = next((v for v in order if used[v] < caps[v]), order[0])
+        used[vibe] += 1; pick[c['name']] = vibe
+    for c, sc, order, cues, stage in pre:
+        vibe = pick[c['name']]
+        st = c.get('stats') or []
         total = sum(st) if len(st) == 6 else 400
         age = {'basic': 'early', 'middle': 'mid', 'final': 'late'}.get(stage) or ('late' if c.get('rare') or total >= 500 else 'mid' if total >= 400 else 'early')
         cols = IMP_EYES.get(c.get('color') or '', ['warm hazel', 'amber gold'])
@@ -1090,8 +1098,8 @@ def check_impression(faces, quiet=False):
         if m.get('vibe') not in J['vibes']: bad.append(f"{f['name']} 분위기 {m.get('vibe')}")
         if not m.get('eyes'): bad.append(f"{f['name']} 눈 색 없음")
         cnt[m.get('vibe')] = cnt.get(m.get('vibe'), 0) + 1
-    cap = int(len(faces) * IMP_CAP)
     for v, n in cnt.items():
+        cap = int(len(faces) * IMP_CAP_VIBE.get(v, IMP_CAP))
         if n > cap: bad.append(f'분위기 {v} {n}종 > {cap}')
     return bad
 
@@ -1160,7 +1168,7 @@ def render():
         '나이감(20대 초 · 중 · 후반) · 분위기 열넷(눈빛 · 아이라인이 따라온다) · 눈 색을 고르고, **생성기가 새 인물(경장 ①)에만 HAIR 뒤에 `IMPRESSION:` 줄로 싣는다**.',
         '',
         '- 나이감은 진화 단계 — 처음 초반 · 가운데 중반 · 마지막 후반, 진화 없는 종은 희귀 · 능력치 합 500 이상 후반, 400 이상 중반.',
-        '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를 넘지 않는다.',
+        '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를, 사나움은 4% 를 넘지 않는다(2026-11-09).',
         '- 눈 색은 도감 색에서 두 가지 중 하나. 생성기에서 눈 색을 직접 고르면 그 값이 이긴다(IMPRESSION 줄에서 눈 색만 빠진다).',
         '- 이미 등록된 그림은 그대로다 — 새로 그리는 ① 부터.',
         '',
