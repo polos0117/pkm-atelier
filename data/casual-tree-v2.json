@@ -679,7 +679,7 @@
    "key": "out",
    "ko": "화면 밖",
    "zone": "out",
-   "en": "her own {side} hand stays outside the frame"
+   "en": "her own {side} hand rests low, below the frame edge — that arm runs down from her shoulder out of frame"
   },
   {
    "key": "natural",
@@ -8703,7 +8703,7 @@
    "ko": "머리 받치고 눕기",
    "posture": "recline",
    "support": "back_lounger",
-   "frame": "chest_up",
+   "frame": "waist_up",
    "body": "front",
    "head": "with_body",
    "camera": "high",
@@ -8794,7 +8794,7 @@
    "head": "with_body",
    "camera": "eye",
    "right": "wave",
-   "left": "chest_hand",
+   "left": "out",
    "legs": "",
    "gaze": "camera"
   },

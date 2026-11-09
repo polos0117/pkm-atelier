@@ -449,6 +449,10 @@ def check(doc, v1):
         # 뒷모습으로 돌아보며 얼굴 · 머리에 손 — 팔이 머리 뒤를 가로질렀다(2026-11-01 「난간에서 돌아보기」 뺌, lib/casual-tree-v2.js whyHand lookback)
         if body[p["body"]].get("far") and head[p["head"]].get("look_back") and any(s != "prop" and hands[s]["zone"] == "face" for s in sides):
             err.append(f"{w} — 뒷모습으로 돌아보는 컷에 얼굴 · 머리에 대는 손")
+        # 가슴 위 · 얼굴 클로즈업에 두 손을 다 올림 — 떠다니는 손 · 팔 없는 몸통(2026-11-09, lib/casual-tree-v2.js whyHand raised)
+        up = lambda k: k == "prop" or (not hands[k].get("both") and hands[k]["zone"] in ("face", "chest", "overhead"))
+        if p["frame"] in ("chest_up", "face_close") and up(sides[0]) and up(sides[1]) and not (sides[0] == "prop" and sides[1] == "prop"):
+            err.append(f"{w} — 가까운 컷 {p['frame']} 에 두 손을 다 올린다({sides[0]} · {sides[1]})")
         for s in SIDES:
             k = p[s]
             if k == "prop":
