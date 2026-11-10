@@ -35,6 +35,11 @@ const LAW=['MOUNT','OCCLUSION','FAIL','REFERENCE ROLES','PLATE DISCIPLINE','INSE
 const law=t=>LAW.filter(w=>t.includes(w));
 
 /* 꼬부기 — 보고된 실패(등딱지가 어깨에, 꼬리가 엉덩이 옆 원판)의 종 */
+/* 두 타입 머리색(2026-11-10) — 두 타입 종만, 새 인물 만들기에서, 머리색을 직접 고르면 빠진다 */
+{ const b=build('이상해씨'), m=b.split('\n\n').find(l=>l.startsWith('HAIR COLOR:'));
+  assert(m&&/grass and poison/.test(m)&&b.indexOf(m)>b.indexOf('FACE:'),'두 타입 종 HAIR COLOR 줄: '+m);
+  assert(!build('꼬부기').includes('HAIR COLOR:'),'한 타입 종은 머리색 섞기 없음');
+  assert(!build('이상해씨',{params:[['hair color','green']]}).includes('HAIR COLOR:'),'머리색을 고르면 섞기 없음'); }
 const sq=build('꼬부기');
 assert.deepEqual(law(sq),[],'law block came back');
 assert(sq.startsWith('INPUT: text only'),'new character needs no image');
@@ -178,7 +183,7 @@ for(const c of cards){
  if(words(t)>most[0]) most=[words(t),c.en];
  const pal=P.palette(s); assert(pal.length<=5,c.en);
 }
-assert(most[0]<=605,'anchor budget over 1025: '+most.join(' '));   // 2026-11-08 +105 — 경장 판 · ARMOR 줄 · 2026-11-08 +35 — 메카 노출 줄 · 2026-11-07 +14 — ANATOMY 7.5등신 · 2026-11-06 +25 — 카메라 수평 3/4 줄
+assert(most[0]<=640,'anchor budget over 1025: '+most.join(' '));   // 2026-11-10 +35 — 두 타입 종 HAIR COLOR 줄 · 2026-11-08 +105 — 경장 판 · ARMOR 줄 · 2026-11-08 +35 — 메카 노출 줄 · 2026-11-07 +14 — ANATOMY 7.5등신 · 2026-11-06 +25 — 카메라 수평 3/4 줄
 assert(none<120,'too many species get no wear line: '+none);
 
 /* 스타일·모드 행렬 */
