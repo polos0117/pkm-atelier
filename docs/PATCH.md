@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-10 · claude · 두 타입 머리색을 타입색으로 — 비행은 흰색
+- 사용자 「그러면 몸의 색 말고, 타입색으로 넣어보자. 비행이면 흰색 같이」 — 몸 팔레트에서 고르게 했더니 리자몽은 주황에 청록이 조금만 섞였다
+- lib/prompt-spec.js TYPE_HAIR(타입 열여덟 → 머리색, 비행 white · 강철 silver · 악 black …), hairMix 「{첫 타입색} hair for her {타입}, with {둘째 타입색} … in streaks and at the tips — these type colors, not her body's palette」. lib/prompt-anthro.js hairMixLine 이 표를 읽는다
+- tests/prompt-engine.cjs 이상해씨 leaf green + violet · 갸라도스 비행 white · 타입 열여덟 모두 색. 이상해씨 · 리자몽 · 갸라도스 · 루카리오로 시험 그림(올리지 않음)
+
 ## 2026-11-10 · claude · 두 타입 종 머리색 — 타입마다 한 색씩 섞기
 - 사용자 「포켓몬 쪽에 타입 여러개인 친구들은 발챙이처럼 헤어색 섞는것도 좋겠다」 — 발챙이 ①(anime_25d_gloss)은 파란 머리에 분홍이 끝 · 가닥으로 섞였다
 - lib/prompt-spec.js PROMPT_LINES.hairMix, lib/prompt-anthro.js hairMixLine — 새 인물 만들기에서 타입이 둘이면 HAIR 줄 다음에 「HAIR COLOR: 타입 하나에 한 색씩, 그 종의 팔레트에서 — 바탕색에 둘째 색이 가닥 · 끝으로」. 색 이름은 적지 않는다(모델이 팔레트에서). 머리색을 직접 고르면 안 싣는다. 이어가기 · 일상컷은 첨부 그림의 머리색 그대로

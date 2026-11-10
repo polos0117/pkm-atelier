@@ -37,7 +37,9 @@ const law=t=>LAW.filter(w=>t.includes(w));
 /* 꼬부기 — 보고된 실패(등딱지가 어깨에, 꼬리가 엉덩이 옆 원판)의 종 */
 /* 두 타입 머리색(2026-11-10) — 두 타입 종만, 새 인물 만들기에서, 머리색을 직접 고르면 빠진다 */
 { const b=build('이상해씨'), m=b.split('\n\n').find(l=>l.startsWith('HAIR COLOR:'));
-  assert(m&&/grass and poison/.test(m)&&b.indexOf(m)>b.indexOf('FACE:'),'두 타입 종 HAIR COLOR 줄: '+m);
+  assert(m&&m.startsWith('HAIR COLOR: leaf green hair for her grass type, with violet for her poison type')&&b.indexOf(m)>b.indexOf('FACE:'),'두 타입 종 HAIR COLOR 줄 — 타입색: '+m);
+  assert(build('갸라도스').includes('with white for her flying type'),'비행은 흰색');
+  assert(Object.keys(S.TYPE_ENERGY).every(k=>S.TYPE_HAIR[k]),'타입 열여덟 모두 머리색');
   assert(!build('꼬부기').includes('HAIR COLOR:'),'한 타입 종은 머리색 섞기 없음');
   assert(!build('이상해씨',{params:[['hair color','green']]}).includes('HAIR COLOR:'),'머리색을 고르면 섞기 없음'); }
 const sq=build('꼬부기');
