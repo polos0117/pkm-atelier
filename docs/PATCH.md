@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-10 · claude · 두 타입 머리색 — 바탕은 종의 메인색, 보조색만 타입색
+- 사용자 「아니 내말은 메인컬러는 그 케릭터 메인색 쓰고 보조로 들어가는 색을 타입색 쓰자고」 — 바로 앞 칸은 바탕까지 첫 타입색이라 루카리오 머리가 진홍이 됐다
+- lib/prompt-spec.js hairMix 「her main hair color is the creature's own main color; {둘째 타입색} for her {둘째 타입} type runs through it as the accent, in streaks and at the tips」. lib/prompt-anthro.js hairMixLine 은 둘째 타입색만. 첫 타입은 대개 몸 색과 같아 둘째를 쓴다. tests/prompt-engine.cjs 이상해씨 바탕 메인색 · 보조 violet
+
 ## 2026-11-10 · claude · 두 타입 머리색을 타입색으로 — 비행은 흰색
 - 사용자 「그러면 몸의 색 말고, 타입색으로 넣어보자. 비행이면 흰색 같이」 — 몸 팔레트에서 고르게 했더니 리자몽은 주황에 청록이 조금만 섞였다
 - lib/prompt-spec.js TYPE_HAIR(타입 열여덟 → 머리색, 비행 white · 강철 silver · 악 black …), hairMix 「{첫 타입색} hair for her {타입}, with {둘째 타입색} … in streaks and at the tips — these type colors, not her body's palette」. lib/prompt-anthro.js hairMixLine 이 표를 읽는다
