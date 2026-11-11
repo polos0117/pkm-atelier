@@ -129,12 +129,12 @@ python3 tests/casual-tree.py     # 일상컷 트리 검사기
 python3 tools/casual-tree-v2.py check  # 일상컷 트리 버전2 표(docs/CASUAL_TREE_V2.md, 옮기는 중) — 51곳 받침 · 역할 동작 · 동료 · 안 쓰는 값 · 다 되는 장소 없는 자세 추천
 python3 tests/casual-tree-v2.py  # 버전2 검사기가 pkm 몫을 거는지
 node tests/casual-tree-v2.cjs    # 버전2 거르기 모듈 × pkm 표 — 검사기와 같은 길, 랜덤(카드 세대) · 포켓몬 세계 장소 · 칸 바꾸기 뒤 걸리는 칸 없음
-node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1200 낱말 · 버전1 기록은 버전1 지시문
-node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 여덟 자리(① 메카 자동 · anime_gloss)와 아홉 자리(--legacy) · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
+node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1400 낱말(2026-11-11) · 자유 장면(갈래 · 상황 자유 · 장면 자유) · 버전1 기록은 버전1 지시문
+node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 열한 자리(① + 일상 열 — 2026-11-11, version 3 열 · version 2 여덟 자리 그대로, ① 메카 자동)와 아홉 자리(--legacy) · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
 node tests/concept-mecha.cjs     # 메카 옵션 표 — 부품 표 열쇠 · 실루엣 owns · 자동 · 직접 고르기 · 겹치는 칸 · 배치 실루엣 안 겹침 · 옵션 줄 자리(docs/CONCEPT_MECHA.md, 명령줄 도구는 2026-11-08 지웠다)
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cjs  # 새 인물 만들기의 메카 옵션(기본 없음 = 그대로 · 실루엣 칸 막힘 · MECHA SILHOUETTE / TYPE EFFECTS 줄 · 두 타입 · 새로고침 · 이어가기 · 일상컷 · 폰)
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 여덟 자리 · 아홉 자리 글자 하나 다르지 않다(브라우저)
-node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 아홉 장(2026-11-09 — 필수 셋 한 장씩 · 코스튬 · 상황 노출(버전2) · 자유 셋) 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
+node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출 · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 서른 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글

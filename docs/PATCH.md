@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 일상컷 열 장 — 자유 장면 두 장(갈래 · 상황 자유 + 장면 자유)
+- 사용자 「gpt 담당 자유컷 1장더 추가해서 필수갈래랑 상황노출을 묶어서 우리쪽에 없는 목록으로 그리라고 넣어줘. 그러면 이제 일상컷 10장씩」 → 「장소·활동·자세·구도·의상을 자유롭게 설계해줘 … 얼굴·화풍·인체 규칙은 유지해줘」 · 「필수갈래랑 상황노출 두개를 묶어서 이렇게 가자. 그리고 지금 맡겨놓은 일상컷 1장만 같이 이런식으로」 · 「상한을 늘려서 지시문을 정확하게 써줘」
+- lib/casual-plan.js — CUTS 10(TEN_SINCE 앞 아홉 장 캐릭터 다시 채우기는 9), chooseXfree(갈래 · 상황 자유 한 장), chooseOfree 가 열 장이면 옷 자유 둘 중 한 장에 sfree(장면 자유). 칸 xfree · sfree
+- lib/prompt-spec.js FREE_SCENE · FREE_AXES, lib/prompt-anthro.js buildFreeCasual — 두 컷은 SCENE 이 설계 주문(장소 · 활동 · 자세 · 구도 · 의상은 맡은 쪽, 최근 작업과 다른 장면), 우리 장면 줄 · 크롭 · 시대 줄 없음, 얼굴 · 화풍 · 인체 · 표정 · 노출 강도 · 원작 영향도는 그대로. lib/prompt-state.js PLAN_V2
+- tools/prompt-pack.cjs — settings version 4 열한 자리(version 3 열 자리 그대로), outfit-catalog.md 끝에 우리 상황 목록, INDEX 안내. tools/casual-ledger.py — 열 장 · 갈래 · 상황 자유 한 장 · 장면 자유 한 장(옷 자유 가운데). tools/image-runner.py — 새 차례 light10
+- 버전2 일상컷 낱말 상한 1200 → 1400(tests/prompt-casual-v2.cjs). IMAGE_RULES.md 3절 · AGENTS.md · docs/IMAGE_AUTOMATION.md · docs/CASUAL_TREE_V2.md, prompt.html ?v=xfree1, 시험 casual-plan · casual-plan-v2 · casual-ledger · prompt-pack · prompt-casual-v2 · image-runner
+
 ## 2026-11-11 · gpt · 야도란 애니 2.5D 광택 등록
 - data/img.json — 사용자 선택 메카 4번과 일상컷 9장을 새 화풍으로 추가하고 기존 등록은 보존했다.
 

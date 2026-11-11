@@ -12,7 +12,7 @@ const t = C.make(tree2, tree), T = S.PROMPT_LINES;
 const cards = Object.values(JSON.parse(fs.readFileSync('data/card.json', 'utf8')).cards).flat();
 const base = { mech: 'Pikachu', series: 'Electric', style: S.DEFAULT_STYLE, tree, tree2, gen: 1, treeV: 2 };
 const block = (s, k) => (s.split(k + ' (chosen):\n')[1] || '').split('\n\n')[0];
-const LIMIT = 1200;   /* game 과 같다(docs/CASUAL_TREE_V2.md 4절) */
+const LIMIT = 1400;   /* 2026-11-11 1200 → 1400(사용자 「상한을 늘려서 지시문을 정확하게 써줘」 — 자유 장면 주문을 줄이지 않는다). 그 전엔 game 과 같은 1200(docs/CASUAL_TREE_V2.md 4절) */
 let n = 0, most = [0, ''];
 function look(sc, where, card) {
   const st = Object.assign({}, base, card ? { mech: card.en, gen: card.gen } : {}, sc);
@@ -49,12 +49,22 @@ for (const pr of tree2.presets) for (const pl of C.allPlaces(t)) {
 }
 assert(n > 2000, '추천 × 장소 ' + n);
 /* 2. 랜덤 — 카드 세대 · 표정 · 세부 강도 다섯을 다 얹어 가장 긴 것 */
-let s = 9; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
+let s = 9, xf = 0; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
 const exprs = S.EXPRESSION_OPTIONS.map(x => Array.isArray(x) ? x[0] : x.key || x).filter(Boolean);
 for (let i = 0; i < 1500; i++) {
   const card = cards[i % cards.length], sc = C.random(t, {}, { gen: card.gen }, rnd);
   const axes = {}; (S.LOCAL_AXES || []).forEach(k => { const o = S.ADVANCED_OPTIONS[k] || []; if (o.length) axes[k] = o[o.length - 1]; });
   look(Object.assign(sc, { expr: exprs[i % exprs.length], axes, scene: i % 4 ? '' : 'late afternoon light through the window', ofeat: i % 5 ? [] : ['glasses'] }), '랜덤 ' + i, card);
+  /* 자유 장면(2026-11-11 — 갈래 · 상황 자유 · 장면 자유) — SCENE 이 주문, 우리 장소 · 자세 · 구도 · 손 · 크롭 · 시대 줄 없음, 얼굴 · 화풍 · 인체 칸 그대로 */
+  if (sc.ofam !== 'pokemon_costume') {
+    const fr = Object.assign({}, base, { mech: card.en, gen: card.gen }, sc, i % 2 ? { xfree: true } : { sfree: true, ofree: true }), tf = L.buildSingle(fr), F = S.FREE_SCENE;
+    assert(tf.includes(F.head) && tf.includes(F.avoid) && tf.includes(i % 2 ? F.xfree : F.sfree) && !tf.includes(i % 2 ? F.sfree : F.xfree) && tf.includes(F.keep) && tf.includes(F.end), '랜덤 ' + i + ' 자유 주문');
+    assert(!/^(Place|POSTURE|COMPOSITION|Lens \/ perspective|RIGHT HAND|LEFT HAND|BOTH HANDS|PROP|GAZE|Outfit|Outfit colours|Cut|Situation|action_level|separates_preference): /m.test(tf) && !/\n\n(CROP|WORLD|LOOK-BACK): /.test(tf) && !tf.includes(S.OUTFIT_FREE), '랜덤 ' + i + ' 자유 — 우리 장면 줄 없음');
+    assert(/\n\nFACE: /.test(tf) && /\n\nBODY TYPE: /.test(tf) && /\n\nSTYLE: /.test(tf) && tf.includes(T.anatomy) && tf.includes(T.bodyV2) && tf.includes(T.handsV2) && tf.includes(T.figure) && /^skin_exposure: /m.test(tf), '랜덤 ' + i + ' 자유 — 얼굴 · 화풍 · 인체 · 노출 강도 그대로');
+    if (fr.expr) assert(/^EXPRESSION: /m.test(tf), '랜덤 ' + i + ' 자유 — 표정');
+    assert(!/[가-힣]/.test(tf) && P.words(tf) <= LIMIT, '랜덤 ' + i + ' 자유 ' + P.words(tf));
+    xf++;
+  }
 }
 /* 3. pkm 고정 사례 */
 const job = C.repair(t, { treeV: 2, era: 'in_pokemon', place: 'work_lab', ofam: 'work', posture: 'stand', support: 'none', frame: 'waist_up', body: 'front_3q', head: 'with_body', camera: 'eye', right: 'prop', left: 'prop', use: 'job_lab_maps' });
@@ -81,4 +91,5 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(hw.includes(T.casualOutputV2) && block(hw, 'SCENE').includes('source_influence: subtle'), '할로윈은 보통 옷 줄');
   n += 2;
 }
-console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 버전1 기록`);
+assert(xf > 1000, '자유 장면 ' + xf);
+console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록`);

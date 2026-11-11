@@ -194,14 +194,14 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     require('../lib/concept-mecha.js');
     const CMT = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/concept-mecha.json'), 'utf8'));
     const p7 = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'pack7' });
-    assert.equal(p7.cuts.length, 9);   /* 2026-11-09 아홉 장 */
+    assert.equal(p7.cuts.length, 10);   /* 2026-11-11 열 장(그 전 11-09 아홉 장) */
     const plan7 = path.join(tmp, 'PLAN-7.json'), repo = path.join(tmp, 'img-x'), d7 = path.join(tmp, 'pikachu-7'), d7b = path.join(tmp, 'pikachu-7b');
     fs.writeFileSync(plan7, JSON.stringify({ session: 't7', characters: [{ card: '피카츄', cuts: p7.cuts }] }));
     fs.mkdirSync(path.join(repo, 'records'), { recursive: true });
     r = run('init', '피카츄', '--dir', d7, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
     const s7 = JSON.parse(fs.readFileSync(path.join(d7, 'settings.json'), 'utf8'));
-    assert.equal(s7.version, 3); assert.equal(s7.style, 'anime_25d_gloss', '기본 화풍 애니 2.5D 광택(2026-11-08)');
-    assert.deepEqual(Object.keys(s7.slots), ['light', 'casual1', 'casual2', 'casual3', 'casual4', 'casual5', 'casual6', 'casual7', 'casual8', 'casual9']);
+    assert.equal(s7.version, 4); assert.equal(s7.style, 'anime_25d_gloss', '기본 화풍 애니 2.5D 광택(2026-11-08)');
+    assert.deepEqual(Object.keys(s7.slots), ['light', 'casual1', 'casual2', 'casual3', 'casual4', 'casual5', 'casual6', 'casual7', 'casual8', 'casual9', 'casual10']);
     const m = s7.slots.light.mecha, sil = CMT.silhouettes.find(x => x.key === m.set.silhouette);
     assert(sil && sil.key !== 'none' && Object.keys(m.set).length === 1, '큰 실루엣 하나만(부위 부품은 비운다)');
     assert(CMT.types.electric.silhouette.includes(sil.key), '타입 추천 안에서');
@@ -228,7 +228,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert.deepEqual(lu.storage.cards['피카츄'].mecha, m, '저장값에 mecha');
     assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, lu.storage.cards['피카츄'], tree1, pika, null, { C2, tree2 }).st, pika, appear, faces, tree1, tree2, CMT) + '\n', lt, '저장값 → 같은 지시문');
     const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');
-    assert(idx.includes('| ⑩ | casual9 | ① 피카츄_light_anime_25d_gloss_f.webp |') && idx.includes('`피카츄_anime_25d_gloss_f_casual9.webp`') && !idx.includes('heavy-prompt'), '차례표 열 자리');
+    assert(idx.includes('| ⑪ | casual10 | ① 피카츄_light_anime_25d_gloss_f.webp |') && idx.includes('`피카츄_anime_25d_gloss_f_casual10.webp`') && !idx.includes('heavy-prompt'), '차례표 열한 자리');
     for (let n = 1; n <= 9; n++) assert(fs.existsSync(path.join(d7, 'casual' + n + '-prompt.txt')), 'casual' + n);
     /* ① GPT 임의 설계 주문(2026-11-11 — 삼국지 · 원소처럼 ① 네 장: 우리 설계 둘 + 임의 설계 둘, 멈추고 묻기) */
     const lf = fs.readFileSync(path.join(d7, 'light-free.txt'), 'utf8'), pikaSil = CMT.types.electric.silhouette.map(k => CMT.silhouettes.find(x => x.key === k).en);
@@ -269,10 +269,25 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
       assert(!fs.readFileSync(path.join(d7, slotS + '-prompt.txt'), 'utf8').includes('Situation:'), '뺀 상황'); }
     /* 옷 자유 컷(2026-11-09 — 포켓몬은 일상컷만) — Outfit 줄이 주문, 옷 색 · 재단 줄 없음 */
     { const fc = p7.cuts.filter(x => x.ofree); assert.equal(fc.length, 2, '옷 자유 두 장');
-      for (const x of fc) { const t = fs.readFileSync(path.join(d7, 'casual' + x.cut + '-prompt.txt'), 'utf8'); assert(t.includes(S.OUTFIT_FREE) && !/^Outfit colours: /m.test(t) && !/^Cut: /m.test(t), '옷 자유 줄 ' + x.cut); } }
+      for (const x of fc.filter(y => !y.sfree)) { const t = fs.readFileSync(path.join(d7, 'casual' + x.cut + '-prompt.txt'), 'utf8'); assert(t.includes(S.OUTFIT_FREE) && !/^Outfit colours: /m.test(t) && !/^Cut: /m.test(t), '옷 자유 줄 ' + x.cut); } }
+    /* 갈래 · 상황 자유 컷(2026-11-11) — Outfit 줄이 갈래 · 상황 주문, 옷 색 · 재단 · 상황 줄 없음, 옷 목록 끝에 우리 상황 넷 */
+    { const xc = p7.cuts.filter(x => x.xfree); assert.equal(xc.length, 1, '갈래 · 상황 자유 한 장');
+      const t = fs.readFileSync(path.join(d7, 'casual' + xc[0].cut + '-prompt.txt'), 'utf8');
+      assert(t.includes(S.FREE_SCENE.head) && t.includes(S.FREE_SCENE.xfree) && !t.includes(S.OUTFIT_FREE) && !/^(Place|POSTURE|COMPOSITION|Outfit colours|Cut|Situation): /m.test(t), '갈래 · 상황 자유 — 자유 장면 주문');
+      const sc2 = p7.cuts.filter(x => x.sfree); assert(sc2.length === 1 && sc2[0].ofree, '장면 자유 한 장(옷 자유 가운데)');
+      const t2 = fs.readFileSync(path.join(d7, 'casual' + sc2[0].cut + '-prompt.txt'), 'utf8');
+      assert(t2.includes(S.FREE_SCENE.head) && t2.includes(S.FREE_SCENE.sfree) && !t2.includes(S.OUTFIT_FREE) && !/^(Place|POSTURE|COMPOSITION): /m.test(t2), '장면 자유 — 자유 장면 주문');
+      const cat = fs.readFileSync(path.join(d7, 'outfit-catalog.md'), 'utf8');
+      assert(cat.includes('# Our exposure situations') && S.SITUATIONS.every(x => cat.includes('- ' + x.key + ' — ' + x.en)), '옷 목록에 우리 상황');
+      assert(fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8').includes('일상컷 자유 장면 두 장'), '차례표 안내'); }
+    /* 아홉 장 settings(version 3)는 그대로 열 자리 */
+    { const d73 = path.join(tmp, 'pikachu-73'); r = run('init', '피카츄', '--dir', d73, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
+      const s73 = JSON.parse(fs.readFileSync(path.join(d73, 'settings.json'), 'utf8')); s73.version = 3; delete s73.slots.casual10;
+      fs.writeFileSync(path.join(d73, 'settings.json'), JSON.stringify(s73)); r = run('build', '--dir', d73); assert.equal(r.status, 0, r.stderr);
+      assert(fs.existsSync(path.join(d73, 'casual9-prompt.txt')) && !fs.existsSync(path.join(d73, 'casual10-prompt.txt')), '열 자리 그대로'); }
     /* 일곱 장 settings(version 2)는 그대로 여덟 자리 */
     { const d72 = path.join(tmp, 'pikachu-72'); r = run('init', '피카츄', '--dir', d72, '--plan', plan7, '--repos', repo); assert.equal(r.status, 0, r.stderr);
-      const s72 = JSON.parse(fs.readFileSync(path.join(d72, 'settings.json'), 'utf8')); s72.version = 2; delete s72.slots.casual8; delete s72.slots.casual9;
+      const s72 = JSON.parse(fs.readFileSync(path.join(d72, 'settings.json'), 'utf8')); s72.version = 2; delete s72.slots.casual8; delete s72.slots.casual9; delete s72.slots.casual10;
       for (const k of Object.keys(s72.slots)) delete s72.slots[k].situ;
       fs.writeFileSync(path.join(d72, 'settings.json'), JSON.stringify(s72)); r = run('build', '--dir', d72); assert.equal(r.status, 0, r.stderr);
       assert(fs.existsSync(path.join(d72, 'casual7-prompt.txt')) && !fs.existsSync(path.join(d72, 'casual8-prompt.txt')), '여덟 자리 그대로'); }
@@ -295,5 +310,5 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.includes(styleLine) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열 자리(경장 + 일상 아홉 · 상황 줄 · 상황 빼기 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
+  console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열한 자리(경장 + 일상 열 · 상황 줄 · 상황 빼기 · 자유 장면 두 장(갈래 · 상황 · 장면) · 옷 목록의 상황 · 열 자리 version 3 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

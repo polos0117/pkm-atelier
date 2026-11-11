@@ -53,7 +53,9 @@ for (let i = 0; i < 30; i++) {
   const card = 'C' + i, r = batchPlan(entries, [card], 'seq');
   tries += r.tries;
   const ch = r.plan.characters[0];
-  assert.equal(ch.cuts.length, 9);
+  assert.equal(ch.cuts.length, 10);
+  /* 갈래 · 상황 자유 컷(2026-11-11) — 한 장, 필수 · 코스튬 · 상황 · 옷 자유 · 얼굴 클로즈업이 아닌 컷, 옷 색 없음 */
+  { const xf = ch.cuts.filter(x => x.xfree); assert.equal(xf.length, 1, card + ' 갈래 · 상황 자유 한 장'); assert.equal(ch.cuts.filter(x => x.sfree).length, 1, card + ' 장면 자유 한 장'); assert(ch.cuts.filter(x => x.sfree).every(x => x.ofree), card + ' 장면 자유는 옷 자유 가운데'); assert(xf.every(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume' && !x.situ && !x.ofree && x.frame !== 'face_close' && !x.ocolor), card + ' 갈래 · 상황 자유 컷'); }
   /* 옷 자유 컷(2026-11-09) — 두 장, 필수 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷, 옷 색 없음 */
   { const fr = ch.cuts.filter(x => x.ofree); assert.equal(fr.length, 2, card + ' 옷 자유 두 장'); assert(fr.every(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume' && !x.situ && x.frame !== 'face_close' && !x.ocolor), card + ' 옷 자유 컷'); }
   /* 상황 노출(2026-11-09) — 한 장, 필수 · 코스튬 · 얼굴 클로즈업이 아닌 컷에 그 옷에 맞는 것 */
@@ -61,9 +63,9 @@ for (let i = 0; i < 30; i++) {
     assert(!P.isRequired(tree, si[0]) && si[0].ofam !== 'pokemon_costume' && si[0].frame !== 'face_close' && P.situsFor(S, P.outfitText(tree, si[0])).includes(si[0].situ), card + ' 상황 컷: ' + JSON.stringify(si[0])); }
   for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(x => x.ofam === f).length, 1, card + ' 필수 ' + f + ' 한 장(2026-11-07)');
   for (const k of ['orient', 'frame']) assert(ch.cuts.every(x => ch.cuts.filter(y => y[k] === x[k]).length <= 2), card + ' ' + k + ' 같은 값 두 장까지');
-  assert.equal(new Set(ch.cuts.map(x => x.orient + '|' + x.frame)).size, 9, card + ' 같은 짝 없음');
+  assert.equal(new Set(ch.cuts.map(x => x.orient + '|' + x.frame)).size, 10, card + ' 같은 짝 없음');
   /* 드러내는 방식 — 같은 짝은 한 번, 한 방식은 세 장까지(2026-11-07 가디 넷이 같은 짝. 옷 종류마다 고를 수 있는 방식이 여섯 ~ 아홉이라 열네 번 고르면 셋까지 간다) */
-  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 9, card + ' 드러내기 짝 겹침');
+  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 10, card + ' 드러내기 짝 겹침');
   const exN = {}; ch.cuts.flatMap(x => x.expose).forEach(e => { exN[e] = (exN[e] || 0) + 1; });
   assert(Object.values(exN).every(v => v <= 4), card + ' 드러내기 한 방식이 다섯 장 이상: ' + JSON.stringify(exN));   /* 아홉 장(2026-11-09) — 첫째는 늘 목선이라 목선 하나가 넷까지 */
   /* 깊게 파인 목선(2026-11-07) — 컷마다 첫째 드러내기는 목선 */
@@ -71,7 +73,7 @@ for (let i = 0; i < 30; i++) {
   const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
   assert.equal(new Set(freeFams).size, freeFams.length, card + ' 자유 컷 의상 계열 겹침: ' + freeFams);
   /* 옷 색(2026-11-07) — 코스튬 컷은 없음, 나머지는 표의 색, 같은 색은 두 장까지 */
-  const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume' && !x.ofree).map(x => x.ocolor);   /* 옷 자유 컷은 색 없음(2026-11-09) */
+  const COLS = S.OUTFIT_COLORS.map(x => x.key), cols = ch.cuts.filter(x => x.ofam !== 'pokemon_costume' && !x.ofree && !x.xfree).map(x => x.ocolor);   /* 옷 자유 컷은 색 없음(2026-11-09) */
   assert(ch.cuts.filter(x => x.ofam === 'pokemon_costume').every(x => !x.ocolor) && cols.every(x => COLS.includes(x)), card + ' 옷 색: ' + cols);
   assert(cols.every(x => cols.filter(y => y === x).length <= 2), card + ' 같은 옷 색 세 장: ' + cols);
   assert.equal(ch.cuts.filter(x => x.ofam === 'pokemon_costume').length, 1, card + ' 포켓몬 코스튬 한 장(2026-11-01)');
@@ -91,7 +93,7 @@ for (let i = 0; i < 30; i++) {
     assert(P.LEAD.includes(x.lead));
   }
   assert.equal(new Set(ch.cuts.map(x => x.lead)).size, P.LEAD.length, '장면 칸 첫머리가 다 돈다');
-  assert.equal(new Set(ch.cuts.map(groupOf)).size, 9, '아홉 장은 서로 다른 장소 묶음');
+  assert.equal(new Set(ch.cuts.map(groupOf)).size, 10, '열 장은 서로 다른 장소 묶음');
   entries.push({ card, status: 'done', at: at(i), cuts: ch.cuts });
   n++;
 }
@@ -126,9 +128,9 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 {
   const r = batchPlan(entries, ['B1', 'B2', 'B3'], 'batch');
   const ks = r.plan.characters.flatMap(ch => ch.cuts.map(key));
-  assert.equal(new Set(ks).size, 27, '배치 안 장소·하는 일 스물일곱이 다 다르다');
+  assert.equal(new Set(ks).size, 30, '배치 안 장소·하는 일 서른이 다 다르다');
   const pairs = r.plan.characters.flatMap(ch => ch.cuts.map(x => x.orient + '|' + x.frame));
-  assert.equal(new Set(pairs).size, 27, '배치 안 (방향, 프레이밍) 짝이 다 다르다');
+  assert.equal(new Set(pairs).size, 30, '배치 안 (방향, 프레이밍) 짝이 다 다르다');
   n += 2;
 }
 
@@ -137,7 +139,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   const mine = entries[entries.length - 1], kept = mine.cuts.slice(0, 6);
   const r = batchPlan(entries, [mine.card], 'refill', { [mine.card]: { refill: true, kept } });
   const cuts = r.plan.characters[0].cuts;
-  assert(cuts.length === 9 && cuts.slice(0, 6).every(x => x.kept) && cuts.slice(6).every(x => !x.kept) && cuts[6].cut === 7, '빈 7 · 8 · 9번만 새로');
+  assert(cuts.length === 10 && cuts.slice(0, 6).every(x => x.kept) && cuts.slice(6).every(x => !x.kept) && cuts[6].cut === 7, '빈 7 · 8 · 9 · 10번만 새로');
   assert.deepEqual({ ...cuts[0], kept: undefined }, { ...kept[0], kept: undefined });
   n++;
 }
@@ -165,11 +167,18 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 
 /* ── 만든 컷은 두고 한 컷만 다시(--keep) — 막힌 2번만 바꾸고 1·3번은 그대로, 차례 조건까지 통과 ── */
 {
-  const first = plan({ entries, card: 'Z', seed: 'k' }), keep = first.cuts.filter(x => x.cut !== 2).map(x => ({ ...x, kept: true }));
-  let ok = null;
-  for (let t = 0; t < 40 && !ok; t++) {
-    const p = plan({ entries, card: 'Z', seed: 'k' + t, kept: keep, avoid: [{ cut: 2, field: 'act', value: first.cuts[1].act }] });
-    if (!check(entries, { session: 't', characters: [{ card: 'Z', species: 'Z', cuts: p.cuts }] })) ok = p;
+  /* 처음 계획도 명령줄처럼 check 를 통과한 것 — 열 장(2026-11-11)부터 씨앗 하나로는 세 축 겹침에 걸릴 수 있다.
+     아홉 장을 두면 새 컷 하나로는 세 축 겹침(열 장에 여덟)을 못 비킬 때가 있어, 그런 처음 계획이면 다른 처음 계획으로 */
+  let first = null, ok = null;
+  for (let f = 0; f < 10 && !ok; f++) {
+    const p0 = plan({ entries, card: 'Z', seed: 'k' + (f || '') });
+    if (check(entries, { session: 't', characters: [{ card: 'Z', species: 'Z', cuts: p0.cuts }] })) continue;
+    first = p0;
+    const keep = first.cuts.filter(x => x.cut !== 2).map(x => ({ ...x, kept: true }));
+    for (let t = 0; t < 40 && !ok; t++) {
+      const p = plan({ entries, card: 'Z', seed: 'k' + t, kept: keep, avoid: [{ cut: 2, field: 'act', value: first.cuts[1].act }] });
+      if (!check(entries, { session: 't', characters: [{ card: 'Z', species: 'Z', cuts: p.cuts }] })) ok = p;
+    }
   }
   assert(ok, '한 컷만 다시 정해도 check 를 통과한다');
   assert.equal(key(ok.cuts[0]), key(first.cuts[0])); assert.equal(key(ok.cuts[2]), key(first.cuts[2]));
@@ -284,7 +293,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   let batch = [];
   for (const card of ['Y1', 'Y2', 'Y3']) {
     const p = plan({ entries: entries.concat(crowded), card, batch, seed: 'crowded|' + card });
-    assert.equal(p.cuts.length, 9, card + ' 계획이 나온다');
+    assert.equal(p.cuts.length, 10, card + ' 계획이 나온다');
     assert(p.cuts.every(x => x.orient && x.frame && x.place), card + ' 컷마다 값이 있다');
     batch.push({ card, cuts: p.cuts, claims: p.claims });
   }

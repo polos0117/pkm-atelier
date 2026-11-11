@@ -66,7 +66,9 @@ let tries = 0; const situN = {};
 for (let i = 0; i < 30; i++) {
   const card = 'B' + i, r = batchPlan(entries, [card], 'seq', true), ch = r.plan.characters[0];
   tries += r.tries;
-  assert.equal(ch.cuts.length, 9);
+  assert.equal(ch.cuts.length, 10);
+  /* 갈래 · 상황 자유 컷(2026-11-11) — 한 장, 필수 · 코스튬 · 상황 · 옷 자유 · 얼굴 클로즈업이 아닌 컷, 옷 색 없음 */
+  { const xf = ch.cuts.filter(x => x.xfree); assert.equal(xf.length, 1, card + ' 갈래 · 상황 자유 한 장'); assert.equal(ch.cuts.filter(x => x.sfree).length, 1, card + ' 장면 자유 한 장'); assert(ch.cuts.filter(x => x.sfree).every(x => x.ofree), card + ' 장면 자유는 옷 자유 가운데'); assert(xf.every(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume' && !x.situ && !x.ofree && x.frame !== 'face_close' && !x.ocolor), card + ' 갈래 · 상황 자유 컷'); }
   /* 옷 자유 컷(2026-11-09) — 두 장, 필수 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷, 옷 색 없음 */
   { const fr = ch.cuts.filter(x => x.ofree); assert.equal(fr.length, 2, card + ' 옷 자유 두 장'); assert(fr.every(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume' && !x.situ && x.frame !== 'face_close' && !x.ocolor), card + ' 옷 자유 컷'); }
   /* 상황 노출(2026-11-09) — 한 장, 필수 · 코스튬 · 얼굴 클로즈업이 아닌 컷, 그 옷에 맞는 것. 지시문에 Situation 줄 */
@@ -79,11 +81,11 @@ for (let i = 0; i < 30; i++) {
   for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(x => x.ofam === f).length, 1, card + ' 필수 ' + f + ' 한 장');
   const bh = x => x.body + '+' + x.head;
   assert(ch.cuts.every(x => ch.cuts.filter(y => y.frame === x.frame).length <= 2 && ch.cuts.filter(y => bh(y) === bh(x)).length <= 2), card + ' 프레이밍 · 몸+머리 같은 값 두 장까지');
-  assert.equal(new Set(ch.cuts.map(x => bh(x) + '|' + x.frame)).size, 9, card + ' 같은 짝 없음');
-  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 9, card + ' 드러내기 짝 겹침');
+  assert.equal(new Set(ch.cuts.map(x => bh(x) + '|' + x.frame)).size, 10, card + ' 같은 짝 없음');
+  assert.equal(new Set(ch.cuts.map(x => x.expose.slice().sort().join('+'))).size, 10, card + ' 드러내기 짝 겹침');
   const freeFams = ch.cuts.filter(x => !P.isRequired(tree, x) && x.ofam !== 'pokemon_costume').map(x => x.ofam);
   assert.equal(new Set(freeFams).size, freeFams.length, card + ' 자유 컷 의상 계열 겹침: ' + freeFams);
-  assert.equal(new Set(ch.cuts.map(x => (C2.place(t, x.place) || {}).group)).size, 9, card + ' 다른 묶음');
+  assert.equal(new Set(ch.cuts.map(x => (C2.place(t, x.place) || {}).group)).size, 10, card + ' 다른 묶음');
   const recent = new Set(entries.slice(-10).flatMap(e => e.cuts.map(key)));
   for (const x of ch.cuts) assert(!recent.has(key(x)), card + ' 장소/짓 ' + key(x) + ' 최근 10명');
   entries.push({ card, status: 'done', at: at(entries.length), cuts: ch.cuts });
@@ -139,7 +141,13 @@ fs.writeFileSync(PLAN, JSON.stringify(rp));
 cp.execFileSync('python3', ['tools/casual-ledger.py', 'reserve', PLAN, '--ledger', LEDGER, '--repos', tmp], { cwd: ROOT, stdio: 'pipe' });
 const saved = JSON.parse(fs.readFileSync(path.join(tmp, 'casual-reservations', 't.json'), 'utf8')).characters[0].cuts;
 rp.characters[0].cuts.forEach((x, i) => { assert.equal(saved[i].treeV, 2); for (const k of P.V2_FIELDS) assert.deepEqual(saved[i][k] || '', x[k] || '', '예약 칸 ' + k); });
-const re3 = P.planV2({ S, tree, tree2, subject, entries, card: 'R', seed: 'r3', kept: saved.slice(0, 2), avoid: [{ cut: 3, field: 'item', value: saved[2].item }] });
-assert.equal(check(entries, { session: 't2', characters: [{ card: 'R', species: 'R', cuts: re3.cuts, claims: re3.claims }] }), '', '두 컷을 두고 다시 정한 계획');
+/* 명령줄처럼 걸리면 씨앗을 바꿔 다시 — 열 장(2026-11-11)부터 한 씨앗만으로는 짝이 비교 대상과 겹칠 수 있다 */
+let re3 = null, why3 = '';
+for (let i = 0; i < 10 && !re3; i++) {
+  const r = P.planV2({ S, tree, tree2, subject, entries, card: 'R', seed: 'r3' + (i || ''), kept: saved.slice(0, 2), avoid: [{ cut: 3, field: 'item', value: saved[2].item }] });
+  why3 = check(entries, { session: 't2', characters: [{ card: 'R', species: 'R', cuts: r.cuts, claims: r.claims }] });
+  if (!why3) re3 = r;
+}
+assert(re3 && re3.cuts[0].kept && re3.cuts[1].kept, '두 컷을 두고 다시 정한 계획\n' + why3);
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log('PASS 계획기 버전2: 버전1 열 명 위에 서른 명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸');

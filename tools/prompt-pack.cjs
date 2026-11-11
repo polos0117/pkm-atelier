@@ -6,7 +6,7 @@
 
    2026-11-07 여덟 자리(사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「필수3 코스튬1 자유3」):
      경장 ① 한 장 + 일상컷 아홉 장(2026-11-09 — 필수 셋 · 코스튬 · 상황 노출 · 자유 넷), 화풍 기본 anime_25d_gloss(생성기 기본과 같다 — 2026-11-08). ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정해 settings 에 적는다(아래 mecha).
-     settings.version 3 이 열 자리(경장 + 일상 아홉), version 2 는 여덟 자리(일상 일곱 — 11-08 까지 만든 묶음), version 1(예전 · --legacy)은 아홉 자리 그대로 build 한다.
+     settings.version 4 가 열한 자리(경장 + 일상 열 — 2026-11-11 갈래 · 상황 자유 한 장 더), version 3 은 열 자리(경장 + 일상 아홉 — 11-11 까지 만든 묶음), version 2 는 여덟 자리(일상 일곱 — 11-08 까지 만든 묶음), version 1(예전 · --legacy)은 아홉 자리 그대로 build 한다.
 
    node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style <화풍 키>] [--plan PLAN.json] [--legacy] [--repos <그림 저장소> …]
      작업 폴더에 settings.json(고칠 수 있는 칸만)을 만든다 — 이미 있으면 덮지 않고 멈춘다.
@@ -55,9 +55,11 @@ const SLOTS7 = { light: Object.assign({}, NINE.light, { fields: NINE.light.field
 ['②', '③', '④', '⑤', '⑥', '⑦', '⑧'].forEach((n, i) => { SLOTS7['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why'] }; });
 /* 열 자리(2026-11-09 — settings.version 3, IMAGE_RULES 3절 표) — 경장 ① + 일상 아홉(사용자 「일상컷 룰에 '상황으로 만들기'를 필수로 넣어주고, 거기는 일상컷 생성 수를 9장으로」).
    일상 칸 situ — 비우면 계획 그대로, "none" 은 상황 노출 컷이 노출을 낮춰도 막혔을 때만 상황을 뺀다(exposure_why 필요) */
-const SLOTS = { light: SLOTS7.light };
-['②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'].forEach((n, i) => { SLOTS['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why', 'situ'] }; });
-const slotsOf = set => (set && set.version >= 3 ? SLOTS : set && set.version === 2 ? SLOTS7 : NINE);
+const SLOTS9 = { light: SLOTS7.light };
+['②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'].forEach((n, i) => { SLOTS9['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why', 'situ'] }; });
+/* 열한 자리(2026-11-11 — settings.version 4) — 경장 ① + 일상 열(아홉 + 갈래 · 상황 자유 한 장, 사용자 「gpt 담당 자유컷 1장더 추가해서 필수갈래랑 상황노출을 묶어서 우리쪽에 없는 목록으로 그리라고 넣어줘. 그러면 이제 일상컷 10장씩」) */
+const SLOTS = Object.assign({}, SLOTS9, { casual10: Object.assign({}, SLOTS9.casual9, { n: '⑪', cut: 10 }) });
+const slotsOf = set => (set && set.version >= 4 ? SLOTS : set && set.version === 3 ? SLOTS9 : set && set.version === 2 ? SLOTS7 : NINE);
 const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(anime_25d_gloss) · 아홉 자리(--legacy)는 그때 기본 */
 const MECHA_RECENT = 10;
 const ACTION_SCENE = ['expr', 'pose', 'orient', 'frame', 'lens', 'aspect', 'camera', 'scene', 'outfit', 'custom', 'action'];
@@ -143,9 +145,11 @@ function guideOfV2(d, cut) {
     v2: { era: row(CT.era(d.tree, cut.era)), place: row(p), role: u && u.role ? { ko: u.role_ko, en: u.role } : null, use: u ? { key: u.key, ko: u.ko, en: u.en.replace('{prop}', pr ? pr.en : ''), prop: pr ? pr.ko : '' } : null,
       ofam: row(f, f && f.guide ? { guide: f.guide } : {}), item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' },
       posture: row(C2.posture(t, cut.posture)), frame: cut.frame, body: row(by(t.v2.body, cut.body)), hands: [cut.right || 'AUTO', cut.left || 'AUTO'].join(' · ') },
-    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut), situ: situGuide(cut)
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut), situ: situGuide(cut), free: freeGuide(cut)
   };
 }
+/* 옷 자유(2026-11-09) · 갈래 · 상황 자유(2026-11-11) 컷 표시 */
+function freeGuide(cut) { return cut.xfree ? '갈래 · 상황 자유(자유 장면)' : cut.sfree ? '장면 자유(자유 장면)' : cut.ofree ? '옷 자유' : ''; }
 /* 상황 노출(2026-11-09) — 계획의 situ */
 function situGuide(cut) { const c = (S.SITUATIONS || []).find(x => x.key === cut.situ); return c ? { key: c.key, ko: c.ko, en: c.en } : null; }
 /* 옷 색(2026-11-07) — 계획의 ocolor. 옷 직접 쓰기 글은 이 색 낱말을 하나는 쓴다(build 가 본다) */
@@ -172,7 +176,7 @@ function init(o) {
   const file = path.join(o.dir, 'settings.json');
   if (fs.existsSync(file)) throw new Error('이미 있다 — 덮지 않는다: ' + file);
   const blank = () => { return { expr: '', pose: '', orient: '', frame: '', lens: '', aspect: '2:3', camera: '', scene: '', outfit: '', custom: '', action: ST.normalizeAction(S, {}) }; };
-  const set = { version: o.legacy ? 1 : 3, card: c.name, no: c.no, style, plan: o.plan ? path.resolve(o.plan) : '',
+  const set = { version: o.legacy ? 1 : 4, card: c.name, no: c.no, style, plan: o.plan ? path.resolve(o.plan) : '',
     note: '고칠 수 있는 칸만 있다. 자리마다 고정인 것(출력·인물 기준·장갑 폼·폭주 기준·첨부)은 tools/prompt-pack.cjs 가 정한다. 다 쓰면 build.', slots: {} };
   const plan = o.plan ? JSON.parse(fs.readFileSync(o.plan, 'utf8')) : null;
   const used = o.legacy ? [] : recentSilhouettes(o.repos, c.name);
@@ -345,7 +349,9 @@ function build(o) {
   let rev = '';
   try { rev = cp.execFileSync('git', ['-C', ROOT, 'rev-parse', '--short', 'HEAD']).toString().trim(); } catch (e) { /* git 이 없는 곳 */ }
   /* 옷 목록(2026-11-09 「일상컷도 우리쪽 의상자료를 참고하라고해서 여기 없는걸 선택하라고 하자」) — 옷 자유 컷은 이 목록에 없는 옷을 짓는다 */
-  fs.writeFileSync(path.join(o.dir, 'outfit-catalog.md'), '# Our outfit catalog — every outfit type we already use for casual cuts\n\nFor a free-outfit cut, design an outfit that is NOT on this list.\n\n' + (d.tree.outfits || []).map(f => '## ' + f.key + ' — ' + String(f.en).replace('{costume}', 'her creature') + '\n' + (f.items || []).map(i => '- ' + String(i.en).replace('{costume}', 'her creature')).join('\n')).join('\n\n') + '\n');
+  fs.writeFileSync(path.join(o.dir, 'outfit-catalog.md'), '# Our outfit catalog — every outfit type we already use for casual cuts\n\nFor a free-outfit cut, design an outfit that is NOT on this list.\n\n' + (d.tree.outfits || []).map(f => '## ' + f.key + ' — ' + String(f.en).replace('{costume}', 'her creature') + '\n' + (f.items || []).map(i => '- ' + String(i.en).replace('{costume}', 'her creature')).join('\n')).join('\n\n') + '\n' +
+    /* 우리 상황 노출 목록(2026-11-11) — 갈래 · 상황 자유 컷은 여기 없는 상황을 짓는다 */
+    '\n# Our exposure situations — every situation we already use\n\nFor the free category + situation cut, invent a situation that is NOT on this list.\n\n' + (S.SITUATIONS || []).map(x => '- ' + x.key + ' — ' + x.en).join('\n') + '\n');
   for (const r of out) {
     fs.writeFileSync(path.join(o.dir, r.slot + '-prompt.txt'), r.text + '\n');
     fs.writeFileSync(path.join(o.dir, r.slot + '-ui.json'), JSON.stringify(r.ui, null, 1) + '\n');
@@ -359,7 +365,8 @@ function build(o) {
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
     '자리마다 `<자리>-prompt.txt` 를 **고치지 않고 그대로** 제출하고, 첨부 칸의 그림을 붙인다. 고칠 것이 있으면 settings.json 을 고쳐 build 를 다시 돌린다.', '',
     '**① → 멈춤 → 일상컷**(2026-11-11 삼국지 · 원소와 같이). ① 은 **네 장**(첨부 없이 한 장씩) — **두 장은 우리 설계 `light-prompt.txt` 그대로, 두 장은 임의 설계 `light-free.txt`**(설계 주문 — 화풍 · 색 · 머리색 · 체형 · 장갑 폼 · 원작 특징 · 노출 · 구도 · 자세는 우리 것, 큰 실루엣은 목록에서 하나 + 원작에서 딴 제 아이디어 하나, 얼굴 · 눈색(우리 것이든 제 것이든) · 헤어스타일 · 화장 · 표정 · 장면(배경) · 타입 효과는 맡은 쪽이 지어 제 지시문을 쓴다, 둘째 장은 첫째와 확실히 다르게(자세는 같게)). 네 장을 「우리 설계 1 · 2 / GPT 설계 1 · 2」 로 붙여 보이고 **멈추고 묻는다** — 고르기 전엔 일상컷으로 넘어가지 않고 ① 도 올리지 않는다. 고른 장만 올리고 그 장을 붙여 일상컷을 그린다. 임의 설계 장이면 기록 `generation.design: "gpt_free"` 와 실제로 넘긴 지시문(`generation.free_prompt`)을 남긴다.', '',
-    '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷은 Outfit 줄이 「노출 의상을 네가 지어라」 다 — 이 묶음의 `outfit-catalog.md`(우리가 쓰는 옷 전부)를 읽고 **거기 없는 옷**을 지어 그 줄에만 써 넣는다(실제로 넘긴 글은 기록에).', '',
+    '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷 가운데 「장면 자유」 가 아닌 한 장은 Outfit 줄이 「노출 의상을 네가 지어라」 다 — 이 묶음의 `outfit-catalog.md`(우리가 쓰는 옷 전부)를 읽고 **거기 없는 옷**을 지어 그 줄에만 써 넣는다(실제로 넘긴 글은 기록에).', '',
+    '**일상컷 자유 장면 두 장**(2026-11-11) — 계획에 「장면 자유」(옷 자유 가운데 한 장) · 「갈래 · 상황 자유」 로 적힌 컷은 SCENE 칸이 설계 주문이다: **장소 · 활동 · 자세 · 구도 · 의상을 맡은 쪽이 짓는다** — 캐릭터의 특징에서 출발해 예상하지 못했지만 자연스럽게 어울리는 일상의 한 순간, 참신함은 장식보다 상황과 행동에서, 이 묶음의 다른 일상컷 · 이 세션에서 그린 컷과 비슷한 장면은 피한다. 장면 자유는 `outfit-catalog.md` 에 **없는 노출 의상**, 갈래 · 상황 자유는 필수 갈래(성인 롤플레이 · 수영복 · 란제리풍) 하나를 골라 **없는 옷** + 끝의 상황 목록에 **없는 노출 상황**. SCENE 밖의 칸(얼굴 · 화풍 · 체형 · 인체 · 옷 갈아입기 · 각도)과 표정 · 노출 강도 · 원작 영향도 줄은 우리 것 그대로 — 그 위에서 제 지시문을 써 그린다. 기록에 `generation.design: "gpt_free"` 와 실제로 넘긴 지시문(`generation.free_prompt`).', '',
     '**프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다(2026-11-08).** IMAGE_RULES.md 1절의 변경 사유(settings 고친 뒤 build · 막혔을 때 계획기 다시 계획 · 같은 지시문 재생성 · 사용자가 시킨 부분 고치기) 말고는 낱말 하나도 고치지 않는다. image_gen 에도 이 글 그대로 넘기고(`submitted` 0 일 때만) 고쳐 쓰지 말고 그대로 그리게 한다.', '',
     '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
@@ -376,7 +383,7 @@ function build(o) {
       '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
       '| 몸 자세 · 구도 | ' + (v.posture ? v.posture.ko : '—') + ' · ' + v.frame + ' · ' + (v.body ? v.body.ko : '—') + ' | ' + (v.posture ? v.posture.en : '') + ' |',
       '| 손 · 소품 동작 | ' + v.hands + (v.use ? ' · ' + v.use.prop + ' · ' + v.use.ko : '') + ' | ' + (v.use ? v.use.en : '') + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
   }
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV !== 2)) {
@@ -388,7 +395,7 @@ function build(o) {
       '| 하는 일 | ' + (t.act ? t.act.ko + (t.act.pose_family ? ' · ' + t.act.pose_family : '') : '—') + ' | ' + (t.act ? t.act.en : '') + ' |',
       '| 의상 계열 | ' + (t.ofam ? t.ofam.ko : '—') + ' | ' + (t.ofam ? t.ofam.en + (t.ofam.guide ? ' — ' + t.ofam.guide : '') : '') + ' |',
       '| 옷 | ' + t.item.ko + ' | ' + t.item.en + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
   }
   if (!o.slot) fs.writeFileSync(path.join(o.dir, 'INDEX.md'), lines.join('\n') + '\n');
@@ -397,7 +404,7 @@ function build(o) {
 
 /* 실제로 넘긴 글 — 묶음 지시문과 글자 그대로인지(2026-11-03). 넘긴 글이 묶음과 다르면 그 그림은 묶음 지시문의 결과가 아니다 */
 function submitted(o) {
-  if (!o.dir || !(SLOTS[o.slot] || SLOTS7[o.slot] || NINE[o.slot]) || !o.file) throw new Error('submitted --dir <작업 폴더> --slot <자리> --file <넘긴 글>');
+  if (!o.dir || !(SLOTS[o.slot] || SLOTS7[o.slot] || NINE[o.slot]) || !o.file) throw new Error('submitted --dir <작업 폴더> --slot <자리> --file <넘긴 글>');   /* SLOTS 가 SLOTS9 를 품는다 */
   const want = fs.readFileSync(path.join(o.dir, o.slot + '-prompt.txt'), 'utf8'), got = fs.readFileSync(o.file, 'utf8');
   const out = path.join(o.dir, o.slot + '-submitted.txt');
   if (path.resolve(o.file) !== path.resolve(out)) fs.writeFileSync(out, got);
@@ -423,4 +430,4 @@ if (require.main === module) {
     else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리] | submitted --dir <작업 폴더> --slot 자리 --file <넘긴 글>'); process.exit(2); }
   } catch (e) { console.error(e.message); process.exit(2); }
 }
-module.exports = { SLOTS, SLOTS7, NINE, slotsOf, PACK_STYLE, init, build, submitted, stateOf, planCut, fileName, guideOfV2, recentSilhouettes, autoMecha };
+module.exports = { SLOTS, SLOTS9, SLOTS7, NINE, slotsOf, PACK_STYLE, init, build, submitted, stateOf, planCut, fileName, guideOfV2, recentSilhouettes, autoMecha };

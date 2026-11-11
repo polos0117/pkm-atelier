@@ -44,7 +44,7 @@ claims는 캐릭터 전체에 대한 owner/run 잠금이다. 시간 경과만으
 ```sh
 # 먼저 원문/UI를 영속 기록. 성공한 intent 하나당 생성 호출 한 번만.
 node tools/prompt-pack.cjs init <카드> --dir /path/pack --plan /path/plan.json   # 한 캐릭터에 한 번 — settings.json 을 채우고
-node tools/prompt-pack.cjs build --dir /path/pack                             # 열 자리(① + 일상 아홉 — 2026-11-09, settings version 2 는 여덟 자리 · 예전 차례는 아홉) <slot>-prompt.txt · <slot>-ui.json · INDEX.md
+node tools/prompt-pack.cjs build --dir /path/pack                             # 열한 자리(① + 일상 열 — 2026-11-11, settings version 3 은 열 자리 · version 2 는 여덟 자리 · 예전 차례는 아홉) <slot>-prompt.txt · <slot>-ui.json · INDEX.md
 python3 tools/image-runner.py intent --owner pkm-daily --card 345 --slot heavy --prompt /path/pack/heavy-prompt.txt --ui /path/pack/heavy-ui.json
 node tools/prompt-pack.cjs submitted --dir /path/pack --slot heavy --file /path/sent.txt   # 넘길 글 그대로 — 0 일 때만 부른다(IMAGE_RULES 3절)
 # 에이전트가 image_gen을 호출한다. 위 명령은 이미지를 만들지 않는다.
@@ -74,7 +74,7 @@ python3 tools/image-runner.py resume --reason '확인한 해결 내용'
 
 ## 업로드와 완료
 
-그 차례의 slot을 모두 승인한 뒤(2026-11-07 부터 새 차례는 `slot_set: light7` — 경장 ① + casual1~7 여덟 개, 화풍 `anime_gloss`. 그 전에 잡은 차례는 아홉 개 그대로) IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지(img/)와 종별 records는 한 캐릭터 단위 커밋으로 **열린 저장소 img-4/main**(2026-10-31 부터 — img-3 은 약 938MB 라 닫힘)에 올린다 — 생성 원본 PNG 없이(아래 "원본은 세션 안에만"). 상태(`records/automation/state.json`)는 그대로 img-2. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. 기존 원격 원본 기록은 보존하지만 새 원본 PNG/JPG는 업로드하지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
+그 차례의 slot을 모두 승인한 뒤(2026-11-11 부터 새 차례는 `slot_set: light10` — 경장 ① + casual1~10 열한 개. `light9`(11-09 ~ 11-11) 은 열 개, `light7`(11-07 ~ 11-08) 은 여덟 개, 그 전에 잡은 차례는 아홉 개 그대로) IMAGE_RULES대로 새 WebP를 만들고 이름·중복 검사를 수행한다. PNG는 quality85/method6, 기존 WebP는 재인코딩하지 않는다. 이미지(img/)와 종별 records는 한 캐릭터 단위 커밋으로 **열린 저장소 img-4/main**(2026-10-31 부터 — img-3 은 약 938MB 라 닫힘)에 올린다 — 생성 원본 PNG 없이(아래 "원본은 세션 안에만"). 상태(`records/automation/state.json`)는 그대로 img-2. 업로드 직전에 `python3 tools/image-runner.py prepublish --owner pkm-daily --card 345`를 실행한다. 반환 `operation`이 prepublish이고 `upload_base`가 있을 때만 그 commit을 부모로 업로드 커밋을 만든다. 로컬 업로드 checkout의 HEAD가 그 SHA와 일치하는지 확인하고, 기존 경로에는 다른 바이트를 쓰지 않는다. 일반 push가 밀리면 rebase 후 재push하지 말고 prepublish부터 다시 대조한다. prepublish는 이미지를 업로드하지 않는다. 기존 원격 원본 기록은 보존하지만 새 원본 PNG/JPG는 업로드하지 않는다. 썸네일/등록 Actions의 실패·경고를 확인한다.
 
 ```sh
 python3 tools/image-runner.py complete --owner pkm-daily --card 345
