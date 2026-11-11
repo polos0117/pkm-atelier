@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · ① 임의 설계 — 자세는 우리 것, 눈색은 우리 것 · 맡은 쪽 것 둘 다
+- 사용자 「자세는 고정, 눈색은 자유로 하자」 → 「대신 눈색은 우리거 써도 되고, gpt가 정해도 되는걸로」 — FREE_DESIGN.eyes 「Eye colour (your choice): ours is … — keep it or choose your own」(우리 눈색은 Impression 줄에서) — lib/prompt-spec.js FREE_DESIGN.pose · free · second, lib/prompt-anthro.js buildFree 가 우리 ① 의 자세 줄(「Default stance is a standing, card-ready pose …」)을 「Pose (fixed — ours)」 로 싣는다. 장면(배경)은 맡은 쪽. IMAGE_RULES 「① 경장」 · 묶음 INDEX 말 · tests/prompt-pack.cjs
+
 ## 2026-11-11 · claude · ① 네 장 — 우리 설계 둘 + GPT 임의 설계 둘, 고른 뒤 일상컷
 - 사용자 「pkm쪽 생성룰에 삼국지나 원소공방처럼 메카컷 우리쪽설계2장, gpt설계 2장 생성해서 나한테 검토 후 진행하는 방향으로 바꿔줘」
 - lib/prompt-spec.js FREE_DESIGN(삼국지 · 원소 WORLD_FREE 꼴), lib/prompt-anthro.js buildFree — 우리 ① 지시문(칸 꼴 · 줄 꼴)에서 화풍 · 색 · 머리색 · 체형 · 장갑 폼 · 원작 특징 · 노출 · 구도를 「fixed — ours」 로 뽑고, 큰 실루엣은 그 종 타입 추천 목록에서 하나 + 원작 아이디어 하나, 얼굴 · 눈색 · 헤어스타일 · 표정 · 자세 · 장면 · 타입 효과는 맡은 쪽

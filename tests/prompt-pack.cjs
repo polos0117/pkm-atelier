@@ -235,6 +235,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert(lf.startsWith('Design brief') && lf.includes('Pikachu (피카츄), electric type') && lf.includes('Body type (fixed — ours): ' + S.CARD_FIGURE), '① 임의 설계 — 누구 · 체형은 우리 것');
     assert(pikaSil.every(t => lf.includes(t.replace(/\.$/, ''))) && /Type effects \(yours\): one or two electric effects/.test(lf), '① 임의 설계 — 큰 실루엣은 그 타입 추천에서, 타입 효과는 맡은 쪽');
     assert(['Style (fixed — ours): ', 'Colours (fixed — ours): ', 'Armor (fixed — ours): ', 'Exposure (fixed — ours): ', 'Composition (fixed): '].every(h => lf.includes(h)) && !/Face — /.test(lf) && !/Impression/.test(lf), '① 임의 설계 — 얼굴 · 인상은 우리 줄을 싣지 않는다');
+    assert(/Pose \(fixed — ours\): Default stance is a standing, card-ready pose/.test(lf) && /^Eye colour \(your choice\): ours is [a-z -]+ eyes — keep it or choose your own\.$/m.test(lf) && !/eye colou?r \(fixed/i.test(lf), '① 임의 설계 — 자세는 우리 것, 눈색은 우리 것도 맡은 쪽 것도(2026-11-11)');
     assert(idx.includes('light-free.txt') && idx.includes('멈추고 묻는다') && idx.includes('gpt_free'), '차례표에 ① 네 장 · 멈춤');
     assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY TYPE: ' + S.CARD_FIGURE + ' — '), '일상컷 몸 = 설계표 체형(2026-11-08)');
     /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */
