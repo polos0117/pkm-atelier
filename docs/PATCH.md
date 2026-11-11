@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · core v3 블록
+- core 블록 판만 v3 로 — 포켓몬은 face_shape · lips 표가 없어 지시문 변화 없음
+- prompt.html ?v=core3
+
 ## 2026-11-11 · claude · core v2 블록
 - core 블록 판만 v2 로 — 포켓몬은 face_shape 표가 없어 지시문 변화 없음(긴 얼굴은 제 FACE_SOFT 로 이미 순화)
 - prompt.html ?v=core2
