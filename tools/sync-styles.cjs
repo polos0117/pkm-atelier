@@ -13,8 +13,17 @@ function registry() {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'lib/prompt-spec.js'), 'utf8'), ctx);
   const S = ctx.window.AtelierSpec;
-  const styles = Array.from(S.ART_STYLES, ([key, name]) => ({ key, name }));
+  /* 내린 화풍(S.RETIRED_STYLES, 2026-11-11)도 목록에 남는다 — 등록기가 파일 이름에서 키를 읽는다. retired · retired_why 만 붙는다 */
+  const retired = S.RETIRED_STYLES || {};
+  const styles = Array.from(S.ART_STYLES, ([key, name]) => retired[key]
+    ? { key, name, retired: retired[key].date, retired_why: retired[key].why } : { key, name });
   assert.equal(new Set(styles.map(s => s.key)).size, styles.length, 'Duplicate style key');
+  for (const key of Object.keys(retired)) {
+    assert(styles.some(s => s.key === key), 'Retired style is not a style: ' + key);
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(retired[key].date) && retired[key].why, 'Retired style needs date and why: ' + key);
+  }
+  assert.deepEqual(Array.from(S.LIVE_STYLES, r => r[0]), styles.filter(s => !s.retired).map(s => s.key), 'LIVE_STYLES differs from ART_STYLES minus retired');
+  assert(!retired[S.DEFAULT_STYLE], 'Default style is retired');
   for (const { key, name } of styles) {
     assert(/^[a-z][a-z0-9_]*$/.test(key) && name, 'Invalid style row: ' + key);
     for (const table of ['ACTION_STYLE_CORES', 'CASUAL_STYLE_CORES'])
@@ -23,7 +32,7 @@ function registry() {
   assert(styles.some(s => s.key === S.DEFAULT_STYLE), 'Default style is not selectable');
   return {
     version: 1,
-    note: 'Generated from lib/prompt-spec.js ART_STYLES. Do not edit separately. Run node tools/sync-styles.cjs --write after changing prompt styles. Keys are shared by prompts, gallery, image registration and filenames.',
+    note: 'Generated from lib/prompt-spec.js ART_STYLES. Do not edit separately. Run node tools/sync-styles.cjs --write after changing prompt styles. Keys are shared by prompts, gallery, image registration and filenames. Shape: styles = [{key, name, retired?, retired_why?}] — a row with retired (date, from RETIRED_STYLES) stays for registration and history but is not offered for new work.',
     styles,
   };
 }

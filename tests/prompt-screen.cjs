@@ -14,7 +14,12 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.equal(await p.locator('#source').inputValue(),'피카츄','dex deep link');
   assert.deepEqual(await p.locator('#group option').evaluateAll(es=>es.slice(1).map(e=>e.textContent)),
    groups.order.map(k=>groups.name[k]));
-  assert.equal(await p.locator('#style option').count(),18);   // 2026-11-06 anime_gloss · 2026-11-07 gloss_daylight · 2026-11-08 anime_25d · anime_25d_gloss
+  /* 고르개엔 지금 쓰는 화풍만(2026-11-11 그림 없는 열하나를 내렸다 — S.RETIRED_STYLES). 18 → 7 */
+  const live=await p.evaluate(()=>window.AtelierSpec.LIVE_STYLES.map(r=>r[0])),retired=await p.evaluate(()=>Object.keys(window.AtelierSpec.RETIRED_STYLES));
+  assert.deepEqual(live,['cinematic_semi_real','glossy_promo','mecha_cinematic_keyart','anime_gloss','gloss_daylight','anime_25d','anime_25d_gloss']);
+  assert.deepEqual(await p.locator('#style option').evaluateAll(es=>es.map(e=>e.value)),live,'화풍 고르개 = 지금 쓰는 일곱');
+  assert.equal(retired.length,11);
+  for(const k of retired) assert.equal(await p.locator('#style option[value="'+k+'"]').count(),0,'내린 화풍이 고르개에: '+k);
   assert.equal(await p.locator('#mode-portrait').count(),0,'the sheet mode is gone');
   assert((await text()).startsWith('INPUT: text only'));
   assert((await text()).includes('lightning-shaped tail becomes'),'source data is worn as costume');
@@ -119,7 +124,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
    assert((await text()).includes('STYLE: '+await p.evaluate(k=>window.AtelierSpec.CASUAL_STYLE_CORES[k],key))&&!(await text()).includes("keep the attached image's rendering"),key);
    assert(!(await text()).includes('undefined'),key);
   }
-  await p.locator('#style').selectOption('bright_catalog');await settled();
+  await p.locator('#style').selectOption('gloss_daylight');await settled();
   const want=await text();
   await p.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
    writeText:async t=>{window.__copied=t}}}));
@@ -134,10 +139,10 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert(!(await text()).includes('CASUAL_SCENE_MARKER'));
   await p.locator('#source').selectOption('피카츄');await settled();
   assert((await text()).includes('CASUAL_SCENE_MARKER'));
-  assert.equal(await p.locator('#style').inputValue(),'bright_catalog');
+  assert.equal(await p.locator('#style').inputValue(),'gloss_daylight');
   await p.reload();
   await p.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('CASUAL_SCENE_MARKER'));
-  assert.equal(await p.locator('#style').inputValue(),'bright_catalog');
+  assert.equal(await p.locator('#style').inputValue(),'gloss_daylight');
   await p.locator('#mode-action').click();await settled();
   assert((await text()).includes('LOW_CAMERA_MARKER'));
   // The wrap owns scrolling on small and large viewports.
@@ -194,6 +199,6 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await corrupt.page.waitForSelector('#prompt-output');
   assert.deepEqual(corrupt.errors,[]);
   await corrupt.close();
-  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 18 styles, copy, saved settings, figures, 44px controls and 3 viewport sizes');
+  console.log('PASS prompt screen: action/casual, wear from data, reference identity, overdrive, forms, 7 live styles (11 retired hidden), copy, saved settings, figures, 44px controls and 3 viewport sizes');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

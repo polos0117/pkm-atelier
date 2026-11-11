@@ -42,3 +42,8 @@ node tests/styles.cjs
 기존 `semi_real` 이미지 분류와 원본·썸네일 파일명은
 `cinematic_semi_real`로 통합했다. 사용되지 않던 `bright_catalog`는 제거했다.
 이름만 통일한 것으로, 기존 이미지를 재생성하거나 화풍을 보정한 것은 아니다.
+
+2026-11-11 도감에 그림이 한 장도 없던 화풍 열하나(`game_keyart` · `glossy_kr_game` · `game_cgi` · `semi_real_paint` ·
+`photoreal` · `anime_illust` · `cel_anime` · `painterly` · `retro_anime` · `ink_wash` · `bright_catalog`)를 내렸다.
+정의와 문장은 `ART_STYLES` 에 남고 `RETIRED_STYLES` 에 적혀, 생성기 고르개(`LIVE_STYLES`) · 지시문 묶음 · 도감 화풍 거르기에서 빠진다.
+`data/style.json` 에는 `retired` · `retired_why` 가 붙은 채 남는다.

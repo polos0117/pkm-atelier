@@ -11,6 +11,15 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 그림 없는 화풍 열하나 내림
+- 사용자 「도감에 그림 등록이 없는 키들은 빼는게 좋을거 같아」 → 「1,2번 다 내려줘」 — data/img.json byStyle 에 한 장도 없던 game_keyart · glossy_kr_game · game_cgi · semi_real_paint · photoreal · anime_illust · cel_anime · painterly · retro_anime · ink_wash · bright_catalog(다시 세어 0 확인). 남는 화풍 일곱: glossy_promo · anime_25d_gloss · anime_gloss · anime_25d · mecha_cinematic_keyart · gloss_daylight · cinematic_semi_real
+- lib/prompt-spec.js — RETIRED_STYLES(날짜 · 까닭)와 LIVE_STYLES(ART_STYLES 에서 내린 것만 뺀 차례) 추가. 정의 · 화풍 문장 · 견본은 기록으로 그대로 둔다
+- tools/sync-styles.cjs · data/style.json — 내린 열하나에 retired 2026-11-11 · retired_why 를 붙여 생성(등록기가 옛 파일 이름을 읽도록 목록엔 남긴다). LIVE_STYLES 와 어긋나거나 기본 화풍이 내린 것이면 실패
+- lib/prompt-ui.js — 생성기 화풍 고르개가 LIVE_STYLES 만(18 → 7). lib/prompt-state.js — 저장값 · 주소의 내린 화풍은 기본 화풍으로. prompt.html 판(retire1)
+- tools/prompt-pack.cjs — init --style 내린 화풍이면 서고, build 는 settings 의 내린 화풍을 고칠 칸으로
+- dex.html — 도감 화풍 거르기에서 retired 화풍을 뺀다(그림은 원래 없다 · 주소로 고른 값이면 그 칸만 남긴다)
+- tests/styles.cjs · prompt-engine.cjs · prompt-screen.cjs · prompt-pack.cjs · dex-nav.cjs — 옛 18 개 고르개 대신 지금 일곱 · 내린 열하나(그림 없음 · 저장값은 기본으로 · 묶음이 막는다 · 도감 거르기에 없음). 옛 코드로 돌려 실패하는 것을 먼저 봤다. AGENTS.md · README.md · IMAGE_RULES.md 화풍 말 고침
+
 ## 2026-11-11 · gpt · 윤겔라·모다피 애니 2.5D 광택 열 장씩 등록
 - data/img.json — 윤겔라·모다피 각각 경장 1장과 일상 9장을 anime_25d_gloss로 추가. 기존 화풍과 그림은 보존하고 새 그림은 4번 그림 저장소에 게시.
 

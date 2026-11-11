@@ -24,6 +24,13 @@ async function visibleCell(p) {
     const a = await h.open('dex.html', { viewport: FOLD.cover, mobile: true }), p = a.page;
     await p.waitForSelector('.grid > .cell');
     const len0 = await p.evaluate(() => history.length);
+    /* 화풍 거르기엔 내린 화풍(data/style.json retired — 2026-11-11 그림 없던 열하나)이 안 뜬다. 지금 쓰는 화풍은 다 뜬다 */
+    {
+      const rows = JSON.parse(require('node:fs').readFileSync('data/style.json', 'utf8')).styles;
+      const opts = await p.$$eval('#dex-style option', es => es.map(e => e.value));
+      assert(rows.some(r => r.retired), 'no retired style to check');
+      for (const r of rows) assert.equal(opts.includes(r.key), !r.retired, 'dex style filter: ' + r.key);
+    }
 
     /* 0. 칸이 천 장이어도 화면 밖은 안 그린다 — content-visibility:auto, 그리기 전 높이는 잰 값이라 굴림 높이가 그대로다 */
     await p.waitForTimeout(300);

@@ -45,7 +45,22 @@ for (const [name, entry] of Object.entries(images)) {
     files(bucket, key);
   }
 }
-console.log('PASS: ' + actual.styles.length + ' styles generate prompts; ' + count + ' image filenames match');
+/* 내린 화풍(2026-11-11) — style.json 에 남되 retired · retired_why 가 붙고, 그 키로 등록된 그림이 없다(그림 없는 것만 내렸다).
+   새 작업 쪽: 생성기 저장값의 내린 화풍은 기본 화풍으로 돌아간다 */
+const LIVE = ['cinematic_semi_real', 'glossy_promo', 'mecha_cinematic_keyart', 'anime_gloss', 'gloss_daylight', 'anime_25d', 'anime_25d_gloss'];
+assert.deepEqual(actual.styles.filter(s => !s.retired).map(s => s.key), LIVE, 'Live styles');
+const retiredRows = actual.styles.filter(s => s.retired);
+assert.equal(retiredRows.length, 11, 'Retired styles');
+const used = new Set(Object.values(images).flatMap(e => Object.keys(e.byStyle || {})));
+for (const r of retiredRows) {
+  assert(r.retired === '2026-11-11' && /도감에 그림이 없는 화풍/.test(r.retired_why), 'Retired row: ' + r.key);
+  assert(!used.has(r.key), 'A retired style has registered images: ' + r.key);
+}
+vm.runInContext(fs.readFileSync('lib/prompt-state.js', 'utf8'), ctx);
+const ST = ctx.window.AtelierPromptState, tree = JSON.parse(fs.readFileSync('data/casual-tree.json', 'utf8'));
+for (const r of retiredRows) assert.equal(ST.normalize(S, ctx.window.AtelierCasualTree, { style: r.key }, tree).style, S.DEFAULT_STYLE, 'Retired style kept in state: ' + r.key);
+for (const key of LIVE) assert.equal(ST.normalize(S, ctx.window.AtelierCasualTree, { style: key }, tree).style, key, 'Live style dropped from state: ' + key);
+console.log('PASS: ' + actual.styles.length + ' styles generate prompts (' + LIVE.length + ' live, ' + retiredRows.length + ' retired); ' + count + ' image filenames match');
 
 for(const identityMode of ['create','reference']) {
  const t=P.buildPrompt({mech:'Bulbasaur',style:'glossy_promo',outputMode:'portrait',identityMode,form:'light',params:[['apparent age','20s'],['facial character','cute']]});

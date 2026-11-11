@@ -28,6 +28,19 @@ try {
   assert.equal(r.status, 0, r.stderr);
   const set = JSON.parse(fs.readFileSync(path.join(dir, 'settings.json'), 'utf8'));
   assert.equal(set.style, 'glossy_promo', '기본 화풍');
+  /* 내린 화풍(2026-11-11 그림 없는 열하나)은 새 묶음에 못 쓴다 — init 이 서고, 손으로 적은 settings 는 build 가 고칠 칸으로 */
+  for (const k of Object.keys(S.RETIRED_STYLES)) {
+    const rd = path.join(tmp, 'retired-' + k), rr = run('init', '피카츄', '--dir', rd, '--style', k);
+    assert(rr.status !== 0 && /내린 화풍/.test(rr.stderr) && !fs.existsSync(path.join(rd, 'settings.json')), 'init 이 내린 화풍을 받았다: ' + k);
+  }
+  {
+    const rd = path.join(tmp, 'retired-build'); fs.mkdirSync(rd);
+    fs.writeFileSync(path.join(rd, 'settings.json'), JSON.stringify({ ...set, style: 'bright_catalog' }));
+    const rr = run('build', '--dir', rd);
+    assert(rr.status !== 0 && /style — 내린 화풍/.test(rr.stderr), 'build 가 내린 화풍을 받았다');
+  }
+  for (const [k] of S.LIVE_STYLES) assert.equal(run('init', '피카츄', '--dir', path.join(tmp, 'live-' + k), '--style', k).status, 0, '지금 화풍 init: ' + k);
+  checks += 3;
   assert.deepEqual(Object.keys(set.slots), ['light', 'heavy', 'mobility', 'light_overdrive', 'heavy_overdrive', 'mobility_overdrive', 'casual1', 'casual2', 'casual3']);
   assert(!('form' in set.slots.heavy) && !('identityMode' in set.slots.light), '고정값은 settings 에 없다');
   const g1 = set.slots.casual1.guide, treeJ = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/casual-tree.json'), 'utf8'));

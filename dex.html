@@ -365,8 +365,9 @@ function useDex() {
       for (const kind of Object.keys(card.cards || {}))
         for (const c of card.cards[kind]) cards.push(Object.assign({ kind }, c));
       const styleName = {};
-      for (const r of style.styles || []) styleName[r.key] = r.name;
-      set({ cards, defs: card.forms || {}, styleName, img, group, label });
+      const styleRetired = {};   // retired styles (data/style.json retired, 2026-11-11) stay named for old art but leave the filter
+      for (const r of style.styles || []) { styleName[r.key] = r.name; if (r.retired) styleRetired[r.key] = r.retired; }
+      set({ cards, defs: card.forms || {}, styleName, styleRetired, img, group, label });
     }).catch(e => set({ error: String((e && e.message) || e) }));
   }, []);
   return state;
@@ -756,7 +757,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
     <details class="dex-filters" open=${filtersOpen} onToggle=${e=>setFiltersOpen(e.currentTarget.open)}>
       <summary>${W('dex.filter.title')}</summary>
       <div class="dex-filter-grid">
-        ${pick('style',[all,...Object.entries(st.styleName)])}
+        ${pick('style',[all,...Object.entries(st.styleName).filter(([k])=>!(st.styleRetired||{})[k]||k===f.style)])}
         ${pick('gen',[all,...generations.map(n=>[String(n),W('card.gen',{n})])])}
         ${pick('type',[all,...types.map(k=>[k,st.group.name[k]||k])])}
         ${pick('cut',FILTER.CUTS.map(k=>[k,W('dex.cut.'+k)]))}

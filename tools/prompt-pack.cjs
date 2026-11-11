@@ -168,6 +168,7 @@ function init(o) {
   if (!c) throw new Error('카드가 없다: ' + o.card + ' (data/card.json 의 이름 그대로)');
   const SL = o.legacy ? NINE : SLOTS, style = o.style || (o.legacy ? LEGACY_STYLE : PACK_STYLE);
   if (!S.ACTION_STYLE_CORES[style]) throw new Error('화풍 키가 없다: ' + style);
+  if (S.RETIRED_STYLES[style]) throw new Error('내린 화풍이다(' + S.RETIRED_STYLES[style].date + ' — ' + S.RETIRED_STYLES[style].why + '): ' + style);
   const file = path.join(o.dir, 'settings.json');
   if (fs.existsSync(file)) throw new Error('이미 있다 — 덮지 않는다: ' + file);
   const blank = () => { return { expr: '', pose: '', orient: '', frame: '', lens: '', aspect: '2:3', camera: '', scene: '', outfit: '', custom: '', action: ST.normalizeAction(S, {}) }; };
@@ -324,6 +325,7 @@ function build(o) {
   if (!c) throw new Error('카드가 없다: ' + set.card);
   if (c.no !== set.no) bad.push('no — 카드 번호가 다르다(' + set.no + ' ≠ ' + c.no + ')');
   if (!S.ACTION_STYLE_CORES[set.style]) bad.push('style — 화풍 키가 없다: ' + set.style);
+  else if (S.RETIRED_STYLES[set.style]) bad.push('style — 내린 화풍이다(' + S.RETIRED_STYLES[set.style].date + '): ' + set.style);
   const SL = slotsOf(set);
   for (const k of Object.keys(set.slots || {})) if (!SL[k]) bad.push('slots.' + k + ' — 없는 자리');
   const planFile = o.plan || set.plan, plan = planFile && fs.existsSync(planFile) ? JSON.parse(fs.readFileSync(planFile, 'utf8')) : null;

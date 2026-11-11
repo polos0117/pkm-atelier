@@ -20,6 +20,10 @@ function input(name,extra){
 const build=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
 assert.equal(S.ART_STYLES.length,18);   // 2026-11-08 anime_25d · anime_25d_gloss
+/* 2026-11-11 그림 없는 열하나를 내렸다 — 정의(18)는 기록으로 남고, 새 작업에서 고르는 것은 일곱 */
+assert.deepEqual(Array.from(S.LIVE_STYLES,r=>r[0]),['cinematic_semi_real','glossy_promo','mecha_cinematic_keyart','anime_gloss','gloss_daylight','anime_25d','anime_25d_gloss']);
+assert.deepEqual(Array.from(Object.keys(S.RETIRED_STYLES)).sort(),['anime_illust','bright_catalog','cel_anime','game_cgi','game_keyart','glossy_kr_game','ink_wash','painterly','photoreal','retro_anime','semi_real_paint']);
+assert(!S.RETIRED_STYLES[S.DEFAULT_STYLE],'기본 화풍은 내린 화풍이 아니다');
 assert(!S.PROMPT_LINES.anatomy.includes('enlargement'),'ANATOMY 에 신체 과장 금지 말 없음(2026-11-07 — 체형 줄과 부딪혔다)');   // 2026-11-06 anime_gloss · 2026-11-07 gloss_daylight
 assert.equal(S.DEFAULT_STYLE,'anime_25d_gloss','기본 화풍은 애니 2.5D 광택(IMAGE_RULES 와 같이 — 2026-11-08)');
 assert(/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d_gloss)&&/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d_gloss)&&!/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d)&&!/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d),'피부 광택은 새 키에만 — anime_25d 는 광택 전 그대로');

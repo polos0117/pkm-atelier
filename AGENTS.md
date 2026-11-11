@@ -147,7 +147,7 @@ node tests/lane-sim.cjs --quick   # 진화 결투 — 규칙·AI·보상 (--quic
 node tests/gwent-sim.cjs --quick  # 폼 결투 — 규칙·AI·보상 (--quick 없이 돌리면 균형 보고)
 node tests/patch.cjs             # 패치 기록의 모양 — 날짜·차례·빈 칸
 node tests/source-appearance.cjs # 1025종 외형 자료 — 출처·길이·색과 입는 법·이어가기 격리
-node tests/styles.cjs            # 화풍 14가지가 프롬프트를 내고 견본 파일명이 맞나
+node tests/styles.cjs            # 화풍 18가지(지금 쓰는 일곱 · 2026-11-11 내린 열하나)가 프롬프트를 내고 견본 파일명이 맞나 · 내린 화풍은 그림 없음 · 저장값에서 기본으로
 ```
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
