@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · core v4 블록
+- core 블록 판을 v4 로 — 칸 꼴 틀(CORE_FRAME)이 같이 오지만 이 공방 지시문은 아직 제 구조라 바뀐 것 없음. 칸 꼴로 옮길 땐 대조표 초안 먼저(사용자 2026-11-11 3단계)
+
 ## 2026-11-11 · claude · core v3 블록
 - core 블록 판만 v3 로 — 포켓몬은 face_shape · lips 표가 없어 지시문 변화 없음
 - prompt.html ?v=core3
