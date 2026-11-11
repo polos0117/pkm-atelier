@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 기본 화풍의 「파스텔」 → 「자기 색을 부드럽게」(감사 P1)
+- anime_25d_gloss 세계 그림 글: 「Use luminous midtones, restrained highlights on clothing and armor, and a delicate pastel palette(빛나는 중간 톤, 옷 · 장갑엔 절제된 하이라이트, 섬세한 파스텔 색)」 → 「Use luminous midtones and restrained highlights on clothing and armor, keeping her own colours in soft, clean tints(… 색은 그 종의 자기 색 그대로 부드럽고 깨끗한 톤으로)」. 일상컷 글도 같이(장갑 말만 빠진 꼴)
+- 까닭: 첫 색이 검정 · 짙은 색인 183종(검정이 들어간 종 330)에서 종의 색 줄(Colours)과 「파스텔」 이 서로 반대 말이었다(독침붕 · 피죤투 · 아보 …). 광택 전 판 anime_25d 는 기본 화풍이 아니라 그대로
+- 지시문 1,025종 모두 1칸 한 문장만 바뀜. prompt.html prompt-spec ?v=p1, 검사 — 처음부터 깨져 있던 14개 말고 통과(dot-screen 은 한 번 깨졌다 다시 돌리니 통과 — 도트 배율 검사)
+- 사용자 2026-11-11 「응 고쳐줘」
+
 ## 2026-11-11 · claude · 메카 지시문 칸 꼴
 - lib/prompt-anthro.js · lib/prompt-spec.js — 새 인물 · 이어가기 · 개방 지시문을 core 칸 틀(CORE_FRAME)의 머리말 + 다섯 칸으로(toSections). 사용자 2026-11-11 「초안 없이 다 진행해줘」(3단계 — 칸 꼴 통일). 일상컷은 그대로
 - 칸 대조 — 머리말 Input · Source · Subject · Output / 1 STYLE 화풍 문장 / 2 CHARACTER (첨부 그림의 그 사람) · Face — · Hair · Hair color · Impression · Identity · Proportions(옛 ANATOMY) · Body · Hands · 해부 줄 / 3 ARMOR — 폼 Costume(옛 FORM —) · Form note · Armor · Silhouette · Colours(옛 PALETTE) · Wear · Head · Motifs to keep · Exposure (개방은 Change only this) / 4 SCENE Composition · Pose · Type effects · 고른 장면 값 · Note / 5 CONSTRAINTS ONE FIGURE ONLY. · Avoid
