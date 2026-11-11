@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 표정 표를 공방 공통 글(core v1)로
+- lib/prompt-spec.js 끝에 화풍공방 core/v1 블록 — 표정 표(EXPRESSION_DETAIL) 32개가 공통 글(삼국지 11-03 순화본)로 바뀐다. 공방에만 있는 열쇠는 그대로
+- 사용자 2026-11-11 「프롬포트 생성 관련 테스트나 문구관리를 하나의 공방에서 관리는 못하나」 → 「응 1번부터 진행해줘」
+- ① 지시문(1025종)은 표정을 안 실어서 바뀐 것 없음 — 생성기에서 표정을 고를 때만 새 글
+- 검사 tests/core-sync.cjs(블록 = 원본), prompt.html ?v=core1
+
 ## 2026-11-11 · claude · 그림 없는 화풍 열하나 내림
 - 사용자 「도감에 그림 등록이 없는 키들은 빼는게 좋을거 같아」 → 「1,2번 다 내려줘」 — data/img.json byStyle 에 한 장도 없던 game_keyart · glossy_kr_game · game_cgi · semi_real_paint · photoreal · anime_illust · cel_anime · painterly · retro_anime · ink_wash · bright_catalog(다시 세어 0 확인). 남는 화풍 일곱: glossy_promo · anime_25d_gloss · anime_gloss · anime_25d · mecha_cinematic_keyart · gloss_daylight · cinematic_semi_real
 - lib/prompt-spec.js — RETIRED_STYLES(날짜 · 까닭)와 LIVE_STYLES(ART_STYLES 에서 내린 것만 뺀 차례) 추가. 정의 · 화풍 문장 · 견본은 기록으로 그대로 둔다
