@@ -92,15 +92,31 @@ assert(na > 1000, '자동 초안 ' + na);
   const tree = read('casual-tree.json'), nz = x => ST.normalize(S, W.AtelierCasualTree, x, tree), st0 = nz({});
   const pr = (st, table) => ST.prompt(W.AtelierPrompt, W.AtelierLifestyle, st, card, undefined, null, tree, null, table);
   const sel = { set: { silhouette: 'knight_plate', legs: 'heels', shoulders: 'balloon' }, fx: [{ key: 'aura', type: 'flying' }, { key: 'hand', type: '' }] };
-  const want = CML.lines(C, ['water', 'flying'], sel), withM = pr(nz({ mecha: sel }), C), base = pr(st0, C);
+  const want = CML.lines(C, ['water', 'flying'], sel);
   assert.equal(want.length, 2);
   assert(want[1].indexOf('TYPE EFFECTS: One open hand') === 0 && want[1].includes('pale sky-blue glow'), '표현 순서는 표 순서 · 오라는 비행');
-  const paras = withM.split('\n\n'), i = paras.indexOf(want[0]);
-  assert.equal(paras[i - 2], S.FORM_LINES.light, 'FORM 줄 · ARMOR 줄 뒤'); assert.equal(paras[i - 1], S.PROMPT_LINES.armor, 'ARMOR 줄(2026-11-08) 바로 뒤'); assert.equal(paras[i + 1], want[1]);
-  assert.equal(paras.filter((x, k) => k !== i && k !== i + 1).join('\n\n'), base, '두 줄 말고는 그대로');
-  assert.equal(pr(nz({ mecha: sel }), null), base, '표가 없으면 안 싣는다');
-  assert.equal(pr(nz({ mecha: { set: {}, fx: [] } }), C), base, '안 고르면 그대로');
-  assert(!/MECHA|TYPE EFFECTS/.test(pr(nz({ mecha: sel, identityMode: 'reference' }), C)), '이어가기에는 없다');
+  /* 줄 꼴(칸 꼴 스위치를 끈 판 — 2026-11-11 부터 지시문은 칸 꼴, 줄 꼴은 S.SECTIONS.on=false 로 남아 있다) — FORM · ARMOR 문단 바로 뒤 */
+  S.SECTIONS.on = false;
+  { const withM = pr(nz({ mecha: sel }), C), base = pr(st0, C);
+    const paras = withM.split('\n\n'), i = paras.indexOf(want[0]);
+    assert.equal(paras[i - 2], S.FORM_LINES.light, 'FORM 줄 · ARMOR 줄 뒤'); assert.equal(paras[i - 1], S.PROMPT_LINES.armor, 'ARMOR 줄(2026-11-08) 바로 뒤'); assert.equal(paras[i + 1], want[1]);
+    assert.equal(paras.filter((x, k) => k !== i && k !== i + 1).join('\n\n'), base, '두 줄 말고는 그대로');
+    assert.equal(pr(nz({ mecha: sel }), null), base, '표가 없으면 안 싣는다');
+    assert.equal(pr(nz({ mecha: { set: {}, fx: [] } }), C), base, '안 고르면 그대로');
+    assert(!/MECHA|TYPE EFFECTS/.test(pr(nz({ mecha: sel, identityMode: 'reference' }), C)), '이어가기에는 없다'); }
+  S.SECTIONS.on = true;
+  /* 칸 꼴(실제로 나가는 지시문) — 실루엣은 3칸 「Silhouette:」 로 Armor 줄 바로 뒤, 타입 표현은 4칸 「Type effects:」. 글은 lines 그대로, 두 줄 말고는 그대로 */
+  { const withM = pr(nz({ mecha: sel }), C), base = pr(st0, C), CF = S.CORE_FRAME;
+    const sil = 'Silhouette: ' + want[0].replace(/^MECHA SILHOUETTE: /, ''), fx = 'Type effects: ' + want[1].replace(/^TYPE EFFECTS: /, '');
+    const B = withM.split('\n\n'), b3 = B[3].split('\n'), b4 = B[4].split('\n'), i = b3.indexOf(sil);
+    assert(B.length === 6 && B[1].startsWith(CF.s1 + '\n') && b3[0] === CF.s3.replace('{costume}', S.SECTIONS.costume).replace('{genre}', 'LIGHT'), '칸 꼴');
+    assert(i > 1 && b3[i - 2] === 'Costume: ' + S.FORM_LINES.light.replace(/^FORM — LIGHT: /, '') && b3[i - 1] === 'Armor: ' + S.PROMPT_LINES.armor.replace(/^ARMOR: /, ''), '3칸 — Costume · Armor 줄 바로 뒤에 Silhouette');
+    assert(b4.includes(fx), '4칸에 Type effects');
+    assert.equal(withM.split('\n').filter(l => l !== sil && l !== fx).join('\n'), base, '두 줄 말고는 그대로(칸 꼴)');
+    assert.equal(pr(nz({ mecha: sel }), null), base, '표가 없으면 안 싣는다(칸 꼴)');
+    assert.equal(pr(nz({ mecha: { set: {}, fx: [] } }), C), base, '안 고르면 그대로(칸 꼴)');
+    const ref = pr(nz({ mecha: sel, identityMode: 'reference' }), C);
+    assert(ref.startsWith('Input: the attached image') && !/^(?:Silhouette|Type effects|MECHA|TYPE EFFECTS)\b/m.test(ref) && !ref.includes(want[0].replace(/^MECHA SILHOUETTE: /, '')), '이어가기에는 없다(칸 꼴)'); }
   assert(C.silhouettes.find(o => o.key === 'knight_plate').owns.includes('shoulders'));
   assert(!want[0].includes(C.parts.shoulders.find(o => o.key === 'balloon').en), '실루엣이 정하는 칸은 안 싣는다');
   assert.equal(nz({ mode: 'concept', concept: { set: {} } }).mode, 'action', '잠깐 있던 갈래는 액션으로');

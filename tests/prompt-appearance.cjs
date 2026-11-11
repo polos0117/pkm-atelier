@@ -5,8 +5,12 @@ for(const f of ['prompt-spec','casual-tree','prompt-anthro'])vm.runInContext(fs.
 const {AtelierSpec:S,AtelierPrompt:P}=ctx.window;
 const params=require('./fixtures/appearance-bulbasaur.json');
 const base={mech:'이상해씨',sourceName:'Bulbasaur',series:'grass / poison',style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params,expr:'smirk',tree:JSON.parse(require('node:fs').readFileSync('data/casual-tree.json','utf8'))};
-const build=override=>P.buildPrompt({...base,...override});
+/* 줄 꼴(칸 꼴 스위치를 끈 판)로 본다 — IDENTITY 문단을 문단째 찾는 검사라서. 2026-11-11 부터 메카 지시문은 칸 꼴이고 IDENTITY 문단은 2칸의 「Identity (…)」 줄 + 값 줄로 그대로 옮겨진다(아래 sec 검사 · tests/prompt-sections.cjs) */
+const build=override=>P.buildPrompt({...base,...override},{sections:false});
 const identity=t=>(t.split('\n\n').find(x=>x.startsWith(S.PROMPT_LINES.identity))||'');
+{ const old=identity(build()), sec=P.buildPrompt(base).split('\n\n'), b2=sec[2].split('\n');
+  /* 줄마다 그대로 — 통째 「No …」 문장(ethnicity scope 의 「No stereotyped features.」)만 5칸 Avoid 로 간다(R5) */
+  assert(old&&b2[0]===S.CORE_FRAME.s2&&old.split('\n').every((l,i)=>b2.includes(i?P.splitNo(l,true).text:l.replace(/^IDENTITY /,'Identity ')))&&/\nAvoid: [^\n]*stereotyped features/.test(sec[5]),'칸 꼴 2칸에 IDENTITY 문단이 글 그대로(머리만 Identity)'); }
 const original=JSON.stringify(params);
 const full=build();
 assert(full.includes('U-shaped lower-face outline'),'rounded jaw must specify actual outline');

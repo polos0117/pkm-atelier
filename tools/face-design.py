@@ -383,15 +383,17 @@ def light_registered(img):
 def read_records(dirs):
     """카드 이름 → 경장 ① 새 인물 기록들 [(종류, 경로, {항목: 원래 값}, HAIR 줄 있음)]. 종류 ui = 화면 저장값, prompt = 제출한 프롬프트"""
     found = {}
+    # 칸 꼴(2026-11-11 — lib/prompt-anthro.js toSections)도 읽는다: 머리말 「Input: text only」 · 「Source: …」, 3칸 머리 「3. ARMOR — LIGHT」, 2칸의 「Hair: …」 줄.
+    # 고른 머리 값(hairstyle: … 줄)은 두 꼴에서 같은 줄이다
     def from_prompt(t, path):
-        if not t.startswith('INPUT: text only') or 'FORM — LIGHT' not in t: return
-        m = re.search(r'SOURCE: [^\n]*?\(([^)\n]+)\)', t)
+        if not re.match(r'(?:INPUT|Input): text only', t) or not ('FORM — LIGHT' in t or re.search(r'^\d\. [A-Z][A-Z ]* — LIGHT$', t, re.M)): return
+        m = re.search(r'(?:SOURCE|Source): [^\n]*?\(([^)\n]+)\)', t)
         if not m: return
         vals = {}
         for k in HAIR_KEYS:
             mm = re.search(r'^' + re.escape(k) + r': (.+?)(?: — |$)', t, re.M)
             if mm: vals[k] = mm.group(1).strip()
-        found.setdefault(m.group(1), []).append(('prompt', path, vals, '\n\nHAIR: ' in t))
+        found.setdefault(m.group(1), []).append(('prompt', path, vals, '\n\nHAIR: ' in t or re.search(r'^Hair: ', t, re.M) is not None))
     def walk(o, path):
         if isinstance(o, dict):
             st = o.get('storage')
@@ -403,7 +405,7 @@ def read_records(dirs):
             for v in o.values(): walk(v, path)
         elif isinstance(o, list):
             for v in o: walk(v, path)
-        elif isinstance(o, str) and o.startswith('INPUT: text only'): from_prompt(o, path)
+        elif isinstance(o, str) and re.match(r'(?:INPUT|Input): text only', o): from_prompt(o, path)
     for d in dirs:
         for dp, dn, fn in os.walk(d):
             dn.sort()

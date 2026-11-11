@@ -11,6 +11,17 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 메카 지시문 칸 꼴
+- lib/prompt-anthro.js · lib/prompt-spec.js — 새 인물 · 이어가기 · 개방 지시문을 core 칸 틀(CORE_FRAME)의 머리말 + 다섯 칸으로(toSections). 사용자 2026-11-11 「초안 없이 다 진행해줘」(3단계 — 칸 꼴 통일). 일상컷은 그대로
+- 칸 대조 — 머리말 Input · Source · Subject · Output / 1 STYLE 화풍 문장 / 2 CHARACTER (첨부 그림의 그 사람) · Face — · Hair · Hair color · Impression · Identity · Proportions(옛 ANATOMY) · Body · Hands · 해부 줄 / 3 ARMOR — 폼 Costume(옛 FORM —) · Form note · Armor · Silhouette · Colours(옛 PALETTE) · Wear · Head · Motifs to keep · Exposure (개방은 Change only this) / 4 SCENE Composition · Pose · Type effects · 고른 장면 값 · Note / 5 CONSTRAINTS ONE FIGURE ONLY. · Avoid
+- 바뀐 글 — 줄 머리(첫 글자만 대문자 · 삼국지 낱말), 「No …」 나열 문장 · 마디 8가지 → Avoid(No helmet; at most … · unless · No added VFX 는 제자리), 옛 줄 이름 가리키던 말 as FORM says → as the costume below says · her own FACE line below → her own Face line below(얼굴 줄 없으면 her own face), 해부 줄과 겹치는 BODY 마디 · natural human hands. 빼기. 전부 tests/prompt-sections.cjs CHANGED 표
+- 스위치 lib/prompt-spec.js SECTIONS.on(false 면 줄 꼴) · buildPrompt(st,{sections:false}) 는 그 한 번만 줄 꼴 · prompt.html ?v=sections1
+- tools/prompt-pack.cjs — submitted 의 화풍 줄을 칸 꼴에선 「1. STYLE」 바로 아래 줄로(옛 /^STYLE:/ 로는 늘 style_kept true 였다)
+- tools/face-design.py — 그림 기록 지시문 읽기가 칸 꼴(Input · Source · 3. ARMOR — LIGHT · Hair:)도 읽는다(머리 잠금이 칸 꼴 ① 을 못 찾지 않게)
+- tests/prompt-sections.cjs(새) — 전 카드 × 새 인물 · 이어가기 세 폼 · 개방 넷, 화풍 열여덟, 고르는 칸 전부 1만 2천 장을 줄 꼴과 마디마다 견준다(잃은 글 · 새로 쓴 글 0) · 낱말 범위는 종류마다(개방 245낱말이 옛 하한 250 에 걸렸다)
+- tests — 줄 꼴 조건 검사는 스위치 끈 판으로 계속 보고(prompt-engine · face-design · concept-mecha · styles · prompt-appearance) 칸 꼴 검사를 더했다. 칸 꼴 기준으로 고쳐 쓴 것: source-appearance · prompt-pack · prompt-action(빈 글끼리 같던 장갑 문단) · prompt-screen · concept-mecha-screen · prompt-pack-screen · prompt-appearance-dom · source-appearance-dom · face-design-hair-lock.py
+- IMAGE_RULES.md 3절 · AGENTS.md 검사 목록 — 칸 꼴 단락 · 새 검사 한 줄
+
 ## 2026-11-11 · claude · core v4 블록
 - core 블록 판을 v4 로 — 칸 꼴 틀(CORE_FRAME)이 같이 오지만 이 공방 지시문은 아직 제 구조라 바뀐 것 없음. 칸 꼴로 옮길 땐 대조표 초안 먼저(사용자 2026-11-11 3단계)
 

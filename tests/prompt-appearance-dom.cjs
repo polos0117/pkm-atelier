@@ -1,4 +1,5 @@
-/* Exercise the actual generator screen and its output, not a hand-built prompt. */
+/* Exercise the actual generator screen and its output, not a hand-built prompt.
+   메카 지시문은 칸 꼴(2026-11-11) — 줄 머리 Wear · Head(줄 꼴 WEAR · HEAD), 일상컷은 줄 꼴 그대로 */
 const assert=require('node:assert/strict');
 const {open,pause,storeKey}=require('./prompt-dom-harness.cjs');
 const params=require('./fixtures/appearance-bulbasaur.json');
@@ -13,12 +14,12 @@ const params=require('./fixtures/appearance-bulbasaur.json');
   assert(a.get('source-wear'),'a new character shows how the source is worn');
   assert(a.get('wear-preview').textContent.includes('dorsal plant bulb becomes'),'automatic wear preview');
   await a.set('motifs','a leaf-trimmed cape and a bud brooch');
-  assert(a.output().includes('WEAR (user choice): a leaf-trimmed cape and a bud brooch.'));
+  assert(a.output().includes('\nWear (user choice): a leaf-trimmed cape and a bud brooch.'));
   assert(!a.get('wear-preview'),'typed wear replaces the automatic preview');
   await a.set('head-feature','accessory');
   assert(a.output().includes('earrings, ear cuffs or a choker'),'head feature choice reaches the prompt');
   await a.set('head-feature','__custom__');await a.set('head-feature-custom','tiny leaf clips');
-  assert(a.output().includes('HEAD: tiny leaf clips.'));
+  assert(a.output().includes('\nHead: tiny leaf clips.'));
   await a.set('head-feature','accessory');
   assert(!a.output().includes('hair length: medium'));
   assert(a.get(id('hair length')+'-description').textContent.includes('픽시컷'));
@@ -46,7 +47,7 @@ const params=require('./fixtures/appearance-bulbasaur.json');
   assert(!a.output().includes('U-shaped lower-face outline'));
   assert(!a.get(id('jaw & chin')));
   assert(!a.get('source-wear'));
-  assert(!a.output().includes('WEAR'));
+  assert(a.output().startsWith('Input: the attached image')&&!/WEAR|\nWear[ :(]/.test(a.output()));
   await a.click('mode-casual');
   await a.set('axis-action_level','balanced');
   assert(a.output().includes('gentle movement, not a ratio of multiple images'));

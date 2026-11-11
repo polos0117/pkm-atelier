@@ -31,7 +31,8 @@ for(const pose of S.ACTION_POSES){
  assert(!P.buildPrompt({...base,outputMode:'casual',pose:pose.key}).includes(pose.prompt));
 }
 const action={category:'ranged',example:'aimed_release',equipment:'unarmed',power:'none',effects:'none',speed:'still',environment:'forest',timing:'impact'};
-const formLine=t=>(t.split('\n\n').find(x=>x.startsWith('FORM —'))||'');
+/* 고른 장갑 — 줄 꼴은 「FORM —」 문단, 칸 꼴(2026-11-11 — 실제로 나가는 지시문)은 3칸(「3. ARMOR — 폼」 아래 Costume · Armor · Colours …) 통째. 못 찾으면 실패(빈 글끼리 같아 아무것도 안 보는 일이 없게) */
+const formLine=t=>{const x=t.split('\n\n').find(x=>x.startsWith('FORM —')||x.startsWith(S.CORE_FRAME.s3.split('{')[0]));assert(x&&/\n?Costume: |^FORM —/.test(x),'장갑 문단이 없다');return x;};
 for(const form of ['light','heavy','mobility'])for(const identityMode of ['create','reference']){
  const input={...base,form,identityMode,action};
  const t=P.buildPrompt(input), plain=P.buildPrompt({...input,action:{}});

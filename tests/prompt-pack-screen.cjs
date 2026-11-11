@@ -34,7 +34,8 @@ const CUTS = [
   set7.slots.light.mecha.set.legs = 'heels'; set7.slots.light.mecha_why = '다리 부품 하나 직접';
   fs.writeFileSync(path.join(dir7, 'settings.json'), JSON.stringify(set7, null, 1));
   run('build', '--dir', dir7);
-  assert(fs.readFileSync(path.join(dir7, 'light-prompt.txt'), 'utf8').includes('MECHA SILHOUETTE:'), '① 메카 줄');
+  /* ① 은 칸 꼴(2026-11-11) — 메카 실루엣은 3칸 「Silhouette:」(줄 꼴 MECHA SILHOUETTE) */
+  assert(/^Silhouette: /m.test((fs.readFileSync(path.join(dir7, 'light-prompt.txt'), 'utf8').split('\n\n')[3] || '').replace(/^3\. ARMOR — LIGHT\n/, '')), '① 메카 줄');
   const h = await start();
   let checks = 0;
   try {

@@ -140,6 +140,7 @@ node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예�
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
 python3 tests/anatomy-check.py   # 팔·다리·손 검사기 — 떨어진 손·손 셋·뒤집힌 손·늘어난 팔다리·맨발·같은 손 두 번(모델 없이 점 목록으로)
 node tests/prompt-engine.cjs     # 프롬프트가 화면 없이 끝까지 나오나
+node tests/prompt-sections.cjs   # 칸 꼴 — 메카 지시문(새 인물 · 이어가기 · 개방, 전 카드 × 화풍 열여덟 × 고르는 칸)이 core 칸 틀 다섯 칸, 줄 꼴과 마디마다 견줘 잃은 글·새로 쓴 글 0(달라진 글은 CHANGED 표), 옛 줄 이름 없음, 스위치(lib/prompt-spec.js SECTIONS.on)
 node tests/battle-sim.cjs --quick  # 전투 규칙이 코드에 옮겨졌나 (--quick 없이 돌리면 실험까지)
 node tests/run-sim.cjs --quick     # 런 규칙 — 뽑기·상대·체력 이어짐·보상·끝 (--quick 없이 돌리면 완주율 표)
 node tests/survey-sim.cjs         # 탐사 작전 — 배치·폼·에너지·예상 결과·저장·6일 완주

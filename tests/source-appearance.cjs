@@ -26,24 +26,28 @@ for(const f of ['prompt-spec','casual-tree','prompt-anthro'])vm.runInContext(fs.
 const P=ctx.window.AtelierPrompt;
 const base={style:'glossy_promo',form:'light',outputMode:'action',identityMode:'create',params:[],tree:JSON.parse(require('node:fs').readFileSync('data/casual-tree.json','utf8'))};
 // 자료는 새 인물에만 — 색(PALETTE)과 입는 법(WEAR)으로. 이어가기·개방·일상은 첨부가 정하므로 다시 싣지 않는다.
+// 메카 지시문은 칸 꼴(2026-11-11) — PALETTE 는 3칸 「Colours:」, WEAR 는 3칸 「Wear:」, SOURCE 는 머리말 「Source:」(줄 꼴 이름은 일상컷 · 스위치 끈 판)
+const CF=ctx.window.AtelierSpec.CORE_FRAME, sec3=t=>(t.split('\n\n').find(b=>b.startsWith('3. '))||'');
+const REDO=/(?:^|\n)(?:WEAR|Wear|PALETTE|Colours)[ :(]/;
 let worn=0,prompts=0;
 for(const c of cards){
  const st={...base,mech:c.name,sourceName:c.en,series:c.element,sourceAppearance:data.entries[c.no],motifs:''};
  const text=P.buildPrompt(st),wear=P.wearClauses(st),pal=P.palette(st);prompts++;
- if(wear.length){worn++;assert(text.includes('WEAR: '+wear.join('; ')+'.'),c.en);}
- if(pal.length)assert(text.includes('PALETTE: '+pal.join(', ')+'.'),c.en);
+ assert(text.startsWith('Input: text only')&&text.includes('\n\n'+CF.s1+'\n'),c.en+' 칸 꼴');
+ if(wear.length){worn++;assert(sec3(text).includes('\nWear: '+wear.join('; ')+'.'),c.en);}
+ if(pal.length)assert(sec3(text).includes('\nColours: '+pal.join(', ')+'.'),c.en);
  assert(!/\b(?:light|pale|dark)?[- ]?\w+[- ]skin\b/.test(text.replace('Her skin is human skin.','')),c.en+': a skin color reached the prompt');
  for(const extra of [{identityMode:'reference'},{form:'overdrive',baseForm:'light'},{outputMode:'casual'}]){
   const ref=P.buildPrompt({...st,...extra});prompts++;
-  assert(!ref.includes('WEAR:')&&!ref.includes('PALETTE:'),c.en+' source data overwrote the approved image');
+  assert(!REDO.test(ref)&&!(wear.length&&ref.includes(wear[0]))&&!(pal.length>1&&ref.includes(pal.join(', '))),c.en+' source data overwrote the approved image');
  }
 }
 assert(worn>=900,'species with a wear line: '+worn);
 const st={...base,mech:'꼬부기',sourceName:'Squirtle',series:'water',sourceAppearance:data.entries['7']};
 const overridden=P.buildPrompt({...st,motifs:'USER_MOTIFS'});
-assert(overridden.includes('WEAR (user choice): USER_MOTIFS.'));
+assert(sec3(overridden).includes('\nWear (user choice): USER_MOTIFS.'));
 assert(!overridden.includes(data.entries['7'].features[0].detail+' becomes'));
-assert(P.buildPrompt({...st,sourceAppearance:null}).includes('SOURCE: Squirtle (꼬부기), water type.'),'missing data still builds');
+assert(P.buildPrompt({...st,sourceAppearance:null}).includes('\nSource: Squirtle (꼬부기), water type.\n'),'missing data still builds');
 assert(!/jet|nozzle|reactor/i.test(data.entries['7'].features.map(f=>f.detail).join(' ')));
 assert.equal(data.entries['964'].formScope,'Zero Form');
 assert.equal(data.entries['718'].formScope,'50% Forme');

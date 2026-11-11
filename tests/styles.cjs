@@ -16,10 +16,20 @@ const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L } = ctx.window;
 // 화풍은 한 줄 — 갑주 출력은 ACTION_STYLE_CORES, 일상은 장갑 말이 없는 CASUAL_STYLE_CORES
 for (const { key } of actual.styles) {
   for (const form of ['light', 'heavy', 'overdrive']) for (const identityMode of ['create', 'reference']) {
-    const text = P.buildPrompt({ mech: 'test', series: 'water', style: key, outputMode: 'action', identityMode, form, baseForm: 'light', params: [] });
-    assert(text.includes('STYLE: ' + S.ACTION_STYLE_CORES[key]), 'Wrong action style: ' + key);
-    assert(!text.includes('undefined'), 'Unresolved prompt: ' + key);
+    const st = { mech: 'test', series: 'water', style: key, outputMode: 'action', identityMode, form, baseForm: 'light', params: [] };
+    /* 줄 꼴(칸 꼴 스위치를 끈 판) — STYLE 문단이 그 화풍 문장 그대로 */
+    const old = P.buildPrompt(st, { sections: false });
+    assert(old.includes('STYLE: ' + S.ACTION_STYLE_CORES[key]), 'Wrong action style: ' + key);
+    assert(!old.includes('undefined'), 'Unresolved prompt: ' + key);
+    /* 칸 꼴(2026-11-11 — 실제로 나가는 지시문) — 1칸이 그 화풍 문장. 달라지는 것은 「No …」 나열이 Avoid 로 가는 것(splitNo)과
+       FACE 줄 가리키는 말(이 견본엔 얼굴 줄이 없다 → SECTIONS.faceRef.none)뿐 — 마디마다 견주기는 tests/prompt-sections.cjs */
+    const text = P.buildPrompt(st), SE = S.SECTIONS, s1 = text.split('\n\n')[1];
+    assert.equal(s1, S.CORE_FRAME.s1 + '\n' + P.splitNo(S.ACTION_STYLE_CORES[key]).text.replace(SE.faceRef.from, SE.faceRef.none), 'Wrong action style (sections): ' + key);
+    assert(!text.includes('undefined'), 'Unresolved prompt (sections): ' + key);
   }
+  /* 화풍마다 1칸이 다르다 — 칸 꼴에서 화풍이 한 문장으로 뭉개지지 않는다 */
+  const s1Of = k => P.buildPrompt({ mech: 'test', series: 'water', style: k, outputMode: 'action', identityMode: 'create', form: 'light', params: [] }).split('\n\n')[1];
+  if (key !== actual.styles[0].key) assert.notEqual(s1Of(key), s1Of(actual.styles[0].key), 'Same style section: ' + key);
   const casual = L.buildSingle({ mech: 'test', series: 'water', style: key, cat: 'everyday_basic', aspect: '2:3', axes: {}, tree: JSON.parse(fs.readFileSync('data/casual-tree.json', 'utf8')) });
   /* 일상컷 STYLE 은 그 화풍의 일상 문장(2026-11-08 — 그 전 11-03 부터는 「첨부 그림 그대로」) */
   assert(casual.includes('STYLE: ' + S.CASUAL_STYLE_CORES[key]) && !casual.includes("keep the attached image's rendering"), 'Wrong casual style: ' + key);   // 2026-11-08 — 그 화풍 문장

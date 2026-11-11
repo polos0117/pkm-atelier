@@ -177,8 +177,10 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     fs.writeFileSync(wpath, JSON.stringify(sx)); const rx = run('build', '--dir', v2dir); assert.equal(rx.status, 0, rx.stderr);
     const cx = fs.readFileSync(path.join(v2dir, 'casual1-prompt.txt'), 'utf8'), lx = fs.readFileSync(path.join(v2dir, 'light-prompt.txt'), 'utf8'), hx = fs.readFileSync(path.join(v2dir, 'heavy-prompt.txt'), 'utf8');
     assert(/skin_exposure: moderate/.test(cx) && !/skin_exposure: bold/.test(cx), '일상 한 단계 낮춤');
-    assert(!/^EXPOSURE:/m.test(lx), '메카 폼 low — 열린 곳 없음');
-    assert(/^EXPOSURE: armor and undersuit open by design only at /m.test(hx) && P.mechaOpenings('Pikachu', 'moderate').length === 1 && P.mechaOpenings('Pikachu').length === 2, '메카 폼 moderate — 한 곳');
+    /* 메카 지시문은 칸 꼴(2026-11-11) — 노출 줄은 3칸의 「Exposure:」(줄 꼴 EXPOSURE). 옛 머리로 찾으면 늘 없어서 low 검사가 아무것도 안 본다 */
+    assert(!/^(?:EXPOSURE|Exposure):/m.test(lx) && lx.includes('\n' + S.CORE_FRAME.s3.replace('{costume}', S.SECTIONS.costume).replace('{genre}', 'LIGHT') + '\n'), '메카 폼 low — 열린 곳 없음');
+    assert(/^Exposure: armor and undersuit open by design only at /m.test(hx) && P.mechaOpenings('Pikachu', 'moderate').length === 1 && P.mechaOpenings('Pikachu').length === 2, '메카 폼 moderate — 한 곳');
+    assert.equal(hx.match(/^Exposure: [^\n]*/m)[0].split(', and ').length, 1, '메카 폼 moderate — 열린 곳 하나');
     fs.writeFileSync(wpath, JSON.stringify(s2)); assert.equal(run('build', '--dir', v2dir).status, 0); }
   /* 틀린 칸 — 버전2 컷의 카메라 글, 표에 안 맞는 계획 값 */
   s2.slots.casual2.camera = 'low angle'; fs.writeFileSync(path.join(v2dir, 'settings.json'), JSON.stringify(s2));
@@ -219,7 +221,9 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     r = run('build', '--dir', d7); assert.equal(r.status, 0, r.stderr);
     const lt = fs.readFileSync(path.join(d7, 'light-prompt.txt'), 'utf8'), lu = JSON.parse(fs.readFileSync(path.join(d7, 'light-ui.json'), 'utf8'));
     const want = window.AtelierConceptMecha.lines(CMT, ['electric'], m);
-    assert(want.length === 2 && want.every(x => lt.includes(x)), '① 메카 줄');
+    /* 칸 꼴(2026-11-11) — MECHA SILHOUETTE 는 3칸 「Silhouette:」, TYPE EFFECTS 는 4칸 「Type effects:」. 글은 lines 그대로 */
+    const LT = lt.split('\n\n'), asSec = x => x.replace(/^MECHA SILHOUETTE: /, 'Silhouette: ').replace(/^TYPE EFFECTS: /, 'Type effects: ');
+    assert(want.length === 2 && /^MECHA SILHOUETTE: /.test(want[0]) && /^TYPE EFFECTS: /.test(want[1]) && LT[3].includes('\n' + asSec(want[0]) + '\n') && LT[4].includes('\n' + asSec(want[1])), '① 메카 줄');
     assert(lt.includes('body type: ' + S.CARD_FIGURE) && lt.includes('without slimming her figure'), '① 체형 줄 · 장갑만 가늘게');
     assert.deepEqual(lu.storage.cards['피카츄'].mecha, m, '저장값에 mecha');
     assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, lu.storage.cards['피카츄'], tree1, pika, null, { C2, tree2 }).st, pika, appear, faces, tree1, tree2, CMT) + '\n', lt, '저장값 → 같은 지시문');
@@ -274,11 +278,14 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   fs.writeFileSync(sent, lp.trimEnd());
   r = run('submitted', '--dir', dir, '--slot', 'light', '--file', sent); assert.equal(r.status, 0, r.stderr);
   assert.equal(fs.readFileSync(path.join(dir, 'light-submitted.txt'), 'utf8'), lp.trimEnd(), '넘긴 글 그대로 남긴다');
-  fs.writeFileSync(sent, lp.split('\n').filter(x => !/^STYLE:/.test(x)).join('\n').replace('SUBJECT:', 'SUBJECT: anime girl,'));
+  /* 경장 지시문은 칸 꼴(2026-11-11) — 화풍 줄은 「1. STYLE」 바로 아래 줄, 주제는 머리말의 「Subject:」 */
+  const lpl = lp.split('\n'), styleLine = lpl[lpl.indexOf(S.CORE_FRAME.s1) + 1];
+  assert(lpl.includes(S.CORE_FRAME.s1) && styleLine && styleLine.length > 200 && lp.includes('\nSubject: '), '경장 지시문의 화풍 줄 · 주제 줄');
+  fs.writeFileSync(sent, lpl.filter(x => x !== styleLine).join('\n').replace('Subject:', 'Subject: anime girl,'));
   r = run('submitted', '--dir', dir, '--slot', 'light', '--file', sent); assert.equal(r.status, 1);
   const log = JSON.parse(fs.readFileSync(path.join(dir, 'submitted.json'), 'utf8')).light;
-  assert.deepEqual(log.map(x => x.same), [true, false]); assert.equal(log[1].style_kept, false);
-  assert(log[1].missing.some(x => /^STYLE:/.test(x)) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
+  assert.deepEqual(log.map(x => x.same), [true, false]); assert.equal(log[0].style_kept, true); assert.equal(log[1].style_kept, false);
+  assert(log[1].missing.includes(styleLine) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
   console.log('PASS 지시문 묶음: 열 자리(경장 + 일상 아홉 · 상황 줄 · 상황 빼기 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');

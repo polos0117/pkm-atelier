@@ -71,13 +71,24 @@
 - **① 의 메카 큰 실루엣 · 타입 표현**(생성기 「새 인물 만들기」 의 「메카 실루엣 · 타입 표현 (선택)」, `docs/CONCEPT_MECHA.md`) — 지시문 묶음 `init` 이 정해
   settings 의 `light.mecha` 에 적는다: 그 종의 타입 추천 안에서 최근 열 명의 ①(그림 저장소 `records/<폴더>/light-ui.json`)이 안 쓴 큰 실루엣 하나,
   타입 표현은 자동(손 + 몸 하나 + 주변 하나, 두 타입 종은 두 타입을 섞는다). 부위 부품은 비운다 — 원작 입는 법(WEAR)이 부위를 쥔다.
-  지시문엔 FORM 줄 바로 뒤에 `MECHA SILHOUETTE:` · `TYPE EFFECTS:` 두 줄로 실린다.
+  지시문엔 FORM 줄 바로 뒤에 `MECHA SILHOUETTE:` · `TYPE EFFECTS:` 두 줄로 실린다(칸 꼴 — 아래 — 에선 3칸 Armor 줄 바로 뒤 `Silhouette:` · 4칸 `Type effects:`).
 - **① 의 체형**(2026-11-07 꼬부기 초안 4 — 사용자 「이대로 고정해줘」) — 지시문 묶음 `init` 이 외형 칸 `params['body type']` 에 모든 종 같은 문장(`lib/prompt-spec.js` `CARD_FIGURE`):
   흉부는 은은하게 · 허리는 가늘게(slim) · 골반은 넓고 둥글게, 골반에서 허벅지로 매끄럽게 이어져 무릎 쪽으로 서서히 좁아진다(골반 아래에서 갑자기 좁아지지 않게) · 무릎 아래는 가늘게.
   「긴 몸통 · 긴 다리」 말은 쓰지 않는다. ANATOMY 줄에 「약 7.5등신, 어깨 · 몸에 맞는 머리 크기」(머리만 크고 몸이 작게 나온 일상컷 — 2026-11-07). 경장 폼 줄은 「장갑 윤곽만 가늘게, 몸은 가늘게 하지 않는다」.
   ANATOMY 줄의 「No body-part enlargement」 는 뺐다(체형 줄과 부딪혀 볼륨이 안 나왔다). (같은 날 그 전엔 메카 컨셉의 종별 체형 문장이었다.)
 - **일상컷 몸** — 일상컷 지시문 FACE 줄 다음에 `BODY TYPE:` 한 줄(2026-11-08 — 사용자 「첨부는 하고, 몸매만 따로 적자」). 몸은 첨부 ① 이 아니라 설계표 체형 문구(그 카드의 body type, 없으면 ① 과 같은 체형 문장 `CARD_FIGURE`) — ① 은 갑옷이 몸을 가린다. 첨부 ① 에서는 얼굴 · 머리만 가져온다(CHARACTER · WARDROBE 줄). 그 전(11-07)엔 `BODY LINE:`(첨부 ① 의 몸매를 따르되 살짝 강조). 생성기 · 지시문 묶음 모두. 바꾸려면 `mecha` 를 고치고 `mecha_why` 에 사유를 쓴다(`mecha_auto` 는 정한 값 그대로 둔다).
 - 아래 일상컷 절의 「세 장」 은 새 캐릭터에선 **아홉 장**으로 읽는다(일곱 장 규칙 — 같은 값 두 장까지 · 새 값 · 세 축 겹침 — 이 그대로 아홉 장에) — 이 절에서 따로 적은 것(필수 갈래 · 같은 값 · 새 값 · 세 축)만 다르다.
+
+**메카 지시문은 칸 꼴**(2026-11-11 — 사용자 「초안 없이 다 진행해줘」, 3단계 칸 꼴 통일): 새 인물(①) · 이어가기(②③) · 개방(④⑤⑥) 지시문을 화풍공방 core 칸 틀(`AtelierSpec.CORE_FRAME` — 삼국지 · 원소 · 책과 같은 틀)로 짓는다. 빈 줄로 나눈 여섯 덩어리, 칸 안은 한 줄에 한 항목. 글은 줄 꼴 조립이 만든 그 글을 자리만 옮긴 것이다(새로 쓰지 않는다).
+- 머리말 — Input(첨부) · Source(원작) · Subject(새 인물만 — 포켓몬의 메카 의인화) · Output(무엇을 그리나)
+- 1 STYLE — 화풍 문장 전문(「her own FACE line below」 는 「her own Face line below」, 얼굴 줄이 없는 이어가기 · 개방 · 얼굴 설계 끔은 「her own face」)
+- 2 CHARACTER — (이어가기는 맨 위에 첨부 그림의 그 사람 「Keep her face, eye and hair colors … change only her armor, as the costume below says.」, 개방은 「Keep its camera, pose, framing …」) · Face —(옛 FACE) · Hair · Hair color · Impression · Identity(고른 외형) · Proportions(옛 ANATOMY — core 해부 줄과 머리가 겹쳐서) · Body · Hands · 맨 끝 core 해부 줄 Anatomy
+- 3 ARMOR — 폼(LIGHT · HEAVY · MOBILITY · OVERDRIVE) — Costume(옛 FORM —) · Form note · Armor · Silhouette(옛 MECHA SILHOUETTE) · Colours(옛 PALETTE) · Wear · Head · Motifs to keep · Exposure. 개방은 「Change only this: …」(그 폼이 여는 법) · Form note
+- 4 SCENE — Composition(카드 구도) · Pose(기본 자세 · 이어가기의 새 자세) · Type effects(옛 TYPE EFFECTS) · 고른 장면 값(「Chosen settings below …」 줄 아래 그대로) · Note. 개방은 「The pair must read as the same picture …」 · Note
+- 5 CONSTRAINTS — ONE FIGURE ONLY.(규칙 줄은 글 그대로) · 맨 끝 `Avoid:`(「No …」 나열 문장 · 마디를 모은 것)
+- 줄 꼴과 달라지는 글은 넷뿐이고 `tests/prompt-sections.cjs` 의 `CHANGED` 표에 다 있다: 줄 머리(첫 글자만 대문자, 뜻이 같은 줄은 삼국지 낱말 — Costume · Colours · Silhouette · Composition · Pose), 「No …」 나열 → Avoid(뒤 마디가 「at most …」 인 「No helmet」 · 「unless」 · 한 지시에 딸린 「No added VFX: …」 는 제자리), 옛 줄 이름(FORM · FACE)을 가리키던 말 → below · 「her own face」, core 해부 줄과 글자 그대로 겹치는 BODY · HANDS 마디 빼기. 이 공방엔 빛 줄이 없다.
+- 켜는 곳은 `lib/prompt-spec.js` 의 `SECTIONS.on` — `false` 로 바꾸면(또는 core 칸 틀이 없으면) 줄 꼴 그대로 나온다. 생성기 화면 · 지시문 묶음 · 관리기 기록이 같은 조립(`lib/prompt-anthro.js` toSections)을 쓴다. `buildPrompt(st,{sections:false})` 는 그 한 번만 줄 꼴(검사 · 견주기용). 칸 꼴 말(3칸 낱말 ARMOR · 줄 머리 · 옛 줄 이름 가리키던 말)은 `SECTIONS`, 칸 머리 · 해부 줄 · Avoid 줄은 core 블록. 검사 `node tests/prompt-sections.cjs`(전 카드 × 새 인물 · 이어가기 세 폼 · 개방 넷, 화풍 열여덟, 고르는 칸 전부 — 1만 2천 장을 줄 꼴과 마디마다 견준다: 잃은 글 · 새로 쓴 글 0).
+- 일상컷은 줄 꼴 그대로다. 이 문서 · `docs/` 의 대문자 줄 이름(FORM · FACE · HAIR · IMPRESSION · ANATOMY · WEAR · PALETTE · MECHA SILHOUETTE · TYPE EFFECTS · EXPOSURE …)은 줄 꼴 이름이고, 칸 꼴에선 위 칸의 같은 줄이다. `docs/CHARACTER_FACE_DESIGNS.md` 의 FACE · HAIR 줄도 줄 꼴로 적혀 있다 — 칸 꼴에선 2칸의 `Face — …:` · `Hair:` 줄이고 글은 같다(`tests/face-design.cjs` 가 본다). 얼굴 설계 도구(`tools/face-design.py`)는 그림 기록의 두 꼴 지시문을 다 읽고, 지시문 묶음 `submitted` 는 칸 꼴에선 「1. STYLE」 바로 아래 줄을 화풍 줄로 본다.
 
 예전 아홉 장(2026-11-06 까지 시작한 캐릭터):
 

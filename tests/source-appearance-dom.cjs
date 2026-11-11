@@ -1,3 +1,4 @@
+/* 메카 지시문은 칸 꼴(2026-11-11) — 줄 머리 Source · Wear · Colours(줄 꼴 SOURCE · WEAR · PALETTE) */
 const assert=require('node:assert/strict');
 const {open,storeKey}=require('./prompt-dom-harness.cjs');
 const data=require('../data/source-appearance.json').entries;
@@ -12,22 +13,22 @@ const data=require('../data/source-appearance.json').entries;
   assert(a.output().includes(data['6'].features[0].detail));
   assert(!a.output().includes(data['7'].features[0].detail));
   await a.set('motifs','CUSTOM_PURPLE_SURFACE');
-  assert(a.output().includes('WEAR (user choice): CUSTOM_PURPLE_SURFACE.'));
+  assert(a.output().includes('\nWear (user choice): CUSTOM_PURPLE_SURFACE.'));
   const state=a.w.localStorage.getItem(storeKey);a.dom.window.close();a=await open(state);
   assert(a.output().includes('CUSTOM_PURPLE_SURFACE'));
   await a.set('motifs','');
   assert(a.output().includes(data['6'].features[0].detail+' become'),'clearing returns to automatic wear');
   await a.set('identity-mode','reference');
-  assert(!a.output().includes('WEAR')&&!a.output().includes('PALETTE'));
+  assert(a.output().startsWith('Input: the attached image')&&!/WEAR|PALETTE|\n(?:Wear|Colours)[ :(]/.test(a.output()));
   assert(!a.get('source-wear'));
   assert.deepEqual(a.errors,[]);
   console.log('PASS actual Preact UI: blank input, source switch, override/reset, persistence and reference isolation');
  }finally{a.dom.window.close()}
  a=await open(JSON.stringify({last:'꼬부기',cards:{}}),{failFetch:'data/source-appearance.json'});
  try{
-  assert(a.output().includes('SOURCE: Squirtle (꼬부기)'));
+  assert(a.output().includes('\nSource: Squirtle (꼬부기)'));
   assert(a.w.document.body.textContent.includes('외형 데이터를 불러오지 못했습니다'));
-  assert(!a.output().includes('WEAR:'));
+  assert(!/WEAR:|\nWear: /.test(a.output()));
   assert.deepEqual(a.errors,[]);
   console.log('PASS missing data degrades to named-source generation without blocking editor');
  }finally{a.dom.window.close()}

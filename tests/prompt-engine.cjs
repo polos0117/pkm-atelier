@@ -17,7 +17,11 @@ function input(name,extra){
  return {mech:c.name,sourceName:c.en,series:[c.element,c.element2].filter(Boolean).join(' / '),
   sourceAppearance:app[String(c.no)],style:'glossy_promo',params:[],outputMode:'action',identityMode:'create',form:'light',tree,gen:c.gen,...extra};
 }
-const build=(name,extra)=>P.buildPrompt(input(name,extra));
+/* 줄 꼴 계약 — 아래 검사는 줄 이름(INPUT · FORM — · HAIR COLOR …)과 문단 자리를 본다. 2026-11-11 부터 메카 지시문은 칸 꼴(머리말 + 다섯 칸)로 나가고
+   줄 꼴은 칸 꼴 스위치를 끈 판(buildPrompt(st,{sections:false}))으로 남았다 — 칸 꼴은 같은 글을 자리만 옮긴 것이고 tests/prompt-sections.cjs 가 마디마다 견준다.
+   실제로 나가는 칸 꼴의 화풍 · 예산은 맨 아래 「칸 꼴」 에서 따로 본다. 일상컷은 칸 꼴이 아니라 그대로다 */
+const build=(name,extra)=>P.buildPrompt(input(name,extra),{sections:false});
+const buildSec=(name,extra)=>P.buildPrompt(input(name,extra));
 assert(Object.values(S).every(x=>typeof x!=='function'),'spec stays data');
 assert.equal(S.ART_STYLES.length,18);   // 2026-11-08 anime_25d · anime_25d_gloss
 /* 2026-11-11 그림 없는 열하나를 내렸다 — 정의(18)는 기록으로 남고, 새 작업에서 고르는 것은 일곱 */
@@ -27,7 +31,9 @@ assert(!S.RETIRED_STYLES[S.DEFAULT_STYLE],'기본 화풍은 내린 화풍이 아
 assert(!S.PROMPT_LINES.anatomy.includes('enlargement'),'ANATOMY 에 신체 과장 금지 말 없음(2026-11-07 — 체형 줄과 부딪혔다)');   // 2026-11-06 anime_gloss · 2026-11-07 gloss_daylight
 assert.equal(S.DEFAULT_STYLE,'anime_25d_gloss','기본 화풍은 애니 2.5D 광택(IMAGE_RULES 와 같이 — 2026-11-08)');
 assert(/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d_gloss)&&/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d_gloss)&&!/glossy sheen/.test(S.ACTION_STYLE_CORES.anime_25d)&&!/glossy sheen/.test(S.CASUAL_STYLE_CORES.anime_25d),'피부 광택은 새 키에만 — anime_25d 는 광택 전 그대로');
-assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).includes(S.ACTION_STYLE_CORES.anime_25d_gloss),'화풍을 안 고르면 애니 2.5D 광택');
+assert(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'},{sections:false}).includes(S.ACTION_STYLE_CORES.anime_25d_gloss),'화풍을 안 고르면 애니 2.5D 광택');
+/* 칸 꼴 — 1칸이 애니 2.5D 광택 문장(얼굴 줄이 없으니 「FACE line below」 는 「her own face」, 「No …」 나열이 있으면 Avoid 로) */
+assert.equal(P.buildPrompt({mech:'꼬부기',sourceName:'Squirtle'}).split('\n\n')[1],S.CORE_FRAME.s1+'\n'+P.splitNo(S.ACTION_STYLE_CORES.anime_25d_gloss).text.replace(S.SECTIONS.faceRef.from,S.SECTIONS.faceRef.none),'화풍을 안 고르면 애니 2.5D 광택(칸 꼴)');
 /* 2026-11-09 — 애니 2.5D 광택 화풍 문장은 얼굴을 정하지 않는다(큰 눈 · 작은 코 · 좁은 턱이 모든 종의 FACE 줄을 이겼다). 얼굴은 FACE · IMPRESSION 줄 */
 for(const C of [S.ACTION_STYLE_CORES.anime_25d_gloss,S.CASUAL_STYLE_CORES.anime_25d_gloss]) assert(!/large expressive eyes|compact tapered jaw|small simplified nose/.test(C)&&C.includes('drawn to her own FACE line'),'anime_25d_gloss 얼굴 묘사 없음');
 assert(/large expressive eyes/.test(S.ACTION_STYLE_CORES.anime_25d),'anime_25d 는 그대로');
@@ -178,7 +184,7 @@ assert(cas.includes('jaw length and face length-to-width ratio')&&cas.includes('
 const BODY=/^(nose|mouth|lip|toe|finger|eye|pupil|iris|snout|tooth|beak|neck|leg|arm|paw|foot|hand|head|face|body|fur|skin|limb|muzzle|jaw|belly|chest|torso|abdomen|back|waist|digit|tongue|eyebrow|eyelash|brow|sclera|hoof|hair|underside|coat)$/;
 let most=[0,''], none=0;
 for(const c of cards){
- const s=input(c.name,{}), w=P.wearClauses(s), t=P.buildPrompt(s);
+ const s=input(c.name,{}), w=P.wearClauses(s), t=P.buildPrompt(s,{sections:false});
  assert(w.length<=5,c.en);
  w.forEach(x=>assert(/ becomes? /.test(x),c.en+': '+x));
  for(const f of s.sourceAppearance.features) if(BODY.test(String(f.part).toLowerCase()))
@@ -206,6 +212,8 @@ assert.equal(build('꼬부기',{outputMode:'portrait'}),sq);
 for(const bad of [{style:'nope'},{form:'nope'},{form:'overdrive',baseForm:'nope'},{outputMode:'nope'},{identityMode:'nope'}])
  assert.throws(()=>build('꼬부기',bad),JSON.stringify(bad));
 assert.throws(()=>P.buildPrompt({style:'glossy_promo'}),/Source creature/);
+for(const bad of [{style:'nope'},{form:'nope'},{form:'overdrive',baseForm:'nope'},{outputMode:'nope'},{identityMode:'nope'}])
+ assert.throws(()=>buildSec('꼬부기',bad),'칸 꼴도 '+JSON.stringify(bad));
 /* 종별 머리 설계(data/face-design.json 의 hair) — 새 인물에만 FACE 뒤 HAIR 줄. 직접 고른 머리가 이기고, 이어가기·개방·일상엔 없다.
    첨부한 그림이 인물을 쥐는 단계에서 설계 머리를 다시 실으면 확정한 그림과 싸운다 */
 const faces=JSON.parse(fs.readFileSync('data/face-design.json','utf8')).faces;
@@ -230,4 +238,23 @@ assert(!build('꼬부기',{orient:'rear_3q'}).includes('LOOK-BACK: '),'action cu
 /* 일상컷의 돌기 방향에는 갑옷용 "장비가 부착 부위를 따른다" 를 싣지 않는다(2026-10-26) */
 { const t=L.buildSingle(input('꼬부기',{cat:'everyday_basic',orient:'turning_midmotion'}));
   assert(t.includes('Orientation: mid-turn body motion, with her clothing and hair following the turn')&&!/body mounts/.test(t),'casual turning_midmotion line'); }
+/* 칸 꼴(2026-11-11 — 실제로 나가는 메카 지시문) — 예산 · 옛 법조문 · 화풍 행렬을 칸 꼴에서도. 줄 꼴과의 낱말 차이는 칸 머리 다섯 줄(12) · 해부 줄(20)이 더해지고
+   「No …」 나열의 No · 해부 줄과 겹치던 BODY · HANDS 마디가 빠진 몫 — 2026-11-11 잰 값 +6~+7(전 범위는 tests/prompt-sections.cjs). 예산은 줄 꼴 예산 + SEC 낱말 */
+const SEC=10, CF=S.CORE_FRAME;
+{ const sec=buildSec('꼬부기'), secRef=buildSec('꼬부기',{identityMode:'reference',form:'heavy',params});
+  assert(sec.startsWith('Input: text only')&&sec.split('\n\n').length===6&&sec.includes('\n\n'+CF.s5+'\n'),'칸 꼴 앵커');
+  assert.deepEqual(law(sec),[],'칸 꼴 law'); assert.deepEqual(law(secRef),[],'칸 꼴 이어가기 law');
+  assert(words(sec)<=580+SEC,'칸 꼴 anchor budget: '+words(sec));
+  assert(words(secRef)<=455+SEC,'칸 꼴 continuation budget: '+words(secRef));
+  for(const base of ['light','heavy','mobility','reference']){
+    const t=buildSec('꼬부기',{form:'overdrive',baseForm:base,params,frame:'waist_up',pose:'low_guard',custom:'OPEN_NOTE'});
+    assert(t.includes(S.OPEN_LINES[base])&&t.includes('\nNote: OPEN_NOTE')&&!t.includes(S.FRAME_GUIDES.waist_up[1])&&words(t)<=260+SEC,'칸 꼴 overdrive '+base+': '+words(t));
+  }
+  let most2=0; for(const c of cards) most2=Math.max(most2,words(P.buildPrompt(input(c.name,{}))));
+  assert(most2<=640+SEC,'칸 꼴 anchor budget over 1025: '+most2);
+  for(const [style] of S.ART_STYLES) for(const identityMode of ['create','reference']) for(const form of ['light','overdrive']){
+    const t=buildSec('이상해씨',{style,identityMode,form,baseForm:'light'});
+    assert(t.split('\n\n')[1].startsWith(CF.s1+'\n'+S.ACTION_STYLE_CORES[style].slice(0,40))&&!/undefined|\{\w+\}/.test(t),'칸 꼴 화풍 '+style);
+  }
+}
 console.log(`PASS 프롬프트: 꼬부기 앵커 ${words(sq)}낱말 · 이어가기 ${words(ref)} · 일상 ${words(cas)} · 1025종 최대 ${most[0]}(${most[1]}) · 입는 법 없는 종 ${none} · 행렬 ${matrix} · 뒤돌아보기 줄`);

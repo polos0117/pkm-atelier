@@ -1,4 +1,5 @@
 /* Browser contracts for the three image modes and approved-reference workflow.
+   메카 지시문(새 인물 · 이어가기 · 개방)은 칸 꼴(2026-11-11 — 머리말 + 다섯 칸, 줄 머리 Input · Face — · Hair · Form note …, 2칸 끝 core 해부 줄)이다. 일상컷은 줄 꼴 그대로.
    ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs */
 const fs=require('node:fs'),assert=require('node:assert/strict');
 const {start,FOLD}=require('./browser-harness.cjs');
@@ -8,7 +9,7 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
  try{
   const a=await harness.open('prompt.html?mech='+encodeURIComponent('피카츄'),{viewport:FOLD.inner,mobile:true});
   const p=a.page;
-  await p.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('ANATOMY:'));
+  await p.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('\n'+window.AtelierSpec.CORE_FRAME.anatomy));
   const text=()=>p.locator('#prompt-output').inputValue();
   const settled=()=>p.waitForTimeout(90);
   assert.equal(await p.locator('#source').inputValue(),'피카츄','dex deep link');
@@ -21,21 +22,21 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert.equal(retired.length,11);
   for(const k of retired) assert.equal(await p.locator('#style option[value="'+k+'"]').count(),0,'내린 화풍이 고르개에: '+k);
   assert.equal(await p.locator('#mode-portrait').count(),0,'the sheet mode is gone');
-  assert((await text()).startsWith('INPUT: text only'));
+  assert((await text()).startsWith('Input: text only')&&(await text()).includes('\n\n1. STYLE\n'),'칸 꼴');
   assert((await text()).includes('lightning-shaped tail becomes'),'source data is worn as costume');
   /* 종별 얼굴 설계 — 새 인물에만 FACE 줄, 끄면 빠지고, 무작위 변경은 얼굴 항목을 건드리지 않는다 */
   await p.waitForSelector('#face-design-list');
   assert.equal(await p.locator('#face-design-list li').count(),11,'얼굴 항목 열하나');
-  assert((await text()).includes("FACE (her own structure"),'새 인물 프롬프트에 FACE 줄');
+  assert((await text()).includes("\nFace — her own structure"),'새 인물 프롬프트에 FACE 줄');
   /* 피카츄는 확정 그림에 머리 기록이 없어(모델 기본) 표가 머리를 정하지 않는다 — HAIR 줄 없음 */
-  assert(!(await text()).includes('\n\nHAIR: ')&&await p.locator('#hair-design-list').count()===0,'기록 없는 확정 종에 HAIR 줄');
+  assert(!(await text()).includes('\nHair: ')&&await p.locator('#hair-design-list').count()===0,'기록 없는 확정 종에 HAIR 줄');
   await p.locator('#face-design-on').click();await settled();
-  assert(!(await text()).includes('FACE ('),'끄면 FACE 줄이 빠진다');
+  assert(!(await text()).includes('\nFace — ')&&(await text()).includes('drawn to her own face'),'끄면 FACE 줄이 빠진다');
   assert.equal(await p.locator('#face-design-list').count(),0);
   await p.locator('#face-design-on').click();await settled();
-  assert((await text()).includes('FACE ('),'다시 켜면 돌아온다');
+  assert((await text()).includes('\nFace — '),'다시 켜면 돌아온다');
   await p.locator('#randomize').click();await settled();
-  assert((await text()).includes('FACE (')&&!/\n(face shape|jaw & chin|eyebrows|lips): /.test(await text()),'무작위 변경이 얼굴 항목을 채우지 않았다');
+  assert((await text()).includes('\nFace — ')&&!/\n(face shape|jaw & chin|eyebrows|lips): /.test(await text()),'무작위 변경이 얼굴 항목을 채우지 않았다');
   await p.locator('#appearance-settings button:has-text("'+await p.evaluate(()=>window.W('prompt.reset'))+'")').click();await settled();
   // The normal copy action includes the creation call instructions without a manual prefix.
   await p.evaluate(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{
@@ -66,9 +67,9 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   await p.locator('#identity-mode').selectOption('reference');await settled();
   assert.equal(await p.locator('#appearance-settings').count(),0);
   assert.equal(await p.locator('#source-wear').count(),0);
-  assert(!(await text()).includes('FACE ('),'이어가기에는 FACE 줄이 없다');
+  assert(!(await text()).includes('\nFace — ')&&!(await text()).includes('FACE ('),'이어가기에는 FACE 줄이 없다');
   assert(!(await text()).includes('body type: athletic'),'reference must not emit creation parameters');
-  assert((await text()).startsWith('INPUT: the attached image is the approved character'));
+  assert((await text()).startsWith('Input: the attached image is the approved character'));
   assert(!(await text()).includes('omit referenced_image_paths'));
   await p.locator('#form').selectOption('heavy');await settled();
   assert((await text()).includes('the HEAVY form of the woman in the attached image'));
@@ -83,13 +84,13 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   assert((await text()).includes('stacked outer plates swing away'));
   assert(!(await text()).includes('LOW_CAMERA_MARKER')&&!(await text()).includes('ACTION_SCENE_MARKER'),'overdrive keeps the attached camera');
   await p.locator('#form-override').fill('ONLY_LEFT_PANEL');await settled();
-  assert((await text()).includes('FORM NOTE: ONLY_LEFT_PANEL'));
+  assert((await text()).includes('\nForm note: ONLY_LEFT_PANEL'));
   await p.locator('#form').selectOption('heavy');await settled();
   assert.equal(await p.locator('#camera').inputValue(),'LOW_CAMERA_MARKER');
   await p.locator('#mode-casual').click();await settled();
   assert.equal(await p.locator('#form').count(),0);
   assert.equal(await p.locator('#identity-mode').count(),0);
-  assert(!(await text()).includes('FORM —'));
+  assert(!(await text()).includes('FORM —')&&!(await text()).includes('3. ARMOR')&&(await text()).startsWith('CHARACTER: '),'일상컷은 줄 꼴 그대로 · 장갑 칸 없음');
   assert(!(await text()).includes('ONLY_LEFT_PANEL'));
   assert(!(await text()).includes('LOW_CAMERA_MARKER'));
   /* 새 일상 장면은 버전2(2026-10-30) — 하는 일 칸 없이 몸 자세 · 구도 · 손 둘. 자세 추천은 지금 장소에서 쓸 수 있는 것만 */
@@ -164,22 +165,22 @@ const groups=JSON.parse(fs.readFileSync('data/group.json','utf8'));
   /* 종별 머리 설계 — 새로 고른 종(꼬링크)은 FACE 뒤에 HAIR 줄. 무작위 변경은 설계된 머리를 채우지 않고,
      헤어스타일을 직접 고르면 HAIR 줄이 빠지며, 이어가기에는 싣지 않는다 */
   const shinx=JSON.parse(fs.readFileSync('data/face-design.json','utf8')).faces[403];
-  const hairText='HAIR: '+shinx.hair['hair length']+' '+shinx.hair.hairstyle+', '+shinx.hair.bangs+'.';
+  const hairText='Hair: '+shinx.hair['hair length']+' '+shinx.hair.hairstyle+', '+shinx.hair.bangs+'.';
   const b=await harness.open('prompt.html?mech='+encodeURIComponent('꼬링크'),{viewport:FOLD.inner,mobile:true});
   const q=b.page,qtext=()=>q.locator('#prompt-output').inputValue();
-  await q.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('ANATOMY:'));
+  await q.waitForFunction(()=>document.querySelector('#prompt-output')?.value.includes('\n'+window.AtelierSpec.CORE_FRAME.anatomy));
   await q.waitForSelector('#hair-design-list');
   assert.equal(await q.locator('#hair-design-list li').count(),3,'머리 항목 셋');
-  assert((await qtext()).includes('\n\n'+hairText+'\n\n'),'새 인물 프롬프트에 HAIR 줄');
-  assert((await qtext()).indexOf('FACE (')<(await qtext()).indexOf(hairText),'HAIR 는 FACE 뒤');
+  assert((await qtext()).includes('\n'+hairText+'\n'),'새 인물 프롬프트에 HAIR 줄');
+  assert((await qtext()).indexOf('\nFace — ')>0&&(await qtext()).indexOf('\nFace — ')<(await qtext()).indexOf(hairText),'HAIR 는 FACE 뒤');
   await q.locator('#randomize').click();await q.waitForTimeout(90);
   assert((await qtext()).includes(hairText)&&!/\n(hairstyle|hair length|bangs): /.test(await qtext()),'무작위 변경이 설계된 머리를 채웠다');
   await q.locator('#appearance-settings details').evaluateAll(es=>es.forEach(e=>e.open=true));
   await q.locator('#param-hairstyle').selectOption('locs');await q.waitForTimeout(90);
-  assert(!(await qtext()).includes('\n\nHAIR: ')&&(await qtext()).includes('hairstyle: locs'),'고른 헤어스타일이 이긴다');
+  assert(!(await qtext()).includes('\nHair: ')&&(await qtext()).includes('hairstyle: locs'),'고른 헤어스타일이 이긴다');
   assert.equal(await q.locator('#hair-design-list li.overridden').count(),3,'설계 머리가 다 직접 고른 값에 밀린다');
   await q.locator('#identity-mode').selectOption('reference');await q.waitForTimeout(90);
-  assert(!(await qtext()).includes('HAIR: '),'이어가기에 HAIR 줄');
+  assert(!(await qtext()).includes('\nHair: ')&&!(await qtext()).includes('HAIR: '),'이어가기에 HAIR 줄');
   assert.deepEqual(b.errors,[]);
   await b.close();
   /* 버전1 기록 — 하는 일로 고른 예전 장면은 버전1 그대로 열고 지시문도 버전1, 「버전2로 다시 고르기」 로 옮긴다 */

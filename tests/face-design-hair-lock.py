@@ -35,4 +35,16 @@ with tempfile.TemporaryDirectory() as td:
         p.write_text(json.dumps(ui, ensure_ascii=False), encoding='utf-8')
         plain, _, _ = m.design_hair([card], {}, img, old, {'렌트라': '렌트라'}, m.hair_spec())
         assert plain['렌트라'] == {}, 'an older image without HAIR must remain unspecified'
-print('PASS canonical HAIR: first lock, repeated build, legacy unspecified hair')
+        # 칸 꼴(2026-11-11) — 같은 지시문이 머리말 + 다섯 칸으로 나온다: Input · Source · 2칸 Hair 줄 · 3칸 「3. ARMOR — LIGHT」
+        sec = ('Input: text only\nSource: Luxray (렌트라), electric type.\n\n1. STYLE\nslim.\n\n2. CHARACTER\n'
+               'Hair: long crown braid, choppy bangs.\nhairstyle: crown braid\n\n3. ARMOR — LIGHT\nCostume: slim plates.')
+        ui['prompt'] = sec
+        p.write_text(json.dumps(ui, ensure_ascii=False), encoding='utf-8')
+        ev = m.read_records([td]).get('렌트라', [])
+        assert any(e[0] == 'prompt' and e[3] and e[2].get('hairstyle') == 'crown braid' for e in ev), ('칸 꼴 지시문을 기록으로 못 읽었다', ev)
+        again, _, _ = m.design_hair([card], {}, img, old, {'렌트라': '렌트라'}, m.hair_spec())
+        assert again['렌트라'] == hair, '칸 꼴 Hair 줄로 확정한 머리를 다시 build 하며 잃었다'
+        ui['prompt'] = sec.replace('3. ARMOR — LIGHT', '3. ARMOR — HEAVY')
+        p.write_text(json.dumps(ui, ensure_ascii=False), encoding='utf-8')
+        assert not any(e[0] == 'prompt' for e in m.read_records([td]).get('렌트라', [])), '칸 꼴 중장 지시문은 경장 ① 기록이 아니다'
+print('PASS canonical HAIR: first lock, repeated build, legacy unspecified hair, sections-form prompt')

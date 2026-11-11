@@ -400,7 +400,9 @@ function submitted(o) {
   if (path.resolve(o.file) !== path.resolve(out)) fs.writeFileSync(out, got);
   const hash = t => crypto.createHash('sha256').update(t).digest('hex');
   const lines = t => t.split('\n').map(x => x.trimEnd()).filter(Boolean);
-  const a = lines(want), b = lines(got), style = a.find(x => /^STYLE:/.test(x)) || '';
+  /* 화풍 줄 — 줄 꼴(일상컷)은 「STYLE: …」, 칸 꼴(메카 지시문, 2026-11-11)은 1칸 머리(CORE_FRAME.s1) 바로 아래 줄 */
+  const a = lines(want), b = lines(got), s1 = S.CORE_FRAME ? a.indexOf(S.CORE_FRAME.s1) : -1;
+  const style = a.find(x => /^STYLE:/.test(x)) || (s1 >= 0 && a[s1 + 1]) || '';
   const r = { slot: o.slot, at: new Date().toISOString(), prompt_sha256: hash(want), submitted_sha256: hash(got), same: want.trimEnd() === got.trimEnd(),
     prompt_words: P.words(want), submitted_words: P.words(got), style_kept: !style || b.includes(style),
     missing: a.filter(x => !b.includes(x)).slice(0, 8), added: b.filter(x => !a.includes(x)).slice(0, 8) };
