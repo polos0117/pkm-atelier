@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · gpt · 야돈 애니 2.5D 광택 10장 등록
+- data/img.json — 승인된 메카 1장과 일상컷 9장을 anime_25d_gloss 화풍으로 추가하고 기존 화풍을 보존했다.
+
 ## 2026-11-11 · claude · ① 임의 설계 — 자세는 우리 것, 눈색은 우리 것 · 맡은 쪽 것 둘 다
 - 사용자 「자세는 고정, 눈색은 자유로 하자」 → 「대신 눈색은 우리거 써도 되고, gpt가 정해도 되는걸로」 — FREE_DESIGN.eyes 「Eye colour (your choice): ours is … — keep it or choose your own」(우리 눈색은 Impression 줄에서) — lib/prompt-spec.js FREE_DESIGN.pose · free · second, lib/prompt-anthro.js buildFree 가 우리 ① 의 자세 줄(「Default stance is a standing, card-ready pose …」)을 「Pose (fixed — ours)」 로 싣는다. 장면(배경)은 맡은 쪽. IMAGE_RULES 「① 경장」 · 묶음 INDEX 말 · tests/prompt-pack.cjs
 
