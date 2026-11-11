@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · 인상 눈빛 낱말에서 「눈을 얼마나 뜨나」 빼기(감사 P3)
+- IMPRESSION_VIBES 다섯: fierce 「a sharp, narrow-eyed glare(눈을 가늘게 뜬 노려봄)」 → 「a sharp, challenging stare(날카롭게 도전하는 눈빛)」, sleepy 「heavy, sleepy half-lidded eyes(반쯤 감긴 졸린 눈)」 → 「a drowsy, unhurried gaze(졸린 듯 느긋한 눈빛)」, regal 「a proud gaze from slightly lowered lids(눈꺼풀을 내린 오만한 눈빛)」 → 「a proud, level gaze(오만하게 똑바로)」, elegant 「a poised gaze under lowered lashes(속눈썹을 내리깐)」 → 「a poised, quiet gaze(침착하고 조용한)」, cheerful 「a sunny, open look…(눈을 활짝 뜬)」 → 「a sunny look with laughter in her eyes(밝은 얼굴, 눈에 웃음)」
+- 까닭: 눈 모양 · 크기는 Face 줄이 정하는데 인상 줄이 눈 뜬 정도까지 정해 부딪혔다(큰 눈 + 가늘게 뜬 노려봄 등). 처진 눈꼬리 + 날카로운 아이라인은 화장이라 그대로
+- 지시문 299종의 Impression 줄 한 토막만 바뀜(다른 줄 0). prompt.html prompt-spec ?v=p3, 검사 — 처음부터 깨져 있던 14개 말고 통과
+- 사용자 2026-11-11 「응 고쳐줘」
+
 ## 2026-11-11 · claude · 기본 화풍의 「파스텔」 → 「자기 색을 부드럽게」(감사 P1)
 - anime_25d_gloss 세계 그림 글: 「Use luminous midtones, restrained highlights on clothing and armor, and a delicate pastel palette(빛나는 중간 톤, 옷 · 장갑엔 절제된 하이라이트, 섬세한 파스텔 색)」 → 「Use luminous midtones and restrained highlights on clothing and armor, keeping her own colours in soft, clean tints(… 색은 그 종의 자기 색 그대로 부드럽고 깨끗한 톤으로)」. 일상컷 글도 같이(장갑 말만 빠진 꼴)
 - 까닭: 첫 색이 검정 · 짙은 색인 183종(검정이 들어간 종 330)에서 종의 색 줄(Colours)과 「파스텔」 이 서로 반대 말이었다(독침붕 · 피죤투 · 아보 …). 광택 전 판 anime_25d 는 기본 화풍이 아니라 그대로
