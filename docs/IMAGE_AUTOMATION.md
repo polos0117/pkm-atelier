@@ -53,7 +53,7 @@ python3 tools/image-runner.py record --owner pkm-daily --card 345 --slot heavy -
 python3 tools/image-runner.py review --owner pkm-daily --card 345 --slot heavy --qa /path/qa.json
 ```
 
-①이 accepted가 되기 전에는 다음 slot의 intent를 기록할 수 없다. 중장·고기동·일상은 ① 해시를, 개방은 해당 폼의 해시를 references에 기록한다. 에이전트는 그 파일을 실제 첨부해야 하며 관리기가 첨부를 대신하거나 외부 호출 사실을 증명하지 않는다. `intent_recorded:true`와 대상 번호·slot을 확인한 호출만 생성한다. `reconciled_external_skip` 응답이면 기존 원문을 제출하지 말고 새 대상의 실제 UI부터 준비한다.
+① 은 네 장(우리 설계 `light-prompt.txt` 둘 + GPT 임의 설계 `light-free.txt` 둘 — 2026-11-11, IMAGE_RULES 「① 경장」)을 뽑아 사용자에게 보이고 사용자가 고른 장만 accepted 로 올린다. ①이 accepted가 되기 전에는 다음 slot의 intent를 기록할 수 없다. 중장·고기동·일상은 ① 해시를, 개방은 해당 폼의 해시를 references에 기록한다. 에이전트는 그 파일을 실제 첨부해야 하며 관리기가 첨부를 대신하거나 외부 호출 사실을 증명하지 않는다. `intent_recorded:true`와 대상 번호·slot을 확인한 호출만 생성한다. `reconciled_external_skip` 응답이면 기존 원문을 제출하지 말고 새 대상의 실제 UI부터 준비한다.
 
 `--card`는 현재 도감 번호와 일치해야 한다. 외부 작업 때문에 큐가 바뀌었을 때 이전 캐릭터의 원문·결과·QA가 새 캐릭터에 붙는 것을 막는다.
 

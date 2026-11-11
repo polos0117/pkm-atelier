@@ -349,6 +349,8 @@ function build(o) {
   for (const r of out) {
     fs.writeFileSync(path.join(o.dir, r.slot + '-prompt.txt'), r.text + '\n');
     fs.writeFileSync(path.join(o.dir, r.slot + '-ui.json'), JSON.stringify(r.ui, null, 1) + '\n');
+    /* ① GPT 임의 설계 주문(2026-11-11 — 삼국지 · 원소처럼 ① 네 장: 우리 설계 둘 + 임의 설계 둘) */
+    if (r.slot === 'light') fs.writeFileSync(path.join(o.dir, 'light-free.txt'), P.buildFree(r.text, r.ui.storage.cards[c.name], d.concept) + '\n');
   }
   /* 차례표 — 이 자리의 지시문을 읽어 그대로 제출하고, 적힌 그림을 첨부한다 */
   const sha = t => crypto.createHash('sha256').update(t + '\n').digest('hex').slice(0, 12);
@@ -356,6 +358,7 @@ function build(o) {
   const lines = ['# ' + c.name + ' (' + String(c.no).padStart(4, '0') + ' · ' + c.en + ') — 지시문 묶음', '',
     '화풍 `' + set.style + '` · 만든 도구 `tools/prompt-pack.cjs build` · 생성기 코드 ' + (rev || '?') + ' · ' + new Date().toISOString(), '',
     '자리마다 `<자리>-prompt.txt` 를 **고치지 않고 그대로** 제출하고, 첨부 칸의 그림을 붙인다. 고칠 것이 있으면 settings.json 을 고쳐 build 를 다시 돌린다.', '',
+    '**① → 멈춤 → 일상컷**(2026-11-11 삼국지 · 원소와 같이). ① 은 **네 장**(첨부 없이 한 장씩) — **두 장은 우리 설계 `light-prompt.txt` 그대로, 두 장은 임의 설계 `light-free.txt`**(설계 주문 — 화풍 · 색 · 머리색 · 체형 · 장갑 폼 · 원작 특징 · 노출 · 구도는 우리 것, 큰 실루엣은 목록에서 하나 + 원작에서 딴 제 아이디어 하나, 얼굴 · 눈색 · 헤어스타일 · 화장 · 표정 · 자세 · 장면 · 타입 효과는 맡은 쪽이 지어 제 지시문을 쓴다, 둘째 장은 첫째와 확실히 다르게). 네 장을 「우리 설계 1 · 2 / GPT 설계 1 · 2」 로 붙여 보이고 **멈추고 묻는다** — 고르기 전엔 일상컷으로 넘어가지 않고 ① 도 올리지 않는다. 고른 장만 올리고 그 장을 붙여 일상컷을 그린다. 임의 설계 장이면 기록 `generation.design: "gpt_free"` 와 실제로 넘긴 지시문(`generation.free_prompt`)을 남긴다.', '',
     '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷은 Outfit 줄이 「노출 의상을 네가 지어라」 다 — 이 묶음의 `outfit-catalog.md`(우리가 쓰는 옷 전부)를 읽고 **거기 없는 옷**을 지어 그 줄에만 써 넣는다(실제로 넘긴 글은 기록에).', '',
     '**프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다(2026-11-08).** IMAGE_RULES.md 1절의 변경 사유(settings 고친 뒤 build · 막혔을 때 계획기 다시 계획 · 같은 지시문 재생성 · 사용자가 시킨 부분 고치기) 말고는 낱말 하나도 고치지 않는다. image_gen 에도 이 글 그대로 넘기고(`submitted` 0 일 때만) 고쳐 쓰지 말고 그대로 그리게 한다.', '',
     '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',

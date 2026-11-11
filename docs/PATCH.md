@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-11 · claude · ① 네 장 — 우리 설계 둘 + GPT 임의 설계 둘, 고른 뒤 일상컷
+- 사용자 「pkm쪽 생성룰에 삼국지나 원소공방처럼 메카컷 우리쪽설계2장, gpt설계 2장 생성해서 나한테 검토 후 진행하는 방향으로 바꿔줘」
+- lib/prompt-spec.js FREE_DESIGN(삼국지 · 원소 WORLD_FREE 꼴), lib/prompt-anthro.js buildFree — 우리 ① 지시문(칸 꼴 · 줄 꼴)에서 화풍 · 색 · 머리색 · 체형 · 장갑 폼 · 원작 특징 · 노출 · 구도를 「fixed — ours」 로 뽑고, 큰 실루엣은 그 종 타입 추천 목록에서 하나 + 원작 아이디어 하나, 얼굴 · 눈색 · 헤어스타일 · 표정 · 자세 · 장면 · 타입 효과는 맡은 쪽
+- tools/prompt-pack.cjs build — ① 자리에 light-free.txt, INDEX.md 에 「① → 멈춤 → 일상컷」(네 장 · 고른 장만 올림 · gpt_free 기록). IMAGE_RULES.md 「① 경장」 · docs/IMAGE_AUTOMATION.md. tests/prompt-pack.cjs
+
 ## 2026-11-11 · claude · 인상 눈빛 낱말에서 「눈을 얼마나 뜨나」 빼기(감사 P3)
 - IMPRESSION_VIBES 다섯: fierce 「a sharp, narrow-eyed glare(눈을 가늘게 뜬 노려봄)」 → 「a sharp, challenging stare(날카롭게 도전하는 눈빛)」, sleepy 「heavy, sleepy half-lidded eyes(반쯤 감긴 졸린 눈)」 → 「a drowsy, unhurried gaze(졸린 듯 느긋한 눈빛)」, regal 「a proud gaze from slightly lowered lids(눈꺼풀을 내린 오만한 눈빛)」 → 「a proud, level gaze(오만하게 똑바로)」, elegant 「a poised gaze under lowered lashes(속눈썹을 내리깐)」 → 「a poised, quiet gaze(침착하고 조용한)」, cheerful 「a sunny, open look…(눈을 활짝 뜬)」 → 「a sunny look with laughter in her eyes(밝은 얼굴, 눈에 웃음)」
 - 까닭: 눈 모양 · 크기는 Face 줄이 정하는데 인상 줄이 눈 뜬 정도까지 정해 부딪혔다(큰 눈 + 가늘게 뜬 노려봄 등). 처진 눈꼬리 + 날카로운 아이라인은 화장이라 그대로

@@ -230,6 +230,12 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     const idx = fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8');
     assert(idx.includes('| ⑩ | casual9 | ① 피카츄_light_anime_25d_gloss_f.webp |') && idx.includes('`피카츄_anime_25d_gloss_f_casual9.webp`') && !idx.includes('heavy-prompt'), '차례표 열 자리');
     for (let n = 1; n <= 9; n++) assert(fs.existsSync(path.join(d7, 'casual' + n + '-prompt.txt')), 'casual' + n);
+    /* ① GPT 임의 설계 주문(2026-11-11 — 삼국지 · 원소처럼 ① 네 장: 우리 설계 둘 + 임의 설계 둘, 멈추고 묻기) */
+    const lf = fs.readFileSync(path.join(d7, 'light-free.txt'), 'utf8'), pikaSil = CMT.types.electric.silhouette.map(k => CMT.silhouettes.find(x => x.key === k).en);
+    assert(lf.startsWith('Design brief') && lf.includes('Pikachu (피카츄), electric type') && lf.includes('Body type (fixed — ours): ' + S.CARD_FIGURE), '① 임의 설계 — 누구 · 체형은 우리 것');
+    assert(pikaSil.every(t => lf.includes(t.replace(/\.$/, ''))) && /Type effects \(yours\): one or two electric effects/.test(lf), '① 임의 설계 — 큰 실루엣은 그 타입 추천에서, 타입 효과는 맡은 쪽');
+    assert(['Style (fixed — ours): ', 'Colours (fixed — ours): ', 'Armor (fixed — ours): ', 'Exposure (fixed — ours): ', 'Composition (fixed): '].every(h => lf.includes(h)) && !/Face — /.test(lf) && !/Impression/.test(lf), '① 임의 설계 — 얼굴 · 인상은 우리 줄을 싣지 않는다');
+    assert(idx.includes('light-free.txt') && idx.includes('멈추고 묻는다') && idx.includes('gpt_free'), '차례표에 ① 네 장 · 멈춤');
     assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY TYPE: ' + S.CARD_FIGURE + ' — '), '일상컷 몸 = 설계표 체형(2026-11-08)');
     /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */
     const s7c = JSON.parse(JSON.stringify(s7)); s7c.slots.light.mecha = { set: { silhouette: 'knight_plate' }, fx: [{ key: 'aura', type: '' }] };
@@ -288,5 +294,5 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.includes(styleLine) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  console.log('PASS 지시문 묶음: 열 자리(경장 + 일상 아홉 · 상황 줄 · 상황 빼기 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
+  console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열 자리(경장 + 일상 아홉 · 상황 줄 · 상황 빼기 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
