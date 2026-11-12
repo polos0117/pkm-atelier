@@ -34,9 +34,21 @@ const RIGHT = { gear: '.appearance-toggle', reset: '#dex-reset', filters: '.dex-
       }
       assert.equal(m.sumAlign, 'center', tag + ' 거르기 줄 가운데 맞춤');
       assert.equal(m.ox, 0, tag + ' 가로 넘침');
+      /* 굴려서 머리가 접혀도(main.dex-scrolled) 검색줄은 그 선에 — 접힌 머리에 workspace.css 의 안쪽 여백이 붙어 21px 로 돌아간 적이 있다 */
+      await p.locator('.collection-scroll').evaluate(e => { e.scrollTop = 900; });
+      await p.waitForSelector('main.dex-scrolled');
+      const sx = await p.evaluate(() => [document.querySelector('.workspace-nav').getBoundingClientRect().left, document.querySelector('.search-row input').getBoundingClientRect().left]);
+      assert(Math.abs(sx[0] - sx[1]) <= 0.5, `${tag} 굴린 뒤 검색줄 ${sx[1]}px — 시작선 ${sx[0]}px`);
+      /* 「목록으로」 — 한 줄에 한 종, 줄도 그 선에서 시작하고 번호가 한 줄에 든다 */
+      await p.locator('#dex-size').click();
+      await p.waitForFunction(() => document.body.classList.contains('dex-compact'));
+      const rw = await p.evaluate(() => { const c = document.querySelector('.grid > .cell'), n = c.querySelector('.no'), b = c.getBoundingClientRect();
+        return { left: b.left, w: b.width, gw: document.querySelector('.grid').clientWidth, noH: n.getBoundingClientRect().height, line: parseFloat(getComputedStyle(n).lineHeight) }; });
+      assert(Math.abs(rw.left - edge) <= 0.5 && Math.abs(rw.w - rw.gw) <= 1, `${tag} 목록 줄 ${rw.left}px · 폭 ${rw.w}/${rw.gw}`);
+      assert(rw.noH <= rw.line * 1.5, `${tag} 목록 줄 번호가 두 줄로 꺾였다 ${rw.noH}px`);
       assert.deepEqual(a.errors, []);
       await a.close();
     }
-    console.log('PASS dex gutter: one left edge and one right edge on the list screen at cover, inner and desktop');
+    console.log('PASS dex gutter: one left edge and one right edge on the list screen at cover, inner and desktop — also scrolled and in the row view');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

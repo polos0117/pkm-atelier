@@ -175,11 +175,11 @@ body {color:var(--text);font-size:15px}
 .dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=holo1"></script>
+<script src="lib/words.js?v=box1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=recent2"></script>
 <script src="lib/dex-filter.js?v=3"></script>
-<link rel="stylesheet" href="lib/gallery.css?v=gutter1">
+<link rel="stylesheet" href="lib/gallery.css?v=box1">
 <script src="lib/scene-motion.js?v=1"></script>
 <link rel="stylesheet" href="lib/scene-motion.css?v=1">
 <!-- 즐겨찾기 — lib/favorites.js(공방 넷과 공방 모음이 글자 하나 다르지 않게 나눠 쓴다) -->
@@ -755,6 +755,14 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
     if (a.top < b.top || a.bottom > b.bottom) sc.scrollTop += a.top - b.top - Math.max(0, (b.height - a.height) / 2);
   }, []);
   const shown = useMemo(() => select(filters), [st, filters, newOnly]);
+  /* 채운 수 — 진행 막대는 전체 카드 중 그림이 하나라도 있는 종, 세대 머리줄은 지금 보이는 칸 안의 종 */
+  const meter = useMemo(() => ({ done: st.cards.filter(c => st.img[c.name]).length, all: st.cards.length }), [st]);
+  const gens = useMemo(() => {
+    const g = {};
+    for (const r of shown) { const x = g[r.card.gen] || (g[r.card.gen] = { have: new Set(), seen: new Set() }); x.seen.add(r.card.name); if (r.file) x.have.add(r.card.name); }
+    for (const k in g) g[k] = { done: g[k].have.size, all: g[k].seen.size };
+    return g;
+  }, [shown]);
   /* 칸 높이 어림 — 폭(화면·작게 보기)이 바뀌거나 글꼴이 늦게 오면 다시 잰다 */
   useLayoutEffect(() => {
     const grid = gridRef.current;
@@ -807,22 +815,28 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
     </div>
     ${shown.length === 0
       ? html`<p class="empty">${W('dex.filter.empty')}</p>`
-      : html`<div class="grid" ref=${gridRef}>${shown.map((shot,i) => {
+      : html`<div class="dex-meter"><span>${W('dex.meter.label')}</span><b>${W('dex.gen.count',meter)}</b><i><u style=${'width:'+(meter.done/meter.all*100).toFixed(1)+'%'}></u></i></div>
+        <div class="grid" ref=${gridRef}>${shown.flatMap((shot,i) => {
           const c=shot.card,entry=st.img[c.name],want=wanted(st.defs,c);
           const prog=IMG.formsDone(shot.style?(IMG.styleMap(entry||{})[shot.style]||{}):entry,want,V),fresh=rowNew(shot,f);
-          return html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':shot.empty?'cell style-empty':'cell'}
+          const types=[c.element,c.element2].filter(Boolean),no=String(c.no).padStart(4,'0');
+          /* 세대 머리줄 — 걸러진 것 안에서 그 세대를 몇 종 채웠나. 굴릴 때 위에 붙는다 */
+          const head=(i===0||shown[i-1].card.gen!==c.gen)&&html`<p key=${'gen-'+c.gen+'-'+i} class="gen-head">${W('card.gen',{n:c.gen})}<span>${W('dex.gen.count',gens[c.gen])}</span></p>`;
+          return [head,html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':shot.empty?'cell style-empty':'cell'}
             data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut} data-new=${fresh?'1':undefined}
             onClick=${() => onOpen(shot)}>
+            <span class="stripe">${types.map(k=>html`<u style=${'background:'+(st.group.color[k]||'var(--line)')}></u>`)}</span>
             <span class="face">${shot.file
               ? html`<${Pic} file=${shot.file} alt=${c.name+' · '+shotLabel(shot,st.defs)} />`
-              : html`<span class="ph">${shot.empty ? W('dex.style.empty') : W('art.none')}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}${SP && sprites && SP.actorFor(sprites, c.name) && html`<span class="dot-badge" title=${W('dex.dot.label')}>${W('dex.dot.badge')}</span>`}</span>
-            <span class="cap"><span class="card-meta">${[c.element,c.element2].filter(Boolean).map(k=>st.group.name[k]||k).join(' · ')}<span>${String(c.no).padStart(4,'0')}</span></span><strong>${c.name}</strong>
+              : html`<span class="ph">${shot.empty ? W('dex.style.empty') : html`<b>${no}</b>${W('dex.box.missing')}`}</span>`}${fresh && html`<${NewBadge} title=${W(f.cut==='auto'?'dex.new.card':'dex.new.file')} />`}${SP && sprites && SP.actorFor(sprites, c.name) && html`<span class="dot-badge" title=${W('dex.dot.label')}>${W('dex.dot.badge')}</span>`}</span>
+            <span class="cap"><b class="no">${W('dex.box.no',{no})}</b><strong>${c.name}</strong><em class="en">${c.en}</em>
               ${shot.file&&html`<i>${st.styleName[shot.style]||W('dex.style.unknown')}</i><i>${shotLabel(shot,st.defs)}</i>`}
               ${shot.empty&&html`<i>${st.styleName[shot.style]||shot.style}</i><i>${W('dex.style.empty.short')}</i>`}
               <i>${W('art.form.done',prog)}</i>
             </span>
-          </button>`;
-        })}</div>`}
+            <span class="types">${types.map(k=>html`<span style=${'background:'+(st.group.color[k]||'var(--muted)')}>${st.group.name[k]||k}</span>`)}</span>
+          </button>`];
+        }).filter(Boolean)}</div>`}
   <//>`;
 }
 

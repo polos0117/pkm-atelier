@@ -84,10 +84,51 @@ body.dex-page{background-image:none}
    본문 16 · 세대 띠 · 거르기 18px 넷이었다. 모두 main 의 안쪽 여백(메뉴 줄 가장자리) 하나에 맞춘다.
    굴림 자리 · 옆으로 구르는 띠는 초점 테두리(2px + 3px 띄움)가 넘침 자르기에 안 잘리게 바깥으로 6px 내밀고 같은 만큼 안쪽 여백을 준다 — 보이는 칸은 시작선에 선다.
    검사 tests/dex-gutter.cjs */
-.dex-page header{padding-inline:0}
+.dex-page header,.dex-page main.dex-scrolled header{padding-inline:0}   /* 굴려 접힌 머리(workspace.css 5px 8px)도 */
 .dex-page .collection-scroll{margin-inline:-6px;padding-inline:6px}
 .genre-strip,.recent-strip{margin-inline:-6px;padding-inline:6px;scroll-padding-inline:6px}
 .dex-filters{padding-inline:0}
 .dex-filters summary{align-items:center}
 /* 세대 띠가 화면 끝에서 「5세ㄷ」처럼 잘려 보였다 — 오른쪽 끝을 흐려 옆으로 밀린다는 걸 알린다. 끝까지 밀면 마지막 단추가 흐림 밖에 서게 오른쪽 여백을 그만큼 */
 .genre-strip{padding-right:28px;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 28px),transparent)}
+/* 표본 상자(2026-11-12) — 사용자 「포켓몬은 약간 밋밋해」 → 시안 셋 중 「b기본에 a섞어줘」. 다른 공방과 같은 두 장씩 큰 그림 대신
+   세 칸씩 표본 상자: 위 색 띠가 타입(둘이면 반반), 라벨에 붉은 번호 도장과 이름. 그림 없는 종은 점선 상자에 번호와 「미발견」.
+   A(도감 단말)에서 세대 머리줄(그 세대를 몇 종 채웠나 · 굴릴 때 위에 붙는다)과 진행 막대, 「목록으로」 줄 보기를 가져왔다 */
+.dex-page .grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px 12px;align-items:start}
+.dex-page .grid>.cell{position:relative;border:1px solid var(--line);border-radius:6px;background:var(--card);overflow:hidden}
+.dex-page .grid>.cell:hover .face{outline:0}@media(hover:hover){.dex-page .grid>.cell:hover{border-color:var(--accent)}}
+.grid .stripe{display:flex;height:4px}.grid .stripe u{flex:1}
+.dex-page .grid .face{aspect-ratio:3/4;border-radius:0}
+.dex-page .grid .cell .face img{object-fit:cover;object-position:50% 10%}
+.dex-page .grid .cap{padding:5px 7px 7px;border-top:1px dashed var(--line);line-height:1.35}
+.grid .cap .no{display:block;font:700 10px/1.5 var(--num);color:var(--accent)}
+.dex-page .grid .cap strong{font-size:12px;font-weight:750;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dex-page .grid .cap i,.grid .cap .en,.grid .types{display:none}
+.dex-page .grid>.cell:not(.has-art){background:transparent;border:1.5px dashed var(--line);box-shadow:none}
+.dex-page .grid>.cell:not(.has-art) .stripe{opacity:.35}.dex-page .grid>.cell:not(.has-art) .cap strong{color:var(--muted);font-weight:500}
+.dex-page .grid>.cell:not(.has-art) .face{background:transparent}
+.dex-page .grid .ph::before{display:none}.dex-page .grid .ph{gap:2px;font-size:10px}.grid .ph b{font:800 18px var(--num);color:var(--line)}
+/* 세대 머리줄 · 진행 막대 */
+.gen-head{grid-column:1/-1;position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:baseline;margin:6px 0 0;padding:8px 0 6px;background:var(--bg);border-bottom:2px solid var(--text);font:800 12px/1.4 var(--sans)}
+.gen-head span{font:700 11px var(--num);color:var(--muted)}
+.dex-meter{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 8px;margin:0 0 6px;font-size:11px;color:var(--muted)}
+.dex-meter b{font:800 12px var(--num);color:var(--accent)}
+.dex-meter i{grid-column:1/-1;height:6px;border-radius:3px;background:var(--card2);overflow:hidden}.dex-meter u{display:block;height:100%;background:var(--accent)}
+/* 목록으로 — 한 줄에 한 종: 번호 · 작은 그림 · 이름과 영문명 · 타입 */
+.dex-page.dex-compact .grid{grid-template-columns:minmax(0,1fr);gap:0}
+.dex-page.dex-compact .grid>.cell{display:grid;grid-template-columns:58px 52px minmax(0,1fr) auto;grid-template-rows:auto auto;align-items:center;column-gap:10px;min-height:64px;padding:6px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;overflow:visible}
+@media(hover:hover){.dex-page.dex-compact .grid>.cell:hover{border-color:var(--line);background:var(--card)}}
+.dex-compact .grid .stripe{display:none}
+.dex-page.dex-compact .grid .face{grid-column:2;grid-row:1/3;width:52px;height:52px;aspect-ratio:auto;border-radius:10px;border:1px solid var(--line);background:var(--card2)}
+.dex-page.dex-compact .grid .cap{display:contents}
+.dex-compact .grid .cap .no{grid-column:1;grid-row:1/3;font-size:11px;color:var(--muted);white-space:nowrap}
+.dex-page.dex-compact .grid .cap strong{grid-column:3;grid-row:1;align-self:end;font-size:14px}
+.dex-compact .grid .cap .en{display:block;grid-column:3;grid-row:2;align-self:start;margin-top:2px;font:400 10px var(--num);font-style:normal;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dex-compact .grid .types{grid-column:4;grid-row:1/3;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.grid .types span{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:9px;color:#fff;font:700 10px/1 var(--sans);white-space:nowrap}
+.dex-page.dex-compact .grid>.cell:not(.has-art) .face{background:repeating-linear-gradient(45deg,var(--card2) 0 6px,transparent 6px 12px)}
+.dex-compact .grid>.cell:not(.has-art) .types{opacity:.4}
+.dex-compact .grid .ph b,.dex-compact .grid .dot-badge{display:none}.dex-page.dex-compact .grid .ph{font-size:9px;padding:2px}
+@media(max-width:1000px){.dex-page .grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:599px){.dex-page .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}}
+@media(max-width:599px){.dex-page.dex-compact .grid{grid-template-columns:minmax(0,1fr);gap:0}}

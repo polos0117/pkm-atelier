@@ -192,6 +192,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-holo.cjs      # 도
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-zoom-turn.cjs # 도감 크게 보기 넘기기 전환 — 나가는 그림 사본 · 넘긴 쪽에서 들어옴 · 끝나면 정리 · 움직임 줄이기면 바로
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도감 최근 추가 띠·새 표시(지난 방문)·새 그림만 — 다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-gutter.cjs    # 도감 목록 시작선 — 왼쪽 · 오른쪽 끝선이 하나(덮개 · 펼침 · PC), 거르기 줄 가운데 맞춤
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-box.cjs       # 도감 표본 상자 — 세 칸 · 타입 색 띠 · 번호 도장 · 미발견 상자 · 세대 머리줄 · 진행 막대 · 목록으로 기억
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs  # 움직임 — 공용 모듈·도감 상세의 켄 번스·오버드라이브 열리기·타입 입자·스위치
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-favorites.cjs # 즐겨찾기 — 상세의 하트·저장된 칸·?pic= 로 열기·저장 막힘·다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/prompt-screen.cjs

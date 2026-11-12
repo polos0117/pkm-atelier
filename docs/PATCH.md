@@ -11,9 +11,17 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 도감 목록 표본 상자 · 세대 머리줄 · 목록으로
+- 사용자 「포켓몬은 약간 밋밋해」 → 시안 셋(도감 단말 · 표본 상자 · 연구 카드) 중 「b기본에 a섞어줘」 — 다른 공방과 같던 두 장씩 큰 그림 목록을 공방다운 모양으로
+- dex.html — 칸에 타입 색 띠(.stripe) · 번호 도장(.no) · 영문명(.en) · 타입 꼬리표(.types), 그림 없는 종은 번호와 「미발견」. 목록 위 진행 막대(.dex-meter — 그림 있는 종 / 전체), 세대가 바뀌는 자리에 세대 머리줄(.gen-head — 보이는 칸 안에서 그림 있는 종 / 종, 굴릴 때 위에 붙는다). 「작게 보기」 단추가 「목록으로 / 상자로」(저장 열쇠 pkm_dex_compact_v1 그대로). words.js?v=box1 · gallery.css?v=box1
+- lib/gallery.css — 표본 상자(덮개 세 칸 · 펼침 네 칸 · PC 여섯 칸, 3:4 위쪽 맞춤, 점선 라벨), 그림 없는 칸은 점선 상자, 목록으로는 한 줄에 한 종(번호 · 52px 그림 · 이름과 영문명 · 타입). 굴려 접힌 머리도 시작선에(workspace.css 의 5px 8px 가 검색줄을 20px 로 밀었다), 손가락 화면에서 누른 칸이 떠 보이지 않게 hover 는 마우스에서만
+- lib/words.js — dex.view.small/normal 「목록으로」 · 「상자로」, dex.box.no · dex.box.missing · dex.gen.count · dex.meter.label
+- tests/dex-box.cjs(새로) · tests/dex-gutter.cjs(굴린 뒤 · 목록으로도) · AGENTS.md 검사 목록
+
 ## 2026-11-12 · claude · 공방 지도의 문에서 넘어올 때 페이드
 - index.html · dex.html · prompt.html · battle.html · run.html · lane.html · gwent.html · survey.html — 머리(`<title>` 바로 아래)에 한 줄: `@view-transition { navigation: auto; }`(동작 줄이기면 꺼진다)와, 여기서 나갈 때는 전환을 그만두는 `pageswap` · 끊긴 전환의 콘솔 오류를 받아 두는 `pagereveal` 한 마디씩. 공방 지도(polos0117.github.io)의 대미궁에서 문을 누르면 이 페이지가 페이드로 들어온다 — 공방 안에서 쪽을 옮길 때는 전과 같다. 문서 간 전환을 모르는 브라우저도 전과 같다
 - 사용자 2026-11-12 「각 공방 저장소에도 한 줄 넣고 VT_READY 에 더해줘」 — 약속은 공방 지도 README 「방에 들어가는 연출」
+
 
 ## 2026-11-12 · claude · 도감 목록 시작선 하나로
 - 사용자 「배치도 그렇고 버튼 위치가 안 맞는다거나, 깔끔하지가 않다」 → 「포켓몬 도감부터」 — 폴드 덮개에서 왼쪽 시작선이 메뉴 12 · 검색줄 21 · 본문 16 · 세대 띠 · 거르기 18px 넷이었다
