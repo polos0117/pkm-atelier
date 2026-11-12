@@ -12,6 +12,14 @@ function worstContrast(sel){
  const bg=getComputedStyle(plate).backgroundColor,fg=getComputedStyle(el).color;
  return Math.min(...['#fff','#000'].map(u=>{const a=lum(px(u,fg)),b=lum(px(u,bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);}));
 }
+/* 그림 겹(두 번째 배경)이 그림 층을 다 덮나 — 그림은 1536×1024(3:2). cover 거나, 높이 n% 로 키웠으면 그 크기가 층보다 넓고 높아야 한다
+   (접힌 머리 · 낮은 화면에서 층이 낮아지면 auto 125% 는 가운데 작은 조각이 된다) */
+function artCovers(){
+ const e=document.querySelector('.region-hero'),r=e.getBoundingClientRect(),size=getComputedStyle(e).backgroundSize.split(', ').pop();
+ if(size==='cover')return true;
+ const m=/^auto (\d+(?:\.\d+)?)%$/.exec(size);if(!m)return size;
+ const ht=r.height*m[1]/100;return ht>=r.height-.5&&ht*1.5>=r.width-.5||size+' '+r.width+'×'+r.height;
+}
 (async()=>{
  const h=await start();
  try{
@@ -51,6 +59,7 @@ function worstContrast(sel){
     await scroll.evaluate(e=>{e.scrollTop=300});await p.waitForSelector('main.dex-scrolled');
     const [heroH,headH]=await p.evaluate(()=>[document.querySelector('.region-hero').getBoundingClientRect().height,document.querySelector('.workspace-header').getBoundingClientRect().height]);
     assert(heroH<=headH+.5,tag+' 접힌 머리의 그림 층: '+heroH+' > '+headH);
+    assert.equal(await p.evaluate(artCovers),true,tag+' 접힌 머리에서도 그림이 층을 다 덮는다');
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
    /* 그림을 못 받는다 — 지역 색 바탕만, 풍경 단추는 숨고, 글자는 그대로 읽힌다 */
@@ -63,6 +72,17 @@ function worstContrast(sel){
      assert(await q.evaluate(worstContrast,sel)>=4.5,tag+' no-art '+sel+' 대비');
    }finally{await b.close()}
   }
-  console.log('PASS region header: 8 pages × 3 sizes — region art layer, wooden sign 44px, translucent plate contrast in 9 regions, nav ≤ 300px on cover, no-art fallback, folds with dex scroll');
+  /* 낮은 화면(max-height:550) — 머리는 메뉴 줄뿐. 좁은 분할 화면(560×400)과 가로 폰(844×390), 굴려 접혀도 그림이 층을 다 덮는다 */
+  for(const viewport of [{width:560,height:400},{width:844,height:390}]){
+   const c=await h.open('dex.html',{viewport,mobile:true}),r=c.page;
+   try{
+    await r.waitForSelector('.grid .cell');
+    assert.equal(await r.evaluate(artCovers),true,viewport.width+'×'+viewport.height+' 낮은 화면의 그림 층');
+    await r.locator('.collection-scroll').evaluate(e=>{e.scrollTop=300});await r.waitForSelector('main.dex-scrolled');
+    assert.equal(await r.evaluate(artCovers),true,viewport.width+'×'+viewport.height+' 낮은 화면 · 접힘의 그림 층');
+    assert.deepEqual(c.errors,[]);
+   }finally{await c.close()}
+  }
+  console.log('PASS region header: 8 pages × 3 sizes — region art layer, wooden sign 44px, translucent plate contrast in 9 regions, nav ≤ 300px on cover, no-art fallback, folds with dex scroll, art covers the folded and short-screen hero');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

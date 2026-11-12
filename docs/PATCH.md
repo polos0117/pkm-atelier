@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 접힌 머리 · 낮은 화면에서 지역 그림이 조각나던 것
+- lib/workspace.css — 폰의 그림 크기(층 높이의 125%)가 머리가 접히거나(folded · dex-scrolled) 낮은 화면(max-height:550)에서 층이 낮아지면 가운데 작은 조각(344 폭에 206px)이 됐다. 두 경우는 다시 cover(보이는 자리는 그대로)
+- 화면 여덟 — workspace.css 를 ?v=region4b 로
+- tests/region-header.cjs — 344 도감 접힘과 낮은 화면(560×400 · 844×390, 접힘 포함)에서 그림이 층을 다 덮는지
+
 ## 2026-11-12 · claude · 화면 머리 — 지역 그림 · 나무 표지판 · 반투명 제목판
 - lib/workspace-ui.js — 머리(WorkspaceHeader) 안에 지역 그림 층 `.region-hero`(data-region, 그림은 new Image() 로 미리 받아 못 받으면 `.no-art`), 나무 표지판 `button.region-sign`(「관동 지방」, 누르면 onOpenMap — 여행 지도 자리), 풍경 단추 `button.scenery-toggle`(그림 없으면 숨김, 동작은 풍경만 보기 작업에서). 쓰지 않던 theme 를 뺐다
 - lib/workspace.css — 그림 층은 화면 폭 · 머리 뒤(z-index:-1)에서 아래로 --bg 에 녹는다(폰 300px 남짓, 폰은 높이 125% 로 세로 자리도 고른다). 표지판은 지역과 무관한 갈색 판 · 둥근 오른끝 · 못 하나. 제목판(.workspace-heading)은 --card 92% 반투명 판 — 흰 그림이든 검은 그림이든 아홉 지역 모두 글자 대비 4.5 이상. 접히면(folded · dex-scrolled) 그림 층은 머리 높이 안으로, 표지판 줄은 숨는다. 표지판과 제목판 사이를 띄워 그림의 랜드마크가 보이는 창을 둔다

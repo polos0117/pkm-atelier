@@ -143,7 +143,8 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 @media (max-width:599px) { .region-hero {background-size:100% 100%,auto 125%} }
 @media (min-width:600px) { .region-hero {background-position:0 0,var(--region-pos-wide,var(--region-pos))} }
 .region-hero.no-art {background-image:linear-gradient(180deg,var(--accent-soft),var(--bg))}
-:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-hero {top:0;bottom:0}
+/* 접히면 층이 머리 높이(폰 110px 남짓)로 낮아진다 — 폰의 auto 125% 그대로면 그림이 가운데 작은 조각이 되니 다시 cover(자리는 그대로) */
+:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-hero {top:0;bottom:0;background-size:100% 100%,cover}
 /* 지역 표지판 — 나무 이정표(갈색 판 · 둥근 오른끝 · 못 하나). 지역 색과 무관한 고정 색. 누르는 자리는 44px, 판은 그 안에 */
 .region-sign-row {display:flex;align-items:center;justify-content:space-between;gap:8px}
 .workspace-header .region-sign {display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;border-radius:0;background:none;font:inherit;color:inherit}
@@ -361,6 +362,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 }
 @media(max-height:550px) {
  .workspace-heading,.region-sign-row {display:none}
+ .region-hero {background-size:100% 100%,cover}   /* 머리가 메뉴 줄뿐이라 층이 낮다 — 위 접힘과 같은 이유 */
 }
 @media(max-height:550px) and (min-width:600px) {
  .workspace-header {display:flex;gap:8px;align-items:center}
