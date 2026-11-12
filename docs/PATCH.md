@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 홀로 효과 — WebGL 로만(Context7 로 PixiJS 문법 대조)
+- 사용자 「context7 커넥터 설치했는데 pixi관련 문법에 변화가 없는지 확인해줘」 — Context7 의 PixiJS 8.19.0 · 8.22.0 문서와 대조: Filter({ glProgram, resources }) · GlProgram.from · 타입 붙은 uniform · out vec4 finalColor · texture() · Application.init 옵션 · destroy(두 인자) 모두 그대로
+- lib/holo.js — preference 'webgl'(글자) → ['webgl'](배열). 글자로 주면 WebGL 이 없을 때 WebGPU · Canvas 로 넘어가는데(8.19 autoDetectRenderer), 그 렌더러는 WebGL 셰이더뿐인 이 필터를 건너뛰어 그림이 한 겹 더 밝게 얹힌다. 이제 WebGL 이 없으면 아무것도 안 한다. dex.html holo.js?v=2
+- tests/dex-holo.cjs — 끄기 · 원본 크기 뒤 캔버스 정리를 기다린다(정리는 화면을 그린 뒤)
+
 ## 2026-11-12 · claude · 도감 크게 보기 홀로 효과(PixiJS)
 - 사용자 「pkm 도감에 PixiJS로 홀로 효과 붙여줄래?」 — lib/holo.js(새로): PixiJS 8.19.0(jsdelivr) WebGL 캔버스를 그림이 그려진 칸에 얹어 screen 으로 섞는다. 무지갯빛 반사 + 빛 번짐, 밝고 차가운 곳(장갑 · 금속 · 하늘)에 세게 · 살색 같은 따뜻한 색엔 약하게. 마우스 · 폰 기울기(iOS 는 처음 누를 때 허락)를 따라가고 가만두면 천천히 지나간다, 움직임 줄이기면 혼자 안 움직인다. WebGL · CDN 이 없으면 아무것도 안 한다
 - dex.html 크게 보기 — 「홀로」 단추(켜고 끈 것 기억 atelier_holo_v1, 원본 크기에선 없음, 넘겨도 캔버스는 그대로 그림만 바꿈). lib/gallery.css · lib/words.js(gallery.holo) · ?v= words holo1 · gallery.css holo1

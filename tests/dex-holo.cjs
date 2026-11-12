@@ -36,6 +36,7 @@ const shot = p => p.locator('.zoom-body').screenshot({ animations: 'disabled' })
     const on2 = await shot(p);
     assert(!on1.equals(on2), '마우스를 따라 빛이 움직인다'); n++;
     await p.locator('.zoom-holo').click();
+    await p.locator('canvas.holo-layer').waitFor({ state: 'detached', timeout: 5000 });   /* 정리는 화면을 그린 뒤(effect) */
     assert.equal(await p.locator('canvas.holo-layer').count(), 0, '끄면 캔버스가 없다');
     assert(!(await shot(p)).equals(on2), '켠 그림과 끈 그림이 다르다');
     assert.equal(await p.evaluate(() => localStorage.getItem('atelier_holo_v1')), '0', '끈 것을 기억'); n += 3;
@@ -43,6 +44,7 @@ const shot = p => p.locator('.zoom-body').screenshot({ animations: 'disabled' })
     assert.equal(await p.locator('canvas.holo-layer').count(), 0, '다시 열어도 꺼진 채'); n++;
     await p.locator('.zoom-holo').click(); await cv.waitFor({ timeout: 20000 });
     await p.locator('.zoom-open').click();
+    await p.locator('canvas.holo-layer').waitFor({ state: 'detached', timeout: 5000 });
     assert.equal(await p.locator('canvas.holo-layer').count(), 0, '원본 크기에선 없다');
     assert.equal(await p.locator('.zoom-holo').isDisabled(), true); n += 2;
     await p.locator('.zoom-open').click(); await cv.waitFor({ timeout: 20000 });
