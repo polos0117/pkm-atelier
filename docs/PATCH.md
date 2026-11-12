@@ -11,6 +11,16 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 화면 머리 — 지역 그림 · 나무 표지판 · 반투명 제목판
+- lib/workspace-ui.js — 머리(WorkspaceHeader) 안에 지역 그림 층 `.region-hero`(data-region, 그림은 new Image() 로 미리 받아 못 받으면 `.no-art`), 나무 표지판 `button.region-sign`(「관동 지방」, 누르면 onOpenMap — 여행 지도 자리), 풍경 단추 `button.scenery-toggle`(그림 없으면 숨김, 동작은 풍경만 보기 작업에서). 쓰지 않던 theme 를 뺐다
+- lib/workspace.css — 그림 층은 화면 폭 · 머리 뒤(z-index:-1)에서 아래로 --bg 에 녹는다(폰 300px 남짓, 폰은 높이 125% 로 세로 자리도 고른다). 표지판은 지역과 무관한 갈색 판 · 둥근 오른끝 · 못 하나. 제목판(.workspace-heading)은 --card 92% 반투명 판 — 흰 그림이든 검은 그림이든 아홉 지역 모두 글자 대비 4.5 이상. 접히면(folded · dex-scrolled) 그림 층은 머리 높이 안으로, 표지판 줄은 숨는다. 표지판과 제목판 사이를 띄워 그림의 랜드마크가 보이는 창을 둔다
+- lib/workspace-theme.js — 지역마다 보이는 자리(pos)를 344×882 머리 창에서 다시 골랐다(관동 여객선 · 등대, 성도 오층탑, 가라르 경기장 …). 600px 이상에서 다른 자리가 필요한 셋(관동 · 알로라 · 가라르)은 posWide
+- lib/words.js — region.sign(「{name} 지방」) · region.scenery(풍경만 보기)
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · workspace-theme.js · words.js(· prompt-ui · survey-ui)를 ?v=region4 로
+- tests/region-header.cjs — 새 검사: 여덟 화면 · 세 크기의 그림 층 · 표지판 44px · 덮개에서 메뉴 줄 ≤ 300px · 아홉 지역 제목판 대비 · 그림 못 받음 · 도감 접힘
+- tests/header-layout.cjs — 그림 층 · 표지판 · 풍경 단추도 화면마다 같은 자리인지 본다
+- AGENTS.md — 검사 목록에 region-header.cjs
+
 ## 2026-11-12 · claude · 지역 그림 올리기 · 검사 껍데기가 그림 주소를 받게
 - tests/browser-harness.cjs — 그림 저장소 `regions/` 주소(`/pkm-atelier-img-4/regions/…`)를 코드 안 작은 PNG 로 채운다. `open()` 의 `regionArt: false` 면 404(그림 못 받음 검사용)
 - tests/region-art-stub.cjs — 위 껍데기가 200(그림으로 풀림) · 404 로 답하는지 확인

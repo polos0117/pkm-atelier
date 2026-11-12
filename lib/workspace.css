@@ -106,7 +106,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 /* 접어도 덮개에서는 제목을 아예 숨기지 않는다 — 문양 + 제목 한 줄(44px 누르는 자리)만 남기고, 그 줄이 연구소 링크다 */
 /* 도감은 목록을 굴리면 머리말을 접은 것처럼 줄인다(.dex-fold) — 다시 맨 위로 오면 펼친다 */
 @media (max-width:599px) {
-  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading {display:flex;height:46px;padding:0 0 2px}
+  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading {display:flex;height:46px;margin:0 0 6px;padding:0 10px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-title {align-self:stretch;min-height:44px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading .crest-mark {width:28px;height:28px;padding:3px;border-radius:9px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading h1 {font-size:15px;margin:0}
@@ -117,7 +117,9 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .workspace-nav a[href="index.html"] {flex-grow:1.25}
 .workspace-nav a[href="prompt.html"] {flex-grow:1.65}
 .theme-dot {width:7px;height:7px;flex:none;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px var(--accent-soft)}
-.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:112px;padding:12px 0 14px;position:relative}
+.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:104px;margin:28px 0 10px;padding:12px 18px;position:relative;
+  background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 75%,transparent);border-radius:16px;
+  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .workspace-title {display:flex;align-items:center;gap:14px;min-width:0;color:inherit;text-decoration:none}
 .workspace-title:hover .crest-mark {border-color:var(--accent)}
 .workspace-title>div {min-width:0}
@@ -131,6 +133,30 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .lab-status dd {margin:0;font:600 13px var(--sans);color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
 .lab-status [data-status="patch"] dd {color:var(--accent)}
 @media (max-width:899px) { .lab-status {display:grid;grid-template-columns:auto auto;gap:2px 14px} }
+/* 화면 머리(시안 A, 2026-11-12) — 지역 그림이 머리 뒤에 깔리고 아래로 --bg 에 녹는다(폰에서 화면 위 300px 남짓).
+   z-index:-1 이라 머리 글 · 메뉴 아래, 머리 다음 내용 아래에 깔린다. 가로는 화면 폭 — 담는 자리(main · .wrap)의 overflow 가 자른다.
+   pos(지역마다 랜드마크가 보이는 자리)는 lib/workspace-theme.js 의 regions. 그림을 못 받으면 .no-art — 지역 색만 */
+.region-hero {position:absolute;z-index:-1;top:-40px;bottom:-72px;left:50%;width:100vw;translate:-50% 0;pointer-events:none;
+  background-image:linear-gradient(180deg,transparent 30%,color-mix(in srgb,var(--bg) 60%,transparent) 60%,var(--bg) 82%),var(--region-art);
+  background-size:100% 100%,cover;background-position:0 0,var(--region-pos,50% 45%);background-repeat:no-repeat}
+/* 폰에서는 그림을 조금 키워(높이 125%) 세로로도 자리를 고를 수 있게 — 좁은 창에 랜드마크를 들인다 */
+@media (max-width:599px) { .region-hero {background-size:100% 100%,auto 125%} }
+@media (min-width:600px) { .region-hero {background-position:0 0,var(--region-pos-wide,var(--region-pos))} }
+.region-hero.no-art {background-image:linear-gradient(180deg,var(--accent-soft),var(--bg))}
+:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-hero {top:0;bottom:0}
+/* 지역 표지판 — 나무 이정표(갈색 판 · 둥근 오른끝 · 못 하나). 지역 색과 무관한 고정 색. 누르는 자리는 44px, 판은 그 안에 */
+.region-sign-row {display:flex;align-items:center;justify-content:space-between;gap:8px}
+.workspace-header .region-sign {display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;border-radius:0;background:none;font:inherit;color:inherit}
+.region-sign>span {display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:5px 16px 5px 11px;border-radius:4px 17px 17px 4px;
+  background-color:#6b4a2b;background-image:repeating-linear-gradient(90deg,#ffffff0a 0 2px,transparent 2px 11px);color:#fff3dd;
+  font-size:13px;font-weight:800;line-height:1;white-space:nowrap;box-shadow:0 2px 0 #3d2a17,0 6px 14px #0003}
+.region-sign>span::before {content:"";width:7px;height:7px;flex:none;border-radius:50%;background:#e8d3ae;box-shadow:inset 0 -1px #0004,0 1px #fff2}
+.region-sign:hover>span {background-color:#7a5533}
+.workspace-header .scenery-toggle {display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:0;border:1px solid color-mix(in srgb,var(--line) 75%,transparent);
+  border-radius:14px;background:color-mix(in srgb,var(--card) 80%,transparent);color:var(--text);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.workspace-header .scenery-toggle[hidden] {display:none}
+.scenery-toggle svg {width:20px;height:20px}
+:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-sign-row {display:none}
 body {background-color:var(--bg);background-image:radial-gradient(var(--pattern) 1px,transparent 1px);background-size:18px 18px}
 /* Archive: compact search deck above an image-led collection. */
 .dex-page main,.prompt-page .wrap {width:100%;max-width:1440px;margin:auto;padding:calc(16px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
@@ -259,7 +285,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 /* Fold cover display (~344–400 CSS px) and narrow split-screen. */
 @media (max-width:599px) {
   .dex-page main,.prompt-page .wrap {padding-left:12px;padding-right:12px;padding-top:calc(12px + env(safe-area-inset-top))}
-  .workspace-heading {height:104px;padding:12px 0 14px;gap:10px}
+  .workspace-heading {height:88px;margin:34px 0 8px;padding:10px 12px;gap:10px;border-radius:14px}
   .workspace-title {gap:10px}
   .crest-mark {width:44px;height:44px;padding:5px;border-radius:14px}
   .workspace-heading h1 {font-size:clamp(20px,5.7vw,25px)}
@@ -334,7 +360,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
  .dex-page .view-tools {margin:8px 0}
 }
 @media(max-height:550px) {
- .workspace-heading {display:none}
+ .workspace-heading,.region-sign-row {display:none}
 }
 @media(max-height:550px) and (min-width:600px) {
  .workspace-header {display:flex;gap:8px;align-items:center}
