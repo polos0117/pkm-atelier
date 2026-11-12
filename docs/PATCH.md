@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 화면 여덟의 처음 theme-color 를 관동 --deck 으로
+- battle.html · dex.html · gwent.html · index.html · lane.html · prompt.html · run.html · survey.html — 자바스크립트가 돌기 전 meta theme-color 가 옛 daylight 값(#faf9f3)이었다. 기본 지역 관동의 --deck(#fbf4e6, lib/workspace.css)으로
+
 ## 2026-11-12 · claude · 도감 상세에서 머리 판(지도 · 풍경)을 열고 닫으면 상세가 닫히던 것
 - dex.html — 상세의 popstate 가 머리 판(useBackDialog)이 쌓은 기록 칸까지 「상세 닫기」로 읽었다. 판 칸으로 들어가는 것과 판 칸에서 카드 칸으로 돌아오는 것은 건너뛴다(지도로 여행 · 풍경 Esc · 풍경 뒤로 뒤에도 상세 그대로, 뒤로 한 번이면 목록). 방향키도 풍경 · 지도가 열려 있으면 뒤 그림을 넘기지 않는다
 - tests/region-map.cjs — 344×882 도감 상세에서 지도 여행 · 풍경 Esc · 풍경 뒤로 → 상세 그대로, 판 열림 + 방향키 → 그림 그대로, 뒤로 한 번 → 목록
