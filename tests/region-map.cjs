@@ -163,6 +163,8 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
    const d=await h.open('dex.html?mech='+encodeURIComponent('피카츄'),{viewport:FOLD.cover,mobile:true}),p=d.page;
    try{
     await p.waitForSelector('#detail-title');
+    /* 상세에서 새로고침 — 목록 칸이 카드 칸의 기록 값({dex:'card'})을 물려받는다. 그래도 마지막 뒤로 한 번은 목록이어야 한다 */
+    await p.reload();await p.waitForSelector('#detail-title');
     const listUrl=()=>!new URL(p.url()).searchParams.get('mech');
     const here=async tag=>{await p.waitForTimeout(400);
      assert.equal(await p.locator('#detail-title').count(),1,tag+' → 상세가 열려 있다');

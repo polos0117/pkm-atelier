@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 도감 상세 popstate — 카드 칸은 주소의 mech 로도 가린다
+- dex.html — 바로 앞 칸의 「판 칸에서 카드 칸으로 돌아온 popstate 는 건너뛴다」가 기록 값 {dex:'card'} 만 봤다. ?mech= 로 새로고침하면 목록 칸도 그 값을 물려받아, 뒤로 가기가 목록으로 못 갔다. 주소에 mech 가 남았는지 같이 본다
+- tests/region-map.cjs — 도감 상세 검사를 새로고침한 상세에서 시작한다(마지막 뒤로 한 번 → 목록)
+
 ## 2026-11-12 · claude · 화면 여덟의 처음 theme-color 를 관동 --deck 으로
 - battle.html · dex.html · gwent.html · index.html · lane.html · prompt.html · run.html · survey.html — 자바스크립트가 돌기 전 meta theme-color 가 옛 daylight 값(#faf9f3)이었다. 기본 지역 관동의 --deck(#fbf4e6, lib/workspace.css)으로
 

@@ -921,8 +921,10 @@ function App() {
   };
   useEffect(() => {
     /* 머리 판(풍경 · 여행 지도, lib/workspace-ui.js useBackDialog)도 기록 칸을 쌓는다 — 그 칸으로 오가는 popstate 는 상세 몫이 아니다:
-       판 칸으로 들어가거나(앞으로 가기), 상세가 열린 채 판 칸에서 카드 칸으로 돌아온 것 */
-    const pop = e => { const s = e.state; if (s && (s.scenery || s.regionMap) || pushed.current && s && s.dex === 'card') return;
+       판 칸으로 들어가거나(앞으로 가기), 상세가 열린 채 판 칸에서 카드 칸으로 돌아온 것.
+       카드 칸은 기록 값만으로 못 가린다 — ?mech= 로 새로고침하면 목록 칸도 {dex:'card'} 를 물려받는다. 주소에 mech 가 남았는지 같이 본다 */
+    const pop = e => { const s = e.state, onCard = s && s.dex === 'card' && new URL(location.href).searchParams.has('mech');
+      if (s && (s.scenery || s.regionMap) || pushed.current && onCard) return;
       if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } else liveForward.current(); };
     addEventListener('popstate', pop);
     return () => removeEventListener('popstate', pop);
