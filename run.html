@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#faf9f3">
+<meta name="theme-color" content="#fbf4e6">
 <title>포켓몬 메카 연구소</title>
 <style>@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }</style><script>addEventListener('pageswap', e => { const t = e.viewTransition; if (t) { t.skipTransition(); t.ready.catch(() => {}); } }); addEventListener('pagereveal', e => { const t = e.viewTransition; if (t) t.ready.catch(() => {}); });</script>   <!-- 공방 지도(polos0117.github.io)의 문에서 넘어올 때 페이드로 들어온다(2026-11-12 — 그쪽 README 「방에 들어가는 연출」). 여기서 나갈 때는 전환을 걸지 않아 공방 안에서 쪽을 옮길 때는 전과 같다. 모르는 브라우저는 그냥 넘어온다 -->
 <!--
@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="lib/workspace.css?v=status1">
+<link rel="stylesheet" href="lib/workspace.css?v=region9">
 <style>
 * {box-sizing:border-box}
 html,body {margin:0;padding:0}
@@ -190,11 +190,11 @@ body {color:var(--text);font-size:15px}
   .note {font-size:11px}
 }
 </style>
-<script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=arms1"></script>
+<script src="lib/workspace-theme.js?v=region10"></script>
+<script src="lib/words.js?v=region9"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/today.js?v=1"></script>
-<script src="lib/img.js?v=status1"></script>
+<script src="lib/img.js?v=region1"></script>
 <script src="lib/battle.js"></script>
 <script src="lib/run.js"></script>
 </head>
@@ -204,7 +204,7 @@ body {color:var(--text);font-size:15px}
 import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=status1';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=region8';
 import { Play, setImages, picOf } from './lib/battle-ui.js';
 const html = htm.bind(h);
 const W = window.W, B = window.AtelierBattle, RUN = window.AtelierRun;

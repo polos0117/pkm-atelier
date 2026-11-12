@@ -23,6 +23,8 @@ const hex = h => 'rgb(' + [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16)).jo
     /* 세대 머리줄 — 걸러지지 않았으면 세대마다 하나, 5세대는 그림 있는 종 / 종 */
     const heads = await p.locator('.gen-head').evaluateAll(es => es.map(e => [e.firstChild.textContent, e.querySelector('span').textContent.replace(/\s/g, '')]));
     assert.equal(heads.length, new Set(cards.map(c => c.gen)).size, '세대 머리줄 수');
+    assert.equal(heads[0][0], '1세대 · 관동 지방');
+    assert.equal(heads[4][0], '5세대 · 하나 지방');
     assert.deepEqual(heads[4][1], gen5have + '/' + gen5.length, '5세대 ' + JSON.stringify(heads[4]));
     /* 두 타입 카드의 색 띠는 반반, 순서대로 그 타입 색 */
     const stripe = await p.locator(`.grid > .cell[data-card="${two.name}"] .stripe u`).evaluateAll(es => es.map(e => getComputedStyle(e).backgroundColor));

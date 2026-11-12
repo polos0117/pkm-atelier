@@ -19,6 +19,8 @@ const ESM = {
   'https://cdn.jsdelivr.net/npm/pixi.js@8.19.0/dist/pixi.min.mjs': 'pixi.js/dist/pixi.min.mjs',
 };
 /* 폴드5 — 덮개 화면과 펼친 화면. 이 저장소 화면이 맞춰 온 두 크기다 */
+/* 지역 그림 자리를 채우는 2×2 PNG — 그림 파일은 이 저장소에 두지 않는다 */
+const REGION_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAIAAAD91JpzAAAAEklEQVR4nGOs6FnAwMDAxAAGABOyAahWI16gAAAAAElFTkSuQmCC';
 const FOLD = { cover: { width: 344, height: 882 }, inner: { width: 690, height: 829 } };
 
 function serve(base) {
@@ -67,6 +69,10 @@ async function start() {
         const src = fs.readFileSync(file, 'utf8').replace(/from"preact"/g, 'from"https://esm.sh/preact@10.24.3"');
         return route.fulfill({ status: 200, contentType: 'text/javascript', body: src });
       }
+      /* 지역 그림(그림 저장소 regions/) — 작은 PNG 상수로 채운다. opt.regionArt === false 면 못 받은 것처럼 404 */
+      if (origin === 'https://polos0117.github.io' && new URL(url).pathname.startsWith('/pkm-atelier-img-4/regions/'))
+        return opt.regionArt === false ? route.fulfill({ status: 404, body: 'no region art' })
+          : route.fulfill({ status: 200, contentType: 'image/png', headers: { 'Access-Control-Allow-Origin': '*' }, body: Buffer.from(REGION_PNG, 'base64') });
       /* 배포된 그림 주소는 체크아웃의 같은 파일로 돌린다.
          주소를 다시 요청하면 한글 파일 이름의 %xx 가 두 번 인코딩돼 404 가 된다 —
          디스크에서 바로 읽는다 */

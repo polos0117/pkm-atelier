@@ -8,61 +8,69 @@
   --sans:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
   --num:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;
 }
-:root[data-theme="midnight"],[data-theme-preview="midnight"] {
-  color-scheme:dark;
-  --bg:#11182b;--deck:#19243c;--card:#1e2d47;--card2:#263754;--text:#eef5ff;
-  --muted:#b3c4df;--line:#3b506e;--accent:#88d6f6;--accent-soft:#243f58;--on-accent:#102538;
-  --signal:#f8c869;--gold:#c9b9ff;--ok:#8fddba;--warn:#f8c869;--pattern:#88d6f610;
-  --shadow:0 8px 26px #00000026;
-}
-:root, :root[data-theme="daylight"],[data-theme-preview="daylight"] {
+/* 지역 아홉(세대 차례) — 색은 그 지역 그림에서: 넓은 면 → 바탕·카드, 대표색 → 강조. 하나(밤)만 어두운 판 */
+:root, :root[data-theme="kanto"],[data-theme-preview="kanto"] {
   color-scheme:light;
-  --bg:#f4f3eb;--deck:#faf9f3;--card:#ffffff;--card2:#eaf2ef;--text:#223b3a;
-  --muted:#566b64;--line:#cddbd4;--accent:#b52e42;--accent-soft:#fae7e9;--on-accent:#ffffff;
-  --signal:#247e71;--gold:#d8b749;--ok:#256d51;--warn:#875719;--pattern:#247e7110;
+  --bg:#f6eedf;--deck:#fbf4e6;--card:#fffaf1;--card2:#eef0dc;--text:#3a3627;
+  --muted:#625b47;--line:#ddd0b5;--accent:#b04a18;--accent-soft:#fdebdc;--on-accent:#ffffff;
+  --signal:#4f7a4a;--gold:#d9a441;--ok:#3f6b3c;--warn:#8a5a14;--pattern:#d9682e10;
   --shadow:0 8px 26px #263e3010;
 }
-:root[data-theme="blossom"],[data-theme-preview="blossom"] {
+:root[data-theme="johto"],[data-theme-preview="johto"] {
   color-scheme:light;
-  --bg:#fbf0f7;--deck:#fff5fc;--card:#fffbfe;--card2:#f5e8f6;--text:#4c304d;
-  --muted:#76556f;--line:#e1c7dd;--accent:#974385;--accent-soft:#f5dff0;--on-accent:#ffffff;
-  --signal:#8556ac;--gold:#c9973c;--ok:#347565;--warn:#885921;--pattern:#97438510;
+  --bg:#f3efe7;--deck:#f8f5ee;--card:#fffdf8;--card2:#ece5d8;--text:#3b2e25;
+  --muted:#6a5848;--line:#d9cdbb;--accent:#a3301c;--accent-soft:#f7e0d8;--on-accent:#ffffff;
+  --signal:#a07a2a;--gold:#d4a53c;--ok:#476b3a;--warn:#8a5418;--pattern:#a3301c10;
   --shadow:0 8px 26px #263e3010;
 }
-:root[data-theme="moss"],[data-theme-preview="moss"] {
-  color-scheme:dark;
-  --bg:#14251e;--deck:#1b3026;--card:#233d2e;--card2:#2b4736;--text:#f1f6e7;
-  --muted:#b8cdb5;--line:#46664d;--accent:#b9dd85;--accent-soft:#3b542f;--on-accent:#233322;
-  --signal:#81d6bb;--gold:#e5c46e;--ok:#89dab5;--warn:#eed48a;--pattern:#b9dd850d;
-  --shadow:0 8px 26px #00000026;
-}
-:root[data-theme="plum"],[data-theme-preview="plum"] {
-  color-scheme:dark;
-  --bg:#211a35;--deck:#2b2243;--card:#352a50;--card2:#40325e;--text:#f7edff;
-  --muted:#c8b7e3;--line:#5e4b7a;--accent:#d5adff;--accent-soft:#503968;--on-accent:#30213f;
-  --signal:#9de3cb;--gold:#f0c687;--ok:#9de3cb;--warn:#f0c687;--pattern:#d5adff12;
-  --shadow:0 8px 26px #00000026;
-}
-:root[data-theme="sand"],[data-theme-preview="sand"] {
+:root[data-theme="hoenn"],[data-theme-preview="hoenn"] {
   color-scheme:light;
-  --bg:#fff3c5;--deck:#fff8d9;--card:#fffcf0;--card2:#fae9a1;--text:#403622;
-  --muted:#6f613a;--line:#decc83;--accent:#775219;--accent-soft:#f7df83;--on-accent:#fffdf5;
-  --signal:#cc4138;--gold:#e3b321;--ok:#416c37;--warn:#884a1f;--pattern:#b8901714;
+  --bg:#e9f1f0;--deck:#f1f7f6;--card:#fbfefd;--card2:#dcebe6;--text:#1d3a2c;
+  --muted:#4b6659;--line:#bfd6cd;--accent:#17714f;--accent-soft:#d5eee3;--on-accent:#ffffff;
+  --signal:#1f7f86;--gold:#c9a84a;--ok:#2c7a4f;--warn:#8a5a1e;--pattern:#17714f10;
   --shadow:0 8px 26px #263e3010;
 }
-:root[data-theme="deep"],[data-theme-preview="deep"] {
+:root[data-theme="sinnoh"],[data-theme-preview="sinnoh"] {
+  color-scheme:light;
+  --bg:#eef0f8;--deck:#f5f6fc;--card:#ffffff;--card2:#e2e7f6;--text:#232a4a;
+  --muted:#535c80;--line:#c9cfe8;--accent:#4a55b0;--accent-soft:#e1e3f7;--on-accent:#ffffff;
+  --signal:#3a86b8;--gold:#c4a24a;--ok:#2f7a5f;--warn:#8a5a1e;--pattern:#4a55b010;
+  --shadow:0 8px 26px #263e3010;
+}
+:root[data-theme="unova"],[data-theme-preview="unova"] {
   color-scheme:dark;
-  --bg:#072d38;--deck:#0a3945;--card:#104554;--card2:#175262;--text:#e6fbfb;
-  --muted:#acd0d7;--line:#356774;--accent:#80e5e0;--accent-soft:#205b63;--on-accent:#07343d;
-  --signal:#9bbcf6;--gold:#f0d596;--ok:#93e8be;--warn:#f0d596;--pattern:#80e5e00d;
+  --bg:#0f1b34;--deck:#142342;--card:#17284b;--card2:#1f3258;--text:#eef2ff;
+  --muted:#b3bfd9;--line:#34476e;--accent:#f2c14e;--accent-soft:#2f3a52;--on-accent:#14213d;
+  --signal:#9fb4c8;--gold:#f2c14e;--ok:#8fddba;--warn:#f8c869;--pattern:#f2c14e10;
   --shadow:0 8px 26px #00000026;
 }
-:root[data-theme="ember"],[data-theme-preview="ember"] {
-  color-scheme:dark;
-  --bg:#281c1d;--deck:#332327;--card:#412b2a;--card2:#503330;--text:#fff0e4;
-  --muted:#e0bdad;--line:#805147;--accent:#ffbb82;--accent-soft:#68422e;--on-accent:#3a241d;
-  --signal:#ff927e;--gold:#f5db83;--ok:#b4da9c;--warn:#f5db83;--pattern:#ffbb8210;
-  --shadow:0 8px 26px #00000026;
+:root[data-theme="kalos"],[data-theme-preview="kalos"] {
+  color-scheme:light;
+  --bg:#f7f2ec;--deck:#fbf7f2;--card:#fffdfa;--card2:#efe8f1;--text:#3f3340;
+  --muted:#6b5a68;--line:#e0d3da;--accent:#a8406a;--accent-soft:#f8e1ea;--on-accent:#ffffff;
+  --signal:#7b5aa8;--gold:#c9a050;--ok:#3d6f5a;--warn:#8a5a22;--pattern:#a8406a10;
+  --shadow:0 8px 26px #263e3010;
+}
+:root[data-theme="alola"],[data-theme-preview="alola"] {
+  color-scheme:light;
+  --bg:#f7f1e3;--deck:#fbf7ec;--card:#fffdf6;--card2:#e2f2f1;--text:#283d40;
+  --muted:#546769;--line:#d6dcd0;--accent:#b8384f;--accent-soft:#fce8ea;--on-accent:#ffffff;
+  --signal:#137f86;--gold:#d6a94a;--ok:#2f7a5a;--warn:#8a5a1e;--pattern:#b8384f10;
+  --shadow:0 8px 26px #263e3010;
+}
+:root[data-theme="galar"],[data-theme-preview="galar"] {
+  color-scheme:light;
+  --bg:#eceae5;--deck:#f3f1ec;--card:#fbfaf7;--card2:#e3e4dc;--text:#2f2b25;
+  --muted:#5c5850;--line:#cfcbc1;--accent:#9c4128;--accent-soft:#f3ddd3;--on-accent:#ffffff;
+  --signal:#4e6b3c;--gold:#c39a4a;--ok:#3f6b3c;--warn:#8a5418;--pattern:#9c412810;
+  --shadow:0 8px 26px #263e3010;
+}
+:root[data-theme="paldea"],[data-theme-preview="paldea"] {
+  color-scheme:light;
+  --bg:#f8f1e0;--deck:#fcf7ea;--card:#fffdf6;--card2:#f1e6c9;--text:#3a3020;
+  --muted:#6a5b3c;--line:#e0d0a8;--accent:#8c5a10;--accent-soft:#f6e3b8;--on-accent:#ffffff;
+  --signal:#2b6cc4;--gold:#e0ad3a;--ok:#416c37;--warn:#a0461f;--pattern:#8c5a1010;
+  --shadow:0 8px 26px #263e3010;
 }
 :root[data-density="relaxed"] {
   --ui-font:15px;--ui-small:13px;--ui-height:46px;--ui-pad:12px;--ui-gap:10px;--gap:14px;
@@ -98,7 +106,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 /* 접어도 덮개에서는 제목을 아예 숨기지 않는다 — 문양 + 제목 한 줄(44px 누르는 자리)만 남기고, 그 줄이 연구소 링크다 */
 /* 도감은 목록을 굴리면 머리말을 접은 것처럼 줄인다(.dex-fold) — 다시 맨 위로 오면 펼친다 */
 @media (max-width:599px) {
-  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading {display:flex;height:46px;padding:0 0 2px}
+  :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading {display:flex;height:46px;margin:0 0 6px;padding:0 10px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-title {align-self:stretch;min-height:44px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading .crest-mark {width:28px;height:28px;padding:3px;border-radius:9px}
   :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .workspace-heading h1 {font-size:15px;margin:0}
@@ -109,7 +117,9 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .workspace-nav a[href="index.html"] {flex-grow:1.25}
 .workspace-nav a[href="prompt.html"] {flex-grow:1.65}
 .theme-dot {width:7px;height:7px;flex:none;border-radius:50%;background:var(--signal);box-shadow:0 0 0 3px var(--accent-soft)}
-.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:112px;padding:12px 0 14px;position:relative}
+.workspace-heading {display:flex;justify-content:space-between;align-items:center;gap:18px;height:104px;margin:28px 0 10px;padding:12px 18px;position:relative;
+  background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid color-mix(in srgb,var(--line) 75%,transparent);border-radius:16px;
+  box-shadow:var(--shadow);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .workspace-title {display:flex;align-items:center;gap:14px;min-width:0;color:inherit;text-decoration:none}
 .workspace-title:hover .crest-mark {border-color:var(--accent)}
 .workspace-title>div {min-width:0}
@@ -123,14 +133,49 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .lab-status dd {margin:0;font:600 13px var(--sans);color:var(--text);font-variant-numeric:tabular-nums;white-space:nowrap}
 .lab-status [data-status="patch"] dd {color:var(--accent)}
 @media (max-width:899px) { .lab-status {display:grid;grid-template-columns:auto auto;gap:2px 14px} }
+/* 화면 머리(시안 A, 2026-11-12) — 지역 그림이 머리 뒤에 깔리고 아래로 --bg 에 녹는다(폰에서 화면 위 300px 남짓).
+   z-index:-1 이라 머리 글 · 메뉴 아래, 머리 다음 내용 아래에 깔린다. 가로는 화면 폭 — 담는 자리(main · .wrap)의 overflow 가 자른다.
+   pos(지역마다 랜드마크가 보이는 자리)는 lib/workspace-theme.js 의 regions. 그림을 못 받으면 .no-art — 지역 색만 */
+.region-hero {position:absolute;z-index:-1;top:-40px;bottom:-72px;left:50%;width:100vw;translate:-50% 0;pointer-events:none;
+  background-image:linear-gradient(180deg,transparent 30%,color-mix(in srgb,var(--bg) 60%,transparent) 60%,var(--bg) 82%),var(--region-art);
+  background-size:100% 100%,cover;background-position:0 0,var(--region-pos,50% 45%);background-repeat:no-repeat}
+/* 폰에서는 그림을 조금 키워(높이 125%) 세로로도 자리를 고를 수 있게 — 좁은 창에 랜드마크를 들인다 */
+@media (max-width:599px) { .region-hero {background-size:100% 100%,auto 125%} }
+@media (min-width:600px) { .region-hero {background-position:0 0,var(--region-pos-wide,var(--region-pos))} }
+.region-hero.no-art {background-image:linear-gradient(180deg,var(--accent-soft),var(--bg))}
+/* 접히면 층이 머리 높이(폰 110px 남짓)로 낮아진다 — 폰의 auto 125% 그대로면 그림이 가운데 작은 조각이 되니 다시 cover(자리는 그대로) */
+:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-hero {top:0;bottom:0;background-size:100% 100%,cover}
+/* 지역 이동 — 구름 전환(lib/workspace-theme.js 의 travel 이 html.travelling 을 단 동안만 — 공방 지도에서 들어오는 쪽 넘김 페이드는 그대로).
+   짝(image-pair) 바탕이 구름: 흰 덩어리 그라데이션. 옛 화면은 그 속으로 흐려지고(0.3초), 새 화면은 구름 구멍 셋이 넓어지며 걷힌다(0.3초 뒤 0.3초 — 처음엔 천천히).
+   CSS 만 — 가면은 등록한 --cloud 하나를 움직인다. 기본 plus-lighter 섞기는 구름까지 더해 하얗게 타니 normal */
+@property --cloud {syntax:'<percentage>';inherits:false;initial-value:0%}
+html.travelling::view-transition-image-pair(root) {background:
+  radial-gradient(40% 20% at 20% 16%,#fff 45%,transparent 72%),radial-gradient(44% 22% at 74% 24%,#fff 45%,transparent 72%),
+  radial-gradient(48% 22% at 28% 50%,#fff 40%,transparent 72%),radial-gradient(42% 20% at 80% 70%,#fff 40%,transparent 72%),
+  radial-gradient(46% 18% at 36% 88%,#fff 40%,transparent 72%),linear-gradient(#bcd3ea,#e3edf7 60%,#f4f7fb)}
+html.travelling::view-transition-old(root),html.travelling::view-transition-new(root) {mix-blend-mode:normal}
+html.travelling::view-transition-old(root) {animation:travel-into .3s ease-in both}
+html.travelling::view-transition-new(root) {animation:travel-part .3s cubic-bezier(.5,0,.75,.6) .3s both;
+  -webkit-mask-image:radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 30% 20%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 74% 36%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 42% 72%,#000 55%,transparent);
+  mask-image:radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 30% 20%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 74% 36%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 42% 72%,#000 55%,transparent)}
+@keyframes travel-into {to {opacity:0;transform:scale(1.04)}}
+@keyframes travel-part {from {--cloud:0%} to {--cloud:240%}}
+/* 지역 표지판 — 나무 이정표(갈색 판 · 둥근 오른끝 · 못 하나). 지역 색과 무관한 고정 색. 누르는 자리는 44px, 판은 그 안에 */
+/* 표지판 줄의 빈 가운데는 클릭을 통과시켜 머리 상자(빈 곳 누르기)로 간다 */
+.region-sign-row {pointer-events:none;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.workspace-header .region-sign,.workspace-header .scenery-toggle {pointer-events:auto}
+.workspace-header .region-sign {display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;border-radius:0;background:none;font:inherit;color:inherit}
+.region-sign>span {display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:5px 16px 5px 11px;border-radius:4px 17px 17px 4px;
+  background-color:#6b4a2b;background-image:repeating-linear-gradient(90deg,#ffffff0a 0 2px,transparent 2px 11px);color:#fff3dd;
+  font-size:13px;font-weight:800;line-height:1;white-space:nowrap;box-shadow:0 2px 0 #3d2a17,0 6px 14px #0003}
+.region-sign>span::before {content:"";width:7px;height:7px;flex:none;border-radius:50%;background:#e8d3ae;box-shadow:inset 0 -1px #0004,0 1px #fff2}
+.region-sign:hover>span {background-color:#7a5533}
+.workspace-header .scenery-toggle {display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;min-height:44px;padding:0;border:1px solid color-mix(in srgb,var(--line) 75%,transparent);
+  border-radius:14px;background:color-mix(in srgb,var(--card) 80%,transparent);color:var(--text);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.workspace-header .scenery-toggle[hidden] {display:none}
+.scenery-toggle svg {width:20px;height:20px}
+:is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-sign-row {display:none}
 body {background-color:var(--bg);background-image:radial-gradient(var(--pattern) 1px,transparent 1px);background-size:18px 18px}
-[data-theme="midnight"] body {background-image:radial-gradient(circle at 85% 0,var(--pattern),transparent 45%),radial-gradient(var(--pattern) 1px,transparent 1px);background-size:auto,24px 24px}
-[data-theme="blossom"] body {background-image:radial-gradient(ellipse at 10% 0,var(--pattern),transparent 60%),radial-gradient(var(--pattern) 2px,transparent 2px);background-size:auto,28px 28px}
-[data-theme="moss"] body {background-image:repeating-linear-gradient(125deg,transparent 0 35px,var(--pattern) 36px 37px,transparent 38px 70px)}
-[data-theme="plum"] body {background-image:radial-gradient(ellipse at 85% 10%,var(--pattern),transparent 60%),radial-gradient(var(--pattern) 2px,transparent 2px);background-size:auto,32px 32px}
-[data-theme="sand"] body {background-image:repeating-linear-gradient(135deg,transparent 0 40px,var(--pattern) 40px 42px,transparent 42px 80px)}
-[data-theme="deep"] body {background-image:repeating-radial-gradient(ellipse at 15% 0,transparent 0 44px,var(--pattern) 45px 46px,transparent 47px 90px)}
-[data-theme="ember"] body {background-image:radial-gradient(ellipse at 80% 100%,var(--pattern),transparent 65%),radial-gradient(var(--pattern) 1.5px,transparent 1.5px);background-size:auto,26px 26px}
 /* Archive: compact search deck above an image-led collection. */
 .dex-page main,.prompt-page .wrap {width:100%;max-width:1440px;margin:auto;padding:calc(16px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
 .dex-page header {margin:0;padding:0 14px 12px;border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:12px;background:var(--deck);box-shadow:var(--shadow)}
@@ -230,7 +275,6 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .prompt-page .controls {position:static;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--deck);box-shadow:var(--shadow);grid-template-columns:minmax(0,1fr) auto;gap:10px}
 .prompt-page .controls button {min-height:46px}
 .prompt-page .controls .primary {background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-:is([data-theme="daylight"],[data-theme="blossom"],[data-theme="sand"]) .prompt-page .controls .primary {color:#fff}
 .prompt-page .status {padding:8px 4px;font-size:12px;overflow-wrap:anywhere}
 .prompt-page .prompt-view {margin-top:12px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .prompt-page .prompt-view textarea {background:var(--card);color:var(--text);padding:18px;font-size:13px;line-height:1.7}
@@ -242,7 +286,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .studio-selection .selection-count {margin-left:auto;white-space:nowrap;color:var(--accent);font:11px var(--sans);font-variant-numeric:tabular-nums}
 @media (hover:hover) {
   .workspace-nav a:hover,button:not(:disabled):hover {filter:brightness(1.12)}
-  :is([data-theme="daylight"],[data-theme="blossom"],[data-theme="sand"]) button:not(:disabled):hover {filter:brightness(.96)}
+  :root:not([data-theme="unova"]) button:not(:disabled):hover {filter:brightness(.96)}   /* 밝은 판(하나 밖 여덟)은 어둡게 */
   .dex-page .cell:hover {transform:translateY(-3px);border-color:var(--accent)}
 }
 /* Fold inner display: use the added width without squeezing fields into tiny columns. */
@@ -259,7 +303,7 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 /* Fold cover display (~344–400 CSS px) and narrow split-screen. */
 @media (max-width:599px) {
   .dex-page main,.prompt-page .wrap {padding-left:12px;padding-right:12px;padding-top:calc(12px + env(safe-area-inset-top))}
-  .workspace-heading {height:104px;padding:12px 0 14px;gap:10px}
+  .workspace-heading {height:88px;margin:34px 0 8px;padding:10px 12px;gap:10px;border-radius:14px}
   .workspace-title {gap:10px}
   .crest-mark {width:44px;height:44px;padding:5px;border-radius:14px}
   .workspace-heading h1 {font-size:clamp(20px,5.7vw,25px)}
@@ -334,7 +378,8 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
  .dex-page .view-tools {margin:8px 0}
 }
 @media(max-height:550px) {
- .workspace-heading {display:none}
+ .workspace-heading,.region-sign-row {display:none}
+ .region-hero {background-size:100% 100%,cover}   /* 머리가 메뉴 줄뿐이라 층이 낮다 — 위 접힘과 같은 이유 */
 }
 @media(max-height:550px) and (min-width:600px) {
  .workspace-header {display:flex;gap:8px;align-items:center}
@@ -380,23 +425,20 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .theme-gallery-head {display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-bottom:15px}
 .theme-gallery-head h2 {font-size:18px;margin:0}
 .theme-gallery-head p {font-size:12px;color:var(--muted);margin:0}
-.theme-gallery {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:24px}
-.prompt-page .theme-card {position:relative;min-width:0;text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);padding:16px;min-height:160px;box-shadow:var(--shadow)}
+.theme-gallery {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}
+/* 여행지 진열 — 지역 아홉: 3×3, 600px 아래는 두 칸에 마지막(팔데아)이 한 줄을 다 쓴다(남는 칸 없이) */
+.prompt-page .theme-card {position:relative;min-width:0;text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);padding:0 14px 14px;overflow:hidden;box-shadow:var(--shadow)}
 .theme-card[aria-pressed="true"] {outline:3px solid var(--accent);outline-offset:2px}
-.theme-card .crest-mark {width:40px;height:40px;padding:5px;border-radius:13px;margin-bottom:12px}
+.theme-card .region-thumb {height:110px;margin:0 -14px 12px}
 .theme-card strong {display:block;font-size:13px}
-.theme-card small {display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:400}
-.theme-swatches {position:absolute;right:15px;top:16px;display:flex;gap:4px}
-.theme-swatches i {width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.theme-swatches i:nth-child(2) {background:var(--signal)}
-.theme-swatches i:nth-child(3) {background:var(--gold)}
+.theme-card small {display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:400;padding-right:16px}
 .theme-selected {position:absolute;right:14px;bottom:13px;color:var(--accent)}
-@media(max-width:850px) {.theme-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:599px) {
  .lab-intro{display:block}
  .lab-links{gap:18px;margin:20px 0 28px}.lab-tools{grid-template-columns:1fr;gap:10px}
  .lab-link{padding:16px 18px}.lab-row{grid-template-columns:1fr;gap:2px}.theme-gallery-head{display:block}.theme-gallery-head p{margin-top:7px}
- .theme-gallery{gap:10px}.prompt-page .theme-card{padding:13px;min-height:163px}
+ .theme-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.theme-gallery>:last-child:nth-child(odd){grid-column:1/-1}
+ .prompt-page .theme-card{padding:0 12px 12px}.theme-card .region-thumb{height:84px;margin:0 -12px 10px}
 }
 
 /* 설정 — 메뉴 줄 끝의 ⚙. 누르면 테마·화면 밀도가 같은 폭 두 칸, 아랫줄에 머리 조작 */
@@ -411,3 +453,45 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .appearance-extra {grid-column:1/-1;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px;padding-top:10px;border-top:1px solid var(--line)}
 .appearance-extra button {flex:none;width:100%;min-height:42px;padding:6px 10px;font-size:12px;font-weight:700;border-radius:8px}
 .appearance-extra .header-help[aria-pressed="true"] {color:var(--gold);border-color:var(--gold);background:var(--accent-soft)}
+
+/* 풍경만 보기 — 그림 높이 100% · 폭 자연, 가로로 굴려 둘러본다. 열리면 제목판 · 메뉴 · 내용은 흐려져 사라진다(움직임 줄이기면 바로) */
+div.scenery {position:fixed;inset:0;z-index:300;overflow-x:auto;overflow-y:hidden;background:#000;opacity:0;transition:opacity .3s;-webkit-overflow-scrolling:touch}
+div.scenery.in {opacity:1}
+div.scenery img {display:block;height:100%;width:auto;max-width:none;cursor:zoom-out;-webkit-user-select:none;user-select:none}
+.scenery-close {position:fixed;top:max(10px,env(safe-area-inset-top));right:10px;width:44px;height:44px;min-height:44px;padding:0;border:1px solid #fff5;border-radius:14px;background:#000a;color:#fff;font:inherit;font-size:18px;cursor:pointer}
+.appearance-extra .scenery-open {min-height:44px}
+html.scenery :is(.workspace-nav,.workspace-heading,.collection-scroll,.region-sign-row) {opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
+html.scenery-still :is(div.scenery,.workspace-nav,.workspace-heading,.collection-scroll,.region-sign-row) {transition-duration:0s;transition-delay:0s}
+/* 지역 작은 그림 — 못 받으면 그림 없이 그 지역 색 띠(엽서가 data-theme-preview 라 색은 그 지역 것) */
+.region-thumb {display:block;overflow:hidden;background:linear-gradient(135deg,var(--accent-soft),var(--accent))}
+.region-thumb img {display:block;width:100%;height:100%;object-fit:cover}
+/* 여행 지도 — 폰은 아래에서 올라오는 판(두 칸, 마지막 엽서는 한 줄), 600px 이상은 가운데 판(3×3) */
+.region-map {position:fixed;inset:0;z-index:250;display:flex;align-items:flex-end;justify-content:center;background:#000a;opacity:0;transition:opacity .2s}
+.region-map.in {opacity:1}
+.region-map-sheet {box-sizing:border-box;width:100%;max-height:calc(100dvh - 56px);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;padding:10px 16px max(16px,env(safe-area-inset-bottom));
+  background:var(--bg);color:var(--text);border-radius:18px 18px 0 0;box-shadow:0 -12px 34px #0006;translate:0 32px;transition:translate .25s ease-out}
+.region-map.in .region-map-sheet {translate:0 0}
+.region-map.still,.region-map.still .region-map-sheet {transition:none}
+.region-map-head {display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.region-map-head h2 {margin:0;font-size:17px}
+button.region-map-close {flex:none;width:44px;height:44px;min-height:44px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:inherit;font-size:16px}
+.region-map-cards {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.region-map-cards>:last-child:nth-child(odd) {grid-column:1/-1}
+/* button. 을 붙여 화면들의 단추 꼴(.prompt-page button)을 이긴다 — 엽서는 어느 화면에서나 같은 모양: 흰 테두리 6px 안에 그림 */
+button.region-card {position:relative;display:flex;flex-direction:column;min-width:0;min-height:44px;padding:6px 6px 0;overflow:hidden;font-weight:400;text-align:left;border:1px solid var(--line);border-radius:12px;
+  background:var(--card);color:var(--text);font:inherit;box-shadow:var(--shadow)}
+.region-card[aria-current="true"] {outline:3px solid var(--accent);outline-offset:2px}
+.region-card .region-thumb {height:76px;border-radius:7px}
+.region-label {display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:8px 10px}
+.region-label strong {font-size:14px;min-width:0}
+.region-label small {flex:none;font-size:11.5px;color:var(--muted)}
+.region-stamp {position:absolute;top:7px;right:7px;padding:3px 8px;border:2px solid var(--on-accent);border-radius:999px;background:var(--accent);color:var(--on-accent);
+  font-size:11px;font-weight:700;rotate:-6deg;box-shadow:0 2px 6px #0004}
+@media (min-width:600px) {
+  .region-map {align-items:center;padding:24px}
+  .region-map-sheet {width:min(720px,100%);max-height:calc(100dvh - 48px);padding:14px 20px 20px;border-radius:18px;translate:none;scale:.97;transition:scale .2s ease-out}
+  .region-map.in .region-map-sheet {scale:1}
+  .region-map-cards {grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .region-map-cards>:last-child:nth-child(odd) {grid-column:auto}
+  .region-card .region-thumb {height:104px}
+}

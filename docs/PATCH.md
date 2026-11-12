@@ -11,6 +11,95 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 도감 상세 popstate — 카드 칸은 주소의 mech 로도 가린다
+- dex.html — 바로 앞 칸의 「판 칸에서 카드 칸으로 돌아온 popstate 는 건너뛴다」가 기록 값 {dex:'card'} 만 봤다. ?mech= 로 새로고침하면 목록 칸도 그 값을 물려받아, 뒤로 가기가 목록으로 못 갔다. 주소에 mech 가 남았는지 같이 본다
+- tests/region-map.cjs — 도감 상세 검사를 새로고침한 상세에서 시작한다(마지막 뒤로 한 번 → 목록)
+
+## 2026-11-12 · claude · 화면 여덟의 처음 theme-color 를 관동 --deck 으로
+- battle.html · dex.html · gwent.html · index.html · lane.html · prompt.html · run.html · survey.html — 자바스크립트가 돌기 전 meta theme-color 가 옛 daylight 값(#faf9f3)이었다. 기본 지역 관동의 --deck(#fbf4e6, lib/workspace.css)으로
+
+## 2026-11-12 · claude · 도감 상세에서 머리 판(지도 · 풍경)을 열고 닫으면 상세가 닫히던 것
+- dex.html — 상세의 popstate 가 머리 판(useBackDialog)이 쌓은 기록 칸까지 「상세 닫기」로 읽었다. 판 칸으로 들어가는 것과 판 칸에서 카드 칸으로 돌아오는 것은 건너뛴다(지도로 여행 · 풍경 Esc · 풍경 뒤로 뒤에도 상세 그대로, 뒤로 한 번이면 목록). 방향키도 풍경 · 지도가 열려 있으면 뒤 그림을 넘기지 않는다
+- tests/region-map.cjs — 344×882 도감 상세에서 지도 여행 · 풍경 Esc · 풍경 뒤로 → 상세 그대로, 판 열림 + 방향키 → 그림 그대로, 뒤로 한 번 → 목록
+
+## 2026-11-12 · claude · 구름 전환을 빠르게 두 번 — 건너뛴 전환의 거절을 받는다
+- lib/workspace-theme.js — travel 이 전환의 ready 거절을 받는다. 첫 전환이 막 시작할 때 다음 지역을 누르면 skipTransition 이 ready 를 AbortError 로 거절해 "Uncaught (in promise)" 가 났다
+- tests/region-map.cjs — 전환 감싸개가 ready 에 처리기를 달지 않는다(달면 거절을 삼켜 못 본다). 처리 안 된 거절을 모아 비었는지 보고, 첫 전환 시작 순간에 다음 travel 을 부르는 경우를 더했다
+- 화면 여덟 — workspace-theme.js ?v= region10
+
+## 2026-11-12 · claude · 도감 세대 머리줄에 지역 이름
+- dex.html — 세대 머리줄이 「5세대 · 하나 지방」 꼴(세대 n → 지역 n번째)
+- lib/words.js — dex.gen.region 낱말
+- tests/dex-box.cjs — 머리줄 글 단언
+- (화면 여덟) — words.js ?v=region9
+
+## 2026-11-12 · claude · 지역 이동 구름 전환 — AtelierAppearance.travel
+- lib/workspace-theme.js — travel(key): 같은 지역이면 그대로, 움직임 줄이기 · View Transitions 없음이면 바로 set. 새 머리 그림을 먼저 받아 두고(최대 0.4초) startViewTransition 안에서 바꾼다. 전환 중엔 html.travelling, 또 부르면 진행 중인 것을 skipTransition 하고 마지막 것만. storage 사건은 전환 없이 그대로
+- lib/workspace.css — html.travelling 일 때만 구름 전환(공방 지도에서 들어오는 쪽 넘김 페이드는 그대로): 옛 화면이 하늘색 구름 바탕 속으로 흐려지고(0.3초) 새 화면이 구름 구멍 셋으로 걷힌다(0.3초 뒤 0.3초). 가면은 등록한 --cloud 하나
+- tests/region-map.cjs — 전환 수 · 길이(0.4~0.8초) · 같은 지역 · 50ms 두 번 · 움직임 줄이기 · 전환 없는 브라우저 · 다른 탭 storage. 호연 엽서 뒤엔 바뀔 때까지 기다린다(travel 은 비동기)
+- tests/theme-screen.cjs — ⚙ 로 고른 지역도 전환 안에서 바뀌니 바뀔 때까지 기다린다
+- 화면 여덟 — workspace.css · workspace-theme.js ?v= region9
+
+## 2026-11-12 · claude · 생성기 · 탐사 화면이 옛 workspace-ui 를 부르던 것
+- prompt.html · survey.html — prompt-ui.js · survey-ui.js 를 ?v= region8 로. 두 파일은 workspace-ui.js?v=region8 을 부르게 바뀌었는데 화면이 region7 을 불러 캐시가 남은 브라우저는 옛 머리(표지판이 지도를 못 여는)를 계속 썼다
+- tests/workspace-theme.cjs — workspace-ui.js 를 부르는 lib 파일마다, 그 파일을 부르는 모든 ?v= 꼬리표가 그 파일이 부르는 workspace-ui.js 꼬리표와 같은지 본다
+
+## 2026-11-12 · claude · 여행 지도 — 표지판을 누르면 지역 아홉 그림엽서
+- lib/workspace-ui.js — 여행 지도 판(RegionMap: 폰은 아래에서 올라옴 · 600px 이상 가운데, 지금 지역 엽서에 도장 「지금 여기」). 엽서 · ⚙ 고르개 · 집 화면 진열이 한 길 travelTo(travel 이 있으면 그것, 없으면 set). 뒤로 가기로 닫는 판은 풍경만 보기와 한 훅(useBackDialog)으로. 진열 카드는 문장 · 색점 대신 지역 작은 그림. 안 쓰던 onOpenMap 받이는 지움
+- lib/workspace.css — 엽서 판 · 엽서(button. 으로 화면 단추 꼴을 이김), 진열은 3×3 · 600px 아래 두 칸에 팔데아가 한 줄(남는 칸 없이). 작은 그림을 못 받으면 그 지역 색 띠
+- lib/words.js — region.map · region.map.close · region.map.gen · region.map.here, 진열 머리 「여행지」로
+- tests/region-map.cjs — 새 검사: 세 크기, 엽서 아홉 차례 · 44px · 넘침, 호연 → 표지판 · 진열 현황, Esc · 바깥 · 뒤로 닫기와 초점, ⚙ · 진열도 같은 결과, travel 을 부르는지, 그림 없음
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · words.js ?v= region8
+
+## 2026-11-12 · claude · 풍경 단추가 그림 실패를 늦게 알던 것
+- lib/workspace-ui.js — 그림 실패를 주소별로 나누어 써서 ⚙ 판이 늦게 떠도 풍경 단추가 잠깐 보이지 않게
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region7
+
+## 2026-11-12 · claude · 풍경만 보기 고침 — 초점 돌려주기 · 낡은 기록 · 두 번 닫기
+- lib/workspace-ui.js — 닫으면 초점이 연 단추로(⚙ 안 단추면 ⚙), 새로고침 · 뒤로/앞으로로 남은 {scenery:1} 은 지우거나 다시 쌓지 않고 열기, back() 은 closing 표로 한 번만
+- tests/region-header.cjs — 세 가지 검사 추가
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region6
+
+## 2026-11-12 · claude · 풍경만 보기 — 머리 그림만 화면 가득
+- lib/workspace-ui.js — 풍경 층(.scenery, 그림 높이 100%·가로 굴림, 처음엔 지역 pos 자리), 머리 단추 · 머리 빈 곳 · ⚙ 안 단추가 연다. pushState({scenery:1}) · 뒤로 가기가 닫음, Esc · 닫기는 history.back()
+- lib/workspace.css — 층 · 닫기 단추 · 열리면 제목판 · 메뉴 · 내용 흐려짐(움직임 줄이기면 바로), 표지판 줄은 클릭 통과
+- lib/words.js — region.scenery.close
+- tests/region-header.cjs — 풍경 열기 · 가로 굴림 · 뒤로 · Esc · 닫기 · 접힘 · 줄임 · 그림 없음 검사
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region5
+
+## 2026-11-12 · claude · 접힌 머리 · 낮은 화면에서 지역 그림이 조각나던 것
+- lib/workspace.css — 폰의 그림 크기(층 높이의 125%)가 머리가 접히거나(folded · dex-scrolled) 낮은 화면(max-height:550)에서 층이 낮아지면 가운데 작은 조각(344 폭에 206px)이 됐다. 두 경우는 다시 cover(보이는 자리는 그대로)
+- 화면 여덟 — workspace.css 를 ?v=region4b 로
+- tests/region-header.cjs — 344 도감 접힘과 낮은 화면(560×400 · 844×390, 접힘 포함)에서 그림이 층을 다 덮는지
+
+## 2026-11-12 · claude · 화면 머리 — 지역 그림 · 나무 표지판 · 반투명 제목판
+- lib/workspace-ui.js — 머리(WorkspaceHeader) 안에 지역 그림 층 `.region-hero`(data-region, 그림은 new Image() 로 미리 받아 못 받으면 `.no-art`), 나무 표지판 `button.region-sign`(「관동 지방」, 누르면 onOpenMap — 여행 지도 자리), 풍경 단추 `button.scenery-toggle`(그림 없으면 숨김, 동작은 풍경만 보기 작업에서). 쓰지 않던 theme 를 뺐다
+- lib/workspace.css — 그림 층은 화면 폭 · 머리 뒤(z-index:-1)에서 아래로 --bg 에 녹는다(폰 300px 남짓, 폰은 높이 125% 로 세로 자리도 고른다). 표지판은 지역과 무관한 갈색 판 · 둥근 오른끝 · 못 하나. 제목판(.workspace-heading)은 --card 92% 반투명 판 — 흰 그림이든 검은 그림이든 아홉 지역 모두 글자 대비 4.5 이상. 접히면(folded · dex-scrolled) 그림 층은 머리 높이 안으로, 표지판 줄은 숨는다. 표지판과 제목판 사이를 띄워 그림의 랜드마크가 보이는 창을 둔다
+- lib/workspace-theme.js — 지역마다 보이는 자리(pos)를 344×882 머리 창에서 다시 골랐다(관동 여객선 · 등대, 성도 오층탑, 가라르 경기장 …). 600px 이상에서 다른 자리가 필요한 셋(관동 · 알로라 · 가라르)은 posWide
+- lib/words.js — region.sign(「{name} 지방」) · region.scenery(풍경만 보기)
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · workspace-theme.js · words.js(· prompt-ui · survey-ui)를 ?v=region4 로
+- tests/region-header.cjs — 새 검사: 여덟 화면 · 세 크기의 그림 층 · 표지판 44px · 덮개에서 메뉴 줄 ≤ 300px · 아홉 지역 제목판 대비 · 그림 못 받음 · 도감 접힘
+- tests/header-layout.cjs — 그림 층 · 표지판 · 풍경 단추도 화면마다 같은 자리인지 본다
+- AGENTS.md — 검사 목록에 region-header.cjs
+
+## 2026-11-12 · claude · 지역 그림 올리기 · 검사 껍데기가 그림 주소를 받게
+- tests/browser-harness.cjs — 그림 저장소 `regions/` 주소(`/pkm-atelier-img-4/regions/…`)를 코드 안 작은 PNG 로 채운다. `open()` 의 `regionArt: false` 면 404(그림 못 받음 검사용)
+- tests/region-art-stub.cjs — 위 껍데기가 200(그림으로 풀림) · 404 로 답하는지 확인
+- 그림 저장소 pkm-atelier-img-4 — `regions/<지역>.webp` 아홉 + `regions/thumb/` 아홉(폭 360 · q80)을 올렸다. `img/` 밖이라 썸네일 · 등록 워크플로가 읽지 않는다
+
+## 2026-11-12 · claude · 진열장을 지역마다 따로 — 옛 테마 칸 옮기기
+- lib/img.js — 진열(pkm_hall_v1)을 읽을 때 옛 테마 칸(daylight · midnight …)을 짝지은 지역 칸으로 옮겨 한 번 저장(이미 있는 지역 칸은 덮지 않는다). 아주 옛 배열 값은 관동 칸. 기본 지역 daylight → kanto
+- 화면 여덟 · lib/*.js — img.js 를 ?v=region1 로
+- tests/home-screen.cjs — 옛 칸 옮기기 · 새로고침 뒤에도 같음 검사
+
+## 2026-11-12 · claude · 테마 여덟을 지역 아홉으로 — 표 · 색 · 낱말 · 옛 테마 옮기기
+- lib/workspace-theme.js — 테마 = 관동 ~ 팔데아(세대 차례). AtelierAppearance.regions(세대 · 그림 · 작은 그림 · 보이는 자리) · legacy(옛 열쇠 → 지역). 옛 값(pkm_theme_v1 · 옛 공용 atelier_theme_v1)은 짝지은 지역으로 옮겨 다시 적고, 모르는 값은 관동
+- lib/workspace.css — 지역 아홉 판: 색은 그 지역 그림에서(넓은 면 → 바탕 · 카드, 대표색 → 강조), 하나(밤)만 어두운 판. 기본은 관동. 테마마다의 바탕 무늬 줄은 지역 그림이 맡으므로 지웠고, 밝은 판 목록은 「하나 밖」으로
+- lib/workspace-ui.js — 테마마다 다른 문장 여덟을 몬스터볼 하나로
+- lib/words.js — theme.<지역> = 지역 이름, theme.note.<지역> = 그림 한 줄(랜드마크 · 시간). 옛 테마 낱말은 지웠다
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · workspace-theme.js 를 ?v=region1 로(prompt-ui · survey-ui 도 함께)
+- tests/workspace-theme.cjs · tests/theme-screen.cjs — 지역 아홉 · 옛 값 옮기기 · 문장 하나 · 아홉 판의 AA 대비 · theme-color
+
 ## 2026-11-12 · claude · 외형 지시문 검사 상한 5200 → 6600
 - 사용자 「1,2 고쳐줘」(검사 정리 중 찾은 실패) — tests/prompt-appearance.cjs 의 외형 서른 개 새 인물 지시문이 칸 꼴 · 공통 규칙 줄로 6128자가 되어 상한 5200 에 걸려 있었다. 사용자 2026-11-11 「텍스트 모자라면 상한을 올려줘」 대로 글은 그대로 두고 상한을 6600 으로.
 
@@ -27,6 +116,7 @@
 - tests/scene-motion.cjs · gallery-screen.cjs — 크기 다섯 · 넷 → 덮개 · PC 둘 (31 → 22초, 11 → 6초)
 - tests/theme-screen.cjs — 화면 여덟마다 테마 여덟을 다 바꾸던 것을 생성기에서만, 크기 셋 → 둘 (7 → 6초)
 - docs/superpowers/plans/2026-11-12-region-theme.md — 지운 dex-layout 이름 뺌
+
 
 ## 2026-11-12 · claude · 도감 크게 보기에 즐겨찾기 하트
 - 사용자 「크게보기에도 즐겨찾기 추가 다 해야돼. 지금까지 그게 없었어」 — 삼국지 · 원소 크게 보기에는 하트가 있고 여기는 상세에만 있었다

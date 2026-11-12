@@ -1,6 +1,7 @@
 /* Tab changes must preserve the shared header's geometry, including native scrollbars. */
 const assert=require('node:assert/strict'),{start,FOLD}=require('./browser-harness.cjs');
-const selectors=['.workspace-heading','.workspace-heading h1','.workspace-nav',
+/* 지역 그림 층 · 표지판 · 풍경 단추도 화면마다 같은 자리(화면마다의 단추 꼴에 안 밀리게) */
+const selectors=['.region-hero','.region-sign','.scenery-toggle','.workspace-heading','.workspace-heading h1','.workspace-nav',
  '.workspace-nav a:nth-child(1)','.workspace-nav a:nth-child(2)','.workspace-nav a:nth-child(3)',
  '.workspace-nav a:nth-child(4)','.workspace-nav a:nth-child(5)','.workspace-nav a:nth-child(6)','.workspace-nav a:nth-child(7)',
  '.appearance-controls','.appearance-toggle'];

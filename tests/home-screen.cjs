@@ -96,6 +96,16 @@ const ready=p=>p.waitForSelector('.capsule',{timeout:6000});
    await q.goto(h.base+'/dex.html?mech=not-a-species');await q.waitForSelector('.grid .cell');assert.equal(await q.locator('#detail-title').count(),0);
    assert.deepEqual(d.errors,[]);
   }finally{await d.close();}
+  {const a=await h.open('index.html',{init:[seed,{picks:{daylight:['이상해씨'],midnight:['파이리'],kanto:['꼬부기']}}]}),p=a.page;
+   try{
+    await ready(p);
+    for(let i=0;i<2;i++){
+     const r=await p.evaluate(()=>{const I=window.AtelierImg;return {k:I.hallPicks('kanto'),u:I.hallPicks('unova'),g:I.hallPicks('galar'),raw:JSON.parse(localStorage.getItem('pkm_hall_v1'))};});
+     assert.deepEqual(r.k,['꼬부기'],'existing region slot kept');assert.deepEqual(r.u,['파이리'],'midnight moved to unova');assert.deepEqual(r.g,[]);
+     assert(!('daylight' in r.raw)&&!('midnight' in r.raw),'old slots removed');
+     await p.reload();await ready(p);
+    }
+   }finally{await a.close();}}
   console.log('PASS home state: family sampling, theme persistence, capacity, dex deep links and display button');
  }finally{await h.stop();for(const file of temp)fs.unlinkSync(file);}
 })().catch(e=>{console.error(e);process.exitCode=1;});
