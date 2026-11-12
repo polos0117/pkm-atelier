@@ -134,8 +134,8 @@ node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 열한 자�
 node tests/concept-mecha.cjs     # 메카 옵션 표 — 부품 표 열쇠 · 실루엣 owns · 자동 · 직접 고르기 · 겹치는 칸 · 배치 실루엣 안 겹침 · 옵션 줄 자리(docs/CONCEPT_MECHA.md, 명령줄 도구는 2026-11-08 지웠다)
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cjs  # 새 인물 만들기의 메카 옵션(기본 없음 = 그대로 · 실루엣 칸 막힘 · MECHA SILHOUETTE / TYPE EFFECTS 줄 · 두 타입 · 새로고침 · 이어가기 · 일상컷 · 폰)
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 여덟 자리 · 아홉 자리 글자 하나 다르지 않다(브라우저)
-node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출 · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 서른 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
-node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 서른 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
+node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출 · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 열두 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
+node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 열여섯 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
 python3 tests/anatomy-check.py   # 팔·다리·손 검사기 — 떨어진 손·손 셋·뒤집힌 손·늘어난 팔다리·맨발·같은 손 두 번(모델 없이 점 목록으로)
@@ -208,7 +208,6 @@ node tests/face-design.cjs              # 종별 얼굴·머리 설계 — 1025�
 python3 tools/face-design.py --check  # 같은 규칙을 도구 쪽에서
 NODE_PATH=<jsdom·preact 가 든 node_modules> node tests/prompt-appearance-dom.cjs   # 생성기 화면(jsdom) — 외형·입는 법·머리 특징·개방·저장
 NODE_PATH=<같은 경로> node tests/source-appearance-dom.cjs                        # 자료 자동 채움·수동 보정·자료 실패
-python3 tests/appearance-extractor.py   # 외형 추출기 — tools/appearance-requirements.txt 설치 후
 ```
 
 `run.html` 은 놀 수 있는 게임이다 — 규칙은 `lib/run.js`(런: 공유 팩 드래프트·AI 여섯·

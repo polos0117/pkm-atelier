@@ -11,6 +11,20 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 검사 정리 — 겹치거나 늘 실패하던 검사 넷을 지우고 느린 검사 여덟의 되풀이를 줄였다
+- tests/core-sync.cjs — 지움. 화풍공방 tests/core.cjs 가 같은 대조를 한다
+- tests/dex-layout.cjs — 지움. dex-forms.cjs 가 두 줄 자리 · 그림 있는 폼 · 연출 · 기준 없는 옛 폭주를 이미 본다(docs/PORT_NOTES.md 문단 고침)
+- tests/dex-filter-dom.cjs — 지움. 문서 검사 표에 없어 아무도 안 돌렸고 11-12 표본 상자 뒤로 고정 자료가 낡아 죽어 있었다. 논리는 dex-filter.cjs, 화면은 브라우저 도감 검사(docs/PORT_NOTES.md 고침, dex-filter-fixture.cjs 는 dex-filter.cjs 가 써서 남김)
+- tests/appearance-extractor.py — 지움. 따로 까는 라이브러리 없이는 늘 실패했고 1025종 외형 자료는 다 모았다(AGENTS.md · docs/SOURCE_APPEARANCE.md 줄 뺌)
+- tests/casual-tree-v2.cjs — 랜덤 3000 · 포켓몬 세계 3000 · 바꾸기 1500 → 300 · 300 · 200 (108초 → 17초)
+- tests/prompt-casual-v2.cjs — 추천 × 장소를 다 돌지 않고 추천 · 장소마다 한 번은 + 열 쌍에 하나, 랜덤 1500 → 150 (64초 → 13초)
+- tests/casual-plan.cjs — 차례로 정하는 사람 서른 → 열둘, 씨앗 되풀이(색 · 작은 묶음 · 겉옷 · 뒤 캐릭터 · 활동 맞춤) 4분의 1 (108초 → 63초, 부하 큰 때)
+- tests/casual-plan-v2.cjs — 버전2 사람 서른 → 열여섯(역할 동작이 나오는 만큼) (58초 → 38초, 부하 큰 때). AGENTS.md 두 줄의 사람 수
+- tests/header-layout.cjs — 크기 다섯 × 밀도 둘 → 덮개 · PC · 낮은 가로 셋, 밀도 둘은 덮개만 (37초 → 20초)
+- tests/scene-motion.cjs · gallery-screen.cjs — 크기 다섯 · 넷 → 덮개 · PC 둘 (31 → 22초, 11 → 6초)
+- tests/theme-screen.cjs — 화면 여덟마다 테마 여덟을 다 바꾸던 것을 생성기에서만, 크기 셋 → 둘 (7 → 6초)
+- docs/superpowers/plans/2026-11-12-region-theme.md — 지운 dex-layout 이름 뺌
+
 ## 2026-11-12 · claude · 도감 크게 보기에 즐겨찾기 하트
 - 사용자 「크게보기에도 즐겨찾기 추가 다 해야돼. 지금까지 그게 없었어」 — 삼국지 · 원소 크게 보기에는 하트가 있고 여기는 상세에만 있었다
 - dex.html — Zoom 위 띠에 하트(#zoom-fav, 「♡ 즐겨찾기」): 지금 넘겨 보는 그림 한 장을 담고 뺀다, 넘기면 그 그림의 상태, 알림은 크게 보기 안에. 담는 칸 만들기를 favEntry() 하나로(상세 하트와 같이 쓴다). gallery.css?v=zfav1

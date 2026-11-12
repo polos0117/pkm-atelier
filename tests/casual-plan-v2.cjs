@@ -1,5 +1,5 @@
 /* 일상컷 계획기 버전2 — lib/casual-plan.js planV2 · tools/casual-plan.cjs --v2(docs/CASUAL_TREE_V2.md 4단계). node tests/casual-plan-v2.cjs
-   - 빈 장부에서 서른 명을 차례로 버전2 로 정해도 매번 tools/casual-ledger.py check 를 통과하고, 컷마다 버전2 모듈이 고칠 칸이 없다
+   - 빈 장부에서 열여섯 명을 차례로 버전2 로 정해도 매번 tools/casual-ledger.py check 를 통과하고, 컷마다 버전2 모듈이 고칠 칸이 없다
    - 버전1 컷이 쌓인 장부 위에서도(섞인 장부) — 비교 열쇠는 짓 · 몸+머리(casual-ledger.py with_path 와 같다)
    - 아홉 장(2026-11-09 — 일곱 장은 11-07): 필수 셋 한 장씩 · 상황 노출 한 장 · 다른 묶음 · 프레이밍 · 몸+머리 같은 값 두 장까지 · 같은 짝 없음, 장소/짓은 최근 10명 안에서 안 겹친다
    - 생성기 주소(generatorQuery) → 생성기 상태(prompt-state planned)가 버전2 칸 그대로 잠근다 · 피할 값 · 만든 컷 두기 */
@@ -56,14 +56,15 @@ function validV2(x, where) {
   assert(x.garments.length && x.expose.length === 2 && x.lead && x.axes.source_influence, where + ' 옷 종류 · 드러내기 · 첫머리 · 세 축');
 }
 
-/* 1. 섞인 장부 — 버전1 열 명 뒤에 버전2 서른 명 */
+/* 1. 섞인 장부 — 버전1 열 명 뒤에 버전2 열여섯 명(2026-11-12 서른 → 열여섯 — 사람마다 python check 를 띄워 1분이 걸렸다) */
+const N_V2 = 16;
 const entries = [];
 for (let i = 0; i < 10; i++) {
   const r = batchPlan(entries, ['A' + i], 'v1', false);
   entries.push({ card: 'A' + i, status: 'done', at: at(entries.length), cuts: r.plan.characters[0].cuts });
 }
 let tries = 0; const situN = {};
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < N_V2; i++) {
   const card = 'B' + i, r = batchPlan(entries, [card], 'seq', true), ch = r.plan.characters[0];
   tries += r.tries;
   assert.equal(ch.cuts.length, 10);
@@ -105,7 +106,7 @@ assert(v2cuts.some(x => (C2.use(t, x.use) || {}).role), '역할 동작');
 assert(v2cuts.some(x => x.era === 'in_pokemon'), '포켓몬 세계');
 assert(new Set(v2cuts.map(x => x.frame)).size >= 6 && new Set(v2cuts.map(x => x.body)).size >= 4, '구도가 퍼진다');
 assert(!v2cuts.some(x => x.body === 'back' || x.frame === 'detail'), '안 쓰는 값');
-/* 소품 — 마실 것(잔 · 칵테일 잔 · 물병 · 찻주전자)은 한 캐릭터에 한 장까지, 서른 명에 소품이 고르게(사용자 2026-10-30 「기본 소품이 컵 밖에 없다」) */
+/* 소품 — 마실 것(잔 · 칵테일 잔 · 물병 · 찻주전자)은 한 캐릭터에 한 장까지, 버전2 사람들에 소품이 고르게(사용자 2026-10-30 「기본 소품이 컵 밖에 없다」) */
 const DR = ['cup', 'drink_glass', 'water_bottle', 'teapot'], propOf = x => (C2.use(t, x.use) || {}).prop;
 for (const e of entries.slice(10)) assert(e.cuts.filter(x => DR.includes(propOf(x))).length <= 1, e.card + ' 마실 것 두 장');
 const pc = {}; v2cuts.forEach(x => { const p = propOf(x); if (p) pc[p] = (pc[p] || 0) + 1; });
@@ -150,4 +151,4 @@ for (let i = 0; i < 10 && !re3; i++) {
 }
 assert(re3 && re3.cuts[0].kept && re3.cuts[1].kept, '두 컷을 두고 다시 정한 계획\n' + why3);
 fs.rmSync(tmp, { recursive: true, force: true });
-console.log('PASS 계획기 버전2: 버전1 열 명 위에 서른 명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸');
+console.log('PASS 계획기 버전2: 버전1 열 명 위에 ' + N_V2 + '명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸');

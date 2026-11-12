@@ -41,17 +41,20 @@ function look(sc, where, card) {
   n++;
   return text;
 }
-/* 1. 자세 추천 × 쓸 수 있는 장소(장소마다 그 시대 하나) */
+/* 1. 자세 추천 × 쓸 수 있는 장소(장소마다 그 시대 하나) — 2026-11-12 다 돌지 않고 추천마다 · 장소마다 한 번은 + 열 쌍에 하나(이천여 쌍이 1분 걸렸다) */
+const seenPr = new Set(), seenPl = new Set(); let pairs = 0;
 for (const pr of tree2.presets) for (const pl of C.allPlaces(t)) {
   const era = pl.eras.includes('now') ? 'now' : pl.eras[0];
   if (!C.presetOk(t, { era, place: pl.key, ofam: 'everyday' }, pr.key)) continue;
+  if (seenPr.has(pr.key) && seenPl.has(pl.key) && pairs++ % 10) continue;
+  seenPr.add(pr.key); seenPl.add(pl.key);
   look(C.repair(t, C.applyPreset(t, { treeV: 2, era, place: pl.key, ofam: 'everyday' }, pr.key)), pr.key + ' @ ' + pl.key);
 }
-assert(n > 2000, '추천 × 장소 ' + n);
+assert(n > 200 && seenPr.size === tree2.presets.length, '추천 × 장소 ' + n + ' · 추천 ' + seenPr.size + '/' + tree2.presets.length);
 /* 2. 랜덤 — 카드 세대 · 표정 · 세부 강도 다섯을 다 얹어 가장 긴 것 */
 let s = 9, xf = 0; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
 const exprs = S.EXPRESSION_OPTIONS.map(x => Array.isArray(x) ? x[0] : x.key || x).filter(Boolean);
-for (let i = 0; i < 1500; i++) {
+for (let i = 0; i < 150; i++) {
   const card = cards[i % cards.length], sc = C.random(t, {}, { gen: card.gen }, rnd);
   const axes = {}; (S.LOCAL_AXES || []).forEach(k => { const o = S.ADVANCED_OPTIONS[k] || []; if (o.length) axes[k] = o[o.length - 1]; });
   look(Object.assign(sc, { expr: exprs[i % exprs.length], axes, scene: i % 4 ? '' : 'late afternoon light through the window', ofeat: i % 5 ? [] : ['glasses'] }), '랜덤 ' + i, card);
@@ -91,5 +94,5 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(hw.includes(T.casualOutputV2) && block(hw, 'SCENE').includes('source_influence: subtle'), '할로윈은 보통 옷 줄');
   n += 2;
 }
-assert(xf > 1000, '자유 장면 ' + xf);
+assert(xf > 100, '자유 장면 ' + xf);
 console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록`);

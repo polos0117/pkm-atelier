@@ -201,6 +201,6 @@
 
 - [ ] **Step 1: 실패하는 검사** — `dex-box.cjs` 의 머리줄 단언: `heads[4][0] === '5세대 · 하나 지방'`, 첫 머리줄 「1세대 · 관동 지방」.
 - [ ] **Step 2: 실패 확인 → 구현 → 통과** — `node tests/dex-box.cjs` PASS.
-- [ ] **Step 3: 마무리 검사 묶음** — words · workspace-theme · theme-screen · header-layout · region-header · region-map · home-screen · dex-box · dex-gutter · dex-favorites · gallery-screen · patch. 그림이 없어 원래부터 멈추던 검사(dex-forms · dex-recent · dex-layout · dex-nav)는 바꾸기 전과 같은 자리에서 멈추는지만 본다.
+- [ ] **Step 3: 마무리 검사 묶음** — words · workspace-theme · theme-screen · header-layout · region-header · region-map · home-screen · dex-box · dex-gutter · dex-favorites · gallery-screen · patch. 그림이 없어 원래부터 멈추던 검사(dex-forms · dex-recent · dex-nav)는 바꾸기 전과 같은 자리에서 멈추는지만 본다.
 - [ ] **Step 4: 344×882 스크린샷** — 집 · 도감 · 프롬프트를 관동 · 하나 · 알로라로 찍어 사용자에게 보낸다(SendUserFile).
 - [ ] **Step 5: 커밋 · push** — PATCH.md, `?v=`.

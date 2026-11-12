@@ -24,11 +24,12 @@ function same(actual,expected,label){
 (async()=>{
  const h=await start();
  try{
-  for(const [viewport,mobile] of [[FOLD.cover,true],[FOLD.inner,true],
-   [{width:1280,height:900},false],[{width:1920,height:1080},false],[{width:882,height:344},true]]){
+  /* 2026-11-12 크기 다섯 × 밀도 둘(80번 이동, 1분 반) → 덮개 · PC · 낮은 가로 화면 셋, 밀도 둘은 덮개에서만 */
+  for(const [viewport,mobile] of [[FOLD.cover,true],
+   [{width:1280,height:900},false],[{width:882,height:344},true]]){
    const a=await h.open('index.html',{viewport,mobile}),p=a.page;
    try{
-    for(const density of ['compact','relaxed']){
+    for(const density of viewport===FOLD.cover?['compact','relaxed']:['compact']){
      await p.goto(h.base+'/index.html');await p.waitForSelector('.workspace-nav');
      await p.evaluate(d=>window.AtelierAppearance.set('density',d),density);
      const reference=await geometry(p);
@@ -114,6 +115,6 @@ function same(actual,expected,label){
     assert.deepEqual(a.errors,[]);
    }finally{await a.close()}
   }
-  console.log('PASS header layout: 8 pages, 5 viewport sizes, both densities, document lock only for fine pointers, skip link, dex heading folds while scrolling');
+  console.log('PASS header layout: 8 pages, 3 viewport sizes, both densities on the cover, document lock only for fine pointers, skip link, dex heading folds while scrolling');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

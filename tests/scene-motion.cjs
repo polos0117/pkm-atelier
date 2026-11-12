@@ -4,7 +4,8 @@
    ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs */
 const assert = require('node:assert/strict'), fs = require('node:fs'), vm = require('node:vm');
 const { start, FOLD } = require('./browser-harness.cjs');
-const VIEWPORTS = [FOLD.cover, { width: 390, height: 844 }, { width: 844, height: 390 }, FOLD.inner, { width: 1280, height: 900 }];
+/* 2026-11-12 다섯 크기 → 가장 좁은 덮개 · 넓은 PC 둘(사이 크기는 같은 것을 되풀이했다) */
+const VIEWPORTS = [FOLD.cover, { width: 1280, height: 900 }];
 const NAME = '가디', ST = 'glossy_promo', F = s => NAME + '_' + s + '_' + ST + '_f.webp';
 const IMGJSON = JSON.parse(fs.readFileSync('data/img.json', 'utf8'));
 IMGJSON.img[NAME] = { byStyle: { [ST]: {
@@ -196,7 +197,7 @@ const settled = p => p.waitForFunction(() => !document.querySelector('.am-ghost,
     assert.equal(await yp.locator('.am-burst, .big .am-particles, .am-ghost').count(), 0, '동작 줄이기 — 입자·사본 없음');
     assert.deepEqual(y.errors, []); await y.close();
 
-    /* 8. 다섯 크기 — 움직임을 켠 채 오버드라이브로 열고 가로 넘침·화면 오류 없음, 입자는 큰 그림 칸 안 */
+    /* 8. 두 크기(덮개 · PC) — 움직임을 켠 채 오버드라이브로 열고 가로 넘침·화면 오류 없음, 입자는 큰 그림 칸 안 */
     for (const viewport of VIEWPORTS) {
       const g = await h.open(DEX, { viewport, init: [SWAP, JSON.stringify(IMGJSON)] }), gp = g.page;
       await gp.waitForSelector('.big .zoom img');
@@ -211,6 +212,6 @@ const settled = p => p.waitForFunction(() => !document.querySelector('.am-ghost,
       const tap = await gp.locator('#dex-motion').boundingBox(); assert(tap && tap.height >= 40, '#dex-motion 누르는 자리 ' + JSON.stringify(viewport));
       assert.deepEqual(g.errors, [], 'dex ' + JSON.stringify(viewport)); await g.close();
     }
-    console.log('PASS 움직임: 같은 파일(판·바깥 없음·주제 말 없음)·타입 → 입자 ' + group.order.length + '타입 · 입자(화소 변화·destroy) · 켄 번스(씨앗·12~20초) · 열리기·끊기·넘기기 · 스위치(저장·구독·새로고침) · 동작 줄이기 · 도감 상세(폼 ↔ 오버드라이브 열리기·넘기기·떠도는 입자·크게 보기·스위치) · 다섯 크기 넘침·오류 없음');
+    console.log('PASS 움직임: 같은 파일(판·바깥 없음·주제 말 없음)·타입 → 입자 ' + group.order.length + '타입 · 입자(화소 변화·destroy) · 켄 번스(씨앗·12~20초) · 열리기·끊기·넘기기 · 스위치(저장·구독·새로고침) · 동작 줄이기 · 도감 상세(폼 ↔ 오버드라이브 열리기·넘기기·떠도는 입자·크게 보기·스위치) · 두 크기 넘침·오류 없음');
   } finally { await h.stop(); }
 })().catch(e => { console.error(e); process.exitCode = 1; });

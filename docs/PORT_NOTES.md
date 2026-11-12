@@ -32,8 +32,8 @@
 `byForm.overdrive` 그림은 상세 하단에서 따로 열어 볼 수 있고, 세 폭주 칸에
 중복 배정하지 않는다. 목록과 상세의 진척은 일반 3장 + 폭주 3장, 총 6칸이다.
 
-`tests/dex-layout.cjs`는 세 화면 크기에서 3열·2행 정렬, 여섯 이미지 선택,
-장갑별 폭주 연출컷, 기존 폭주 이미지 보존을 확인한다.
+`tests/dex-forms.cjs`는 두 줄 정렬, 그림 있는 폼만 고르기, 연출컷, 기준 없는 기존 폭주 이미지를
+확인한다(2026-11-12 같은 것을 보던 `tests/dex-layout.cjs`는 지웠다).
 `python3 tests/register-images.py`는 등록·재등록과 잘못된 기준 장갑 거부를 검사한다.
 
 ## 포켓몬 연구소 테마
@@ -348,12 +348,11 @@ anthro = 그 armor 문단
 선택 로직은 `lib/dex-filter.js`에 있고 화면과 검사가 공유한다.
 `tests/dex-filter.cjs`는 복합 필터, 보조 타입, 화풍/폼 대체 금지, 다중 컷,
 미등록·구형 자료와 1,025종을 검사한다. 보조 타입 비교를 제거한 변이가 실패함을
-확인했다. DOM 검사는 실제 `dex.html`·Preact·HTM으로 메뉴, 선택 이미지와 상세
-연결, 돌아가기, 새로고침 복원·초기화, 저장 차단을 확인한다.
+확인했다. 화면 쪽(메뉴, 상세 연결, 주소·새로고침)은 브라우저 도감 검사(`dex-nav` 등)가 본다
+(jsdom DOM 검사 `tests/dex-filter-dom.cjs`는 2026-11-12 지웠다).
 
 ```bash
 node tests/dex-filter.cjs
-NODE_PATH=<jsdom·preact·htm이 있는 node_modules> node tests/dex-filter-dom.cjs
 ```
 
 ### 도감 작게 보기

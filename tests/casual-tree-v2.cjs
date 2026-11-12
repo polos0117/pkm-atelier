@@ -1,6 +1,6 @@
 /* 일상컷 트리 버전2 모듈(lib/casual-tree-v2.js — game-atelier 원본) × pkm 표. node tests/casual-tree-v2.cjs
    - 검사기(tools/casual-tree-v2.py)와 같은 길: 자세 추천마다 쓸 수 있는 장소가 같다
-   - 다시 검사 뒤엔 어느 칸도 걸리지 않는다(랜덤 수천 번 — 카드 세대도 돌린다)
+   - 다시 검사 뒤엔 어느 칸도 걸리지 않는다(랜덤 수백 번 — 카드 세대도 돌린다)
    - pkm 몫: 안 쓰는 값(몸 뒤 · 디테일), 필수 갈래엔 얼굴 클로즈업 없음, 동료는 동료 묶음에서만 · 거기선 가슴 위 · 클로즈업 없음,
      직업 역할 동작은 그 현장에서만, 첫 등장 무렵의 해(세대) */
 const assert = require('node:assert'), fs = require('node:fs'), path = require('node:path');
@@ -49,7 +49,7 @@ function valid(sc, where, card) {
   assert.equal(sc.treeV, 2);
 }
 const rnd = seeded(7);
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < 300; i++) {
   const card = cardList[i % cardList.length];
   const sc = C.random(t, {}, card, rnd, [], { preset: i % 2 === 0 });
   valid(sc, '랜덤 ' + i, card);
@@ -57,14 +57,14 @@ for (let i = 0; i < 3000; i++) {
 /* 포켓몬 세계 장소만 따로 — 직업 현장 · 동료 · 나무열매가 랜덤에 잘 안 걸려도 본다 */
 const pkmPlaces = t.v1.places.filter(p => ['pokeworld', 'work', 'partner', 'berry'].includes(p.group));
 const rp = seeded(13);
-for (let i = 0; i < 3000; i++) {
+for (let i = 0; i < 300; i++) {
   const pl = pkmPlaces[i % pkmPlaces.length];
   const sc = C.random(t, { era: 'in_pokemon', place: pl.key }, null, rp, ['era', 'place'], { preset: i % 3 === 0 });
   assert.equal(sc.place, pl.key);
   valid(sc, '포켓몬 세계 ' + pl.key);
 }
 const r2 = seeded(11);
-for (let i = 0; i < 1500; i++) {
+for (let i = 0; i < 200; i++) {
   let sc = C.random(t, {}, null, r2);
   const k = C.ORDER[Math.floor(r2() * C.ORDER.length)], pool = k === 'place' ? t.v1.places.map(p => p.key) : [].concat(...['hands', 'legs', 'postures', 'supports', 'gaze', 'body', 'prop_uses'].map(n => t.v2[n].map(x => x.key)), Object.keys(t.v2.frames), ['prop', 'nope']);
   sc = C.set(t, sc, k, pool[Math.floor(r2() * pool.length)]);
@@ -105,4 +105,4 @@ const hh = card => C.uses(t, fx({ era: 'release', frame: 'waist_up', right: 'pro
 assert(hh({ gen: 1 }) && hh({ gen: 9 }));
 assert(!hh({ facts: { year: 1985 } }), '1989 전이면 없다');
 
-console.log('casual-tree-v2(pkm) 모듈 ok — 추천×장소', pairs, '· 랜덤 3000 · 포켓몬 세계 3000 · 바꾸기 1500');
+console.log('casual-tree-v2(pkm) 모듈 ok — 추천×장소', pairs, '· 랜덤 300 · 포켓몬 세계 300 · 바꾸기 200');

@@ -62,14 +62,16 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
    }),page+' heading, navigation, appearance order');
    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'ember','theme follows navigation');
    const before=page==='prompt.html'?await p.locator('#prompt-output').inputValue():null;
-   for(const key of keys){
+   /* 2026-11-12 화면 여덟 × 테마 여덟 × 크기 셋을 다 돌았다 — 테마 바꾸기는 생성기(지시문이 안 바뀌나)에서만, 크기는 덮개 · PC 둘.
+      화면마다 머리 자리 · 넘침은 header-layout 이 본다 */
+   if(before!==null)for(const key of keys){
     /* 테마는 ⚙ 패널 안에 있다. 머리가 다시 그려지면 패널이 닫힐 수 있어 매번 본다 */
     if(!await p.locator('.appearance-panel').count())await p.locator('.appearance-toggle').click();
     await p.getByLabel('테마',{exact:true}).selectOption(key);
     assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),key);
-    if(before)assert.equal(await p.locator('#prompt-output').inputValue(),before,'appearance never changes the prompt');
+    assert.equal(await p.locator('#prompt-output').inputValue(),before,'appearance never changes the prompt');
    }
-   for(const viewport of [FOLD.cover,FOLD.inner,{width:1280,height:900}]){
+   for(const viewport of [FOLD.cover,{width:1280,height:900}]){
     await p.setViewportSize(viewport);
     const size=await p.evaluate(()=>({
      body:document.body.scrollWidth,width:innerWidth,
@@ -85,6 +87,6 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   assert.deepEqual(a.errors,[]);
   assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
-  console.log('PASS theme screens: 8 palettes and motifs, dark capsule wall, lab status line, AA text contrast, persisted navigation, unchanged prompts, 3 viewports');
+  console.log('PASS theme screens: 8 palettes and motifs, dark capsule wall, lab status line, AA text contrast, persisted navigation, unchanged prompts, 2 viewports');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});

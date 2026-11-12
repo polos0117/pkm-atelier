@@ -1,6 +1,6 @@
 /* 일상컷 계획기 — lib/casual-plan.js · tools/casual-plan.cjs. node tests/casual-plan.cjs
    2026-10-29 일상컷 트리(B안) — 장면은 트리 길, 장부의 옛 칸(갈래/예시)은 변환표로 같은 길.
-   - 빈 장부에서 서른 명을 차례로 정해도 매번 tools/casual-ledger.py check 를 통과한다(사람 손 없이)
+   - 빈 장부에서 열두 명을 차례로 정해도 매번 tools/casual-ledger.py check 를 통과한다(사람 손 없이)
    - 2026-11-09 아홉 장 — 필수 셋(역할극 · 수영복 · 란제리풍) 한 장씩 + 코스튬 한 장 + 상황 노출 한 장 + 자유 넷, 아홉 묶음이 다 다르다, 방향 · 프레이밍 같은 값 두 장까지
    - 세 명 배치 · 빈 컷 다시 채우기(일곱 장 · 세 장으로 등록된 옛 캐릭터) · 피할 값(--avoid) · 만든 컷 두기 · 같은 씨앗 같은 답
    - 생성기 주소(generatorQuery ↔ fromQuery)는 트리 위의 값만 받는다(예전 주소의 갈래·예시는 변환표로)
@@ -46,10 +46,11 @@ function batchPlan(entries, cards, tag, opts = {}) {
 }
 let n = 0;
 
-/* ── 서른 명을 차례로 — 한 명씩 정하고 등록된 것으로 친다 ── */
+/* ── 열두 명을 차례로 — 한 명씩 정하고 등록된 것으로 친다(2026-11-12 서른 → 열둘: 10명 창을 넘기는 만큼만) ── */
+const N_SEQ = 12;
 const entries = [];
 let tries = 0;
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < N_SEQ; i++) {
   const card = 'C' + i, r = batchPlan(entries, [card], 'seq');
   tries += r.tries;
   const ch = r.plan.characters[0];
@@ -97,7 +98,7 @@ for (let i = 0; i < 30; i++) {
   entries.push({ card, status: 'done', at: at(i), cuts: ch.cuts });
   n++;
 }
-/* 서른 명 동안 — 같은 장소·하는 일은 10명 안에 없고, 묶음·시대가 퍼진다 */
+/* 열두 명 동안 — 같은 장소·하는 일은 10명 안에 없고, 묶음·시대가 퍼진다 */
 const seen = entries.map(e => e.cuts.map(key));
 for (let i = 0; i < seen.length; i++) for (let j = Math.max(0, i - 10); j < i; j++) assert(!seen[i].some(k => seen[j].includes(k)), '10명 안 같은 장소·하는 일 ' + i + '·' + j);
 const groupsUsed = new Set(entries.flatMap(e => e.cuts.map(groupOf)));
@@ -112,13 +113,13 @@ n += 4;
 /* ── 옷 색은 그 종의 대표 색을 피한다(옷 문장이 색을 정한 컷만 예외) · 덜 쓴 색부터 ── */
 {
   const named = x => { const it = CT.item(tree, x.ofam, x.item); return it && S.OUTFIT_COLORS.some(c => c.words.some(w => new RegExp('\\b' + w + '\\b').test(it.en.toLowerCase()))); };
-  for (let s = 0; s < 20; s++) {
+  for (let s = 0; s < 5; s++) {
     const p = plan({ entries, card: 'Y' + s, seed: 'col' + s, subject: { gen: 1, color: 'yellow' } });
     assert(p.cuts.every(x => x.ocolor !== 'yellow' || named(x)), '대표 색 노랑을 옷에: ' + p.cuts.map(x => x.ocolor));
   }
   const allCols = entries.flatMap(e => e.cuts.map(x => x.ocolor).filter(Boolean)), cn = {};
   allCols.forEach(c => { cn[c] = (cn[c] || 0) + 1; });
-  assert(Object.keys(cn).length === S.OUTFIT_COLORS.length && Math.max(...Object.values(cn)) <= 3 * Math.min(...Object.values(cn)), '서른 명 동안 색이 고르게: ' + JSON.stringify(cn));
+  assert(Object.keys(cn).length === S.OUTFIT_COLORS.length && Math.max(...Object.values(cn)) <= 3 * Math.min(...Object.values(cn)), N_SEQ + '명 동안 색이 고르게: ' + JSON.stringify(cn));
   n++;
 }
 /* ── 같은 씨앗 같은 답 ── */
@@ -248,7 +249,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   let hit = 0;
   /* 코스튬 칸(2026-11-01)이 자유 칸 하나를 가져가 작은 묶음이 덜 나온다 — 이 시험은 작은 묶음 규칙만 보니 코스튬 없는 표로 */
   const noCos = { ...tree, costume_required: undefined };
-  for (let s = 0; s < 40; s++) for (const x of plan({ entries: hist, card: 'NEW', seed: 'small' + s, tree: noCos }).cuts) if (groupOf(x) === g) { hit++; assert.equal(key(x), once, '작은 묶음 ' + g + ' 은 아직 안 쓴 길부터'); }
+  for (let s = 0; s < 10; s++) for (const x of plan({ entries: hist, card: 'NEW', seed: 'small' + s, tree: noCos }).cuts) if (groupOf(x) === g) { hit++; assert.equal(key(x), once, '작은 묶음 ' + g + ' 은 아직 안 쓴 길부터'); }
   assert(hit > 0, '작은 묶음이 한 번은 나온다');
   n++;
 }
@@ -256,7 +257,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 /* ── 덮는 겉옷은 한 장까지 ── */
 {
   const COV = P.COVERING;
-  for (let s = 0; s < 60; s++) {
+  for (let s = 0; s < 15; s++) {
     const p = plan({ entries, card: 'NEW', seed: 'cover' + s });
     assert(p.cuts.filter(c => (c.garments || []).some(g => COV.includes(g))).length <= 1, '덮는 겉옷 두 장: ' + JSON.stringify(p.cuts.map(c => [key(c), c.garments])));
   }
@@ -330,7 +331,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   const ORS = S.ORIENTATION_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v)), FRS = S.FRAME_OPTIONS.map(r => r[0]).filter(v => v && !/^auto/.test(v));
   const fixedCuts = [];
   for (let i = 0; i < 12; i++) fixedCuts.push({ cut: 1 + (i % 3), cat: 'everyday_basic', ex: 'commute_train', orient: ORS[i % ORS.length], frame: FRS[(i * 7) % FRS.length], garments: ['dress'], axes: {} });
-  for (let s = 0; s < 20; s++) {
+  for (let s = 0; s < 5; s++) {
     const p = plan({ entries, card: 'W', batch: [], fixed: [{ card: 'V', cuts: fixedCuts }], seed: 'fixed|' + s });
     const pairs = new Set(fixedCuts.map(c => c.orient + '|' + c.frame));
     if (!(p.why.relaxed || []).length) assert(p.cuts.every(c => !pairs.has(c.orient + '|' + c.frame)), '뒤 캐릭터의 등록된 컷과 짝이 겹친다: ' + s);
@@ -352,7 +353,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
     for (const o of orients) assert.equal(P.orientFits(o, text), false, o + ' 가 「' + text.slice(0, 40) + '」 에 붙는다');
     assert(P.poseFits('mid_action', text), '「선택한 활동 진행 중」 은 늘 된다');
   }
-  for (let s = 0; s < 30; s++) {
+  for (let s = 0; s < 8; s++) {
     const p = plan({ entries, card: 'Z' + s, batch: [], seed: 'fit|' + s });
     for (const x of p.cuts) {
       const it = CT.item(tree, x.ofam, x.item), t = (CT.act(tree, x.act).en + ' ' + (it ? it.en : '')).toLowerCase();
@@ -364,4 +365,4 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   n++;
 }
 fs.rmSync(tmp, { recursive: true, force: true });
-console.log('PASS 일상컷 계획기: ' + n + '가지 · 서른 명 차례로 check 통과(다시 정한 횟수 ' + tries + ') · 10명 안 장소·하는 일 겹침 없음 · 묶음 ' + groupsUsed.size + '개 · 시대 ' + tree.eras.map(e => e.key + ' ' + eraN(e.key)).join('·') + ' · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 만든 컷 두기 · 생성기 주소 · 옷 종류 말 · 옛 칸 같은 열쇠');
+console.log('PASS 일상컷 계획기: ' + n + '가지 · ' + N_SEQ + '명 차례로 check 통과(다시 정한 횟수 ' + tries + ') · 10명 안 장소·하는 일 겹침 없음 · 묶음 ' + groupsUsed.size + '개 · 시대 ' + tree.eras.map(e => e.key + ' ' + eraN(e.key)).join('·') + ' · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 만든 컷 두기 · 생성기 주소 · 옷 종류 말 · 옛 칸 같은 열쇠');

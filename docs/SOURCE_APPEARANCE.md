@@ -42,7 +42,6 @@
 python -m pip install -r tools/appearance-requirements.txt
 python tools/fetch-appearance.py --fetch --build
 node tests/source-appearance.cjs
-python tests/appearance-extractor.py
 NODE_PATH=/path/to/dependencies/node_modules node tests/source-appearance-dom.cjs
 ```
 
