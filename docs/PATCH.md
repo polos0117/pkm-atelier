@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 도감 목록 시작선 하나로
+- 사용자 「배치도 그렇고 버튼 위치가 안 맞는다거나, 깔끔하지가 않다」 → 「포켓몬 도감부터」 — 폴드 덮개에서 왼쪽 시작선이 메뉴 12 · 검색줄 21 · 본문 16 · 세대 띠 · 거르기 18px 넷이었다
+- lib/gallery.css — 검색줄 · 굴림 자리 · 최근 띠 · 세대 띠 · 거르기를 main 의 안쪽 여백(메뉴 줄 가장자리) 한 선에(구르는 띠는 초점 테두리가 안 잘리게 6px 내밀고 같은 만큼 안쪽 여백), 거르기 줄 글자와 +/− 가운데 맞춤, 세대 띠 오른쪽 끝을 흐려 옆으로 밀린다는 표시. dex.html gallery.css?v=gutter1
+- tests/dex-gutter.cjs(새로) — 덮개 · 펼침 · PC 에서 목록 화면 칸들의 왼쪽 · 오른쪽 끝선이 하나인지 · AGENTS.md 검사 목록
+
 ## 2026-11-12 · claude · 홀로 효과 점검(허브 게임 스킬)
 - 사용자 「응 스킬 읽고 만든 것들 점검해줘」 — 허브 .claude/skills 의 pixijs-rendering · shader-programming · game-feel 로 lib/holo.js 를 대조
 - lib/holo.js — ① 거꾸로 준 smoothstep 가장자리(0.3 → 0.0 — GLSL 에서 정의되지 않아 GPU 마다 다르다)를 1 − smoothstep(0, 0.3) 로 ② 필터 셰이더 정밀도 mediump → highp(폰에서 촘촘한 줄무늬가 계단지고 반짝인다 — Pixi 8.19 GlProgram 기본값이 mediump) ③ 앱을 지울 때 releaseGlobalResources(크게 보기를 거듭 열고 닫을 때 깜빡임 · 깨진 텍스처 막기). element-atelier 와 같은 파일. holo.js?v=5
