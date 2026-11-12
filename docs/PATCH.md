@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 지역 그림 올리기 · 검사 껍데기가 그림 주소를 받게
+- tests/browser-harness.cjs — 그림 저장소 `regions/` 주소(`/pkm-atelier-img-4/regions/…`)를 코드 안 작은 PNG 로 채운다. `open()` 의 `regionArt: false` 면 404(그림 못 받음 검사용)
+- tests/region-art-stub.cjs — 위 껍데기가 200(그림으로 풀림) · 404 로 답하는지 확인
+- 그림 저장소 pkm-atelier-img-4 — `regions/<지역>.webp` 아홉 + `regions/thumb/` 아홉(폭 360 · q80)을 올렸다. `img/` 밖이라 썸네일 · 등록 워크플로가 읽지 않는다
+
 ## 2026-11-12 · claude · 진열장을 지역마다 따로 — 옛 테마 칸 옮기기
 - lib/img.js — 진열(pkm_hall_v1)을 읽을 때 옛 테마 칸(daylight · midnight …)을 짝지은 지역 칸으로 옮겨 한 번 저장(이미 있는 지역 칸은 덮지 않는다). 아주 옛 배열 값은 관동 칸. 기본 지역 daylight → kanto
 - 화면 여덟 · lib/*.js — img.js 를 ?v=region1 로
