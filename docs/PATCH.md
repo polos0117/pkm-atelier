@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 진열장을 지역마다 따로 — 옛 테마 칸 옮기기
+- lib/img.js — 진열(pkm_hall_v1)을 읽을 때 옛 테마 칸(daylight · midnight …)을 짝지은 지역 칸으로 옮겨 한 번 저장(이미 있는 지역 칸은 덮지 않는다). 아주 옛 배열 값은 관동 칸. 기본 지역 daylight → kanto
+- 화면 여덟 · lib/*.js — img.js 를 ?v=region1 로
+- tests/home-screen.cjs — 옛 칸 옮기기 · 새로고침 뒤에도 같음 검사
+
 ## 2026-11-12 · claude · 테마 여덟을 지역 아홉으로 — 표 · 색 · 낱말 · 옛 테마 옮기기
 - lib/workspace-theme.js — 테마 = 관동 ~ 팔데아(세대 차례). AtelierAppearance.regions(세대 · 그림 · 작은 그림 · 보이는 자리) · legacy(옛 열쇠 → 지역). 옛 값(pkm_theme_v1 · 옛 공용 atelier_theme_v1)은 짝지은 지역으로 옮겨 다시 적고, 모르는 값은 관동
 - lib/workspace.css — 지역 아홉 판: 색은 그 지역 그림에서(넓은 면 → 바탕 · 카드, 대표색 → 강조), 하나(밤)만 어두운 판. 기본은 관동. 테마마다의 바탕 무늬 줄은 지역 그림이 맡으므로 지웠고, 밝은 판 목록은 「하나 밖」으로
