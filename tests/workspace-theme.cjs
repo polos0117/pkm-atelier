@@ -9,10 +9,22 @@ vm.runInNewContext(source,{window,document:{documentElement:root,querySelector:(
  localStorage:{getItem:k=>stored.get(k)||null,setItem:(k,v)=>stored.set(k,v)},
  requestAnimationFrame:fn=>{frames.push(fn);return frames.length},cancelAnimationFrame(){},Event:function(){}});
 while(frames.length)frames.shift()();
-assert.equal(root.dataset.theme,'daylight','new visitors start in the Pokemon laboratory');
+assert.equal(root.dataset.theme,'kanto','new visitors start in Kanto');
 assert.equal(properties.get('--atelier-vh'),'704px');
-const themes=['midnight','daylight','blossom','moss','plum','sand','deep','ember'];
-assert.deepEqual(Array.from(window.AtelierAppearance.themes),themes,'saved theme keys stay stable');
+const themes=['kanto','johto','hoenn','sinnoh','unova','kalos','alola','galar','paldea'];
+assert.deepEqual(Array.from(window.AtelierAppearance.themes),themes,'nine regions in generation order');
+assert(Object.isFrozen(window.AtelierAppearance.themes));
+const regions=window.AtelierAppearance.regions,ART='https://polos0117.github.io/pkm-atelier-img-4/regions/';
+assert.equal(regions.kanto.art,ART+'kanto.webp');
+assert.deepEqual(themes.map(k=>regions[k].gen),[1,2,3,4,5,6,7,8,9],'one region per generation');
+for(const k of themes){
+ assert.equal(regions[k].art,ART+k+'.webp');
+ assert.equal(regions[k].thumb,ART+'thumb/'+k+'.webp');
+ assert.match(regions[k].pos,/^\d+% \d+%$/,k+' background-position');
+}
+const legacy=window.AtelierAppearance.legacy;
+assert(Object.isFrozen(legacy));
+assert.deepEqual({...legacy},{midnight:'unova',daylight:'kanto',blossom:'kalos',moss:'hoenn',plum:'sinnoh',sand:'paldea',deep:'alola',ember:'johto'});
 for(const key of themes){
  window.AtelierAppearance.set('theme',key);
  assert.equal(root.dataset.theme,key);
@@ -24,18 +36,19 @@ for(const key of themes){
  assert(css.includes('[data-theme-preview="'+key+'"]'),key+' palette preview');
 }
 window.AtelierAppearance.set('theme','unknown');
-assert.equal(root.dataset.theme,'daylight');
+assert.equal(root.dataset.theme,'kanto');
 window.AtelierAppearance.set('density','relaxed');
 assert.equal(root.dataset.density,'relaxed');
 window.AtelierAppearance.set('density','unknown');
 assert.equal(root.dataset.density,'compact');
-stored.set('pkm_theme_v1','plum');events.get('storage')({key:'pkm_theme_v1'});
-assert.equal(root.dataset.theme,'plum','cross-tab preference survives');
-const marks=ui.slice(ui.indexOf('const CREST_MARK'),ui.indexOf('const MARK_STYLE'));
-const shapes=[...marks.matchAll(/  (\w+): \[([\s\S]*?)\n  \]/g)].map(m=>m[2]);
-assert.equal(shapes.length,8);
-assert.equal(new Set(shapes).size,8,'eight distinct motifs');
-assert(!/#[0-9a-f]{3,6}/i.test(marks),'motifs inherit palette colors');
+stored.set('pkm_theme_v1','galar');events.get('storage')({key:'pkm_theme_v1'});
+assert.equal(root.dataset.theme,'galar','cross-tab preference survives');
+/* 문장은 하나 — 지역과 상관없이 같은 모양(옛 daylight 몬스터볼) */
+assert(!ui.includes('CREST_MARK'),'no per-theme crest motifs');
+const crestAt=ui.indexOf('function Crest'),crest=ui.slice(crestAt,ui.indexOf('\n}\n',crestAt));
+assert(crest.includes('M6 24a18 18 0 0 1 36 0Z'),'one crest: the capture ball');
+assert(!/theme/.test(crest),'crest does not depend on the region');
+assert(!/#[0-9a-f]{3,6}/i.test(crest),'crest inherits palette colors');
 assert(!/지구연방|네오지온|소레스탈|철화단|모노아이|CREATIVE DECK/.test(ui));
 assert(!css.includes("content:'DAYLIGHT"),'theme labels are not CSS content');
 assert(ui.includes("W('lab.status')"),'the header carries the lab status line');
@@ -65,9 +78,8 @@ for(const f of sheets){
  }
  if(f!=='lib/prompt.css')assert(!/ui-monospace,monospace/.test(text.replace(/--num:[^;]+;/,'')),f+' monospace only through --num');
 }
-console.log('PASS: 8 Pokemon themes, persistent keys, palette previews, browser chrome, viewport sizing and one loaded Korean sans');
 /* 공방마다 따로 — 옛 공용 열쇠(atelier_theme_v1)는 처음 한 번만, 이 공방 테마일 때만 옮겨 온다. 이 공방에서 바꿔도 옛 열쇠는 안 건드린다 */
-for (const [legacy, want] of [['plum', 'plum'], ['archangel', null]]) {
+for (const [legacy, want] of [['plum', 'sinnoh'], ['midnight', 'unova'], ['archangel', null]]) {
   const st = new Map([['atelier_theme_v1', legacy]]), rt = { dataset: {}, style: { setProperty() {} } }, w = { innerHeight: 800, addEventListener() {}, dispatchEvent() {} };
   vm.runInNewContext(source, { window: w, document: { documentElement: rt, querySelector: () => ({ content: '' }) },
     localStorage: { getItem: k => st.has(k) ? st.get(k) : null, setItem: (k, v) => st.set(k, v) },
@@ -77,3 +89,13 @@ for (const [legacy, want] of [['plum', 'plum'], ['archangel', null]]) {
   w.AtelierAppearance.set('theme', w.AtelierAppearance.themes[1]);
   assert.equal(st.get('atelier_theme_v1'), legacy, '이 공방에서 바꿔도 다른 공방(옛 열쇠)은 그대로');
 }
+/* 옛 테마를 저장해 둔 사람 — 짝지은 지역으로 옮기고 저장값도 고쳐 적는다. 모르는 값은 관동 */
+for (const [saved, want, written] of [['plum', 'sinnoh', 'sinnoh'], ['unknown', 'kanto', 'unknown'], ['johto', 'johto', 'johto']]) {
+  const st = new Map([['pkm_theme_v1', saved]]), rt = { dataset: {}, style: { setProperty() {} } }, w = { innerHeight: 800, addEventListener() {}, dispatchEvent() {} };
+  vm.runInNewContext(source, { window: w, document: { documentElement: rt, querySelector: () => ({ content: '' }) },
+    localStorage: { getItem: k => st.has(k) ? st.get(k) : null, setItem: (k, v) => st.set(k, v) },
+    requestAnimationFrame: () => 0, cancelAnimationFrame() {}, Event: function () {} });
+  assert.equal(rt.dataset.theme, want, saved + ' → ' + want);
+  assert.equal(st.get('pkm_theme_v1'), written, saved + ' stored as ' + written);
+}
+console.log('PASS: 9 Pokemon regions, legacy theme migration, palette previews, browser chrome, viewport sizing and one loaded Korean sans');

@@ -11,6 +11,14 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 테마 여덟을 지역 아홉으로 — 표 · 색 · 낱말 · 옛 테마 옮기기
+- lib/workspace-theme.js — 테마 = 관동 ~ 팔데아(세대 차례). AtelierAppearance.regions(세대 · 그림 · 작은 그림 · 보이는 자리) · legacy(옛 열쇠 → 지역). 옛 값(pkm_theme_v1 · 옛 공용 atelier_theme_v1)은 짝지은 지역으로 옮겨 다시 적고, 모르는 값은 관동
+- lib/workspace.css — 지역 아홉 판: 색은 그 지역 그림에서(넓은 면 → 바탕 · 카드, 대표색 → 강조), 하나(밤)만 어두운 판. 기본은 관동. 테마마다의 바탕 무늬 줄은 지역 그림이 맡으므로 지웠고, 밝은 판 목록은 「하나 밖」으로
+- lib/workspace-ui.js — 테마마다 다른 문장 여덟을 몬스터볼 하나로
+- lib/words.js — theme.<지역> = 지역 이름, theme.note.<지역> = 그림 한 줄(랜드마크 · 시간). 옛 테마 낱말은 지웠다
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · workspace-theme.js 를 ?v=region1 로(prompt-ui · survey-ui 도 함께)
+- tests/workspace-theme.cjs · tests/theme-screen.cjs — 지역 아홉 · 옛 값 옮기기 · 문장 하나 · 아홉 판의 AA 대비 · theme-color
+
 ## 2026-11-12 · claude · 도감 크게 보기에 즐겨찾기 하트
 - 사용자 「크게보기에도 즐겨찾기 추가 다 해야돼. 지금까지 그게 없었어」 — 삼국지 · 원소 크게 보기에는 하트가 있고 여기는 상세에만 있었다
 - dex.html — Zoom 위 띠에 하트(#zoom-fav, 「♡ 즐겨찾기」): 지금 넘겨 보는 그림 한 장을 담고 뺀다, 넘기면 그 그림의 상태, 알림은 크게 보기 안에. 담는 칸 만들기를 favEntry() 하나로(상세 하트와 같이 쓴다). gallery.css?v=zfav1

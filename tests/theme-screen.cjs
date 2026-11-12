@@ -12,10 +12,9 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   const a=await harness.open('index.html',{viewport:{width:1280,height:900}});
   const p=a.page;
   await p.waitForSelector('.theme-card');
-  assert.equal(await p.locator('.theme-card').count(),8);
-  assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'daylight');
+  assert.equal(await p.locator('.theme-card').count(),9);
+  assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'kanto');
   const keys=await p.evaluate(()=>window.AtelierAppearance.themes);
-  const marks=new Set(),backgrounds=new Set();
   for(const key of keys){
    await p.locator('[data-theme-preview="'+key+'"]').click();
    await p.waitForFunction(k=>document.documentElement.dataset.theme===k,key);
@@ -32,10 +31,7 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
    const wall=await p.locator('.bay-wall').evaluate(e=>getComputedStyle(e).backgroundColor);
    const rgb=wall.match(/\d+/g).slice(0,3).map(Number);
    assert(luminance('#'+rgb.map(n=>n.toString(16).padStart(2,'0')).join(''))<.03,key+' capsule wall stays dark: '+wall);
-   backgrounds.add(colors.bg);
-   marks.add(await p.locator('.workspace-title svg').innerHTML());
   }
-  assert.equal(backgrounds.size,8);assert.equal(marks.size,8);
   /* 머리말 오른쪽 상태줄 — 장식이 아니라 실제 수치(등록 종·그림 수·진열·마지막 패치일) */
   const fs=require('node:fs'),img=JSON.parse(fs.readFileSync('data/img.json','utf8')).img;
   const files=JSON.stringify(img).match(/\.webp"/gi).length,patch=fs.readFileSync('docs/PATCH.md','utf8').match(/\n## (\d{4})-(\d{2})-(\d{2})/);
@@ -60,7 +56,7 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
     return !!(heading.compareDocumentPosition(nav)&Node.DOCUMENT_POSITION_FOLLOWING)&&
      !!(nav.compareDocumentPosition(controls)&Node.DOCUMENT_POSITION_FOLLOWING);
    }),page+' heading, navigation, appearance order');
-   assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'ember','theme follows navigation');
+   assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'paldea','theme follows navigation');
    const before=page==='prompt.html'?await p.locator('#prompt-output').inputValue():null;
    for(const key of keys){
     /* 테마는 ⚙ 패널 안에 있다. 머리가 다시 그려지면 패널이 닫힐 수 있어 매번 본다 */
@@ -85,6 +81,6 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
   assert.deepEqual(a.errors,[]);
   assert.deepEqual(await p.evaluate(()=>window.AtelierWords.missing()),[]);
   await a.close();
-  console.log('PASS theme screens: 8 palettes and motifs, dark capsule wall, lab status line, AA text contrast, persisted navigation, unchanged prompts, 3 viewports');
+  console.log('PASS theme screens: 9 region palettes, dark capsule wall, lab status line, AA text contrast, persisted navigation, unchanged prompts, 3 viewports');
  }finally{await harness.stop()}
 })().catch(e=>{console.error(e);process.exitCode=1});
