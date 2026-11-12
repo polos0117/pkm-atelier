@@ -87,7 +87,7 @@
 | galar | 4d665cc787bee0ad2a5350db378ca357cb34c3a46dbc2fede1824994dc306abc |
 | paldea | 427ec983202450a40b5129824070e659502cae5093793086a06c654b75376c74 |
 
-- 지금 자리: 이 세션의 임시 폴더(`…\scratchpad\region\g\` · `g2\`). 만드는 쪽이 `pkm-atelier-img-4/regions/<열쇠>.webp` 로 올린다(원본 그대로 + 폰용 작은 판은 만드는 쪽 판단).
+- 지금 자리: 이 PC 의 `C:\Users\jjshs\pkm-region-art\<열쇠>.webp`(지시문 · 만든 도구는 `prompts\`). 만드는 쪽이 `pkm-atelier-img-4/regions/<열쇠>.webp` 로 올린다(원본 그대로 + 폰용 작은 판은 만드는 쪽 판단).
 
 ### 화면 머리 (시안 A)
 
