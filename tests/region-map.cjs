@@ -102,9 +102,12 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
    }finally{await b.close()}
   }
   /* 구름 전환(travel) — startViewTransition 을 감싸 부른 수와 전환 움직임 길이를 센다. 344×882 만 */
-  const COUNT=()=>{const o=document.startViewTransition;window.__vt=0;window.__dur=[];if(!o)return;
-   document.startViewTransition=function(){window.__vt++;const t=o.apply(this,arguments);
-    t.ready.then(()=>{for(const x of document.getAnimations())if(x.effect&&String(x.effect.pseudoElement).startsWith('::view-transition'))window.__dur.push(x.effect.getComputedTiming().endTime);},()=>{});return t;};};
+  /* ready 에는 손대지 않는다 — 처리기를 달면 건너뛴 전환의 AbortError 를 삼켜, travel 이 안 받아도 검사가 못 본다.
+     길이는 전환이 끝날 때까지 프레임마다 모은다. 처리 안 된 거절은 __rej 에 적고 검사가 비었는지 본다 */
+  const COUNT=()=>{window.__rej=[];addEventListener('unhandledrejection',e=>window.__rej.push(String(e.reason&&e.reason.name||e.reason)));
+   const o=document.startViewTransition;window.__vt=0;window.__dur=[];if(!o)return;
+   document.startViewTransition=function(){window.__vt++;const t=o.apply(this,arguments);let live=true;t.finished.then(()=>live=false,()=>live=false);
+    (function tick(){for(const x of document.getAnimations())if(x.effect&&String(x.effect.pseudoElement).startsWith('::view-transition'))window.__dur.push(x.effect.getComputedTiming().endTime);if(live)requestAnimationFrame(tick);})();return t;};};
   const NOVT=()=>{delete Document.prototype.startViewTransition;window.__vt=0;};
   const vt=async opt=>{const c=await h.open('index.html',{viewport:FOLD.cover,mobile:true,...opt});await c.page.waitForSelector('.theme-card');return c;};
   const still=p=>p.waitForFunction(()=>!document.documentElement.classList.contains('travelling'),null,{timeout:3000});
@@ -129,11 +132,18 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
     assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'galar','빠른 두 번 → 마지막');
     assert(!await p.evaluate(()=>document.documentElement.classList.contains('travelling')),'travelling 남지 않음');
     assert.equal(await p.locator('.region-map').count(),0,'판 닫힘');
+    /* 첫 전환이 막 시작한 순간(ready 전)에 다음 travel — 건너뛴 전환의 ready 거절(AbortError)을 travel 이 받아야 한다.
+       50ms 사이로는 대개 ready 뒤라 거절이 안 생긴다. 다음 그림을 미리 풀어 두고 travelling 이 붙는 순간 부른다 */
+    assert.deepEqual(await p.evaluate(async()=>{const A=window.AtelierAppearance,root=document.documentElement,im=new Image();
+     im.src=A.regions.kalos.art;await im.decode();
+     const mo=new MutationObserver(()=>{if(root.classList.contains('travelling')){mo.disconnect();A.travel('kalos');}});mo.observe(root,{attributes:true,attributeFilter:['class']});
+     await A.travel('johto');await new Promise(r=>setTimeout(r,1200));return [root.dataset.theme,root.classList.contains('travelling')];}),['kalos',false],'시작 순간 두 번째 → 마지막 지역');
     /* 다른 탭에서 바꿈(storage) → 전환 없이 */
     const before=await p.evaluate(()=>window.__vt),q=await c.ctx.newPage();
     await q.goto(p.url());await q.waitForFunction(()=>window.AtelierAppearance);await q.evaluate(()=>window.AtelierAppearance.set('theme','paldea'));
     await p.waitForFunction(()=>document.documentElement.dataset.theme==='paldea',null,{timeout:3000});await p.waitForTimeout(300);
     assert.equal(await p.evaluate(()=>window.__vt),before,'storage 사건 → 전환 없음');
+    assert.deepEqual(await p.evaluate(()=>window.__rej),[],'처리 안 된 거절 없음(건너뛴 전환의 AbortError)');
     assert.deepEqual(c.errors,[]);
    }finally{await c.close()}
   }

@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 구름 전환을 빠르게 두 번 — 건너뛴 전환의 거절을 받는다
+- lib/workspace-theme.js — travel 이 전환의 ready 거절을 받는다. 첫 전환이 막 시작할 때 다음 지역을 누르면 skipTransition 이 ready 를 AbortError 로 거절해 "Uncaught (in promise)" 가 났다
+- tests/region-map.cjs — 전환 감싸개가 ready 에 처리기를 달지 않는다(달면 거절을 삼켜 못 본다). 처리 안 된 거절을 모아 비었는지 보고, 첫 전환 시작 순간에 다음 travel 을 부르는 경우를 더했다
+- 화면 여덟 — workspace-theme.js ?v= region10
+
 ## 2026-11-12 · claude · 도감 세대 머리줄에 지역 이름
 - dex.html — 세대 머리줄이 「5세대 · 하나 지방」 꼴(세대 n → 지역 n번째)
 - lib/words.js — dex.gen.region 낱말
