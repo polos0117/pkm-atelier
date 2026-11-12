@@ -23,8 +23,9 @@ assert(!full.includes('second eye color:'),'duplicate same-eye entry');
 assert(!full.includes('parameter precedence:'),'old global parent precedence must not affect unrelated groups');
 assert(!full.includes('must clearly read as Korean'),'ancestry must not override explicit geometry');
 assert(identity(full).includes('controls the actual outline'));
-// 2026-10-02 간결화: 외형 서른 개를 다 고른 새 인물이 12723 → 약 5000자. 늘면 상한을 올리기 전에 문장을 줄인다.
-assert(full.length<5200,'detailed fixture exceeds compacted budget: '+full.length);
+// 2026-10-02 간결화: 외형 서른 개를 다 고른 새 인물이 12723 → 약 5000자.
+// 2026-11-12 상한 5200 → 6600: 칸 꼴 · 공통 규칙 줄이 붙어 6128자(사용자 2026-11-11 「텍스트 모자라면 상한을 올려줘」 — 글을 깎지 않고 상한을 올린다).
+assert(full.length<6600,'detailed fixture exceeds compacted budget: '+full.length);
 assert.equal(JSON.stringify(params),original,'assembly mutated stored settings');
 const sharp=build({params:[['jaw & chin','narrow tapered chin']]});
 assert(!sharp.includes('U-shaped lower-face outline'),'round lock leaked into another jaw');
