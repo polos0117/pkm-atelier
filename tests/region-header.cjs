@@ -72,6 +72,64 @@ function artCovers(){
      assert(await q.evaluate(worstContrast,sel)>=4.5,tag+' no-art '+sel+' 대비');
    }finally{await b.close()}
   }
+  /* 풍경만 보기 — 344×882 터치. 그림은 진짜 관동 그림(1536×1024)으로 바꿔 끼워 가로로 굴릴 수 있다 */
+  for(const reduced of [false,true]){
+   const d=await h.open('index.html',{viewport:FOLD.cover,mobile:true,...(reduced?{reducedMotion:'reduce'}:{})}),s=d.page,tag='풍경'+(reduced?'(줄임) ':' ');
+   try{
+    await s.route('https://polos0117.github.io/pkm-atelier-img-4/regions/kanto.webp',r=>r.fulfill({status:200,contentType:'image/webp',headers:{'Access-Control-Allow-Origin':'*'},body:require('fs').readFileSync('C:/Users/jjshs/pkm-region-art/kanto.webp')}));
+    await s.goto(h.base+'/dex.html');await s.waitForSelector('.grid .cell');
+    const dexUrl=s.url();
+    assert.equal(await s.locator('div.scenery').count(),0,tag+'처음엔 없다');
+    /* 빈 곳(그림 층)을 눌러도 열린다 — 표지판 · 단추가 아닌 노출된 그림 자리 */
+    const tap=await s.evaluate(()=>{const hh=document.querySelector('.workspace-header').getBoundingClientRect();
+     for(let y=hh.top+2;y<hh.bottom;y+=6)for(let x=2;x<innerWidth;x+=6){const e=document.elementFromPoint(x,y);if(e&&e.classList.contains('workspace-header'))return [x,y];}return null;});
+    assert(tap,tag+'머리에 노출된 그림 자리가 있다');
+    await s.mouse.click(...tap);
+    await s.waitForSelector('div.scenery');
+    await s.locator('.scenery-close').click();await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.waitForFunction(()=>document.documentElement.classList.contains('scenery'),null,{timeout:2000});
+    assert.equal(await s.locator('div.scenery').getAttribute('role'),'dialog');
+    assert.equal(await s.locator('div.scenery').getAttribute('aria-label'),'풍경만 보기');
+    assert.equal(await s.locator('.scenery-close').getAttribute('aria-label'),'풍경 닫기');
+    assert((await s.locator('.scenery-close').boundingBox()).height>=44,tag+'닫기 44px');
+    await s.waitForFunction(()=>{const i=document.querySelector('div.scenery img');return i&&i.complete&&i.naturalWidth>2});
+    await s.waitForTimeout(500);
+    for(const sel of ['.workspace-nav','.collection-scroll'])
+     assert.equal(await s.locator(sel).evaluate(e=>{const c=getComputedStyle(e);return c.visibility==='hidden'||+c.opacity===0}),true,tag+sel+' 사라진다');
+    const g=await s.evaluate(()=>{const sc=document.querySelector('div.scenery'),i=sc.querySelector('img');return {iw:i.getBoundingClientRect().width,vw:innerWidth,ih:i.getBoundingClientRect().height,vh:innerHeight,o:document.documentElement.scrollWidth<=innerWidth}});
+    assert(g.iw>g.vw,tag+'그림 폭 > 화면 폭 '+JSON.stringify(g));
+    assert(Math.abs(g.ih-g.vh)<=1,tag+'그림 높이 = 화면 높이 '+JSON.stringify(g));assert(g.o,tag+'가로 넘침');
+    const moved=await s.evaluate(()=>{const sc=document.querySelector('div.scenery'),a=sc.scrollLeft;sc.scrollLeft=a>50?a-40:a+40;return Math.abs(sc.scrollLeft-a)>=1});
+    assert(moved,tag+'가로로 굴린다');
+    if(reduced)assert.equal(await s.evaluate(()=>[getComputedStyle(document.querySelector('div.scenery')).transitionDuration,getComputedStyle(document.querySelector('.workspace-nav')).transitionDuration].join()),'0s,0s',tag+'전환 0');
+    /* 뒤로 가기 — 풍경만 닫는다 */
+    await s.goBack();await s.waitForSelector('div.scenery',{state:'detached'});
+    assert.equal(s.url(),dexUrl,tag+'뒤로 가도 주소 그대로');
+    await s.waitForFunction(()=>!document.documentElement.classList.contains('scenery'),null,{timeout:2000});
+    /* Esc · 닫기 단추 — 기록을 남기지 않는다 */
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForTimeout(100);assert.equal(s.url(),dexUrl,tag+'Esc 뒤 주소');
+    assert.equal(await s.evaluate(()=>history.state&&history.state.scenery||0),0,tag+'Esc 뒤 기록에 풍경 없음');
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.locator('.scenery-close').click();await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForTimeout(100);assert.equal(await s.evaluate(()=>history.state&&history.state.scenery||0),0,tag+'닫기 뒤 기록');
+    /* 접힌 상태(dex-scrolled)에서도 — 표지판 줄은 접혀 숨으니 ⚙ 안의 단추로 */
+    await s.locator('.collection-scroll').evaluate(e=>{e.scrollTop=300});await s.waitForSelector('main.dex-scrolled');
+    assert(!await s.locator('.scenery-toggle').isVisible(),tag+'접히면 머리 단추는 숨는다');
+    await s.locator('.appearance-toggle').click();
+    const inPanel=s.locator('.appearance-panel .scenery-open');
+    assert((await inPanel.boundingBox()).height>=44,tag+'설정 안 단추 44px');
+    await inPanel.click();await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    assert.deepEqual(d.errors,[]);
+   }finally{await d.close()}
+  }
+  /* 그림을 못 받으면 설정 안 단추도 숨는다 */
+  {const e=await h.open('dex.html',{viewport:FOLD.cover,mobile:true,regionArt:false}),t=e.page;
+   try{await t.waitForSelector('.region-hero.no-art');await t.locator('.appearance-toggle').click();
+    assert.equal(await t.locator('.appearance-panel .scenery-open').count(),0,'no-art 설정 안 풍경 단추');}finally{await e.close()}}
   /* 낮은 화면(max-height:550) — 머리는 메뉴 줄뿐. 좁은 분할 화면(560×400)과 가로 폰(844×390), 굴려 접혀도 그림이 층을 다 덮는다 */
   for(const viewport of [{width:560,height:400},{width:844,height:390}]){
    const c=await h.open('dex.html',{viewport,mobile:true}),r=c.page;

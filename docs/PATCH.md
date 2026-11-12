@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 풍경만 보기 — 머리 그림만 화면 가득
+- lib/workspace-ui.js — 풍경 층(.scenery, 그림 높이 100%·가로 굴림, 처음엔 지역 pos 자리), 머리 단추 · 머리 빈 곳 · ⚙ 안 단추가 연다. pushState({scenery:1}) · 뒤로 가기가 닫음, Esc · 닫기는 history.back()
+- lib/workspace.css — 층 · 닫기 단추 · 열리면 제목판 · 메뉴 · 내용 흐려짐(움직임 줄이기면 바로), 표지판 줄은 클릭 통과
+- lib/words.js — region.scenery.close
+- tests/region-header.cjs — 풍경 열기 · 가로 굴림 · 뒤로 · Esc · 닫기 · 접힘 · 줄임 · 그림 없음 검사
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region5
+
 ## 2026-11-12 · claude · 접힌 머리 · 낮은 화면에서 지역 그림이 조각나던 것
 - lib/workspace.css — 폰의 그림 크기(층 높이의 125%)가 머리가 접히거나(folded · dex-scrolled) 낮은 화면(max-height:550)에서 층이 낮아지면 가운데 작은 조각(344 폭에 206px)이 됐다. 두 경우는 다시 cover(보이는 자리는 그대로)
 - 화면 여덟 — workspace.css 를 ?v=region4b 로
