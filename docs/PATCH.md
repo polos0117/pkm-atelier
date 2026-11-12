@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 홀로 효과 모듈 — 원소 도감과 같이 쓰게
+- lib/holo.js — 캔버스 넣을 자리를 옵션(before)으로, 그림의 둥근 모서리를 따라간다. element-atelier 도감이 같은 파일을 쓴다(사용자 「원소 도감에도 홀로 효과 붙여줘」). dex.html 은 before 로 넘기기 단추 앞을 준다, holo.js?v=3
+
 ## 2026-11-12 · claude · 홀로 효과 — WebGL 로만(Context7 로 PixiJS 문법 대조)
 - 사용자 「context7 커넥터 설치했는데 pixi관련 문법에 변화가 없는지 확인해줘」 — Context7 의 PixiJS 8.19.0 · 8.22.0 문서와 대조: Filter({ glProgram, resources }) · GlProgram.from · 타입 붙은 uniform · out vec4 finalColor · texture() · Application.init 옵션 · destroy(두 인자) 모두 그대로
 - lib/holo.js — preference 'webgl'(글자) → ['webgl'](배열). 글자로 주면 WebGL 이 없을 때 WebGPU · Canvas 로 넘어가는데(8.19 autoDetectRenderer), 그 렌더러는 WebGL 셰이더뿐인 이 필터를 건너뛰어 그림이 한 겹 더 밝게 얹힌다. 이제 WebGL 이 없으면 아무것도 안 한다. dex.html holo.js?v=2
