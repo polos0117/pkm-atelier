@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 풍경 단추가 그림 실패를 늦게 알던 것
+- lib/workspace-ui.js — 그림 실패를 주소별로 나누어 써서 ⚙ 판이 늦게 떠도 풍경 단추가 잠깐 보이지 않게
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region7
+
 ## 2026-11-12 · claude · 풍경만 보기 고침 — 초점 돌려주기 · 낡은 기록 · 두 번 닫기
 - lib/workspace-ui.js — 닫으면 초점이 연 단추로(⚙ 안 단추면 ⚙), 새로고침 · 뒤로/앞으로로 남은 {scenery:1} 은 지우거나 다시 쌓지 않고 열기, back() 은 closing 표로 한 번만
 - tests/region-header.cjs — 세 가지 검사 추가
