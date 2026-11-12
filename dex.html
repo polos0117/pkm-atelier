@@ -174,11 +174,11 @@ body {color:var(--text);font-size:15px}
 .dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=pokemon1"></script>
-<script src="lib/words.js?v=arms1"></script>
+<script src="lib/words.js?v=holo1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=recent2"></script>
 <script src="lib/dex-filter.js?v=3"></script>
-<link rel="stylesheet" href="lib/gallery.css?v=recent1">
+<link rel="stylesheet" href="lib/gallery.css?v=holo1">
 <script src="lib/scene-motion.js?v=1"></script>
 <link rel="stylesheet" href="lib/scene-motion.css?v=1">
 <!-- 즐겨찾기 — lib/favorites.js(공방 넷과 공방 모음이 글자 하나 다르지 않게 나눠 쓴다) -->
@@ -201,6 +201,7 @@ import { modalFocus } from './lib/gallery.js?v=1';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter, MOTION = window.AtelierMotion, FAV = window.AtelierFavorites;
 const FAV_HUB = '/favorites.html';
+const HOLO_KEY = 'atelier_holo_v1';
 /* 즐겨찾기 목록 — 다른 탭(공방 모음)에서 빼도 따라온다 */
 function useFavorites() {
   const [list, setList] = useState(() => (FAV ? FAV.list() : []));
@@ -671,8 +672,22 @@ function Zoom({ card, shots, at, canPrev, canNext, onMove, onClose, defs }) {
     홈 화면 앱(허브 범위 /)에서는 같은 앱 창에 그림만 떠서 돌아올 길이 없었다(2026-10-20). 넘기면 다시 화면에 맞춘다 */
  const [actual,setActual]=useState(false);
  useEffect(()=>setActual(false),[shot&&shot.file]);
+ /* 홀로 효과(2026-11-12 — lib/holo.js, PixiJS) — 화면에 맞춘 보기에서만. 켜고 끈 것은 기억한다(atelier_holo_v1). 넘겨도 캔버스는 그대로, 그림만 바꾼다 */
+ const [holo,setHolo]=useState(()=>{try{return localStorage.getItem(HOLO_KEY)!=='0';}catch(e){return true;}});
+ const holoRef=useRef(null);
+ const toggleHolo=()=>{const on=!holo;setHolo(on);try{localStorage.setItem(HOLO_KEY,on?'1':'0');}catch(e){}
+   const D=window.DeviceOrientationEvent;if(on&&D&&typeof D.requestPermission==='function')D.requestPermission().catch(()=>{});};
+ useEffect(()=>{
+   if(!holo||actual)return;
+   const body=layer.current&&layer.current.querySelector('.zoom-body'),img=body&&body.querySelector('img');
+   if(!body||!img)return;
+   let gone=false;
+   import('./lib/holo.js?v=1').then(m=>m.mountHolo(body,img,{reduced:!!(MOTION&&MOTION.reduced())})).then(x=>{if(gone)x&&x.destroy();else holoRef.current=x;},()=>{});
+   return()=>{gone=true;if(holoRef.current){holoRef.current.destroy();holoRef.current=null;}};
+ },[holo,actual]);
+ useEffect(()=>{const x=holoRef.current,img=layer.current&&layer.current.querySelector('.zoom-body img');if(x&&img)x.setImage(img);},[shot&&shot.file]);
  return html`<div ref=${layer} class="zoom-layer" role="dialog" aria-modal="true" aria-label=${W('gallery.zoom')}>
-  <div class="zoom-bar"><b>${card.name} · ${shotLabel(shot,defs)}</b><span aria-live="polite">${at+1} / ${shots.length}</span><button type="button" class="zoom-open" aria-pressed=${actual} onClick=${()=>setActual(v=>!v)}>${W(actual?'gallery.fit':'gallery.original')}</button><button class="zoom-close" data-dialog-close onClick=${onClose} aria-label=${W('gallery.close')}>✕</button></div>
+  <div class="zoom-bar"><b>${card.name} · ${shotLabel(shot,defs)}</b><span aria-live="polite">${at+1} / ${shots.length}</span><button type="button" class="zoom-holo" aria-pressed=${holo} disabled=${actual} title=${W('gallery.holo.note')} onClick=${toggleHolo}>${W('gallery.holo')}</button><button type="button" class="zoom-open" aria-pressed=${actual} onClick=${()=>setActual(v=>!v)}>${W(actual?'gallery.fit':'gallery.original')}</button><button class="zoom-close" data-dialog-close onClick=${onClose} aria-label=${W('gallery.close')}>✕</button></div>
   <div class=${'zoom-body'+(actual?' actual':'')} ...${actual?{}:swipe}><${Pic} full file=${shot.file} alt=${card.name+' · '+shotLabel(shot,defs)} /><div class="zoom-nav"><button class="zoom-prev" disabled=${!canPrev} onClick=${()=>onMove(-1)} aria-label=${W('gallery.previous')}>‹</button><button class="zoom-next" disabled=${!canNext} onClick=${()=>onMove(1)} aria-label=${W('gallery.next')}>›</button></div></div>
   <div class="zoom-footer"><span class="viewer-keyboard">${W('gallery.viewer.hint')}</span><span class="viewer-touch">${W('gallery.viewer.touch')}</span></div>
  </div>`;

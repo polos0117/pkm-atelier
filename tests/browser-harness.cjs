@@ -1,6 +1,6 @@
 /* 브라우저 검사 공용 껍데기.
    화면 셋은 Preact 를 esm.sh 에서 받는다. CDN 이 막힌 곳에서는 ESM_DIR 에
-   node_modules 경로를 주면 그 사본으로 갈아 끼운다 (npm i preact@10.24.3 htm@3.1.1).
+   node_modules 경로를 주면 그 사본으로 갈아 끼운다 (npm i preact@10.24.3 htm@3.1.1 pixi.js@8.19.0).
    ESM_DIR 이 없으면 그대로 CDN 으로 나간다 — 열린 곳에서는 아무것도 안 해도 된다.
 
    BASE_URL 을 주면 이미 도는 서버를 쓰고, 없으면 제 서버를 띄운다.
@@ -15,6 +15,8 @@ const ESM = {
   'https://esm.sh/preact@10.24.3': 'preact/dist/preact.mjs',
   'https://esm.sh/preact@10.24.3/hooks': 'preact/hooks/dist/hooks.mjs',
   'https://esm.sh/htm@3.1.1': 'htm/dist/htm.mjs',
+  /* 홀로 효과(lib/holo.js, 2026-11-12) — 사본은 npm i pixi.js@8.19.0 */
+  'https://cdn.jsdelivr.net/npm/pixi.js@8.19.0/dist/pixi.min.mjs': 'pixi.js/dist/pixi.min.mjs',
 };
 /* 폴드5 — 덮개 화면과 펼친 화면. 이 저장소 화면이 맞춰 온 두 크기다 */
 const FOLD = { cover: { width: 344, height: 882 }, inner: { width: 690, height: 829 } };
@@ -95,8 +97,9 @@ async function start() {
         if (!(file.startsWith(ROOT + path.sep) || (figure && file.startsWith(path.resolve(ROOT, '..', 'atelier') + path.sep))) || !fs.existsSync(file)) {
           return route.fulfill({ status: 404, body: 'no ' + rel });
         }
+        /* github.io 는 Access-Control-Allow-Origin: * 을 준다 — 홀로 효과가 그림을 WebGL 로 읽을 수 있게 같이 준다 */
         return route.fulfill({ status: 200, contentType: MIME[path.extname(file)] || 'application/octet-stream',
-                               body: fs.readFileSync(file) });
+                               headers: { 'Access-Control-Allow-Origin': '*' }, body: fs.readFileSync(file) });
       }
       return route.abort();
     });

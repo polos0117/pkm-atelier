@@ -165,7 +165,7 @@ const settled = p => p.waitForFunction(() => !document.querySelector('.am-ghost,
     await xp.waitForSelector('.dex-motion-layer .am-particles');
     await xp.click('.big .zoom'); await xp.waitForSelector('.zoom-layer img'); await xp.waitForTimeout(300);
     assert.equal(await xp.evaluate(() => document.querySelector('.zoom-layer img').getAnimations().length), 0, '크게 보기 — 켄 번스 없음');
-    assert.equal(await xp.locator('.zoom-layer canvas, .zoom-layer .am-ghost').count(), 0, '크게 보기 — 입자 없음');
+    assert.equal(await xp.locator('.zoom-layer canvas:not(.holo-layer), .zoom-layer .am-ghost').count(), 0, '크게 보기 — 입자 없음(홀로 효과 캔버스는 따로 — tests/dex-holo.cjs)');
     assert.equal(await xp.locator('.big .am-particles').count(), 0, '크게 보는 동안 뒤의 입자도 쉰다');
     await xp.keyboard.press('Escape'); await xp.waitForSelector('.zoom-layer', { state: 'detached' });
     assert.equal(await xp.evaluate(() => document.activeElement && document.activeElement.matches('.big .zoom')), true, '닫으면 초점은 큰 그림으로');
