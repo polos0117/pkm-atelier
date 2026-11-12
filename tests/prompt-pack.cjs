@@ -211,6 +211,12 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert.equal(s7.slots.light.params['body type'], S.CARD_FIGURE, '피카츄 체형');
     const sn = path.join(tmp, 'snorlax-7'); r = run('init', '잠만보', '--dir', sn, '--repos', repo); assert.equal(r.status, 0, r.stderr);
     assert.equal(JSON.parse(fs.readFileSync(path.join(sn, 'settings.json'), 'utf8')).slots.light.params['body type'], S.CARD_FIGURE, '잠만보도 같은 문장');
+    /* 종별 체형(2026-11-12 core v6 — 「포켓몬쪽은 분배까지도 해줘」) — CARD_BODY 에 적힌 종은 그 글. 같은 진화 가족은 같은 체형 */
+    for (const [name, k] of [['제라오라', 'lean_toned'], ['마빌크', 'petite_voluptuous']]) {
+      const bd = path.join(tmp, 'body-' + k); r = run('init', name, '--dir', bd, '--repos', repo); assert.equal(r.status, 0, r.stderr);
+      assert.equal(JSON.parse(fs.readFileSync(path.join(bd, 'settings.json'), 'utf8')).slots.light.params['body type'], S.VOCAB_EN.body[k], name + ' 체형 ' + k);
+    }
+    assert.equal(S.CARD_BODY['마휘핑'], S.CARD_BODY['마빌크'], '진화 가족은 같은 체형');
     /* 최근 ① 이 그 실루엣을 썼으면 다른 것 */
     const rec = path.join(repo, 'records', 'raichu-anime_gloss-20261107'); fs.mkdirSync(rec);
     fs.writeFileSync(path.join(rec, 'light-ui.json'), JSON.stringify({ storage: { last: '라이츄', cards: { '라이츄': { mecha: { set: { silhouette: sil.key }, fx: [] } } } } }));

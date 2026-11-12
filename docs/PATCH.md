@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-13 · claude · core v6 · 체형 둘 — 선택지와 종별 분배(슬림 근육형 39 · 아담한 풍만형 42)
+- lib/prompt-spec.js — 외형 칸 body type 에 「lean and toned」 · 「petite and short in stature yet voluptuous」(값 + PARAM_GUIDES 풀이 = core 글), 도식 BODY_FIG, 여성 값 표시. 사용자 「pkm,myth은 그림 없어도 추가해줘」
+- lib/prompt-spec.js VOCAB_EN.body · CARD_BODY — 아직 그림 없는 진화 가족을 통째로: 슬림 근육형 24 가족 39마리(빠르기 높은 사냥꾼 · 검사 · 닌자 · 질주형, 격투 73마리 뺌) · 아담한 풍만형 27 가족 42마리(작은 페어리 · 노말 · 에스퍼, 진화 전 포함). 사용자 「포켓몬쪽은 분배까지도 해줘」 · 「아담풍만형은 진화전에 줘도 돼」 · 「숫자는 그정도면 돼」
+- tools/prompt-pack.cjs figureOf · lib/prompt-anthro.js refBody — CARD_BODY 종은 CARD_FIGURE 대신 그 체형 글(① body type · 일상컷 BODY TYPE 줄). 슬림 근육형 종의 일상컷 복근 줄은 넣지 않는다(「일상컷에 추가하는건 아까한 격투 쪽만이야」)
+- IMAGE_RULES.md — ① 의 체형 절에 종별 체형 둘 · tests/prompt-pack.cjs — 종별 체형 단언
+- lib/prompt-spec.js — core:v6 블록 · prompt.html ?v=body1
+
 ## 2026-11-12 · claude · 알통몬 가족 복근 줄을 식스팩으로
 - 사용자 「알통몬 쪽은 식스팩 라인으로 넣어줘. 이미 이미지 만들긴했는데 그래도 이름값 하게 해줘야지 않겠어?」 — 알통몬 · 근육몬 · 괴력몬 11자 → 식스팩(식스팩 40 · 11자 33). 이미 그린 그림은 그대로, 다음 일상컷부터. prompt.html ?v=abs3.
 
