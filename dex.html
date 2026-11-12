@@ -664,14 +664,31 @@ function useSwipe(onMove, onTap) {
 }
 
 function Zoom({ card, shots, at, canPrev, canNext, onMove, onClose, defs }) {
- const layer=useRef(),live=useRef();live.current={onMove,onClose};
+ const layer=useRef(),live=useRef(),dirRef=useRef(1);
+ /* 넘긴 쪽(전환의 방향) — 단추 · 방향키 · 밀기가 다 여기로 */
+ const go=d=>{dirRef.current=d;live.current.onMove(d);};
+ live.current={onMove,onClose};
  useLayoutEffect(()=>modalFocus(layer.current,()=>live.current.onClose(),'.big .zoom'),[]);
- useLayoutEffect(()=>{const key=e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();live.current.onMove(e.key==='ArrowLeft'?-1:1);}};addEventListener('keydown',key);return()=>removeEventListener('keydown',key);},[]);
- const swipe=useSwipe(d=>live.current.onMove(d)),shot=shots[at];
+ useLayoutEffect(()=>{const key=e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(e.key==='ArrowLeft'?-1:1);}};addEventListener('keydown',key);return()=>removeEventListener('keydown',key);},[]);
+ const swipe=useSwipe(d=>go(d)),shot=shots[at];
+ /* 넘기기 전환(2026-11-12 사용자 「크게 보기에서 넘길 때 부드러운 전환 효과 pkm 쪽에 넣어줘」) — 큰 그림 칸과 같은 lib/scene-motion.js turn:
+    나가는 그림은 바뀌기 직전(그리는 때)에 떠 둔 사본(ghost)이 반대쪽으로 밀리며 흐려지고, 새 그림은 넘긴 쪽에서 들어온다. 켄 번스 · 입자는 여전히 없다.
+    움직임 끄기 · 줄이기면 바로 바뀐다(turn 이 본다). 원본 크기에선 하지 않는다 */
+ const lastFile=useRef(null),outgoing=useRef(null);
+ if(MOTION&&shot&&lastFile.current&&lastFile.current!==shot.file&&!outgoing.current)outgoing.current=MOTION.snapshot(layer.current&&layer.current.querySelector('.zoom-body'));
  /* 원본 크기 — 그림을 제 픽셀 크기로 펼쳐 손가락·휠로 구석구석 본다. 예전엔 그림 파일을 새 창으로 열었는데,
     홈 화면 앱(허브 범위 /)에서는 같은 앱 창에 그림만 떠서 돌아올 길이 없었다(2026-10-20). 넘기면 다시 화면에 맞춘다 */
  const [actual,setActual]=useState(false);
  useEffect(()=>setActual(false),[shot&&shot.file]);
+ useLayoutEffect(()=>{
+   const prev=lastFile.current,snap=outgoing.current,img=layer.current&&layer.current.querySelector('.zoom-body>img');
+   outgoing.current=null;lastFile.current=shot&&shot.file;
+   if(!MOTION||!prev||!snap||!img||!shot||prev===shot.file||actual)return;
+   MOTION.cancel('dex-zoom');
+   const ghost=MOTION.ghost(img,snap.src,{fit:'contain'});
+   MOTION.turn(ghost,img,{direction:dirRef.current<0?'previous':'next',removeFrom:true,key:'dex-zoom'});
+ },[shot&&shot.file]);
+ useEffect(()=>()=>{if(MOTION)MOTION.cancel('dex-zoom');},[]);
  /* 홀로 효과(2026-11-12 — lib/holo.js, PixiJS) — 화면에 맞춘 보기에서만. 켜고 끈 것은 기억한다(atelier_holo_v1). 넘겨도 캔버스는 그대로, 그림만 바꾼다 */
  const [holo,setHolo]=useState(()=>{try{return localStorage.getItem(HOLO_KEY)!=='0';}catch(e){return true;}});
  const holoRef=useRef(null);
@@ -682,13 +699,13 @@ function Zoom({ card, shots, at, canPrev, canNext, onMove, onClose, defs }) {
    const body=layer.current&&layer.current.querySelector('.zoom-body'),img=body&&body.querySelector('img');
    if(!body||!img)return;
    let gone=false;
-   import('./lib/holo.js?v=3').then(m=>m.mountHolo(body,img,{reduced:!!(MOTION&&MOTION.reduced()),before:body.querySelector('.zoom-nav')})).then(x=>{if(gone)x&&x.destroy();else holoRef.current=x;},()=>{});
+   import('./lib/holo.js?v=4').then(m=>m.mountHolo(body,img,{reduced:!!(MOTION&&MOTION.reduced()),before:body.querySelector('.zoom-nav')})).then(x=>{if(gone)x&&x.destroy();else holoRef.current=x;},()=>{});
    return()=>{gone=true;if(holoRef.current){holoRef.current.destroy();holoRef.current=null;}};
  },[holo,actual]);
  useEffect(()=>{const x=holoRef.current,img=layer.current&&layer.current.querySelector('.zoom-body img');if(x&&img)x.setImage(img);},[shot&&shot.file]);
  return html`<div ref=${layer} class="zoom-layer" role="dialog" aria-modal="true" aria-label=${W('gallery.zoom')}>
   <div class="zoom-bar"><b>${card.name} · ${shotLabel(shot,defs)}</b><span aria-live="polite">${at+1} / ${shots.length}</span><button type="button" class="zoom-holo" aria-pressed=${holo} disabled=${actual} title=${W('gallery.holo.note')} onClick=${toggleHolo}>${W('gallery.holo')}</button><button type="button" class="zoom-open" aria-pressed=${actual} onClick=${()=>setActual(v=>!v)}>${W(actual?'gallery.fit':'gallery.original')}</button><button class="zoom-close" data-dialog-close onClick=${onClose} aria-label=${W('gallery.close')}>✕</button></div>
-  <div class=${'zoom-body'+(actual?' actual':'')} ...${actual?{}:swipe}><${Pic} full file=${shot.file} alt=${card.name+' · '+shotLabel(shot,defs)} /><div class="zoom-nav"><button class="zoom-prev" disabled=${!canPrev} onClick=${()=>onMove(-1)} aria-label=${W('gallery.previous')}>‹</button><button class="zoom-next" disabled=${!canNext} onClick=${()=>onMove(1)} aria-label=${W('gallery.next')}>›</button></div></div>
+  <div class=${'zoom-body'+(actual?' actual':'')} ...${actual?{}:swipe}><${Pic} full file=${shot.file} alt=${card.name+' · '+shotLabel(shot,defs)} /><div class="zoom-nav"><button class="zoom-prev" disabled=${!canPrev} onClick=${()=>go(-1)} aria-label=${W('gallery.previous')}>‹</button><button class="zoom-next" disabled=${!canNext} onClick=${()=>go(1)} aria-label=${W('gallery.next')}>›</button></div></div>
   <div class="zoom-footer"><span class="viewer-keyboard">${W('gallery.viewer.hint')}</span><span class="viewer-touch">${W('gallery.viewer.touch')}</span></div>
  </div>`;
 }

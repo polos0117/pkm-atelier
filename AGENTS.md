@@ -189,6 +189,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dot-screen.cjs      # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-forms.cjs
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-nav.cjs       # 도감 넘기기 — 목록 자리·그림·카드 넘기기·뒤로 가기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-holo.cjs      # 도감 크게 보기 홀로 효과(lib/holo.js · PixiJS — ESM_DIR 에 pixi.js@8.19.0 사본도) — 그림 칸에 맞음 · 끄기 기억 · 원본 크기엔 없음 · 움직임 줄이기
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-zoom-turn.cjs # 도감 크게 보기 넘기기 전환 — 나가는 그림 사본 · 넘긴 쪽에서 들어옴 · 끝나면 정리 · 움직임 줄이기면 바로
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-recent.cjs    # 도감 최근 추가 띠·새 표시(지난 방문)·새 그림만 — 다섯 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/scene-motion.cjs  # 움직임 — 공용 모듈·도감 상세의 켄 번스·오버드라이브 열리기·타입 입자·스위치
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/dex-favorites.cjs # 즐겨찾기 — 상세의 하트·저장된 칸·?pic= 로 열기·저장 막힘·다섯 크기
