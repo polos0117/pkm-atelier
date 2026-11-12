@@ -175,7 +175,7 @@ body {color:var(--text);font-size:15px}
 .dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=region9"></script>
-<script src="lib/words.js?v=region8"></script>
+<script src="lib/words.js?v=region9"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=region1"></script>
 <script src="lib/dex-filter.js?v=3"></script>
@@ -829,7 +829,7 @@ function List({ st, filters, onFilter, onOpen, compact, onCompact, restore, sele
           const prog=IMG.formsDone(shot.style?(IMG.styleMap(entry||{})[shot.style]||{}):entry,want,V),fresh=rowNew(shot,f);
           const types=[c.element,c.element2].filter(Boolean),no=String(c.no).padStart(4,'0');
           /* 세대 머리줄 — 걸러진 것 안에서 그 세대를 몇 종 채웠나. 굴릴 때 위에 붙는다 */
-          const head=(i===0||shown[i-1].card.gen!==c.gen)&&html`<p key=${'gen-'+c.gen+'-'+i} class="gen-head">${W('card.gen',{n:c.gen})}<span>${W('dex.gen.count',gens[c.gen])}</span></p>`;
+          const head=(i===0||shown[i-1].card.gen!==c.gen)&&html`<p key=${'gen-'+c.gen+'-'+i} class="gen-head">${W('dex.gen.region',{gen:W('card.gen',{n:c.gen}),region:W('theme.'+window.AtelierAppearance.themes[c.gen-1])})}<span>${W('dex.gen.count',gens[c.gen])}</span></p>`;
           return [head,html`<button key=${c.name+'-'+shot.style+'-'+shot.file+'-'+i} class=${shot.file?'cell has-art':shot.empty?'cell style-empty':'cell'}
             data-card=${c.name} data-style=${shot.style} data-form=${shot.form} data-cut=${shot.cut} data-new=${fresh?'1':undefined}
             onClick=${() => onOpen(shot)}>

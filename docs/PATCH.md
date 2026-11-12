@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 도감 세대 머리줄에 지역 이름
+- dex.html — 세대 머리줄이 「5세대 · 하나 지방」 꼴(세대 n → 지역 n번째)
+- lib/words.js — dex.gen.region 낱말
+- tests/dex-box.cjs — 머리줄 글 단언
+- (화면 여덟) — words.js ?v=region9
+
 ## 2026-11-12 · claude · 지역 이동 구름 전환 — AtelierAppearance.travel
 - lib/workspace-theme.js — travel(key): 같은 지역이면 그대로, 움직임 줄이기 · View Transitions 없음이면 바로 set. 새 머리 그림을 먼저 받아 두고(최대 0.4초) startViewTransition 안에서 바꾼다. 전환 중엔 html.travelling, 또 부르면 진행 중인 것을 skipTransition 하고 마지막 것만. storage 사건은 전환 없이 그대로
 - lib/workspace.css — html.travelling 일 때만 구름 전환(공방 지도에서 들어오는 쪽 넘김 페이드는 그대로): 옛 화면이 하늘색 구름 바탕 속으로 흐려지고(0.3초) 새 화면이 구름 구멍 셋으로 걷힌다(0.3초 뒤 0.3초). 가면은 등록한 --cloud 하나
