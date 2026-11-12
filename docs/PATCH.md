@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-13 · claude · 일상컷 BODY TYPE — 손으로 고른 체형도 글 전체
+- 사용자 「응 고쳐줘」 — 생성기에서 body type 을 고르면 일상컷 BODY TYPE 줄에 값 이름(lean and toned · curvy 등)만 실리던 것을, 세계 그림(①) 외형 줄처럼 「값 — 풀이(PARAM_GUIDES)」 글 전체로. lib/prompt-anthro.js refBody, prompt.html ?v=body2.
+- 확인: lean and toned → 「lean and toned — a slim, firm waist with softly defined vertical abs …」, curvy → 「curvy — flowing bust-to-waist …」. prompt-appearance · prompt-engine · prompt-pack · prompt-casual-v2 통과.
+
 ## 2026-11-13 · claude · core v6 · 체형 둘 — 선택지와 종별 분배(슬림 근육형 39 · 아담한 풍만형 42)
 - lib/prompt-spec.js — 외형 칸 body type 에 「lean and toned」 · 「petite and short in stature yet voluptuous」(값 + PARAM_GUIDES 풀이 = core 글), 도식 BODY_FIG, 여성 값 표시. 사용자 「pkm,myth은 그림 없어도 추가해줘」
 - lib/prompt-spec.js VOCAB_EN.body · CARD_BODY — 아직 그림 없는 진화 가족을 통째로: 슬림 근육형 24 가족 39마리(빠르기 높은 사냥꾼 · 검사 · 닌자 · 질주형, 격투 73마리 뺌) · 아담한 풍만형 27 가족 42마리(작은 페어리 · 노말 · 에스퍼, 진화 전 포함). 사용자 「포켓몬쪽은 분배까지도 해줘」 · 「아담풍만형은 진화전에 줘도 돼」 · 「숫자는 그정도면 돼」
