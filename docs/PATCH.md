@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 생성기 · 탐사 화면이 옛 workspace-ui 를 부르던 것
+- prompt.html · survey.html — prompt-ui.js · survey-ui.js 를 ?v= region8 로. 두 파일은 workspace-ui.js?v=region8 을 부르게 바뀌었는데 화면이 region7 을 불러 캐시가 남은 브라우저는 옛 머리(표지판이 지도를 못 여는)를 계속 썼다
+- tests/workspace-theme.cjs — workspace-ui.js 를 부르는 lib 파일마다, 그 파일을 부르는 모든 ?v= 꼬리표가 그 파일이 부르는 workspace-ui.js 꼬리표와 같은지 본다
+
 ## 2026-11-12 · claude · 여행 지도 — 표지판을 누르면 지역 아홉 그림엽서
 - lib/workspace-ui.js — 여행 지도 판(RegionMap: 폰은 아래에서 올라옴 · 600px 이상 가운데, 지금 지역 엽서에 도장 「지금 여기」). 엽서 · ⚙ 고르개 · 집 화면 진열이 한 길 travelTo(travel 이 있으면 그것, 없으면 set). 뒤로 가기로 닫는 판은 풍경만 보기와 한 훅(useBackDialog)으로. 진열 카드는 문장 · 색점 대신 지역 작은 그림. 안 쓰던 onOpenMap 받이는 지움
 - lib/workspace.css — 엽서 판 · 엽서(button. 으로 화면 단추 꼴을 이김), 진열은 3×3 · 600px 아래 두 칸에 팔데아가 한 줄(남는 칸 없이). 작은 그림을 못 받으면 그 지역 색 띠

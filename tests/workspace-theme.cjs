@@ -98,4 +98,14 @@ for (const [saved, want, written] of [['plum', 'sinnoh', 'sinnoh'], ['unknown', 
   assert.equal(rt.dataset.theme, want, saved + ' → ' + want);
   assert.equal(st.get('pkm_theme_v1'), written, saved + ' stored as ' + written);
 }
+/* 공유 모듈을 부르는 lib 파일(prompt-ui.js · survey-ui.js)이 workspace-ui.js 의 ?v= 를 올렸으면, 그 파일을 부르는 화면의 ?v= 도 같은 꼬리표로.
+   안 올리면 옛 판이 캐시에 남아 옛 workspace-ui 를 계속 부른다(2026-11-12 여행 지도 — 표지판이 죽을 뻔했다) */
+{
+  const files=[...fs.readdirSync('.').filter(f=>f.endsWith('.html')),...fs.readdirSync('lib').filter(f=>f.endsWith('.js')).map(f=>'lib/'+f)];
+  for(const lib of fs.readdirSync('lib').filter(f=>f.endsWith('.js'))){
+    const m=/workspace-ui\.js\?v=([\w.-]+)/.exec(fs.readFileSync('lib/'+lib,'utf8'));if(!m)continue;
+    for(const f of files)for(const [,tag] of fs.readFileSync(f,'utf8').matchAll(new RegExp(lib.replace('.','\\.')+'\\?v=([\\w.-]+)','g')))
+      assert.equal(tag,m[1],f+' 이 부르는 '+lib+'?v= 는 그 파일이 부르는 workspace-ui.js?v= 와 같아야 한다');
+  }
+}
 console.log('PASS: 9 Pokemon regions, legacy theme migration, palette previews, browser chrome, viewport sizing and one loaded Korean sans');
