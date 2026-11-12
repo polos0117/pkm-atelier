@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 문장 검사가 Windows 줄 끝에서 깨지던 것
+- tests/workspace-theme.cjs — 지역 테마를 main 에 합친 뒤 이 체크아웃(CRLF)에서 「crest does not depend on the region」이 실패했다. 함수 끝을 줄바꿈 · } · 줄바꿈으로 찾는데 CRLF 라 못 찾고 파일 끝까지 읽었다. CSS · UI 를 LF 로 맞춰 읽는다(화면 코드는 그대로)
+
 ## 2026-11-12 · claude · 도감 상세 popstate — 카드 칸은 주소의 mech 로도 가린다
 - dex.html — 바로 앞 칸의 「판 칸에서 카드 칸으로 돌아온 popstate 는 건너뛴다」가 기록 값 {dex:'card'} 만 봤다. ?mech= 로 새로고침하면 목록 칸도 그 값을 물려받아, 뒤로 가기가 목록으로 못 갔다. 주소에 mech 가 남았는지 같이 본다
 - tests/region-map.cjs — 도감 상세 검사를 새로고침한 상세에서 시작한다(마지막 뒤로 한 번 → 목록)

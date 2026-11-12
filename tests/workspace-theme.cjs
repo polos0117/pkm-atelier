@@ -1,6 +1,8 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
 const source=fs.readFileSync('lib/workspace-theme.js','utf8');
-const css=fs.readFileSync('lib/workspace.css','utf8'),ui=fs.readFileSync('lib/workspace-ui.js','utf8');
+/* 줄 끝을 LF 로 맞춰 읽는다 — Windows 체크아웃(CRLF)에서는 아래 문장 검사가 함수 끝을 못 찾아 파일 끝까지 읽었다 */
+const lf=f=>fs.readFileSync(f,'utf8').split('\r\n').join('\n');
+const css=lf('lib/workspace.css'),ui=lf('lib/workspace-ui.js');
 const stored=new Map(),events=new Map(),viewportEvents=new Map(),properties=new Map(),frames=[];
 const meta={content:''},root={dataset:{},style:{setProperty:(k,v)=>properties.set(k,v)}};
 const window={innerHeight:800,visualViewport:{height:704,addEventListener:(k,v)=>viewportEvents.set(k,v)},
