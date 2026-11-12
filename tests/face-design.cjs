@@ -118,7 +118,7 @@ assert(!build(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts[k][0]])
 
 /* 3. 머리 — 종마다 헤어스타일·길이·앞머리. 생성기가 스스로 고르면 보브·웨이브 몇 가지로 몰렸다(2026-10-20)
    - 값은 생성기 열쇠, 여성 인물이라 남성 전용 값 없음, 길이는 컷에 맞음(HAIR_LENGTH_LIMITS)
-   - 한 헤어스타일 8% · 보브 4% 를 넘지 않는다(확정 그림이 이미 넘으면 그 수까지 — 새로 고르지 않는다)
+   - 한 헤어스타일 4% · 보브 3% 를 넘지 않는다(2026-11-12 머리 34가지를 더하며 8% · 4% 에서)(확정 그림이 이미 넘으면 그 수까지 — 새로 고르지 않는다)
    - 진화 한 걸음마다 같은 묶음에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽 · 계열 안 두 종이 똑같지 않다 · 도감 옆 번호의 다른 계열과 헤어스타일이 다르다
    - 경장 ①이 등록된 종은 그림 기록의 값으로 잠근다 */
 assert.deepEqual([...S.HAIR_KEYS], ['hairstyle', 'hair length', 'bangs'], 'HAIR_KEYS');
@@ -126,7 +126,7 @@ const HR = data.rules.hair, HK = S.HAIR_KEYS, LEN = HR.lengths;
 const hopt = Object.fromEntries(HK.map(k => [k, S.PARAM_DEFS.find(d => d.key === k).options.map(o => o[0]).filter(v => v && v !== '__custom__')]));
 const male = k => Object.entries(S.ONLY[k] || {}).filter(([, s]) => s === 'male').map(([v]) => v);
 for (const v of ['buzz cut', 'crew cut', 'fade', 'man bun', 'mullet']) assert(male('hairstyle').includes(v), '남성 전용 표에 ' + v);
-const lightReg = new Set(Object.entries(img).filter(([, v]) => Object.values(v.byStyle || {}).some(s => s.byForm && s.byForm.light)).map(([n]) => n));
+const lightReg = new Set(Object.entries(img).filter(([, v]) => { const s = (v.byStyle || {})[S.DEFAULT_STYLE]; return s && s.byForm && s.byForm.light; }).map(([n]) => n));   /* 잠금은 기본 화풍 그림만(2026-11-12) */
 const fam = s => Object.keys(HR.family).find(f => HR.family[f].includes(s)) || HR.familyLocked[s];
 const edgeOk = (p, c) => {
   const a = p.hairstyle, b = c.hairstyle; if (!a || !b) return true;
@@ -155,7 +155,7 @@ for (const c of cards) {
   if (HR.bangs[h.hairstyle]) assert(HR.bangs[h.hairstyle].includes(h.bangs), c.name + ' ' + h.hairstyle + ' 에 맞지 않는 앞머리');
 }
 const N = cards.length, cap = s => Math.max(Math.floor((s === 'bob' ? HR.bobCap : HR.cap) * N), lockedCount[s] || 0);
-assert(HR.cap <= 0.08 && HR.bobCap <= 0.04, '상한 8% · 보브 4%');
+assert(HR.cap <= 0.04 && HR.bobCap <= 0.03, '상한 4% · 보브 3%');
 for (const [s, k] of Object.entries(count)) assert(k <= cap(s), '헤어스타일 ' + s + ' ' + k + '종 — 상한 ' + cap(s));
 assert(Object.keys(count).length >= 30, '헤어스타일이 몇 가지로 몰렸다: ' + Object.keys(count).length);
 /* 여성 헤어스타일은 새로 더한 것(아프로·브레이드 …)까지 모두 배정된다 — 적게 쓰인 머리 채우기(2026-10-27) */
@@ -193,7 +193,7 @@ for (const c of cards) {
 const hb = t => t.split('\n\n').find(x => x.startsWith('HAIR: '));
 const free = cards.find(c => !F[c.no].hair_locked && F[c.no].hair['hair length'] && !S.HAIR_LENGTH_LIMITS[F[c.no].hair.hairstyle] && F[c.no].hair.bangs !== 'none');
 const fh = F[free.no].hair, ft = build(input(free.name));
-assert.equal(hb(ft), 'HAIR: ' + fh['hair length'] + ' ' + fh.hairstyle + ', ' + fh.bangs + '.', '새 인물에 HAIR 줄');
+assert.equal(hb(ft), 'HAIR: ' + fh['hair length'] + ' ' + fh.hairstyle + (S.HAIR_BOLD[fh.hairstyle] ? ' (' + S.HAIR_BOLD[fh.hairstyle] + ')' : '') + ', ' + fh.bangs + '.', '새 인물에 HAIR 줄');
 assert(ft.indexOf('\n\nHAIR: ') > ft.indexOf('FACE (') && ft.indexOf('\n\nHAIR: ') < ft.indexOf('FORM —'), 'HAIR 는 FACE 뒤, FORM 앞');
 assert(!ft.includes('\nhairstyle: '), '설계 머리는 IDENTITY 로 가지 않는다');
 for (const [why, extra] of [['이어가기', { identityMode: 'reference', form: 'heavy' }], ['개방', { form: 'overdrive', baseForm: 'light' }], ['끔', { faceDesignOn: false }], ['자료 없음', { faceDesign: null }],
@@ -204,10 +204,10 @@ const mineLen = build(input(free.name, { params: [['hair length', 'very short']]
 assert.equal(hb(mineLen), 'HAIR: ' + fh.bangs + '.', '길이를 고르면 컷과 길이가 빠지고 앞머리만 남는다');
 assert(mineLen.includes('hair length: very short'), '고른 길이는 IDENTITY 로');
 const mineBangs = build(input(free.name, { params: [['bangs', 'none']] }));
-assert.equal(hb(mineBangs), 'HAIR: ' + fh['hair length'] + ' ' + fh.hairstyle + '.', '앞머리를 고르면 앞머리만 빠진다');
+assert.equal(hb(mineBangs), 'HAIR: ' + fh['hair length'] + ' ' + fh.hairstyle + (S.HAIR_BOLD[fh.hairstyle] ? ' (' + S.HAIR_BOLD[fh.hairstyle] + ')' : '') + '.', '앞머리를 고르면 앞머리만 빠진다');
 assert(!build(input(free.name, { params: HK.map(k => [k, hopt[k][0]]) })).includes('\n\nHAIR: '), '머리를 다 고르면 HAIR 줄 없음');
 const pixie = cards.find(c => !F[c.no].hair_locked && S.HAIR_LENGTH_LIMITS[F[c.no].hair.hairstyle]);
-assert(hb(build(input(pixie.name))).startsWith('HAIR: ' + F[pixie.no].hair.hairstyle + ','), '길이가 고정된 컷은 길이를 안 적는다');
+assert(hb(build(input(pixie.name))).startsWith('HAIR: ' + F[pixie.no].hair.hairstyle + (S.HAIR_BOLD[F[pixie.no].hair.hairstyle] ? ' (' : ',')), '길이가 고정된 컷은 길이를 안 적는다');
 const empty = cards.find(c => F[c.no].hair_locked && !Object.keys(F[c.no].hair).length);
 assert(empty && !build(input(empty.name)).includes('\n\nHAIR: '), '기록에 머리가 없는 확정 종은 HAIR 줄 없음');
 const lockedOne = cards.find(c => F[c.no].hair_locked && F[c.no].hair.hairstyle);
@@ -250,4 +250,4 @@ for (const [why, extra] of [['이어가기', { identityMode: 'reference', form: 
 }
 const top = Object.entries(count).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([s, k]) => s + ' ' + k).join(', ');
 console.log(`PASS 얼굴 설계: 1025종 서로 다름 · 계열 ${Object.values(lines).filter(x => x.length > 1).length}개 ${pairs}쌍 셋 이상 다름 · 전체 둘 이상 다름 · 새 인물에만 FACE · 직접 고른 항목 우선 · 문서=엔진 · 칸 꼴 2칸에 같은 줄 ${secN}종 · 최대 ${most[0]}낱말(${most[1]})`);
-console.log(`PASS 머리 설계: 헤어스타일 ${Object.keys(count).length}가지(많은 순 ${top}) · 8%·보브 4% 상한 · 계열 잇기 · 옆 번호 다름 · 잠금 ${locked}(기록값 ${lockedWith}, 기록 대조 ${checkedRecords}) · 새 인물에만 HAIR · 직접 고른 머리 우선`);
+console.log(`PASS 머리 설계: 헤어스타일 ${Object.keys(count).length}가지(많은 순 ${top}) · 4%·보브 3% 상한 · 계열 잇기 · 옆 번호 다름 · 잠금 ${locked}(기록값 ${lockedWith}, 기록 대조 ${checkedRecords}) · 새 인물에만 HAIR · 직접 고른 머리 우선`);

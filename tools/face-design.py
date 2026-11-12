@@ -158,6 +158,7 @@ SEED_MAP = {
 }
 SEED_W = {'species': 3.0, 'draft': 1.0}   # 직접 쓴 것은 굳게, 단서 초안은 원작 단서가 이기게
 KEEP_W = 4.0                               # 이 json 의 이전 값 — 다시 돌려도 안 흔들린다
+FRESH_HAIR = False                         # build --fresh-hair: 잠기지 않은 종의 이전 머리에 주는 가산점을 빼고 새로 고른다(2026-11-12 새 머리 재분배)
 
 # ── 머리(2026-10-20) ─────────────────────────────────────────────────────────────
 # 생성기가 머리를 스스로 고르면 보브·웨이브·하이 포니테일 몇 가지로 몰렸다(기록 84종 중 보브 23).
@@ -165,7 +166,7 @@ KEEP_W = 4.0                               # 이 json 의 이전 값 — 다시 
 # 인물은 모두 여성이라 남성 전용 값(ONLY 의 male — buzz cut·crew cut·fade·man bun·mullet·side part·swept back·shaggy)은 쓰지 않는다.
 HAIR_KEYS = ['hairstyle', 'hair length', 'bangs']
 LENGTHS = ['very short', 'short', 'medium', 'long', 'very long']
-HAIR_CAP, BOB_CAP = 0.08, 0.04            # 한 헤어스타일이 1,025종에서 차지할 수 있는 몫 · 보브는 따로 더 낮게
+HAIR_CAP, BOB_CAP = 0.04, 0.03            # 한 헤어스타일이 1,025종에서 차지할 수 있는 몫 · 보브는 따로 더 낮게(2026-11-12 머리 34가지를 더하며 0.08·0.04 → 0.04·0.03)
 # 적게 쓰인 헤어스타일 채우기(2026-10-27) — 앞서 정한 머리를 지키는 가산점(항목마다 +2.5) 때문에 새로 더한 머리(아프로·브레이드 …)가
 # 한 번도 안 나왔다. FILL_MIN 종에 못 미치는 헤어스타일은 원작 단서가 FILL_SCORE 넘는 종 가운데 가장 잘 맞는 종을 미리 골라 FILL_PULL 만큼 당긴다
 FILL_MIN, FILL_SCORE, FILL_PULL = 8, .7, 12.0
@@ -213,6 +214,89 @@ BANGS_OK = {'hime cut': ['straight bangs'], 'slicked back': ['none'], 'wet-look 
 BANGS_BASE = {'straight bangs': .3, 'side-swept bangs': .3, 'curtain bangs': .3, 'parted bangs': .2, 'none': .2, 'long side bangs': .2,
               'choppy bangs': .2, 'asymmetric bangs': .1, 'long side bangs covering one eye': 0.0}
 LEN_BASE = {'very short': 0.0, 'short': .3, 'medium': .4, 'long': .4, 'very long': .2}
+# ── 과장된 2D 머리(2026-11-12) ──────────────────────────────────────────────────────
+# 사용자 「pkm쪽은 헤어스타일이 제한적인거 같아. 2d 케릭터라 더 다양하고 과장되게 써도 되는데」 → 「위에 표에 더 많이 추가해서 분배해줘」 →
+# 「응 그렇게 진행해줘」. 낱말 · 풀이는 lib/prompt-spec.js HAIR_BOLD_ROWS. 아직 기본 화풍 그림이 없는 종의 약 60% 가 이쪽으로 가게 BOLD_BONUS 를 준다.
+BOLD_LEN = {
+    'drill curls': ['long', 'very long'], 'drill sidelocks': ['long'], 'spiky hair': ['short', 'medium'],
+    'giant twin tails': ['very long'], 'lopsided twin tails': ['medium', 'long'], 'looped twin tails': ['medium', 'long'],
+    'triple ponytails': ['medium', 'long', 'very long'], 'spiky ponytail': ['long', 'very long'], 'segmented tail': ['very long'],
+    'giant braid': ['very long'], 'floor-length hair': ['very long'], 'animal-ear buns': ['medium', 'long'],
+    'buns with tails': ['long', 'very long'], 'cloud hair': ['short', 'medium', 'long'], 'lion mane': ['medium', 'long'],
+    'wild flare': ['short', 'medium', 'long'], 'jellyfish cut': ['long'], 'flared bob': ['short'],
+    'winged sidelocks': ['medium', 'long'], 'horn locks': ['short', 'medium', 'long'], 'pompadour': ['short', 'medium', 'long'],
+    'fauxhawk': ['very short', 'short'], 'flame-tipped hair': ['short', 'medium', 'long'], 'wave-crest hair': ['long', 'very long'],
+    'leaf-layered hair': ['medium', 'long'], 'razor-cut points': ['medium', 'long', 'very long'], 'zigzag spikes': ['short', 'medium', 'long'],
+    'floating hair': ['long', 'very long'], 'wind-wing hair': ['long', 'very long'], 'blocky layers': ['short', 'medium', 'long'],
+    'drip-tip hair': ['medium', 'long'], 'petal curls': ['short', 'medium', 'long'], 'mermaid waves': ['very long'],
+    'side braid': ['long', 'very long'],
+}
+BOLD_FAM = {'crop': ['flared bob', 'fauxhawk', 'pompadour'],
+            'sleek': ['drill sidelocks', 'floor-length hair', 'jellyfish cut', 'razor-cut points', 'floating hair', 'drip-tip hair'],
+            'layer': ['spiky hair', 'wild flare', 'winged sidelocks', 'horn locks', 'flame-tipped hair', 'leaf-layered hair', 'zigzag spikes',
+                      'wind-wing hair', 'blocky layers'],
+            'curl': ['drill curls', 'cloud hair', 'lion mane', 'wave-crest hair', 'petal curls', 'mermaid waves'],
+            'tail': ['giant twin tails', 'lopsided twin tails', 'looped twin tails', 'triple ponytails', 'spiky ponytail', 'segmented tail'],
+            'braid': ['giant braid', 'side braid'], 'bun': ['animal-ear buns', 'buns with tails']}
+BOLD_ELAB = {'flared bob': 1, 'fauxhawk': 1, 'pompadour': 2, 'drill sidelocks': 3, 'floor-length hair': 3, 'jellyfish cut': 2, 'razor-cut points': 2,
+             'floating hair': 3, 'drip-tip hair': 2, 'spiky hair': 2, 'wild flare': 2, 'winged sidelocks': 2, 'horn locks': 2, 'flame-tipped hair': 2,
+             'leaf-layered hair': 2, 'zigzag spikes': 2, 'wind-wing hair': 3, 'blocky layers': 2, 'drill curls': 3, 'cloud hair': 2, 'lion mane': 3,
+             'wave-crest hair': 2, 'petal curls': 2, 'mermaid waves': 3, 'giant twin tails': 3, 'lopsided twin tails': 2, 'looped twin tails': 3,
+             'triple ponytails': 3, 'spiky ponytail': 2, 'segmented tail': 3, 'giant braid': 3, 'side braid': 2, 'animal-ear buns': 2, 'buns with tails': 3}
+BOLD_BANGS = {'pompadour': ['none'], 'fauxhawk': ['none', 'side-swept bangs'],
+              'spiky hair': ['choppy bangs', 'asymmetric bangs', 'side-swept bangs', 'none'],
+              'drill sidelocks': ['straight bangs', 'parted bangs', 'curtain bangs'], 'jellyfish cut': ['straight bangs'],
+              'horn locks': ['parted bangs', 'choppy bangs', 'side-swept bangs', 'none']}
+BOLD_BONUS = 0.5
+# 원작 단서(HAIR_CUES 의 단서 이름) · 타입 · 몸 형태 → 새 머리 점수
+BOLD_CUE = {
+    '길게 늘어진 귀·더듬이·리본': {'giant twin tails': 1.6, 'buns with tails': 1.0, 'segmented tail': .6},
+    '더듬이': {'horn locks': .8, 'animal-ear buns': .6}, '선 귀': {'animal-ear buns': 2.0, 'spiky hair': .4},
+    '처진 귀': {'buns with tails': 1.2, 'drill sidelocks': .6}, '여러 갈래 꼬리': {'triple ponytails': 2.0, 'giant twin tails': 1.2},
+    '긴 꼬리': {'segmented tail': 1.4, 'spiky ponytail': .8, 'giant braid': .8}, '복슬한 꼬리': {'cloud hair': 1.2, 'lion mane': .6},
+    '볏·머리 깃': {'pompadour': 1.4, 'fauxhawk': 1.0, 'spiky ponytail': .6}, '갈기·목털': {'lion mane': 2.2, 'wild flare': 1.0},
+    '털 다발': {'wild flare': .8, 'cloud hair': .6}, '가시·삐죽한 선': {'spiky hair': 2.0, 'zigzag spikes': .8, 'spiky ponytail': .8},
+    '뿔': {'horn locks': 2.0}, '불꽃': {'flame-tipped hair': 2.4, 'spiky hair': .6},
+    '지느러미·물결': {'wave-crest hair': 1.6, 'mermaid waves': 1.4, 'jellyfish cut': .4}, '꽃·꽃잎': {'petal curls': 2.0, 'drill curls': .4},
+    '잎': {'leaf-layered hair': 2.0}, '덩굴·줄기': {'giant braid': 1.2, 'side braid': 1.0}, '알뿌리·씨앗': {'cloud hair': .6, 'looped twin tails': .6},
+    '버섯 갓·둥근 덮개': {'jellyfish cut': 1.6, 'flared bob': 1.2}, '둥글고 폭신한 몸': {'cloud hair': 1.4, 'looped twin tails': .8, 'flared bob': .6},
+    '구름·연기': {'cloud hair': 1.8, 'floating hair': .8}, '가면·드레스·보석': {'drill curls': 1.6, 'drill sidelocks': 1.2, 'floor-length hair': 1.0},
+    '왕관': {'drill curls': .8, 'floor-length hair': .6}, '돌·강철 판': {'blocky layers': 1.8, 'razor-cut points': 1.0},
+    '촉수': {'floating hair': 1.4, 'jellyfish cut': 1.4, 'drip-tip hair': .6}, '깃털·날개': {'winged sidelocks': 1.6, 'wind-wing hair': 1.6},
+    '줄무늬·마디': {'segmented tail': 1.6}, '말린 선': {'drill curls': 1.4, 'petal curls': .6}, '번개': {'zigzag spikes': 2.4, 'spiky hair': .8},
+    '얼음·결정': {'razor-cut points': 1.6, 'floor-length hair': .4}, '칼날': {'razor-cut points': 1.6, 'spiky ponytail': .6},
+    '졸린 인상': {'cloud hair': .8}, '헝클어진 털': {'wild flare': 1.6}, '수염': {'drill sidelocks': .6},
+    '별·초승달': {'looped twin tails': 1.0, 'animal-ear buns': .4},
+}
+BOLD_TYPE = {
+    'fairy': {'petal curls': 1.0, 'looped twin tails': .8, 'cloud hair': .6, 'drill curls': .5},
+    'psychic': {'floating hair': 1.0, 'floor-length hair': .8, 'drill sidelocks': .6},
+    'ghost': {'floating hair': 1.2, 'floor-length hair': .6, 'drip-tip hair': .4},
+    'dark': {'razor-cut points': .6, 'wild flare': .6, 'spiky ponytail': .4},
+    'dragon': {'horn locks': .8, 'spiky ponytail': .8, 'giant braid': .6, 'lion mane': .4},
+    'fighting': {'spiky ponytail': .8, 'pompadour': .6, 'fauxhawk': .6, 'segmented tail': .4},
+    'steel': {'razor-cut points': 1.0, 'blocky layers': .6, 'fauxhawk': .4}, 'rock': {'blocky layers': 1.4},
+    'ground': {'blocky layers': .8, 'giant braid': .6}, 'water': {'wave-crest hair': 1.2, 'mermaid waves': 1.0, 'jellyfish cut': .4},
+    'ice': {'razor-cut points': 1.0, 'floor-length hair': .5, 'drill sidelocks': .4},
+    'fire': {'flame-tipped hair': 1.6, 'spiky hair': .6, 'wild flare': .4}, 'electric': {'zigzag spikes': 1.6, 'spiky hair': .8},
+    'grass': {'leaf-layered hair': 1.4, 'side braid': .5, 'petal curls': .4},
+    'bug': {'animal-ear buns': .6, 'flared bob': .6, 'winged sidelocks': .6}, 'poison': {'drip-tip hair': 1.4, 'jellyfish cut': .4},
+    'flying': {'wind-wing hair': 1.4, 'winged sidelocks': 1.0},
+    'normal': {'cloud hair': .6, 'lopsided twin tails': .6, 'animal-ear buns': .6, 'buns with tails': .4},
+}
+BOLD_SHAPE = {'ball': {'cloud hair': .6, 'looped twin tails': .6}, 'fish': {'mermaid waves': .8, 'wave-crest hair': .6},
+              'squiggle': {'segmented tail': 1.0, 'giant braid': .6}, 'wings': {'wind-wing hair': .8, 'winged sidelocks': .6},
+              'tentacles': {'floating hair': .6, 'jellyfish cut': .6}, 'heads': {'triple ponytails': 1.2, 'giant twin tails': .6},
+              'quadruped': {'animal-ear buns': .6, 'lion mane': .4}, 'humanoid': {'drill sidelocks': .4, 'floor-length hair': .3},
+              'bug-wings': {'winged sidelocks': .8, 'flared bob': .4}, 'armor': {'blocky layers': .8, 'razor-cut points': .4},
+              'upright': {'spiky ponytail': .3}, 'arms': {'lopsided twin tails': .3}, 'legs': {'flared bob': .3},
+              'blob': {'cloud hair': .6, 'drip-tip hair': .4}}
+HAIR_LEN.update(BOLD_LEN)
+for _f, _ss in BOLD_FAM.items(): FAMILY[_f] = FAMILY[_f] + _ss
+FAM_OF.update({_s: _f for _f, _ss in BOLD_FAM.items() for _s in _ss})
+ELAB.update(BOLD_ELAB)
+BANGS_OK.update(BOLD_BANGS)
+assert set(BOLD_LEN) == set(BOLD_ELAB) == set(FAM_OF) & set(BOLD_LEN), '새 머리 표끼리 열쇠가 다르다'
 H_BAL, L_BAL, B_BAL, NEAR_PEN = 1.2, .5, .6, .7   # 많이 쓴 값일수록 깎는 정도(헤어스타일·길이·앞머리) · 가까운 번호의 다른 계열과 같은 헤어스타일 감점
 HS, HL, HB = 'hairstyle', 'hair length', 'bangs'
 # 낱말 표 — (정규식, 단서 이름, {항목: {값: 점수}}, 몸 쪽만 볼지). 특징 문장(부위+설명)에 건다
@@ -312,6 +396,13 @@ HAIR_TYPE = {
     'normal': {HS: {'ponytail': .6, 'layered': .5, 'half-up': .3, 'low bun': .3, 'afro': .3, 'shaggy': .3}, HB: {'curtain bangs': .3, 'side-swept bangs': .3}},
 }
 
+for _i, (_rx, _label, _tab, _body) in enumerate(HAIR_CUES):   # 새 머리 점수를 단서 표에 더한다(2026-11-12)
+    if _label in BOLD_CUE: HAIR_CUES[_i] = (_rx, _label, {**_tab, HS: {**_tab.get(HS, {}), **BOLD_CUE[_label]}}, _body)
+assert set(BOLD_CUE) <= {_c[1] for _c in HAIR_CUES}, '새 머리 단서 이름이 HAIR_CUES 에 없다'
+for _t, _d in BOLD_TYPE.items(): HAIR_TYPE[_t] = {**HAIR_TYPE[_t], HS: {**HAIR_TYPE[_t].get(HS, {}), **_d}}
+for _t, _d in BOLD_SHAPE.items(): HAIR_SHAPE[_t] = {**HAIR_SHAPE[_t], HS: {**HAIR_SHAPE[_t].get(HS, {}), **_d}}
+
+
 
 def spec():
     out = subprocess.run(['node', '-e', "global.window={};require('./lib/prompt-spec.js');const S=window.AtelierSpec;"
@@ -328,7 +419,7 @@ def hair_spec():
     """생성기 머리 항목 셋의 값·한글 이름, 여성 인물에 쓸 수 있는 헤어스타일, 길이가 고정되는 헤어스타일"""
     out = subprocess.run(['node', '-e', "global.window={};require('./lib/prompt-spec.js');const S=window.AtelierSpec;"
                           f"const K={json.dumps(HAIR_KEYS)};"
-                          "process.stdout.write(JSON.stringify({defs:S.PARAM_DEFS.filter(d=>K.includes(d.key)),only:S.ONLY,limits:S.HAIR_LENGTH_LIMITS,keys:S.HAIR_KEYS||null}))"],
+                          "process.stdout.write(JSON.stringify({defs:S.PARAM_DEFS.filter(d=>K.includes(d.key)),only:S.ONLY,limits:S.HAIR_LENGTH_LIMITS,keys:S.HAIR_KEYS||null,bold:S.HAIR_BOLD||{},style:S.DEFAULT_STYLE}))"],
                          cwd=ROOT, capture_output=True, text=True, check=True).stdout
     j = json.loads(out)
     by = {d['key']: d for d in j['defs']}
@@ -341,7 +432,8 @@ def hair_spec():
     assert set(female[HS]) == set(HAIR_LEN), ('HAIR_LEN 이 여성 헤어스타일 전부를 덮지 않는다', set(female[HS]) ^ set(HAIR_LEN))
     assert set(sum(FAMILY.values(), [])) == set(HAIR_LEN) and set(ELAB) == set(HAIR_LEN)
     assert all(set(v) <= set(opts[HB]) for v in BANGS_OK.values()) and set(BANGS_BASE) == set(opts[HB])
-    return {'opts': opts, 'ko': ko, 'name': name, 'male': male, 'female': female, 'limits': j['limits']}
+    assert set(j['bold']) == set(BOLD_LEN), ('새 머리가 생성기(HAIR_BOLD)와 다르다', set(j['bold']) ^ set(BOLD_LEN))
+    return {'opts': opts, 'ko': ko, 'name': name, 'male': male, 'female': female, 'limits': j['limits'], 'bold': j['bold'], 'style': j['style']}
 
 
 # ── 확정한 그림의 머리 — 그림 저장소의 기록(records)에서 읽는다(읽기만) ─────────────────────────
@@ -376,8 +468,10 @@ def working_cards():
     return out
 
 
-def light_registered(img):
-    return {n for n, v in img.items() if any('light' in (s.get('byForm') or {}) for s in (v.get('byStyle') or {}).values())}
+def light_registered(img, style=None):
+    """경장 ①이 등록된 종. style 을 주면 그 화풍만 — 머리 잠금은 기본 화풍(lib/prompt-spec.js DEFAULT_STYLE) 그림만 센다
+    (2026-11-12 사용자 「그림있는건 지금 기본화풍 기준으로」 — 옛 화풍 그림만 있는 종은 새 머리로 다시 고른다)"""
+    return {n for n, v in img.items() if any('light' in (b.get('byForm') or {}) for k, b in (v.get('byStyle') or {}).items() if style is None or k == style)}
 
 
 def read_records(dirs):
@@ -450,6 +544,8 @@ def pick_record(ev):
 def hair_score(card, rec, depth, final, H):
     sc = {k: {o: 0.0 for o in H['opts'][k]} for k in HAIR_KEYS}
     for b, w in BANGS_BASE.items(): sc[HB][b] += w
+    for st in BOLD_LEN:   # 과장된 2D 머리 쪽으로 기울인다(2026-11-12 — 남은 종의 약 60%)
+        if st in sc[HS]: sc[HS][st] += BOLD_BONUS
     for L, w in LEN_BASE.items(): sc[HL][L] += w
     why = {k: {o: [] for o in H['opts'][k]} for k in HAIR_KEYS}
     def add(tab, label, mul=1.0):
@@ -487,9 +583,9 @@ def hair_score(card, rec, depth, final, H):
     if depth >= 1 and final: add({HL: {'long': .4, 'very long': .3}}, '최종 진화')
     egg = card.get('egg') or []
     if 'no-eggs' in egg and not card.get('from') and not card.get('to'):
-        add({HS: {'chignon': .6, 'crown braid': .5, 'hime cut': .4, 'ringlet curls': .4}, HL: {'very long': .4}}, '전설·환상')
+        add({HS: {'chignon': .6, 'crown braid': .5, 'hime cut': .4, 'ringlet curls': .4, 'floor-length hair': .6, 'drill curls': .4}, HL: {'very long': .4}}, '전설·환상')
     elif 'no-eggs' in egg and card.get('to'):
-        add({HS: {'pixie cut': .5, 'space buns': .5, 'twin tail': .4}}, '아기 단계')
+        add({HS: {'pixie cut': .5, 'space buns': .5, 'twin tail': .4, 'animal-ear buns': .6, 'looped twin tails': .5, 'flared bob': .4}}, '아기 단계')
     return sc, why
 
 
@@ -527,7 +623,7 @@ def design_hair(cards, app, img, old, roots, H):
         while cur.get('from') in by and cur['name'] not in seen:
             seen.add(cur['name']); cur = by[cur['from']]; d += 1
         return d
-    reg = light_registered(img)
+    reg = light_registered(img, H.get('style'))
     dirs = record_dirs()
     found = read_records(dirs) if dirs else {}
     if not dirs: print('[머리] 그림 저장소 기록이 없다 — 잠금은 json 의 이전 값을 쓴다')
@@ -543,6 +639,10 @@ def design_hair(cards, app, img, old, roots, H):
                 if any(e[3] for e in ev) and prev.get('hair'):   # HAIR 줄로 확정한 값은 잠근 뒤 다시 build 해도 보존한다
                     vals = {**{k: v for k, v in prev['hair'].items() if k in HAIR_KEYS}, **vals}
                 rec = {'path': path, 'kind': kind, 'raw': raw}
+            elif prev.get('hair_locked'):   # 기록이 이 자리에 받아 둔 저장소에 없다(예: pkm-atelier-img-4) — 앞서 잠근 값을 지킨다
+                vals, rec = prev.get('hair') or {}, prev.get('hair_record')
+                if rec and os.path.isdir(os.path.join(ROOT, '..', rec['path'].split('/')[0])) and not os.path.exists(os.path.join(ROOT, '..', rec['path'])):
+                    rec = None   # 저장소는 있는데 기록 파일이 지워졌다(옛 generation/) — 가리킬 기록이 없다
             else:
                 vals, rec = {}, None
         else:
@@ -588,7 +688,7 @@ def design_hair(cards, app, img, old, roots, H):
         if name in locked: continue
         sc, why = scores[name]
         prev = old.get(str(no)) or {}
-        if prev.get('hair') and not prev.get('hair_locked'):
+        if prev.get('hair') and not prev.get('hair_locked') and not FRESH_HAIR:
             for k, v in prev['hair'].items():
                 if k in sc and v in sc[k]: sc[k][v] += 2.5
         mates = [m for m in line_of[roots[name]] if m != name and m in out]
@@ -630,11 +730,11 @@ def design_hair(cards, app, img, old, roots, H):
         note = []
         if chosen[HS] != top[HS]:
             reason = fails(top)
-            what = {'cap': '헤어스타일 상한(8%·보브 4%)에 닿아', 'edge': '진화 계열의 머리 잇기 규칙에 맞추려고',
+            what = {'cap': f'헤어스타일 상한({int(HAIR_CAP * 100)}%·보브 {int(BOB_CAP * 100)}%)에 닿아', 'edge': '진화 계열의 머리 잇기 규칙에 맞추려고',
                     'same': '같은 계열 종과 머리가 똑같아', 'adj': '도감 바로 옆 다른 계열과 헤어스타일이 겹쳐'}
             note.append((what[reason[0]] if reason else '많이 쓴 헤어스타일이라 고르게 나누려고') +
                         f" {H['ko'][HS][top[HS]]} → {H['ko'][HS][chosen[HS]]}")
-        if not note and prev.get('hair') == chosen and not prev.get('hair_locked'):   # 다시 돌려 같은 머리면 앞서 적은 조정을 남긴다
+        if not note and prev.get('hair') == chosen and not prev.get('hair_locked') and not FRESH_HAIR:   # 다시 돌려 같은 머리면 앞서 적은 조정을 남긴다
             old_note = (prev.get('adjusted') or '').split(HAIR_ADJ, 1)
             if len(old_note) == 2: note.append(old_note[1])
         if relaxed: note.append('풀 수 없어 ' + '·'.join({'adj': '옆 번호 다름', 'same': '계열 안 다름', 'edge': '계열 잇기'}[r] for r in relaxed) + ' 규칙을 늦춤')
@@ -658,18 +758,18 @@ def design_hair(cards, app, img, old, roots, H):
     return out, res, locked
 
 
-def hair_items(hair, limits):
-    """생성기 HAIR 줄(lib/prompt-anthro.js hairItems)과 같은 낱말 — 문서에 그대로 보인다"""
+def hair_items(hair, limits, bold=None):
+    """생성기 HAIR 줄(lib/prompt-anthro.js hairItems)과 같은 낱말 — 문서에 그대로 보인다. 과장된 2D 머리는 괄호 풀이가 붙는다"""
     s, L, b = hair.get(HS), hair.get(HL), hair.get(HB)
     parts = []
-    if s: parts.append((L + ' ' if L and s not in limits else '') + s)
+    if s: parts.append((L + ' ' if L and s not in limits else '') + s + (f' ({bold[s]})' if bold and s in bold else ''))
     elif L: parts.append(L + ' hair')
     if b: parts.append('no bangs' if b == 'none' else b)
     return parts
 
 
-def hair_line(hair, limits):
-    p = hair_items(hair, limits)
+def hair_line(hair, limits, bold=None):
+    p = hair_items(hair, limits, bold)
     return 'HAIR: ' + ', '.join(p) + '.' if p else ''
 
 
@@ -679,7 +779,7 @@ def check_hair(faces, cards, img, H, quiet=False):
     caps = hair_caps(n)
     roots = lines_of(cards)
     by = {c['name']: c for c in cards}
-    reg = light_registered(img)
+    reg = light_registered(img, H.get('style'))
     cnt, lcnt = {}, {}
     for c in cards:
         f = faces.get(str(c['no'])) or {}
@@ -985,7 +1085,7 @@ def build(seed_doc=None):
         if r['adjusted']: f['adjusted'] = (f['adjusted'] + ' ' if f['adjusted'] else '') + HAIR_ADJ + r['adjusted']
     for no, m in design_impression(cards, imp_spec()).items(): faces[no]['impression'] = m   # 인상(2026-11-09)
     out = {'version': 1,
-           'note': 'tools/face-design.py 가 만든다. 값은 생성기 얼굴 항목(lib/prompt-spec.js)의 열쇠 그대로이고, 새 인물(경장 ①)에만 FACE 줄로 실린다. 손으로 고치면 build 를 다시 돌려 겹침 검사를 받는다. faces: 번호 → {name,en,line,how,registered,face:{얼굴 항목: 값},why,cues,adjusted,hair:{hairstyle,hair length,bangs},hair_locked,hair_why,hair_cues,hair_record?}. hair 는 생성기 머리 항목 열쇠 그대로이고 FACE 뒤 HAIR 줄로 실린다. impression {age, vibe, eyes, cues}(2026-11-09) 는 HAIR 뒤 IMPRESSION 줄 — 낱말은 lib/prompt-spec.js IMPRESSION_AGES · IMPRESSION_VIBES. hair_locked 는 경장 ①이 등록된 종 — 그림 저장소 기록의 값(없으면 빈 hair)을 따른다.',
+           'note': 'tools/face-design.py 가 만든다. 값은 생성기 얼굴 항목(lib/prompt-spec.js)의 열쇠 그대로이고, 새 인물(경장 ①)에만 FACE 줄로 실린다. 손으로 고치면 build 를 다시 돌려 겹침 검사를 받는다. faces: 번호 → {name,en,line,how,registered,face:{얼굴 항목: 값},why,cues,adjusted,hair:{hairstyle,hair length,bangs},hair_locked,hair_why,hair_cues,hair_record?}. hair 는 생성기 머리 항목 열쇠 그대로이고 FACE 뒤 HAIR 줄로 실린다. impression {age, vibe, eyes, cues}(2026-11-09) 는 HAIR 뒤 IMPRESSION 줄 — 낱말은 lib/prompt-spec.js IMPRESSION_AGES · IMPRESSION_VIBES. hair_locked 는 기본 화풍(lib/prompt-spec.js DEFAULT_STYLE) 경장 ①이 등록된 종 — 그림 저장소 기록의 값(없으면 빈 hair)을 따른다. 과장된 2D 머리(HAIR_BOLD)는 HAIR 줄에 괄호 풀이가 붙는다.',
            'rules': {'lineMin': LINE_MIN, 'globalMin': GLOBAL_MIN, 'groups': [g for g, _ in GROUPS],
                      'hair': {'keys': HAIR_KEYS, 'cap': HAIR_CAP, 'bobCap': BOB_CAP, 'lengths': LENGTHS, 'length': HAIR_LEN, 'bangs': BANGS_OK,
                               'family': FAMILY, 'familyLocked': FAM_EXTRA, 'grow': {k: sorted(v) for k, v in GROW.items()}, 'elab': ELAB}},
@@ -1228,7 +1328,8 @@ def render():
         '- 길이는 컷에 맞춘다(`HAIR_LENGTH_LIMITS` 와 같은 뜻 — 픽시는 짧게, 보브는 짧은 머리, 한쪽 민 긴 머리는 길게). 히메컷은 일자 앞머리, 넘긴 머리는 앞머리 없음.',
         f'- 한 헤어스타일은 1,025종의 {int(HAIR_CAP * 100)}%(={hair_caps(len(faces))["all"]}종), 보브는 {int(BOB_CAP * 100)}%(={hair_caps(len(faces))["bob"]}종)를 넘지 않는다. 확정한 그림이 이미 그보다 많으면 새로 고르지 않는다.',
         '- 같은 진화 계열은 같은 묶음(' + ' · '.join(f'{FAM_KO[k]}' for k in FAMILY) + ') 안에서 길이가 줄지 않거나, 이어지는 묶음으로 더 공들인 쪽으로 간다. 계열 안 두 종이 똑같지는 않고, 도감 바로 옆 번호의 다른 계열과는 헤어스타일이 다르다.',
-        '- **경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다.',
+        f'- **기본 화풍(`{H["style"]}`) 경장 ①이 등록된 종은 그림 저장소 기록(`records/*-ui.json`·제출 프롬프트)의 값으로 잠근다**(`hair_locked`). 기록에 머리 선택이 없으면(모델 기본) 표가 정하지 않는다. 다른 화풍 그림만 있는 종은 잠그지 않고 다시 고른다(2026-11-12).',
+        '- 과장된 2D 머리 34가지(2026-11-12 — 드릴 롤 · 거대 트윈테일 · 구름 머리 · 불꽃처럼 솟은 머리 …, `HAIR_BOLD`)는 원작 단서 · 타입 · 몸 형태에 점수를 받고 가산점(BOLD_BONUS)으로 기본 화풍 그림이 없는 종의 약 60% 를 차지한다. HAIR 줄에는 낱말 뒤에 괄호로 모양 풀이가 붙는다.',
         '',
         '## 인상',
         '',
@@ -1279,7 +1380,7 @@ def render():
             if f['cues']: out += ['**원작 단서:** ' + ' · '.join(f['cues']), '']
             if f['adjusted']: out += [f"**조정:** {f['adjusted']}", '']
             out += ['```text', face_line(f, keys, opts), '```', '']
-            if hair_line(f['hair'], H['limits']): out += ['```text', hair_line(f['hair'], H['limits']), '```', '']
+            if hair_line(f['hair'], H['limits'], H['bold']): out += ['```text', hair_line(f['hair'], H['limits'], H['bold']), '```', '']
     with open(DOC, 'w', encoding='utf-8') as fh:
         fh.write('\n'.join(out))
     print(f'[문서] {DOC} · {len(faces)}종')
@@ -1290,7 +1391,9 @@ if __name__ == '__main__':
     ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression', 'relong'])
     ap.add_argument('--seed-doc')
     ap.add_argument('--check', action='store_true')
+    ap.add_argument('--fresh-hair', action='store_true')
     a = ap.parse_args()
+    FRESH_HAIR = a.fresh_hair
     if a.cmd == 'build': build(a.seed_doc)
     elif a.cmd == 'render': render()
     elif a.cmd == 'impression': impression()

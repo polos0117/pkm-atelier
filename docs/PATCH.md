@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-13 · claude · 과장된 2D 머리 34가지 · 기본 화풍 기준 머리 재분배
+- 사용자 「pkm쪽은 헤어스타일이 제한적인거 같아. 2d 케릭터라 더 다양하고 과장되게 써도 되는데」 · 「그림있는건 지금 기본화풍 기준으로 … 위에 표에 더 많이 추가해서 분배해줘」 → 「응 그렇게 진행해줘」
+- lib/prompt-spec.js — HAIR_BOLD_ROWS 34가지(드릴 롤 · 옆머리만 드릴 · 뾰족 솟은 머리 · 거대/짝짝이/고리 트윈테일 · 세 갈래 · 뾰족 끝 포니테일 · 마디 묶음 꼬리 · 거대 땋기 · 바닥까지 긴 머리 · 동물귀 번 · 꼬리 달린 번 · 구름 머리 · 사자 갈기 · 사방 뻗친 머리 · 해파리컷 · 끝이 퍼진 보브 · 날개 옆머리 · 뿔 모양 머리 · 퐁파두르 · 파우호크, 타입 모양 열(불꽃 · 파도 · 잎 · 칼날 · 번개 · 떠 있는 · 바람 날개 · 바위 단층 · 물방울 끝 · 꽃잎 컬), 원소공방에서 인어 웨이브 · 어깨로 넘긴 땋은 머리)을 헤어스타일 목록 · 풀이 · 도형 · 고정 길이에 더함. HAIR_BOLD 내보냄
+- lib/prompt-anthro.js hairItems — 설계표 HAIR 줄에 새 머리만 괄호로 영어 풀이(예: long spiky ponytail (a long high ponytail flaring into spiky points)). prompt.html prompt-spec · prompt-anthro ?v=hair1
+- tools/face-design.py — 새 머리 길이 · 묶음 · 공들임 · 앞머리 표, 원작 단서 · 타입 · 몸 형태 점수, BOLD_BONUS 0.5(남은 종의 60.1% = 547종). 상한 8%·보브 4% → 4%·3%. 머리 잠금은 기본 화풍(anime_25d_gloss) 경장 ① 그림만(115종 — 기록 머리 29) · 다른 화풍 그림만 있는 종은 다시 고름. build --fresh-hair(이전 머리 가산점 빼기)로 910종 재분배(750종 바뀜). 받아 둔 저장소에 기록이 없으면 앞서 잠근 값을 지킨다
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md 다시 고름 · 그림(얼굴 · 인상은 그대로). AGENTS.md 머리 줄. 검사 tests/face-design.cjs · tests/face-design-hair-lock.py(기본 화풍 잠금) · prompt-engine · prompt-appearance · prompt-sections · prompt-pack · prompt-controls 통과
+
 ## 2026-11-13 · claude · 일상컷 BODY TYPE — 손으로 고른 체형도 글 전체
 - 사용자 「응 고쳐줘」 — 생성기에서 body type 을 고르면 일상컷 BODY TYPE 줄에 값 이름(lean and toned · curvy 등)만 실리던 것을, 세계 그림(①) 외형 줄처럼 「값 — 풀이(PARAM_GUIDES)」 글 전체로. lib/prompt-anthro.js refBody, prompt.html ?v=body2.
 - 확인: lean and toned → 「lean and toned — a slim, firm waist with softly defined vertical abs …」, curvy → 「curvy — flowing bust-to-waist …」. prompt-appearance · prompt-engine · prompt-pack · prompt-casual-v2 통과.
