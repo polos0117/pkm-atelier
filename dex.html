@@ -258,14 +258,17 @@ function setUrl(href, push) {
   if (href === location.pathname + location.search + location.hash && !push) return;
   try { history[push ? 'pushState' : 'replaceState'](push ? { dex: 'card' } : history.state, '', href); } catch {}
 }
-/* 그리기 전 칸 높이 — 그림 칸·빈 칸 하나씩 잠깐 그려 잰다(늘어나지 않게 align-self:start) */
+/* 그리기 전 칸 높이 — 그림 칸·빈 칸 하나씩 잠깐 그려 잰다(늘어나지 않게 align-self:start).
+   contain-intrinsic-size 는 내용 상자 높이다 — 테두리·안쪽 여백은 그 위에 또 붙는다. 표본 상자 테두리(그림 칸 1px · 빈 칸 1.5px)를
+   빼지 않으면 그리기 전 줄마다 2~3px 씩 커져 천 장에서 1% 어긋난다(2026-11-12) */
 function measureCells(grid) {
   if (!grid) return;
   for (const [sel, name] of [['.cell.has-art', '--cell-h-art'], ['.cell:not(.has-art)', '--cell-h']]) {
     const c = grid.querySelector(':scope > ' + sel);
     if (!c) continue;
     c.style.contentVisibility = 'visible'; c.style.alignSelf = 'start';
-    const hgt = c.getBoundingClientRect().height;
+    const s = getComputedStyle(c), edge = ['borderTopWidth', 'borderBottomWidth', 'paddingTop', 'paddingBottom'].reduce((n, k) => n + (parseFloat(s[k]) || 0), 0);
+    const hgt = c.getBoundingClientRect().height - edge;
     c.style.contentVisibility = ''; c.style.alignSelf = '';
     if (hgt > 0) grid.style.setProperty(name, hgt.toFixed(1) + 'px');
   }
