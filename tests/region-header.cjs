@@ -72,11 +72,20 @@ function artCovers(){
      assert(await q.evaluate(worstContrast,sel)>=4.5,tag+' no-art '+sel+' 대비');
    }finally{await b.close()}
   }
+  /* 넓은 관동 그림 — 옆에 받은 그림 저장소(pkm-atelier-img-4)나 REGION_ART 가 있으면 그 파일, 없으면 같은 크기(1536×1024) PNG 를 만들어 쓴다.
+     (2026-11-12: 한 기기의 절대 경로가 박혀 다른 곳에서는 늘 실패하던 것을 고침) */
+  const KANTO=(()=>{const fs=require('fs'),path=require('path');
+   for(const f of [process.env.REGION_ART,path.join(__dirname,'..','..','pkm-atelier-img-4','regions','kanto.webp')])if(f&&fs.existsSync(f))return {type:'image/webp',body:fs.readFileSync(f)};
+   const zlib=require('zlib'),W=1536,H=1024,row=Buffer.alloc(1+W*3);for(let x=0;x<W;x++){row[1+x*3]=60+(x*120/W|0);row[2+x*3]=110;row[3+x*3]=70;}
+   const raw=Buffer.concat(Array.from({length:H},()=>row)),crc=b=>{let c,t=[];for(let n=0;n<256;n++){c=n;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;t[n]=c>>>0;}c=0xffffffff;for(const x of b)c=t[(c^x)&255]^(c>>>8);return (c^0xffffffff)>>>0;};
+   const chunk=(ty,d)=>{const l=Buffer.alloc(4);l.writeUInt32BE(d.length);const td=Buffer.concat([Buffer.from(ty),d]),c=Buffer.alloc(4);c.writeUInt32BE(crc(td));return Buffer.concat([l,td,c]);};
+   const ih=Buffer.alloc(13);ih.writeUInt32BE(W,0);ih.writeUInt32BE(H,4);ih[8]=8;ih[9]=2;
+   return {type:'image/png',body:Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk('IHDR',ih),chunk('IDAT',zlib.deflateSync(raw)),chunk('IEND',Buffer.alloc(0))])};})();
   /* 풍경만 보기 — 344×882 터치. 그림은 진짜 관동 그림(1536×1024)으로 바꿔 끼워 가로로 굴릴 수 있다 */
   for(const reduced of [false,true]){
    const d=await h.open('index.html',{viewport:FOLD.cover,mobile:true,...(reduced?{reducedMotion:'reduce'}:{})}),s=d.page,tag='풍경'+(reduced?'(줄임) ':' ');
    try{
-    await s.route('https://polos0117.github.io/pkm-atelier-img-4/regions/kanto.webp',r=>r.fulfill({status:200,contentType:'image/webp',headers:{'Access-Control-Allow-Origin':'*'},body:require('fs').readFileSync('C:/Users/jjshs/pkm-region-art/kanto.webp')}));
+    await s.route('https://polos0117.github.io/pkm-atelier-img-4/regions/kanto.webp',r=>r.fulfill({status:200,contentType:KANTO.type,headers:{'Access-Control-Allow-Origin':'*'},body:KANTO.body}));
     await s.goto(h.base+'/dex.html');await s.waitForSelector('.grid .cell');
     const dexUrl=s.url();
     assert.equal(await s.locator('div.scenery').count(),0,tag+'처음엔 없다');

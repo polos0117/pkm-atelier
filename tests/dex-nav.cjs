@@ -35,7 +35,7 @@ async function visibleCell(p) {
     /* 0. 칸이 천 장이어도 화면 밖은 안 그린다 — content-visibility:auto, 그리기 전 높이는 잰 값이라 굴림 높이가 그대로다 */
     await p.waitForTimeout(300);
     const cv = await p.evaluate(() => {
-      const g = document.querySelector('.grid'), cs = [...g.children], sc = document.querySelector('.collection-scroll');
+      const g = document.querySelector('.grid'), cs = [...g.querySelectorAll(':scope > .cell')], sc /* 세대 머리줄(2026-11-12)은 칸이 아니다 */ = document.querySelector('.collection-scroll');
       const before = sc.scrollHeight;
       const drawn = cs.filter(c => c.querySelector('.cap').checkVisibility({ contentVisibilityAuto: true })).length;
       cs.forEach(c => { c.style.contentVisibility = 'visible'; });

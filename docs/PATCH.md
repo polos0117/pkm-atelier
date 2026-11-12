@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 검사 둘 고침 — 지역 머리 그림 경로 · 도감 넘기기 세대 머리줄
+- tests/region-header.cjs — 한 기기의 절대 경로(관동 그림)가 박혀 다른 곳에서는 늘 실패하던 것을, 옆 그림 저장소 pkm-atelier-img-4 · REGION_ART 가 있으면 그 파일, 없으면 같은 크기 1536×1024 PNG 를 만들어 쓰게.
+- tests/dex-nav.cjs — 세대 머리줄(지역 테마 합치기)이 .grid 의 자식이라 칸으로 세던 것을 .cell 만. 고친 뒤 드러난 것: 어림 높이가 실제와 1% 다르다(68133 / 67480 — 천 장 굴림이 조금 튄다) — 도감 코드 몫이라 남겨 둠.
+
 ## 2026-11-12 · claude · 문장 검사가 Windows 줄 끝에서 깨지던 것
 - tests/workspace-theme.cjs — 지역 테마를 main 에 합친 뒤 이 체크아웃(CRLF)에서 「crest does not depend on the region」이 실패했다. 함수 끝을 줄바꿈 · } · 줄바꿈으로 찾는데 CRLF 라 못 찾고 파일 끝까지 읽었다. CSS · UI 를 LF 로 맞춰 읽는다(화면 코드는 그대로)
 
