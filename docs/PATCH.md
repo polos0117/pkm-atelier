@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 복근 줄 — 둘째 타입 격투 33마리 더 · 진화 가족마다 같은 모양
+- 사용자 「응 넣어주는데 위에 주타입에 보니까 같은 진화 라인인데 나눠논게 보이더라구. 같은 진화면 복근 모양도 통일 시켜줘」 — 격투 73마리(주 40 + 둘째 33), card.json from · to 로 진화 가족 48을 묶어 가족마다 한 모양, 가족을 도감 번호 차례로 적은 쪽에 붙여 식스팩 37 · 11자 36.
+- lib/prompt-spec.js PROMPT_LINES.abs.by 다시 씀, IMAGE_RULES 한 줄 고침, prompt.html ?v=abs2. 확인: prompt-casual-v2 통과, 루차불 · 내던숭이 열 칸.
+
 ## 2026-11-12 · claude · 격투 포켓몬 일상컷에 복근 줄 — 식스팩 · 11자 반반
 - 사용자 「일상컷만 메인이 격투인 포켓몬에 11자 복근도 추가해서 반반씩 분배해줘」 — 주 타입(element) 격투 40마리, 도감 번호 차례로 번갈아 식스팩 20 · 11자 20(lib/prompt-spec.js PROMPT_LINES.abs).
 - lib/prompt-anthro.js absLine — 일상컷 버전2 · 자유 장면의 ANATOMY 뒤 MIDRIFF:. 세계 그림엔 안 넣음. 확인: 루차불 열 칸 식스팩 · 내던숭이 열 칸 11자 · 루가루암(바위) 없음. 지시문 검사 prompt-* 여덟 통과. prompt.html ?v=abs1.
