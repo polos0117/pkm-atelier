@@ -410,23 +410,20 @@ body {background-color:var(--bg);background-image:radial-gradient(var(--pattern)
 .theme-gallery-head {display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-bottom:15px}
 .theme-gallery-head h2 {font-size:18px;margin:0}
 .theme-gallery-head p {font-size:12px;color:var(--muted);margin:0}
-.theme-gallery {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:24px}
-.prompt-page .theme-card {position:relative;min-width:0;text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);padding:16px;min-height:160px;box-shadow:var(--shadow)}
+.theme-gallery {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}
+/* 여행지 진열 — 지역 아홉: 3×3, 600px 아래는 두 칸에 마지막(팔데아)이 한 줄을 다 쓴다(남는 칸 없이) */
+.prompt-page .theme-card {position:relative;min-width:0;text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--card);color:var(--text);padding:0 14px 14px;overflow:hidden;box-shadow:var(--shadow)}
 .theme-card[aria-pressed="true"] {outline:3px solid var(--accent);outline-offset:2px}
-.theme-card .crest-mark {width:40px;height:40px;padding:5px;border-radius:13px;margin-bottom:12px}
+.theme-card .region-thumb {height:110px;margin:0 -14px 12px}
 .theme-card strong {display:block;font-size:13px}
-.theme-card small {display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:400}
-.theme-swatches {position:absolute;right:15px;top:16px;display:flex;gap:4px}
-.theme-swatches i {width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.theme-swatches i:nth-child(2) {background:var(--signal)}
-.theme-swatches i:nth-child(3) {background:var(--gold)}
+.theme-card small {display:block;font-size:11px;color:var(--muted);margin-top:4px;font-weight:400;padding-right:16px}
 .theme-selected {position:absolute;right:14px;bottom:13px;color:var(--accent)}
-@media(max-width:850px) {.theme-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:599px) {
  .lab-intro{display:block}
  .lab-links{gap:18px;margin:20px 0 28px}.lab-tools{grid-template-columns:1fr;gap:10px}
  .lab-link{padding:16px 18px}.lab-row{grid-template-columns:1fr;gap:2px}.theme-gallery-head{display:block}.theme-gallery-head p{margin-top:7px}
- .theme-gallery{gap:10px}.prompt-page .theme-card{padding:13px;min-height:163px}
+ .theme-gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.theme-gallery>:last-child:nth-child(odd){grid-column:1/-1}
+ .prompt-page .theme-card{padding:0 12px 12px}.theme-card .region-thumb{height:84px;margin:0 -12px 10px}
 }
 
 /* 설정 — 메뉴 줄 끝의 ⚙. 누르면 테마·화면 밀도가 같은 폭 두 칸, 아랫줄에 머리 조작 */
@@ -450,3 +447,36 @@ div.scenery img {display:block;height:100%;width:auto;max-width:none;cursor:zoom
 .appearance-extra .scenery-open {min-height:44px}
 html.scenery :is(.workspace-nav,.workspace-heading,.collection-scroll,.region-sign-row) {opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
 html.scenery-still :is(div.scenery,.workspace-nav,.workspace-heading,.collection-scroll,.region-sign-row) {transition-duration:0s;transition-delay:0s}
+/* 지역 작은 그림 — 못 받으면 그림 없이 그 지역 색 띠(엽서가 data-theme-preview 라 색은 그 지역 것) */
+.region-thumb {display:block;overflow:hidden;background:linear-gradient(135deg,var(--accent-soft),var(--accent))}
+.region-thumb img {display:block;width:100%;height:100%;object-fit:cover}
+/* 여행 지도 — 폰은 아래에서 올라오는 판(두 칸, 마지막 엽서는 한 줄), 600px 이상은 가운데 판(3×3) */
+.region-map {position:fixed;inset:0;z-index:250;display:flex;align-items:flex-end;justify-content:center;background:#000a;opacity:0;transition:opacity .2s}
+.region-map.in {opacity:1}
+.region-map-sheet {box-sizing:border-box;width:100%;max-height:calc(100dvh - 56px);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;padding:10px 16px max(16px,env(safe-area-inset-bottom));
+  background:var(--bg);color:var(--text);border-radius:18px 18px 0 0;box-shadow:0 -12px 34px #0006;translate:0 32px;transition:translate .25s ease-out}
+.region-map.in .region-map-sheet {translate:0 0}
+.region-map.still,.region-map.still .region-map-sheet {transition:none}
+.region-map-head {display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.region-map-head h2 {margin:0;font-size:17px}
+button.region-map-close {flex:none;width:44px;height:44px;min-height:44px;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--text);font:inherit;font-size:16px}
+.region-map-cards {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.region-map-cards>:last-child:nth-child(odd) {grid-column:1/-1}
+/* button. 을 붙여 화면들의 단추 꼴(.prompt-page button)을 이긴다 — 엽서는 어느 화면에서나 같은 모양: 흰 테두리 6px 안에 그림 */
+button.region-card {position:relative;display:flex;flex-direction:column;min-width:0;min-height:44px;padding:6px 6px 0;overflow:hidden;font-weight:400;text-align:left;border:1px solid var(--line);border-radius:12px;
+  background:var(--card);color:var(--text);font:inherit;box-shadow:var(--shadow)}
+.region-card[aria-current="true"] {outline:3px solid var(--accent);outline-offset:2px}
+.region-card .region-thumb {height:76px;border-radius:7px}
+.region-label {display:flex;align-items:baseline;justify-content:space-between;gap:6px;padding:8px 10px}
+.region-label strong {font-size:14px;min-width:0}
+.region-label small {flex:none;font-size:11.5px;color:var(--muted)}
+.region-stamp {position:absolute;top:7px;right:7px;padding:3px 8px;border:2px solid var(--on-accent);border-radius:999px;background:var(--accent);color:var(--on-accent);
+  font-size:11px;font-weight:700;rotate:-6deg;box-shadow:0 2px 6px #0004}
+@media (min-width:600px) {
+  .region-map {align-items:center;padding:24px}
+  .region-map-sheet {width:min(720px,100%);max-height:calc(100dvh - 48px);padding:14px 20px 20px;border-radius:18px;translate:none;scale:.97;transition:scale .2s ease-out}
+  .region-map.in .region-map-sheet {scale:1}
+  .region-map-cards {grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .region-map-cards>:last-child:nth-child(odd) {grid-column:auto}
+  .region-card .region-thumb {height:104px}
+}

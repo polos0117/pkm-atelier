@@ -204,6 +204,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/lane-screen.cjs     # �
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/gwent-screen.cjs    # 폼 결투 — 고르기·덱 짜기(날씨판)·대결·결과·전적·상점
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/header-layout.cjs   # 화면 여덟의 머리가 같은 자리에
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/region-header.cjs   # 머리의 지역 그림 · 나무 표지판 · 반투명 제목판 — 아홉 지역 대비 · 그림 못 받음 · 접힘
+ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/region-map.cjs      # 여행 지도 — 표지판 → 엽서 아홉, 지금 지역 도장, 고르면 표지판 · 진열 현황, Esc · 바깥 · 뒤로 닫기, ⚙ · 진열도 한 길 · 세 크기
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/patch-screen.cjs    # 패치 기록 단추 — 열고 읽고 닫기
 node tests/face-design.cjs              # 종별 얼굴·머리 설계 — 1025종 겹침 규칙·머리 분포와 계열 잇기·새 인물에만 FACE/HAIR 줄·문서=엔진
 python3 tools/face-design.py --check  # 같은 규칙을 도구 쪽에서

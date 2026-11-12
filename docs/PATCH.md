@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 여행 지도 — 표지판을 누르면 지역 아홉 그림엽서
+- lib/workspace-ui.js — 여행 지도 판(RegionMap: 폰은 아래에서 올라옴 · 600px 이상 가운데, 지금 지역 엽서에 도장 「지금 여기」). 엽서 · ⚙ 고르개 · 집 화면 진열이 한 길 travelTo(travel 이 있으면 그것, 없으면 set). 뒤로 가기로 닫는 판은 풍경만 보기와 한 훅(useBackDialog)으로. 진열 카드는 문장 · 색점 대신 지역 작은 그림. 안 쓰던 onOpenMap 받이는 지움
+- lib/workspace.css — 엽서 판 · 엽서(button. 으로 화면 단추 꼴을 이김), 진열은 3×3 · 600px 아래 두 칸에 팔데아가 한 줄(남는 칸 없이). 작은 그림을 못 받으면 그 지역 색 띠
+- lib/words.js — region.map · region.map.close · region.map.gen · region.map.here, 진열 머리 「여행지」로
+- tests/region-map.cjs — 새 검사: 세 크기, 엽서 아홉 차례 · 44px · 넘침, 호연 → 표지판 · 진열 현황, Esc · 바깥 · 뒤로 닫기와 초점, ⚙ · 진열도 같은 결과, travel 을 부르는지, 그림 없음
+- 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — workspace.css · workspace-ui.js · words.js ?v= region8
+
 ## 2026-11-12 · claude · 풍경 단추가 그림 실패를 늦게 알던 것
 - lib/workspace-ui.js — 그림 실패를 주소별로 나누어 써서 ⚙ 판이 늦게 떠도 풍경 단추가 잠깐 보이지 않게
 - 화면 여덟 · lib/prompt-ui.js · lib/survey-ui.js — ?v= region7
