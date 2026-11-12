@@ -115,6 +115,32 @@ function artCovers(){
     await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
     await s.locator('.scenery-close').click();await s.waitForSelector('div.scenery',{state:'detached'});
     await s.waitForTimeout(100);assert.equal(await s.evaluate(()=>history.state&&history.state.scenery||0),0,tag+'닫기 뒤 기록');
+    /* 고침 1 — 초점은 연 단추로 돌아온다 */
+    await s.reload();await s.waitForSelector('.grid .cell');
+    await s.locator('.scenery-toggle').focus();await s.keyboard.press('Enter');await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForFunction(()=>document.activeElement.classList.contains('scenery-toggle'),null,{timeout:2000});
+    await s.locator('.appearance-toggle').click();await s.locator('.appearance-panel .scenery-open').click();await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForFunction(()=>document.activeElement.classList.contains('appearance-toggle')||document.activeElement.classList.contains('scenery-open'),null,{timeout:2000});
+    /* 고침 2 — 열린 채 새로고침 · 뒤로 → 앞으로 뒤에도 연 단추가 산다 */
+    await s.reload();await s.waitForSelector('.grid .cell');
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.reload();await s.waitForSelector('.grid .cell');
+    assert.equal(await s.evaluate(()=>history.state&&history.state.scenery||0),0,tag+'새로고침 뒤 낡은 기록 없음');
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.goBack();await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.goForward();await s.waitForTimeout(200);
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    assert.equal(s.url(),dexUrl,tag+'앞으로 뒤 Esc 주소');
+    /* 고침 3 — Esc 두 번 · 닫기 두 번 눌러도 화면을 나가지 않는다 */
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.keyboard.press('Escape');await s.keyboard.press('Escape');await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForTimeout(300);assert.equal(s.url(),dexUrl,tag+'Esc 두 번');
+    await s.locator('.scenery-toggle').click();await s.waitForSelector('div.scenery');
+    await s.locator('.scenery-close').dblclick().catch(()=>{});await s.waitForSelector('div.scenery',{state:'detached'});
+    await s.waitForTimeout(300);assert.equal(s.url(),dexUrl,tag+'닫기 두 번');
     /* 접힌 상태(dex-scrolled)에서도 — 표지판 줄은 접혀 숨으니 ⚙ 안의 단추로 */
     await s.locator('.collection-scroll').evaluate(e=>{e.scrollTop=300});await s.waitForSelector('main.dex-scrolled');
     assert(!await s.locator('.scenery-toggle').isVisible(),tag+'접히면 머리 단추는 숨는다');

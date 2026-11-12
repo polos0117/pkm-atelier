@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400..800&amp;display=swap" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="lib/workspace.css?v=region5">
+<link rel="stylesheet" href="lib/workspace.css?v=region6">
 <style>
 :root {--row-h:108px}
 * {box-sizing:border-box}
@@ -226,8 +226,8 @@ body {color:var(--text);font-size:15px}
 .gw-bar .gw-sumline b {font-size:18px;color:var(--text);letter-spacing:.06em} .gw-bar .gw-sumline b[data-side="foe"] {color:var(--signal,#c33)}
 @media (prefers-reduced-motion:reduce) {.gw-unit.flip,.gw-unit.hit,.gw-target {animation:none} .gw-unit.burst::after {display:none}}
 </style>
-<script src="lib/workspace-theme.js?v=region5"></script>
-<script src="lib/words.js?v=region5"></script>
+<script src="lib/workspace-theme.js?v=region6"></script>
+<script src="lib/words.js?v=region6"></script>
 <script src="lib/fresh.js?v=4"></script>
 <script src="lib/today.js?v=1"></script>
 <script src="lib/speech.js?v=1"></script>
@@ -241,7 +241,7 @@ body {color:var(--text);font-size:15px}
 import { h, render } from 'https://esm.sh/preact@10.24.3';
 import { useState, useEffect, useMemo, useRef } from 'https://esm.sh/preact@10.24.3/hooks';
 import htm from 'https://esm.sh/htm@3.1.1';
-import { WorkspaceHeader } from './lib/workspace-ui.js?v=region5';
+import { WorkspaceHeader } from './lib/workspace-ui.js?v=region6';
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, C = window.AtelierCollection, G = window.AtelierGwent;
 const T = window.AtelierToday, ROOM = 'pokemon'; T.visit(ROOM);   /* 오늘 기록 — 공방 지도의 방 열쇠(lib/today.js) */
