@@ -132,3 +132,8 @@ body.dex-page{background-image:none}
 @media(max-width:1000px){.dex-page .grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:599px){.dex-page .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}}
 @media(max-width:599px){.dex-page.dex-compact .grid{grid-template-columns:minmax(0,1fr);gap:0}}
+/* 크게 보기 하트(2026-11-12) — 지금 보는 그림을 즐겨찾기에. 담기면 분홍. 알림은 아래 넘기기 단추와 안 겹치게 위쪽 띠 밑에 */
+.zoom-layer .zoom-fav span{font-size:15px;line-height:1;margin-right:4px}
+.zoom-layer .zoom-fav[aria-pressed="true"]{border-color:#f4a6b8;color:#f4a6b8}
+.zoom-layer .fav-toast{bottom:auto;top:calc(76px + env(safe-area-inset-top))}
+@media(max-width:599px){.zoom-layer .zoom-fav{order:3}.zoom-layer .fav-toast{top:calc(108px + env(safe-area-inset-top))}}

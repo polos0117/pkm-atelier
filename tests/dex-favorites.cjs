@@ -3,6 +3,7 @@
    - 그림마다 따로다(같은 카드의 다른 폼은 안 담긴 상태), 새것이 앞
    - 새로고침해도 남고, 칸의 link(?mech=&pic=)로 오면 그 그림으로 열린다. 목록으로 돌아가면 주소에서 pic 이 빠진다
    - 「즐겨찾기 n」 이 공방 모음의 /favorites.html 로 간다
+   - 크게 보기에도 하트(2026-11-12) — 넘겨 보는 그림을 담고, 넘기면 그 그림의 상태, 닫으면 상세와 같다
    - 저장이 막힌 브라우저에서는 던지지 않고 "못 담았다" 를 알린다
    - 344×882 · 390×844 · 844×390 · 690×829 · 1280×900 에서 누르는 자리 44px, 옆으로 안 넘친다, 초점 고리
    lib/favorites.js 는 polos0117.github.io/favorites.js 와 글자 하나 다르지 않아야 한다(옆에 받아 두었으면 견준다).
@@ -83,6 +84,31 @@ const A = Object.keys(DOC.img).filter(n => Object.values(DOC.img[n].byStyle || {
     add('목록으로 가면 주소에서 mech·pic 이 빠진다', !/[?&](mech|pic)=/.test(new URL(p.url()).search), p.url());
     add('오류 없음', !s.errors.length, s.errors.join(' | '));
     await s.close();
+
+    /* 크게 보기의 하트(2026-11-12) — 넘겨 보는 그 그림을 담고, 넘기면 그 그림의 상태로, 닫으면 상세 하트도 같다 */
+    const z = await h.open(url(A), { viewport: { width: 344, height: 882 }, mobile: true }), zp = z.page;
+    await zp.locator('#dex-fav').waitFor({ timeout: 30000 });
+    await zp.locator('.big .zoom').tap();
+    await zp.locator('.zoom-layer #zoom-fav').waitFor({ timeout: 10000 });
+    const zFile = () => zp.evaluate(() => { const i = document.querySelector('.zoom-body > img'); return i ? decodeURIComponent(i.getAttribute('src').split('?')[0].split('/').pop()) : ''; });
+    const z1 = await zFile();
+    add('크게 보기 — 하트에 이름 · 처음엔 비었다', (await zp.locator('#zoom-fav').textContent()).includes(W('dex.fav')) && await zp.locator('#zoom-fav').getAttribute('aria-pressed') === 'false');
+    await zp.locator('#zoom-fav').tap(); await zp.waitForTimeout(150);
+    let zl = await stored(zp);
+    add('크게 보기 — 보고 있는 그림이 담긴다', zl.length === 1 && zl[0].file === z1 && zl[0].a === 'pkm' && zl[0].key === A && new URL(zl[0].link, 'http://x').searchParams.get('pic') === z1, JSON.stringify(zl[0] || {}));
+    add('크게 보기 — 하트가 차고 알림', await zp.locator('#zoom-fav').getAttribute('aria-pressed') === 'true' && (await zp.locator('.zoom-layer .fav-toast').textContent()) === W('dex.fav.added'));
+    const zb = await zp.evaluate(() => { const b = document.querySelector('#zoom-fav').getBoundingClientRect(); return { h: b.height, r: b.right, w: innerWidth }; });
+    add('크게 보기 — 하트 44px · 화면 안', zb.h >= 44 && zb.r <= zb.w + 1, JSON.stringify(zb));
+    if (await zp.locator('.zoom-next:not([disabled])').count()) {
+      await zp.locator('.zoom-next').tap(); await zp.waitForTimeout(600);
+      add('크게 보기 — 넘기면 그 그림의 상태(안 담김)', (await zFile()) !== z1 && await zp.locator('#zoom-fav').getAttribute('aria-pressed') === 'false', await zFile());
+      await zp.locator('.zoom-prev').tap(); await zp.waitForTimeout(600);
+      add('크게 보기 — 돌아오면 다시 찬 하트', await zp.locator('#zoom-fav').getAttribute('aria-pressed') === 'true');
+    }
+    await zp.locator('.zoom-close').tap(); await zp.waitForTimeout(200);
+    add('크게 보기를 닫으면 상세 하트도 차 있다', await zp.locator('#dex-fav').getAttribute('aria-pressed') === 'true');
+    add('크게 보기 — 오류 없음', !z.errors.length, z.errors.join(' | '));
+    await z.close();
 
     /* 저장이 막힌 브라우저 */
     const b = await h.open(url(A), { viewport: { width: 1280, height: 900 },
