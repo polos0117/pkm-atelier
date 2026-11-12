@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 지역 이동 구름 전환 — AtelierAppearance.travel
+- lib/workspace-theme.js — travel(key): 같은 지역이면 그대로, 움직임 줄이기 · View Transitions 없음이면 바로 set. 새 머리 그림을 먼저 받아 두고(최대 0.4초) startViewTransition 안에서 바꾼다. 전환 중엔 html.travelling, 또 부르면 진행 중인 것을 skipTransition 하고 마지막 것만. storage 사건은 전환 없이 그대로
+- lib/workspace.css — html.travelling 일 때만 구름 전환(공방 지도에서 들어오는 쪽 넘김 페이드는 그대로): 옛 화면이 하늘색 구름 바탕 속으로 흐려지고(0.3초) 새 화면이 구름 구멍 셋으로 걷힌다(0.3초 뒤 0.3초). 가면은 등록한 --cloud 하나
+- tests/region-map.cjs — 전환 수 · 길이(0.4~0.8초) · 같은 지역 · 50ms 두 번 · 움직임 줄이기 · 전환 없는 브라우저 · 다른 탭 storage. 호연 엽서 뒤엔 바뀔 때까지 기다린다(travel 은 비동기)
+- tests/theme-screen.cjs — ⚙ 로 고른 지역도 전환 안에서 바뀌니 바뀔 때까지 기다린다
+- 화면 여덟 — workspace.css · workspace-theme.js ?v= region9
+
 ## 2026-11-12 · claude · 생성기 · 탐사 화면이 옛 workspace-ui 를 부르던 것
 - prompt.html · survey.html — prompt-ui.js · survey-ui.js 를 ?v= region8 로. 두 파일은 workspace-ui.js?v=region8 을 부르게 바뀌었는데 화면이 region7 을 불러 캐시가 남은 브라우저는 옛 머리(표지판이 지도를 못 여는)를 계속 썼다
 - tests/workspace-theme.cjs — workspace-ui.js 를 부르는 lib 파일마다, 그 파일을 부르는 모든 ?v= 꼬리표가 그 파일이 부르는 workspace-ui.js 꼬리표와 같은지 본다

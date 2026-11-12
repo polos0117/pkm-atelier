@@ -62,7 +62,7 @@ const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)
     /* 테마는 ⚙ 패널 안에 있다. 머리가 다시 그려지면 패널이 닫힐 수 있어 매번 본다 */
     if(!await p.locator('.appearance-panel').count())await p.locator('.appearance-toggle').click();
     await p.getByLabel('테마',{exact:true}).selectOption(key);
-    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),key);
+    await p.waitForFunction(k=>document.documentElement.dataset.theme===k,key,{timeout:3000});   /* travel(구름 전환)은 전환 안에서 바꾼다 */
     if(before)assert.equal(await p.locator('#prompt-output').inputValue(),before,'appearance never changes the prompt');
    }
    for(const viewport of [FOLD.cover,FOLD.inner,{width:1280,height:900}]){

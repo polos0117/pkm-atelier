@@ -42,7 +42,7 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
     const url=p.url();
     await p.locator('.region-card[data-region=hoenn]').click();
     await map.waitFor({state:'detached'});
-    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'hoenn',tag+'호연으로');
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='hoenn',null,{timeout:3000});   /* travel 은 그림을 받고 전환 안에서 바꾼다 */
     assert.equal((await sign.textContent()).trim(),'호연 지방',tag+'표지판 글');
     await p.waitForFunction(()=>{const d=document.querySelector('.lab-status [data-status=hall] dd');return d&&d.textContent==='3 / 12';},null,{timeout:3000});
     await p.waitForTimeout(150);assert.equal(p.url(),url,tag+'엽서 뒤 주소 그대로');
@@ -77,7 +77,8 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
     assert.equal((await sign.textContent()).trim(),'호연 지방',tag+'진열 뒤 표지판');
     await p.waitForFunction(()=>document.querySelector('.lab-status [data-status=hall] dd').textContent==='3 / 12');
     assert(await p.evaluate(noOverflow),tag+'진열 가로 넘침');
-    /* 셋 다 한 길 — travel 이 생기면(Task 7) 그것을 부른다 */
+    /* 셋 다 한 길 — 진짜 travel 이 있고, 셋이 그것을 부른다(가짜로 바꿔 끼워 부른 차례를 본다) */
+    assert.equal(await p.evaluate(()=>typeof window.AtelierAppearance.travel),'function',tag+'travel 이 있다');
     await p.evaluate(()=>{window.__went=[];const A=window.AtelierAppearance;A.travel=k=>{window.__went.push(k);A.set('theme',k);};});
     await sign.click();await map.waitFor();await p.locator('.region-card[data-region=galar]').click();await map.waitFor({state:'detached'});
     await p.locator('.appearance-toggle').click();await p.locator('.appearance-panel select').first().selectOption('alola');await p.keyboard.press('Escape');
@@ -99,6 +100,52 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
     assert.equal(await q.evaluate(()=>[...document.querySelectorAll('.region-map img,.theme-gallery img')].filter(i=>i.complete&&!i.naturalWidth).length),0,tag+'깨진 그림 없음');
     assert(await q.evaluate(noOverflow),tag+'그림 없음 가로 넘침');
    }finally{await b.close()}
+  }
+  /* 구름 전환(travel) — startViewTransition 을 감싸 부른 수와 전환 움직임 길이를 센다. 344×882 만 */
+  const COUNT=()=>{const o=document.startViewTransition;window.__vt=0;window.__dur=[];if(!o)return;
+   document.startViewTransition=function(){window.__vt++;const t=o.apply(this,arguments);
+    t.ready.then(()=>{for(const x of document.getAnimations())if(x.effect&&String(x.effect.pseudoElement).startsWith('::view-transition'))window.__dur.push(x.effect.getComputedTiming().endTime);},()=>{});return t;};};
+  const NOVT=()=>{delete Document.prototype.startViewTransition;window.__vt=0;};
+  const vt=async opt=>{const c=await h.open('index.html',{viewport:FOLD.cover,mobile:true,...opt});await c.page.waitForSelector('.theme-card');return c;};
+  const still=p=>p.waitForFunction(()=>!document.documentElement.classList.contains('travelling'),null,{timeout:3000});
+  const pick=async(p,key)=>{await p.locator('.region-sign').click();await p.waitForSelector('.region-map.in');await p.waitForTimeout(350);
+   await p.locator('.region-card[data-region='+key+']').click();await p.locator('.region-map').waitFor({state:'detached'});};
+  {
+   const c=await vt({init:COUNT}),p=c.page;
+   try{
+    await pick(p,'alola');
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='alola');await still(p);
+    assert.equal(await p.evaluate(()=>window.__vt),1,'엽서 하나 → 전환 한 번');
+    const dur=await p.evaluate(()=>window.__dur);
+    assert(dur.length&&Math.max(...dur)<=800&&Math.max(...dur)>=400,'구름 전환 0.4~0.8초(기본 0.25초 페이드가 아님) — '+dur);
+    /* 지금 지역을 다시 → 전환 없이 판만 닫힌다 */
+    await pick(p,'alola');await p.waitForTimeout(400);
+    assert.equal(await p.evaluate(()=>window.__vt),1,'같은 지역 → 전환 없음');
+    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'alola');
+    /* 다른 엽서 둘을 50ms 사이로 → 마지막 지역, 오류 없음, travelling 남지 않음 */
+    await p.locator('.region-sign').click();await p.waitForSelector('.region-map.in');await p.waitForTimeout(350);
+    await p.evaluate(()=>new Promise(r=>{const a=document.querySelector('.region-card[data-region=kanto]'),b=document.querySelector('.region-card[data-region=galar]');a.click();setTimeout(()=>{b.click();r();},50);}));
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='galar',null,{timeout:3000});await still(p);await p.waitForTimeout(800);
+    assert.equal(await p.evaluate(()=>document.documentElement.dataset.theme),'galar','빠른 두 번 → 마지막');
+    assert(!await p.evaluate(()=>document.documentElement.classList.contains('travelling')),'travelling 남지 않음');
+    assert.equal(await p.locator('.region-map').count(),0,'판 닫힘');
+    /* 다른 탭에서 바꿈(storage) → 전환 없이 */
+    const before=await p.evaluate(()=>window.__vt),q=await c.ctx.newPage();
+    await q.goto(p.url());await q.waitForFunction(()=>window.AtelierAppearance);await q.evaluate(()=>window.AtelierAppearance.set('theme','paldea'));
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='paldea',null,{timeout:3000});await p.waitForTimeout(300);
+    assert.equal(await p.evaluate(()=>window.__vt),before,'storage 사건 → 전환 없음');
+    assert.deepEqual(c.errors,[]);
+   }finally{await c.close()}
+  }
+  for(const [name,opt] of [['움직임 줄이기',{init:COUNT,reducedMotion:'reduce'}],['startViewTransition 없음',{init:NOVT}]]){
+   const c=await vt(opt),p=c.page;
+   try{
+    await pick(p,'hoenn');
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='hoenn',null,{timeout:2000});
+    assert.equal(await p.evaluate(()=>window.__vt),0,name+' → 전환 없음');
+    assert(!await p.evaluate(()=>document.documentElement.classList.contains('travelling')),name+' travelling 없음');
+    assert.deepEqual(c.errors,[],name);
+   }finally{await c.close()}
   }
   console.log('PASS region-map');
  }finally{await h.stop()}

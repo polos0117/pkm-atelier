@@ -145,6 +145,21 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,te
 .region-hero.no-art {background-image:linear-gradient(180deg,var(--accent-soft),var(--bg))}
 /* 접히면 층이 머리 높이(폰 110px 남짓)로 낮아진다 — 폰의 auto 125% 그대로면 그림이 가운데 작은 조각이 되니 다시 cover(자리는 그대로) */
 :is(.workspace-header.folded,.dex-fold.dex-scrolled .workspace-header) .region-hero {top:0;bottom:0;background-size:100% 100%,cover}
+/* 지역 이동 — 구름 전환(lib/workspace-theme.js 의 travel 이 html.travelling 을 단 동안만 — 공방 지도에서 들어오는 쪽 넘김 페이드는 그대로).
+   짝(image-pair) 바탕이 구름: 흰 덩어리 그라데이션. 옛 화면은 그 속으로 흐려지고(0.3초), 새 화면은 구름 구멍 셋이 넓어지며 걷힌다(0.3초 뒤 0.3초 — 처음엔 천천히).
+   CSS 만 — 가면은 등록한 --cloud 하나를 움직인다. 기본 plus-lighter 섞기는 구름까지 더해 하얗게 타니 normal */
+@property --cloud {syntax:'<percentage>';inherits:false;initial-value:0%}
+html.travelling::view-transition-image-pair(root) {background:
+  radial-gradient(40% 20% at 20% 16%,#fff 45%,transparent 72%),radial-gradient(44% 22% at 74% 24%,#fff 45%,transparent 72%),
+  radial-gradient(48% 22% at 28% 50%,#fff 40%,transparent 72%),radial-gradient(42% 20% at 80% 70%,#fff 40%,transparent 72%),
+  radial-gradient(46% 18% at 36% 88%,#fff 40%,transparent 72%),linear-gradient(#bcd3ea,#e3edf7 60%,#f4f7fb)}
+html.travelling::view-transition-old(root),html.travelling::view-transition-new(root) {mix-blend-mode:normal}
+html.travelling::view-transition-old(root) {animation:travel-into .3s ease-in both}
+html.travelling::view-transition-new(root) {animation:travel-part .3s cubic-bezier(.5,0,.75,.6) .3s both;
+  -webkit-mask-image:radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 30% 20%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 74% 36%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 42% 72%,#000 55%,transparent);
+  mask-image:radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 30% 20%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 74% 36%,#000 55%,transparent),radial-gradient(var(--cloud) calc(var(--cloud)*.7) at 42% 72%,#000 55%,transparent)}
+@keyframes travel-into {to {opacity:0;transform:scale(1.04)}}
+@keyframes travel-part {from {--cloud:0%} to {--cloud:240%}}
 /* 지역 표지판 — 나무 이정표(갈색 판 · 둥근 오른끝 · 못 하나). 지역 색과 무관한 고정 색. 누르는 자리는 44px, 판은 그 안에 */
 /* 표지판 줄의 빈 가운데는 클릭을 통과시켜 머리 상자(빈 곳 누르기)로 간다 */
 .region-sign-row {pointer-events:none;display:flex;align-items:center;justify-content:space-between;gap:8px}
