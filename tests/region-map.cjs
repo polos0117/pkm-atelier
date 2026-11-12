@@ -157,6 +157,49 @@ const noOverflow=()=>document.documentElement.scrollWidth<=innerWidth&&document.
     assert.deepEqual(c.errors,[],name);
    }finally{await c.close()}
   }
+  /* 도감 상세 안에서 머리 판(지도 · 풍경)을 열고 닫아도 상세는 그대로 — 판이 쌓은 기록 칸의 popstate 를 도감이 상세 닫기로 읽던 것.
+     풍경이 열린 동안 방향키는 뒤 그림을 넘기지 않는다. 344×882 */
+  {
+   const d=await h.open('dex.html?mech='+encodeURIComponent('피카츄'),{viewport:FOLD.cover,mobile:true}),p=d.page;
+   try{
+    await p.waitForSelector('#detail-title');
+    const listUrl=()=>!new URL(p.url()).searchParams.get('mech');
+    const here=async tag=>{await p.waitForTimeout(400);
+     assert.equal(await p.locator('#detail-title').count(),1,tag+' → 상세가 열려 있다');
+     assert.equal(new URL(p.url()).searchParams.get('mech'),'피카츄',tag+' → 주소 ?mech= 그대로');};
+    const shot=()=>p.evaluate(()=>[document.querySelector('#detail-title').textContent,document.querySelector('.big-count')&&document.querySelector('.big-count').textContent]);
+    /* (a) 지도에서 다른 지역 → 상세 그대로, 뒤로 한 번이면 목록 */
+    await p.locator('.region-sign').click();await p.waitForSelector('.region-map.in');await p.waitForTimeout(350);
+    await p.locator('.region-card[data-region=johto]').click();await p.locator('.region-map').waitFor({state:'detached'});
+    await p.waitForFunction(()=>document.documentElement.dataset.theme==='johto',null,{timeout:3000});
+    await here('지도 여행');
+    /* (b) 풍경 → 방향키는 뒤 그림을 안 넘긴다, Esc → 상세 그대로 */
+    const before=await shot();
+    await p.evaluate(()=>dispatchEvent(new Event('atelier-scenery')));await p.waitForSelector('div.scenery');
+    await p.keyboard.press('ArrowRight');await p.waitForTimeout(200);
+    assert.deepEqual(await shot(),before,'풍경 열림 + 방향키 → 뒤 그림 그대로');
+    await p.keyboard.press('Escape');await p.locator('div.scenery').waitFor({state:'detached'});
+    await here('풍경 Esc');
+    /* 지도 열림 + 방향키도 마찬가지 */
+    await p.locator('.region-sign').click();await p.waitForSelector('.region-map.in');
+    await p.keyboard.press('ArrowRight');await p.waitForTimeout(200);
+    assert.deepEqual(await shot(),before,'지도 열림 + 방향키 → 뒤 그림 그대로');
+    await p.keyboard.press('Escape');await p.locator('.region-map').waitFor({state:'detached'});
+    await here('지도 Esc');
+    /* (c) 풍경 → 뒤로 가기 → 상세 그대로 */
+    await p.evaluate(()=>dispatchEvent(new Event('atelier-scenery')));await p.waitForSelector('div.scenery');
+    await p.goBack();await p.locator('div.scenery').waitFor({state:'detached'});
+    await here('풍경 뒤로');
+    /* 판이 없으면 방향키가 넘긴다(위 검사가 헛돌지 않게) */
+    await p.keyboard.press('ArrowRight');await p.waitForTimeout(200);
+    assert.notDeepEqual(await shot(),before,'판 없음 + 방향키 → 넘어간다');
+    /* 뒤로 한 번 → 목록 */
+    await p.goBack();await p.waitForSelector('.grid > .cell');
+    assert.equal(await p.locator('#detail-title').count(),0,'뒤로 한 번 → 상세 닫힘');
+    assert(listUrl(),'뒤로 한 번 → 목록 주소');
+    assert.deepEqual(d.errors,[]);
+   }finally{await d.close()}
+  }
   console.log('PASS region-map');
  }finally{await h.stop()}
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -491,10 +491,10 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     const k = selection?.keep, sc = document.querySelector('.collection-scroll'), el = k && document.querySelector(k.sel);
     if (sc && el) sc.scrollTop += el.getBoundingClientRect().top - k.y;
   }, []);
-  /* 방향키 — 셀렉트 같은 입력칸에 있을 땐 그 칸 몫 */
+  /* 방향키 — 셀렉트 같은 입력칸에 있을 땐 그 칸 몫. 크게 보기 · 머리의 풍경 · 여행 지도가 열려 있으면 그 판 몫 */
   const liveMove = useRef(); liveMove.current = move;
   useLayoutEffect(() => {
-    const key = e => { if (document.querySelector('.zoom-layer') || e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('input, select, textarea'))) return;
+    const key = e => { if (document.querySelector('.zoom-layer, div.scenery, .region-map') || e.altKey || e.ctrlKey || e.metaKey || (e.target.closest && e.target.closest('input, select, textarea'))) return;
       if (e.key === 'ArrowLeft') liveMove.current(-1); if (e.key === 'ArrowRight') liveMove.current(1); };
     addEventListener('keydown', key);
     return () => removeEventListener('keydown', key);
@@ -920,7 +920,10 @@ function App() {
     listTop.current = sc ? sc.scrollTop : 0; from.current = c.name; pushed.current = true; setOpen({ card: c });
   };
   useEffect(() => {
-    const pop = () => { if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } else liveForward.current(); };
+    /* 머리 판(풍경 · 여행 지도, lib/workspace-ui.js useBackDialog)도 기록 칸을 쌓는다 — 그 칸으로 오가는 popstate 는 상세 몫이 아니다:
+       판 칸으로 들어가거나(앞으로 가기), 상세가 열린 채 판 칸에서 카드 칸으로 돌아온 것 */
+    const pop = e => { const s = e.state; if (s && (s.scenery || s.regionMap) || pushed.current && s && s.dex === 'card') return;
+      if (skipPop.current) { skipPop.current = false; return; } if (pushed.current) { pushed.current = false; liveShut.current(); } else liveForward.current(); };
     addEventListener('popstate', pop);
     return () => removeEventListener('popstate', pop);
   }, []);
