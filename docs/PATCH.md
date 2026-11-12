@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-12 · claude · 홀로 효과 점검(허브 게임 스킬)
+- 사용자 「응 스킬 읽고 만든 것들 점검해줘」 — 허브 .claude/skills 의 pixijs-rendering · shader-programming · game-feel 로 lib/holo.js 를 대조
+- lib/holo.js — ① 거꾸로 준 smoothstep 가장자리(0.3 → 0.0 — GLSL 에서 정의되지 않아 GPU 마다 다르다)를 1 − smoothstep(0, 0.3) 로 ② 필터 셰이더 정밀도 mediump → highp(폰에서 촘촘한 줄무늬가 계단지고 반짝인다 — Pixi 8.19 GlProgram 기본값이 mediump) ③ 앱을 지울 때 releaseGlobalResources(크게 보기를 거듭 열고 닫을 때 깜빡임 · 깨진 텍스처 막기). element-atelier 와 같은 파일. holo.js?v=5
+
 ## 2026-11-12 · claude · 도감 크게 보기 넘기기 전환
 - 사용자 「넘기기: 크게 보기에서 넘길 때 부드러운 전환 효과 pkm 쪽에 넣어줘」 — dex.html Zoom: 큰 그림 칸과 같은 lib/scene-motion.js turn(나가는 그림의 사본이 반대쪽으로 밀리며 흐려지고, 새 그림은 넘긴 쪽에서 들어온다 — 단추 · 방향키 · 밀기 모두 방향을 넘긴다). 움직임 끄기 · 줄이기면 바로 바뀐다, 원본 크기에선 안 한다, 켄 번스 · 입자는 여전히 없다
 - lib/holo.js — 그림을 바꿀 때 홀로 빛도 0.45초에 걸쳐 다시 든다(움직임 줄이기면 바로). holo.js?v=4

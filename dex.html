@@ -699,7 +699,7 @@ function Zoom({ card, shots, at, canPrev, canNext, onMove, onClose, defs }) {
    const body=layer.current&&layer.current.querySelector('.zoom-body'),img=body&&body.querySelector('img');
    if(!body||!img)return;
    let gone=false;
-   import('./lib/holo.js?v=4').then(m=>m.mountHolo(body,img,{reduced:!!(MOTION&&MOTION.reduced()),before:body.querySelector('.zoom-nav')})).then(x=>{if(gone)x&&x.destroy();else holoRef.current=x;},()=>{});
+   import('./lib/holo.js?v=5').then(m=>m.mountHolo(body,img,{reduced:!!(MOTION&&MOTION.reduced()),before:body.querySelector('.zoom-nav')})).then(x=>{if(gone)x&&x.destroy();else holoRef.current=x;},()=>{});
    return()=>{gone=true;if(holoRef.current){holoRef.current.destroy();holoRef.current=null;}};
  },[holo,actual]);
  useEffect(()=>{const x=holoRef.current,img=layer.current&&layer.current.querySelector('.zoom-body img');if(x&&img)x.setImage(img);},[shot&&shot.file]);
