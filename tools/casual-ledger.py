@@ -69,7 +69,7 @@ REQUIRED = {"adult_roleplay", "swimwear", "lingerie", "retro_glamour"}  # 옛 �
 TREE_FILE = os.path.join(ROOT, "data", "casual-tree.json")
 TREE2_FILE = os.path.join(ROOT, "data", "casual-tree-v2.json")
 # 버전2 컷의 칸(lib/casual-plan.js V2_FIELDS)
-V2_KEYS = ("era", "place", "weather", "ofam", "item", "posture", "support", "frame", "body", "head", "camera", "right", "left", "use", "legs", "gaze", "expr", "preset")
+V2_KEYS = ("era", "place", "weather", "time", "light", "spot", "depth", "view", "ofam", "item", "posture", "support", "frame", "body", "head", "camera", "right", "left", "use", "legs", "gaze", "expr", "preset")
 EX_WINDOW = 10          # 같은 장소·하는 일(옛 칸은 같은 예시)은 최근 10명 안에서 다시 쓰지 않는다
 CMP_WINDOW = 3          # 구도·옷·세 축 비교는 최근 3명
 CMP_RESERVED = 3        # 그 비교에 넣는 다른 세션 예약도 가장 최근 셋까지(2026-10-27 — 전부 넣으면 예약이 쌓일 때 SOURCE 구성 일곱 가지·옷 종류가 다 막혔다)
