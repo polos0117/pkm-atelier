@@ -1257,7 +1257,7 @@
      "base": "pw_workshop",
      "place": "a neighborhood pharmacy — shelves of medicine boxes, a dispensing counter, a glass cabinet and a green cross-shaped lamp",
      "activity": "she is a trainee pharmacist with a hand at her waist, reading a small medicine bottle with a puzzled look",
-     "preset": "pocket_look",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a small medicine bottle",
      "outfit": {
