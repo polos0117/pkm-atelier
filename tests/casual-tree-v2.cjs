@@ -20,7 +20,7 @@ let pairs = 0;
 for (const pr of t.v2.presets) {
   for (const pl of C.allPlaces(t)) {
     const era = pl.eras.includes('now') ? 'now' : pl.eras[0], e = C.era(t, era);
-    const fam = t.v1.outfits.find(o => e.outfits.includes(o.key) && !req.includes(o.key) && feat(pr).every(x => C.features(t, o.key, '').includes(x)));
+    const fam = t.v1.outfits.find(o => e.outfits.includes(o.key) && !req.includes(o.key) && feat(pr).every(x => C.features(t, o.key, '').includes(x)) && !C.why(t, { era, place: pl.key }, 'ofam', o.key));   /* 그 장소에 설 수 있는 의상 계열만(표 outfit_rules, 2026-11-13) */
     if (!fam) continue;
     pairs++;
     assert.equal(C.presetOk(t, { era, place: pl.key, ofam: fam.key }, pr.key), py[pr.key].includes(pl.key), pr.key + ' @ ' + pl.key);

@@ -266,7 +266,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     r = run('build', '--dir', d7b); assert.equal(r.status, 0, r.stderr);
     /* 상황 노출(2026-11-09) — 계획의 상황이 지시문 Situation 줄로 · 안내에 상황. 막혀 뺄 때만 situ none + exposure_why */
     { const sc = p7.cuts.find(x => x.situ), slotS = 'casual' + sc.cut, row = S.SITUATIONS.find(x => x.key === sc.situ);
-      assert(fs.readFileSync(path.join(d7, slotS + '-prompt.txt'), 'utf8').includes('Situation: right now — ' + row.en), '상황 줄');
+      { const txt7 = fs.readFileSync(path.join(d7, slotS + '-prompt.txt'), 'utf8'); assert(txt7.includes('Situation: right now — ' + row.en) || (!!row.enIn && txt7.includes('Situation: right now — ' + row.enIn)), '상황 줄(실내면 물 튐 글 enIn — 2026-11-13)'); }
       assert(p7.cuts.filter(x => !x.situ).every(x => !fs.readFileSync(path.join(d7, 'casual' + x.cut + '-prompt.txt'), 'utf8').includes('Situation:')), '상황 없는 컷엔 줄 없음');
       assert.equal(s7.slots[slotS].guide.situ.key, sc.situ, '안내에 상황');
       const s7s = JSON.parse(JSON.stringify(s7)); s7s.slots[slotS].situ = 'none';

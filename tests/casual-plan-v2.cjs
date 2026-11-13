@@ -125,9 +125,9 @@ const v1cut = entries[0].cuts[0], s1 = ST.initial(S, CT, P, {}, tree, { name: '�
 assert(!s1.st.scenes.casual.treeV && s1.st.scenes.casual.act === v1cut.act, '버전1 주소');
 
 /* 3. 피할 값 · 만든 컷 두기 */
-/* 전신 프레이밍을 통째로 피하면 남는 프레이밍 다섯 × 두 장 = 열 장이라 빠듯하다 — 씨앗에 따라 「맞는 구도 없음」 으로 던진다(고치기 전 60번 중 12번, 2026-11-13 규칙 뒤 17번). 도구(tools/casual-plan.cjs)처럼 씨앗을 바꿔 다시 */
-const av = (() => { for (let i = 0; i < 20; i++) { try { return P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z' + (i || ''), avoid: [{ cut: null, field: 'place', value: cut0.place }, { cut: null, field: 'frame', value: 'full_body' }] }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('피할 값 계획을 스무 번 안에 못 정했다'); })();
-assert(!av.cuts.some(x => x.place === cut0.place || x.frame === 'full_body'), '피할 값');
+/* 씨앗에 따라 「맞는 구도 없음」 으로 던질 수 있다 — 도구(tools/casual-plan.cjs)처럼 씨앗을 바꿔 다시 */
+const av = (() => { for (let i = 0; i < 20; i++) { try { return P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z' + (i || ''), avoid: [{ cut: null, field: 'place', value: cut0.place }, { cut: 1, field: 'frame', value: 'full_body' }] }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('피할 값 계획을 스무 번 안에 못 정했다'); })();
+assert(!av.cuts.some(x => x.place === cut0.place || (x.cut === 1 && x.frame === 'full_body')), '피할 값(장소는 모든 컷, 프레이밍은 한 컷 — 프레이밍 하나를 열 장에서 통째로 피하면 남는 다섯 × 두 장이 딱 열 장이라, 2026-11-13 조건이 늘어난 뒤로는 거의 못 맞춘다. 도구에서도 프레이밍은 컷마다 피한다)');
 const keep = P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z2', kept: [Object.assign({}, av.cuts[0], { kept: true })] });
 assert.deepEqual(keep.cuts[0].place, av.cuts[0].place); assert(keep.cuts[0].kept, '만든 컷은 그대로');
 assert.deepEqual(P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'same' }), P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'same' }), '같은 씨앗 같은 답');

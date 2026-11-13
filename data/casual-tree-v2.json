@@ -82,6 +82,62 @@
   "timed": {
    "ko": "시간이 글에 정해진 곳",
    "en": "a place whose own description already fixes the time of day"
+  },
+  "k_private": {
+   "ko": "종류 — 사적인 실내",
+   "en": "a private room of her own"
+  },
+  "k_public": {
+   "ko": "종류 — 공공 실내",
+   "en": "a public indoor place"
+  },
+  "k_work": {
+   "ko": "종류 — 작업 현장",
+   "en": "a working site"
+  },
+  "k_water": {
+   "ko": "종류 — 물가 · 목욕",
+   "en": "a place for swimming or bathing"
+  },
+  "k_nature": {
+   "ko": "종류 — 야외 자연",
+   "en": "open nature"
+  },
+  "k_street": {
+   "ko": "종류 — 거리 · 바깥 길",
+   "en": "a street or outdoor public way"
+  },
+  "k_stage": {
+   "ko": "종류 — 무대 · 환상 · 밤 문화",
+   "en": "a stage, a fantasy set or a night-out venue"
+  },
+  "k_vehicle": {
+   "ko": "종류 — 탈것 안",
+   "en": "inside or on a vehicle"
+  },
+  "soft": {
+   "ko": "눕거나 바닥에 앉을 만한 면",
+   "en": "a bed, sofa, mat, grass or sand to lie or sit on"
+  },
+  "wheel": {
+   "ko": "운전대 · 조타륜 · 조종간",
+   "en": "a steering wheel, helm or control yoke"
+  },
+  "strap_rail": {
+   "ko": "머리 위 손잡이",
+   "en": "an overhead strap or grab rail"
+  },
+  "bike": {
+   "ko": "자전거 · 바이크",
+   "en": "a bicycle or motorbike to sit on"
+  },
+  "car": {
+   "ko": "세워 둔 차",
+   "en": "a parked car beside her"
+  },
+  "fire": {
+   "ko": "모닥불 · 화로",
+   "en": "a campfire or brazier"
   }
  },
  "frames": {
@@ -365,7 +421,7 @@
    "en": "she lies on her left side, her left hip and left shoulder on the ground",
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "hands_left": [
     "head_rest",
@@ -380,7 +436,7 @@
    "en": "she lies on her front, propped on her forearms",
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "hands": [
     "chin_both",
@@ -557,12 +613,33 @@
    ]
   },
   {
+   "key": "ride_seat",
+   "ko": "안장에 앉기(자전거 · 바이크)",
+   "family": "sit",
+   "en": "seated on the saddle of the parked bike, one foot down on the ground",
+   "needs": [
+    "bike"
+   ],
+   "supports": [
+    "none"
+   ],
+   "frames": [
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "hands": [
+    "handle_both",
+    "natural"
+   ]
+  },
+  {
    "key": "sit_floor",
    "ko": "바닥에 앉기",
    "family": "low",
    "en": "sitting on the ground",
    "needs": [
-    "floor"
+    "soft"
    ],
    "supports": [
     "none",
@@ -666,7 +743,7 @@
    "en": "lying on her left side",
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "supports": [
     "side_floor"
@@ -688,7 +765,7 @@
    "en": "lying on her front",
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "supports": [
     "front_floor"
@@ -1023,6 +1100,18 @@
    ]
   },
   {
+   "key": "strap_hold",
+   "ko": "머리 위 손잡이 잡기",
+   "zone": "overhead",
+   "en": "her own {side} hand holds the overhead strap",
+   "needs": [
+    "strap_rail"
+   ],
+   "postures": [
+    "stand"
+   ]
+  },
+  {
    "key": "strap",
    "ko": "끈 잡기",
    "zone": "chest",
@@ -1104,7 +1193,7 @@
    ],
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "sides": [
     "left"
@@ -1120,7 +1209,7 @@
    ],
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ],
    "sides": [
     "right"
@@ -1208,6 +1297,52 @@
    ]
   },
   {
+   "key": "wheel_both",
+   "ko": "두 손으로 운전대",
+   "zone": "chest",
+   "both": true,
+   "en": "both hands rest on the wheel in front of her",
+   "needs": [
+    "wheel"
+   ],
+   "postures": [
+    "sit_chair",
+    "stand"
+   ]
+  },
+  {
+   "key": "handle_both",
+   "ko": "두 손으로 핸들",
+   "zone": "chest",
+   "both": true,
+   "en": "both hands hold the handlebars in front of her",
+   "needs": [
+    "bike"
+   ],
+   "postures": [
+    "ride_seat"
+   ]
+  },
+  {
+   "key": "fire_warm",
+   "ko": "불에 두 손 쬐기",
+   "zone": "chest",
+   "both": true,
+   "en": "both hands are held out, palms toward the small campfire in front of her",
+   "needs": [
+    "fire"
+   ],
+   "postures": [
+    "sit_floor",
+    "squat",
+    "kneel",
+    "half_kneel",
+    "sit_edge",
+    "sit_sideways",
+    "stand"
+   ]
+  },
+  {
    "key": "chin_both",
    "ko": "두 손으로 턱 괴기",
    "zone": "face",
@@ -1218,7 +1353,7 @@
    ],
    "needs_any": [
     "lie",
-    "floor"
+    "soft"
    ]
   },
   {
@@ -1524,13 +1659,16 @@
    "wall",
    "edge",
    "indoor",
-   "window"
+   "window",
+   "k_private",
+   "soft"
   ],
   "home_bath": [
    "edge",
    "shallow_water",
    "wall",
-   "indoor"
+   "indoor",
+   "k_private"
   ],
   "home_kitchen": [
    "rail_waist",
@@ -1541,7 +1679,8 @@
    "indoor",
    "window",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_private"
   ],
   "home_living": [
    "chair",
@@ -1550,14 +1689,18 @@
    "table",
    "wall",
    "indoor",
-   "window"
+   "window",
+   "k_private",
+   "soft"
   ],
   "home_balcony": [
    "rail_waist",
    "chair",
    "wall",
    "floor",
-   "sky"
+   "sky",
+   "k_private",
+   "soft"
   ],
   "home_entry": [
    "wall",
@@ -1566,19 +1709,23 @@
    "indoor",
    "shelf_high",
    "stool",
-   "doorway"
+   "doorway",
+   "k_private",
+   "soft"
   ],
   "street_alley": [
    "wall",
    "edge",
    "floor",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "street_market": [
    "rail_waist",
    "wall",
    "sky",
-   "shelf_high"
+   "shelf_high",
+   "k_street"
   ],
   "street_cafe": [
    "chair",
@@ -1587,20 +1734,23 @@
    "wall",
    "indoor",
    "window",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "street_shop": [
    "rail_waist",
    "wall",
    "indoor",
    "window",
-   "shelf_high"
+   "shelf_high",
+   "k_public"
   ],
   "street_station": [
    "wall",
    "chair",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "street_laundromat": [
    "chair",
@@ -1610,14 +1760,16 @@
    "indoor",
    "window",
    "night",
-   "shelf_high"
+   "shelf_high",
+   "k_public"
   ],
   "street_rooftop": [
    "rail_waist",
    "edge",
    "floor",
    "wall",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "street_park": [
    "chair",
@@ -1625,31 +1777,37 @@
    "lie",
    "edge",
    "sky",
-   "stool"
+   "stool",
+   "k_nature",
+   "soft"
   ],
   "street_grocery": [
    "rail_waist",
    "wall",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_public"
   ],
   "street_mall": [
    "rail_waist",
    "edge",
    "wall",
    "chair",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "arcade_hall": [
    "chair",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "arcade_photo": [
    "chair",
    "wall",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "studio_art": [
    "chair",
@@ -1659,7 +1817,8 @@
    "indoor",
    "window",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_work"
   ],
   "water_pool": [
    "water",
@@ -1667,21 +1826,26 @@
    "edge",
    "lie",
    "chair",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "water_beach": [
    "floor",
    "lie",
    "water",
    "deep_water",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "water_river": [
    "edge",
    "rail_waist",
    "water",
    "deep_water",
-   "sky"
+   "sky",
+   "k_water"
   ],
   "water_resort": [
    "lie",
@@ -1689,110 +1853,137 @@
    "edge",
    "water",
    "deep_water",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "water_yacht": [
    "rail_waist",
    "lie",
    "edge",
    "water",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "water_waterfall": [
    "water",
    "deep_water",
    "edge",
    "floor",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "water_infinity": [
    "water",
    "deep_water",
    "edge",
    "lie",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "spa_onsen": [
    "water",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_water"
   ],
   "spa_cedar": [
    "water",
    "edge",
    "wall",
    "indoor",
-   "window"
+   "window",
+   "k_water"
   ],
   "spa_sauna": [
    "edge",
    "wall",
    "lie",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "spa_jjimjil": [
    "floor",
    "lie",
    "wall",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "spa_hammam": [
    "edge",
    "lie",
    "wall",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "spa_lounge": [
    "lie",
    "chair",
    "table",
-   "indoor"
+   "indoor",
+   "k_private",
+   "soft"
   ],
   "spa_footbath": [
    "edge",
    "shallow_water",
-   "sky"
+   "sky",
+   "k_water"
   ],
   "sports_gym": [
    "wall",
    "floor",
    "edge",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "sports_court": [
    "floor",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_public"
   ],
   "sports_track": [
    "floor",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_public"
   ],
   "sports_studio": [
    "floor",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_public",
+   "soft"
   ],
   "sports_wall": [
    "wall",
    "floor",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "sports_rink": [
    "rail_waist",
    "edge",
    "floor",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "sports_range": [
    "rail_waist",
    "wall",
-   "sky"
+   "sky",
+   "k_public"
   ],
   "night_bar": [
    "chair",
@@ -1801,7 +1992,8 @@
    "wall",
    "indoor",
    "night",
-   "stool"
+   "stool",
+   "k_stage"
   ],
   "night_jazz": [
    "chair",
@@ -1810,91 +2002,105 @@
    "wall",
    "indoor",
    "night",
-   "stool"
+   "stool",
+   "k_stage"
   ],
   "night_club": [
    "wall",
    "rail_waist",
    "edge",
    "indoor",
-   "night"
+   "night",
+   "k_stage"
   ],
   "night_livehouse": [
    "wall",
    "rail_waist",
    "edge",
    "indoor",
-   "night"
+   "night",
+   "k_stage"
   ],
   "night_karaoke": [
    "chair",
    "table",
    "wall",
    "indoor",
-   "night"
+   "night",
+   "k_stage"
   ],
   "night_taxi": [
    "chair",
    "indoor",
    "window",
-   "night"
+   "night",
+   "k_vehicle"
   ],
   "night_rooftop": [
    "rail_waist",
    "chair",
    "edge",
    "sky",
-   "night"
+   "night",
+   "k_stage"
   ],
   "night_powder": [
    "chair",
    "rail_waist",
    "wall",
    "indoor",
-   "night"
+   "night",
+   "k_stage"
   ],
   "stage_festival": [
    "wall",
    "edge",
    "rail_waist",
    "sky",
-   "shelf_high"
+   "shelf_high",
+   "k_street"
   ],
   "stage_fireworks": [
    "rail_waist",
    "floor",
    "edge",
    "sky",
-   "night"
+   "night",
+   "k_street"
   ],
   "stage_contest": [
    "chair",
    "table",
    "wall",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "stage_event": [
    "chair",
    "table",
    "wall",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "stage_convention": [
    "chair",
    "table",
    "wall",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "stage_dance": [
    "floor",
    "wall",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "stage_redcarpet": [
    "wall",
    "rail_waist",
    "sky",
-   "night"
+   "night",
+   "k_street"
   ],
   "stage_wedding": [
    "chair",
@@ -1902,19 +2108,22 @@
    "wall",
    "edge",
    "indoor",
-   "window"
+   "window",
+   "k_public"
   ],
   "stage_open_air": [
    "chair",
    "edge",
    "floor",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "stage_show": [
    "chair",
    "wall",
    "edge",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "evening_hotel": [
    "lie",
@@ -1923,7 +2132,9 @@
    "wall",
    "rail_waist",
    "indoor",
-   "window"
+   "window",
+   "k_private",
+   "soft"
   ],
   "evening_penthouse": [
    "lie",
@@ -1933,53 +2144,65 @@
    "table",
    "indoor",
    "window",
-   "night"
+   "night",
+   "k_private",
+   "soft"
   ],
   "evening_opera": [
    "chair",
    "rail_waist",
    "wall",
    "indoor",
-   "stairs"
+   "stairs",
+   "k_public"
   ],
   "evening_gala": [
    "chair",
    "table",
    "wall",
    "indoor",
-   "night"
+   "night",
+   "k_public"
   ],
   "evening_museum": [
    "wall",
    "rail_waist",
    "edge",
    "indoor",
-   "night"
+   "night",
+   "k_public"
   ],
   "travel_trail": [
    "floor",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "travel_rural_station": [
    "chair",
    "wall",
    "rail_waist",
    "sky",
-   "stool"
+   "stool",
+   "k_street"
   ],
   "travel_ferry": [
    "rail_waist",
    "chair",
    "edge",
-   "sky"
+   "sky",
+   "k_vehicle"
   ],
   "travel_camp": [
    "chair",
    "floor",
    "lie",
-   "sky"
+   "sky",
+   "fire",
+   "k_nature",
+   "soft"
   ],
   "travel_lake": [
    "edge",
@@ -1987,13 +2210,16 @@
    "water",
    "deep_water",
    "lie",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "travel_lookout": [
    "rail_waist",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_nature"
   ],
   "travel_lodge": [
    "chair",
@@ -2003,25 +2229,32 @@
    "floor",
    "indoor",
    "window",
-   "stool"
+   "stool",
+   "k_private",
+   "soft"
   ],
   "travel_cablecar": [
    "chair",
    "rail_waist",
    "wall",
    "indoor",
-   "window"
+   "window",
+   "k_public"
   ],
   "travel_dunes": [
    "floor",
    "lie",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "travel_coast": [
    "rail_waist",
    "edge",
    "floor",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "fx_studio": [
    "chair",
@@ -2029,36 +2262,47 @@
    "wall",
    "edge",
    "lie",
-   "indoor"
+   "indoor",
+   "k_stage",
+   "soft"
   ],
   "fx_runway": [
    "floor",
-   "indoor"
+   "indoor",
+   "k_stage",
+   "soft"
   ],
   "fx_ballroom": [
    "chair",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "fx_starstage": [
    "floor",
    "edge",
    "sky",
-   "night"
+   "night",
+   "k_stage",
+   "soft"
   ],
   "fx_forest": [
    "floor",
    "lie",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "fx_spa": [
    "water",
    "lie",
    "edge",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "fx_observatory": [
    "rail_waist",
@@ -2066,27 +2310,32 @@
    "wall",
    "indoor",
    "window",
-   "night"
+   "night",
+   "k_public"
   ],
   "fx_circus": [
    "floor",
    "edge",
    "wall",
-   "indoor"
+   "indoor",
+   "k_stage",
+   "soft"
   ],
   "fx_castle": [
    "edge",
    "rail_waist",
    "wall",
    "indoor",
-   "stairs"
+   "stairs",
+   "k_public"
   ],
   "fx_chapel": [
    "chair",
    "wall",
    "edge",
    "indoor",
-   "window"
+   "window",
+   "k_public"
   ],
   "fx_retro_home": [
    "chair",
@@ -2095,7 +2344,9 @@
    "wall",
    "rail_waist",
    "indoor",
-   "window"
+   "window",
+   "k_stage",
+   "soft"
   ],
   "library_reading": [
    "chair",
@@ -2104,7 +2355,8 @@
    "floor",
    "indoor",
    "window",
-   "shelf_high"
+   "shelf_high",
+   "k_public"
   ],
   "greenhouse": [
    "worktable",
@@ -2114,14 +2366,16 @@
    "indoor",
    "window",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "bakery_kitchen": [
    "worktable",
    "wall",
    "rail_waist",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "boardgame_lounge": [
    "chair",
@@ -2129,7 +2383,8 @@
    "floor",
    "wall",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_public"
   ],
   "lodge_terrace": [
    "rail_waist",
@@ -2137,7 +2392,9 @@
    "wall",
    "floor",
    "sky",
-   "stool"
+   "stool",
+   "k_nature",
+   "soft"
   ],
   "train_sleeper": [
    "lie",
@@ -2147,7 +2404,9 @@
    "edge",
    "indoor",
    "window",
-   "night"
+   "night",
+   "k_private",
+   "soft"
   ],
   "tailor_room": [
    "worktable",
@@ -2156,7 +2415,8 @@
    "wall",
    "indoor",
    "window",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "backstage_dressing": [
    "chair",
@@ -2164,7 +2424,8 @@
    "wall",
    "rail_waist",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_private"
   ],
   "pw_town": [
    "chair",
@@ -2172,7 +2433,8 @@
    "floor",
    "wall",
    "rail_waist",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "pw_room": [
    "chair",
@@ -2183,7 +2445,9 @@
    "table",
    "indoor",
    "window",
-   "shelf_high"
+   "shelf_high",
+   "k_private",
+   "soft"
   ],
   "pw_bath": [
    "water",
@@ -2191,14 +2455,17 @@
    "edge",
    "floor",
    "wall",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "pw_market": [
    "chair",
    "wall",
    "rail_waist",
    "sky",
-   "shelf_high"
+   "shelf_high",
+   "k_street"
   ],
   "pw_lodge": [
    "chair",
@@ -2208,7 +2475,8 @@
    "wall",
    "indoor",
    "night",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "pw_roof": [
    "chair",
@@ -2216,13 +2484,17 @@
    "rail_waist",
    "floor",
    "wall",
-   "sky"
+   "sky",
+   "k_private",
+   "soft"
   ],
   "pw_route": [
    "floor",
    "edge",
    "lie",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "pw_center": [
    "chair",
@@ -2231,20 +2503,23 @@
    "table",
    "indoor",
    "window",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "pw_contest": [
    "chair",
    "wall",
    "rail_waist",
    "floor",
-   "indoor"
+   "indoor",
+   "k_public"
   ],
   "pw_stadium": [
    "chair",
    "rail_waist",
    "edge",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "work_lab": [
    "chair",
@@ -2253,32 +2528,39 @@
    "wall",
    "floor",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "work_design": [
    "chair",
    "table",
    "worktable",
    "wall",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_trail": [
    "floor",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "work_wetland": [
    "rail_waist",
    "floor",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "work_hide": [
    "floor",
    "chair",
    "wall",
    "indoor",
-   "window"
+   "window",
+   "k_work"
   ],
   "work_reserve": [
    "floor",
@@ -2286,34 +2568,40 @@
    "edge",
    "wall",
    "sky",
-   "doorway"
+   "doorway",
+   "k_work"
   ],
   "work_ranch": [
    "floor",
    "rail_waist",
    "wall",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "work_aviary": [
    "floor",
    "rail_waist",
    "wall",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "work_center": [
    "worktable",
    "chair",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_salon": [
    "worktable",
    "chair",
    "wall",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_workshop": [
    "chair",
@@ -2322,34 +2610,41 @@
    "wall",
    "indoor",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_work"
   ],
   "work_atelier": [
    "chair",
    "worktable",
    "table",
    "wall",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_showroom": [
    "worktable",
    "chair",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_aquarium": [
    "rail_waist",
    "wall",
    "floor",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "work_shore": [
    "edge",
    "floor",
    "rail_waist",
    "chair",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "work_lagoon": [
    "chair",
@@ -2357,7 +2652,9 @@
    "edge",
    "shallow_water",
    "floor",
-   "sky"
+   "sky",
+   "k_water",
+   "soft"
   ],
   "work_observatory": [
    "rail_waist",
@@ -2365,7 +2662,8 @@
    "chair",
    "wall",
    "sky",
-   "night"
+   "night",
+   "k_work"
   ],
   "work_contest": [
    "floor",
@@ -2373,7 +2671,8 @@
    "wall",
    "table",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "work_league": [
    "chair",
@@ -2381,19 +2680,23 @@
    "rail_waist",
    "floor",
    "wall",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_practice": [
    "floor",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "work_travel": [
    "chair",
    "rail_waist",
    "wall",
    "table",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "work_shop": [
    "rail_waist",
@@ -2402,7 +2705,8 @@
    "chair",
    "indoor",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_work"
   ],
   "work_landing": [
    "rail_waist",
@@ -2410,14 +2714,16 @@
    "wall",
    "edge",
    "sky",
-   "shelf_high"
+   "shelf_high",
+   "k_street"
   ],
   "work_dock": [
    "edge",
    "floor",
    "rail_waist",
    "wall",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "work_train": [
    "chair",
@@ -2425,14 +2731,16 @@
    "wall",
    "edge",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_vehicle"
   ],
   "work_hotel": [
    "rail_waist",
    "chair",
    "wall",
    "indoor",
-   "stool"
+   "stool",
+   "k_work"
   ],
   "work_museum": [
    "rail_waist",
@@ -2440,20 +2748,24 @@
    "chair",
    "worktable",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "work_dig": [
    "floor",
    "worktable",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "work_storeroom": [
    "worktable",
    "floor",
    "wall",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "work_station": [
    "chair",
@@ -2461,13 +2773,16 @@
    "wall",
    "worktable",
    "indoor",
-   "shelf_high"
+   "shelf_high",
+   "k_work"
   ],
   "partner_garden": [
    "floor",
    "edge",
    "chair",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "partner_room": [
    "floor",
@@ -2475,14 +2790,18 @@
    "lie",
    "wall",
    "indoor",
-   "window"
+   "window",
+   "k_private",
+   "soft"
   ],
   "partner_park": [
    "chair",
    "floor",
    "edge",
    "sky",
-   "stool"
+   "stool",
+   "k_nature",
+   "soft"
   ],
   "partner_porch": [
    "chair",
@@ -2492,24 +2811,32 @@
    "rail_waist",
    "sky",
    "timed",
-   "doorway"
+   "doorway",
+   "k_nature",
+   "soft"
   ],
   "partner_lawn": [
    "floor",
    "wall",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "partner_yard": [
    "floor",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "berry_orchard": [
    "floor",
    "wall",
    "edge",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "berry_kitchen": [
    "worktable",
@@ -2519,20 +2846,25 @@
    "rail_waist",
    "indoor",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_private"
   ],
   "berry_camp": [
    "floor",
    "chair",
    "edge",
    "table",
-   "sky"
+   "sky",
+   "fire",
+   "k_nature",
+   "soft"
   ],
   "berry_market": [
    "rail_waist",
    "wall",
    "sky",
-   "shelf_high"
+   "shelf_high",
+   "k_street"
   ],
   "berry_stall": [
    "rail_waist",
@@ -2541,7 +2873,8 @@
    "table",
    "sky",
    "shelf_high",
-   "stool"
+   "stool",
+   "k_street"
   ],
   "street_office": [
    "chair",
@@ -2550,7 +2883,8 @@
    "wall",
    "indoor",
    "window",
-   "timed"
+   "timed",
+   "k_public"
   ],
   "street_diner": [
    "chair",
@@ -2560,7 +2894,8 @@
    "indoor",
    "window",
    "night",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "travel_airport": [
    "wall",
@@ -2568,32 +2903,39 @@
    "rail_waist",
    "indoor",
    "window",
-   "stool"
+   "stool",
+   "k_public"
   ],
   "studio_sound": [
    "chair",
    "table",
    "wall",
    "worktable",
-   "indoor"
+   "indoor",
+   "k_work"
   ],
   "travel_ranch": [
    "chair",
    "floor",
    "lie",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "fx_oasis": [
    "floor",
    "lie",
    "sky",
-   "timed"
+   "timed",
+   "k_water",
+   "soft"
   ],
   "fx_mirror": [
    "chair",
    "wall",
    "rail_waist",
-   "indoor"
+   "indoor",
+   "k_stage"
   ],
   "fx_jungle_ruins": [
    "floor",
@@ -2602,7 +2944,9 @@
    "wall",
    "sky",
    "shelf_high",
-   "stairs"
+   "stairs",
+   "k_nature",
+   "soft"
   ],
   "fx_lanternriver": [
    "floor",
@@ -2611,7 +2955,9 @@
    "wall",
    "sky",
    "night",
-   "stairs"
+   "stairs",
+   "k_stage",
+   "soft"
   ],
   "fx_skygarden": [
    "floor",
@@ -2620,14 +2966,18 @@
    "wall",
    "sky",
    "shelf_high",
-   "stairs"
+   "stairs",
+   "k_nature",
+   "soft"
   ],
   "fx_marble_temple": [
    "floor",
    "lie",
    "edge",
    "wall",
-   "sky"
+   "sky",
+   "k_stage",
+   "soft"
   ],
   "fx_moonpond": [
    "water",
@@ -2635,27 +2985,33 @@
    "edge",
    "sky",
    "night",
-   "stairs"
+   "stairs",
+   "k_water",
+   "soft"
   ],
   "fx_marble_bath": [
    "water",
    "lie",
    "edge",
-   "indoor"
+   "indoor",
+   "k_water",
+   "soft"
   ],
   "fx_cloudpavilion": [
    "rail_waist",
    "chair",
    "wall",
    "sky",
-   "timed"
+   "timed",
+   "k_nature"
   ],
   "fx_pirate_ship": [
    "edge",
    "rail_waist",
    "wall",
    "sky",
-   "stairs"
+   "stairs",
+   "k_vehicle"
   ],
   "fx_library": [
    "edge",
@@ -2663,14 +3019,16 @@
    "wall",
    "indoor",
    "shelf_high",
-   "stairs"
+   "stairs",
+   "k_public"
   ],
   "fx_ice": [
    "edge",
    "rail_waist",
    "wall",
    "indoor",
-   "stairs"
+   "stairs",
+   "k_stage"
   ],
   "fx_underwater": [
    "edge",
@@ -2679,7 +3037,8 @@
    "indoor",
    "window",
    "stairs",
-   "doorway"
+   "doorway",
+   "k_water"
   ],
   "repair_kiosk": [
    "worktable",
@@ -2690,7 +3049,8 @@
    "shelf_high",
    "indoor",
    "window",
-   "doorway"
+   "doorway",
+   "k_work"
   ],
   "maintenance_shed": [
    "worktable",
@@ -2701,7 +3061,8 @@
    "shelf_high",
    "indoor",
    "doorway",
-   "window"
+   "window",
+   "k_work"
   ],
   "pool_gear_room": [
    "edge",
@@ -2710,7 +3071,8 @@
    "floor",
    "shelf_high",
    "indoor",
-   "window"
+   "window",
+   "k_work"
   ],
   "drying_terrace": [
    "floor",
@@ -2719,7 +3081,9 @@
    "rail_waist",
    "edge",
    "shelf_high",
-   "sky"
+   "sky",
+   "k_nature",
+   "soft"
   ],
   "museum_workshop": [
    "table",
@@ -2729,7 +3093,8 @@
    "wall",
    "floor",
    "indoor",
-   "window"
+   "window",
+   "k_public"
   ],
   "stair_landing": [
    "stairs",
@@ -2738,14 +3103,17 @@
    "floor",
    "rail_waist",
    "indoor",
-   "window"
+   "window",
+   "k_public"
   ],
   "home_closet": [
    "stool",
    "wall",
    "floor",
    "shelf_high",
-   "indoor"
+   "indoor",
+   "k_private",
+   "soft"
   ],
   "home_veranda": [
    "floor",
@@ -2754,7 +3122,9 @@
    "shelf_high",
    "doorway",
    "indoor",
-   "window"
+   "window",
+   "k_private",
+   "soft"
   ],
   "street_bookstall": [
    "table",
@@ -2763,21 +3133,26 @@
    "wall",
    "floor",
    "shelf_high",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "street_bus_stop": [
    "chair",
    "stool",
    "wall",
    "floor",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "street_bike_path": [
    "edge",
    "wall",
    "floor",
    "rail_waist",
-   "sky"
+   "sky",
+   "bike",
+   "k_nature",
+   "soft"
   ],
   "water_indoor_pool": [
    "edge",
@@ -2786,7 +3161,8 @@
    "water",
    "deep_water",
    "indoor",
-   "window"
+   "window",
+   "k_water"
   ],
   "pw_workshop": [
    "worktable",
@@ -2797,7 +3173,8 @@
    "shelf_high",
    "doorway",
    "indoor",
-   "window"
+   "window",
+   "k_work"
   ],
   "pw_stairs": [
    "stairs",
@@ -2805,7 +3182,8 @@
    "wall",
    "floor",
    "rail_waist",
-   "sky"
+   "sky",
+   "k_street"
   ],
   "pw_laundry": [
    "floor",
@@ -2813,7 +3191,8 @@
    "wall",
    "shelf_high",
    "shallow_water",
-   "sky"
+   "sky",
+   "k_water"
   ],
   "pw_balcony": [
    "chair",
@@ -2821,7 +3200,9 @@
    "rail_waist",
    "wall",
    "floor",
-   "sky"
+   "sky",
+   "k_private",
+   "soft"
   ],
   "pw_platform": [
    "chair",
@@ -2830,7 +3211,55 @@
    "floor",
    "wall",
    "rail_waist",
-   "sky"
+   "sky",
+   "k_street"
+  ],
+  "car_seat": [
+   "chair",
+   "wheel",
+   "indoor",
+   "window",
+   "k_vehicle"
+  ],
+  "car_wash": [
+   "car",
+   "floor",
+   "wall",
+   "sky",
+   "k_work"
+  ],
+  "subway_platform": [
+   "chair",
+   "stool",
+   "wall",
+   "floor",
+   "indoor",
+   "k_public"
+  ],
+  "subway_car": [
+   "chair",
+   "strap_rail",
+   "wall",
+   "indoor",
+   "window",
+   "k_vehicle"
+  ],
+  "street_noodle_stall": [
+   "table",
+   "stool",
+   "rail_waist",
+   "floor",
+   "sky",
+   "night",
+   "k_street"
+  ],
+  "pw_cycling_road": [
+   "bike",
+   "rail_waist",
+   "edge",
+   "floor",
+   "sky",
+   "k_street"
   ]
  },
  "props": [
@@ -2862,7 +3291,10 @@
     "partner_room",
     "home_veranda",
     "pw_balcony",
-    "pw_workshop"
+    "pw_workshop",
+    "car_seat",
+    "subway_platform",
+    "street_noodle_stall"
    ]
   },
   {
@@ -2898,7 +3330,12 @@
     "@arcade",
     "@studio",
     "@stage",
-    "@evening"
+    "@evening",
+    "car_seat",
+    "subway_platform",
+    "subway_car",
+    "car_wash",
+    "street_noodle_stall"
    ]
   },
   {
@@ -2933,7 +3370,9 @@
     "street_bus_stop",
     "home_veranda",
     "pw_balcony",
-    "pw_platform"
+    "pw_platform",
+    "subway_car",
+    "subway_platform"
    ]
   },
   {
@@ -2955,7 +3394,9 @@
     "work_wetland",
     "street_bike_path",
     "pw_stairs",
-    "pw_platform"
+    "pw_platform",
+    "pw_cycling_road",
+    "subway_platform"
    ]
   },
   {
@@ -3025,7 +3466,8 @@
     "partner_porch",
     "water_indoor_pool",
     "pw_laundry",
-    "home_veranda"
+    "home_veranda",
+    "car_wash"
    ]
   },
   {
@@ -3219,7 +3661,9 @@
     "work_trail",
     "work_practice",
     "street_bike_path",
-    "water_indoor_pool"
+    "water_indoor_pool",
+    "pw_cycling_road",
+    "car_wash"
    ]
   },
   {
@@ -4188,7 +4632,8 @@
     "pw_workshop",
     "pw_laundry",
     "home_veranda",
-    "home_closet"
+    "home_closet",
+    "car_wash"
    ]
   },
   {
@@ -4247,6 +4692,34 @@
     "home_closet",
     "street_bookstall",
     "pw_workshop"
+   ]
+  },
+  {
+   "key": "meal_bowl",
+   "ko": "밥그릇 · 한 끼",
+   "en": "a bowl of hot food",
+   "places": [
+    "street_noodle_stall",
+    "street_diner",
+    "street_cafe",
+    "home_kitchen",
+    "travel_camp",
+    "travel_lodge",
+    "pw_lodge",
+    "pw_center",
+    "berry_kitchen",
+    "berry_camp",
+    "berry_stall",
+    "night_bar",
+    "train_sleeper"
+   ]
+  },
+  {
+   "key": "wash_sponge",
+   "ko": "세차 스펀지",
+   "en": "a soapy sponge",
+   "places": [
+    "car_wash"
    ]
   }
  ],
@@ -9560,6 +10033,115 @@
     "step_up",
     "lean_wall"
    ]
+  },
+  {
+   "key": "meal_eat",
+   "prop": "meal_bowl",
+   "kind": "both",
+   "hands": "both",
+   "zone": "chest",
+   "ko": "탁자 위 그릇에서 먹는다",
+   "en": "eats from {prop} set on the table in front of her",
+   "grip": {
+    "right": "lifts a bite with chopsticks or a spoon",
+    "left": "steadies the bowl"
+   },
+   "frames": [
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "sit_chair",
+    "sit_sideways",
+    "sit_lean",
+    "sit_edge",
+    "sit_floor",
+    "stand",
+    "lean_counter"
+   ],
+   "gaze": "at_prop",
+   "needs_any": [
+    "table",
+    "worktable",
+    "rail_waist"
+   ]
+  },
+  {
+   "key": "meal_hold",
+   "prop": "meal_bowl",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "chest",
+   "ko": "그릇을 든다",
+   "en": "holds {prop} at chest height",
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "sit_chair",
+    "sit_sideways",
+    "sit_edge",
+    "sit_floor",
+    "kneel",
+    "half_kneel",
+    "squat",
+    "lean_counter",
+    "sit_lean"
+   ]
+  },
+  {
+   "key": "car_sponge",
+   "prop": "wash_sponge",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "chest",
+   "ko": "차 문을 스펀지로 닦는다",
+   "en": "wipes the door of the car beside her with {prop}",
+   "frames": [
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "squat",
+    "half_kneel"
+   ],
+   "gaze": "at_prop",
+   "needs": [
+    "car"
+   ]
+  },
+  {
+   "key": "sponge_hold",
+   "prop": "wash_sponge",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "hips",
+   "ko": "스펀지를 옆에 든다",
+   "en": "holds {prop} dripping at her side",
+   "frames": [
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "walk",
+    "lean_wall"
+   ]
   }
  ],
  "outfit_features": {
@@ -10044,7 +10626,12 @@
     "street_bus_stop",
     "pw_workshop",
     "pw_stairs",
-    "pw_platform"
+    "pw_platform",
+    "car_seat",
+    "car_wash",
+    "subway_platform",
+    "subway_car",
+    "street_noodle_stall"
    ],
    "ko": "새 작업 자리 · 길가에 수영복 · 목욕 차림 · 란제리풍"
   }
@@ -10063,7 +10650,8 @@
    "left": "out",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "cheek_close",
@@ -10078,7 +10666,8 @@
    "left": "out",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "hair_close",
@@ -10092,7 +10681,8 @@
    "right": "hair_tuck",
    "left": "out",
    "legs": "",
-   "gaze": "down"
+   "gaze": "down",
+   "act": "ready"
   },
   {
    "key": "sip_close",
@@ -10107,7 +10697,8 @@
    "left": "out",
    "prop_kind": "raise",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "sip"
   },
   {
    "key": "vsign_close",
@@ -10122,7 +10713,8 @@
    "left": "out",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "chin_close",
@@ -10136,7 +10728,8 @@
    "right": "chin_table",
    "left": "out",
    "legs": "",
-   "gaze": "window"
+   "gaze": "window",
+   "act": "look"
   },
   {
    "key": "recline_head",
@@ -10151,7 +10744,8 @@
    "left": "prop",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "crossed_wall",
@@ -10165,7 +10759,8 @@
    "right": "arms_crossed",
    "left": "arms_crossed",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "lookback_raise",
@@ -10180,7 +10775,8 @@
    "left": "out",
    "prop_kind": "raise",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "look"
   },
   {
    "key": "strap_tilt",
@@ -10194,7 +10790,8 @@
    "right": "strap",
    "left": "out",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "ready"
   },
   {
    "key": "soak_hair",
@@ -10208,7 +10805,8 @@
    "right": "hair_tuck",
    "left": "water_trail",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "ready"
   },
   {
    "key": "swim_close",
@@ -10222,7 +10820,8 @@
    "right": "out",
    "left": "out",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "wave_chest",
@@ -10237,7 +10836,8 @@
    "left": "out",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "window_chin",
@@ -10251,7 +10851,8 @@
    "right": "chin_rail",
    "left": "rail",
    "legs": "",
-   "gaze": "window"
+   "gaze": "window",
+   "act": "look"
   },
   {
    "key": "thumbs_waist",
@@ -10266,7 +10867,8 @@
    "left": "hip",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "counter_cup",
@@ -10281,7 +10883,8 @@
    "left": "rail",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "look"
   },
   {
    "key": "pocket_look",
@@ -10296,7 +10899,8 @@
    "left": "pocket",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "look"
   },
   {
    "key": "clasp_low",
@@ -10311,7 +10915,8 @@
    "left": "clasp_both",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "wall_hair",
@@ -10325,7 +10930,8 @@
    "right": "hair_tuck",
    "left": "out",
    "legs": "",
-   "gaze": "screen_left"
+   "gaze": "screen_left",
+   "act": "ready"
   },
   {
    "key": "reach_waist",
@@ -10340,7 +10946,8 @@
    "left": "chest_hand",
    "legs": "",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "chair_cross_prop",
@@ -10355,7 +10962,8 @@
    "left": "lap",
    "prop_kind": "hold",
    "legs": "cross_legs",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "rest"
   },
   {
    "key": "walk_lookback",
@@ -10370,7 +10978,8 @@
    "left": "down",
    "prop_kind": "hold",
    "legs": "walk_pause",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "walk"
   },
   {
    "key": "hip_contra",
@@ -10384,7 +10993,8 @@
    "right": "hip",
    "left": "hair_tuck",
    "legs": "contrapposto",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "ready"
   },
   {
    "key": "edge_brace",
@@ -10398,7 +11008,8 @@
    "right": "edge_brace_both",
    "left": "edge_brace_both",
    "legs": "knees_together",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "floor_knee",
@@ -10412,7 +11023,8 @@
    "right": "chin_knee",
    "left": "floor_brace",
    "legs": "knee_up",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "camera_shot",
@@ -10427,7 +11039,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "stand_relaxed",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "key": "kneel_clasp",
@@ -10441,7 +11054,8 @@
    "right": "clasp_both",
    "left": "clasp_both",
    "legs": "knees_together",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "pose"
   },
   {
    "key": "wall_foot",
@@ -10455,7 +11069,8 @@
    "right": "pocket",
    "left": "hair_tuck",
    "legs": "foot_on_wall",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "stride_prop",
@@ -10470,7 +11085,8 @@
    "left": "down",
    "prop_kind": "hold",
    "legs": "walk_stride",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "walk"
   },
   {
    "key": "tiptoe_wave",
@@ -10485,7 +11101,8 @@
    "left": "down",
    "legs": "stand_relaxed",
    "gaze": "camera",
-   "pose": true
+   "pose": true,
+   "act": "pose"
   },
   {
    "key": "side_chair_read",
@@ -10500,7 +11117,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "knees_together",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "fix"
   },
   {
    "key": "side_chair_cross",
@@ -10515,7 +11133,8 @@
    "left": "lap",
    "prop_kind": "hold",
    "legs": "cross_legs",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "lie_side_full",
@@ -10529,7 +11148,8 @@
    "right": "floor_front",
    "left": "head_rest",
    "legs": "legs_bent_side",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "lie_front_full",
@@ -10543,7 +11163,8 @@
    "right": "chin_both",
    "left": "chin_both",
    "legs": "feet_up",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "edge_dangle",
@@ -10557,7 +11178,8 @@
    "right": "edge_brace_both",
    "left": "edge_brace_both",
    "legs": "feet_in_water",
-   "gaze": "horizon"
+   "gaze": "horizon",
+   "act": "rest"
   },
   {
    "key": "squat_prop",
@@ -10572,7 +11194,8 @@
    "left": "lap",
    "prop_kind": "hold",
    "legs": "squat_heels",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "chore"
   },
   {
    "key": "floor_horizon",
@@ -10586,7 +11209,8 @@
    "right": "lap",
    "left": "floor_brace",
    "legs": "cross_legged",
-   "gaze": "horizon"
+   "gaze": "horizon",
+   "act": "rest"
   },
   {
    "key": "lounger_drink",
@@ -10601,7 +11225,8 @@
    "left": "prop",
    "prop_kind": "hold",
    "legs": "legs_extended",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "stand_use",
@@ -10616,7 +11241,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "stand_relaxed",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "key": "bench_sit",
@@ -10631,7 +11257,8 @@
    "left": "lap",
    "prop_kind": "hold",
    "legs": "knees_together",
-   "gaze": "screen_left"
+   "gaze": "screen_left",
+   "act": "rest"
   },
   {
    "key": "counter_work",
@@ -10646,7 +11273,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "key": "table_lean_use",
@@ -10661,7 +11289,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "knees_together",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "key": "wrap_close",
@@ -10676,7 +11305,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "sip"
   },
   {
    "key": "ankles_sit",
@@ -10690,7 +11320,8 @@
    "right": "lap",
    "left": "natural",
    "legs": "ankles_crossed",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "raise_chest",
@@ -10705,7 +11336,8 @@
    "left": "out",
    "prop_kind": "raise",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "look"
   },
   {
    "key": "kneel_pet",
@@ -10719,7 +11351,8 @@
    "right": "pet_companion",
    "left": "natural",
    "legs": "",
-   "gaze": "down"
+   "gaze": "down",
+   "act": "rest"
   },
   {
    "key": "squat_offer",
@@ -10734,7 +11367,8 @@
    "left": "natural",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "chore"
   },
   {
    "key": "floor_rest_pet",
@@ -10748,7 +11382,8 @@
    "right": "pet_companion",
    "left": "floor_brace",
    "legs": "",
-   "gaze": "camera"
+   "gaze": "camera",
+   "act": "rest"
   },
   {
    "key": "walk_beside",
@@ -10763,7 +11398,8 @@
    "left": "natural",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "walk"
   },
   {
    "key": "stand_inspect",
@@ -10778,7 +11414,8 @@
    "left": "natural",
    "prop_kind": "hold",
    "legs": "",
-   "gaze": "at_prop"
+   "gaze": "at_prop",
+   "act": "fix"
   },
   {
    "key": "kneel_work",
@@ -10793,7 +11430,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "key": "desk_work",
@@ -10808,7 +11446,8 @@
    "left": "prop",
    "prop_kind": "both",
    "legs": "",
-   "gaze": ""
+   "gaze": "",
+   "act": "fix"
   },
   {
    "support": "none",
@@ -10823,7 +11462,8 @@
    "body": "front_3q",
    "right": "prop",
    "left": "prop",
-   "prop_kind": "both"
+   "prop_kind": "both",
+   "act": "fix"
   },
   {
    "support": "none",
@@ -10838,7 +11478,8 @@
    "body": "front_3q",
    "right": "prop",
    "left": "floor_brace",
-   "prop_kind": "hold"
+   "prop_kind": "hold",
+   "act": "chore"
   },
   {
    "support": "none",
@@ -10852,7 +11493,8 @@
    "frame": "full_body",
    "body": "side",
    "right": "reach_high",
-   "left": "natural"
+   "left": "natural",
+   "act": "chore"
   },
   {
    "support": "none",
@@ -10867,7 +11509,8 @@
    "body": "front_3q",
    "right": "prop",
    "left": "prop",
-   "prop_kind": "both"
+   "prop_kind": "both",
+   "act": "chore"
   },
   {
    "support": "none",
@@ -10881,7 +11524,8 @@
    "frame": "full_body",
    "body": "side",
    "right": "lace_tie",
-   "left": "lace_tie"
+   "left": "lace_tie",
+   "act": "ready"
   },
   {
    "support": "none",
@@ -10895,7 +11539,8 @@
    "frame": "full_body",
    "body": "front_3q",
    "right": "hip",
-   "left": "natural"
+   "left": "natural",
+   "act": "look"
   },
   {
    "support": "none",
@@ -10910,7 +11555,8 @@
    "body": "side",
    "right": "prop",
    "left": "out",
-   "prop_kind": "raise"
+   "prop_kind": "raise",
+   "act": "look"
   },
   {
    "support": "back_wall",
@@ -10925,7 +11571,68 @@
    "body": "front_3q",
    "right": "prop",
    "left": "prop",
-   "prop_kind": "both"
+   "prop_kind": "both",
+   "act": "fix"
+  },
+  {
+   "support": "back_seat",
+   "head": "with_body",
+   "camera": "eye",
+   "legs": "",
+   "gaze": "horizon",
+   "key": "drive_seat",
+   "ko": "운전대 잡고 앉기",
+   "act": "ride",
+   "posture": "sit_chair",
+   "frame": "waist_up",
+   "body": "front_3q",
+   "right": "wheel_both",
+   "left": "wheel_both"
+  },
+  {
+   "support": "none",
+   "head": "with_body",
+   "camera": "eye",
+   "legs": "",
+   "gaze": "down",
+   "key": "strap_stand",
+   "ko": "손잡이 잡고 서기",
+   "act": "ride",
+   "posture": "stand",
+   "frame": "three_quarter",
+   "body": "side",
+   "right": "strap_hold",
+   "left": "natural"
+  },
+  {
+   "support": "none",
+   "head": "with_body",
+   "camera": "eye",
+   "legs": "",
+   "gaze": "horizon",
+   "key": "saddle_sit",
+   "ko": "안장에 앉아 먼 곳 보기",
+   "act": "ride",
+   "posture": "ride_seat",
+   "frame": "full_body",
+   "body": "side",
+   "right": "handle_both",
+   "left": "handle_both"
+  },
+  {
+   "support": "none",
+   "head": "with_body",
+   "camera": "high",
+   "legs": "",
+   "gaze": "down",
+   "key": "fire_sit",
+   "ko": "불가에 앉아 손 쬐기",
+   "act": "camp",
+   "posture": "sit_floor",
+   "frame": "full_body",
+   "body": "front_3q",
+   "right": "fire_warm",
+   "left": "fire_warm"
   }
  ],
  "expressions": {
@@ -11357,6 +12064,60 @@
    "key": "pw_platform",
    "ko": "포켓몬 세계 정거장",
    "en": "a small station or dock platform of a Pokémon-world town, benches, a signal post and a waiting carriage"
+  },
+  {
+   "key": "car_seat",
+   "group": "street",
+   "ko": "운전석",
+   "en": "the driver's seat of a small car parked on a quiet street, the steering wheel in front of her, the windscreen and side window bright",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "car_wash",
+   "group": "street",
+   "ko": "셀프 세차장",
+   "en": "a self-service car wash bay, a small wet car beside her, a foam bucket, a coiled hose and puddles on the concrete",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "subway_platform",
+   "group": "street",
+   "ko": "지하철 승강장",
+   "en": "an underground subway platform, a tiled wall, a bench, platform-edge lights and a train arriving",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "subway_car",
+   "group": "street",
+   "ko": "지하철 객차 안",
+   "en": "the inside of a quiet subway car, bench seats along the windows, overhead straps and a grab pole",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "street_noodle_stall",
+   "group": "street",
+   "ko": "밤 포장마차",
+   "en": "a street food stall at night under a tarp, a narrow counter with stools, steaming pots and a bare bulb",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "pw_cycling_road",
+   "group": "pokeworld",
+   "ko": "포켓몬 세계 사이클링 로드",
+   "en": "a long cycling road bridge of the Pokémon world, a parked bicycle at the rail, sea wind and a town far below",
+   "eras": [
+    "in_pokemon"
+   ]
   }
  ],
  "weather": [
@@ -11740,6 +12501,101 @@
    "key": "lamplight",
    "ko": "등불",
    "en": "warm lamplight or candlelight indoors, the rest in shadow"
+  }
+ ],
+ "outfit_rules": {
+  "note": "의상 계열이 설 수 있는 장소 종류(2026-11-13 사용자 「갱도에서 수영복을 입고 누워있는 다거나」). needs_any: 이 종류 가운데 하나여야 · not_has: 이 종류면 안 된다. 없는 계열은 어디든. lib/casual-tree-v2.js why ofam",
+  "swimwear": {
+   "not_has": [
+    "k_work",
+    "k_public",
+    "k_street",
+    "k_vehicle"
+   ]
+  },
+  "bath": {
+   "not_has": [
+    "k_work",
+    "k_public",
+    "k_street",
+    "k_vehicle",
+    "k_nature"
+   ]
+  },
+  "lingerie": {
+   "not_has": [
+    "k_work",
+    "k_public",
+    "k_street",
+    "k_vehicle",
+    "k_nature"
+   ]
+  },
+  "homewear": {
+   "not_has": [
+    "k_work",
+    "k_public",
+    "k_street",
+    "k_vehicle"
+   ]
+  },
+  "evening": {
+   "not_has": [
+    "k_work"
+   ]
+  },
+  "bridal": {
+   "not_has": [
+    "k_work",
+    "k_water"
+   ]
+  },
+  "resort": {
+   "not_has": [
+    "k_work"
+   ]
+  }
+ },
+ "acts": [
+  {
+   "key": "ride",
+   "ko": "이동 · 탈것"
+  },
+  {
+   "key": "camp",
+   "ko": "야영"
+  },
+  {
+   "key": "fix",
+   "ko": "손보기 · 쓰기"
+  },
+  {
+   "key": "chore",
+   "ko": "집안일 · 정리"
+  },
+  {
+   "key": "ready",
+   "ko": "채비 · 매무새"
+  },
+  {
+   "key": "look",
+   "ko": "살피기 · 바라보기"
+  },
+  {
+   "key": "walk",
+   "ko": "걷기"
+  },
+  {
+   "key": "rest",
+   "ko": "쉬기"
+  },
+  {
+   "key": "sip",
+   "ko": "먹고 마시기"
+  },
+  {
+   "key": "pose",
+   "ko": "카메라용 몸짓"
   }
  ]
 }
