@@ -88,6 +88,10 @@ function ownDone(o, card) {
 function ownStep(o, card, cardRow) {
   const OWN = ownTable(o), n = OWN.number || 90;
   if (!P.ownRow(OWN, card)) return { note: n + ' ◇ 캐릭터만의 컷 — 아직 없음(data/casual-own.json 에 내용이 없다) · 건너뜀', none: true };
+  /* 같은 진화 계열(표의 line)의 다른 카드와 자세 추천(= 구도)이 같으면 짓지 않는다 — 표를 고친다(2026-11-13 사용자 「진화계열이 같은건 직업 레벨만 달라지고 구도는 똑같네」) */
+  const mine = P.ownRow(OWN, card), line = (OWN.cards[card] || {}).line;
+  const same = line ? Object.entries(OWN.cards).filter(([k, c]) => k !== card && c.line === line && ((c.worlds || {}).all || {}).preset === mine.preset).map(([k]) => k) : [];
+  if (same.length && !(!o.ownLevel && ownDone(o, card))) return { note: n + ' ✗ 캐릭터만의 컷 — 같은 계열 ' + same.join(' · ') + ' 와 같은 구도(' + mine.preset + ') · data/casual-own.json 을 고친다 · 건너뜀', bad: true };
   if (!o.ownLevel && ownDone(o, card)) return { note: n + ' ◇ 캐릭터만의 컷 — 이미 있다(등록부 · 기록) · 건너뜀 (다시 지으려면 --own-level)', done: true };
   try { return { cut: P.ownCutV2({ tree: TREE, tree2: TREE2, subject: { gen: cardRow.gen, color: cardRow.color }, own: OWN, card, level: o.ownLevel, seed: [o.seed || o.session || 'plan', card].join('|') }) }; }
   catch (e) { if (!/^casual-plan own/.test(e.message)) throw e; return { note: n + ' ✗ 캐릭터만의 컷을 못 지었다 — ' + e.message.replace(/^casual-plan own: /, ''), bad: true }; }
