@@ -25,7 +25,8 @@
     "pokemon_costume",
     "dongtan",
     "adventure",
-    "drape"
+    "drape",
+    "resort"
    ]
   },
   {
@@ -65,7 +66,8 @@
     "traditional",
     "costume",
     "dongtan",
-    "adventure"
+    "adventure",
+    "resort"
    ]
   },
   {
@@ -87,7 +89,8 @@
     "halloween",
     "pokemon_costume",
     "adventure",
-    "drape"
+    "drape",
+    "resort"
    ]
   }
  ],
@@ -7859,6 +7862,53 @@
      "en": "a modern toga mini dress — one-shoulder draped jersey in a short wrap, a gold cuff on the upper arm and strappy sandals"
     }
    ]
+  },
+  {
+   "key": "resort",
+   "ko": "휴양지 차림",
+   "en": "a resort look — light holiday clothes for sun and sea air, worn loose over bare skin",
+   "items": [
+    {
+     "key": "kaftan_open",
+     "ko": "열어 입은 카프탄",
+     "en": "a long printed kaftan worn open over a bandeau top and tailored shorts, flat sandals"
+    },
+    {
+     "key": "sarong_set",
+     "ko": "사롱 세트",
+     "en": "a knotted sarong skirt with a matching halter crop top and a shell anklet"
+    },
+    {
+     "key": "linen_shirt_shorts",
+     "ko": "린넨 셔츠와 반바지",
+     "en": "an oversized linen shirt half-buttoned over a bralette top with linen shorts"
+    },
+    {
+     "key": "crochet_set",
+     "ko": "크로셰 투피스",
+     "en": "a fully lined crochet two-piece — a short-sleeved crochet crop top and a matching mini skirt"
+    },
+    {
+     "key": "sundress_backless",
+     "ko": "등 파인 선드레스",
+     "en": "a backless halter sundress with a short flared hem and espadrilles"
+    },
+    {
+     "key": "palazzo_bandeau",
+     "ko": "와이드 팬츠와 밴도",
+     "en": "wide-leg palazzo trousers with a bandeau top and a wide-brimmed straw hat"
+    },
+    {
+     "key": "romper_wrap",
+     "ko": "랩 점프슈트(짧은)",
+     "en": "a wrap-front holiday romper with a deep V neckline and a tie belt"
+    },
+    {
+     "key": "aloha_knot",
+     "ko": "묶어 입은 알로하 셔츠",
+     "en": "a tropical-print shirt knotted at the waist over a bikini-style top with denim cut-offs"
+    }
+   ]
   }
  ],
  "required": {
@@ -13431,7 +13481,12 @@
    "wet",
    "wind",
    "undone",
-   "strap"
+   "strap",
+   "knot",
+   "waist_tied",
+   "sweat",
+   "sheer_light",
+   "slit"
   ],
   "not_frames": [
    "face_close"

@@ -2739,6 +2739,98 @@
    "rail_waist",
    "indoor",
    "window"
+  ],
+  "home_closet": [
+   "stool",
+   "wall",
+   "floor",
+   "shelf_high",
+   "indoor"
+  ],
+  "home_veranda": [
+   "floor",
+   "wall",
+   "stool",
+   "shelf_high",
+   "doorway",
+   "indoor",
+   "window"
+  ],
+  "street_bookstall": [
+   "table",
+   "stool",
+   "edge",
+   "wall",
+   "floor",
+   "shelf_high",
+   "sky"
+  ],
+  "street_bus_stop": [
+   "chair",
+   "stool",
+   "wall",
+   "floor",
+   "sky"
+  ],
+  "street_bike_path": [
+   "edge",
+   "wall",
+   "floor",
+   "rail_waist",
+   "sky"
+  ],
+  "water_indoor_pool": [
+   "edge",
+   "floor",
+   "wall",
+   "water",
+   "deep_water",
+   "indoor",
+   "window"
+  ],
+  "pw_workshop": [
+   "worktable",
+   "table",
+   "stool",
+   "wall",
+   "floor",
+   "shelf_high",
+   "doorway",
+   "indoor",
+   "window"
+  ],
+  "pw_stairs": [
+   "stairs",
+   "edge",
+   "wall",
+   "floor",
+   "rail_waist",
+   "sky"
+  ],
+  "pw_laundry": [
+   "floor",
+   "edge",
+   "wall",
+   "shelf_high",
+   "shallow_water",
+   "sky"
+  ],
+  "pw_balcony": [
+   "chair",
+   "table",
+   "rail_waist",
+   "wall",
+   "floor",
+   "sky"
+  ],
+  "pw_platform": [
+   "chair",
+   "stool",
+   "edge",
+   "floor",
+   "wall",
+   "rail_waist",
+   "sky"
   ]
  },
  "props": [
@@ -2767,7 +2859,10 @@
     "berry_camp",
     "partner_porch",
     "partner_lawn",
-    "partner_room"
+    "partner_room",
+    "home_veranda",
+    "pw_balcony",
+    "pw_workshop"
    ]
   },
   {
@@ -2833,7 +2928,12 @@
     "street_diner",
     "studio_sound",
     "travel_ranch",
-    "fx_cloudpavilion"
+    "fx_cloudpavilion",
+    "street_bookstall",
+    "street_bus_stop",
+    "home_veranda",
+    "pw_balcony",
+    "pw_platform"
    ]
   },
   {
@@ -2852,7 +2952,10 @@
     "pw_stadium",
     "pw_route",
     "partner_park",
-    "work_wetland"
+    "work_wetland",
+    "street_bike_path",
+    "pw_stairs",
+    "pw_platform"
    ]
   },
   {
@@ -2872,7 +2975,10 @@
     "pw_town",
     "pw_market",
     "partner_porch",
-    "partner_park"
+    "partner_park",
+    "street_bus_stop",
+    "street_bike_path",
+    "pw_platform"
    ]
   },
   {
@@ -2916,7 +3022,10 @@
     "pw_bath",
     "pw_room",
     "work_lagoon",
-    "partner_porch"
+    "partner_porch",
+    "water_indoor_pool",
+    "pw_laundry",
+    "home_veranda"
    ]
   },
   {
@@ -3073,7 +3182,9 @@
     "fx_pirate_ship",
     "fx_library",
     "fx_ice",
-    "fx_underwater"
+    "fx_underwater",
+    "pw_stairs",
+    "pw_workshop"
    ]
   },
   {
@@ -3106,7 +3217,9 @@
     "travel_dunes",
     "pw_route",
     "work_trail",
-    "work_practice"
+    "work_practice",
+    "street_bike_path",
+    "water_indoor_pool"
    ]
   },
   {
@@ -3190,7 +3303,8 @@
     "work_hide",
     "work_league",
     "street_office",
-    "street_diner"
+    "street_diner",
+    "street_bookstall"
    ]
   },
   {
@@ -3214,7 +3328,8 @@
     "street_park",
     "street_shop",
     "berry_orchard",
-    "partner_garden"
+    "partner_garden",
+    "home_veranda"
    ]
   },
   {
@@ -3673,7 +3788,9 @@
    "ko": "놋쇠 나침반",
    "en": "a brass compass",
    "places": [
-    "work_trail"
+    "work_trail",
+    "pw_stairs",
+    "pw_platform"
    ]
   },
   {
@@ -4046,7 +4163,8 @@
     "tailor_room",
     "bakery_kitchen",
     "greenhouse",
-    "home_kitchen"
+    "home_kitchen",
+    "pw_workshop"
    ]
   },
   {
@@ -4066,7 +4184,11 @@
     "pool_gear_room",
     "drying_terrace",
     "museum_workshop",
-    "stair_landing"
+    "stair_landing",
+    "pw_workshop",
+    "pw_laundry",
+    "home_veranda",
+    "home_closet"
    ]
   },
   {
@@ -4084,7 +4206,9 @@
     "pool_gear_room",
     "drying_terrace",
     "museum_workshop",
-    "stair_landing"
+    "stair_landing",
+    "pw_workshop",
+    "pw_stairs"
    ]
   },
   {
@@ -4097,7 +4221,10 @@
     "street_laundromat",
     "pool_gear_room",
     "spa_lounge",
-    "tailor_room"
+    "tailor_room",
+    "pw_laundry",
+    "home_veranda",
+    "home_closet"
    ]
   },
   {
@@ -4116,7 +4243,10 @@
     "pool_gear_room",
     "drying_terrace",
     "museum_workshop",
-    "stair_landing"
+    "stair_landing",
+    "home_closet",
+    "street_bookstall",
+    "pw_workshop"
    ]
   }
  ],
@@ -9469,7 +9599,8 @@
    "adventure": [
     "pocket"
    ],
-   "drape": []
+   "drape": [],
+   "resort": []
   },
   "add": {
    "overalls": [
@@ -9620,6 +9751,21 @@
    ],
    "fur_coat_mini": [
     "collar"
+   ],
+   "sundress_backless": [
+    "strap"
+   ],
+   "sarong_set": [
+    "strap"
+   ],
+   "linen_shirt_shorts": [
+    "collar"
+   ],
+   "aloha_knot": [
+    "collar"
+   ],
+   "palazzo_bandeau": [
+    "pocket"
    ]
   },
   "remove": {
@@ -9854,6 +10000,53 @@
     "stage_redcarpet"
    ],
    "ko": "모험가 차림으로 목욕 · 격식 자리"
+  },
+  {
+   "outfits": [
+    "resort"
+   ],
+   "places": [
+    "@sports",
+    "@work",
+    "evening_opera",
+    "evening_gala",
+    "evening_museum",
+    "street_office",
+    "library_reading",
+    "street_station",
+    "travel_airport",
+    "stage_wedding",
+    "repair_kiosk",
+    "maintenance_shed",
+    "museum_workshop",
+    "stair_landing",
+    "street_bookstall",
+    "street_bus_stop",
+    "home_closet",
+    "pw_workshop",
+    "pw_stairs",
+    "pw_platform"
+   ],
+   "ko": "휴양지 차림으로 현장 · 운동 · 격식 자리 · 작업 자리"
+  },
+  {
+   "outfits": [
+    "swimwear",
+    "bath",
+    "lingerie"
+   ],
+   "places": [
+    "repair_kiosk",
+    "maintenance_shed",
+    "museum_workshop",
+    "stair_landing",
+    "street_bookstall",
+    "street_bus_stop",
+    "pw_workshop",
+    "pw_stairs",
+    "pw_platform"
+   ],
+   "ko": "새 작업 자리 · 길가에 수영복 · 목욕 차림 · 란제리풍"
   }
  ],
  "presets": [
@@ -11065,6 +11258,105 @@
    "eras": [
     "now"
    ]
+  },
+  {
+   "key": "home_closet",
+   "group": "home",
+   "ko": "드레스룸",
+   "en": "a walk-in closet with open shelves, hanging rails, a full-length mirror and a low stool",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "home_veranda",
+   "group": "home",
+   "ko": "볕 드는 베란다",
+   "en": "a sunny enclosed veranda with drying racks overhead, floor cushions and a sliding glass door",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "street_bookstall",
+   "group": "street",
+   "ko": "헌책 노점",
+   "en": "a second-hand book stall under an awning on a quiet street, crates of books on trestle tables and a folding stool",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "street_bus_stop",
+   "group": "street",
+   "ko": "버스 정류장",
+   "en": "a bus shelter on a quiet street, a narrow bench, a glass side panel and the road beyond",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "street_bike_path",
+   "group": "travel",
+   "ko": "강변 자전거 길",
+   "en": "a riverside cycle path with a parked bicycle, a low stone wall and reeds along the water",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "key": "water_indoor_pool",
+   "group": "water",
+   "ko": "실내 수영장",
+   "en": "an indoor lap pool with lane ropes, a tiled deck, a starting block and tall windows",
+   "eras": [
+    "now"
+   ]
+  },
+  {
+   "group": "pokeworld",
+   "eras": [
+    "in_pokemon"
+   ],
+   "key": "pw_workshop",
+   "ko": "포켓몬 세계 공방",
+   "en": "a craftsman's workshop of a Pokémon-world town, a heavy workbench, hanging tools and an open door"
+  },
+  {
+   "group": "pokeworld",
+   "eras": [
+    "in_pokemon"
+   ],
+   "key": "pw_stairs",
+   "ko": "포켓몬 세계 돌계단",
+   "en": "a long outdoor stairway climbing through a town of a Pokémon-world town, lamps along the steps and rooftops below"
+  },
+  {
+   "group": "pokeworld",
+   "eras": [
+    "in_pokemon"
+   ],
+   "key": "pw_laundry",
+   "ko": "포켓몬 세계 빨래터",
+   "en": "a washing place by a water channel of a Pokémon-world town, stone basins, drying lines overhead and wet flagstones"
+  },
+  {
+   "group": "pokeworld",
+   "eras": [
+    "in_pokemon"
+   ],
+   "key": "pw_balcony",
+   "ko": "포켓몬 세계 발코니",
+   "en": "a balcony of her own house in a town of a Pokémon-world town, a balustrade, a small table and the street below"
+  },
+  {
+   "group": "pokeworld",
+   "eras": [
+    "in_pokemon"
+   ],
+   "key": "pw_platform",
+   "ko": "포켓몬 세계 정거장",
+   "en": "a small station or dock platform of a Pokémon-world town, benches, a signal post and a waiting carriage"
   }
  ],
  "weather": [

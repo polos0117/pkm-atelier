@@ -93,7 +93,7 @@ for (let i = 0; i < N_V2; i++) {
   n++;
 }
 /* 상황 넷이 다 돈다 · 새 계열(동탄룩 · 모험가 · 신화 드레이프, 2026-11-09 삼국지에서 옮김)도 나온다 */
-assert.equal(Object.keys(situN).length, 4, '상황 ' + JSON.stringify(situN));
+assert(Object.keys(situN).length >= 4, '상황 넷 넘게(2026-11-13 상황이 늘었다 — 아홉) ' + JSON.stringify(situN));
 { const fams = new Set(entries.slice(10).flatMap(e => e.cuts.map(x => x.ofam))); assert(['dongtan', 'adventure', 'drape'].every(f => fams.has(f)), '새 계열 — ' + [...fams].join(' · ')); }
 /* 버전2 컷이 쌓인 장부 위에서 버전1 계획기도 check 를 통과한다 — 버전2 표의 새 장소도 같은 묶음으로 센다(이상해씨 시범 예약 뒤 버전1 계획기가 덜 쓴 묶음을 장부와 다르게 셌다) */
 assert(entries.slice(10).some(e => e.cuts.some(x => !tree.places.some(p => p.key === x.place))), '버전2 새 장소가 장부에 있다');
@@ -125,7 +125,8 @@ const v1cut = entries[0].cuts[0], s1 = ST.initial(S, CT, P, {}, tree, { name: '�
 assert(!s1.st.scenes.casual.treeV && s1.st.scenes.casual.act === v1cut.act, '버전1 주소');
 
 /* 3. 피할 값 · 만든 컷 두기 */
-const av = P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z', avoid: [{ cut: null, field: 'place', value: cut0.place }, { cut: null, field: 'frame', value: 'full_body' }] });
+/* 전신 프레이밍을 통째로 피하면 남는 프레이밍 다섯 × 두 장 = 열 장이라 빠듯하다 — 씨앗에 따라 「맞는 구도 없음」 으로 던진다(고치기 전 60번 중 12번, 2026-11-13 규칙 뒤 17번). 도구(tools/casual-plan.cjs)처럼 씨앗을 바꿔 다시 */
+const av = (() => { for (let i = 0; i < 20; i++) { try { return P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z' + (i || ''), avoid: [{ cut: null, field: 'place', value: cut0.place }, { cut: null, field: 'frame', value: 'full_body' }] }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('피할 값 계획을 스무 번 안에 못 정했다'); })();
 assert(!av.cuts.some(x => x.place === cut0.place || x.frame === 'full_body'), '피할 값');
 const keep = P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z2', kept: [Object.assign({}, av.cuts[0], { kept: true })] });
 assert.deepEqual(keep.cuts[0].place, av.cuts[0].place); assert(keep.cuts[0].kept, '만든 컷은 그대로');
