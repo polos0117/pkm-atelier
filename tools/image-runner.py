@@ -21,17 +21,29 @@ SLOTS7 = ['light'] + ['casual%d' % n for n in range(1, 8)]
 SLOTS9 = ['light'] + ['casual%d' % n for n in range(1, 10)]
 # 2026-11-11 — 새로 잡는 캐릭터는 경장 ① + 일상 열 장(아홉 + 갈래 · 상황 자유 한 장 — 사용자 「그러면 이제 일상컷 10장씩」). 아홉 장으로 잡은 차례(light9)는 그대로
 SLOTS = ['light'] + ['casual%d' % n for n in range(1, 11)]
-ALL_SLOTS = LEGACY_SLOTS + [s for s in SLOTS if s not in LEGACY_SLOTS]
+# 2026-11-13 — 새로 잡는 캐릭터는 열 장 뒤에 캐릭터만의 컷 한 장(casual90 — data/casual-own.json, 사용자 「직업쪽은 항상 필수로 한장」). 열 장으로 잡은 차례(light10)는 그대로
+OWN_SLOT = 'casual90'
+SLOTS_OWN = SLOTS + [OWN_SLOT]
+ALL_SLOTS = LEGACY_SLOTS + [s for s in SLOTS_OWN if s not in LEGACY_SLOTS]
 STYLE = 'anime_25d_gloss'   # 2026-11-08 애니 2.5D 광택(사용자 「새 화풍키로 등록해줘」) — 그 전 anime_25d · anime_gloss · gloss_daylight
 
 
 def slots_of(c):
-    return SLOTS if c.get('slot_set') == 'light10' else SLOTS9 if c.get('slot_set') == 'light9' else SLOTS7 if c.get('slot_set') == 'light7' else LEGACY_SLOTS
+    return SLOTS_OWN if c.get('slot_set') == 'light10own' else SLOTS if c.get('slot_set') == 'light10' else SLOTS9 if c.get('slot_set') == 'light9' else SLOTS7 if c.get('slot_set') == 'light7' else LEGACY_SLOTS
+
+
+def has_own(name):
+    """그 카드의 캐릭터만의 컷 내용이 표에 있나 — 없으면 열 장만 잡는다"""
+    try:
+        return bool(json.loads((ROOT / 'data' / 'casual-own.json').read_text(encoding='utf-8')).get('cards', {}).get(name, {}).get('worlds'))
+    except (OSError, ValueError):
+        return False
 
 
 def style_complete(v):
     """그 화풍이 다 찼나 — 아홉 자리(폼 여섯 + 일상 셋) 또는 경장 + 일상 일곱"""
-    forms, casual = v.get('byForm', {}), v.get('casual', {}).get('f', [])
+    forms = v.get('byForm', {})
+    casual = [f for f in v.get('casual', {}).get('f', []) if not f.endswith('_f_' + OWN_SLOT + '.webp')]   # 캐릭터만의 컷은 일상 장수에 안 센다
     nine = all(forms.get(f, {}).get('f') for f in LEGACY_SLOTS[:6]) and len(casual) >= 3
     eight = bool(forms.get('light', {}).get('f')) and len(casual) >= 7
     return nine or eight
@@ -409,7 +421,7 @@ def prepare(state, owner, available, blocked, at, execution_id=None):
     charge(state, [picked['no']], at)
     ident = utc + '-' + str(len(state['runs']) + 1)
     r = {'id': ident, 'execution_id': execution_id, 'owner': owner, 'status': 'active', 'created_at': now(), 'queue': [
-        {'no': picked['no'], 'name': picked['name'], 'style': STYLE, 'slot_set': 'light10', 'status': 'claimed', 'slots': {}}]}
+        {'no': picked['no'], 'name': picked['name'], 'style': STYLE, 'slot_set': 'light10own' if has_own(picked['name']) else 'light10', 'status': 'claimed', 'slots': {}}]}
     state['runs'].append(r)
     state['claims'][str(picked['no'])] = {'owner': owner, 'run': ident, 'status': 'held', 'at': now()}
     return r

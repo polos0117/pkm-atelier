@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-13 · claude · 관리기 — 캐릭터만의 컷(casual90) 자리 · 일상 장수에서 빼기
+- tools/image-runner.py — 사용자 「응, 고쳐줘」: 새로 잡는 캐릭터는 표(data/casual-own.json)에 내용이 있으면 열 장 뒤에 casual90 한 자리를 더 잡는다(slot_set light10own — 경장 + 일상 열 + 90번, `--slot casual90` 받음). 이미 잡힌 차례(light10 등)는 그대로. style_complete 는 90번을 일상 장수에 세지 않는다(일상 여섯 + 90번을 일곱 장으로 보던 것). 관리기는 새 캐릭터만 잡으므로, 이미 다 그린 카드의 90번은 계획기 `--own` 으로 따로 만든다
+- tests/image-runner.py · tests/image-runner-external.py — 새 차례의 자리 열둘(등록 where 포함)에 맞추고, 차례마다 제 자리 묶음(slots_of)을 쓰게
+
 ## 2026-11-13 · claude · 캐릭터만의 컷 — 1,025종 내용 채움 · 새 캐릭터 설계 규칙
 - data/casual-own.json — 사용자 「한번에 채워줘주고 묶음 도구 연결도 해줘」: 진화 계열 541개마다 직업 하나, 계열 안의 종은 경력 단계(견습 → 정직원 → 점장)로 1,025종 전부(mode same_job, worlds.all). 예시였던 잠만보 · 럭키도 계열 직업으로 바뀌었다(도시락 가게 · 간호). 글은 보조 에이전트 여덟이 썼고, 아이 · 손님이 나오는 문장 열한 줄은 고쳤다. 1,025 장면 모두 ownCutV2 통과
 - docs/casual-own-list.md — 새 파일. 계열별 연상 · 종별 직업 훑어보기 목록(도감 차례)

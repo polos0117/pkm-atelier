@@ -87,8 +87,8 @@ assert c['status']=='skipped_external_partial'
 
 # All nine own outputs with registration still absent must wait, not skip.
 state,run,_=setup();c=run['queue'][0]
-c['slots']={slot:{'status':'accepted','image':{'path':path,'sha256':R.digest(raw)}} for slot in R.SLOTS}
-files={path:raw, **{'img/'+R.filename(c,slot):R.webp(raw) for slot in R.SLOTS}}
+c['slots']={slot:{'status':'accepted','image':{'path':path,'sha256':R.digest(raw)}} for slot in R.slots_of(c)}
+files={path:raw, **{'img/'+R.filename(c,slot):R.webp(raw) for slot in R.slots_of(c)}}
 a,b=Remote('a'),Remote('b',files)
 R.reconcile_external(state,run,{},[a,b],'code-before-registration',b.read)
 assert c['status'] not in R.TERMINAL and R.next_step(run)['action']=='verify_registration'
@@ -160,10 +160,10 @@ with tempfile.TemporaryDirectory() as tmp:
         # Originals/accepted bytes are publishable once; the normal push is the race guard.
         state,run,_=setup();c=run['queue'][0]
         buf=io.BytesIO();Image.new('RGB',(1024,1536)).save(buf,format='PNG');raw=buf.getvalue()
-        source='records/automation/fixture.png';c['slots']={slot:{'status':'accepted','image':{'path':source,'sha256':R.digest(raw)}} for slot in R.SLOTS}
+        source='records/automation/fixture.png';c['slots']={slot:{'status':'accepted','image':{'path':source,'sha256':R.digest(raw)}} for slot in R.slots_of(c)}
         R.prepare_publication(run,lambda p:raw)
         assert len(c['publication']['files'])==len(R.slots_of(c)) and R.next_step(run)['action']=='publish_images_then_verify_registration'
-        c['own_publication']={'files':[R.filename(c,slot) for slot in R.SLOTS]}
+        c['own_publication']={'files':[R.filename(c,slot) for slot in R.slots_of(c)]}
         assert R.next_step(run)['action']=='verify_registration'
     finally:R.ROOT=oldroot;sys.argv=oldargv
 # 일상컷 intent 앞 — 자기 예약이라도 계획기(reserve)가 적은 그대로가 아니면 멈춘다(2026-10-25 히포포타스)

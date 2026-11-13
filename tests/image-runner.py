@@ -25,7 +25,7 @@ with tempfile.TemporaryDirectory() as td:
     q=R.prepare(state,'worker',cards,{},'2026-10-22','test-execution')
     assert len(q['queue'])==1
     # 2026-11-07 — 새 차례는 경장 ① + 일상 일곱(애니 광택)
-    assert q['queue'][0]['slot_set']=='light10' and q['queue'][0]['style']=='anime_25d_gloss' and R.slots_of(q['queue'][0])==['light']+['casual%d'%n for n in range(1,11)]
+    assert q['queue'][0]['slot_set']=='light10own' and q['queue'][0]['style']=='anime_25d_gloss' and R.slots_of(q['queue'][0])==['light']+['casual%d'%n for n in range(1,11)]+['casual90'] and R.slots_of({'slot_set':'light10'})==['light']+['casual%d'%n for n in range(1,11)]
     assert R.slots_of({'slot_set':'light9'})==['light']+['casual%d'%n for n in range(1,10)]
     assert R.slots_of({'slot_set': 'light7'})==['light']+['casual%d'%n for n in range(1,8)]   # 일곱 장으로 잡은 차례는 그대로(2026-11-09)
     rejects(lambda:R.prepare(state,'other',cards,{},'2026-10-22','test-execution'),'owner takeover')
@@ -86,20 +86,20 @@ with tempfile.TemporaryDirectory() as td:
     import io
     completed = copy.deepcopy(q)
     c = completed['queue'][0]
-    c['slots'] = {slot: copy.deepcopy(c['slots']['light']) for slot in R.SLOTS}
+    c['slots'] = {slot: copy.deepcopy(c['slots']['light']) for slot in R.SLOTS_OWN}
     for x in c['slots'].values(): x['status'] = 'accepted'
     raw = image.read_bytes(); buf = io.BytesIO()
     Image.open(io.BytesIO(raw)).save(buf, format='WEBP', quality=85, method=6)
     thumb = io.BytesIO(); Image.new('RGB', (341, 512)).save(thumb, format='WEBP')
     blobs = {c['slots']['light']['image']['path']: raw}
     entry = {'byForm': {}, 'casual': {'f': []}}; where = {}
-    for slot in R.SLOTS:
+    for slot in R.SLOTS_OWN:
         f = R.filename(c, slot)
         if slot.startswith('casual'): entry['casual']['f'].append(f)
         else: entry['byForm'][slot] = {'f': f}
         blobs['img/' + f] = buf.getvalue(); blobs['img/thumb/' + f] = thumb.getvalue(); where[f] = 1
     registry = {'img': {c['name']: {'byStyle': {c['style']: entry}}}, 'where': where}
-    assert len(where) == 11   # 경장 + 일상 열(2026-11-11)
+    assert len(where) == 12   # 경장 + 일상 열(2026-11-11)
     image_store = type('Images', (), {'base':'image-commit','read':lambda self,p:blobs[p]})()
     code_store = type('Code', (), {'base':'code-commit','read':lambda self,p:R.encoded(registry)})()
     broken = next(p for p in blobs if p.startswith('img/') and not p.startswith('img/thumb/'))
