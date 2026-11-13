@@ -13486,7 +13486,9 @@
    "waist_tied",
    "sweat",
    "sheer_light",
-   "slit"
+   "slit",
+   "sleeves_up",
+   "tie_loose"
   ],
   "not_frames": [
    "face_close"
