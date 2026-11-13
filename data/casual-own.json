@@ -2224,7 +2224,7 @@
      "base": "pw_workshop",
      "place": "a bedding shop — stacked mattresses, rows of pillows, a tester bed with linen and warm lamps",
      "activity": "she is a trainee with a hand at her waist, looking down at a soft pillow and yawning",
-     "preset": "pocket_look",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a soft pillow",
      "outfit": {
