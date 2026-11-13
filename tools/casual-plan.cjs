@@ -20,7 +20,15 @@
    트리 변환표로 길을 붙여 준다 — 생김새 몰림도 그 길(path:<장소>/<하는 일>·group:<장소 묶음>)로 센다(Rust 색인은 그대로). --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr
    버전2(2026-10-30 기본, docs/CASUAL_TREE_V2.md) — 버전2 칸으로 정한다(lib/casual-plan.js planV2). 버전2 컷은 장부 비교에서 짓(소품 동작 · 몸 자세+손) ·
    몸 방향+머리 방향으로 센다. --avoid 칸은 era·place·ofam·item·group·posture·body·frame·use·expr.
-   --v1 이면 예전 버전1 칸(하는 일 · 자세 · 방향 · 화각)으로 정한다 — 그때 --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr */
+   --v1 이면 예전 버전1 칸(하는 일 · 자세 · 방향 · 화각)으로 정한다 — 그때 --avoid 칸은 era·place·act·ofam·item·group·pose·orient·frame·lens·expr
+
+   캐릭터만의 컷(2026-11-13, IMAGE_RULES 3절 「캐릭터만의 컷」) — 일상 묶음을 정한 뒤 표(data/casual-own.json)에 그 카드의 내용이 있고 90번이 아직 없으면
+   (등록부 data/img.json 의 …_casual90.webp · 그림 저장소 records/<폴더>/casual90-ui.json) 계획 끝에 한 장(cut 90)을 더한다. 장부는 90번을 세지 않는다(check · reserve 가 걸러 낸다).
+   표에 내용이 없으면 「90 ◇ 아직 없음 · 건너뜀」, 표의 줄이 트리에 안 맞으면 「90 ✗ …」 를 찍고 일상 묶음은 그대로 낸다.
+       --own                 일상컷이 이미 등록된 카드도 90번 한 장만 짠다(일상 묶음은 안 정한다 · 예약 없음 — --reserve 와 같이 못 쓴다)
+       --own-level <단계>    bold(기본) · moderate · low — 막혔을 때 한 단계 내려 다시 짓는다. 90번이 이미 있어도 짓는다. 같은 --session(또는 --seed)이면 의상 줄만 바뀐다
+       node tools/casual-plan.cjs 잠만보 --own --session s1 --out work/PLAN90.json
+       node tools/casual-plan.cjs 잠만보 --own --own-level moderate --session s1 --out work/PLAN90.json */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..');
@@ -44,6 +52,8 @@ function args(argv) {
     else if (a === '--json') o.json = true;
     else if (a === '--v2') o.v2 = true;   /* 기본이다 — 예전 명령을 그대로 받는다 */
     else if (a === '--v1') o.v2 = false;
+    else if (a === '--own') o.ownOnly = true;
+    else if (a === '--own-level') o.ownLevel = argv[++i];
     else if (a === '--refill') o.refill.push(argv[++i]);
     else if (a === '--avoid') o.avoid.push(argv[++i]);
     else if (a === '--keep') { const m = /^(.+?):([\d,]+)$/.exec(argv[++i] || ''); if (!m) throw new Error('--keep 은 카드:컷번호(1,3)'); o.keep[m[1]] = m[2].split(',').map(Number); }
@@ -54,7 +64,33 @@ function args(argv) {
   o.cards = o.cards.concat(o.refill.filter(c => !o.cards.includes(c)));
   if (!o.cards.length) throw new Error('카드 이름이 필요하다');
   if (o.reserve && !o.session) throw new Error('--reserve 에는 --session 이 필요하다(예약 파일 이름)');
+  if (o.ownOnly && o.reserve) throw new Error('--own 은 예약이 없다(90번은 장부에 안 센다) — --reserve 없이');
+  if (o.ownOnly && o.refill.length) throw new Error('--own 과 --refill 은 같이 못 쓴다');
   return o;
+}
+/* ══ 캐릭터만의 컷(2026-11-13) — 표 data/casual-own.json, 장면 짓기는 lib/casual-plan.js ownCutV2. o.ownTable 은 검사가 넣는 임시 표 */
+const ownTable = o => o.ownTable || (o.ownTable = fs.existsSync(path.join(ROOT, 'data', 'casual-own.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'casual-own.json'), 'utf8')) : { cards: {} });
+/* 90번이 벌써 있나 — 등록부(data/img.json 의 그 카드 어디든 …_casual90.webp) 또는 그림 저장소 기록(records/<폴더>/casual90-ui.json 의 카드) */
+function ownDone(o, card) {
+  const n = ownTable(o).number || 90, f = path.join(ROOT, 'data', 'img.json');
+  const img = o.img || (o.img = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).img || {} : {});
+  if (new RegExp('_casual' + n + '\\.webp"').test(JSON.stringify(img[card] || {}))) return true;
+  for (const r of o.repos) {
+    let dirs = []; try { dirs = fs.readdirSync(path.join(r, 'records')); } catch (e) { continue; }
+    for (const d of dirs) {
+      let ui; try { ui = JSON.parse(fs.readFileSync(path.join(r, 'records', d, 'casual' + n + '-ui.json'), 'utf8')); } catch (e) { continue; }
+      if (((ui.storage || ui).last || ui.card) === card) return true;
+    }
+  }
+  return false;
+}
+/* 그 카드의 캐릭터만의 컷 한 걸음 — { cut } 또는 { note }(없음 · 이미 있음 · 표가 트리에 안 맞음). 씨앗에 시도 번호를 안 섞는다 — 단계를 내려도 의상 줄만 바뀌게 */
+function ownStep(o, card, cardRow) {
+  const OWN = ownTable(o), n = OWN.number || 90;
+  if (!P.ownRow(OWN, card)) return { note: n + ' ◇ 캐릭터만의 컷 — 아직 없음(data/casual-own.json 에 내용이 없다) · 건너뜀', none: true };
+  if (!o.ownLevel && ownDone(o, card)) return { note: n + ' ◇ 캐릭터만의 컷 — 이미 있다(등록부 · 기록) · 건너뜀 (다시 지으려면 --own-level)', done: true };
+  try { return { cut: P.ownCutV2({ tree: TREE, tree2: TREE2, subject: { gen: cardRow.gen, color: cardRow.color }, own: OWN, card, level: o.ownLevel, seed: [o.seed || o.session || 'plan', card].join('|') }) }; }
+  catch (e) { if (!/^casual-plan own/.test(e.message)) throw e; return { note: n + ' ✗ 캐릭터만의 컷을 못 지었다 — ' + e.message.replace(/^casual-plan own: /, ''), bad: true }; }
 }
 function spec() {
   const c = { window: {} }; vm.createContext(c);
@@ -91,11 +127,17 @@ function speciesOf(cards, card) {
 }
 
 function planBatch(o, S, entries, look, cards, attempt) {
-  const batch = [];
+  const batch = [], owns = {}, only = [];
   for (const card of o.cards) {
     const refill = o.refill.includes(card);
     const mine = entries.filter(e => e.card === card && e.status !== 'reserved').pop();
-    if (!refill && mine) throw new Error(card + ' 는 이미 일상컷이 등록됐다 — 빈 컷을 채우려면 --refill');
+    owns[card] = ownStep(o, card, cards.find(x => x.name === card) || {});
+    if (o.ownOnly) {   /* --own — 90번 한 장만. 일상 묶음은 안 건드린다(이미 등록된 카드도 된다) */
+      if (!owns[card].cut) throw new Error(card + ' — ' + owns[card].note);
+      only.push({ card, species: mine ? mine.species : speciesOf(cards, card), own_only: true, cuts: [] });
+      continue;
+    }
+    if (!refill && mine) throw new Error(card + ' 는 이미 일상컷이 등록됐다 — 빈 컷을 채우려면 --refill, 캐릭터만의 컷(90번) 한 장만이면 --own');
     if (refill && !mine) throw new Error(card + ' 는 등록된 일상컷이 없다 — --refill 없이 새로 정한다');
     let kept = refill ? mine.cuts.map(c => ({ ...c })) : [];
     if (o.keep[card]) {
@@ -122,7 +164,11 @@ function planBatch(o, S, entries, look, cards, attempt) {
     const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen, color: cardRow.color }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
-  return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch };
+  /* 캐릭터만의 컷은 묶음을 다 정한 뒤 끝에 붙인다 — 뒤 카드의 묶음 비교(batch)에 섞이지 않게 */
+  return { session: o.session || 'dry-run', planner: 'tools/casual-plan.cjs', characters: batch.concat(only).map(ch => {
+    const own = owns[ch.card];
+    return own.cut ? { ...ch, cuts: ch.cuts.concat([own.cut]) } : { ...ch, own_note: own.note };
+  }) };
 }
 function check(o, planFile) {
   try { return { ok: true, out: ledgerPy(o, 'check', planFile, '--fresh') }; }
@@ -172,8 +218,14 @@ function show(o, res) {
   lines.push('일상컷 계획 — 세션 ' + res.plan.session + ' · 장부 ' + res.entries.length + '칸' +
     (res.look ? ' · 생김새 색인 ' + res.look.cuts + '컷(' + res.look.built + ')' : ' · 생김새 색인 없음') + (res.attempt ? ' · 다시 정한 횟수 ' + res.attempt : ''));
   for (const ch of res.plan.characters) {
-    lines.push('', '■ ' + ch.card + ' (' + ch.species + ')' + (ch.refill ? ' — 빈 컷 다시 채우기' : '') + ' · ' + whyText(ch.why));
+    lines.push('', '■ ' + ch.card + ' (' + ch.species + ')' + (ch.refill ? ' — 빈 컷 다시 채우기' : '') + (ch.own_only ? ' — 캐릭터만의 컷만(--own)' : ' · ' + whyText(ch.why)));
+    if (ch.own_note) lines.push('  ' + ch.own_note);
     for (const c of ch.cuts) {
+      if (c.own) {   /* 캐릭터만의 컷 — 글 칸(장소 · 장면 · 의상 · 도구)은 표에서 온다. 주소에는 own 과 단계만 실리고 생성기가 표를 다시 읽는다 */
+        lines.push('  ' + c.cut + '번 ◆ 캐릭터만의 컷 — ' + c.job_ko + ' · 노출 ' + c.axes.skin_exposure + ' · ' + c.preset + (c.ownProp ? ' · 도구 ' + c.use : ''));
+        lines.push('       ' + GENERATOR + '?' + P.generatorQuery(ch.card, c));
+        continue;
+      }
       if (c.kept) { lines.push('  ' + c.cut + '번 등록됨 — ' + pathText(c)); continue; }
       if (c.treeV === 2) lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' [버전2]');
       else lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' · 자세 ' + (c.pose || '하는 일대로') + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
@@ -185,6 +237,7 @@ function show(o, res) {
   }
   lines.push('', '계획 ' + res.file + ' — casual-ledger.py check 통과');
   lines.push('지시문 묶음: node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> --plan <--out 으로 받은 계획 파일> → settings.json 을 채우고 build (IMAGE_RULES 3절 「지시문 묶음」)');
+  if (res.plan.characters.some(ch => ch.cuts.some(c => c.own))) lines.push('캐릭터만의 컷(90번)은 묶음의 casual90 자리 — 채울 칸이 없다. 이 한 장만이면 build --dir <작업 폴더> --slot casual90 [--plan <새 계획>]');
   return lines.join('\n');
 }
 
@@ -218,7 +271,7 @@ if (require.main === module) {
       git(r, 'pull', '-q', '--rebase', 'origin', 'main');
     }
     const res = o.reserve ? reserve(o, S, cards) : solve(o, S, cards);
-    process.stdout.write((o.json ? JSON.stringify(res.plan, null, 1) : show(o, res) + (o.reserve ? '\n예약 ' + (o.push ? '— push 했다. 이제 생성한다' : '— 그림 저장소에 그 파일만 commit·push 한 뒤 생성한다') : '\n(예약 안 함 — --reserve --push 로 적는다)')) + '\n');
+    process.stdout.write((o.json ? JSON.stringify(res.plan, null, 1) : show(o, res) + (o.reserve ? '\n예약 ' + (o.push ? '— push 했다. 이제 생성한다' : '— 그림 저장소에 그 파일만 commit·push 한 뒤 생성한다') : o.ownOnly ? '\n(캐릭터만의 컷은 예약이 없다 — 90번은 장부에 안 센다)' : '\n(예약 안 함 — --reserve --push 로 적는다)')) + '\n');
   } catch (e) { process.stderr.write('✗ ' + e.message + '\n'); process.exit(1); }
 }
-module.exports = { args, planBatch, lookCrowd, show, pathText };
+module.exports = { args, planBatch, lookCrowd, show, pathText, ownStep, ownDone };

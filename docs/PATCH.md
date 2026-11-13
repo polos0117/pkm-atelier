@@ -11,6 +11,19 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-13 · claude · 캐릭터만의 컷(90번)을 계획기 · 장부 · 지시문 묶음 · 생성기에 이었다
+- tools/casual-plan.cjs — 일상 묶음 뒤에 90번 한 장을 계획에 더한다(표에 내용이 있고 등록부 · 기록에 90번이 없을 때). 화면에 「90번 ◆ 캐릭터만의 컷 — 직업 · 노출 · 자세 추천」 과 생성기 주소, 없으면 「90 ◇ 아직 없음 · 건너뜀」. 새 인자 `--own`(이미 등록된 카드도 그 한 장만 · 예약 없음) · `--own-level moderate|low`(막혔을 때 단계 내려 다시 — 같은 세션이면 의상 줄만 바뀐다). 그 전엔 작업자가 평소 흐름을 따르면 90번이 계획에도 묶음에도 안 나왔다
+- lib/casual-plan.js — ownCutV2 가 표의 도구(prop)를 「그 물건」 소품 자리(prop '0' + ownProp)로 들고 use(sig_hold · sig_raise · sig_both · sig_low)를 적용한다. 자세 추천 · 소품 동작 · 바탕 장소 · 그 단계의 의상 글이 안 맞으면 조용히 바꾸지 않고 오류. 표에서 글 칸을 읽는 ownFields(계획기 · 묶음 · 생성기가 같이 쓴다), 생성기 주소에 own 을 싣는다(글은 안 싣는다)
+- data/casual-tree-v2.json — 소품 「그 직업의 도구」(signature)와 드는 동작 넷(sig_*) — 원소 공방 표에서. 캐릭터만의 컷(ownProp)에서만 걸린다(보통 컷의 계획은 그대로 — 같은 씨앗 열두 명 묶음이 앞뒤로 같다)
+- lib/prompt-anthro.js — PROP 줄이 그 소품 자리에 표의 도구 글(ownProp)을 쓴다. 장면 칸에 prop · ownProp
+- lib/prompt-state.js — 계획 컷이 캐릭터만의 컷이면(own) 장소 · 장면 · 의상 · 도구 글을 표(data/casual-own.json)에서 다시 읽어 채운다 — 주소로는 own 과 단계만 받는다(주소에 끼운 글은 버린다). 표에 없으면 안 맞는 칸 own
+- lib/prompt-ui.js · prompt.html — 생성기가 data/casual-own.json 을 받아 위 길에 넘긴다(없어도 열린다)
+- tools/casual-ledger.py — check · reserve 가 계획의 90번을 걸러 낸다(묶음 장수 · 묶음 규칙 · 겹침 비교 · 예약에 안 센다). 기록의 casual90-ui.json 은 원래 안 읽힌다(1..10 만 돈다)
+- tools/prompt-pack.cjs — casual90 자리(채울 칸 없음 — 글은 표에서, 자세 · 구도는 계획에서). init 은 계획에 90번이 있을 때만 자리를 만들고, build 는 계획에 90번이 없으면 건너뛴다. casual90-ui.json 맨 위에 own { job_ko, level }. 계획 뒤에 표가 바뀌면 고칠 칸. `build --plan` 을 머리말에 적었다
+- tests/casual-own.cjs — 새 검사: 임시 표로 계획(열 장 그대로 + 90번) → 장부 check · reserve → 묶음 지시문(Place · Scene note · Outfit · PROP) · 기록 → 생성기 주소, --own · --own-level
+- IMAGE_RULES.md — 「캐릭터만의 컷」 을 실제 절차(명령 예 · 표의 prop · use · 아직 안 이은 관리기)로
+- AGENTS.md — 검사 목록에 tests/casual-own.cjs
+
 ## 2026-11-13 · claude · 캐릭터만의 컷 — 세계마다 한 장 더(번호 90), 노출 단계별 의상 · 틀과 예시
 - data/casual-own.json — 새 표(세계가 없어 all 하나). 예시 둘(잠만보 · 럭키 — example)
 - lib/casual-plan.js — ownCutV2: 캐릭터만의 컷의 장면 칸을 짓는다(번호 90, 노출 단계). 묶음 도구 · 장부에는 아직 안 이었다. 새 상황 일곱(밑단 · 겉옷 · 땀 · 역광 · 트임 · 소매 · 넥타이)은 옷이 트리의 옷으로 정해진 컷에만 준다 — 작업자가 옷 글을 쓰는 컷은 글이 달라 Situation 줄이 빠질 수 있다

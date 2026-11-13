@@ -82,6 +82,7 @@ PATH_KEYS = ("era", "place", "act", "ofam", "item")
 TWO_REQUIRED_EVERY = 5  # 다섯 명에 한 명은 필수 갈래를 두 장(세 장 시절 규칙)
 CUTS, NINE_CUTS, MID_CUTS, LEGACY_CUTS = 10, 9, 7, 3  # 2026-11-11 — 새 캐릭터는 열 장(아홉 장 + 갈래 · 상황 자유 한 장), 아홉 장으로 등록된 캐릭터 다시 채우기는 아홉 장. 2026-11-09 — 새 캐릭터는 아홉 장(필수 셋 한 장씩 + 코스튬 + 상황 노출 + 자유 넷), 일곱 장(2026-11-07 ~ 11-08) · 세 장으로 등록된 캐릭터 다시 채우기는 그때 규칙
 MAX_CUT = CUTS
+OWN_CUT = 90  # 캐릭터만의 컷(2026-11-13, data/casual-own.json number) — 묶음 장수 · 묶음 규칙 · 겹침 비교 · 예약에 세지 않는다. 기록 읽기는 1..MAX_CUT 만 돌아 casual90-ui.json 을 안 읽는다
 OFREE_N = 2   # 옷 자유 컷(2026-11-09) — 아홉 장에 두 장, lib/casual-plan.js OFREE_N
 
 
@@ -866,6 +867,10 @@ def check(args, write=False):
     doc, sp = snapshot(args), spec()
     with open(args.plan, encoding="utf-8") as f:
         plan = json.load(f)
+    # 캐릭터만의 컷(90번)은 보지 않는다 — 계획에서 걸러 내고, 그 한 장뿐인 캐릭터(계획기 --own)는 검사 · 예약할 것이 없다
+    chars = plan.get("characters") or []
+    kept = [{**ch, "cuts": [c for c in ch.get("cuts") or [] if c.get("cut") != OWN_CUT]} for ch in chars]
+    plan["characters"] = [k for k, ch in zip(kept, chars) if k["cuts"] or not ch.get("cuts")]
     errs = check_plan(doc, plan, sp, args.ledger)
     for e in errs:
         print("  ✗ " + e)

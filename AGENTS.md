@@ -137,6 +137,7 @@ ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cj
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 여덟 자리 · 아홉 자리 글자 하나 다르지 않다(브라우저)
 node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출 · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 열두 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
 node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 열여섯 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
+node tests/casual-own.cjs       # 캐릭터만의 컷(90번) — 임시 표로 계획(열 장 그대로 + 90번 · --own · --own-level) → 장부 check · reserve → 묶음 casual90(표의 글 · PROP 줄 · 기록 own) → 생성기 주소(글은 표에서)
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
 python3 tests/anatomy-check.py   # 팔·다리·손 검사기 — 떨어진 손·손 셋·뒤집힌 손·늘어난 팔다리·맨발·같은 손 두 번(모델 없이 점 목록으로)

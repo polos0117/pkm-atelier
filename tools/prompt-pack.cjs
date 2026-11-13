@@ -14,7 +14,7 @@
      mecha — 그 종의 타입 추천 안에서 최근 열 명의 ①(그림 저장소 records/<폴더>/light-ui.json)이 안 쓴 큰 실루엣 하나 + 타입 표현 자동
        (손 + 몸 하나 + 주변 하나, 두 타입 종은 섞는다 — lib/concept-mecha.js choose). 부위 부품은 비운다(원작 입는 법 WEAR 가 부위를 쥔다).
        mecha_auto 는 정한 값 그대로(build 는 안 읽는다) — mecha 를 바꾸면 mecha_why 에 사유를 쓴다.
-   node tools/prompt-pack.cjs build --dir <작업 폴더> [--slot <자리>]
+   node tools/prompt-pack.cjs build --dir <작업 폴더> [--slot <자리>] [--plan <계획 파일 — settings.plan 대신>]
      settings.json 을 읽어 지시문·저장값·차례표(INDEX.md)를 쓴다. 틀린 칸(없는 열쇠·표에 없는 값·사유 없는 직접 입력·계획에 없는 컷)이 있으면
      아무것도 쓰지 않고 1 로 끝난다. 다시 돌리면 같은 글이 나온다(만든 때 줄만 다르다).
    node tools/prompt-pack.cjs submitted --dir <작업 폴더> --slot <자리> --file <image_gen 에 넘긴 글 그대로>
@@ -27,6 +27,7 @@
      heavy · mobility    motifs · formOverride · scene
      *_overdrive         motifs · formOverride · custom(추가 연출 요청 — 생성기도 폭주엔 이 칸만 보인다)
      casual1~7(아홉 자리는 1~3)  scene · outfit · camera · custom(직접 입력) 과 why(칸마다 사유 — IMAGE_RULES 3절 4)
+     casual90            (없다) 캐릭터만의 컷 — 계획의 90번 컷 + 표 data/casual-own.json. 계획에 90번이 없으면 건너뛴다. 이 한 장만: build --dir <작업 폴더> --slot casual90 [--plan <새 계획>]
    일상 칸 옆 guide 에는 고른 길의 트리 문장(한글 이름·영어 문장·장소 묶음·자세 계열·의상 안내)과 옷 종류·드러내기·첫머리가 있고, INDEX.md 에도 컷마다 표로 찍는다.
    버전2 계획 컷(cut.treeV === 2 — 계획기 --v2, docs/CASUAL_TREE_V2.md)은 버전2 칸 그대로 잠그고 지시문도 버전2. 버전2 컷엔 자유 카메라 글이 없다
    (camera 는 카메라 높이 칸이다 — 조명 · 분위기는 custom 에). 버전1 계획 컷은 지금까지와 같다 */
@@ -58,7 +59,11 @@ const SLOTS7 = { light: Object.assign({}, NINE.light, { fields: NINE.light.field
 const SLOTS9 = { light: SLOTS7.light };
 ['②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩'].forEach((n, i) => { SLOTS9['casual' + (i + 1)] = { n, mode: 'casual', cut: i + 1, attach: ['light'], fields: ['scene', 'outfit', 'camera', 'custom', 'why', 'exposure', 'exposure_why', 'situ'] }; });
 /* 열한 자리(2026-11-11 — settings.version 4) — 경장 ① + 일상 열(아홉 + 갈래 · 상황 자유 한 장, 사용자 「gpt 담당 자유컷 1장더 추가해서 필수갈래랑 상황노출을 묶어서 우리쪽에 없는 목록으로 그리라고 넣어줘. 그러면 이제 일상컷 10장씩」) */
-const SLOTS = Object.assign({}, SLOTS9, { casual10: Object.assign({}, SLOTS9.casual9, { n: '⑪', cut: 10 }) });
+/* 캐릭터만의 컷(2026-11-13, IMAGE_RULES 3절 「캐릭터만의 컷」) — casual90 자리. 채울 칸이 없다: 글 칸(장소 · 장면 · 의상 · 도구)은 표 data/casual-own.json 에서,
+   자세 · 구도는 계획의 90번 컷에서 온다. 계획에 90번이 없으면(표에 내용이 없는 카드 · 이미 그린 카드) 이 자리는 조용히 건너뛴다.
+   노출 단계를 내릴 때는 settings 가 아니라 계획기로(casual-plan.cjs <카드> --own --own-level moderate) 다시 지어 build --slot casual90 --plan <새 계획> */
+const SLOTS = Object.assign({}, SLOTS9, { casual10: Object.assign({}, SLOTS9.casual9, { n: '⑪', cut: 10 }), casual90: { n: '◆', mode: 'casual', cut: 90, own: true, attach: ['light'], fields: [] } });
+const OWN_TEXT = ['placeText', 'scene', 'outfit', 'ownProp'];
 const slotsOf = set => (set && set.version >= 4 ? SLOTS : set && set.version === 3 ? SLOTS9 : set && set.version === 2 ? SLOTS7 : NINE);
 const PACK_STYLE = S.DEFAULT_STYLE, LEGACY_STYLE = 'glossy_promo';   /* 여덟 자리의 기본 화풍 = 생성기 화면의 기본(anime_25d_gloss) · 아홉 자리(--legacy)는 그때 기본 */
 const MECHA_RECENT = 10;
@@ -83,7 +88,7 @@ function args(argv) {
 function data() {
   const cards = read('card.json').cards.character, tree = read('casual-tree.json'), tree2 = read('casual-tree-v2.json');
   const opt = f => { try { return read(f); } catch (e) { return null; } };
-  return { cards, tree, tree2, v2: { C2, tree2 }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null, concept: opt('concept-mecha.json') };
+  return { cards, tree, tree2, v2: { C2, tree2, own: opt('casual-own.json') }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null, concept: opt('concept-mecha.json') };
 }
 /* 화면과 같은 몫 — 원작 외형은 없으면 undefined, 얼굴 설계는 없으면 null(lib/prompt-ui.js App) */
 const extras = (d, c) => ({ appearance: d.appearance ? d.appearance[String(c.no)] : undefined, face: d.faces ? d.faces[String(c.no)] || null : null });
@@ -182,6 +187,7 @@ function init(o) {
   const plan = o.plan ? JSON.parse(fs.readFileSync(o.plan, 'utf8')) : null;
   const used = o.legacy ? [] : recentSilhouettes(o.repos, c.name);
   for (const [slot, def] of Object.entries(SL)) {
+    if (def.own && !(plan && planCut(plan, c.name, def.cut))) continue;   /* 캐릭터만의 컷 자리는 계획에 90번이 있을 때만 만든다(build 는 settings 에 없어도 계획에 있으면 쓴다) */
     const s = {};
     for (const f of def.fields) {
       if (f === 'params') { s.params = {}; const fig = !o.legacy && figureOf(d, c); if (fig) s.params['body type'] = fig; }
@@ -194,7 +200,8 @@ function init(o) {
     if (def.mode === 'casual' && plan) {
       const pc = planCut(plan, c.name, def.cut);
       /* 쓰는 사람이 볼 것 — 계획의 옷 종류·드러내는 방식·장면 칸 첫머리(build 는 이 칸을 읽지 않는다) */
-      if (pc) s.guide = pc.v2 ? guideOfV2(d, pc.cut) : guideOf(d.tree, pc.cut);
+      if (pc && def.own) s.guide = { own: pc.cut.job_ko, level: (pc.cut.axes || {}).skin_exposure, place: pc.cut.placeText, scene: pc.cut.scene, outfit: pc.cut.outfit, prop: pc.cut.ownProp || '', note: '캐릭터만의 컷 — 채울 칸이 없다(글은 표 data/casual-own.json 에서). 단계를 내릴 때는 계획기 --own --own-level' };
+      else if (pc) s.guide = pc.v2 ? guideOfV2(d, pc.cut) : guideOf(d.tree, pc.cut);
     }
     set.slots[slot] = s;
   }
@@ -225,12 +232,19 @@ function stateOf(set, slot, d, c, plan, bad) {
   for (const k of Object.keys(s)) if (def.fields.indexOf(k) < 0 && k !== 'guide' && !(def.fields.indexOf('mecha') >= 0 && (k === 'mecha_auto' || k === 'mecha_recent'))) bad.push(where(k) + ' — 이 자리엔 없는 칸(고정값은 도구가 정한다)');
   const str = k => { const v = s[k]; if (v != null && typeof v !== 'string') bad.push(where(k) + ' — 글이어야 한다'); return typeof v === 'string' ? v : ''; };
   if (def.mode === 'casual') {
-    if (!plan) { bad.push(slot + ' — 계획 파일이 없다(init --plan 또는 settings.plan)'); return null; }
+    if (!plan) { if (!def.own) bad.push(slot + ' — 계획 파일이 없다(init --plan 또는 settings.plan)'); return null; }
     const pc = planCut(plan, c.name, def.cut);
-    if (!pc) { bad.push(slot + ' — 계획에 ' + c.name + ' ' + def.cut + '번 컷이 없다'); return null; }
+    if (!pc) { if (!def.own) bad.push(slot + ' — 계획에 ' + c.name + ' ' + def.cut + '번 컷이 없다'); return null; }   /* 캐릭터만의 컷은 계획에 없으면 건너뛴다 */
+    if (def.own && !(pc.v2 && pc.cut.own)) { bad.push(slot + ' — 계획의 ' + def.cut + '번이 캐릭터만의 컷이 아니다'); return null; }
     if (pc.v2) {
       const base = ST.initial(S, CT, CP, { style: set.style, identityMode: 'reference' }, d.tree, c, null, d.v2).st;
-      const got = ST.plannedV2(S, base, pc.cut, d.tree, c, d.v2);
+      const got = ST.plannedV2(S, base, pc.cut, d.tree, c, d.v2, CP);
+      if (def.own) {   /* 글 칸은 표에서(lib/prompt-state.js plannedV2) — 계획이 지은 글과 같아야 한다. 다르면 계획 뒤에 표가 바뀐 것 */
+        const sc = got.st.scenes.casual, diff = OWN_TEXT.filter(k => (sc[k] || '') !== (pc.cut[k] || ''));
+        if (got.bad.length) bad.push(slot + ' — 계획 값이 표 · 버전2 트리에 안 맞는다: ' + got.bad.join(', ') + ' (own = data/casual-own.json 에 그 카드 · 단계의 글이 없다 — tools/casual-plan.cjs --own 으로 다시 짠다)');
+        else if (diff.length) bad.push(slot + ' — 표(data/casual-own.json)의 글이 계획과 다르다: ' + diff.join(', ') + ' (계획 뒤에 표가 바뀌었다 — tools/casual-plan.cjs --own 으로 다시 짠다)');
+        return { st: got.st, cut: pc.cut, manual: {}, why: {} };
+      }
       if (got.bad.length) bad.push(slot + ' — 계획 값이 버전2 트리에 안 맞는다: ' + got.bad.join(', ') + ' (tools/casual-plan.cjs --v2 로 다시 정한다)');
       if (str('camera').trim()) bad.push(where('camera') + ' — 버전2 컷엔 자유 카메라 글이 없다(카메라 높이는 계획 칸 — 조명 · 분위기는 custom 에)');
       const sc = Object.assign({}, got.st.scenes.casual), why = s.why && typeof s.why === 'object' ? s.why : {};
@@ -327,6 +341,7 @@ function build(o) {
   const file = path.join(o.dir, 'settings.json');
   const set = JSON.parse(fs.readFileSync(file, 'utf8'));
   const d = data(), c = cardOf(d, set.card), bad = [];
+  if (o.ownTable) d.v2.own = o.ownTable;   /* tests/casual-own.cjs */
   if (!c) throw new Error('카드가 없다: ' + set.card);
   if (c.no !== set.no) bad.push('no — 카드 번호가 다르다(' + set.no + ' ≠ ' + c.no + ')');
   if (!S.ACTION_STYLE_CORES[set.style]) bad.push('style — 화풍 키가 없다: ' + set.style);
@@ -344,6 +359,7 @@ function build(o) {
     const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2, d.concept);
     const ui = { storage: { last: c.name, cards: { [c.name]: r.st } }, prompt: text };
     if (r.cut) { ui.plan = r.cut; ui.manual_inputs = r.manual; ui.manual_why = r.why; }
+    if (r.cut && r.cut.own) ui.own = { job_ko: r.cut.job_ko, level: r.st.scenes.casual.axes.skin_exposure };   /* 캐릭터만의 컷 — 구분 열쇠(scene.own 과 같이) */
     out.push({ slot, text, ui });
   }
   if (bad.length) { console.error('고칠 칸 ' + bad.length + '개 — 아무것도 쓰지 않았다:\n  ' + bad.join('\n  ')); process.exit(1); }
@@ -375,6 +391,13 @@ function build(o) {
   for (const r of out) lines.push('| ' + SL[r.slot].n + ' | ' + r.slot + ' | ' + att(SL[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
   /* 일상 컷마다 고른 길 — 트리 문장(지시문에 그대로 들어간다) */
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV === 2)) {
+    if (r.ui.own) {   /* 캐릭터만의 컷 — 표의 글 그대로 */
+      const q = r.ui.plan;
+      lines.push('', '## ' + SL[r.slot].n + ' ' + r.slot + ' — 캐릭터만의 컷(' + r.ui.own.job_ko + ' · 노출 ' + r.ui.own.level + ')', '',
+        '일상 열 장에 더하는 한 장 — 채울 칸이 없다. 막히면 같은 지시문으로 두 번 더(모두 세 번), 그래도 막히면 계획기 `--own --own-level` 로 한 단계 내려 다시 짓는다(IMAGE_RULES 3절 「캐릭터만의 컷」).', '',
+        '| 칸 | 표의 글 |', '|---|---|', '| 장소 | ' + q.placeText + ' |', '| 장면 | ' + q.scene + ' |', '| 의상 | ' + q.outfit + ' |', '| 도구 | ' + (q.ownProp ? q.ownProp + ' (' + q.use + ')' : '—') + ' |', '| 자세 추천 | ' + q.preset + ' |');
+      continue;
+    }
     const g = guideOfV2(d, r.ui.plan), v = g.v2;
     lines.push('', '## ' + SL[r.slot].n + ' ' + r.slot + ' — 고른 장면(버전2)', '',
       '| 칸 | 고른 것 | 지시문 문장 |', '|---|---|---|',
@@ -431,4 +454,4 @@ if (require.main === module) {
     else { console.error('node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style 키] [--plan PLAN.json] | build --dir <작업 폴더> [--slot 자리] | submitted --dir <작업 폴더> --slot 자리 --file <넘긴 글>'); process.exit(2); }
   } catch (e) { console.error(e.message); process.exit(2); }
 }
-module.exports = { SLOTS, SLOTS9, SLOTS7, NINE, slotsOf, PACK_STYLE, init, build, submitted, stateOf, planCut, fileName, guideOfV2, recentSilhouettes, autoMecha };
+module.exports = { data, SLOTS, SLOTS9, SLOTS7, NINE, slotsOf, PACK_STYLE, init, build, submitted, stateOf, planCut, fileName, guideOfV2, recentSilhouettes, autoMecha };

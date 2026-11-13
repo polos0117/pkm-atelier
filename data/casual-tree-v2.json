@@ -4721,6 +4721,15 @@
    "places": [
     "car_wash"
    ]
+  },
+  {
+   "key": "signature",
+   "ko": "그 직업의 도구",
+   "en": "her own tool",
+   "signature": true,
+   "places": [
+    "*"
+   ]
   }
  ],
  "prop_uses": [
@@ -10141,6 +10150,142 @@
     "stand",
     "walk",
     "lean_wall"
+   ]
+  },
+  {
+   "key": "sig_hold",
+   "prop": "signature",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "chest",
+   "ko": "그 직업의 도구을 든다",
+   "en": "holds {prop} at chest height",
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "lean_wall",
+    "lean_rail",
+    "walk",
+    "sit_chair",
+    "sit_edge",
+    "sit_floor",
+    "kneel",
+    "squat",
+    "recline",
+    "lie_side",
+    "lie_front",
+    "lean_counter",
+    "sit_lean",
+    "sit_sideways",
+    "half_kneel",
+    "step_up"
+   ]
+  },
+  {
+   "key": "sig_raise",
+   "prop": "signature",
+   "kind": "raise",
+   "hands": "one",
+   "zone": "face",
+   "ko": "그 직업의 도구을 얼굴 옆에 든다",
+   "en": "holds {prop} up beside her face",
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "lean_wall",
+    "lean_rail",
+    "walk",
+    "sit_chair",
+    "sit_edge",
+    "sit_floor",
+    "kneel",
+    "squat",
+    "recline",
+    "lie_side",
+    "lean_counter",
+    "sit_lean",
+    "sit_sideways",
+    "half_kneel",
+    "step_up"
+   ]
+  },
+  {
+   "key": "sig_both",
+   "prop": "signature",
+   "kind": "both",
+   "hands": "both",
+   "zone": "chest",
+   "ko": "그 직업의 도구을 두 손으로 든다",
+   "en": "holds {prop} in both hands in front of her",
+   "grip": {
+    "right": "holds one side",
+    "left": "holds the other side"
+   },
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "lean_wall",
+    "lean_rail",
+    "walk",
+    "sit_chair",
+    "sit_edge",
+    "sit_floor",
+    "kneel",
+    "squat",
+    "recline",
+    "lie_side",
+    "lie_front",
+    "lean_counter",
+    "sit_lean",
+    "sit_sideways",
+    "half_kneel",
+    "step_up"
+   ]
+  },
+  {
+   "key": "sig_low",
+   "prop": "signature",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "hips",
+   "ko": "그 직업의 도구을 옆에 내려 든다",
+   "en": "carries {prop} low at her side",
+   "frames": [
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "stand",
+    "lean_wall",
+    "lean_rail",
+    "walk",
+    "lean_counter",
+    "step_up"
    ]
   }
  ],
