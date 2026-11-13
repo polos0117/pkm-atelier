@@ -45,15 +45,15 @@
      "job_ko": "꽃집 플로리스트",
      "base": "pw_workshop",
      "place": "a flower shop — buckets of cut flowers, a wrapping counter with ribbon reels and a glass cooler",
-     "activity": "she is a florist with a finished bouquet",
-     "preset": "wrap_close",
-     "use": "sig_both",
-     "prop": "a wrapped bouquet",
+     "activity": "she is a florist trimming flower stems with shears at the wrapping counter",
+     "preset": "counter_work",
      "outfit": {
       "bold": "a florist look fitted to her body — a linen apron over a strappy sundress cut short, bare shoulders and sandals, a ribbon-reel belt at her hip",
       "moderate": "a florist look — a linen apron over a short-sleeved dress to the knee, a ribbon-reel belt at her hip",
       "low": "a florist look — a linen apron over a long-sleeved blouse and trousers, a ribbon-reel belt at her hip"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a pair of floral shears"
     }
    }
   },
@@ -69,10 +69,8 @@
      "job_ko": "꽃집 주인",
      "base": "pw_workshop",
      "place": "a flower shop — buckets of cut flowers, a wrapping counter with ribbon reels and a glass cooler",
-     "activity": "she is the owner of the flower shop presenting her signature bouquet",
-     "preset": "wrap_close",
-     "use": "sig_both",
-     "prop": "a wrapped bouquet",
+     "activity": "she is the owner of the flower shop standing back to admire a finished arrangement",
+     "preset": "hip_contra",
      "outfit": {
       "bold": "a florist look fitted to her body — a linen apron over a strappy sundress cut short, bare shoulders and sandals, a big pink flower pinned at her collar",
       "moderate": "a florist look — a linen apron over a short-sleeved dress to the knee, a big pink flower pinned at her collar",
@@ -117,15 +115,15 @@
      "job_ko": "빵집 제빵사",
      "base": "pw_workshop",
      "place": "a wood-fired bakery — a brick oven glowing orange, wire racks of loaves, a flour-dusted counter and a stack of baskets",
-     "activity": "she is a baker pulling golden loaves from the oven with the peel",
-     "preset": "camera_shot",
-     "use": "sig_both",
-     "prop": "a long wooden bread peel",
+     "activity": "she is a baker kneeling at the oven mouth, sliding a peel of loaves into the fire",
+     "preset": "half_kneel_use",
      "outfit": {
       "bold": "a baker look fitted to her body — a short flour-dusted apron over a fitted tank top and short shorts, bare shoulders and legs, an oven mitt tucked in her belt",
       "moderate": "a baker look — a flour-dusted apron over a short-sleeved top and a knee-length skirt, an oven mitt tucked in her belt",
       "low": "a baker look — a flour-dusted apron over a long-sleeved shirt and long trousers with a bandana, an oven mitt tucked in her belt"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a long wooden bread peel"
     }
    }
   },
@@ -139,17 +137,17 @@
    "worlds": {
     "all": {
      "job_ko": "빵집 점장",
-     "base": "pw_workshop",
+     "base": "pw_lodge",
      "place": "a wood-fired bakery — a brick oven glowing orange, wire racks of loaves, a flour-dusted counter and a stack of baskets",
-     "activity": "she is the head baker of the shop proudly lifting a huge loaf on the peel",
-     "preset": "camera_shot",
-     "use": "sig_both",
-     "prop": "a long wooden bread peel",
+     "activity": "she is the head baker resting on a chair after the morning bake, tasting a slice from a fresh loaf",
+     "preset": "chair_cross_prop",
      "outfit": {
       "bold": "a baker look fitted to her body — a short flour-dusted apron over a fitted tank top and short shorts, bare shoulders and legs, a red scarf knotted at her neck",
       "moderate": "a baker look — a flour-dusted apron over a short-sleeved top and a knee-length skirt, a red scarf knotted at her neck",
       "low": "a baker look — a flour-dusted apron over a long-sleeved shirt and long trousers with a bandana, a red scarf knotted at her neck"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a slice of warm bread"
     }
    }
   },
@@ -189,15 +187,15 @@
      "job_ko": "세차장 직원",
      "base": "pw_town",
      "place": "a self-service car wash — open wash bays with foam brushes, a coiled high-pressure hose, wet tiled floor and a vacuum post",
-     "activity": "she is an attendant kneeling to scrub a wheel with a big sponge until it shines",
-     "preset": "half_kneel_use",
-     "use": "sig_hold",
-     "prop": "a big yellow sponge",
+     "activity": "she is an attendant spraying thick foam over a car with the wand in both hands",
+     "preset": "camera_shot",
      "outfit": {
       "bold": "a car wash attendant look fitted to her body — a cropped waterproof jacket tied under the chest over short denim shorts and rubber boots, bare midriff and legs, a sponge holster at her hip",
       "moderate": "a car wash attendant look — a sleeveless waterproof vest over a short-sleeved tee and knee-length shorts with rubber boots, a sponge holster at her hip",
       "low": "a car wash attendant look — a long-sleeved waterproof coverall with rubber boots and gloves, a sponge holster at her hip"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a foam spray wand"
     }
    }
   },
@@ -213,10 +211,8 @@
      "job_ko": "세차장 점장",
      "base": "pw_town",
      "place": "a self-service car wash — open wash bays with foam brushes, a coiled high-pressure hose, wet tiled floor and a vacuum post",
-     "activity": "she is the manager of the car wash kneeling to polish a wheel to a mirror finish",
-     "preset": "half_kneel_use",
-     "use": "sig_hold",
-     "prop": "a big yellow sponge",
+     "activity": "she is the manager of the car wash standing with a hand on her hip, looking over a row of gleaming cars",
+     "preset": "hip_contra",
      "outfit": {
       "bold": "a car wash attendant look fitted to her body — a cropped waterproof jacket tied under the chest over short denim shorts and rubber boots, bare midriff and legs, a gold-trimmed visor",
       "moderate": "a car wash attendant look — a sleeveless waterproof vest over a short-sleeved tee and knee-length shorts with rubber boots, a gold-trimmed visor",
@@ -259,17 +255,16 @@
    "worlds": {
     "all": {
      "job_ko": "직물 공방 방직공",
-     "base": "pw_room",
+     "base": "pw_workshop",
      "place": "a weaving studio — a tall wooden loom, shelves of dyed yarn spools, a spinning wheel and a table of woven cloth",
-     "activity": "she is a weaver sitting sideways at the loom guiding the shuttle through the threads",
-     "preset": "side_chair_read",
-     "use": "sig_both",
-     "prop": "a shuttle wound with thread",
+     "activity": "she is a weaver perched on a stool, untangling threads on the side table beside the loom",
+     "preset": "bench_fix",
      "outfit": {
       "bold": "a weaver look fitted to her body — a fitted linen smock with a short hem over a halter top and shorts, bare shoulders and legs, a pin cushion on her wrist",
       "moderate": "a weaver look — a linen smock apron over a short-sleeved dress to the knee, a pin cushion on her wrist",
       "low": "a weaver look — a linen smock apron over a long-sleeved dress and leggings, a pin cushion on her wrist"
-     }
+     },
+     "use": "tool_fix"
     }
    }
   },
@@ -283,17 +278,17 @@
    "worlds": {
     "all": {
      "job_ko": "직물 공방 장인",
-     "base": "pw_room",
+     "base": "pw_workshop",
      "place": "a weaving studio — a tall wooden loom, shelves of dyed yarn spools, a spinning wheel and a table of woven cloth",
-     "activity": "she is a master weaver sitting sideways at the loom with a shimmering patterned cloth in progress",
-     "preset": "side_chair_read",
-     "use": "sig_both",
-     "prop": "a shuttle wound with thread",
+     "activity": "she is a master weaver holding a folded length of her shimmering patterned cloth against her chest",
+     "preset": "wrap_close",
      "outfit": {
       "bold": "a weaver look fitted to her body — a fitted linen smock with a short hem over a halter top and shorts, bare shoulders and legs, a rainbow-dyed silk ribbon in her hair",
       "moderate": "a weaver look — a linen smock apron over a short-sleeved dress to the knee, a rainbow-dyed silk ribbon in her hair",
       "low": "a weaver look — a linen smock apron over a long-sleeved dress and leggings, a rainbow-dyed silk ribbon in her hair"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a folded length of shimmering patterned cloth"
     }
    }
   },
@@ -333,15 +328,15 @@
      "job_ko": "양봉장 양봉가",
      "base": "pw_town",
      "place": "an apiary on a flowery hill — rows of white bee boxes, a smoker can, a honey-extractor drum and wildflowers",
-     "activity": "she is a beekeeper lifting a honeycomb frame full of honey with both hands",
-     "preset": "camera_shot",
-     "use": "sig_both",
-     "prop": "a honeycomb frame",
+     "activity": "she is a beekeeper crouching by a hive, checking a frame of capped honey",
+     "preset": "squat_prop",
      "outfit": {
       "bold": "a beekeeper look fitted to her body — a short-sleeved beekeeper jacket cut at the waist over short shorts with a veiled hat, bare arms and legs, a smoker can clipped to her belt",
       "moderate": "a beekeeper look — a short-sleeved beekeeper smock to the knee with a veiled hat, a smoker can clipped to her belt",
       "low": "a beekeeper look — a full-length white beekeeper suit with a veiled hat and gloves, a smoker can clipped to her belt"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a honeycomb frame"
     }
    }
   },
@@ -357,15 +352,15 @@
      "job_ko": "양봉장 주인",
      "base": "pw_town",
      "place": "an apiary on a flowery hill — rows of white bee boxes, a smoker can, a honey-extractor drum and wildflowers",
-     "activity": "she is the owner of the apiary inspecting a heavy honeycomb frame with both hands",
-     "preset": "camera_shot",
-     "use": "sig_both",
-     "prop": "a honeycomb frame",
+     "activity": "she is the owner of the apiary holding a jar of golden honey up to the light",
+     "preset": "raise_chest",
      "outfit": {
       "bold": "a beekeeper look fitted to her body — a short-sleeved beekeeper jacket cut at the waist over short shorts with a veiled hat, bare arms and legs, a golden honey-drop brooch on her veil",
       "moderate": "a beekeeper look — a short-sleeved beekeeper smock to the knee with a veiled hat, a golden honey-drop brooch on her veil",
       "low": "a beekeeper look — a full-length white beekeeper suit with a veiled hat and gloves, a golden honey-drop brooch on her veil"
-     }
+     },
+     "use": "sig_raise",
+     "prop": "a jar of golden honey"
     }
    }
   },
@@ -405,15 +400,15 @@
      "job_ko": "택배 기사",
      "base": "pw_town",
      "place": "a quiet residential street — a delivery bicycle with a front basket, mailboxes, a stack of boxes at a doorstep and a stone wall",
-     "activity": "she is a courier walking briskly with a small parcel box held low at her side",
-     "preset": "stride_prop",
-     "use": "sig_low",
-     "prop": "a small parcel box",
+     "activity": "she is a courier checking the address label on a small parcel in her hand",
+     "preset": "pocket_look",
      "outfit": {
       "bold": "a parcel courier look fitted to her body — a fitted short-sleeved courier jacket zipped low over a short skort with sneakers, bare legs, a feather-shaped pin on her cap",
       "moderate": "a parcel courier look — a short-sleeved courier polo and knee-length culottes with sneakers, a feather-shaped pin on her cap",
       "low": "a parcel courier look — a long-sleeved courier jacket and long trousers with a cap, a feather-shaped pin on her cap"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a small parcel box"
     }
    }
   },
@@ -429,15 +424,15 @@
      "job_ko": "택배 팀장",
      "base": "pw_town",
      "place": "a quiet residential street — a delivery bicycle with a front basket, mailboxes, a stack of boxes at a doorstep and a stone wall",
-     "activity": "she is a veteran courier striding with a small parcel box held at her side, always on time",
-     "preset": "stride_prop",
-     "use": "sig_low",
-     "prop": "a small parcel box",
+     "activity": "she is a veteran courier glancing back over her shoulder with a parcel raised beside her face",
+     "preset": "lookback_raise",
      "outfit": {
       "bold": "a parcel courier look fitted to her body — a fitted short-sleeved courier jacket zipped low over a short skort with sneakers, bare legs, a pair of wing-shaped patches on her sleeves",
       "moderate": "a parcel courier look — a short-sleeved courier polo and knee-length culottes with sneakers, a pair of wing-shaped patches on her sleeves",
       "low": "a parcel courier look — a long-sleeved courier jacket and long trousers with a cap, a pair of wing-shaped patches on her sleeves"
-     }
+     },
+     "use": "sig_raise",
+     "prop": "a small parcel box"
     }
    }
   },
@@ -477,15 +472,15 @@
      "job_ko": "치즈 가게 점장",
      "base": "pw_workshop",
      "place": "a cheese shop — a glass counter of cheese wheels, wooden shelves, a cheese wire and a small tasting table",
-     "activity": "she is the shop manager holding a wrapped wedge of aged cheese close to her chest",
-     "preset": "wrap_close",
-     "use": "sig_both",
-     "prop": "a wrapped wedge of cheese",
+     "activity": "she is the shop manager slicing a wheel of cheese with the cheese wire at the counter",
+     "preset": "counter_work",
      "outfit": {
       "bold": "a cheesemonger look fitted to her body — a short striped apron over a fitted camisole and short skirt, bare shoulders and legs, a golden wire-cutter hanging at her waist",
       "moderate": "a cheesemonger look — a striped apron over a short-sleeved blouse and a knee-length skirt, a golden wire-cutter hanging at her waist",
       "low": "a cheesemonger look — a striped apron over a long-sleeved blouse and long skirt, a golden wire-cutter hanging at her waist"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a cheese wire"
     }
    }
   },
@@ -523,12 +518,10 @@
    "worlds": {
     "all": {
      "job_ko": "경매사",
-     "base": "pw_workshop",
+     "base": "pw_room",
      "place": "an auction hall — rows of folding chairs, a raised wooden podium, a number paddle stand and hanging lamps",
-     "activity": "she is an auctioneer raising her gavel beside her face to close a bid",
-     "preset": "raise_chest",
-     "use": "sig_raise",
-     "prop": "a wooden gavel",
+     "activity": "she is an auctioneer standing at the podium with her hands folded, waiting for the next bid",
+     "preset": "clasp_low",
      "outfit": {
       "bold": "an auctioneer look fitted to her body — a fitted sleeveless vest over a collared blouse and a short pencil skirt, bare arms and legs, a thin red tie",
       "moderate": "an auctioneer look — a vest over a short-sleeved blouse and a knee-length pencil skirt, a thin red tie",
@@ -573,15 +566,14 @@
      "job_ko": "매듭 공예 장인",
      "base": "pw_workshop",
      "place": "a macrame craft studio — hanging knotted wall pieces, coils of colored cord, a wooden dowel rack and a worktable",
-     "activity": "she is a master knot crafter standing at the worktable pulling an intricate knot tight",
-     "preset": "counter_work",
-     "use": "sig_both",
-     "prop": "a half-knotted macrame cord",
+     "activity": "she is a master knot crafter perched on a stool, finishing a knot on a small macrame piece on the worktable",
+     "preset": "bench_fix",
      "outfit": {
       "bold": "a knot crafter look fitted to her body — a fitted cropped knit top and short wrap skirt with cord belts, bare midriff and legs, a patterned cord bracelet",
       "moderate": "a knot crafter look — a sleeveless knit tunic and knee-length skirt with a cord belt, a patterned cord bracelet",
       "low": "a knot crafter look — a long-sleeved knit tunic and long skirt with a cord belt, a patterned cord bracelet"
-     }
+     },
+     "use": "tool_fix"
     }
    }
   },
@@ -619,13 +611,15 @@
      "job_ko": "범퍼카 운영 팀장",
      "base": "pw_town",
      "place": "an amusement park bumper car track — colorful bumper cars, sparkling string lights, a ticket kiosk and a Ferris wheel in the back",
-     "activity": "she is the ride team leader giving a cheerful thumbs up, the whole track humming behind her",
-     "preset": "thumbs_waist",
+     "activity": "she is the ride team leader walking along the track with a ride control key at her side",
+     "preset": "stride_prop",
      "outfit": {
       "bold": "a ride attendant look fitted to her body — a short bright jacket over a fitted tank top and short shorts, bare shoulders and legs, a sparkling lightning brooch and a whistle",
       "moderate": "a ride attendant look — a bright short-sleeved vest uniform and a knee-length skirt, a sparkling lightning brooch and a whistle",
       "low": "a ride attendant look — a bright long-sleeved uniform jacket and long trousers, a sparkling lightning brooch and a whistle"
-     }
+     },
+     "use": "sig_low",
+     "prop": "a ride control key"
     }
    }
   },
@@ -665,15 +659,15 @@
      "job_ko": "밤 구이 노점 주인",
      "base": "pw_town",
      "place": "a chestnut roasting stall — an iron roasting drum on coals, paper bags, a small wooden stool and fallen leaves",
-     "activity": "she is the stall owner crouching by the roasting drum turning chestnuts with long tongs",
-     "preset": "squat_prop",
-     "use": "sig_hold",
-     "prop": "long roasting tongs",
+     "activity": "she is the stall owner shaking hot roasted chestnuts into a paper bag with both hands",
+     "preset": "camera_shot",
      "outfit": {
       "bold": "a chestnut roaster look fitted to her body — a short quilted vest over a fitted knit crop top and short shorts with boots, bare midriff and legs, a spiky chestnut-burr brooch",
       "moderate": "a chestnut roaster look — a quilted vest over a short-sleeved top and a knee-length skirt, a spiky chestnut-burr brooch",
       "low": "a chestnut roaster look — a long-sleeved quilted coat, scarf and long trousers, a spiky chestnut-burr brooch"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a paper bag of roasted chestnuts"
     }
    }
   },
@@ -709,10 +703,10 @@
    "worlds": {
     "all": {
      "job_ko": "어린이집 교사",
-     "base": "pw_room",
+     "base": "pw_lodge",
      "place": "a kindergarten classroom — low cubby shelves, colorful floor mats, a picture-book rack and paper stars on the wall",
-     "activity": "she is a teacher kneeling with both hands clasped, waiting warmly beside a row of tiny chairs",
-     "preset": "kneel_clasp",
+     "activity": "she is a teacher sitting on a small chair in the quiet classroom, resting between lessons",
+     "preset": "ankles_sit",
      "outfit": {
       "bold": "a kindergarten teacher look fitted to her body — a short apron over a fitted tee and short skirt, bare arms and legs, a name-tag lanyard with a heart",
       "moderate": "a kindergarten teacher look — a pastel apron over a short-sleeved dress to the knee, a name-tag lanyard with a heart",
@@ -731,10 +725,10 @@
    "worlds": {
     "all": {
      "job_ko": "어린이집 원장",
-     "base": "pw_room",
+     "base": "pw_workshop",
      "place": "a kindergarten classroom — low cubby shelves, colorful floor mats, a picture-book rack and paper stars on the wall",
-     "activity": "she is the head of the kindergarten kneeling with both hands clasped, warm and reassuring",
-     "preset": "kneel_clasp",
+     "activity": "she is the head of the kindergarten standing in the tidy classroom after closing time",
+     "preset": "hip_contra",
      "outfit": {
       "bold": "a kindergarten teacher look fitted to her body — a short apron over a fitted tee and short skirt, bare arms and legs, a pearl-pinned apron",
       "moderate": "a kindergarten teacher look — a pastel apron over a short-sleeved dress to the knee, a pearl-pinned apron",
@@ -777,17 +771,17 @@
    "worlds": {
     "all": {
      "job_ko": "보석 감정사",
-     "base": "pw_room",
+     "base": "pw_workshop",
      "place": "a jewelry appraisal room — a velvet-topped table, a lamp with a magnifier, small trays of loose stones and a safe in the corner",
-     "activity": "she is an appraiser leaning over the table with both hands holding a cut gemstone to the lamp",
-     "preset": "table_lean_use",
-     "use": "sig_both",
-     "prop": "a cut gemstone",
+     "activity": "she is an appraiser holding a cut gemstone up to the lamp to check its clarity",
+     "preset": "raise_chest",
      "outfit": {
       "bold": "a gem appraiser look fitted to her body — a fitted sleeveless blouse and short pencil skirt with a gem-trim belt, bare arms and legs, a loupe hung on a chain",
       "moderate": "a gem appraiser look — a sleeveless blouse and a knee-length skirt with a small brooch, a loupe hung on a chain",
       "low": "a gem appraiser look — a long-sleeved blouse and long skirt with a small brooch, a loupe hung on a chain"
-     }
+     },
+     "use": "sig_raise",
+     "prop": "a cut gemstone"
     }
    }
   },
@@ -801,17 +795,17 @@
    "worlds": {
     "all": {
      "job_ko": "보석상 대표",
-     "base": "pw_room",
+     "base": "pw_lodge",
      "place": "a jewelry appraisal room — a velvet-topped table, a lamp with a magnifier, small trays of loose stones and a safe in the corner",
-     "activity": "she is the owner of the jewelry house leaning over the table with both hands holding a large diamond",
-     "preset": "table_lean_use",
-     "use": "sig_both",
-     "prop": "a cut gemstone",
+     "activity": "she is the owner of the jewelry house seated with her legs crossed, studying a velvet ring box in her hand",
+     "preset": "chair_cross_prop",
      "outfit": {
       "bold": "a gem appraiser look fitted to her body — a fitted sleeveless blouse and short pencil skirt with a gem-trim belt, bare arms and legs, a diamond-shaped horn-like hairpin",
       "moderate": "a gem appraiser look — a sleeveless blouse and a knee-length skirt with a small brooch, a diamond-shaped horn-like hairpin",
       "low": "a gem appraiser look — a long-sleeved blouse and long skirt with a small brooch, a diamond-shaped horn-like hairpin"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a small velvet ring box"
     }
    }
   },
@@ -847,15 +841,17 @@
    "worlds": {
     "all": {
      "job_ko": "천문대 해설사",
-     "base": "pw_roof",
+     "base": "pw_town",
      "place": "a rooftop observatory deck at night — a domed telescope, folding stargazing mats, a lantern and a wide starry sky over the town",
-     "activity": "she is the head interpreter sitting on the deck mat gazing at the moon with a serene look",
-     "preset": "floor_horizon",
+     "activity": "she is the head interpreter checking a star chart in her hand on the observatory deck",
+     "preset": "pocket_look",
      "outfit": {
       "bold": "a stargazing guide look fitted to her body — a fitted star-print jacket over a halter top and short shorts, bare shoulders and legs, a crescent-moon hair clip",
       "moderate": "a stargazing guide look — a star-print vest over a short-sleeved top and a knee-length skirt, a crescent-moon hair clip",
       "low": "a stargazing guide look — a long-sleeved star-print coat, scarf and long trousers, a crescent-moon hair clip"
-     }
+     },
+     "use": "sig_hold",
+     "prop": "a folded star chart"
     }
    }
   },
@@ -895,10 +891,8 @@
      "job_ko": "신사 무녀장",
      "base": "pw_town",
      "place": "a small hillside shrine — a red gate, stone lanterns, a purification basin and a path lined with ginkgo trees",
-     "activity": "she is the chief shrine maiden walking with the streamer wand held at her side, solemn and graceful",
-     "preset": "stride_prop",
-     "use": "sig_low",
-     "prop": "a wooden wand hung with paper streamers",
+     "activity": "she is the chief shrine maiden standing before the red gate with her hands folded, calm and composed",
+     "preset": "clasp_low",
      "outfit": {
       "bold": "a shrine maiden look fitted to her body — a white sleeveless kimono-style top with short red hakama culottes and tabi sandals, bare shoulders and legs, a sash hung with nine small gold bells",
       "moderate": "a shrine maiden look — a white short-sleeved kimono-style top and a knee-length red hakama skirt, a sash hung with nine small gold bells",
@@ -941,17 +935,17 @@
    "worlds": {
     "all": {
      "job_ko": "심야 라디오 간판 DJ",
-     "base": "pw_lodge",
+     "base": "pw_room",
      "place": "a late-night radio studio — a mixing console, a soundproof glass window, round headphones on a hook and a small desk lamp",
-     "activity": "she is the star host sitting cross-legged on a chair crooning into a handheld microphone with a gentle smile",
-     "preset": "chair_cross_prop",
-     "use": "sig_hold",
-     "prop": "a handheld microphone",
+     "activity": "she is the star host leaning over the mixing console, holding her round headphones in both hands",
+     "preset": "table_lean_use",
      "outfit": {
       "bold": "a radio host look fitted to her body — a short satin jacket over a fitted camisole and short skirt, bare shoulders and legs, a pink fluffy collar trim",
       "moderate": "a radio host look — a satin vest over a short-sleeved blouse and a knee-length skirt, a pink fluffy collar trim",
       "low": "a radio host look — a long-sleeved cardigan over a blouse and long trousers, a pink fluffy collar trim"
-     }
+     },
+     "use": "sig_both",
+     "prop": "a pair of round headphones"
     }
    }
   },
