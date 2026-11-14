@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-15 · gpt · 리아코 애니 2.5D 광택 등록
+- data/img.json — 사용자 선택 메카 1번과 일상 1~10·낚시터 견습생 전용컷 90을 anime_25d_gloss로 추가했다. 기존 화풍과 다른 캐릭터 데이터는 보존했다.
+- 생성 기록 — 다섯째 그림 저장소 records/totodile-20261115/에 실제 제출 원문·선택값·해시·육안 검수를 남겼다. 일상 10번은 반환 전 출력 차단 두 차례 후 원피스 수영복 대안으로 생성했으며, 완료된 이미지는 재생성하지 않았다.
+
 ## 2026-11-14 · claude · 그림 저장소 다섯째(pkm-atelier-img-5)로 전환
 - 사용자 「pkm 이미지 저장소 5번으로 바꿔줘」 — 새 그림 · 새 기록 · 새 도트는 이제 `pkm-atelier-img-5`(where 4)에 올린다. `pkm-atelier-img-4` 는 닫혀 교체만 받고, 지역 그림 `regions/` 은 그대로 넷째에 둔다.
 - lib/img.js `BASES` · tools/register-images.py `SHARDS`·`EXTRA_DIRS` · 등록 워크플로(다섯째 체크아웃 · img-5 링크) · .gitignore 에 다섯째를 더했다. 모든 페이지의 `lib/img.js?v=` 를 `img5` 로.
