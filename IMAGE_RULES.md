@@ -46,7 +46,7 @@
 | `tools/make-thumbs.py` | 썸네일 생성 |
 | `docs/PROMPT_REWRITE.md` | 생성기의 출력과 원작 특징을 의상으로 옮기는 규칙 |
 | `data/face-design.json` · `docs/CHARACTER_FACE_DESIGNS.md` | 1,025종 얼굴 설계(자료와 그 자료를 그린 표). 생성기가 신규 경장 ①에만 싣고, 기존 ①이 우선 · `tools/face-design.py` 로 고친다 |
-| `pkm-atelier-img/README.md` · `pkm-atelier-img-2/README.md` · `pkm-atelier-img-3/README.md` · `pkm-atelier-img-4/README.md` | 그림 저장소의 자리와 올린 뒤 할 일 — 새 그림은 열린 저장소(지금 `pkm-atelier-img-4`)에 |
+| `pkm-atelier-img/README.md` · `pkm-atelier-img-2/README.md` · `pkm-atelier-img-3/README.md` · `pkm-atelier-img-4/README.md` · `pkm-atelier-img-5/README.md` | 그림 저장소의 자리와 올린 뒤 할 일 — 새 그림은 열린 저장소(지금 `pkm-atelier-img-5`)에 |
 
 같은 세션에서 읽은 것은 바뀌지 않았다면 다시 읽지 않는다.
 
@@ -348,7 +348,7 @@ node tools/prompt-pack.cjs build --dir <작업 폴더>
 
 **0. 계획기로 배치를 정하고 예약한 뒤 생성한다.** 2~3종을 같이 만들면 한 번에 넘긴다.
 
-1. 그림 저장소 넷(`pkm-atelier-img`·`pkm-atelier-img-2`·`pkm-atelier-img-3`·`pkm-atelier-img-4`)을 `pkm-atelier` 옆에 받아 둔다(계획기는 넷 다 읽는다).
+1. 그림 저장소 다섯(`pkm-atelier-img`·`pkm-atelier-img-2`·`pkm-atelier-img-3`·`pkm-atelier-img-4`·`pkm-atelier-img-5`)을 `pkm-atelier` 옆에 받아 둔다(계획기는 다섯 다 읽는다).
    장부·예약이 있는 `pkm-atelier-img-2` 에 커밋 안 한 변경이 없어야 한다. `pkm-atelier` 도 `git pull` 해 둔다(`data/img.json`·`data/casual-look.json` 이 최신이어야 한다).
 2. `node tools/casual-plan.cjs <카드> [<카드> …] --session <세션 이름> --reserve --push`
    - 네 저장소를 pull 하고, 기록 + 세션별 예약을 읽어 배치를 정하고, `casual-ledger.py check` 로 맞춰 본다(걸리면 스스로 다시 정한다).
@@ -692,7 +692,8 @@ GitHub Pages 사이트 하나는 1 GB 까지라 첫 저장소가 차서 저장�
 | 0 | `pkm-atelier-img` | 닫힘 | 이미 있는 이름의 **교체**만 |
 | 1 | `pkm-atelier-img-2` | 닫힘(2026-10-23, 약 960 MB) | 이미 있는 이름의 **교체**만 · 일상컷 장부·예약·자동화 상태는 그대로 여기 |
 | 2 | `pkm-atelier-img-3` | 닫힘(2026-10-31, 약 938 MB) | 이미 있는 이름의 **교체**만 · 이미 있는 도트(`sprites/`)는 그대로 |
-| 3 | `pkm-atelier-img-4` | 열림 | **새 그림 전부** · 새 캐릭터의 기록(`records/<종>-<날짜>/`) · 새 도트(`sprites/`) |
+| 3 | `pkm-atelier-img-4` | 닫힘(2026-11-14) | 이미 있는 이름의 **교체**만 · 이미 있는 기록 · 도트 · 지역 그림(`regions/`)은 그대로 |
+| 4 | `pkm-atelier-img-5` | 열림(2026-11-14 부터) | **새 그림 전부** · 새 캐릭터의 기록(`records/<종>-<날짜>/`) · 새 도트(`sprites/`) |
 
 - 새 그림은 **열린 저장소**(번호가 가장 큰 것)의 `img/` 에만 올린다. 닫힌 저장소에 새 이름이
   올라오면 등록이 전부 멈춘다("닫힌 그림 저장소 … 에 새 그림").
@@ -756,7 +757,7 @@ GitHub Pages 사이트 하나는 1 GB 까지라 첫 저장소가 차서 저장�
 
 | 어디 | 워크플로 | 언제 | 하는 일 |
 |---|---|---|---|
-| `pkm-atelier-img` · `pkm-atelier-img-2` · `pkm-atelier-img-3` · `pkm-atelier-img-4` | `썸네일` | `img/*.webp` 가 푸시되면 | `img/thumb/` 를 만들어 `[skip actions]` 로 되커밋 |
+| `pkm-atelier-img` · `pkm-atelier-img-2` · `pkm-atelier-img-3` · `pkm-atelier-img-4` · `pkm-atelier-img-5` | `썸네일` | `img/*.webp` 가 푸시되면 | `img/thumb/` 를 만들어 `[skip actions]` 로 되커밋 |
 | `pkm-atelier` | `그림 등록` | 썸네일이 깨울 때 · 매시 17분 · 수동 실행 | 그림 저장소 전부를 읽어 `data/img.json` 의 `img`·`where` 에 적고 되커밋 |
 
 `그림 등록` 은 둘째 저장소부터는 못 받아도 멈추지 않는다 — 그 저장소에 적힌 그림의 자리(`where`)를
@@ -777,15 +778,15 @@ GitHub Pages 사이트 하나는 1 GB 까지라 첫 저장소가 차서 저장�
    있으면 **전부** 등록하지 않는다(오타를 잡으려고 일부러 통과시키지 않는다).
 
 ```bash
-# img/ 는 첫 저장소, img-2/ 는 둘째, img-3/ 은 셋째, img-4/ 는 넷째 저장소의 img/ 자리다(모두 .gitignore — 올라가지 않는다).
-# 네 저장소를 옆에 받아 링크로 잇는 것이 가장 확실하다 — 닫힘·같은 이름 검사가 실제와 같아진다
-ln -s ../pkm-atelier-img/img img && ln -s ../pkm-atelier-img-2/img img-2 && ln -s ../pkm-atelier-img-3/img img-3 && ln -s ../pkm-atelier-img-4/img img-4
-cp <새 WebP 들> img-4/                       # 새 그림은 열린 저장소 자리로
+# img/ 는 첫 저장소, img-2/ 는 둘째, img-3/ 은 셋째, img-4/ 는 넷째, img-5/ 는 다섯째 저장소의 img/ 자리다(모두 .gitignore — 올라가지 않는다).
+# 다섯 저장소를 옆에 받아 링크로 잇는 것이 가장 확실하다 — 닫힘·같은 이름 검사가 실제와 같아진다
+ln -s ../pkm-atelier-img/img img && ln -s ../pkm-atelier-img-2/img img-2 && ln -s ../pkm-atelier-img-3/img img-3 && ln -s ../pkm-atelier-img-4/img img-4 && ln -s ../pkm-atelier-img-5/img img-5
+cp <새 WebP 들> img-5/                       # 새 그림은 열린 저장소 자리로
 python3 tools/register-images.py --check   # 쓰지 않고 무엇이 달라지는지만
 node tests/forms.cjs
 ```
 
-5. **열린** 그림 저장소(지금 `pkm-atelier-img-4`)에 올린다 — `img/` 아래에 최종 WebP. 생성 원본 PNG 는 올리지 않는다(아래 "원본 PNG").
+5. **열린** 그림 저장소(지금 `pkm-atelier-img-5`)에 올린다 — `img/` 아래에 최종 WebP. 생성 원본 PNG 는 올리지 않는다(아래 "원본 PNG").
    교체만 그 파일이 있던 저장소에.
    한 캐릭터 분량을 **커밋 하나**로 `main` 에 직접 올린다. 작업 브랜치와 PR 은 만들지 않는다.
    `img/thumb/` 와 `data/img.json` 은 워크플로가 만드니 손으로 올리지 않는다.

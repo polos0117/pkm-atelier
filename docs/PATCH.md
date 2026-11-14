@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-14 · claude · 그림 저장소 다섯째(pkm-atelier-img-5)로 전환
+- 사용자 「pkm 이미지 저장소 5번으로 바꿔줘」 — 새 그림 · 새 기록 · 새 도트는 이제 `pkm-atelier-img-5`(where 4)에 올린다. `pkm-atelier-img-4` 는 닫혀 교체만 받고, 지역 그림 `regions/` 은 그대로 넷째에 둔다.
+- lib/img.js `BASES` · tools/register-images.py `SHARDS`·`EXTRA_DIRS` · 등록 워크플로(다섯째 체크아웃 · img-5 링크) · .gitignore 에 다섯째를 더했다. 모든 페이지의 `lib/img.js?v=` 를 `img5` 로.
+- 그림 저장소 목록을 읽는 도구(image-runner · casual-plan · casual-ledger · prompt-pack · face-design)에 다섯째를 더했다 — 다섯 저장소를 `pkm-atelier` 옆에 받아 둔다.
+- README · AGENTS · IMAGE_RULES(4절 표) · docs/IMAGE_AUTOMATION · rust/README 의 열린 저장소 표기를 고쳤다. 기존 이미지는 옮기지 않아 옛 주소가 그대로 산다.
+
 ## 2026-11-14 · gpt · 베이리프 애니 2.5D 광택 등록
 - data/img.json — 사용자 선택 메카 1번과 일상 1~10·허브티 블렌더 전용컷 90을 anime_25d_gloss로 추가했다. 기존 화풍과 다른 캐릭터의 이미지는 보존했다.
 - 생성 기록 — 넷째 그림 저장소 records/bayleef-20261114/에 제출 원문·선택값·해시·육안 검수를 남겼다. 반환된 이미지는 노출을 이유로 재생성하지 않았다.

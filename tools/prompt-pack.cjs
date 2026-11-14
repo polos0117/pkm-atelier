@@ -74,7 +74,7 @@ const keys = rows => rows.map(r => Array.isArray(r) ? r[0] : r.key).filter(v => 
 
 function args(argv) {
   const o = { cmd: argv[0], card: '', dir: '', style: '', plan: '', slot: '', file: '', legacy: false,
-    repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4'].map(n => path.join(ROOT, '..', n)) };
+    repos: ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5'].map(n => path.join(ROOT, '..', n)) };
   for (let i = 1; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--legacy') o.legacy = true;

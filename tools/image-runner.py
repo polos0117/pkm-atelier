@@ -4,7 +4,7 @@ All mutable state and preserved text assets (prompt, UI, QA, approvals) live in 
 Generated originals are NOT committed (2026-10-23): they stay in this session's cache (PKM_IMAGE_CACHE,
 default <tmp>/pkm-image-runner/<sha256>.<ext>) and the record keeps only their sha256 and the sha256 of
 their WebP conversion. Older records whose originals were committed still read them from img-2.
-New images are published to the open image repository (the last of IMAGE_REPOS, img-4 since 2026-10-31);
+New images are published to the open image repository (the last of IMAGE_REPOS, img-5 since 2026-11-14 — img-4 2026-10-31 ~ 11-14);
 the earlier ones are closed (replacements only).
 A normal fast-forward push is the compare-and-swap; contention stops the caller.
 """
@@ -48,7 +48,7 @@ def style_complete(v):
     eight = bool(forms.get('light', {}).get('f')) and len(casual) >= 7
     return nine or eight
 TERMINAL = {'complete', 'completed_externally', 'skipped_external_partial'}
-IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4']   # data/img.json "where" order; last one is open
+IMAGE_REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5']   # data/img.json "where" order; last one is open
 DAILY_MAX = 12
 EXECUTION_MAX = 1
 KST = dt.timezone(dt.timedelta(hours=9))
@@ -264,7 +264,7 @@ def reconcile_external(state, run, registry, images, code_head, read):
                 h = digest(store.read(p))
                 item = {'file': f, 'shard': shard, 'sha256': h}
                 published.append(item)
-                if shard >= 1 and own.get(f) == h:   # img-2 (earlier runs), img-3 or img-4 (open) — never the closed first shard
+                if shard >= 1 and own.get(f) == h:   # img-2 (earlier runs), img-3 · img-4 or img-5 (open) — never the closed first shard
                     ours.append(f)
                 else:
                     foreign.append(item)

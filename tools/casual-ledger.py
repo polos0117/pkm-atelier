@@ -54,13 +54,13 @@ data/casual-tree.json)로 적는다. 옛 컷(갈래 cat · 예시 ex)은 트리 
 자세 pose ← 자세 추천. 그래서 버전1 · 버전2 컷이 섞인 장부도 같은 규칙으로 견준다. 작은 묶음 한 바퀴는 버전1 길의 규칙이라 버전2 컷엔 안 본다.
 버전2 컷의 트리 검사는 안 쓰는 값(몸 방향 · 프레이밍)과 얼굴 클로즈업 조건만 — 칸끼리 맞는지는 계획기 · 지시문 묶음(plannedV2)이 본다.
 
-기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3, ../pkm-atelier-img-4 다(--repos 로 바꾼다).
+기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3, ../pkm-atelier-img-4, ../pkm-atelier-img-5 다(--repos 로 바꾼다).
 장부·예약은 그대로 둘째 저장소에 — 새 그림의 기록은 열린 저장소(지금 넷째)에 쌓인다."""
 from pathlib import Path
 import argparse, datetime, importlib.util, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3", "pkm-atelier-img-4")]
+REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3", "pkm-atelier-img-4", "pkm-atelier-img-5")]
 LEDGER = os.path.join(os.path.dirname(ROOT), "pkm-atelier-img-2", "records", "casual-ledger.json")
 # 예약은 세션마다 따로 파일(2026-10-22) — 한 장부 파일에 다들 쓰다 push 가 엇갈리면 남의 예약을 지웠다(밤선인·파치리스, 체리꼬·샤비)
 RESERVATIONS = "casual-reservations"
