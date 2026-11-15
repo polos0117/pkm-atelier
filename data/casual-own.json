@@ -3738,9 +3738,9 @@
      "job_ko": "야간 경비 견습",
      "base": "pw_workshop",
      "place": "a quiet office building lobby at night — a security desk with a row of monitors, a key cabinet, a revolving door, a long dim hallway",
-     "activity": "she is a night guard apprentice with one hand at her waist, looking down at a flashlight she is checking for the first time",
-     "preset": "pocket_look",
-     "use": "sig_hold",
+     "activity": "she is a night guard apprentice, looking down at a flashlight raised near her face as she checks it for the first time",
+     "preset": "raise_chest",
+     "use": "sig_raise",
      "prop": "a flashlight",
      "outfit": {
       "bold": "a security guard look fitted to her body — a fitted guard uniform jacket over a short pencil skirt with a belt, bare legs, a visor cap, a plain visor cap",
