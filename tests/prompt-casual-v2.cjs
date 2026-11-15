@@ -108,14 +108,17 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(/\n\nBODY TYPE: /.test(fixed.text) && fixed.text.includes(T.figure) && fixed.text.includes(T.bodyV2) && /^skin_exposure: bold/m.test(fixed.sb), '체형 · 인체 · 노출 줄 그대로');
   const abs = Object.keys((T.abs || {}).by || {})[0];
   if (abs) assert(run({ game: 'legend_of_zelda', character: 'Link', cut: 'bodysuit' }, { mech: abs }).text.includes(T.abs[T.abs.by[abs]]), '복근 줄 그대로');
+  /* 2026-11-16 — 등장인물 많은 게임 1회차도 계획기가 정한 캐릭터(text.assigned). 옛 계획의 pick 칸(character 빈 칸)은 지시문 그대로 */
+  const assigned = run({ game: 'overwatch', character: 'Kiriko', cut: 'bodysuit', round: 1 });
+  assert(assigned.sb.includes('Outfit: ' + list.text.assigned.replace('{character}', 'Kiriko').replace('{game}', 'Overwatch').replace('{cut}', 'cut as a high-cut bodysuit')) && assigned.text.includes(T.casualOutputCosplay) && !assigned.sb.includes('…'), '1회차 assigned ' + assigned.sb);
   const pick = run({ game: 'overwatch', character: '', cut: 'bodysuit', round: 1, used: ['Tracer', 'Mercy'] });
-  assert(/^Outfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer, Mercy; write the character's name first/m.test(pick.sb), '1회차 pick ' + pick.sb);
+  assert(/^Outfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer, Mercy; write the character's name first/m.test(pick.sb), '옛 1회차 pick 칸 그대로 ' + pick.sb);
   assert(run({ game: 'overwatch', character: '', cut: 'bodysuit', round: 1 }).sb.includes('already used: none yet;'), '1회차 — 쓴 캐릭터 없음');
   const again = run({ game: 'overwatch', character: 'Mercy', cut: 'bodysuit', round: 2 });
   assert(again.sb.includes('Outfit: a daring adult cosplay of Mercy from Overwatch — the costume\'s recognisable colours and parts, cut as a high-cut bodysuit'), '2회차 ' + again.sb);
   const fallback = run(undefined);   /* 게임을 안 고른 장면(랜덤 · 손으로 계열만) — 트리의 옷 글 */
   assert(fallback.sb.includes('Outfit: a daring adult cosplay of a video-game character, cut as a high-cut bodysuit') && fallback.text.includes(T.casualOutputCosplay), '게임 없음 — 옷 칸 글');
-  for (const x of [fixed, pick, again]) assert(!/[가-힣]/.test(x.text) && P.words(x.text) <= LIMIT, '한글 · 낱말 ' + P.words(x.text));
+  for (const x of [fixed, assigned, pick, again]) assert(!/[가-힣]/.test(x.text) && P.words(x.text) <= LIMIT, '한글 · 낱말 ' + P.words(x.text));
   /* 버전1 장면도 같은 글 */
   const v1c = L.buildSingle({ ...base, treeV: undefined, cosplayList: list, era: 'now', place: 'arcade_hall', act: tree.activities.find(a => (a.places || []).includes('arcade_hall') || (a.places || []).includes('@arcade')).key, ofam: 'game_cosplay', item: 'gc_idol', cosplay: { game: 'super_mario_bros', character: 'Mario', cut: 'idol', round: 1 } });
   assert(v1c.includes('Outfit: a daring adult cosplay of Mario from Super Mario Bros.') && v1c.includes(T.casualOutputCosplay) && v1c.includes(T.casualWardrobeCosplay), '버전1 게임 코스프레');

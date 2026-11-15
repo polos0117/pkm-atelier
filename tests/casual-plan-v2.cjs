@@ -171,43 +171,71 @@ let gcn = 0;
   assert.equal(m.length, 11, '마리오 열한 재단 뒤 끝'); assert.equal(new Set(m.map(x => x.cut)).size, 11, '재단 겹침 없음');
   assert(m.every(x => x.character === 'Mario' && x.round === 1) && /^a daring adult cosplay of Mario from Super Mario Bros\. — /.test(G.cosplayText(LIST, m[0])), '주인공 하나 — fixed 글');
   assert.equal(G.pickCosplay(LIST, m.map(x => ({ game: x.game, character: '', cut: x.cut })).concat(LIST.games.filter(g => g.key !== 'super_mario_bros').map(g => ({ game: g.key, character: g.many ? '' : g.character, cut: 'knit' }))), Math.random).game === 'super_mario_bros', false, '다 찬 주인공 게임은 빠진다(쓴 수가 가장 적어도)');
-  /* 등장인물 많음 — 1회차는 pick(character 빈 칸 · 쓴 캐릭터 목록), roster 에 닿으면 2회차 again(쓴 캐릭터 · 안 입은 재단), 다 차면 빠진다 */
-  const ow = Object.assign({}, LIST, { games: [Object.assign({}, LIST.games.find(g => g.key === 'overwatch'), { roster: 2 })] });
-  const p1 = G.pickCosplay(ow, [{ game: 'overwatch', character: 'Tracer', cut: 'bikini' }], Math.random);
-  assert(p1.character === '' && p1.round === 1 && p1.used.join() === 'Tracer', '1회차 pick ' + JSON.stringify(p1));
-  assert(p1.again && p1.again.character === 'Tracer' && p1.again.cut !== 'bikini', '1회차 칸의 2회차 몫(again) — 쓴 캐릭터 · 안 입은 재단 ' + JSON.stringify(p1.again));
-  const as = G.againScene({ item: 'gc_' + p1.cut, cosplay: p1 });
-  assert(as.item === 'gc_' + p1.again.cut && as.cosplay.round === 2 && G.cosplayText(ow, as.cosplay, p1.again.cut).startsWith('a daring adult cosplay of Tracer from Overwatch'), '2회차 몫 장면');
-  assert.deepEqual(G.cosplayAgain(ow, [{ game: 'overwatch', character: 'Tracer', cut: 'bikini' }], 'overwatch', () => 0, k => k === 'bikini' || k === 'one_piece', 'knit'), { character: 'Tracer', cut: 'one_piece' }, 'cosplayAgain — 장소가 받는 재단만');
-  const t1 = G.cosplayText(ow, p1);
-  assert(t1.startsWith('… (a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer;'), '1회차 글 ' + t1);
+  /* 등장인물 많음(2026-11-16 「오버워치 메르시가 4케릭터안에서 2번이나」 → 「응 그래」) — 1회차도 계획기가 캐릭터를 정한다(assigned): 목록 안 · 쓴/예약 캐릭터 아님,
+     여자 무게 2 · 남자 1. 목록을 다 쓰면 2회차 again(쓴 캐릭터 · 안 입은 재단), 다 차면 빠진다 */
+  const OW = LIST.games.find(g => g.key === 'overwatch'), owNames = OW.characters.map(c => c.name);
+  const ow = Object.assign({}, LIST, { games: [OW] });
+  const p1 = G.pickCosplay(ow, [{ game: 'overwatch', character: 'tracer', cut: 'bikini' }], Math.random);
+  assert(p1.round === 1 && owNames.includes(p1.character) && p1.character !== 'Tracer' && !p1.used && !p1.again, '1회차 assigned — 목록 안 · 쓴 캐릭터 아님 ' + JSON.stringify(p1));
+  assert.equal(G.cosplayText(ow, p1), 'a daring adult cosplay of ' + p1.character + ' from Overwatch — the costume\'s recognisable colours and parts, ' + G.cut(LIST, p1.cut).en, '1회차 assigned 글');
+  { const twenty = seq(ow, [], 20); assert(twenty.length === 20 && new Set(twenty.map(x => G.nameKey(x.character))).size === 20 && twenty.every(x => owNames.includes(x.character) && x.round === 1), '빈 기록에서 오버워치 스무 번 — 캐릭터 안 겹침 ' + twenty.map(x => x.character)); }
+  { let x = 99, f = 0; const rnd = () => (x = (x * 9301 + 49297) % 233280) / 233280, fem = new Set(OW.characters.filter(c => c.female).map(c => c.name));
+    for (let i = 0; i < 4000; i++) if (fem.has(G.pickCosplay(ow, [], rnd).character)) f++;
+    assert(f / 4000 > fem.size / owNames.length + 0.08, '여자 무게 2 — 4000번에 여자 ' + (f / 40).toFixed(1) + '% · 목록 ' + (100 * fem.size / owNames.length).toFixed(1) + '%'); }
+  /* 목록을 다 쓰면 2회차 — 쓴 캐릭터 가운데 덜 입은 하나 · 안 입은 재단 */
+  const ow2 = Object.assign({}, LIST, { games: [Object.assign({}, OW, { characters: OW.characters.filter(c => c.name === 'Tracer' || c.name === 'Mercy'), roster: 2 })] });
   const u2 = [{ game: 'overwatch', character: 'Tracer', cut: 'bikini' }, { game: 'overwatch', character: 'mercy', cut: 'knit' }, { game: 'overwatch', character: 'Mercy', cut: 'idol' }];
-  const p2 = G.pickCosplay(ow, u2, () => 0);
+  assert.equal(G.pickCosplay(ow2, u2.slice(0, 1), () => 0).character, 'Mercy', '남은 캐릭터가 하나면 그 캐릭터');
+  const p2 = G.pickCosplay(ow2, u2, () => 0);
   assert(p2.round === 2 && p2.character === 'Tracer' && p2.cut !== 'bikini', '2회차 — 덜 쓴 캐릭터 · 안 입은 재단 ' + JSON.stringify(p2));
-  assert(G.cosplayText(ow, p2).startsWith('a daring adult cosplay of Tracer from Overwatch — the costume'), '2회차 again 글');
+  assert(G.cosplayText(ow2, p2).startsWith('a daring adult cosplay of Tracer from Overwatch — the costume'), '2회차 again 글');
   const fullOw = CUT_KEYS.flatMap(c => [{ game: 'overwatch', character: 'Tracer', cut: c }, { game: 'overwatch', character: 'Mercy', cut: c }]);
-  assert.equal(G.pickCosplay(ow, fullOw, Math.random), null, '캐릭터 × 재단이 다 차면 빠진다');
-  const ow9 = Object.assign({}, LIST, { games: [LIST.games.find(g => g.key === 'overwatch')] });
-  assert.equal(G.pickCosplay(ow9, u2, Math.random).round, 1, 'roster 아래면 1회차');
-  assert.equal(G.pickCosplay(ow9, [], Math.random).again, undefined, '쓴 캐릭터가 없으면 2회차 몫 없음');
-  assert.equal(G.pickCosplay(ow9, u2, Math.random, { full: ['overwatch'] }).round, 2, '그리는 쪽이 없다고 하면 2회차(--cosplay-full)');
-  assert.equal(G.pickCosplay(ow9, [], Math.random, { full: ['overwatch'] }), null, '쓴 캐릭터가 없으면 2회차도 없다');
-  gcn += 12;
+  assert.equal(G.pickCosplay(ow2, fullOw, Math.random), null, '캐릭터 × 재단이 다 차면 빠진다');
+  assert.equal(G.pickCosplay(ow, u2, Math.random).round, 1, '목록에 남은 캐릭터가 있으면 1회차');
+  assert.equal(G.pickCosplay(ow, u2, Math.random, { full: ['overwatch'] }).round, 2, '--cosplay-full 이면 2회차');
+  assert.equal(G.pickCosplay(ow, [], Math.random, { full: ['overwatch'] }), null, '쓴 캐릭터가 없으면 2회차도 없다');
+  assert.deepEqual(G.cosplayAgain(ow, [{ game: 'overwatch', character: 'Tracer', cut: 'bikini' }], 'overwatch', () => 0, k => k === 'bikini' || k === 'one_piece', 'knit'), { character: 'Tracer', cut: 'one_piece' }, 'cosplayAgain — 장소가 받는 재단만');
+  /* 옛 사본(characters 없음)만 예전 pick — 옛 계획의 pick 칸 글 · 2회차 몫은 그대로 */
+  const owOld = Object.assign({}, LIST, { games: [Object.assign({}, OW, { characters: undefined, roster: 2 })] });
+  const q1 = G.pickCosplay(owOld, [{ game: 'overwatch', character: 'Tracer', cut: 'bikini' }], Math.random);
+  assert(q1.character === '' && q1.round === 1 && q1.used.join() === 'Tracer' && q1.again && q1.again.character === 'Tracer' && q1.again.cut !== 'bikini', '옛 사본 pick ' + JSON.stringify(q1));
+  const as = G.againScene({ item: 'gc_' + q1.cut, cosplay: q1 });
+  assert(as.item === 'gc_' + q1.again.cut && as.cosplay.round === 2 && G.cosplayText(ow, as.cosplay, q1.again.cut).startsWith('a daring adult cosplay of Tracer from Overwatch'), '옛 pick 칸의 2회차 몫 장면');
+  assert(G.cosplayText(LIST, q1).startsWith('… (a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer;'), '옛 pick 칸 지시문 그대로 ' + G.cosplayText(LIST, q1));
+  /* 주인공 하나 게임은 기록의 이름이 달라도 그 주인공(Geralt · Geralt of Rivia) */
+  { const w3 = LIST.games.find(g => g.key === 'witcher_3'), wl = Object.assign({}, LIST, { games: [w3] });
+    const left = G.pickCosplay(wl, CUT_KEYS.slice(1).map(c => ({ game: 'witcher_3', character: c === 'knit' ? 'Geralt' : w3.character, cut: c })), Math.random);
+    assert(left && left.cut === CUT_KEYS[0], '주인공 하나 — 다른 표기도 그 주인공의 재단 ' + JSON.stringify(left)); }
+  gcn += 16;
 }
 {
-  /* 6b. 세 공방 기록 읽기 — generation.cosplay, 없으면 장면 cosplay 의 character 가 찬 것. 1회차 장면(character 빈 칸) · 계획 · 예약 파일은 안 센다 */
+  /* 6b. 쓴 것 = 그린 기록(generation.cosplay, 없으면 장면 cosplay 의 character 가 찬 것) + 아직 안 그린 계획의 예약(2026-11-16 — 계획 파일 · 다시 짠 replan · 세션 예약 · 장부 reserved 칸,
+     character 가 찬 것). 같은 컷(공방 · 카드 · 세계 · 번호)은 한 번 — 그린 기록이 있으면 기록, replan 이 원래 계획을 이긴다. 1회차 pick(character 빈 칸)은 안 센다 — 그린 기록이 없으면 다시 짜기 대상 */
   const base2 = fs.mkdtempSync(path.join(os.tmpdir(), 'cosplay-used-'));
   const put = (repo, rel, obj) => { const f = path.join(base2, repo, 'records', rel); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, JSON.stringify(obj)); };
-  put('pkm-atelier-img-5', 'pikachu-20261115/casual4-ui.json', { generation: { cosplay: { game: 'overwatch', character: 'D.Va', cut: 'bodysuit' } }, storage: { cards: { 피카츄: { scenes: { casual: { cosplay: { game: 'overwatch', character: '', cut: 'bodysuit', round: 1 } } } } } } });
-  put('pkm-atelier-img-5', 'pikachu-20261115/casual5-ui.json', { storage: { cards: { 피카츄: { scenes: { casual: { cosplay: { game: 'overwatch', character: '', cut: 'knit', round: 1 } } } } } } });
-  put('sam-atelier-img-2', '조조/samguk-casual3.kr_drawn_rim_dewy-ui.json', { storage: { scene: { cosplay: { game: 'tomb_raider', character: 'Lara Croft', cut: 'bikini', round: 1 } } } });
-  put('element-atelier-img', 'fe/mecha-casual-plan.json', { cuts: [{ cosplay: { game: 'dark_souls', character: 'x', cut: 'knit' } }] });
-  put('pkm-atelier-img-2', 'casual-reservations/s.json', { characters: [{ cuts: [{ cosplay: { game: 'dark_souls', character: 'x', cut: 'knit' } }] }] });
-  const used = G.cosplayUsage(base2).map(x => x.game + '/' + x.character + '/' + x.cut).sort();
-  assert.deepEqual(used, ['overwatch/D.Va/bodysuit', 'tomb_raider/Lara Croft/bikini'], '쓴 기록 ' + used);
+  put('pkm-atelier-img-5', 'pikachu-20261115/casual4-ui.json', { generation: { cosplay: { game: 'overwatch', character: 'D.Va', cut: 'bodysuit' } }, storage: { last: '피카츄', cards: { 피카츄: { scenes: { casual: { cosplay: { game: 'overwatch', character: '', cut: 'bodysuit', round: 1 } } } } } } });
+  put('pkm-atelier-img-5', 'pikachu-20261115/casual5-ui.json', { storage: { last: '피카츄', cards: { 피카츄: { scenes: { casual: { cosplay: { game: 'overwatch', character: '', cut: 'knit', round: 1 } } } } } } });
+  put('sam-atelier-img-2', '조조/samguk-casual3.kr_drawn_rim_dewy-ui.json', { card: '조조', world: 'samguk', storage: { scene: { cosplay: { game: 'tomb_raider', character: 'Lara Croft', cut: 'bikini', round: 1 } } } });
+  put('sam-atelier-img-2', '조조/samguk-casual-plan.json', { card: '조조', world: 'samguk', cuts: [{ n: 3, cosplay: { game: 'tomb_raider', character: 'Lara Croft', cut: 'bikini', round: 1 } }] });
+  put('sam-atelier-img-2', '조조/fantasy-casual-plan.json', { card: '조조', world: 'fantasy', cuts: [{ n: 3, cosplay: { game: 'overwatch', character: 'Mercy', cut: 'idol', round: 1 } }] });
+  put('sam-atelier-img-2', '조조/fantasy-casual3-replan.json', { card: '조조', world: 'fantasy', cuts: [{ n: 3, cosplay: { game: 'overwatch', character: 'Kiriko', cut: 'leotard', round: 1 } }] });
+  put('element-atelier-img', 'fe/mecha-casual-plan.json', { card: 'fe', world: 'mecha', cuts: [{ n: 3, cosplay: { game: 'dark_souls', character: 'x', cut: 'knit' } }, { n: 4, cosplay: { game: 'overwatch', character: '', cut: 'corset', round: 1, used: [] } }] });
+  put('pkm-atelier-img-2', 'casual-reservations/s.json', { session: 's', at: '2026-11-16T00:00:00+09:00', characters: [{ card: '피카츄', at: '2026-11-16T00:00:00+09:00', cuts: [{ cut: 4, cosplay: { game: 'overwatch', character: '', cut: 'bodysuit', round: 1, used: [] } }, { cut: 6, cosplay: { game: 'league_of_legends', character: 'Ahri', cut: 'idol', round: 1 } }] }] });
+  put('pkm-atelier-img-2', 'casual-ledger.json', { entries: [{ card: '라이츄', status: 'reserved', at: '2026-11-16T01:00:00+09:00', cuts: [{ cut: 2, cosplay: { game: 'overwatch', character: 'Ana', cut: 'corset', round: 1 } }] }, { card: '꼬부기', status: 'done', cuts: [{ cut: 1, cosplay: { game: 'overwatch', character: 'Sombra', cut: 'knit' } }] }] });
+  const key = x => x.game + '/' + x.character + '/' + x.cut;
+  const used = G.cosplayUsage(base2).map(key).sort();
+  assert.deepEqual(used, ['overwatch/D.Va/bodysuit', 'tomb_raider/Lara Croft/bikini'], '그린 기록만 ' + used);
+  const all = G.cosplayUsed(base2), allKeys = all.used.map(key).sort();
+  assert.deepEqual(allKeys, ['dark_souls/x/knit', 'league_of_legends/Ahri/idol', 'overwatch/Ana/corset', 'overwatch/D.Va/bodysuit', 'overwatch/Kiriko/leotard', 'tomb_raider/Lara Croft/bikini'], '그린 기록 + 예약(같은 컷 한 번 · replan · 장부 reserved) ' + allKeys);
+  assert.deepEqual(all.pending.map(p => [p.family, p.card, p.world, p.no, p.game].join('|')), ['element-atelier|fe|mecha|4|overwatch'], '다시 짜기 대상 — 안 그린 pick 칸 ' + JSON.stringify(all.pending));
+  assert.deepEqual(G.cosplayUsed(base2, null, { skip: p => p.card === '피카츄' }).planned.map(key).sort(), ['dark_souls/x/knit', 'overwatch/Ana/corset', 'overwatch/Kiriko/leotard'], 'skip — 다시 짜는 카드의 예약은 안 센다');
+  /* 계획 파일에만 있는 캐릭터(Ana · Kiriko)는 1회차에서 빠진다 */
+  { const ow3 = Object.assign({}, LIST, { games: [Object.assign({}, LIST.games.find(g => g.key === 'overwatch'), { characters: ['Ana', 'Kiriko', 'Tracer'].map(n => ({ name: n, female: true })) })] });
+    const got = new Set(); for (let i = 0; i < 200; i++) got.add(G.pickCosplay(ow3, all.used, Math.random).character);
+    assert.deepEqual([...got], ['Tracer'], '예약한 캐릭터는 빠진다 ' + [...got]); }
   assert.deepEqual(G.COSPLAY_REPOS, ['sam-atelier-img', 'sam-atelier-img-2', 'element-atelier-img', 'pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5']);
   fs.rmSync(base2, { recursive: true, force: true });
-  gcn += 2;
+  gcn += 6;
 }
 /* 6c. 계획 — 열 장에 게임 코스프레 한 장(상황 노출 자리) · 포켓몬 코스튬 한 장 · 상황 노출 없음 · 표의 장소 · 얼굴 클로즈업 없음 · 옷 = 재단 · 장부 check.
    쓴 기록은 차례로 쌓는다 — 덜 쓴 게임부터 돌고, 주인공 하나 게임의 재단은 안 겹친다 */
@@ -220,12 +248,13 @@ for (let i = 0; i < 8; i++) {
   assert.equal(ch.cuts.filter(x => x.situ).length, 0, card + ' 상황 노출은 필수에서 빠졌다');
   const g = gcs[0], x = g.cosplay;
   assert(x && LIST.games.some(gg => gg.key === x.game) && CUT_KEYS.includes(x.cut) && g.item === 'gc_' + x.cut, card + ' 게임 · 재단 · 옷 ' + JSON.stringify(g));
+  assert(x.character && !x.used && !x.again && !gcUsed.some(u => u.game === x.game && G.nameKey(u.character) === G.nameKey(x.character) && x.round === 1), card + ' 새 계획엔 pick 칸이 없다 — 캐릭터가 찬다 ' + JSON.stringify(x));
   assert(GCR.places.includes(g.place) || (GCR.water_cuts.includes(x.cut) && GCR.water_places.includes(g.place)), card + ' 장소 ' + g.place + ' ' + x.cut);
   assert(!GCR.not_frames.includes(g.frame) && !g.ocolor && !g.ofree && !g.xfree, card + ' 얼굴 클로즈업 · 옷 색 · 자유 칸 없음 ' + g.frame);
   assert.equal(ch.cuts.filter(y => y.ofree).length, 2, card + ' 옷 자유 둘'); assert.equal(ch.cuts.filter(y => y.xfree).length, 1, card + ' 갈래 · 상황 자유 하나');
   for (const f of tree.required.outfits) assert.equal(ch.cuts.filter(y => y.ofam === f).length, 1, card + ' 필수 ' + f);
   ch.cuts.forEach(y => validV2(y, card + ' ' + y.cut));
-  gcUsed.push(x.character ? x : Object.assign({}, x, { character: 'Pick' + i }));   /* 1회차는 그리는 쪽이 채운 이름이 기록에 */
+  gcUsed.push(x);
   gcEntries.push({ card, status: 'done', at: at(gcEntries.length), cuts: ch.cuts });
   gcn++;
 }
@@ -282,8 +311,37 @@ assert(new Set(gcUsed.map(x => x.game)).size >= 3, '여덟 명이 여러 게임 
   const gs = pb.characters.map(ch => ch.cuts.find(x => x.cosplay).cosplay.game);
   { const cs = pb.characters.map(ch => ch.cuts.find(x => x.cosplay).cosplay), many = new Set(LIST.games.filter(g => g.many).map(g => g.key));
     /* 2026-11-15 무게 고르기 — 같은 배치에 같은 게임이 와도 된다(등장인물 많은 게임이면 캐릭터가 다르다). 예약된 다크 소울의 재단(knit)은 다시 안 쓴다 */
-    assert(cs.length === 2 && (cs[0].game !== cs[1].game || many.has(cs[0].game)) && !cs.some(c => c.game === 'dark_souls' && c.cut === 'knit'), '같은 배치 · 예약과 겹치지 않음 ' + JSON.stringify(cs)); }
+    assert(cs.length === 2 && (cs[0].game !== cs[1].game || (many.has(cs[0].game) && G.nameKey(cs[0].character) !== G.nameKey(cs[1].character))) && cs.every(c => c.character) && !cs.some(c => c.game === 'dark_souls' && c.cut === 'knit'), '같은 배치 · 예약과 겹치지 않음 ' + JSON.stringify(cs)); }
   gcn += 3;
+}
+/* 6g. 옛 계획 다시 짜기(2026-11-16) — --recosplay 는 안 그린 옛 pick 칸의 cosplay 만 새 규칙으로(장소 그대로 · 되면 원래 재단), 다른 칸 · 다른 카드 · 그린 칸은 그대로.
+   --recosplay-list 는 그림 저장소에서 계획은 있는데 아직 안 그린 pick 칸을 찍는다 */
+{
+  const cli = require('../tools/casual-plan.cjs');
+  const src = gcEntries[gcEntries.length - 1].cuts, k = src.findIndex(x => x.ofam === GCR.outfit), N = src[k].cut;
+  const old = src.map((x, i) => i === k ? Object.assign({}, x, { cosplay: { game: 'overwatch', character: '', cut: x.cosplay.cut, round: 1, used: [] } }) : x);
+  const planF = path.join(tmp, 'records', 'pikachu-rc', 'plan.json');
+  fs.mkdirSync(path.dirname(planF), { recursive: true });
+  fs.writeFileSync(planF, JSON.stringify({ session: 'rc', characters: [{ card: '피카츄', species: 'pikachu-rc', cuts: old }, { card: '라이츄', species: 'raichu-rc', cuts: old }] }));
+  const lo = () => cli.args(['--recosplay-list', '--repos', tmp, '--cosplay-repos']);
+  assert.deepEqual(cli.recosplayList(lo()).map(r => r.family + '|' + r.card + '|' + r.no + '|' + r.game), ['pkm-atelier|라이츄|' + N + '|overwatch', 'pkm-atelier|피카츄|' + N + '|overwatch'], '다시 짜기 대상 목록');
+  const res = cli.recosplay(cli.args(['피카츄', '--recosplay', '--plan', planF, '--repos', tmp, '--cosplay-repos']));
+  const back = JSON.parse(fs.readFileSync(planF, 'utf8')), pk = back.characters[0].cuts, nc = pk[k];
+  assert(res.changed.length === 1 && res.changed[0].cut === N && nc.cosplay.character && LIST.games.some(g => g.key === nc.cosplay.game) && !nc.cosplay.used, '그 칸만 새 규칙 ' + JSON.stringify(nc.cosplay));
+  assert(nc.place === old[k].place && P.cosplayPlaceOk(tree, nc.cosplay.cut, nc.place) && nc.item === 'gc_' + nc.cosplay.cut && nc.cosplay.cut === old[k].cosplay.cut, '장소 그대로 · 원래 재단 ' + nc.place + ' ' + nc.cosplay.cut);
+  assert(pk.every((c, i) => i === k || JSON.stringify(c) === JSON.stringify(old[i])) && JSON.stringify(back.characters[1].cuts) === JSON.stringify(old), '다른 칸 · 다른 카드는 그대로');
+  assert(back.recosplay && back.recosplay[0].cuts[0].now.character === nc.cosplay.character, '계획 파일에 다시 짠 기록');
+  assert.equal(cli.recosplay(cli.args(['피카츄', '--recosplay', '--plan', planF, '--repos', tmp, '--cosplay-repos'])).changed.length, 0, '두 번째는 바꿀 칸이 없다');
+  /* 그린 칸(그림 저장소 기록이 있는 번호)은 안 바꾼다 */
+  fs.mkdirSync(path.join(tmp, 'records', 'raichu-rc'), { recursive: true });
+  fs.writeFileSync(path.join(tmp, 'records', 'raichu-rc', 'casual' + N + '-ui.json'), JSON.stringify({ storage: { last: '라이츄', cards: { 라이츄: { scenes: { casual: {} } } } } }));
+  assert.equal(cli.recosplay(cli.args(['라이츄', '--recosplay', '--plan', planF, '--repos', tmp, '--cosplay-repos'])).changed.length, 0, '그린 칸은 그대로');
+  assert.deepEqual(cli.recosplayList(lo()), [], '다시 짠 칸 · 그린 칸은 목록에서 빠진다');
+  /* 다시 짠 피카츄 칸은 예약으로 센다 — 다른 카드를 짤 때 그 캐릭터는 빠진다 */
+  const o4 = cli.args(['꼬부기', '--session', 'x', '--repos', tmp, '--cosplay-repos']), gc4 = cli.cosplayOf(o4, []);
+  assert(gc4.used.some(u => u.game === nc.cosplay.game && u.character === nc.cosplay.character && u.card === '피카츄'), '다시 짠 칸도 쓴 것 ' + JSON.stringify(gc4.used));
+  fs.rmSync(path.join(tmp, 'records', 'pikachu-rc'), { recursive: true, force: true }); fs.rmSync(path.join(tmp, 'records', 'raichu-rc'), { recursive: true, force: true });
+  gcn += 9;
 }
 fs.rmSync(tmp, { recursive: true, force: true });
 console.log('PASS 계획기 버전2: 버전1 열 명 위에 ' + N_V2 + '명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸 · 게임 코스프레 ' + gcn + '가지(옛 구성 열여섯 명 그대로)');

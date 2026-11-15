@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-16 · claude · 게임 코스프레 2차 — 등장인물 많은 게임도 계획기가 캐릭터를 정하고, 예약도 쓴 것으로 센다
+- 사용자 「삼국지 공방에서만 벌써 오버워치 메르시가 4케릭터안에서 2번이나 나왔어」 → 「응 그래」 — 1회차를 GPT 가 고르고 미리 짠 계획끼리 서로 못 봐 「already used: none yet」 이 되던 것
+- lib/game-cosplay.js — 등장인물 많은 게임 1회차는 목록 characters 가운데 안 쓰고 안 예약한 캐릭터를 여자 무게 2 · 남자 1 로 정한다(text.assigned), 목록을 다 쓰면 2회차. 쓴 것 = 그린 기록 + 아직 안 그린 계획의 예약(cosplayPlanned · cosplayUsed — 계획 파일 · replan · 세션 예약 · 장부 reserved 칸, 같은 컷은 한 번). 주인공 하나 게임은 기록의 표기가 달라도 그 주인공으로 센다
+- lib/casual-plan.js · tools/casual-plan.cjs — 쓴 것을 cosplayUsed 로(이번 카드 예약은 빼고, 장부 view 예약과 같은 컷은 한 번). --recosplay(옛 계획의 아직 안 그린 pick 칸 cosplay 만 새 규칙으로 — 장소 그대로 · 되면 원래 재단, --reserve · --dir) · --recosplay-list(다시 짜기 대상 보기)
+- tools/prompt-pack.cjs — 안내 kind assigned, 「1회차 채우기」 절은 「옛 계획에만」(먼저 --recosplay) · lib/prompt-ui.js · lib/words.js · prompt.html — 등장인물 많은 게임의 캐릭터 고르개(목록, 비우면 옛 pick 자리) · ?v=cos3
+- IMAGE_RULES.md · AGENTS.md — 게임 코스프레 절(쓴 것 = 기록 + 예약 · 계획기가 캐릭터 · 옛 pick 칸 다시 짜기) · data/game-cosplay.json — game-atelier 사본 갱신(characters)
+- tests/casual-plan-v2.cjs · prompt-casual-v2.cjs · prompt-pack.cjs · prompt-pack-screen.cjs · prompt-casual-dom.cjs — assigned(목록 안 · 쓴/예약 아님 · 오버워치 스무 번 안 겹침 · 여자 무게) · 예약 세기 · 2회차 · 다 차면 빠짐 · 옛 pick 칸 글 그대로 · --recosplay 가 안 그린 칸만
 
 ## 2026-11-16 · gpt · 꼬지모 anime_25d_gloss 등록
 - data/img.json — 선택한 메카 4번과 일상 10장·분재 장인 전용컷을 다섯째 그림 저장소에 등록.

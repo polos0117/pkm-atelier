@@ -316,10 +316,11 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.includes(styleLine) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  /* 게임 코스프레(2026-11-15) — 1회차 칸: Outfit 줄 「…」 + 같은 자리의 2회차 몫(<자리>-again-prompt.txt), 안내 · 차례표, 저장값 → 같은 지시문. 위의 목록 없이 짠 묶음(상황 노출 한 장)은 옛 구성 그대로 */
+  /* 게임 코스프레(2026-11-15) — 옛 계획의 1회차 pick 칸(2026-11-16 전 — 목록에 characters 가 없던 사본으로 짠 계획): Outfit 줄 「…」 + 같은 자리의 2회차 몫(<자리>-again-prompt.txt), 안내 · 차례표, 저장값 → 같은 지시문.
+     새 계획(캐릭터를 계획기가 정한 assigned 칸)은 그대로 그리는 글 · again 파일 없음. 위의 목록 없이 짠 묶음(상황 노출 한 장)은 옛 구성 그대로 */
   {
     const LIST = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/game-cosplay.json'), 'utf8')), G = window.AtelierGameCosplay;
-    const only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch') });
+    const only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch').map(g => Object.assign({}, g, { characters: undefined })) });   /* 옛 사본 */
     let pc; for (let i = 0; i < 20 && !pc; i++) { try { pc = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'packgc' + i, cosplay: { list: only, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
     const gcut = pc.cuts.find(x => x.ofam === 'game_cosplay');
     assert(gcut && gcut.cosplay.character === '' && gcut.cosplay.again && gcut.cosplay.again.character === 'Tracer' && !pc.cuts.some(x => x.situ), '1회차 칸 · 2회차 몫 · 상황 없음 ' + JSON.stringify(gcut && gcut.cosplay));
@@ -338,8 +339,27 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert.deepEqual(ug.storage.cards['피카츄'].scenes.casual.cosplay, G.cosplayClean(LIST, gcut.cosplay), '저장값 scene.cosplay');
     assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, ug.storage.cards['피카츄'], tree1, pika, null, { C2, tree2, cosplay: LIST }).st, pika, appear, faces, tree1, tree2, null, LIST) + '\n', tg, '저장값 → 같은 지시문');
     const ig = fs.readFileSync(path.join(dg, 'INDEX.md'), 'utf8');
-    assert(ig.includes('게임 코스프레 오버워치') && ig.includes('again-prompt.txt') && ig.includes('generation.cosplay'), '차례표 안내');
-    checks += 6;
+    assert(ig.includes('게임 코스프레 오버워치') && ig.includes('again-prompt.txt') && ig.includes('generation.cosplay') && ig.includes('옛 계획에만') && ig.includes('--recosplay'), '차례표 안내');
+    /* 새 계획 — 계획기가 정한 캐릭터(assigned): 그 캐릭터 글 그대로, again 파일 없음, 안내 kind assigned */
+    const ow = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch') });
+    let pa; for (let i = 0; i < 20 && !pa; i++) { try { pa = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'packga' + i, cosplay: { list: ow, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
+    const acut = pa.cuts.find(x => x.ofam === 'game_cosplay'), aname = acut.cosplay.character;
+    assert(aname && aname !== 'Tracer' && !acut.cosplay.again, 'assigned 칸 ' + JSON.stringify(acut.cosplay));
+    const planA = path.join(tmp, 'PLAN-ga.json'), da = path.join(tmp, 'pikachu-ga'), aslot = 'casual' + acut.cut;
+    fs.writeFileSync(planA, JSON.stringify({ session: 'tga', characters: [{ card: '피카츄', cuts: pa.cuts }] }));
+    r = run('init', '피카츄', '--dir', da, '--plan', planA, '--repos', repoG); assert.equal(r.status, 0, r.stderr);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(da, 'settings.json'), 'utf8')).slots[aslot].guide.cosplay.kind, 'assigned', '안내 kind assigned');
+    r = run('build', '--dir', da); assert.equal(r.status, 0, r.stderr);
+    assert(fs.readFileSync(path.join(da, aslot + '-prompt.txt'), 'utf8').includes('\nOutfit: a daring adult cosplay of ' + aname + ' from Overwatch — the costume') && !fs.readdirSync(da).some(f => /-again-prompt\.txt$/.test(f)), 'assigned 지시문 · again 없음');
+    assert(fs.readFileSync(path.join(da, 'INDEX.md'), 'utf8').includes(aname + '(계획기가 정함)'), '차례표 — 계획기가 정함');
+    /* 옛 pick 묶음을 다시 짜기 — --recosplay --plan --dir: 계획 파일 · 그 자리 지시문을 다시 쓰고 옛 again 파일을 지운다 */
+    const beforeG = Object.fromEntries(fs.readdirSync(dg).filter(f => /^casual\d+-prompt\.txt$/.test(f) && f !== slot + '-prompt.txt').map(f => [f, fs.readFileSync(path.join(dg, f), 'utf8')]));
+    const rc = cp.spawnSync('node', [path.join(ROOT, 'tools/casual-plan.cjs'), '피카츄', '--recosplay', '--plan', planG, '--dir', dg, '--repos', repoG, '--cosplay-repos', '--no-pull'], { encoding: 'utf8' });
+    assert.equal(rc.status, 0, rc.stderr + rc.stdout);
+    const ng = JSON.parse(fs.readFileSync(planG, 'utf8')).characters[0].cuts.find(x => x.ofam === 'game_cosplay').cosplay, tg2 = fs.readFileSync(path.join(dg, slot + '-prompt.txt'), 'utf8');
+    assert(ng.character && tg2.includes('\nOutfit: a daring adult cosplay of ' + ng.character + ' from ') && !fs.existsSync(path.join(dg, slot + '-again-prompt.txt')), '다시 짠 지시문 ' + JSON.stringify(ng));
+    for (const [f, t] of Object.entries(beforeG)) assert.equal(fs.readFileSync(path.join(dg, f), 'utf8'), t, '다른 자리 그대로 ' + f);
+    checks += 11;
   }
   console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열한 자리(경장 + 일상 열 · 상황 줄 · 상황 빼기 · 자유 장면 두 장(갈래 · 상황 · 장면) · 옷 목록의 상황 · 열 자리 version 3 · 게임 코스프레(1회차 · 2회차 몫) · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

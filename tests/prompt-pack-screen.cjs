@@ -36,8 +36,8 @@ const CUTS = [
   run('build', '--dir', dir7);
   /* ① 은 칸 꼴(2026-11-11) — 메카 실루엣은 3칸 「Silhouette:」(줄 꼴 MECHA SILHOUETTE) */
   assert(/^Silhouette: /m.test((fs.readFileSync(path.join(dir7, 'light-prompt.txt'), 'utf8').split('\n\n')[3] || '').replace(/^3\. ARMOR — LIGHT\n/, '')), '① 메카 줄');
-  /* 게임 코스프레(2026-11-15) — 1회차 칸(쓴 캐릭터 목록 · 2회차 몫)과 생성기 화면(목록을 data/game-cosplay.json 에서 받는다)이 같은 글 */
-  const LIST = read('game-cosplay.json'), only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch') });
+  /* 게임 코스프레(2026-11-15) — 옛 계획의 1회차 pick 칸(쓴 캐릭터 목록 · 2회차 몫 — 2026-11-16 전 사본, characters 없음)과 생성기 화면(목록을 data/game-cosplay.json 에서 받는다)이 같은 글 */
+  const LIST = read('game-cosplay.json'), only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch').map(g => Object.assign({}, g, { characters: undefined })) });
   let pg; for (let i = 0; i < 20 && !pg; i++) { try { pg = window.AtelierCasualPlan.planV2({ S: window.AtelierSpec, tree: read('casual-tree.json'), tree2: read('casual-tree-v2.json'), subject: { gen: 1 }, entries: [], card: '피카츄', seed: 'screengc' + i, cosplay: { list: only, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
   const dirG = path.join(tmp, 'packgc'), planG = path.join(tmp, 'PLANGC.json'), gcSlot = 'casual' + pg.cuts.find(x => x.ofam === 'game_cosplay').cut;
   fs.writeFileSync(planG, JSON.stringify({ characters: [{ card: '피카츄', cuts: pg.cuts }] }));

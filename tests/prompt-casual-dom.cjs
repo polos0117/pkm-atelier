@@ -98,9 +98,9 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
    assert(!g('cosplay-character'),'주인공 하나 게임은 캐릭터 칸 없음');
    assert(a.output().includes("Outfit: a daring adult cosplay of Link from The Legend of Zelda — Link's outfit")&&a.output().includes('cut as a bikini with a sheer sarong'),'주인공 하나 글');
    await a.set('item','gc_leotard');assert(a.output().includes('from The Legend of Zelda')&&a.output().includes('cut as a gymnastic leotard'),'재단은 옷 칸');
-   await a.set('cosplay-game','overwatch');assert(g('cosplay-character'),'등장인물 많은 게임은 캐릭터 칸');
+   await a.set('cosplay-game','overwatch');assert(g('cosplay-character')&&g('cosplay-character').tagName==='SELECT'&&g('cosplay-character').options.length===39,'등장인물 많은 게임은 캐릭터 고르개(비움 + 목록 서른여덟 — 2026-11-16)');
    assert(/Outfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: none yet;/.test(a.output()),'비우면 그리는 쪽이 고르는 자리');
-   await a.set('cosplay-character','Mercy');assert(a.output().includes('Outfit: a daring adult cosplay of Mercy from Overwatch — the costume'),'캐릭터를 쓰면 그 캐릭터');
+   await a.set('cosplay-character','Mercy');assert(a.output().includes('Outfit: a daring adult cosplay of Mercy from Overwatch — the costume'),'캐릭터를 고르면 그 캐릭터(assigned 글)');
    assert(g('cosplay-text').textContent.includes('Mercy'),'Outfit 줄 미리보기');
    await a.set('ofam',Array.from(g('ofam').options).map(o=>o.value).find(v=>v&&v!=='game_cosplay'));assert(!g('cosplay-game'),'다른 계열이면 고르개가 없다');
    assert.deepEqual(Array.from(a.w.AtelierWords.missing()),[]);assert.deepEqual(a.errors,[]);
