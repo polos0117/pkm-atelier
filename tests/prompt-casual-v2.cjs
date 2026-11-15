@@ -2,10 +2,11 @@
    - 자세 추천 × 쓸 수 있는 장소마다, 랜덤 장면(카드 세대 · 표정 · 세부 강도)마다: 하는 일 · HAND TASK 줄 없음, POSTURE · COMPOSITION · 렌즈,
      손 줄은 본인 기준, 한글 없음, 낱말 상한
    - pkm 몫: 직업 역할 동작이면 Role 줄, 동료 묶음이면 동료 줄 · 한 마리 줄(아니면 「한 명만」), 첫 등장 무렵의 해, 포켓몬 세계
-   - 버전1 기록(treeV 없음)은 버전2 표가 와도 버전1 지시문 그대로 */
+   - 버전1 기록(treeV 없음)은 버전2 표가 와도 버전1 지시문 그대로
+   - 게임 코스프레(2026-11-15) — 주인공 하나 · 1회차(「…」 채우는 자리) · 2회차 글, 게임 · 캐릭터 이름, OUTPUT · WARDROBE 코스프레 줄, 옷 색 · 상황 · 원작 영향도 줄 없음, 체형 · 복근 줄 그대로 */
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict');
 const ctx = { window: {} }; vm.createContext(ctx);
-for (const name of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle']) vm.runInContext(fs.readFileSync('lib/' + name + '.js', 'utf8'), ctx);
+for (const name of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'game-cosplay']) vm.runInContext(fs.readFileSync('lib/' + name + '.js', 'utf8'), ctx);
 const { AtelierSpec: S, AtelierPrompt: P, AtelierLifestyle: L, AtelierCasualTreeV2: C } = ctx.window;
 const tree = JSON.parse(fs.readFileSync('data/casual-tree.json', 'utf8')), tree2 = JSON.parse(fs.readFileSync('data/casual-tree-v2.json', 'utf8'));
 const t = C.make(tree2, tree), T = S.PROMPT_LINES;
@@ -59,7 +60,7 @@ for (let i = 0; i < 150; i++) {
   const axes = {}; (S.LOCAL_AXES || []).forEach(k => { const o = S.ADVANCED_OPTIONS[k] || []; if (o.length) axes[k] = o[o.length - 1]; });
   look(Object.assign(sc, { expr: exprs[i % exprs.length], axes, scene: i % 4 ? '' : 'late afternoon light through the window', ofeat: i % 5 ? [] : ['glasses'] }), '랜덤 ' + i, card);
   /* 자유 장면(2026-11-11 — 갈래 · 상황 자유 · 장면 자유) — SCENE 이 주문, 우리 장소 · 자세 · 구도 · 손 · 크롭 · 시대 줄 없음, 얼굴 · 화풍 · 인체 칸 그대로 */
-  if (sc.ofam !== 'pokemon_costume') {
+  if (!(tree.outfits.find(f => f.key === sc.ofam) || {}).costume) {   /* 코스튬 컷(포켓몬 코스튬 · 게임 코스프레)은 자유 장면이 안 된다 */
     const fr = Object.assign({}, base, { mech: card.en, gen: card.gen }, sc, i % 2 ? { xfree: true } : { sfree: true, ofree: true }), tf = L.buildSingle(fr), F = S.FREE_SCENE;
     assert(tf.includes(F.head) && tf.includes(F.avoid) && tf.includes(i % 2 ? F.xfree : F.sfree) && !tf.includes(i % 2 ? F.sfree : F.xfree) && tf.includes(F.keep) && tf.includes(F.end), '랜덤 ' + i + ' 자유 주문');
     assert(!/^(Place|POSTURE|COMPOSITION|Lens \/ perspective|RIGHT HAND|LEFT HAND|BOTH HANDS|PROP|GAZE|Outfit|Outfit colours|Cut|Situation|action_level|separates_preference): /m.test(tf) && !/\n\n(CROP|WORLD|LOOK-BACK): /.test(tf) && !tf.includes(S.OUTFIT_FREE), '랜덤 ' + i + ' 자유 — 우리 장면 줄 없음');
@@ -94,5 +95,32 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(hw.includes(T.casualOutputV2) && block(hw, 'SCENE').includes('source_influence: subtle'), '할로윈은 보통 옷 줄');
   n += 2;
 }
+/* 게임 코스프레(2026-11-15) — 목록의 글에 게임 · 캐릭터 이름 · 재단(옷 칸 gc_<재단>), 코스프레 OUTPUT · WARDROBE, 색 · 상황 · 원작 영향도 줄 없음 */
+{
+  const G = ctx.window.AtelierGameCosplay, list = JSON.parse(fs.readFileSync('data/game-cosplay.json', 'utf8'));
+  const sc = { era: 'now', place: 'arcade_hall', ofam: 'game_cosplay', item: 'gc_bodysuit', ocolor: 'red', situ: 'wind', posture: 'stand', support: 'none', frame: 'three_quarter', body: 'front_3q', head: 'with_body', camera: 'eye', right: 'hip', left: 'natural', aspect: '2:3',
+    axes: { overall_intensity: 'strong', skin_exposure: 'bold', source_influence: 'subtle' } };
+  const run = (cos, extra) => { const text = L.buildSingle(Object.assign({}, base, { cosplayList: list }, sc, { cosplay: cos }, extra || {})); return { text, sb: block(text, 'SCENE') }; };
+  const fixed = run({ game: 'legend_of_zelda', character: 'Link', cut: 'mini_dress', round: 1 });   /* 옷 칸(gc_bodysuit)이 재단을 정한다 */
+  assert(fixed.sb.includes('Outfit: a daring adult cosplay of Link from The Legend of Zelda — Link\'s outfit — a green belted tunic') && fixed.sb.includes('cut as a high-cut bodysuit'), '주인공 하나 ' + fixed.sb);
+  assert(fixed.text.includes(T.casualOutputCosplay) && fixed.text.includes(T.casualWardrobeCosplay) && !fixed.text.includes(T.casualOutputV2) && !fixed.text.includes(T.casualWardrobe) && !fixed.text.includes(T.casualOutputCostume), '코스프레 OUTPUT · WARDROBE');
+  assert(!/Outfit colours:|Situation:|source_influence:/.test(fixed.sb) && !/accessories and objects around her|her source belongs in accessories/.test(fixed.text), '색 · 상황 · 원작 영향도 · 「장신구로만」 줄 없음');
+  assert(/\n\nBODY TYPE: /.test(fixed.text) && fixed.text.includes(T.figure) && fixed.text.includes(T.bodyV2) && /^skin_exposure: bold/m.test(fixed.sb), '체형 · 인체 · 노출 줄 그대로');
+  const abs = Object.keys((T.abs || {}).by || {})[0];
+  if (abs) assert(run({ game: 'legend_of_zelda', character: 'Link', cut: 'bodysuit' }, { mech: abs }).text.includes(T.abs[T.abs.by[abs]]), '복근 줄 그대로');
+  const pick = run({ game: 'overwatch', character: '', cut: 'bodysuit', round: 1, used: ['Tracer', 'Mercy'] });
+  assert(/^Outfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer, Mercy; write the character's name first/m.test(pick.sb), '1회차 pick ' + pick.sb);
+  assert(run({ game: 'overwatch', character: '', cut: 'bodysuit', round: 1 }).sb.includes('already used: none yet;'), '1회차 — 쓴 캐릭터 없음');
+  const again = run({ game: 'overwatch', character: 'Mercy', cut: 'bodysuit', round: 2 });
+  assert(again.sb.includes('Outfit: a daring adult cosplay of Mercy from Overwatch — the costume\'s recognisable colours and parts, cut as a high-cut bodysuit'), '2회차 ' + again.sb);
+  const fallback = run(undefined);   /* 게임을 안 고른 장면(랜덤 · 손으로 계열만) — 트리의 옷 글 */
+  assert(fallback.sb.includes('Outfit: a daring adult cosplay of a video-game character, cut as a high-cut bodysuit') && fallback.text.includes(T.casualOutputCosplay), '게임 없음 — 옷 칸 글');
+  for (const x of [fixed, pick, again]) assert(!/[가-힣]/.test(x.text) && P.words(x.text) <= LIMIT, '한글 · 낱말 ' + P.words(x.text));
+  /* 버전1 장면도 같은 글 */
+  const v1c = L.buildSingle({ ...base, treeV: undefined, cosplayList: list, era: 'now', place: 'arcade_hall', act: tree.activities.find(a => (a.places || []).includes('arcade_hall') || (a.places || []).includes('@arcade')).key, ofam: 'game_cosplay', item: 'gc_idol', cosplay: { game: 'super_mario_bros', character: 'Mario', cut: 'idol', round: 1 } });
+  assert(v1c.includes('Outfit: a daring adult cosplay of Mario from Super Mario Bros.') && v1c.includes(T.casualOutputCosplay) && v1c.includes(T.casualWardrobeCosplay), '버전1 게임 코스프레');
+  assert.equal(G.cosplayText(list, { game: 'super_mario_bros', cut: 'idol' }), 'a daring adult cosplay of Mario from Super Mario Bros. — ' + list.games[0].outfit + ', cut as a stage idol outfit — a cropped jacket and a pleated mini skirt');
+  n += 6;
+}
 assert(xf > 100, '자유 장면 ' + xf);
-console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록`);
+console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록 · 게임 코스프레`);

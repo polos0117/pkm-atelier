@@ -85,6 +85,26 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   for(const id of ids)assert.equal(a.get(id).value,before[id],'restore '+id);
   assert.equal(a.get('place').value,'berry_kitchen');assert.equal(a.get('lens').value,'wide24');assert.equal(a.get('outfit').value,'MY_OUTFIT');assert.equal(a.get('camera').value,'SAVED_CAMERA');
   assert.deepEqual(a.errors,[]);
-  console.log('PASS casual DOM: tree steps, descriptions, old saved jobs, companion, banned values, face close-up rule, crop, preset, mode/card isolation and restore');
+  a.dom.window.close();
+  /* 게임 코스프레(2026-11-15) — 의상 계열이 게임 코스프레일 때만 게임 고르개(열아홉), 재단은 옷 칸, 등장인물 많은 게임은 캐릭터 칸(비우면 그리는 쪽이 고르는 「…」 자리) */
+  a=await open(JSON.stringify({last:'피카츄',cards:{'피카츄':{mode:'casual',identityMode:'reference',scenes:{casual:{era:'now',place:'arcade_hall',act:'play_cabinet',ofam:'game_cosplay',item:'gc_bikini'}}}}}));
+  {
+   const g=a.get;
+   assert(g('cosplay-game'),'게임 고르개');assert.equal(g('cosplay-game').options.length,20,'고르지 않음 + 열아홉');
+   assert(a.output().includes('Outfit: a daring adult cosplay of a video-game character, cut as a bikini'),'게임 없음 — 옷 칸 글');
+   assert(a.output().includes(a.w.AtelierSpec.PROMPT_LINES.casualOutputCosplay),'코스프레 OUTPUT');
+   assert(g('ocolor').disabled&&g('situ').disabled,'옷 색 · 상황은 막힌다');
+   await a.set('cosplay-game','legend_of_zelda');
+   assert(!g('cosplay-character'),'주인공 하나 게임은 캐릭터 칸 없음');
+   assert(a.output().includes("Outfit: a daring adult cosplay of Link from The Legend of Zelda — Link's outfit")&&a.output().includes('cut as a bikini with a sheer sarong'),'주인공 하나 글');
+   await a.set('item','gc_leotard');assert(a.output().includes('from The Legend of Zelda')&&a.output().includes('cut as a gymnastic leotard'),'재단은 옷 칸');
+   await a.set('cosplay-game','overwatch');assert(g('cosplay-character'),'등장인물 많은 게임은 캐릭터 칸');
+   assert(/Outfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: none yet;/.test(a.output()),'비우면 그리는 쪽이 고르는 자리');
+   await a.set('cosplay-character','Mercy');assert(a.output().includes('Outfit: a daring adult cosplay of Mercy from Overwatch — the costume'),'캐릭터를 쓰면 그 캐릭터');
+   assert(g('cosplay-text').textContent.includes('Mercy'),'Outfit 줄 미리보기');
+   await a.set('ofam',Array.from(g('ofam').options).map(o=>o.value).find(v=>v&&v!=='game_cosplay'));assert(!g('cosplay-game'),'다른 계열이면 고르개가 없다');
+   assert.deepEqual(Array.from(a.w.AtelierWords.missing()),[]);assert.deepEqual(a.errors,[]);
+  }
+  console.log('PASS casual DOM: tree steps, descriptions, old saved jobs, companion, banned values, face close-up rule, crop, preset, mode/card isolation and restore, game cosplay picker');
  }finally{a.dom.window.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

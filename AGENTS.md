@@ -139,13 +139,13 @@ python3 tests/casual-tree.py     # 일상컷 트리 검사기
 python3 tools/casual-tree-v2.py check  # 일상컷 트리 버전2 표(docs/CASUAL_TREE_V2.md, 옮기는 중) — 51곳 받침 · 역할 동작 · 동료 · 안 쓰는 값 · 다 되는 장소 없는 자세 추천
 python3 tests/casual-tree-v2.py  # 버전2 검사기가 pkm 몫을 거는지
 node tests/casual-tree-v2.cjs    # 버전2 거르기 모듈 × pkm 표 — 검사기와 같은 길, 랜덤(카드 세대) · 포켓몬 세계 장소 · 칸 바꾸기 뒤 걸리는 칸 없음
-node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1400 낱말(2026-11-11) · 자유 장면(갈래 · 상황 자유 · 장면 자유) · 버전1 기록은 버전1 지시문
-node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 열한 자리(① + 일상 열 — 2026-11-11, version 3 열 · version 2 여덟 자리 그대로, ① 메카 자동)와 아홉 자리(--legacy) · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸
+node tests/prompt-casual-v2.cjs  # 버전2 일상컷 지시문 — 추천 × 장소 · 랜덤마다 버전1 줄 없음 · 역할 · 동료 · 첫 등장의 해 · 1400 낱말(2026-11-11) · 자유 장면(갈래 · 상황 자유 · 장면 자유) · 버전1 기록은 버전1 지시문 · 게임 코스프레(이름 · 1회차 「…」 · 2회차 · 코스프레 OUTPUT · WARDROBE)
+node tests/prompt-pack.cjs       # 지시문 묶음 — init·build 열한 자리(① + 일상 열 — 2026-11-11, version 3 열 · version 2 여덟 자리 그대로, ① 메카 자동)와 아홉 자리(--legacy) · 저장값 = 생성기 상태 · 일상 계획 값·사유 · 장부가 읽음 · 틀린 칸 · 게임 코스프레 1회차 칸 + <자리>-again-prompt.txt
 node tests/concept-mecha.cjs     # 메카 옵션 표 — 부품 표 열쇠 · 실루엣 owns · 자동 · 직접 고르기 · 겹치는 칸 · 배치 실루엣 안 겹침 · 옵션 줄 자리(docs/CONCEPT_MECHA.md, 명령줄 도구는 2026-11-08 지웠다)
 ESM_DIR=<node_modules> CHROMIUM_PATH=<chrome> node tests/concept-mecha-screen.cjs  # 새 인물 만들기의 메카 옵션(기본 없음 = 그대로 · 실루엣 칸 막힘 · MECHA SILHOUETTE / TYPE EFFECTS 줄 · 두 타입 · 새로고침 · 이어가기 · 일상컷 · 폰)
 node tests/prompt-pack-screen.cjs # 지시문 묶음 = 생성기 화면 — 여덟 자리 · 아홉 자리 글자 하나 다르지 않다(브라우저)
-node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출 · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 열두 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
-node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 열여섯 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리)
+node tests/casual-plan.cjs       # 일상컷 계획기 버전1(--v1) — 열 장(2026-11-11 — 필수 셋 한 장씩 · 코스튬 · 상황 노출(목록을 주면 게임 코스프레 — 2026-11-15) · 옷 자유 · 장면 자유 · 갈래 · 상황 자유 · 자유 둘) 열두 명 차례로 check 통과 · 배치 · 다시 채우기(옛 칸 포함) · 피할 값 · 생성기 주소 · 옛 칸 같은 열쇠
+node tests/casual-plan-v2.cjs    # 일상컷 계획기 버전2(기본) — 예약 칸 · 버전2 컷 위 버전1 계획기 · 섞인 장부 위 열여섯 명 check 통과 · 모듈이 고칠 칸 없음 · 생성기 주소 → 상태 · 피할 값 · 만든 컷 · 장부 비교 열쇠(짓 · 몸+머리) · 게임 코스프레(필수 — 상황 노출 자리 · 고르기 1회차 pick · 2회차 again · 다 찬 게임 빠짐 · 세 공방 기록 · 장부가 거는 것 · 옛 구성 그대로)
 node tests/casual-own.cjs       # 캐릭터만의 컷(90번) — 임시 표로 계획(열 장 그대로 + 90번 · --own · --own-level) → 장부 check · reserve → 묶음 casual90(표의 글 · PROP 줄 · 기록 own) → 생성기 주소(글은 표에서)
 (cd rust && cargo test -p casual-look)  # 일상컷 생김새 — 같은 그림·다시 칠한 그림·다른 그림의 거리(rust/README.md)
 node tests/casual-look-wasm.cjs  # 일상컷 생김새 wasm 판 — 소스와 같은가 · cargo 없이 같은 문턱 · 명령줄과 같은 글
@@ -163,6 +163,8 @@ node tests/styles.cjs            # 화풍 18가지(지금 쓰는 일곱 · 2026-
 ```
 
 즐겨찾기 `lib/favorites.js` 는 공방 모음(polos0117.github.io)의 `favorites.js` 를 글자 하나 다르지 않게 복사한 공용 모듈이다(열쇠 `atelier_favorites_v1`, 약속은 그쪽 README 「즐겨찾기」절). 고치면 다섯 저장소를 같이 고치고, `tests/dex-favorites.cjs` 가 원본과 견준다.
+
+게임 코스프레(2026-11-15 — 일상컷 필수, 상황 노출 자리) 모듈 `lib/game-cosplay.js` 는 원소 · 삼국지 공방과 같은 이름(`cosplayUsage` · `pickCosplay` · `cosplayAgain`)과 같은 칸(`scene.cosplay` · `generation.cosplay = { game, character, cut }`)으로 세 공방의 쓴 기록을 합쳐 센다. 목록 `data/game-cosplay.json` 은 game-atelier 가 원본(`tools/game-cosplay.cjs sync`) — 여기서 고치지 않는다. 규칙은 IMAGE_RULES.md 3절 「게임 코스프레 컷」.
 
 일상컷 트리 모듈 `lib/casual-tree.js` 와 검사기 `tools/casual-tree.py` 는 game-atelier 가 원본이고 book·myth·pkm 이 같은 파일을 복사해 쓴다(2026-10-29). 공방마다 다른 것은 트리 표 `data/casual-tree.json` 뿐 — pkm 만의 규칙(안 쓰는 값·얼굴 클로즈업 조건·코스튬 컷에 안 쓰는 프레이밍 `costume_required.not_frames`·동료 묶음·세대의 해)도 표의 칸이다. 모듈을 고치면 game 에서 고쳐 넷에 같이 복사하고 넷의 시험을 다 돌린다. 장면 고르기 규칙은 IMAGE_RULES.md 3절.
 버전2 모듈 `lib/casual-tree-v2.js` · 검사기 `tools/casual-tree-v2.py` 도 game 이 원본이고 pkm 이 같은 파일을 쓴다(2026-10-30 — 옮기는 계획과 단계는 `docs/CASUAL_TREE_V2.md`). pkm 몫(안 쓰는 몸 방향 · 동료 · 직업 역할 동작의 현장)은 버전2 표 `data/casual-tree-v2.json` 의 칸이다. 계획기 · 생성기 · 지시문 묶음 · 자동화의 기본은 버전2 다(2026-10-30, 시범 이상해씨 · 파이리 뒤). 장부는 두 버전을 섞어 읽고, 옛 계획은 `--v1` 로만 낸다. 허브 통합 생성기는 버전2 계획 주소를 pkm 생성기로 넘긴다.

@@ -9,7 +9,7 @@
 const assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path'), os = require('node:os'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..'), TOOL = path.join(ROOT, 'tools/prompt-pack.cjs');
 global.window = global;
-for (const f of ['prompt-spec', 'casual-tree', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state']) require('../lib/' + f + '.js');
+for (const f of ['prompt-spec', 'casual-tree', 'prompt-anthro', 'prompt-lifestyle', 'game-cosplay', 'casual-plan', 'prompt-state']) require('../lib/' + f + '.js');
 const S = window.AtelierSpec, CT = window.AtelierCasualTree, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
 const run = (...a) => cp.spawnSync(process.execPath, [TOOL, ...a], { encoding: 'utf8' });
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'prompt-pack-'));
@@ -316,5 +316,30 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
   assert(log[1].missing.includes(styleLine) && log[1].added.some(x => /anime girl/.test(x)), '빠진 줄·더해진 줄');
   assert.equal(run('submitted', '--dir', dir, '--slot', 'light').status, 2, '--file 없으면 멈춘다');
   checks += 3;
-  console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열한 자리(경장 + 일상 열 · 상황 줄 · 상황 빼기 · 자유 장면 두 장(갈래 · 상황 · 장면) · 옷 목록의 상황 · 열 자리 version 3 · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
+  /* 게임 코스프레(2026-11-15) — 1회차 칸: Outfit 줄 「…」 + 같은 자리의 2회차 몫(<자리>-again-prompt.txt), 안내 · 차례표, 저장값 → 같은 지시문. 위의 목록 없이 짠 묶음(상황 노출 한 장)은 옛 구성 그대로 */
+  {
+    const LIST = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/game-cosplay.json'), 'utf8')), G = window.AtelierGameCosplay;
+    const only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch') });
+    let pc; for (let i = 0; i < 20 && !pc; i++) { try { pc = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'packgc' + i, cosplay: { list: only, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
+    const gcut = pc.cuts.find(x => x.ofam === 'game_cosplay');
+    assert(gcut && gcut.cosplay.character === '' && gcut.cosplay.again && gcut.cosplay.again.character === 'Tracer' && !pc.cuts.some(x => x.situ), '1회차 칸 · 2회차 몫 · 상황 없음 ' + JSON.stringify(gcut && gcut.cosplay));
+    const planG = path.join(tmp, 'PLAN-gc.json'), dg = path.join(tmp, 'pikachu-gc'), repoG = path.join(tmp, 'img-gc');
+    fs.mkdirSync(path.join(repoG, 'records'), { recursive: true });
+    fs.writeFileSync(planG, JSON.stringify({ session: 'tgc', characters: [{ card: '피카츄', cuts: pc.cuts }] }));
+    r = run('init', '피카츄', '--dir', dg, '--plan', planG, '--repos', repoG); assert.equal(r.status, 0, r.stderr);
+    const sg = JSON.parse(fs.readFileSync(path.join(dg, 'settings.json'), 'utf8')), slot = 'casual' + gcut.cut;
+    assert(sg.slots[slot].guide.cosplay && sg.slots[slot].guide.cosplay.kind === 'pick' && sg.slots[slot].guide.cosplay.again.character === 'Tracer', '안내 cosplay');
+    r = run('build', '--dir', dg); assert.equal(r.status, 0, r.stderr);
+    const tg = fs.readFileSync(path.join(dg, slot + '-prompt.txt'), 'utf8'), ag = fs.readFileSync(path.join(dg, slot + '-again-prompt.txt'), 'utf8');
+    assert(/\nOutfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer;/.test(tg) && tg.includes(S.PROMPT_LINES.casualOutputCosplay), '1회차 지시문');
+    assert(ag.includes('\nOutfit: a daring adult cosplay of Tracer from Overwatch — the costume') && ag.includes(G.cut(LIST, gcut.cosplay.again.cut).en), '2회차 몫 지시문');
+    assert.equal(fs.readdirSync(dg).filter(f => /-again-prompt\.txt$/.test(f)).length, 1, '2회차 몫은 그 자리만');
+    const ug = JSON.parse(fs.readFileSync(path.join(dg, slot + '-ui.json'), 'utf8'));
+    assert.deepEqual(ug.storage.cards['피카츄'].scenes.casual.cosplay, G.cosplayClean(LIST, gcut.cosplay), '저장값 scene.cosplay');
+    assert.equal(ST.prompt(P, L, ST.initial(S, CT, CP, ug.storage.cards['피카츄'], tree1, pika, null, { C2, tree2, cosplay: LIST }).st, pika, appear, faces, tree1, tree2, null, LIST) + '\n', tg, '저장값 → 같은 지시문');
+    const ig = fs.readFileSync(path.join(dg, 'INDEX.md'), 'utf8');
+    assert(ig.includes('게임 코스프레 오버워치') && ig.includes('again-prompt.txt') && ig.includes('generation.cosplay'), '차례표 안내');
+    checks += 6;
+  }
+  console.log('PASS 지시문 묶음: ① 임의 설계 주문(light-free · 네 장 · 멈춤) · 열한 자리(경장 + 일상 열 · 상황 줄 · 상황 빼기 · 자유 장면 두 장(갈래 · 상황 · 장면) · 옷 목록의 상황 · 열 자리 version 3 · 게임 코스프레(1회차 · 2회차 몫) · 여덟 자리 version 2 그대로 · anime_25d_gloss · 체형 · 일상 몸 라인 · ① 메카 실루엣 · 타입 표현 자동 · 최근 실루엣 피함 · 바꾸면 사유) · init(고칠 칸만·안내 — 고른 길의 트리 문장·덮지 않음) · build 아홉 자리(--legacy — 고정값·저장값 = 생성기 상태·지시문 = 조립부) · 일상(계획 값 잠김·주소 길과 같음·직접 입력과 사유·장부가 읽음) · 차례표(컷마다 고른 길) · 같은 글 · 틀린 칸 · 넘긴 글 대조 — ' + checks + '가지');
 } finally { fs.rmSync(tmp, { recursive: true, force: true }); }

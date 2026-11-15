@@ -26,7 +26,8 @@
     "dongtan",
     "adventure",
     "drape",
-    "resort"
+    "resort",
+    "game_cosplay"
    ]
   },
   {
@@ -90,7 +91,8 @@
     "pokemon_costume",
     "adventure",
     "drape",
-    "resort"
+    "resort",
+    "game_cosplay"
    ]
   }
  ],
@@ -178,7 +180,8 @@
     "everyday",
     "evening",
     "pokemon_costume",
-    "dongtan"
+    "dongtan",
+    "game_cosplay"
    ]
   },
   {
@@ -227,7 +230,8 @@
     "active",
     "halloween",
     "pokemon_costume",
-    "dongtan"
+    "dongtan",
+    "game_cosplay"
    ],
    "screens": true
   },
@@ -458,7 +462,8 @@
     "subculture",
     "retro",
     "roleplay",
-    "pokemon_costume"
+    "pokemon_costume",
+    "game_cosplay"
    ]
   },
   {
@@ -519,7 +524,8 @@
    "outfits": [
     "swimwear",
     "active",
-    "retro"
+    "retro",
+    "game_cosplay"
    ]
   },
   {
@@ -537,7 +543,8 @@
     "everyday",
     "retro",
     "bridal",
-    "dongtan"
+    "dongtan",
+    "game_cosplay"
    ]
   },
   {
@@ -569,7 +576,8 @@
     "swimwear",
     "everyday",
     "dongtan",
-    "drape"
+    "drape",
+    "game_cosplay"
    ]
   },
   {
@@ -613,7 +621,8 @@
    "outfits": [
     "swimwear",
     "evening",
-    "drape"
+    "drape",
+    "game_cosplay"
    ],
    "since": 2000
   },
@@ -965,7 +974,8 @@
     "everyday",
     "subculture",
     "roleplay",
-    "active"
+    "active",
+    "game_cosplay"
    ],
    "screens": true
   },
@@ -1026,7 +1036,8 @@
     "roleplay",
     "costume",
     "halloween",
-    "pokemon_costume"
+    "pokemon_costume",
+    "game_cosplay"
    ]
   },
   {
@@ -1043,7 +1054,8 @@
     "subculture",
     "costume",
     "halloween",
-    "pokemon_costume"
+    "pokemon_costume",
+    "game_cosplay"
    ],
    "since": 1990
   },
@@ -1417,7 +1429,8 @@
     "halloween",
     "pokemon_costume",
     "drape",
-    "adventure"
+    "adventure",
+    "game_cosplay"
    ]
   },
   {
@@ -7355,6 +7368,70 @@
    ]
   },
   {
+   "key": "game_cosplay",
+   "ko": "게임 코스프레",
+   "costume": true,
+   "cosplay": true,
+   "en": "a daring adult cosplay of a video-game character",
+   "items": [
+    {
+     "key": "gc_mini_dress",
+     "ko": "미니 드레스",
+     "en": "a daring adult cosplay of a video-game character, cut as a fitted strapless mini dress"
+    },
+    {
+     "key": "gc_bodysuit",
+     "ko": "바디수트",
+     "en": "a daring adult cosplay of a video-game character, cut as a high-cut bodysuit with sheer thigh-high stockings"
+    },
+    {
+     "key": "gc_crop_set",
+     "ko": "크롭 투피스",
+     "en": "a daring adult cosplay of a video-game character, cut as a cropped top and a micro skirt or hot pants that bare the midriff"
+    },
+    {
+     "key": "gc_corset",
+     "ko": "코르셋",
+     "en": "a daring adult cosplay of a video-game character, cut as a laced corset bustier with a short flared skirt"
+    },
+    {
+     "key": "gc_bikini",
+     "ko": "비키니",
+     "en": "a daring adult cosplay of a video-game character, cut as a bikini with a sheer sarong in the costume's colours"
+    },
+    {
+     "key": "gc_one_piece",
+     "ko": "원피스 수영복",
+     "en": "a daring adult cosplay of a video-game character, cut as a high-cut one-piece swimsuit"
+    },
+    {
+     "key": "gc_lingerie",
+     "ko": "란제리",
+     "en": "a daring adult cosplay of a video-game character, cut as a lace bralette and high-waisted briefs with garter straps"
+    },
+    {
+     "key": "gc_leotard",
+     "ko": "레오타드",
+     "en": "a daring adult cosplay of a video-game character, cut as a gymnastic leotard with sheer tights"
+    },
+    {
+     "key": "gc_slit_gown",
+     "ko": "트임 롱드레스",
+     "en": "a daring adult cosplay of a video-game character, cut as a floor-length gown with a thigh-high slit"
+    },
+    {
+     "key": "gc_idol",
+     "ko": "아이돌 무대",
+     "en": "a daring adult cosplay of a video-game character, cut as a stage idol outfit — a cropped jacket and a pleated mini skirt"
+    },
+    {
+     "key": "gc_knit",
+     "ko": "니트 원피스",
+     "en": "a daring adult cosplay of a video-game character, cut as a cozy off-shoulder knit mini dress"
+    }
+   ]
+  },
+  {
    "key": "editorial",
    "ko": "화보 쿠튀르",
    "items": [
@@ -7920,7 +7997,7 @@
   "legacy_outfits": [
    "retro"
   ],
-  "note": "일곱 장에 셋 다 한 장씩(2026-11-07 사용자 「레트로는 필수에서 빼고, 필수3 코스튬1 자유3 으로」) — 의상 계열이 역할극·수영복·란제리풍. legacy_outfits 는 세 장 시절(한 장 이상, 레트로도 필수)의 기록을 읽을 때만 — 옛 칸 갈래 adult_roleplay·swimwear·lingerie·retro_glamour. 세계 안 규칙은 없다 · 2026-11-09 아홉 장 — 필수 셋 + 코스튬 + 상황 노출(situ_required) + 자유 넷"
+  "note": "일곱 장에 셋 다 한 장씩(2026-11-07 사용자 「레트로는 필수에서 빼고, 필수3 코스튬1 자유3 으로」) — 의상 계열이 역할극·수영복·란제리풍. legacy_outfits 는 세 장 시절(한 장 이상, 레트로도 필수)의 기록을 읽을 때만 — 옛 칸 갈래 adult_roleplay·swimwear·lingerie·retro_glamour. 세계 안 규칙은 없다 · 2026-11-09 아홉 장 — 필수 셋 + 코스튬 + 상황 노출(situ_required) + 자유 넷 · 2026-11-15 열 장의 필수 구성 — 필수 셋 + 포켓몬 코스튬 + 게임 코스프레(cosplay_required, 상황 노출 자리) + 옷 자유 둘 + 갈래 · 상황 자유 + 자유 둘. 상황 노출은 필수에서만 빠진다"
  },
  "presets": [
   {
@@ -13476,6 +13553,33 @@
   ],
   "note": "한 캐릭터 일상컷 세 장에 그 포켓몬 성인 코스튬 한 장(필수 갈래와 따로, 2026-11-01 사용자). 옷 문장의 {costume} 은 그 종의 영어 이름과 생김새 자료(data/source-appearance.json)의 색 · 특징으로 채운다. 원작 색 · 무늬를 옷에 싣지 않는 규칙의 유일한 예외. not_frames — 이 컷엔 안 쓰는 프레이밍(얼굴 클로즈업은 코스튬이 안 보인다 — 2026-11-02 사용자 「필수코스튬 컷은 얼굴 클로즈업 장면은 빼도록」)"
  },
+ "cosplay_required": {
+  "outfit": "game_cosplay",
+  "list": "data/game-cosplay.json",
+  "places": [
+   "stage_convention",
+   "stage_event",
+   "arcade_hall",
+   "home_living",
+   "home_bedroom",
+   "fx_studio",
+   "stage_contest"
+  ],
+  "water_places": [
+   "water_pool",
+   "water_beach",
+   "water_infinity",
+   "water_resort"
+  ],
+  "water_cuts": [
+   "bikini",
+   "one_piece"
+  ],
+  "not_frames": [
+   "face_close"
+  ],
+  "note": "게임 코스프레(2026-11-15 사용자 「pkm,원소,삼국지 공방에 갈래 하나 추가해서 게임공방에 있는 게임 코스프레 의상은 어떨까?」) — 열 장에 한 장, 필수에서 상황 노출 자리를 대신한다(포켓몬 코스튬은 그대로 — 코스튬 필수 컷이 둘). 게임 · 캐릭터 · 재단은 계획기가 목록(data/game-cosplay.json — 원본 game-atelier)과 세 공방(pkm · 원소 · 삼국지) 그림 저장소 기록을 합쳐 고른다(lib/game-cosplay.js). 옷(item)은 재단 열하나(gc_<재단>), Outfit 줄은 목록의 글(text.fixed · pick · again)에 게임 · 캐릭터 이름을 넣는다 — 실제 작품 이름을 쓰는 유일한 갈래. places — 이 컷의 장소(코스프레 행사 · 테마 행사장 · 오락실 · 거실 · 침실 · 화보 스튜디오 · 대회 무대), water_cuts(비키니 · 원피스 수영복) 재단이면 water_places(물가)도. not_frames — 얼굴 클로즈업은 코스튬이 안 보인다. 옷 색 · 상황 노출 · 원작 영향도 줄은 이 컷에 안 싣는다(포켓몬 코스튬과 같다). 새로 정하는 캐릭터만 — 다시 채우기는 그대로"
+ },
  "situ_required": {
   "keys": [
    "wet",
@@ -13493,6 +13597,6 @@
   "not_frames": [
    "face_close"
   ],
-  "note": "아홉 장에 상황 노출 한 장(2026-11-09 사용자 「일상컷 룰에 '상황으로 만들기'를 필수로 넣어주고, 거기는 일상컷 생성 수를 9장으로」) — 필수 셋 · 코스튬이 아닌 컷에 젖은 옷 · 바람에 날림 · 반쯤 푼 차림 · 흘러내린 어깨끈 중 그 옷에 맞는 것 하나(글 · fit 은 lib/prompt-spec.js SITUATIONS). 얼굴 클로즈업엔 안 쓴다(옷이 안 보인다). 일곱 장 · 세 장으로 등록된 캐릭터 다시 채우기는 상황 없이. 계획기 lib/casual-plan.js chooseSitu, 장부 check 가 본다"
+  "note": "아홉 장에 상황 노출 한 장(2026-11-09 사용자 「일상컷 룰에 '상황으로 만들기'를 필수로 넣어주고, 거기는 일상컷 생성 수를 9장으로」) — 필수 셋 · 코스튬이 아닌 컷에 젖은 옷 · 바람에 날림 · 반쯤 푼 차림 · 흘러내린 어깨끈 중 그 옷에 맞는 것 하나(글 · fit 은 lib/prompt-spec.js SITUATIONS). 얼굴 클로즈업엔 안 쓴다(옷이 안 보인다). 일곱 장 · 세 장으로 등록된 캐릭터 다시 채우기는 상황 없이. 계획기 lib/casual-plan.js chooseSitu, 장부 check 가 본다 · 2026-11-15 필수에서 내렸다(사용자 「필수에서 상황 노출 대신」 게임 코스프레) — 새 계획은 상황 노출 컷을 따로 두지 않는다. 그 전에 짠 묶음 · 등록된 캐릭터 다시 채우기(게임 코스프레 컷이 없는 캐릭터)는 이 규칙 그대로"
  }
 }

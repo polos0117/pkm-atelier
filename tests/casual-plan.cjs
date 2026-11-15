@@ -210,14 +210,26 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
   n += 2;
 }
 
+/* 게임 코스프레(2026-11-15) — 버전1 계획기도 목록을 주면 열 장에 한 장(상황 노출 자리), 표의 장소 · 얼굴 클로즈업 없음 · 옷 = 재단, 장부 check 통과 */
+{
+  const LIST = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/game-cosplay.json'), 'utf8')), R = tree.cosplay_required;
+  const r = batchPlan(entries, ['GC1'], 'gc1', { GC1: { cosplay: { list: LIST, used: [] } } }), cs = r.plan.characters[0].cuts, g = cs.filter(x => x.ofam === R.outfit);
+  assert.equal(g.length, 1, '게임 코스프레 한 장'); assert.equal(cs.filter(x => x.situ).length, 0, '상황 노출 없음');
+  assert(g[0].item === 'gc_' + g[0].cosplay.cut && (R.places.includes(g[0].place) || R.water_places.includes(g[0].place)) && !R.not_frames.includes(g[0].frame), '버전1 코스프레 컷 ' + JSON.stringify(g[0]));
+  n++;
+}
+
 /* Replanning must exclude both requested cards' previous reservations, as check_plan does. */
 {
   const cli = require('../tools/casual-plan.cjs');
   const o = cli.args(['뚜꾸리', '차오꿀', '--session', 'replan-test', '--v1']);
   const cards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character;
-  const first = cli.planBatch(o, S, entries, null, cards, 0);
+  /* 씨앗에 따라 「길 없음」 으로 던질 수 있다 — 도구처럼 시도 번호를 바꿔 다시(2026-11-15 게임 코스프레가 길 하나를 더 쓴다) */
+  let k = 0, first;
+  for (; k < 20 && !first; k++) { try { first = cli.planBatch(o, S, entries, null, cards, k); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
+  assert(first, '스무 번 안에 못 정했다');
   const own = first.characters.map(ch => ({ ...ch, status: 'reserved', at: at(1) }));
-  const again = cli.planBatch(o, S, entries.concat(own), null, cards, 0);
+  const again = cli.planBatch(o, S, entries.concat(own), null, cards, k - 1);
   assert.deepEqual(again, first, 'previous reservations from this batch must not change its comparisons');
   n++;
 }

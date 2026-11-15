@@ -24,7 +24,7 @@ const CUTS = [
   run('build', '--dir', dir);
   /* 여덟 자리 — 계획기 버전2 일곱 컷, ① 메카 자동 + 직접 바꾼 부품 하나(사유와 함께) */
   global.window = global;
-  for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'casual-plan']) require('../lib/' + f + '.js');
+  for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'game-cosplay', 'casual-plan']) require('../lib/' + f + '.js');
   const read = f => JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', f), 'utf8'));
   const p7 = window.AtelierCasualPlan.planV2({ S: window.AtelierSpec, tree: read('casual-tree.json'), tree2: read('casual-tree-v2.json'), subject: { gen: 1 }, entries: [], card: '피카츄', seed: 'screen7' });
   const dir7 = path.join(tmp, 'pack7'), plan7 = path.join(tmp, 'PLAN7.json');
@@ -36,10 +36,17 @@ const CUTS = [
   run('build', '--dir', dir7);
   /* ① 은 칸 꼴(2026-11-11) — 메카 실루엣은 3칸 「Silhouette:」(줄 꼴 MECHA SILHOUETTE) */
   assert(/^Silhouette: /m.test((fs.readFileSync(path.join(dir7, 'light-prompt.txt'), 'utf8').split('\n\n')[3] || '').replace(/^3\. ARMOR — LIGHT\n/, '')), '① 메카 줄');
+  /* 게임 코스프레(2026-11-15) — 1회차 칸(쓴 캐릭터 목록 · 2회차 몫)과 생성기 화면(목록을 data/game-cosplay.json 에서 받는다)이 같은 글 */
+  const LIST = read('game-cosplay.json'), only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch') });
+  let pg; for (let i = 0; i < 20 && !pg; i++) { try { pg = window.AtelierCasualPlan.planV2({ S: window.AtelierSpec, tree: read('casual-tree.json'), tree2: read('casual-tree-v2.json'), subject: { gen: 1 }, entries: [], card: '피카츄', seed: 'screengc' + i, cosplay: { list: only, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
+  const dirG = path.join(tmp, 'packgc'), planG = path.join(tmp, 'PLANGC.json'), gcSlot = 'casual' + pg.cuts.find(x => x.ofam === 'game_cosplay').cut;
+  fs.writeFileSync(planG, JSON.stringify({ characters: [{ card: '피카츄', cuts: pg.cuts }] }));
+  run('init', '피카츄', '--dir', dirG, '--plan', planG, '--repos', path.join(tmp, 'none')); run('build', '--dir', dirG);
+  assert(/\nOutfit: … \(a daring adult cosplay of one character of your choice from Overwatch — not any of these already used: Tracer;/.test(fs.readFileSync(path.join(dirG, gcSlot + '-prompt.txt'), 'utf8')), '게임 코스프레 1회차 칸');
   const h = await start();
   let checks = 0;
   try {
-    for (const [d, slot] of Object.keys(set.slots).map(k => [dir, k]).concat(Object.keys(set7.slots).map(k => [dir7, k]))) {
+    for (const [d, slot] of Object.keys(set.slots).map(k => [dir, k]).concat(Object.keys(set7.slots).map(k => [dir7, k]), [[dirG, gcSlot]])) {
       const ui = JSON.parse(fs.readFileSync(path.join(d, slot + '-ui.json'), 'utf8')), want = fs.readFileSync(path.join(d, slot + '-prompt.txt'), 'utf8').replace(/\n$/, '');
       const a = await h.open('prompt.html?mech=' + encodeURIComponent('피카츄'), { viewport: { width: 390, height: 844 }, store: ['pkm_prompt_v2', JSON.stringify(ui.storage)] });
       await a.page.waitForFunction(() => (document.getElementById('prompt-output') || {}).value?.length > 200, null, { timeout: 20000 });
@@ -47,6 +54,6 @@ const CUTS = [
       assert.deepEqual(a.errors, [], slot + ' 오류');
       await a.close(); checks++;
     }
-    console.log('PASS 지시문 묶음 = 생성기 화면: 여덟 자리(① 메카 실루엣 · 부품 · 타입 표현 · 일상 일곱) + 아홉 자리(① 외형·머리 직접 입력 · ② 연출 · ③ 폼 요청 · 폭주 셋 · 일상 셋 계획 값·옷·장면·카메라) — ' + checks + '가지');
+    console.log('PASS 지시문 묶음 = 생성기 화면: 여덟 자리(① 메카 실루엣 · 부품 · 타입 표현 · 일상 일곱) + 아홉 자리(① 외형·머리 직접 입력 · ② 연출 · ③ 폼 요청 · 폭주 셋 · 일상 셋 계획 값·옷·장면·카메라) + 게임 코스프레 1회차 칸 — ' + checks + '가지');
   } finally { await h.stop(); fs.rmSync(tmp, { recursive: true, force: true }); }
 })().catch(e => { console.error(e); process.exit(1); });

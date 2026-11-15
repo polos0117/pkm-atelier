@@ -181,7 +181,13 @@ def spec():
             "costume_not_frames": (tree.get("costume_required") or {}).get("not_frames") or [],
             # 상황 노출(2026-11-09) — 아홉 장에 한 장
             "situ_keys": set((tree.get("situ_required") or {}).get("keys") or []),
-            "situ_not_frames": (tree.get("situ_required") or {}).get("not_frames") or []}
+            "situ_not_frames": (tree.get("situ_required") or {}).get("not_frames") or [],
+            # 게임 코스프레(2026-11-15) — 열 장에 한 장, 필수에서 상황 노출 자리. 장소 · 물가 재단 · 안 쓰는 프레이밍
+            "cosplay": (tree.get("cosplay_required") or {}).get("outfit") or "",
+            "cosplay_places": set((tree.get("cosplay_required") or {}).get("places") or []),
+            "cosplay_water": set((tree.get("cosplay_required") or {}).get("water_places") or []),
+            "cosplay_water_cuts": set((tree.get("cosplay_required") or {}).get("water_cuts") or []),
+            "cosplay_not_frames": (tree.get("cosplay_required") or {}).get("not_frames") or []}
 
 
 SP = None
@@ -346,12 +352,12 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "ofree": bool(c.get("ofree")) or None, "sfree": bool(c.get("sfree")) or None, "xfree": bool(c.get("xfree")) or None, "expose": c.get("expose") or None,
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "cosplay": c.get("cosplay") or None, "ofree": bool(c.get("ofree")) or None, "sfree": bool(c.get("sfree")) or None, "xfree": bool(c.get("xfree")) or None, "expose": c.get("expose") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
-                                          ("cat", "ex") + PATH_KEYS + ("ocolor", "expr", "pose", "orient", "frame", "lens")},
+                                          ("cat", "ex") + PATH_KEYS + ("ocolor", "cosplay", "expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                              "expose": c.get("expose") or None, "garments": garments_of(c.get("outfit"))})
             if cuts:
@@ -447,7 +453,7 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-RESERVE_TAIL = ("ocolor", "situ", "ofree", "sfree", "xfree", "axes", "garments", "expose", "lead", "kept")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09)
+RESERVE_TAIL = ("ocolor", "situ", "ofree", "sfree", "xfree", "axes", "garments", "expose", "lead", "kept", "cosplay")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09) · cosplay — 게임 코스프레(2026-11-15, 세 공방이 같이 센다)
 
 
 def reserve_keys(c):
@@ -722,7 +728,7 @@ def check_plan(doc, plan, sp, ledger=None):
             if len(set(exs)) != len(exs):
                 bad("같은 드러내는 방식 짝(%s)을 두 컷에" % next(e for e in exs if exs.count(e) > 1))
             # 자유 컷(필수 · 코스튬이 아닌 컷)의 의상 계열은 서로 다르게(2026-11-07 — 뮤츠 시험 자유 셋이 다 일상복)
-            fams = [c.get("ofam") for c in cuts if c.get("ofam") and not c.get("kept") and not is_required(c, sp) and c.get("ofam") != sp.get("costume")]
+            fams = [c.get("ofam") for c in cuts if c.get("ofam") and not c.get("kept") and not is_required(c, sp) and c.get("ofam") not in (sp.get("costume"), sp.get("cosplay"))]
             if len(set(fams)) != len(fams):
                 bad("자유 컷의 의상 계열 %s 이 겹친다" % next(f for f in fams if fams.count(f) > 1))
             # 옷 색(2026-11-07, lib/casual-plan.js chooseColors) — 같은 색은 두 컷까지(옷 문장이 색을 정한 컷이 겹칠 수 있다)
@@ -738,14 +744,33 @@ def check_plan(doc, plan, sp, ledger=None):
                 k = sum(1 for c in cuts if c.get("ofam") == f)
                 if k != 1:
                     bad("필수 갈래 %s 가 %d장 — %d장에 한 장씩(%s)" % (f, k, n_cuts, "·".join(sorted(sp["required"]))))
+        # 게임 코스프레(2026-11-15 — 필수에서 상황 노출 대신) — 열 장 새 계획이면 한 장. 그 구성이면 상황 노출 컷은 없어도 된다(필수에서만 빠졌다).
+        # 게임 코스프레 컷이 없는 계획(그 전에 짠 묶음 · 목록 없이 짠 계획 · 다시 채우기)은 예전 구성 그대로 — 상황 노출 한 장
+        gc = [c for c in cuts if sp.get("cosplay") and c.get("ofam") == sp["cosplay"]]
+        if len(gc) > 1:
+            bad("게임 코스프레 컷이 %d장 — 한 장" % len(gc))
+        for c in gc:
+            if c.get("kept"):
+                continue
+            x = c.get("cosplay") or {}
+            if not x.get("game") or not x.get("cut"):
+                bad("컷 %s: 게임 코스프레 컷에 게임 · 재단(cosplay)이 없다" % c.get("cut"))
+                continue
+            if c.get("item") and c.get("item") != "gc_" + x.get("cut"):
+                bad("컷 %s: 게임 코스프레의 옷 %s 이 재단 %s 와 다르다" % (c.get("cut"), c.get("item"), x.get("cut")))
+            ok_places = sp.get("cosplay_places", set()) | (sp.get("cosplay_water", set()) if x.get("cut") in sp.get("cosplay_water_cuts", set()) else set())
+            if c.get("place") not in ok_places:
+                bad("컷 %s: 게임 코스프레 컷의 장소 %s — 표 cosplay_required 의 장소(%s 재단)가 아니다" % (c.get("cut"), c.get("place"), x.get("cut")))
+            if c.get("frame") in sp.get("cosplay_not_frames", []):
+                bad("컷 %s: 게임 코스프레 컷의 프레이밍 %s — 코스튬이 안 보인다" % (c.get("cut"), c.get("frame")))
         # 상황 노출(2026-11-09) — 아홉 장이면 한 장, 필수 셋 · 코스튬이 아닌 컷, 얼굴 클로즈업 아닌 컷. 일곱 장 · 세 장은 상황 없이
         si = [c for c in cuts if c.get("situ")]
-        if n_cuts >= NINE_CUTS and sp.get("situ_keys") and not refill and len(si) != 1:
-            bad("상황 노출 컷이 %d장 — %d장에 한 장(%s)" % (len(si), n_cuts, "·".join(sorted(sp["situ_keys"]))))
+        if n_cuts >= NINE_CUTS and sp.get("situ_keys") and not refill and (len(si) > 1 if gc else len(si) != 1):
+            bad("상황 노출 컷이 %d장 — %d장에 한 장(%s)%s" % (len(si), n_cuts, "·".join(sorted(sp["situ_keys"])), " — 게임 코스프레 구성은 한 장까지" if gc else ""))
         for c in si:
             if c.get("situ") not in sp.get("situ_keys", set()):
                 bad("컷 %s: 상황 %s 은 표에 없다" % (c.get("cut"), c.get("situ")))
-            if is_required(c, sp) or c.get("ofam") == sp.get("costume"):
+            if is_required(c, sp) or c.get("ofam") in (sp.get("costume"), sp.get("cosplay")):
                 bad("컷 %s: 상황 노출은 필수 갈래 · 코스튬 컷이 아닌 컷에" % c.get("cut"))
             if c.get("frame") in sp.get("situ_not_frames", []):
                 bad("컷 %s: 상황 노출 컷의 프레이밍 %s — 얼굴 클로즈업엔 안 쓴다" % (c.get("cut"), c.get("frame")))
@@ -754,7 +779,7 @@ def check_plan(doc, plan, sp, ledger=None):
         if n_cuts >= NINE_CUTS and not refill and len(fr) != OFREE_N:
             bad("옷 자유 컷이 %d장 — %d장에 %d장" % (len(fr), n_cuts, OFREE_N))
         for c in fr:
-            if is_required(c, sp) or c.get("ofam") == sp.get("costume") or c.get("situ") or c.get("frame") in sp.get("situ_not_frames", []):
+            if is_required(c, sp) or c.get("ofam") in (sp.get("costume"), sp.get("cosplay")) or c.get("situ") or c.get("frame") in sp.get("situ_not_frames", []):
                 bad("컷 %s: 옷 자유는 필수 갈래 · 코스튬 · 상황 · 얼굴 클로즈업이 아닌 컷에" % c.get("cut"))
         # 장면 자유(2026-11-11 「지금 맡겨놓은 일상컷 1장만 같이 이런식으로」) — 열 장이면 옷 자유 둘 가운데 한 장
         sf = [c for c in cuts if c.get("sfree")]
@@ -770,7 +795,7 @@ def check_plan(doc, plan, sp, ledger=None):
         if n_cuts < CUTS and xf:
             bad("갈래 · 상황 자유 컷은 열 장 캐릭터에만")
         for c in xf:
-            if is_required(c, sp) or c.get("ofam") == sp.get("costume") or c.get("situ") or c.get("ofree") or c.get("frame") in sp.get("situ_not_frames", []):
+            if is_required(c, sp) or c.get("ofam") in (sp.get("costume"), sp.get("cosplay")) or c.get("situ") or c.get("ofree") or c.get("frame") in sp.get("situ_not_frames", []):
                 bad("컷 %s: 갈래 · 상황 자유는 필수 갈래 · 코스튬 · 상황 · 옷 자유 · 얼굴 클로즈업이 아닌 컷에" % c.get("cut"))
         # 옛 칸(갈래/예시)만으로 된 계획은 코스튬 계열이 없던 때의 꼴이라 보지 않는다 — 계획기는 늘 트리 칸으로 낸다
         if sp.get("costume") and not refill and not all(c.get("legacy") for c in cuts) and not any(c.get("ofam") == sp["costume"] for c in cuts):
@@ -831,7 +856,7 @@ def check_plan(doc, plan, sp, ledger=None):
             bad("비교 대상이 안 쓴 옷 종류가 한 장에도 없다")
         low = low_groups(base[-GROUP_WINDOW:] + others, sp)
         # 덜 쓴 묶음은 자유 컷(필수 갈래 · 코스튬이 아닌 컷)에서 — 필수 갈래 두 장 + 코스튬이면 자유 컷이 없어 보지 않는다(2026-11-01 완화)
-        free_cuts = [c for c in cuts if not (req_of(c) if legacy else is_required(c, sp)) and c.get("ofam") != sp.get("costume")]
+        free_cuts = [c for c in cuts if not (req_of(c) if legacy else is_required(c, sp)) and c.get("ofam") not in (sp.get("costume"), sp.get("cosplay"))]
         if free_cuts and not any(group_of(c, sp) in low for c in free_cuts):
             bad("필수 갈래가 아닌 컷 가운데 덜 쓴 장소 묶음(%s)이 없다" % ", ".join(sorted(low)))
         src = [(c.get("axes") or {}).get("source_influence") for c in cuts]

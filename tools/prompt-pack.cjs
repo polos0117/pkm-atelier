@@ -6,6 +6,7 @@
 
    2026-11-07 여덟 자리(사용자 「gpt 생성룰을 이제 지금 화풍(애니광택)으로 해서 경장1장만 만들자」 · 「필수3 코스튬1 자유3」):
      경장 ① 한 장 + 일상컷 아홉 장(2026-11-09 — 필수 셋 · 코스튬 · 상황 노출 · 자유 넷), 화풍 기본 anime_25d_gloss(생성기 기본과 같다 — 2026-11-08). ① 의 메카 큰 실루엣 · 타입 표현은 init 이 정해 settings 에 적는다(아래 mecha).
+     2026-11-15 일상 열 장의 상황 노출 자리가 게임 코스프레(계획의 cosplay) — 1회차 칸은 Outfit 줄 「…」 을 그리는 쪽이 채우고, 2회차 몫이 있으면 <자리>-again-prompt.txt 를 같이 쓴다. 자리 · version 은 그대로.
      settings.version 4 가 열한 자리(경장 + 일상 열 — 2026-11-11 갈래 · 상황 자유 한 장 더), version 3 은 열 자리(경장 + 일상 아홉 — 11-11 까지 만든 묶음), version 2 는 여덟 자리(일상 일곱 — 11-08 까지 만든 묶음), version 1(예전 · --legacy)은 아홉 자리 그대로 build 한다.
 
    node tools/prompt-pack.cjs init <카드> --dir <작업 폴더> [--style <화풍 키>] [--plan PLAN.json] [--legacy] [--repos <그림 저장소> …]
@@ -35,8 +36,8 @@
 const fs = require('node:fs'), path = require('node:path'), cp = require('node:child_process'), crypto = require('node:crypto');
 const ROOT = path.resolve(__dirname, '..');
 global.window = global;
-for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'casual-plan', 'prompt-state', 'concept-mecha']) require(path.join(ROOT, 'lib', f + '.js'));
-const S = window.AtelierSpec, CT = window.AtelierCasualTree, C2 = window.AtelierCasualTreeV2, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState;
+for (const f of ['prompt-spec', 'casual-tree', 'casual-tree-v2', 'prompt-anthro', 'prompt-lifestyle', 'game-cosplay', 'casual-plan', 'prompt-state', 'concept-mecha']) require(path.join(ROOT, 'lib', f + '.js'));
+const S = window.AtelierSpec, CT = window.AtelierCasualTree, C2 = window.AtelierCasualTreeV2, P = window.AtelierPrompt, L = window.AtelierLifestyle, CP = window.AtelierCasualPlan, ST = window.AtelierPromptState, GCM = window.AtelierGameCosplay;
 const read = f => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8'));
 
 /* 아홉 자리(예전 — settings.version 1) */
@@ -88,7 +89,8 @@ function args(argv) {
 function data() {
   const cards = read('card.json').cards.character, tree = read('casual-tree.json'), tree2 = read('casual-tree-v2.json');
   const opt = f => { try { return read(f); } catch (e) { return null; } };
-  return { cards, tree, tree2, v2: { C2, tree2, own: opt('casual-own.json') }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null, concept: opt('concept-mecha.json') };
+  const cosplay = opt('game-cosplay.json');   /* 게임 코스프레 목록(2026-11-15) */
+  return { cards, tree, tree2, cosplay, v2: { C2, tree2, own: opt('casual-own.json'), cosplay }, appearance: (opt('source-appearance.json') || {}).entries || null, faces: (opt('face-design.json') || {}).faces || null, concept: opt('concept-mecha.json') };
 }
 /* 화면과 같은 몫 — 원작 외형은 없으면 undefined, 얼굴 설계는 없으면 null(lib/prompt-ui.js App) */
 const extras = (d, c) => ({ appearance: d.appearance ? d.appearance[String(c.no)] : undefined, face: d.faces ? d.faces[String(c.no)] || null : null });
@@ -151,9 +153,22 @@ function guideOfV2(d, cut) {
     v2: { era: row(CT.era(d.tree, cut.era)), place: row(p), role: u && u.role ? { ko: u.role_ko, en: u.role } : null, use: u ? { key: u.key, ko: u.ko, en: u.en.replace('{prop}', pr ? pr.en : ''), prop: pr ? pr.ko : '' } : null,
       ofam: row(f, f && f.guide ? { guide: f.guide } : {}), item: it ? row(it) : { key: '', ko: '자동 — 계열 안에서 장면에 맞게', en: '' },
       posture: row(C2.posture(t, cut.posture)), frame: cut.frame, body: row(by(t.v2.body, cut.body)), hands: [cut.right || 'AUTO', cut.left || 'AUTO'].join(' · ') },
-    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut), situ: situGuide(cut), free: freeGuide(cut)
+    garments: cut.garments || [], expose: cut.expose || [], lead: cut.lead || '', color: colorGuide(cut), situ: situGuide(cut), free: freeGuide(cut), cosplay: cosplayGuide(d, cut)
   };
 }
+/* 게임 코스프레(2026-11-15) — 계획의 cosplay. pick(등장인물 많은 게임 1회차)이면 캐릭터는 그리는 쪽이 고른다 */
+function cosplayGuide(d, cut) {
+  const x = cut.cosplay, L = d.cosplay;
+  if (!x || !L) return null;
+  const g = GCM.game(L, x.game), c = GCM.cut(L, x.cut);
+  if (!g || !c) return null;
+  const pick = g.many && !x.character;
+  return { game: g.key, game_ko: g.ko, game_en: g.en, character: x.character || '', character_ko: g.many ? '' : g.character_ko, cut: c.key, cut_ko: c.ko, round: x.round || 1,
+    kind: pick ? 'pick' : g.many ? 'again' : 'fixed', used: x.used || [], text: GCM.cosplayText(L, x, c.key),
+    again: x.again || null,
+    note: pick ? '등장인물 많은 게임 1회차 — Outfit 줄 맨 앞 「…」 에 이미 쓴 캐릭터가 아닌 그 게임의 캐릭터 이름 + 그 의상의 알아볼 색 · 조각 + 괄호 안 재단 글을 써 넣는다(괄호 주문은 지운다). 더 없으면 ' + (x.again ? '같은 자리의 <자리>-again-prompt.txt(2회차 — ' + x.again.character + ' · ' + x.again.cut + ')를 그린다' : '그리지 말고 알린다 → 계획기 --cosplay-full ' + g.key) : '그대로 그린다' };
+}
+const cosplayLine = g => g ? ' · 게임 코스프레 ' + g.game_ko + ' · ' + (g.kind === 'pick' ? '캐릭터는 그리는 쪽이(이미 쓴 ' + (g.used.length ? g.used.length + '명' : '없음') + ')' : g.character + (g.character_ko ? '(' + g.character_ko + ')' : '')) + ' · ' + g.cut_ko + ' · ' + g.round + '회차' : '';
 /* 옷 자유(2026-11-09) · 갈래 · 상황 자유(2026-11-11) 컷 표시 */
 function freeGuide(cut) { return cut.xfree ? '갈래 · 상황 자유(자유 장면)' : cut.sfree ? '장면 자유(자유 장면)' : cut.ofree ? '옷 자유' : ''; }
 /* 상황 노출(2026-11-09) — 계획의 situ */
@@ -356,8 +371,11 @@ function build(o) {
   for (const slot of want) {
     const r = stateOf(set, slot, d, c, plan, bad);
     if (!r) continue;
-    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2, d.concept);
+    const x = extras(d, c), text = ST.prompt(P, L, r.st, c, x.appearance, x.face, d.tree, d.tree2, d.concept, d.cosplay);
     const ui = { storage: { last: c.name, cards: { [c.name]: r.st } }, prompt: text };
+    /* 게임 코스프레 1회차 칸의 2회차 몫(2026-11-15 — 원소와 같은 꼴) — 그리는 쪽이 더 고를 캐릭터가 없으면 이 글을 그린다 */
+    const ag = r.cut && GCM.againScene(r.st.scenes.casual);
+    if (ag) ui.again_prompt = ST.prompt(P, L, Object.assign({}, r.st, { scenes: Object.assign({}, r.st.scenes, { casual: ag }) }), c, x.appearance, x.face, d.tree, d.tree2, d.concept, d.cosplay);
     if (r.cut) { ui.plan = r.cut; ui.manual_inputs = r.manual; ui.manual_why = r.why; }
     if (r.cut && r.cut.own) ui.own = { job_ko: r.cut.job_ko, level: r.st.scenes.casual.axes.skin_exposure };   /* 캐릭터만의 컷 — 구분 열쇠(scene.own 과 같이) */
     out.push({ slot, text, ui });
@@ -372,6 +390,7 @@ function build(o) {
   for (const r of out) {
     fs.writeFileSync(path.join(o.dir, r.slot + '-prompt.txt'), r.text + '\n');
     fs.writeFileSync(path.join(o.dir, r.slot + '-ui.json'), JSON.stringify(r.ui, null, 1) + '\n');
+    if (r.ui.again_prompt) fs.writeFileSync(path.join(o.dir, r.slot + '-again-prompt.txt'), r.ui.again_prompt + '\n');
     /* ① GPT 임의 설계 주문(2026-11-11 — 삼국지 · 원소처럼 ① 네 장: 우리 설계 둘 + 임의 설계 둘) */
     if (r.slot === 'light') fs.writeFileSync(path.join(o.dir, 'light-free.txt'), P.buildFree(r.text, r.ui.storage.cards[c.name], d.concept) + '\n');
   }
@@ -384,6 +403,7 @@ function build(o) {
     '**① → 멈춤 → 일상컷**(2026-11-11 삼국지 · 원소와 같이). ① 은 **네 장**(첨부 없이 한 장씩) — **두 장은 우리 설계 `light-prompt.txt` 그대로, 두 장은 임의 설계 `light-free.txt`**(설계 주문 — 화풍 · 색 · 머리색 · 체형 · 장갑 폼 · 원작 특징 · 노출 · 구도 · 자세는 우리 것, 큰 실루엣은 목록에서 하나 + 원작에서 딴 제 아이디어 하나, 얼굴 · 눈색(우리 것이든 제 것이든) · 헤어스타일 · 화장 · 표정 · 장면(배경) · 타입 효과는 맡은 쪽이 지어 제 지시문을 쓴다, 둘째 장은 첫째와 확실히 다르게(자세는 같게)). 네 장을 「우리 설계 1 · 2 / GPT 설계 1 · 2」 로 붙여 보이고 **멈추고 묻는다** — 고르기 전엔 일상컷으로 넘어가지 않고 ① 도 올리지 않는다. 고른 장만 올리고 그 장을 붙여 일상컷을 그린다. 임의 설계 장이면 기록 `generation.design: "gpt_free"` 와 실제로 넘긴 지시문(`generation.free_prompt`)을 남긴다.', '',
     '**일상컷 옷 자유 컷 두 장** — 계획에 「옷 자유」 로 적힌 컷 가운데 「장면 자유」 가 아닌 한 장은 Outfit 줄이 「노출 의상을 네가 지어라」 다 — 이 묶음의 `outfit-catalog.md`(우리가 쓰는 옷 전부)를 읽고 **거기 없는 옷**을 지어 그 줄에만 써 넣는다(실제로 넘긴 글은 기록에).', '',
     '**일상컷 자유 장면 두 장**(2026-11-11) — 계획에 「장면 자유」(옷 자유 가운데 한 장) · 「갈래 · 상황 자유」 로 적힌 컷은 SCENE 칸이 설계 주문이다: **장소 · 활동 · 자세 · 구도 · 의상을 맡은 쪽이 짓는다** — 캐릭터의 특징에서 출발해 예상하지 못했지만 자연스럽게 어울리는 일상의 한 순간, 참신함은 장식보다 상황과 행동에서, 이 묶음의 다른 일상컷 · 이 세션에서 그린 컷과 비슷한 장면은 피한다. 장면 자유는 `outfit-catalog.md` 에 **없는 노출 의상**, 갈래 · 상황 자유는 필수 갈래(성인 롤플레이 · 수영복 · 란제리풍) 하나를 골라 **없는 옷** + 끝의 상황 목록에 **없는 노출 상황**. SCENE 밖의 칸(얼굴 · 화풍 · 체형 · 인체 · 옷 갈아입기 · 각도)과 표정 · 노출 강도 · 원작 영향도 줄은 우리 것 그대로 — 그 위에서 제 지시문을 써 그린다. 기록에 `generation.design: "gpt_free"` 와 실제로 넘긴 지시문(`generation.free_prompt`).', '',
+    '**일상컷 게임 코스프레 한 장**(2026-11-15 — 필수, 상황 노출 자리) — 계획에 「게임 코스프레」 로 적힌 컷의 Outfit 줄은 게임 · 캐릭터 이름이 든 코스프레 글이다(실제 작품 이름을 쓰는 유일한 갈래). 주인공 하나 게임 · 2회차(캐릭터 이름이 적힌 줄)는 그대로 그린다. **등장인물 많은 게임 1회차**(Outfit 줄 맨 앞이 「…」)는 **맡은 쪽이 캐릭터를 고른다** — 괄호 안 「이미 쓴」 목록에 없는 그 게임의 캐릭터 하나를 골라, 「…」 자리에 캐릭터 이름 + 그 의상의 알아볼 색 · 조각 + 괄호 안 재단 글을 쓰고 괄호 주문은 지운다(그 줄만 — 다른 줄은 그대로). 고를 캐릭터가 더 없으면(다 썼거나 알아볼 만한 캐릭터가 없으면) 새로 지어내지 말고 **같은 자리의 `<자리>-again-prompt.txt`**(계획기가 쓴 캐릭터 가운데 덜 입은 하나 · 아직 안 입은 재단을 정해 둔 2회차 지시문)를 그대로 그린다 — 기록 `generation.cosplay` 는 그 지시문의 캐릭터 · 재단. 그 파일이 없으면(쓴 캐릭터가 아직 없다) 1회차로 고른다. 그래도 막히면 그 컷을 다시 짠다: `node tools/casual-plan.cjs <카드> --session <같은 세션> --keep <카드>:<다른 컷 번호> --cosplay-full <게임 열쇠> --reserve --push`. 그린 뒤 기록에 `generation.cosplay: { "game": "<게임 열쇠>", "character": "<그린 캐릭터 영어 이름 — 1회차는 채운 이름>", "cut": "<재단 열쇠>" }`(세 공방이 이 칸으로 쓴 캐릭터를 센다)와 실제로 넘긴 글(`submitted`).', '',
     '**프롬프트 임의 수정 금지 — 이미지 모델에도 똑같다(2026-11-08).** IMAGE_RULES.md 1절의 변경 사유(settings 고친 뒤 build · 막혔을 때 계획기 다시 계획 · 같은 지시문 재생성 · 사용자가 시킨 부분 고치기) 말고는 낱말 하나도 고치지 않는다. image_gen 에도 이 글 그대로 넘기고(`submitted` 0 일 때만) 고쳐 쓰지 말고 그대로 그리게 한다.', '',
     '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
@@ -404,11 +424,12 @@ function build(o) {
       '| 시대 | ' + (v.era ? v.era.ko : '—') + ' | ' + (v.era ? v.era.en : '') + ' |',
       '| 장소 | ' + (v.place ? v.place.ko : '—') + ' | ' + (v.place ? v.place.en : '') + ' |',
       '| 역할 | ' + (v.role ? v.role.ko : '—') + ' | ' + (v.role ? v.role.en : '') + ' |',
-      '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
+      '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (g.cosplay ? g.cosplay.text : v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
       '| 몸 자세 · 구도 | ' + (v.posture ? v.posture.ko : '—') + ' · ' + v.frame + ' · ' + (v.body ? v.body.ko : '—') + ' | ' + (v.posture ? v.posture.en : '') + ' |',
       '| 손 · 소품 동작 | ' + v.hands + (v.use ? ' · ' + v.use.prop + ' · ' + v.use.ko : '') + ' | ' + (v.use ? v.use.en : '') + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + cosplayLine(g.cosplay) + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
+    if (g.cosplay && g.cosplay.kind === 'pick') lines.push('', '게임 코스프레 1회차 — ' + g.cosplay.note);
   }
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV !== 2)) {
     const g = guideOf(d.tree, r.ui.plan), t = g.tree;

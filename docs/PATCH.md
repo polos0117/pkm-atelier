@@ -11,6 +11,19 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-15 · claude · 일상컷 필수 갈래 게임 코스프레 — 상황 노출 자리(코스튬 필수 컷 둘)
+- data/casual-tree.json — 의상 계열 game_cosplay(costume · cosplay, 옷 = 재단 열하나 gc_<재단>) · 표 cosplay_required(장소 — 코스프레 행사 · 테마 행사장 · 오락실 · 거실 · 침실 · 화보 스튜디오 · 대회 무대, 비키니 · 원피스 수영복 재단이면 물가 넷, 얼굴 클로즈업 안 씀) · 시대 지금 · 환상과 그 장소들의 outfits 에. 사용자 「pkm,원소,삼국지 공방에 갈래 하나 추가해서 게임공방에 있는 게임 코스프레 의상은 어떨까?」 → 필수에서 상황 노출 대신 · 이름 넣기 · 세 공방 합쳐 세기
+- data/game-cosplay.json(새로, game-atelier 사본 — 고치지 않는다) · lib/game-cosplay.js(새로) — cosplayUsage(세 공방 그림 저장소 기록의 generation.cosplay, 없으면 장면 cosplay 의 character 찬 것) · pickCosplay(덜 쓴 게임 → 주인공 하나는 안 입은 재단 fixed / 등장인물 많음 1회차 pick · 2회차 again, 다 찬 게임 빠짐) · cosplayAgain(1회차 칸의 2회차 몫) · cosplayText · cosplayClean — 원소(53b1956)와 같은 이름 · 칸(scene.cosplay = { game, character, cut, round, used?, again? } · generation.cosplay = { game, character, cut })
+- lib/casual-plan.js — 열 장의 상황 노출 자리에 게임 코스프레 한 장(버전1 · 버전2 계획기, 포켓몬 코스튬 묶음을 남기고 장소, 옷은 재단, 얼굴 클로즈업 안 씀, 옷 색 · 상황 · 자유 칸 아님). 목록(o.cosplay) 없이 부르거나 게임 코스프레가 없는 캐릭터 다시 채우기는 예전 구성(상황 노출 한 장) 그대로. ownCutV2 가 버전2 모듈을 스스로 불러온다(--v1 묶음에서 원래 터지던 것)
+- lib/prompt-anthro.js · lib/prompt-spec.js — 게임 코스프레 컷의 Outfit 줄은 목록 글(게임 · 캐릭터 이름 — 실제 작품 이름을 쓰는 유일한 갈래), OUTPUT · WARDROBE 는 casualOutputCosplay · casualWardrobeCosplay(그 캐릭터의 코스프레를 입은 그녀 — 얼굴 · 머리색 · 몸은 그대로), 옷 색 · 상황 · 원작 영향도 줄 없음. 체형 · 복근 · 인체 줄 그대로
+- lib/prompt-state.js — 계획 · 주소의 cosplay 를 목록으로 바로잡아 잠근다(목록에 없으면 bad cosplay), 조립 입력 cosplayList · ST.prompt 끝 인자 cosplay
+- lib/prompt-ui.js · lib/words.js · prompt.html — 의상 계열이 게임 코스프레일 때 「게임 코스프레 — 게임」 고르개(열아홉) · 등장인물 많은 게임의 캐릭터 칸(비우면 그리는 쪽이 고르는 자리) · Outfit 줄 미리보기, 재단은 옷 칸. data/game-cosplay.json 을 받는다. ?v=cos1(words.js 는 여덟 화면 다)
+- tools/casual-plan.cjs — 쓴 기록(세 공방 그림 저장소 + 장부 예약 + 같은 배치)으로 고르고 말로 찍는다. --cosplay-full <게임>(그리는 쪽이 더 없다고 하면 2회차) · --cosplay-repos · --avoid cosplay=<게임>
+- tools/casual-ledger.py — 컷 · 예약에 cosplay 칸. check: 게임 코스프레 컷 한 장까지 · 게임 · 재단 · 옷 = 재단 · 표의 장소 · 얼굴 클로즈업, 그 구성이면 상황 노출 없어도(한 장까지), 없으면 예전 구성(상황 노출 한 장) 그대로
+- tools/prompt-pack.cjs — 안내(guide.cosplay) · 차례표 · INDEX 안내(1회차 「…」 채우기 · 더 없으면 <자리>-again-prompt.txt · 기록 generation.cosplay), 1회차 칸의 2회차 몫 지시문 <자리>-again-prompt.txt
+- IMAGE_RULES.md 3절 · AGENTS.md — 열 장 구성(전: 필수 셋 + 포켓몬 코스튬 + 상황 노출 + 자유 다섯 → 후: 필수 셋 + 포켓몬 코스튬 + 게임 코스프레 + 자유 다섯), 「게임 코스프레 컷」 절, 이름 규칙 예외, 상황 노출은 필수에서만 빠짐
+- tests — casual-plan-v2(게임 코스프레 34가지 — 고르기 · 세 공방 기록 · 계획 여덟 명 · 장부가 거는 것 · 주소 · 명령줄 · 예약), casual-plan(버전1 한 장 · 다시 정하기 씨앗 돌리기), prompt-casual-v2(글 · 줄), prompt-pack(1회차 칸 · 2회차 몫 파일), prompt-casual-dom(고르개 — 하네스에 game-cosplay.js), prompt-pack-screen(1회차 칸 = 생성기 화면)
+
 ## 2026-11-15 · gpt · 푸푸린 애니 2.5D 광택 등록
 - data/img.json — 사용자 선택 2번 경장과 일상 10장·라디오 진행자 인턴 직업컷 90번을 다섯째 그림 저장소에 등록했다. 기존 화풍·등록과 다른 캐릭터 변경을 보존했다.
 - 생성 기록 — records/igglybuff-20261115/에 제출문·선택값·원본 해시·육안 검수를 남겼다. 노출을 이유로 다시 생성한 이미지는 없다.
