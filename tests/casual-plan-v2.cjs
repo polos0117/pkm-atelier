@@ -162,9 +162,9 @@ let gcn = 0;
 {
   /* 6a. 고르기 — 목록 · 쓴 기록만으로(계획기 없이) */
   const seq = (list, used, k, opts) => { const out = []; let r = 0.37; const rnd = () => (r = (r * 9301 + 49297) % 233280 / 233280); for (let i = 0; i < k; i++) { const x = G.pickCosplay(list, used.concat(out), rnd, opts); if (!x) break; out.push(x); } return out; };
-  /* 덜 쓴 게임 먼저 — 열아홉 게임을 한 번씩 돈 뒤에야 두 번째 */
-  const first19 = seq(LIST, [], 19);
-  assert.equal(new Set(first19.map(x => x.game)).size, 19, '열아홉 번은 게임이 다 다르다: ' + first19.map(x => x.game));
+  /* 무게 고르기(2026-11-15 「케릭터 수 많은 게임일수록 더 많이」 → B) — 남은 인원의 제곱근. 빈 기록에서 LoL 이 주인공 하나 게임보다 훨씬 자주, 주인공 하나 게임도 나온다 */
+  { let x = 123; const rnd = () => (x = (x * 9301 + 49297) % 233280) / 233280, cnt = {}; for (let i = 0; i < 4000; i++) { const k = G.pickCosplay(LIST, [], rnd).game; cnt[k] = (cnt[k] || 0) + 1; }
+    assert((cnt.league_of_legends || 0) > 5 * (cnt.super_mario_bros || 0) && (cnt.super_mario_bros || 0) > 0 && (cnt.league_of_legends || 0) > (cnt.street_fighter_2 || 0), '무게 고르기 ' + JSON.stringify(cnt)); }
   /* 주인공 하나 게임 — 재단 겹침 없이 열하나, 다 입으면 그 게임은 빠진다 */
   const mario = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'super_mario_bros') });
   const m = seq(mario, [], 20);
@@ -229,7 +229,7 @@ for (let i = 0; i < 8; i++) {
   gcEntries.push({ card, status: 'done', at: at(gcEntries.length), cuts: ch.cuts });
   gcn++;
 }
-assert.equal(new Set(gcUsed.map(x => x.game)).size, 8, '덜 쓴 게임 먼저 — 여덟 명 여덟 게임 ' + gcUsed.map(x => x.game));
+assert(new Set(gcUsed.map(x => x.game)).size >= 3, '여덟 명이 여러 게임 — ' + gcUsed.map(x => x.game));   /* 2026-11-15 무게 고르기 — 예전엔 덜 쓴 게임 먼저라 여덟 게임 */
 { /* 예약 파일에 cosplay 가 실리고, 장부 view 가 그 예약을 cosplay 째 돌려준다(계획기가 남의 예약을 쓴 것으로 센다) */
   const lastE = gcEntries[gcEntries.length - 1];
   fs.writeFileSync(LEDGER, JSON.stringify({ entries: [] }));
@@ -280,7 +280,9 @@ assert.equal(new Set(gcUsed.map(x => x.game)).size, 8, '덜 쓴 게임 먼저 �
   const cardsAll = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card.json'), 'utf8')).cards.character;
   let pb; for (let i = 0; i < 20 && !pb; i++) { try { pb = cli.planBatch(o2, S, [], null, cardsAll, i); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
   const gs = pb.characters.map(ch => ch.cuts.find(x => x.cosplay).cosplay.game);
-  assert(gs[0] !== gs[1] && !gs.includes('dark_souls'), '같은 배치 · 예약과 다른 게임 ' + gs);
+  { const cs = pb.characters.map(ch => ch.cuts.find(x => x.cosplay).cosplay), many = new Set(LIST.games.filter(g => g.many).map(g => g.key));
+    /* 2026-11-15 무게 고르기 — 같은 배치에 같은 게임이 와도 된다(등장인물 많은 게임이면 캐릭터가 다르다). 예약된 다크 소울의 재단(knit)은 다시 안 쓴다 */
+    assert(cs.length === 2 && (cs[0].game !== cs[1].game || many.has(cs[0].game)) && !cs.some(c => c.game === 'dark_souls' && c.cut === 'knit'), '같은 배치 · 예약과 겹치지 않음 ' + JSON.stringify(cs)); }
   gcn += 3;
 }
 fs.rmSync(tmp, { recursive: true, force: true });
