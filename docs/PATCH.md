@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-15 · gpt · 네이티오 애니 2.5D 광택 등록
+- data/img.json — 사용자 선택 4번 경장과 일상 10장·선임 관측사 직업컷 90번, 총 12장을 다섯째 그림 저장소에 등록했다.
+- 생성 기록 — records/xatu-20261115-2c3c/에 실제 제출 원문·선택값·원본 해시와 컷별 육안 검수를 남겼다. 노출을 이유로 재생성한 컷은 없다.
+
 ## 2026-11-15 · claude · 일상컷 필수 갈래 게임 코스프레 — 상황 노출 자리(코스튬 필수 컷 둘)
 - data/casual-tree.json — 의상 계열 game_cosplay(costume · cosplay, 옷 = 재단 열하나 gc_<재단>) · 표 cosplay_required(장소 — 코스프레 행사 · 테마 행사장 · 오락실 · 거실 · 침실 · 화보 스튜디오 · 대회 무대, 비키니 · 원피스 수영복 재단이면 물가 넷, 얼굴 클로즈업 안 씀) · 시대 지금 · 환상과 그 장소들의 outfits 에. 사용자 「pkm,원소,삼국지 공방에 갈래 하나 추가해서 게임공방에 있는 게임 코스프레 의상은 어떨까?」 → 필수에서 상황 노출 대신 · 이름 넣기 · 세 공방 합쳐 세기
 - data/game-cosplay.json(새로, game-atelier 사본 — 고치지 않는다) · lib/game-cosplay.js(새로) — cosplayUsage(세 공방 그림 저장소 기록의 generation.cosplay, 없으면 장면 cosplay 의 character 찬 것) · pickCosplay(덜 쓴 게임 → 주인공 하나는 안 입은 재단 fixed / 등장인물 많음 1회차 pick · 2회차 again, 다 찬 게임 빠짐) · cosplayAgain(1회차 칸의 2회차 몫) · cosplayText · cosplayClean — 원소(53b1956)와 같은 이름 · 칸(scene.cosplay = { game, character, cut, round, used?, again? } · generation.cosplay = { game, character, cut })
