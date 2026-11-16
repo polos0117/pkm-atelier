@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-16 · claude · spread — 앞서 정한 체형 · 피부 지키기
+- 앞 고침 직후 무우마 ① 이 등록되어 spread 를 다시 돌리니 상한이 한 칸 줄어 다른 가족 아홉 종의 체형이 밀렸다 — 앞서 정한 가족은 그 값을 그대로 지키고 상한은 새 가족에만
+- data/face-design.json — 무우마 · 무우마직(이제 그림 있는 가족)의 체형 · 피부만 빠짐, 문서 다시 그림
+
 ## 2026-11-16 · claude · 종별 체형 · 피부 · 얼굴형 · 눈매 · 앞머리 늘리고 나누기
 - 사용자 「원소공방은 외형정보나 실루엣이 삼국지나 pkm에 비해 적은거 같은데」 → pkm 검토(체형 944종이 모래시계 하나 · 피부 설계 없음 · 계란형 40% · 앞머리) → 「1,2,3,4 로 해줘」
 - lib/prompt-spec.js — 외형 선택지: 얼굴형 +2(v-line · inverted triangle) · 눈매 +4(phoenix · hooded · cat · peach-blossom) · 앞머리 +4(wispy see-through · short baby · face-framing side locks · swept-back fringe) · 피부 5 → 8(olive · golden beige · bronze), 풀이(PARAM_GUIDES) · EYE_CONTOURS. VOCAB_EN.body 굴곡 체형 열(삼국지 글), SKIN_WORDS, IMPRESSION 줄에 {skin}

@@ -5573,7 +5573,7 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 곧은 생머리 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 | 인상 | 20대 초반 · 수줍음 · 눈 steel blue · no eyeliner |
-| 체형 · 피부 | 체형 busty_slender · 피부 pale |
+| 체형 · 피부 | 정하지 않음(그림 있는 가족 · CARD_BODY) |
 
 **이유:** 흐르는 머리와 큰 붉은 눈 및 놀래키는 기질을 작은 턱과 큰 사람 눈으로 해석한다.
 
@@ -5582,8 +5582,6 @@ FACE (her own structure, not the style's default face): oval face, balanced leng
 **머리 단서:** ‘flowing lilac-tipped hair’(원작의 머리칼) → 헤어스타일 곧은 생머리 · ‘flowing lilac-tipped hair’(원작의 머리칼) → 머리 길이 긴 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
 **원작 단서:** 몸 형태 ball → 얼굴 길이 짧은 얼굴 · 몸 형태 ball → 눈 크기 큰 눈 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
-
-**체형 · 피부 단서:** 체형 ← 가벼운 몸 4.4kg · 능력치 특공 · 고스트 타입 · 몸 형태 ball · 피부 ← 도감 색 purple · 가족 무우마(대표 무우마직)
 
 **조정:** 다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 짧은 얼굴
 
@@ -13358,7 +13356,7 @@ HAIR: long wild flare (wild, untamed hair flaring out in every direction), wispy
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 떠 있는 머리 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 | 인상 | 20대 후반 · 신비 · 눈 violet · a dark smoky liner |
-| 체형 · 피부 | 체형 busty_slender · 피부 pale |
+| 체형 · 피부 | 정하지 않음(그림 있는 가족 · CARD_BODY) |
 
 **이유:** 둥근 머리와 가늘고 붉은 입을 짧고 부드러운 윤곽·가느다란 입술로, 주문을 거는 인상을 올라간 눈매와 긴 아치 눈썹으로 옮긴다.
 
@@ -13367,8 +13365,6 @@ HAIR: long wild flare (wild, untamed hair flaring out in every direction), wispy
 **머리 단서:** 고스트 타입 → 헤어스타일 떠 있는 머리 · 고스트 타입 → 앞머리 한쪽 눈을 덮는 긴 사이드뱅
 
 **원작 단서:** ‘round head’ → 얼굴형 부드럽고 둥근 얼굴형 · ‘round head’ → 얼굴 길이 짧은 얼굴 · ‘round head’ → 턱선 · 턱끝 부드럽고 둥근 턱 · 몸 형태 ball → 눈 간격 눈 사이가 넓은
-
-**체형 · 피부 단서:** 체형 ← 가벼운 몸 4.4kg · 능력치 특공 · 고스트 타입 · 몸 형태 ball · 피부 ← 도감 색 purple · 가족 무우마(대표 무우마직)
 
 **조정:** [머리] 진화 계열의 머리 잇기 규칙에 맞추려고 구름 머리 → 떠 있는 머리
 

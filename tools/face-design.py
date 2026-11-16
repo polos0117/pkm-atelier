@@ -1401,16 +1401,22 @@ def skin_score(c, opts):
     return sc, cues
 
 
-def assign(fams, scorer, cap):
-    """가족마다 점수 · 상한(종 수로 센다) — 가장 뚜렷한 가족(첫째 · 둘째 점수 차)부터 자리를 준다"""
+LOOK_PREV_W = 2.0   # 앞서 정한 체형 · 피부를 지키는 가산점 — 새 그림이 올라와 한 가족이 빠져도 다른 가족이 밀리지 않게
+
+
+def assign(fams, scorer, cap, prev=None):
+    """가족마다 점수 · 상한(종 수로 센다) — 가장 뚜렷한 가족(첫째 · 둘째 점수 차)부터 자리를 준다. prev 는 {뿌리: 앞선 값}"""
     pre = []
     for r, ms in fams.items():
         sc, cues = scorer(rep_of(ms))
+        if prev and prev.get(r) in sc: sc[prev[r]] += LOOK_PREV_W
         order = sorted(sc, key=lambda v: -sc[v])
         pre.append((r, ms, order, cues, sc[order[0]] - sc[order[1]]))
     used, out = {}, {}
-    for r, ms, order, cues, _ in sorted(pre, key=lambda x: (-x[4], x[0])):
-        v = next((v for v in order if used.get(v, 0) + len(ms) <= cap), order[0])
+    # 앞서 정한 가족은 그 값을 그대로 지킨다(상한은 새 가족에만 — 그림이 올라와 가족이 빠질 때마다 다른 가족이 밀리지 않게)
+    for r, ms, order, cues, _ in sorted(pre, key=lambda x: (not (prev and prev.get(x[0]) in x[2]), -x[4], x[0])):
+        keep = prev and prev.get(r) in order
+        v = prev[r] if keep else next((v for v in order if used.get(v, 0) + len(ms) <= cap), order[0])
         used[v] = used.get(v, 0) + len(ms); out[r] = (v, cues)
     return out, used
 
@@ -1424,8 +1430,9 @@ def spread():
     # 체형 — CARD_BODY 가 있는 가족은 빼고
     bf = {r: ms for r, ms in fams.items() if not any(m['name'] in L['card'] for m in ms)}
     n_body = sum(len(ms) for ms in bf.values())
-    bres, bused = assign(bf, body_score, max(1, int(n_body * BODY_CAP)))
-    sres, sused = assign(fams, lambda c: skin_score(c, L['skin']), max(1, int(sum(len(ms) for ms in fams.values()) * SKIN_CAP)))
+    prev = {k: {r: faces[by_no[rep_of(ms)['name']]].get(k) for r, ms in fams.items()} for k in ('body', 'skin')}
+    bres, bused = assign(bf, body_score, max(1, int(n_body * BODY_CAP)), prev['body'])
+    sres, sused = assign(fams, lambda c: skin_score(c, L['skin']), max(1, int(sum(len(ms) for ms in fams.values()) * SKIN_CAP)), prev['skin'])
     for f in faces.values():
         for k in LOOK_KEEP: f.pop(k, None)
     for r, ms in fams.items():
