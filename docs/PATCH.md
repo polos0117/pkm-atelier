@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-16 · claude · 잘린 그림 등록부 되살림
+- 사용자 「자료를 못 읽었다 — Bad control character in string literal in JSON at position 465721」 → data/img.json 이 a60c4f8(자동 등록: 단단지 일상4 재설계 추가)에서 가운데 약 97만 바이트가 「… 972994 bytes omitted …」 글로 바뀐 채 올라갔다(같은 일이 9600a1b · c08d14d 에도 있었다)
+- 바로 앞 e5475d0 판으로 되돌리고 그 커밋이 하려던 것만 다시 넣음 — 단단지 anime_25d_gloss 일상4(img 목록 · where 4(pkm-atelier-img-5, 파일 있음 확인) · added · added_at). 앞 판과 다른 줄은 그 넷뿐
+- 검사: JSON 읽기(python · node) · tests/img-shards.cjs · face-design --check 통과
+
 ## 2026-11-16 · gpt · 핫삼 일상 2·3번 추가
 - data/img.json — 사용자 재시도로 확보한 2·3번을 추가. 1·4번은 도구 차단으로 미생성, 기존 여덟 장과 다른 작업 항목 보존.
 
