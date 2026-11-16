@@ -323,7 +323,7 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     const only = Object.assign({}, LIST, { games: LIST.games.filter(g => g.key === 'overwatch').map(g => Object.assign({}, g, { characters: undefined })) });   /* 옛 사본 */
     let pc; for (let i = 0; i < 20 && !pc; i++) { try { pc = CP.planV2({ S, tree: tree1, tree2, subject: pk, entries: [], card: '피카츄', seed: 'packgc' + i, cosplay: { list: only, used: [{ game: 'overwatch', character: 'Tracer', cut: 'knit' }] } }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } }
     const gcut = pc.cuts.find(x => x.ofam === 'game_cosplay');
-    assert(gcut && gcut.cosplay.character === '' && gcut.cosplay.again && gcut.cosplay.again.character === 'Tracer' && !pc.cuts.some(x => x.situ), '1회차 칸 · 2회차 몫 · 상황 없음 ' + JSON.stringify(gcut && gcut.cosplay));
+    assert(gcut && gcut.cosplay.character === '' && gcut.cosplay.again && gcut.cosplay.again.character === 'Tracer' && pc.cuts.filter(x => x.situ).length === 1 && !gcut.situ, '1회차 칸 · 2회차 몫 · 상황은 일반 컷 한 장(2026-11-16) ' + JSON.stringify(gcut && gcut.cosplay));
     const planG = path.join(tmp, 'PLAN-gc.json'), dg = path.join(tmp, 'pikachu-gc'), repoG = path.join(tmp, 'img-gc');
     fs.mkdirSync(path.join(repoG, 'records'), { recursive: true });
     fs.writeFileSync(planG, JSON.stringify({ session: 'tgc', characters: [{ card: '피카츄', cuts: pc.cuts }] }));

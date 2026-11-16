@@ -38,10 +38,13 @@ function batchPlan(entries, cards, tag, v2, opts = {}) {
   let last = '';
   for (let k = 0; k < 40; k++) {
     const batch = [];
+    let skip = false;
     for (const card of cards) {
-      const p = (v2 ? P.planV2 : P.plan)({ S, tree, tree2, subject, entries, card, batch, seed: [tag, card, k].join('|'), ...(opts[card] || {}) });
+      let p; try { p = (v2 ? P.planV2 : P.plan)({ S, tree, tree2, subject, entries, card, batch, seed: [tag, card, k].join('|'), ...(opts[card] || {}) }); }
+      catch (e) { if (!/^casual-plan/.test(e.message)) throw e; last = e.message; skip = true; break; }   /* 명령줄(tools/casual-plan.cjs)처럼 다른 씨앗으로 다시 */
       batch.push({ card, species: card, refill: p.refill, cuts: p.cuts, claims: p.claims });
     }
+    if (skip) continue;
     const pl = { session: 't', characters: batch };
     last = check(entries, pl);
     if (!last) return { plan: pl, tries: k };
@@ -248,7 +251,8 @@ for (let i = 0; i < 8; i++) {
   const card = 'G' + i, r = batchPlan(gcEntries, [card], 'gc', true, { [card]: { cosplay: { list: LIST, used: gcUsed.slice() } } }), ch = r.plan.characters[0];
   const gcs = ch.cuts.filter(x => x.ofam === GCR.outfit), cos = ch.cuts.filter(x => x.ofam === 'pokemon_costume');
   assert.equal(gcs.length, 1, card + ' 게임 코스프레 한 장'); assert.equal(cos.length, 1, card + ' 포켓몬 코스튬 그대로 한 장');
-  assert.equal(ch.cuts.filter(x => x.situ).length, 0, card + ' 상황 노출은 필수에서 빠졌다');
+  { const st = ch.cuts.filter(x => x.situ);   /* 상황 노출은 필수에서 내려왔지만 일반 컷 하나에 늘 한 장(2026-11-16 「늘 1장은 나오게」) — 필수 · 코스튬 · 자유 설계 칸이 아니다 */
+    assert(st.length === 1 && st[0].ofam !== GCR.outfit && st[0].ofam !== 'pokemon_costume' && !st[0].ofree && !st[0].xfree && !st[0].sfree, card + ' 일반 컷 하나에 상황 ' + JSON.stringify(st.map(x => [x.cut, x.ofam, x.situ]))); }
   const g = gcs[0], x = g.cosplay;
   assert(x && LIST.games.some(gg => gg.key === x.game) && CUT_KEYS.includes(x.cut) && g.item === 'gc_' + x.cut, card + ' 게임 · 재단 · 옷 ' + JSON.stringify(g));
   assert(x.character && !x.used && !x.again && !gcUsed.some(u => u.game === x.game && G.nameKey(u.character) === G.nameKey(x.character) && x.round === 1), card + ' 새 계획엔 pick 칸이 없다 — 캐릭터가 찬다 ' + JSON.stringify(x));
@@ -285,7 +289,7 @@ assert(new Set(gcUsed.map(x => x.game)).size >= 3, '여덟 명이 여러 게임 
   assert(/재단 .* 와 다르다/.test(one(mod(x => Object.assign(x, { item: x.item === 'gc_knit' ? 'gc_idol' : 'gc_knit' })))), '옷 ≠ 재단을 건다');
   assert(/게임 · 재단\(cosplay\)이 없다/.test(one(mod(x => Object.assign(x, { cosplay: null })))), '게임 없는 코스프레 컷을 건다');
   assert(/게임 코스프레 컷이 2장/.test(one(last.cuts.map((x, i) => i === other ? Object.assign({}, last.cuts[k], { cut: x.cut }) : x))), '두 장을 건다');
-  const noGc = last.cuts.map((x, i) => i === k ? Object.assign({}, last.cuts[other], { cut: x.cut }) : x);
+  const noGc = last.cuts.map((x, i) => i === k ? Object.assign({}, last.cuts[other], { cut: x.cut }) : x).map(x => Object.assign({}, x, { situ: '' }));   /* 새 구성은 일반 컷에 상황이 늘 한 장(2026-11-16) — 빼고 옛 구성 판정을 본다 */
   assert(/상황 노출 컷이 0장/.test(one(noGc)), '게임 코스프레가 없으면 옛 구성 — 상황 노출이 있어야');
   gcn += 6;
 }
