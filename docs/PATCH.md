@@ -11,6 +11,15 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-16 · claude · 종별 체형 · 피부 · 얼굴형 · 눈매 · 앞머리 늘리고 나누기
+- 사용자 「원소공방은 외형정보나 실루엣이 삼국지나 pkm에 비해 적은거 같은데」 → pkm 검토(체형 944종이 모래시계 하나 · 피부 설계 없음 · 계란형 40% · 앞머리) → 「1,2,3,4 로 해줘」
+- lib/prompt-spec.js — 외형 선택지: 얼굴형 +2(v-line · inverted triangle) · 눈매 +4(phoenix · hooded · cat · peach-blossom) · 앞머리 +4(wispy see-through · short baby · face-framing side locks · swept-back fringe) · 피부 5 → 8(olive · golden beige · bronze), 풀이(PARAM_GUIDES) · EYE_CONTOURS. VOCAB_EN.body 굴곡 체형 열(삼국지 글), SKIN_WORDS, IMPRESSION 줄에 {skin}
+- lib/prompt-anthro.js — IMPRESSION 줄에 종별 피부(피부를 고르면 빠짐), 일상컷 BODY TYPE 은 CARD_BODY → 설계표 body → CARD_FIGURE. tools/prompt-pack.cjs figureOf 같은 차례
+- tools/face-design.py — 새 값 단서(CUES · TYPE · SHAPE · BASE) · compatible · FACE_CAP(그림 없는 종 얼굴형 20% · 턱 22% · 눈매 17%, 그림 있는 종 얼굴 고정) · spread(그림 없는 진화 가족 444개 791종의 체형 710종(CARD_BODY 가족 빼고, 한 체형 11%) · 피부 791종(20%) · 앞머리 108종 옮김) · check_look · 문서 「체형 · 피부」
+- data/face-design.json · docs/CHARACTER_FACE_DESIGNS.md — build(새로 잠긴 머리 84종 — 그동안 올라온 기본 화풍 ① 기록값, 그 여파로 잠기지 않은 24종 머리가 바뀜) → spread → render. 그림 없는 종 계란형 21% · 둥근 턱 23% · 가는 눈 17%
+- tests/face-design.cjs 체형 · 피부 단언. IMAGE_RULES.md 「종별 체형 · 피부 · 얼굴 늘림」. prompt.html ?v=look1
+- 검사: face-design · face-design-hair-lock · prompt-appearance · prompt-appearance-dom · prompt-engine · prompt-casual · prompt-casual-v2 · prompt-pack · prompt-sections 통과
+
 ## 2026-11-16 · gpt · 블래키 애니 2.5D 광택 3번 확정과 일상 등록
 - data/img.json — 사용자 선택 메카 3번과 일상 10장·캐릭터 전용 직업컷 1장을 추가한다. 기존 화풍과 다른 캐릭터의 등록을 보존한다.
 

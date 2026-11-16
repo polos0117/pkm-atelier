@@ -5,6 +5,7 @@
     python3 tools/face-design.py render                             # json → 설계표 문서
     python3 tools/face-design.py impression                         # 인상(나이감 · 분위기 · 눈 색)만 고쳐 쓴다(2026-11-09)
     python3 tools/face-design.py relong                             # 긴 얼굴 특징을 셋 이상 겹친 종만 얼굴 값을 다시 고른다(2026-11-09)
+    python3 tools/face-design.py spread                             # 체형 · 피부(그림 없는 진화 가족) · 앞머리 나누기(2026-11-16)
     python3 tools/face-design.py --check                            # 쓰지 않고 규칙만 본다(검사가 부른다)
 
 값은 생성기의 얼굴 항목(lib/prompt-spec.js 의 PARAM_DEFS, group face)의 열쇠 그대로다 — 생성기가 그대로 싣는다.
@@ -122,6 +123,27 @@ TYPE = {
     'flying': {'eye tilt': {'upturned outer corners': .5}, 'nose character': {'straight slender bridge': .4}},
     'normal': {'nose character': {'balanced nose': .4}, 'lips': {'medium lips': .4}},
 }
+# ── 얼굴형 둘(v-line · inverted triangle) · 눈매 넷(phoenix · hooded · cat · peach-blossom) 단서(2026-11-16 사용자 「1,2,3,4 로 해줘」) ──
+CUES += [
+    (r'\b(fox|vulpine|cat|feline|kitten|lynx|sly|cunning)\b', '여우·고양이', {'eye shape': {'cat': 2.5}, 'face shape': {'v-line': .8}, 'eye tilt': {'upturned outer corners': .6}}),
+    (r'\b(phoenix|plume|plumes|crest|crested|tail feathers?|flame|flames|fiery)\b', '깃 볏·불꽃', {'eye shape': {'phoenix': 1.6}}),
+    (r'\b(sleep|sleeps|sleeping|drowsy|dozing|yawn|yawning|languid)\b', '졸음', {'eye shape': {'hooded': 2}}),
+    (r'\b(flower|flowers|petal|petals|blossom|blossoms|bloom|bud|ribbon|ribbons|bow)\b', '꽃·리본', {'eye shape': {'peach-blossom': 1.6}, 'face shape': {'v-line': .6}}),
+    (r'\b(wide|broad)\b[^,;]*\b(head|crest|shoulders?|hood|cowl|fins?)\b', '넓은 머리·어깨', {'face shape': {'inverted triangle': 1.6}}),
+]
+for _t, _d in {'fairy': {'eye shape': {'peach-blossom': .8}, 'face shape': {'v-line': .5}}, 'psychic': {'eye shape': {'phoenix': .5, 'cat': .4}},
+               'dark': {'eye shape': {'cat': .8}}, 'ghost': {'eye shape': {'hooded': .8}}, 'dragon': {'eye shape': {'phoenix': .8}, 'face shape': {'inverted triangle': .5}},
+               'fire': {'eye shape': {'phoenix': .6}}, 'ice': {'face shape': {'v-line': .6}}, 'flying': {'face shape': {'inverted triangle': .5}, 'eye shape': {'phoenix': .4}},
+               'poison': {'eye shape': {'hooded': .4}}, 'grass': {'eye shape': {'peach-blossom': .5}}, 'steel': {'face shape': {'inverted triangle': .4}}}.items():
+    for _k, _v in _d.items(): TYPE[_t].setdefault(_k, {}).update(_v)
+BASE['face shape'].update({'v-line': .25, 'inverted triangle': .15})   # 단서가 드문 새 얼굴형도 계란형이 상한에 찰 때 다음 후보로 오게
+SHAPE['wings'][1].setdefault('face shape', {})['inverted triangle'] = .6
+SHAPE['bug-wings'][1]['face shape']['v-line'] = .6
+SHAPE['squiggle'][1].setdefault('eye shape', {})['phoenix'] = .5
+# 그림 없는 종의 쏠림 상한 — 한 값이 기본 화풍 그림 없는 종의 이만큼까지(계란형 40% · 둥근 턱 39% · 가는 눈 32% 였다). 그림 있는 종은 그대로(①이 정본)
+FACE_CAP = {'face shape': .2, 'jaw & chin': .22, 'eye shape': .17}
+DRAWN_W = 50.0   # 기본 화풍 ①이 있는 종의 얼굴은 움직이지 않는다
+
 TYPE_KO = {'fairy': '페어리', 'psychic': '에스퍼', 'ghost': '고스트', 'dragon': '드래곤', 'fighting': '격투', 'steel': '강철', 'rock': '바위',
            'ground': '땅', 'water': '물', 'ice': '얼음', 'fire': '불꽃', 'electric': '전기', 'grass': '풀', 'bug': '벌레', 'poison': '독',
            'dark': '악', 'flying': '비행', 'normal': '노말'}
@@ -212,7 +234,9 @@ BANGS_OK = {'hime cut': ['straight bangs'], 'slicked back': ['none'], 'wet-look 
             'pixie cut': ['none', 'side-swept bangs', 'choppy bangs', 'straight bangs', 'asymmetric bangs', 'parted bangs'],
             'cornrows': ['none'], 'afro': ['none', 'curtain bangs', 'choppy bangs'], 'afro puffs': ['none', 'curtain bangs', 'straight bangs']}
 BANGS_BASE = {'straight bangs': .3, 'side-swept bangs': .3, 'curtain bangs': .3, 'parted bangs': .2, 'none': .2, 'long side bangs': .2,
-              'choppy bangs': .2, 'asymmetric bangs': .1, 'long side bangs covering one eye': 0.0}
+              'choppy bangs': .2, 'asymmetric bangs': .1, 'long side bangs covering one eye': 0.0,
+              # 2026-11-16 사용자 「1,2,3,4 로 해줘」 — 앞머리 넷
+              'wispy see-through bangs': .2, 'short baby bangs': .1, 'face-framing side locks': .2, 'swept-back fringe': .1}
 LEN_BASE = {'very short': 0.0, 'short': .3, 'medium': .4, 'long': .4, 'very long': .2}
 # ── 과장된 2D 머리(2026-11-12) ──────────────────────────────────────────────────────
 # 사용자 「pkm쪽은 헤어스타일이 제한적인거 같아. 2d 케릭터라 더 다양하고 과장되게 써도 되는데」 → 「위에 표에 더 많이 추가해서 분배해줘」 →
@@ -857,6 +881,12 @@ def compatible(t):
     if e == 'sharp' and tl == 'downturned outer corners': return False
     if e == 'large' and z == 'small' and tl != 'level outer corners': return False
     if e == 'narrow' and z == 'large': return False
+    # 새 값(2026-11-16 사용자 「1,2,3,4 로 해줘」)
+    if s == 'v-line' and (j not in ('narrow tapered chin', 'soft rounded jaw', 'balanced jawline') or w == 'wide'): return False
+    if s == 'inverted triangle' and (j not in ('narrow tapered chin', 'balanced jawline', 'angular defined jaw') or w == 'narrow'): return False
+    if e == 'phoenix' and (tl != 'upturned outer corners' or z == 'large'): return False
+    if e == 'cat' and tl == 'downturned outer corners': return False
+    if e == 'peach-blossom' and tl == 'upturned outer corners': return False
     return True
 
 
@@ -1016,6 +1046,10 @@ def build(seed_doc=None):
     names = {c['name']: c for c in cards}
     taken, by_line, four = {}, {}, [set() for _ in GROUPS]
     faces, fallback = {}, []
+    drawn = light_registered(img, hair_spec()['style'])      # 기본 화풍 ①이 있는 종(2026-11-16 사용자 「1,2,3,4 로 해줘」)
+    free_n = sum(1 for c in cards if c['name'] not in drawn)
+    capn = {k: int(free_n * v) for k, v in FACE_CAP.items()}
+    used = {k: {} for k in FACE_CAP}
     for c in cards:
         no, rec = c['no'], app.get(str(c['no']))
         sc, why = score(c, rec, keys, opts)
@@ -1023,16 +1057,17 @@ def build(seed_doc=None):
         sd = seed.get(no)
         how = (prev or {}).get('how') or (sd or {}).get('how') or 'draft'
         prior = (prev or {}).get('face') or (sd or {}).get('face') or {}
-        pw = KEEP_W if prev else SEED_W[how]
+        pw = (DRAWN_W if c['name'] in drawn else KEEP_W) if prev else SEED_W[how]
         for k, o in prior.items():
             if k in sc and o in sc[k]: sc[k][o] += pw
         ranked = {k: sorted(opts[k], key=lambda o: -sc[k][o])[:6] for k in keys}
         best = {k: sc[k][ranked[k][0]] for k in keys}
         mates = [faces[str(names[n]['no'])] for n in by_line.get(root[c['name']], [])]
 
-        def ok(t, gmin):
+        def ok(t, gmin, capped=True):
             g = groups(t)
             if g in taken: return False
+            if capped and c['name'] not in drawn and any(used[k].get(t[k], 0) >= capn[k] for k in FACE_CAP): return False
             if gmin >= 2 and any(tuple(x for j, x in enumerate(g) if j != i) in four[i] for i in range(len(GROUPS))): return False
             return all(diff(g, groups(m['face'])) >= LINE_MIN for m in mates)
         def search(test):
@@ -1051,10 +1086,12 @@ def build(seed_doc=None):
             return None
         top = search(lambda t: True)        # 겹침을 보기 전의 가장 맞는 얼굴
         chosen = None
-        for gmin in (GLOBAL_MIN, 1):
-            chosen = search(lambda t: ok(t, gmin))
+        for gmin, capped in ((GLOBAL_MIN, True), (GLOBAL_MIN, False), (1, True), (1, False)):   # 상한을 먼저 풀고, 넷 이상 같은 얼굴은 마지막에만
+            chosen = search(lambda t: ok(t, gmin, capped))
             if chosen: break
             fallback.append(no)
+        if c['name'] not in drawn:
+            for k in FACE_CAP: used[k][chosen[k]] = used[k].get(chosen[k], 0) + 1
         assert chosen, no
         g = groups(chosen); taken[g] = no
         for i in range(len(GROUPS)): four[i].add(tuple(x for j, x in enumerate(g) if j != i))
@@ -1073,6 +1110,8 @@ def build(seed_doc=None):
                           'registered': c['name'] in img, 'face': chosen,
                           'why': (prev or {}).get('why') or (sd or {}).get('why') or '',
                           'cues': cues[:6], 'adjusted': ' '.join(clash) or (face_adjusted((prev or {}).get('adjusted', '')) if prev and prev.get('face') == chosen else '')}
+        for k in LOOK_KEEP:   # 체형 · 피부(spread 가 정한다 — build 는 그대로 이어받는다)
+            if (prev or {}).get(k) is not None: faces[str(no)][k] = prev[k]
     H = hair_spec()
     hair, hres, locked = design_hair(cards, app, img, old, root, H)
     for c in cards:
@@ -1134,6 +1173,7 @@ def check(data=None, quiet=False):
             seen[i].setdefault(k, no)
     bad += check_hair(faces, cards, img, hair_spec(), quiet)
     bad += check_impression(faces, quiet)
+    bad += check_look(faces, cards, img, quiet)
     if not quiet:
         print(f'[검사] {len(faces)}종 · 서로 다른 얼굴 {len(set(G.values()))} · 넷 이상 같은 쌍 {near} · 문제 {len(bad)}')
         for b in bad[:30]: print('  ' + b)
@@ -1267,6 +1307,192 @@ def check_impression(faces, quiet=False):
     return bad
 
 
+
+# ── 체형 · 피부 · 앞머리 나누기(2026-11-16 사용자 「1,2,3,4 로 해줘」) ─────────────────────────────────────────
+# 1,025종 가운데 944종이 같은 모래시계 몸(CARD_FIGURE) 하나였고, 피부는 종별 설계가 없었다. 그래서 기본 화풍 ①이 하나도 없는
+# 진화 가족(같은 진화면 같은 몸 · 같은 피부)마다 키 · 무게 · 능력치 · 타입 · 몸 형태 · 도감 색에 점수를 주고, 한 값 상한을 두고 고른다.
+# lib/prompt-spec.js CARD_BODY(손으로 정한 81종)는 그대로 이기고 이 표는 그다음 — 일상컷 BODY TYPE 줄 · 지시문 묶음 외형 칸 body type.
+# 피부는 IMPRESSION 줄 「… in her twenties with <SKIN_WORDS>」. 앞머리는 잠기지 않은 종만, 많이 쓰인 값에서 새 넷으로 고르게 옮긴다.
+LOOK_KEEP = ('body', 'skin', 'look_cues')
+BODIES = ['hourglass', 'voluptuous', 'curvy_athletic', 'busty_slender', 'curvy', 'tall_curvy', 'strong_curvy', 'petite_curvy', 'pear_curvy',
+          'willowy_curvy', 'lean_toned', 'petite_voluptuous']   # 삼국지 공방 BODY 와 같은 열둘(볼륨 · 굴곡이 있는 몸만)
+BODY_CAP, SKIN_CAP = .11, .2
+BODY_TYPE = {
+    'fighting': {'strong_curvy': 1, 'curvy_athletic': 1, 'lean_toned': -3},   # 격투는 일상컷 복근 줄이 따로 있다(2026-11-12) — 슬림 근육형과 겹치지 않게
+    'dragon': {'tall_curvy': 1, 'strong_curvy': .6}, 'fairy': {'petite_voluptuous': .8, 'petite_curvy': .6, 'busty_slender': .5},
+    'psychic': {'busty_slender': .8, 'willowy_curvy': .6, 'hourglass': .4}, 'normal': {'curvy': .8, 'petite_curvy': .4},
+    'water': {'hourglass': .8, 'voluptuous': .6}, 'grass': {'pear_curvy': .8, 'curvy': .6}, 'fire': {'curvy_athletic': .8, 'voluptuous': .5},
+    'electric': {'lean_toned': .8, 'curvy_athletic': .6}, 'ice': {'willowy_curvy': .8, 'busty_slender': .6}, 'ground': {'pear_curvy': .8, 'strong_curvy': .6},
+    'rock': {'strong_curvy': .8, 'pear_curvy': .4}, 'steel': {'tall_curvy': .6, 'strong_curvy': .6}, 'poison': {'hourglass': .8, 'voluptuous': .5},
+    'bug': {'lean_toned': .6, 'petite_curvy': .6, 'willowy_curvy': .4}, 'ghost': {'willowy_curvy': .8, 'busty_slender': .6},
+    'dark': {'hourglass': .8, 'lean_toned': .5}, 'flying': {'willowy_curvy': .6, 'busty_slender': .5, 'lean_toned': .4},
+}
+BODY_STAT = [{'voluptuous': .8, 'curvy': .5}, {'strong_curvy': .8, 'curvy_athletic': .8}, {'strong_curvy': .6, 'pear_curvy': .6},
+             {'busty_slender': .8, 'willowy_curvy': .5}, {'hourglass': .8, 'curvy': .4}, {'lean_toned': 1, 'curvy_athletic': .6}]
+BODY_SHAPE = {'ball': {'petite_voluptuous': 1, 'voluptuous': .6}, 'blob': {'petite_voluptuous': .8, 'voluptuous': .8}, 'squiggle': {'willowy_curvy': 1},
+              'fish': {'hourglass': .6}, 'humanoid': {'hourglass': .4, 'tall_curvy': .4}, 'quadruped': {'curvy_athletic': .5},
+              'wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'bug-wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'armor': {'strong_curvy': .8}}
+SKIN_COLOR = {'white': {'pale': 1, 'light': .6}, 'pink': {'pale': .8, 'light': .6}, 'yellow': {'light': .6, 'golden beige': .8},
+              'blue': {'pale': .5, 'light': .6, 'medium': .3}, 'purple': {'pale': .5, 'light': .5, 'olive': .3}, 'green': {'olive': .8, 'light': .4},
+              'brown': {'tan': .8, 'bronze': .6, 'golden beige': .5}, 'red': {'golden beige': .4, 'tan': .5, 'medium': .4},
+              'gray': {'medium': .6, 'olive': .4, 'light': .3}, 'black': {'deep': 1, 'bronze': .6}}
+SKIN_TYPE = {'fire': {'tan': .6, 'bronze': .4, 'golden beige': .4}, 'ground': {'bronze': .8, 'tan': .6, 'deep': .4}, 'rock': {'bronze': .6, 'tan': .4, 'deep': .4},
+             'fighting': {'tan': .6, 'bronze': .5}, 'ice': {'pale': 1}, 'ghost': {'pale': .8}, 'fairy': {'light': .6, 'pale': .4},
+             'water': {'light': .4, 'medium': .3}, 'grass': {'olive': .6, 'medium': .4}, 'electric': {'golden beige': .6, 'light': .3},
+             'dark': {'deep': .8, 'bronze': .4}, 'steel': {'medium': .5, 'light': .3}, 'psychic': {'light': .5, 'pale': .3},
+             'poison': {'olive': .4, 'medium': .4}, 'dragon': {'medium': .5, 'olive': .4}, 'flying': {'light': .5}, 'bug': {'olive': .5, 'golden beige': .3},
+             'normal': {'medium': .5, 'light': .4}}
+BANGS_NEW = ('wispy see-through bangs', 'short baby bangs', 'face-framing side locks', 'swept-back fringe')
+BANGS_KEEP, BANGS_BAL = 1.0, 1.2   # 지금 앞머리를 지키는 가산점 · 고르게 나누는 무게 — 많이 쓰인 값에서만 옮긴다
+
+
+def look_spec():
+    out = subprocess.run(['node', '-e', "global.window={};require('./lib/prompt-spec.js');const S=window.AtelierSpec;"
+                          "process.stdout.write(JSON.stringify({body:Object.keys(S.VOCAB_EN.body),card:S.CARD_BODY,skin:S.PARAM_DEFS.find(d=>d.key==='skin tone').options.map(o=>o[0]).filter(o=>o&&o!=='__custom__'),words:S.SKIN_WORDS}))"],
+                         cwd=ROOT, capture_output=True, text=True, check=True).stdout
+    j = json.loads(out)
+    assert set(BODIES) <= set(j['body']), ('체형 열쇠가 VOCAB_EN.body 에 없다', set(BODIES) - set(j['body']))
+    assert set(j['skin']) == set(j['words']), ('피부 선택지와 SKIN_WORDS 가 다르다', set(j['skin']) ^ set(j['words']))
+    return j
+
+
+def free_families(cards, img, H):
+    """기본 화풍 ①이 하나도 없는 진화 가족 {뿌리: [카드]}"""
+    drawn = light_registered(img, H['style'])
+    root = lines_of(cards)
+    fam = {}
+    for c in cards: fam.setdefault(root[c['name']], []).append(c)
+    return {r: ms for r, ms in fam.items() if not any(m['name'] in drawn for m in ms)}
+
+
+def rep_of(ms):
+    """가족의 대표 — 능력치 합이 가장 큰 종(마지막 진화)"""
+    return max(ms, key=lambda c: (sum(c.get('stats') or [0]), c['no']))
+
+
+def body_score(c):
+    sc = {b: h01(c['name'] + '|body|' + b) * .3 for b in BODIES}; cues = []
+    def add(tab, label):
+        if tab: cues.append(label)
+        for b, w in tab.items(): sc[b] += w
+    h, w = c.get('h') or 0, c.get('w') or 0
+    bmi = w / max(h, .1) ** 2
+    if h >= 1.8: add({'tall_curvy': 1.5, 'willowy_curvy': .8, 'strong_curvy': .4}, f'키 {h:g}m')
+    elif 0 < h <= .7: add({'petite_curvy': 1.5, 'petite_voluptuous': 1.0}, f'키 {h:g}m')
+    if bmi >= 50: add({'strong_curvy': 1, 'voluptuous': 1, 'pear_curvy': .8}, f'무게 {w:g}kg')
+    elif bmi >= 35: add({'voluptuous': .5, 'curvy': .5, 'pear_curvy': .5}, f'무게 {w:g}kg')
+    elif bmi <= 17: add({'willowy_curvy': 1, 'busty_slender': 1, 'lean_toned': .6}, f'가벼운 몸 {w:g}kg')
+    st = c.get('stats') or []
+    if len(st) == 6:
+        k = max(range(6), key=lambda i: st[i]); add(BODY_STAT[k], '능력치 ' + ['HP', '공격', '방어', '특공', '특방', '스피드'][k])
+    for i, t in enumerate([c.get('element'), c.get('element2')]):
+        if t in BODY_TYPE: add({b: x * (1 if i == 0 else .5) for b, x in BODY_TYPE[t].items()}, TYPE_KO.get(t, t) + ' 타입')
+    if c.get('shape') in BODY_SHAPE: add(BODY_SHAPE[c['shape']], '몸 형태 ' + c['shape'])
+    return sc, cues
+
+
+def skin_score(c, opts):
+    sc = {v: h01(c['name'] + '|skin|' + v) * .3 for v in opts}; cues = []
+    if c.get('color') in SKIN_COLOR:
+        cues.append('도감 색 ' + c['color'])
+        for v, x in SKIN_COLOR[c['color']].items(): sc[v] += x
+    for i, t in enumerate([c.get('element'), c.get('element2')]):
+        for v, x in SKIN_TYPE.get(t, {}).items(): sc[v] += x * (1 if i == 0 else .5)
+    return sc, cues
+
+
+def assign(fams, scorer, cap):
+    """가족마다 점수 · 상한(종 수로 센다) — 가장 뚜렷한 가족(첫째 · 둘째 점수 차)부터 자리를 준다"""
+    pre = []
+    for r, ms in fams.items():
+        sc, cues = scorer(rep_of(ms))
+        order = sorted(sc, key=lambda v: -sc[v])
+        pre.append((r, ms, order, cues, sc[order[0]] - sc[order[1]]))
+    used, out = {}, {}
+    for r, ms, order, cues, _ in sorted(pre, key=lambda x: (-x[4], x[0])):
+        v = next((v for v in order if used.get(v, 0) + len(ms) <= cap), order[0])
+        used[v] = used.get(v, 0) + len(ms); out[r] = (v, cues)
+    return out, used
+
+
+def spread():
+    cards, app, img = load_inputs()
+    data = json.load(open(DATA)); faces = data['faces']
+    H, L = hair_spec(), look_spec()
+    by_no = {c['name']: str(c['no']) for c in cards}
+    fams = free_families(cards, img, H)
+    # 체형 — CARD_BODY 가 있는 가족은 빼고
+    bf = {r: ms for r, ms in fams.items() if not any(m['name'] in L['card'] for m in ms)}
+    n_body = sum(len(ms) for ms in bf.values())
+    bres, bused = assign(bf, body_score, max(1, int(n_body * BODY_CAP)))
+    sres, sused = assign(fams, lambda c: skin_score(c, L['skin']), max(1, int(sum(len(ms) for ms in fams.values()) * SKIN_CAP)))
+    for f in faces.values():
+        for k in LOOK_KEEP: f.pop(k, None)
+    for r, ms in fams.items():
+        for m in ms:
+            f = faces[by_no[m['name']]]; cues = []
+            if r in bres: f['body'] = bres[r][0]; cues += ['체형 ← ' + ' · '.join(bres[r][1][:4])]
+            f['skin'] = sres[r][0]; cues += ['피부 ← ' + ' · '.join(sres[r][1][:3])]
+            f['look_cues'] = cues + ['가족 ' + r + '(대표 ' + rep_of(ms)['name'] + ')']
+    # 앞머리 — 잠기지 않은 종, 지금 값을 지키되 많이 쓰인 값에서 고르게 옮긴다(같은 계열 머리 셋이 똑같아지지 않게)
+    root = lines_of(cards)
+    allb = [b for b in H['female'][HB]]
+    target = len(faces) / len(allb)
+    cnt = {}
+    for f in faces.values():
+        b = (f.get('hair') or {}).get(HB)
+        if b and f.get('hair_locked'): cnt[b] = cnt.get(b, 0) + 1
+    moved = 0
+    line = {}
+    for c in cards: line.setdefault(root[c['name']], []).append(c['name'])
+    order = sorted([c for c in cards if not faces[by_no[c['name']]].get('hair_locked') and (faces[by_no[c['name']]].get('hair') or {}).get(HS)],
+                   key=lambda c: h01(c['name'] + '|bangs'))
+    for c in order:
+        h = faces[by_no[c['name']]]['hair']; cur = h.get(HB)
+        ok_b = BANGS_OK.get(h[HS]) or BOLD_BANGS.get(h[HS]) or allb
+        mates = [faces[by_no[m]]['hair'] for m in line[root[c['name']]] if m != c['name']]
+        best = None
+        for b in ok_b:
+            t = dict(h, **{HB: b})
+            if any(hair_triple(m) == hair_triple(t) for m in mates if m): continue
+            v = (BANGS_KEEP if b == cur else 0) + BANGS_BASE.get(b, 0) + h01(c['name'] + '|' + b) * .3 - BANGS_BAL * cnt.get(b, 0) / target
+            if best is None or v > best[0]: best = (v, b)
+        b = best[1] if best else cur
+        if b != cur: moved += 1; h[HB] = b
+        cnt[b] = cnt.get(b, 0) + 1
+    with open(DATA, 'w', encoding='utf-8') as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=0, separators=(',', ':')); fh.write('\n')
+    print(f'[체형] 그림 없는 가족 {len(bf)}({n_body}종, CARD_BODY 가족 빼고) · ' + ' '.join(f'{k} {v}' for k, v in sorted(bused.items(), key=lambda x: -x[1])))
+    print(f'[피부] 그림 없는 가족 {len(fams)}({sum(len(ms) for ms in fams.values())}종) · ' + ' '.join(f'{k} {v}' for k, v in sorted(sused.items(), key=lambda x: -x[1])))
+    print(f'[앞머리] 옮긴 종 {moved} · ' + ' '.join(f'{k} {v}' for k, v in sorted(cnt.items(), key=lambda x: -x[1])))
+
+
+def check_look(faces, cards, img, quiet=False):
+    """체형 · 피부 — 값이 표에 있고, 한 가족은 같고, 상한을 넘지 않는다"""
+    bad = []
+    L = look_spec()
+    root = lines_of(cards)
+    fam = {}
+    for c in cards:
+        f = faces.get(str(c['no'])) or {}
+        if f.get('body') is not None and f['body'] not in BODIES: bad.append(f"{c['name']} 체형 {f['body']} 는 표에 없다")
+        if f.get('skin') is not None and f['skin'] not in L['skin']: bad.append(f"{c['name']} 피부 {f['skin']} 는 선택지에 없다")
+        if f.get('body') and c['name'] in L['card']: bad.append(f"{c['name']} CARD_BODY 종인데 설계표 체형이 있다")
+        fam.setdefault(root[c['name']], set()).add((f.get('body'), f.get('skin')))
+    for r, v in fam.items():
+        if len(v) > 1: bad.append(f'가족 {r} 체형 · 피부가 다르다 {sorted(map(str, v))}')
+    for k, cap in (('body', BODY_CAP), ('skin', SKIN_CAP)):
+        cnt = {}
+        for f in faces.values():
+            if f.get(k): cnt[f[k]] = cnt.get(f[k], 0) + 1
+        n = sum(cnt.values())
+        for v, x in cnt.items():
+            if n and x > int(n * cap) + 40: bad.append(f'{k} {v} {x}종 — 상한 {int(n * cap)}을 크게 넘는다')   # 가족 단위라 큰 가족 하나만큼 넘칠 수 있다
+    if not quiet:
+        nb = sum(1 for f in faces.values() if f.get('body')); ns = sum(1 for f in faces.values() if f.get('skin'))
+        print(f'[체형 · 피부] 체형 {nb}종 · 피부 {ns}종 · 문제 {len(bad)}')
+    return bad
+
 def face_line(f, keys, opts):
     """생성기와 같은 FACE 줄(lib/prompt-anthro.js faceLine) — 문서에 그대로 보인다"""
     t = dict(f['face'])
@@ -1316,7 +1542,7 @@ def render():
         f'- 같은 진화 계열끼리는 다섯 묶음(윤곽·눈·눈썹·코·입) 가운데 **{LINE_MIN}개 이상**이 다르다. 1,025종 어느 둘도 넷 이상이 같지 않다(**{GLOBAL_MIN}개 이상** 다르다). 겹쳐서 옮긴 항목은 각 종의 "조정"에 적는다.',
         '- 긴 얼굴 — 길쭉한 얼굴형 · 긴 길이 · 긴 턱끝 · 좁은 폭 가운데 **둘까지만** 고른다(2026-11-09 — 셋 이상 겹친 159종이 기괴하게 길어져 `relong` 으로 다시 골랐다). FACE 줄에서는 그 낱말을 「살짝」으로 쓰고 「늘어나지 않게」를 붙인다.',
         '- 이 숫자는 글로 쓴 설계가 겹치지 않는다는 뜻이다. 그림이 실제로 구별되는지는 생성 뒤에 같은 계열·최근 캐릭터와 나란히 보고 확인한다.',
-        '- 머리색·피부색·체형은 이 표가 정하지 않는다(생성기의 다른 외형 항목). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로 정한다.',
+        '- 머리색은 이 표가 정하지 않는다(원작 색). 헤어스타일·길이·앞머리는 아래 "머리" 규칙으로, 나이감·분위기·눈 색은 아래 "인상" 규칙으로, 체형·피부는 아래 "체형 · 피부" 규칙으로 정한다.',
         '',
         '## 머리',
         '',
@@ -1340,6 +1566,16 @@ def render():
         '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를, 사나움은 4% 를 넘지 않는다(2026-11-09).',
         '- 눈 색은 도감 색에서 두 가지 중 하나. 생성기에서 눈 색을 직접 고르면 그 값이 이긴다(IMPRESSION 줄에서 눈 색만 빠진다).',
         '- 이미 등록된 그림은 그대로다 — 새로 그리는 ① 부터.',
+        '',
+        '## 체형 · 피부',
+        '',
+        '1,025종 가운데 944종이 같은 모래시계 몸(`CARD_FIGURE`) 하나였고 피부는 종별 설계가 없었다(2026-11-16 사용자 「1,2,3,4 로 해줘」). 그래서 **기본 화풍 ①이 하나도 없는 진화 가족**마다',
+        '(같은 진화면 같은 몸 · 같은 피부) 대표 종(능력치 합이 가장 큰 종)의 키 · 무게 · 가장 높은 능력치 · 타입 · 몸 형태 · 도감 색에 점수를 주고 `python3 tools/face-design.py spread` 로 고른다.',
+        '',
+        f'- 체형은 볼륨 · 굴곡이 있는 열둘(삼국지 공방과 같은 글, `VOCAB_EN.body`)에서, 한 체형은 그 종들의 {int(BODY_CAP * 100)}% 까지. 손으로 정한 `CARD_BODY`(81종)가 이기고, 이 표는 그다음 — 일상컷 BODY TYPE 줄 · 지시문 묶음 외형 칸 body type. 그림이 있는 가족은 그대로(`CARD_FIGURE`).',
+        f'- 피부는 외형 칸 skin tone 의 여덟 값에서, 한 값은 {int(SKIN_CAP * 100)}% 까지. 새 인물(경장 ①)의 IMPRESSION 줄에 「… in her twenties with <피부>」 로 실리고, 피부를 직접 고르면 빠진다.',
+        '- 앞머리 넷(시스루 · 베이비 뱅 · 얼굴을 감싸는 옆머리 · 뒤로 넘긴 앞머리)을 더하고, 잠기지 않은 종에서 많이 쓰인 값부터 고르게 옮겼다.',
+        '- 얼굴형 둘(V라인 · 역삼각형) · 눈매 넷(봉황눈 · 덮인 눈 · 고양이 눈 · 도화눈)을 더하고, 그림 없는 종에서 한 얼굴형은 20% · 턱은 22% · 눈매는 17% 까지(`FACE_CAP` — 계란형 40% · 둥근 턱 39% · 가는 눈 32% 였다). 그림 있는 종의 얼굴은 움직이지 않는다.',
         '',
         '## 지금 상태',
         '',
@@ -1373,11 +1609,13 @@ def render():
                     f"| 입 | {ko['lips'][t['lips']]} |",
                     '| 머리 | ' + (' · '.join(f"{H['name'][k]} {H['ko'][k][f['hair'][k]]}" for k in HAIR_KEYS if f['hair'].get(k)) or '정하지 않음') +
                     (' (확정 그림으로 잠금)' if f.get('hair_locked') else '') + ' |',
-                    imp_row(f.get('impression'), J), '']
+                    imp_row(f.get('impression'), J),
+                    '| 체형 · 피부 | ' + (' · '.join(x for x in ['체형 ' + f['body'] if f.get('body') else '', '피부 ' + f['skin'] if f.get('skin') else ''] if x) or '정하지 않음(그림 있는 가족 · CARD_BODY)') + ' |', '']
             if f['why']: out += [f"**이유:** {f['why']}", '']
             if f.get('hair_why'): out += [f"**머리:** {f['hair_why']}", '']
             if f.get('hair_cues'): out += ['**머리 단서:** ' + ' · '.join(f['hair_cues']), '']
             if f['cues']: out += ['**원작 단서:** ' + ' · '.join(f['cues']), '']
+            if f.get('look_cues'): out += ['**체형 · 피부 단서:** ' + ' · '.join(f['look_cues']), '']
             if f['adjusted']: out += [f"**조정:** {f['adjusted']}", '']
             out += ['```text', face_line(f, keys, opts), '```', '']
             if hair_line(f['hair'], H['limits'], H['bold']): out += ['```text', hair_line(f['hair'], H['limits'], H['bold']), '```', '']
@@ -1388,7 +1626,7 @@ def render():
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
-    ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression', 'relong'])
+    ap.add_argument('cmd', nargs='?', choices=['build', 'render', 'impression', 'relong', 'spread'])
     ap.add_argument('--seed-doc')
     ap.add_argument('--check', action='store_true')
     ap.add_argument('--fresh-hair', action='store_true')
@@ -1398,6 +1636,7 @@ if __name__ == '__main__':
     elif a.cmd == 'render': render()
     elif a.cmd == 'impression': impression()
     elif a.cmd == 'relong': relong()
+    elif a.cmd == 'spread': spread()
     if a.check or not a.cmd:
         bad, _ = check()
         sys.exit(1 if bad else 0)

@@ -124,7 +124,8 @@ function recentSilhouettes(repos, except) {
 /* ① 체형 — 외형 칸 body type 에(직접 쓴 글). 2026-11-07 처음엔 메카 컨셉의 종별 체형 문장(통통은 한 단계 아래)이었고,
    같은 날 꼬부기 초안 4(흉부 은은하게 · 허리 가늘게 · 골반 크게 · 허벅지 위쪽만 약간)를 사용자 「이대로 고정해줘」 — 모든 종 같은 문장(S.CARD_FIGURE).
    2026-11-12 종별 체형(S.CARD_BODY — 슬림 근육형 · 아담한 풍만형, 아직 그림 없는 진화 가족)이 있으면 그 글(S.VOCAB_EN.body) */
-function figureOf(d, c) { const k = (S.CARD_BODY || {})[c.name]; return (k && S.VOCAB_EN && S.VOCAB_EN.body[k]) || S.CARD_FIGURE || ''; }
+/* 2026-11-16 그 다음은 설계표 종별 체형(face-design.json faces[번호].body — 그림 없는 진화 가족) */
+function figureOf(d, c) { const k = (S.CARD_BODY || {})[c.name] || ((d.faces || {})[String(c.no)] || {}).body; return (k && S.VOCAB_EN && S.VOCAB_EN.body[k]) || S.CARD_FIGURE || ''; }
 function autoMecha(d, c, used) {
   const CM = cmOf(d);
   if (!CM) return null;

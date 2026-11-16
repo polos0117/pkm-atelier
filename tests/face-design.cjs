@@ -116,6 +116,32 @@ assert(!build(input('꼬부기', { params: S.FACE_KEYS.map(k => [k, opts[k][0]])
   assert(doc.includes('| 인상 | '), '문서에 인상 칸');
 }
 
+/* 2-1. 체형 · 피부(2026-11-16 사용자 「1,2,3,4 로 해줘」) — 기본 화풍 ①이 없는 진화 가족마다(tools/face-design.py spread)
+   - 체형은 VOCAB_EN.body 열쇠(CARD_BODY 종엔 없다), 피부는 외형 칸 skin tone 값 · SKIN_WORDS 글이 있다, 한 가족은 같다
+   - 피부는 새 인물 IMPRESSION 줄 「in her … with <피부>」, 피부를 직접 고르면 빠진다 · 체형은 일상컷 BODY TYPE 줄(CARD_BODY 다음, CARD_FIGURE 앞) */
+{
+  const skins = S.PARAM_DEFS.find(d => d.key === 'skin tone').options.map(o => o[0]).filter(v => v && v !== '__custom__');
+  assert.equal(JSON.stringify(skins.slice().sort()), JSON.stringify(Object.keys(S.SKIN_WORDS).sort()), 'SKIN_WORDS 가 피부 선택지와 같다');
+  const fam = {}; let nb = 0, ns = 0;
+  for (const c of cards) {
+    const f = F[c.no];
+    if (f.body) { nb++; assert(S.VOCAB_EN.body[f.body], c.name + ' 체형 ' + f.body); assert(!S.CARD_BODY[c.name], c.name + ' CARD_BODY 종에 설계표 체형'); }
+    if (f.skin) { ns++; assert(S.SKIN_WORDS[f.skin], c.name + ' 피부 ' + f.skin); }
+    (fam[root[c.name]] = fam[root[c.name]] || new Set()).add(f.body + '/' + f.skin);
+  }
+  assert(nb > 500 && ns > 500, '체형 · 피부가 그림 없는 종에 찼다 ' + nb + ' · ' + ns);
+  assert(Object.values(fam).every(s => s.size === 1), '한 가족은 같은 체형 · 피부');
+  const sk = cards.find(c => F[c.no].skin && F[c.no].body && F[c.no].impression);
+  const ib = t => t.split('\n\n').find(x => x.startsWith('IMPRESSION ('));
+  const t1 = build(input(sk.name, {}));
+  assert(ib(t1) && ib(t1).includes(' with ' + S.SKIN_WORDS[F[sk.no].skin] + ';'), '피부가 IMPRESSION 줄에: ' + ib(t1));
+  assert(!ib(build(input(sk.name, { params: [['skin tone', 'deep']] }))).includes(' with '), '피부를 고르면 빠진다');
+  const cz = L.buildSingle(input(sk.name, { ...CASUAL, outputMode: 'casual', identityMode: 'reference' }));
+  assert(cz.includes('BODY TYPE: ' + S.VOCAB_EN.body[F[sk.no].body]), '일상컷 BODY TYPE 줄이 설계표 체형');
+  const sq = build(input('꼬부기', {}));
+  assert(!F[card('꼬부기').no].skin && !/in her [a-z-]+ with /.test(ib(sq) || ''), '그림 있는 종은 피부 없음');
+}
+
 /* 3. 머리 — 종마다 헤어스타일·길이·앞머리. 생성기가 스스로 고르면 보브·웨이브 몇 가지로 몰렸다(2026-10-20)
    - 값은 생성기 열쇠, 여성 인물이라 남성 전용 값 없음, 길이는 컷에 맞음(HAIR_LENGTH_LIMITS)
    - 한 헤어스타일 4% · 보브 3% 를 넘지 않는다(2026-11-12 머리 34가지를 더하며 8% · 4% 에서)(확정 그림이 이미 넘으면 그 수까지 — 새로 고르지 않는다)
