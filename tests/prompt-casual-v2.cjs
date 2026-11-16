@@ -125,5 +125,41 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert.equal(G.cosplayText(list, { game: 'super_mario_bros', cut: 'idol' }), 'a daring adult cosplay of Mario from Super Mario Bros. — ' + list.games[0].outfit + ', cut as a stage idol outfit — a cropped jacket and a pleated mini skirt');
   n += 6;
 }
+/* 옷 색 구체 색(shade, 2026-11-16) — Outfit colours 줄은 묶음 글(「… and …」) 대신 shade 의 en 하나. shade 없는 옛 장면은 카드 · 묶음으로 결정적(머리 hue 피함),
+   색 고정 옷(옷 문장이 그 묶음 색을 정함)은 묶음 글 그대로, 코스튬 · 게임 코스프레 · 옷 자유엔 줄 없음 */
+{
+  const sc0 = { era: 'now', place: 'cafe', ofam: 'everyday', posture: 'stand', frame: 'knee_up', body: 'front_3q', head: 'with_body', camera: 'eye', expr: '' };
+  const line = (sc, extra) => (/^Outfit colours: (.*?) — her own colour choice/m.exec(block(L.buildSingle(Object.assign({}, base, extra || {}, sc)), 'SCENE')) || [])[1];
+  for (const g of S.OUTFIT_COLORS) {
+    assert(g.shades.length >= 4 && g.shades.length <= 5, g.key + ' shade 넷 ~ 다섯');
+    for (const x of g.shades) {
+      assert(x.key && x.ko && x.en && x.hue, g.key + ' shade 칸');
+      assert(!/\bsuch as\b|,| and | or /.test(x.en), x.key + ' 색 하나만: ' + x.en);
+      assert(g.words.some(w => new RegExp('\\b' + w + '\\b').test(x.en)), x.key + ' 묶음 낱말(옷 직접 쓰기 검사)');
+      assert.equal(line({ ...sc0, ocolor: g.key, shade: x.key }), x.en, x.key + ' 줄');
+      n++;
+    }
+    const a = line({ ...sc0, ocolor: g.key }, { mech: '피카츄', cardColor: 'yellow' }), b = line({ ...sc0, ocolor: g.key }, { mech: '피카츄', cardColor: 'yellow' });
+    assert.equal(a, b, g.key + ' 옛 장면 — 같은 입력 같은 색');
+    assert(g.shades.some(x => x.en === a) && a !== g.en, g.key + ' 옛 장면 — 그 묶음의 shade: ' + a);
+    assert.equal(line({ ...sc0, ocolor: g.key, shade: 'nope' }, { mech: '피카츄', cardColor: 'yellow' }), a, g.key + ' 없는 열쇠 = 자동');
+  }
+  const keys = S.OUTFIT_COLORS.flatMap(g => g.shades.map(x => x.key));
+  assert.equal(new Set(keys).size, keys.length, 'shade 열쇠 겹침 없음');
+  /* 옛 장면 — 카드마다 고르게 퍼진다(한 묶음 안) */
+  const spread = new Set(cards.slice(0, 200).map(c => line({ ...sc0, ocolor: 'blue' }, { mech: c.name, cardColor: c.color })));
+  assert.equal(spread.size, S.OUTFIT_COLORS.find(g => g.key === 'blue').shades.length, '옛 장면 — 카드마다 다른 shade');
+  assert.equal(P.hueOfHair('soft cherry-blossom pink'), 'pink'); assert.equal(P.hueOfHair('silver-white'), 'white'); assert.equal(P.hueOfHair('???'), '');
+  /* 색 고정 옷 — 옷 문장의 묶음 색 그대로(묶음 글) */
+  const fixedIt = (() => { for (const f of tree.outfits) for (const it of f.items || []) { const g = S.OUTFIT_COLORS.find(c => c.words.some(w => new RegExp('\\b' + w + '\\b').test(String(it.en).toLowerCase()))); if (g && !f.costume) return { f, it, g }; } })();
+  if (fixedIt) {
+    const txt = L.buildSingle(Object.assign({}, base, { ...sc0, ofam: fixedIt.f.key, item: fixedIt.it.key, ocolor: fixedIt.g.key }));
+    const got = (/^Outfit colours: (.*?) — /m.exec(block(txt, 'SCENE')) || [])[1];
+    if (got) assert.equal(got, fixedIt.g.en, '색 고정 옷 — 묶음 글 ' + fixedIt.it.key);
+  }
+  /* 코스튬 · 옷 자유 — 줄 없음 */
+  assert(!/Outfit colours:/.test(L.buildSingle(Object.assign({}, base, { ...sc0, ofam: 'pokemon_costume', ocolor: 'red', shade: 'cherry' }))), '코스튬 — 옷 색 줄 없음');
+  assert(!/Outfit colours:/.test(L.buildSingle(Object.assign({}, base, { ...sc0, ofree: true, ocolor: 'red', shade: 'cherry' }))), '옷 자유 — 옷 색 줄 없음');
+}
 assert(xf > 100, '자유 장면 ' + xf);
 console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록 · 게임 코스프레`);

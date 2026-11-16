@@ -105,6 +105,22 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
    await a.set('ofam',Array.from(g('ofam').options).map(o=>o.value).find(v=>v&&v!=='game_cosplay'));assert(!g('cosplay-game'),'다른 계열이면 고르개가 없다');
    assert.deepEqual(Array.from(a.w.AtelierWords.missing()),[]);assert.deepEqual(a.errors,[]);
   }
-  console.log('PASS casual DOM: tree steps, descriptions, old saved jobs, companion, banned values, face close-up rule, crop, preset, mode/card isolation and restore, game cosplay picker');
+  a.dom.window.close();
+  /* 옷 색 구체 색(2026-11-16) — 묶음을 고르면 그 아래 「색」 고르개(자동 + 그 묶음 shade), 지시문 줄은 shade 하나. 묶음을 바꾸면 그 묶음에 없는 shade 는 자동으로 */
+  a=await open(JSON.stringify({last:'피카츄',cards:{'피카츄':{mode:'casual',identityMode:'reference',scenes:{casual:{era:'now',place:'street_park',act:'stroll',ofam:'everyday'}}}}}));
+  {
+   const g=a.get,S2=a.w.AtelierSpec,line=()=>(/Outfit colours: (.*?) — /.exec(a.output())||[])[1];
+   assert(!g('shade'),'묶음이 없으면 색 고르개 없음');
+   await a.set('ocolor','blue');const blue=S2.OUTFIT_COLORS.find(x=>x.key==='blue');
+   assert(g('shade')&&g('shade').options.length===blue.shades.length+1,'자동 + 그 묶음 shade');
+   assert.equal(g('shade').value,'');assert(g('shade-description').textContent.trim());
+   const auto=line();assert(blue.shades.some(x=>x.en===auto)&&auto!==blue.en,'자동 — 그 묶음의 shade 하나: '+auto);
+   await a.set('shade','navy');assert.equal(line(),'deep navy blue','고른 shade');
+   await a.set('ocolor','red');assert.equal(g('shade').value,'','다른 묶음이면 자동으로');
+   assert(S2.OUTFIT_COLORS.find(x=>x.key==='red').shades.some(x=>x.en===line()),'바꾼 묶음의 shade');
+   await a.set('ocolor','');assert(!g('shade')&&!line(),'정하지 않음 — 줄 없음');
+   assert.deepEqual(Array.from(a.w.AtelierWords.missing()),[]);assert.deepEqual(a.errors,[]);
+  }
+  console.log('PASS casual DOM: tree steps, descriptions, old saved jobs, companion, banned values, face close-up rule, crop, preset, mode/card isolation and restore, game cosplay picker, outfit shade picker');
  }finally{a.dom.window.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

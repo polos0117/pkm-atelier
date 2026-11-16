@@ -4,6 +4,8 @@
    node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
        [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4> <img-5>]
        [--cosplay-full <게임 열쇠>] [--cosplay-repos <그림 저장소 …>]
+   구체 색(shade, 2026-11-16 — IMAGE_RULES 3절 「옷 색」): 옷 색 묶음(ocolor) 안의 구체 색 하나를 정한다 — 이 공방 그림 저장소(--repos)가 그린 기록 + 계획 · 예약에서 덜 쓴 것 먼저,
+   머리 hue(카드 도감 색) 피함, 한 계획 안 겹침 없음. --avoid 칸 shade=<열쇠>
    node tools/casual-plan.cjs <카드> [<카드> …] --recosplay [--plan <계획 파일> | --session <세션> --out <새 계획>] [--dir <묶음 폴더>] [--reserve] [--push]
    node tools/casual-plan.cjs --recosplay-list [--cosplay-repos <그림 저장소 …>]
 
@@ -152,6 +154,20 @@ function cosplayOf(o, entries) {
 function batchCosplay(gc, card, cuts) {
   for (const c of cuts || []) if (c.cosplay && (!c.kept || String(c.cosplay.character || '').trim()) && !gc.drawn[myKey(card, c.cut)]) gc.used.push(Object.assign({}, c.cosplay, { family: PKM, card, world: '', no: c.cut }));
 }
+/* ══ 구체 색(shade, 2026-11-16) — 이 공방 그림 저장소(o.repos)가 그린 기록 + 아직 안 그린 계획 · 예약에서 shade 를 쓴 수(lib/casual-plan.js shadeUsed — 게임 코스프레 쓴 것과 같은 길).
+   이번에 정하는 카드의 예약은 빼고(다시 짜면 그 컷이 바뀐다), 장부 view 가 준 예약(entries)은 같은 컷이면 한 번만. 같은 배치의 앞 카드는 계획기가 batch 로 센다 */
+function shadeOf(o, entries) {
+  if (o._shade === undefined) {
+    const mine = new Set(o.repos.map(r => path.resolve(r)));
+    o._shade = P.shadeUsed(null, [...mine], { family: d => mine.has(path.resolve(d)) ? PKM : '', skip: p => p.family === PKM && o.cards.includes(p.card) });
+  }
+  const got = o._shade, used = Object.assign({}, got.used), seen = new Set(got.rows.map(GCM.cutKeyOf));
+  for (const e of entries || []) if (e.status === 'reserved' && !o.cards.includes(e.card)) for (const c of e.cuts || []) {
+    const k = myKey(e.card, c.cut);
+    if (c.shade && !seen.has(k) && !got.drawn[k]) { seen.add(k); used[c.shade] = (used[c.shade] || 0) + 1; }
+  }
+  return { used };
+}
 function spec() {
   const c = { window: {} }; vm.createContext(c);
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'lib', 'prompt-spec.js'), 'utf8'), c);
@@ -212,7 +228,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
     /* 버전마다 칸이 다르다 — 없는 칸을 피하라고 하면 아무것도 안 피하고 조용히 지나간다 */
-    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'ocolor', 'situ', 'group', 'posture', 'body', 'frame', 'use', 'expr', 'cosplay'] : ['era', 'place', 'act', 'ofam', 'item', 'ocolor', 'situ', 'group', 'pose', 'orient', 'frame', 'lens', 'expr', 'cosplay'];
+    const FIELDS = o.v2 ? ['era', 'place', 'ofam', 'item', 'ocolor', 'shade', 'situ', 'group', 'posture', 'body', 'frame', 'use', 'expr', 'cosplay'] : ['era', 'place', 'act', 'ofam', 'item', 'ocolor', 'shade', 'situ', 'group', 'pose', 'orient', 'frame', 'lens', 'expr', 'cosplay'];
     for (const x of avoid) if (!FIELDS.includes(x.field)) throw new Error('--avoid 칸 ' + x.field + ' 는 ' + (o.v2 ? '버전2' : '버전1(--v1)') + ' 에 없다 — ' + FIELDS.join('·'));
     const comparisonEntries = entries.filter(e => !o.cards.includes(e.card));
     /* 뒤에 정할 다시 채우기 캐릭터의 등록된 컷 — 지금 정하는 컷이 그것과 겹치면 안 된다 */
@@ -224,7 +240,7 @@ function planBatch(o, S, entries, look, cards, attempt) {
     /* 게임 코스프레 — 쓴 기록 + 예약 + 이 배치에서 앞 카드가 고른 것 */
     const gc = cosplayOf(o, entries);
     if (gc) for (const b of batch) batchCosplay(gc, b.card, b.cuts);
-    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen, color: cardRow.color }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, cosplay: gc, seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
+    const p = (o.v2 ? P.planV2 : P.plan)({ S, tree: TREE, tree2: TREE2, subject: { gen, color: cardRow.color }, entries: comparisonEntries, card, batch, fixed, look, refill, kept, avoid, count, cosplay: gc, shade: shadeOf(o, entries), seed: [o.seed || o.session || 'plan', card, attempt].join('|') });
     batch.push({ card, species: refill ? mine.species : speciesOf(cards, card), refill: refill || undefined, cuts: p.cuts, why: p.why, claims: p.claims });
   }
   /* 캐릭터만의 컷은 묶음을 다 정한 뒤 끝에 붙인다 — 뒤 카드의 묶음 비교(batch)에 섞이지 않게 */
@@ -267,6 +283,11 @@ function cosplayText(c) {
   return '       게임 코스프레 ' + (g.ko || x.game) + ' · ' + (x.character ? x.character + (g.character_ko ? '(' + g.character_ko + ')' : '') : '캐릭터는 그리는 쪽이 고른다(이미 쓴 ' + ((x.used || []).length || '없음') + (x.used && x.used.length ? '명' : '') + ')') + ' · 재단 ' + (k.ko || x.cut) + ' · ' + (x.round || 1) + '회차' + (x.again ? ' · 2회차 몫 ' + x.again.character + ' · ' + ((GCM.cut(L, x.again.cut) || {}).ko || x.again.cut) : '');
 }
 
+/* 옷 색을 말로 — 묶음 · 구체 색(2026-11-16, 색 고정 옷은 묶음만) */
+function shadeText(c) {
+  const S = shadeText.S || (shadeText.S = spec()), g = (S.OUTFIT_COLORS || []).find(x => x.key === c.ocolor), sh = g && (g.shades || []).find(x => x.key === c.shade);
+  return g ? g.ko + (sh ? ' — ' + sh.ko + ' (' + sh.en + ')' : '') : c.ocolor;
+}
 /* 버전2 컷을 말로 — 시대 · 장소 · 의상(옷) · 몸 자세 · 프레이밍 · 몸 방향 · 손 · 소품 동작(역할) */
 function v2Text(c) {
   global.window = global.window || global; require(path.join(ROOT, 'lib', 'casual-tree-v2.js'));
@@ -301,7 +322,7 @@ function show(o, res) {
       else lines.push('  ' + c.cut + '번 ' + (P.isRequired(TREE, c) ? '★ ' : '') + pathText(c) + ' · 표정 ' + (c.expr || '—') + ' · 자세 ' + (c.pose || '하는 일대로') + ' · 방향 ' + c.orient + ' · 프레이밍 ' + c.frame + ' · 화각 ' + c.lens);
       if (c.cosplay) lines.push(cosplayText(c));
       lines.push('       세부 강도 ' + ['overall_intensity', 'skin_exposure', 'action_level', 'source_influence', 'separates_preference'].map(k => c.axes[k]).join(' / ') +
-        ' · 옷 ' + c.garments.join('+') + ' · 드러내기 ' + c.expose.join(', ') + ' · 장면 칸 첫머리 ' + c.lead);
+        ' · 옷 ' + c.garments.join('+') + (c.ocolor ? ' · 옷 색 ' + shadeText(c) : '') + ' · 드러내기 ' + c.expose.join(', ') + ' · 장면 칸 첫머리 ' + c.lead);
       lines.push('       ' + GENERATOR + '?' + P.generatorQuery(ch.card, c));
       lines.push('       허브 ' + HUB + '&' + P.generatorQuery(ch.card, c));
     }
@@ -405,4 +426,4 @@ if (require.main === module) {
     process.stdout.write((o.json ? JSON.stringify(res.plan, null, 1) : show(o, res) + (o.reserve ? '\n예약 ' + (o.push ? '— push 했다. 이제 생성한다' : '— 그림 저장소에 그 파일만 commit·push 한 뒤 생성한다') : o.ownOnly ? '\n(캐릭터만의 컷은 예약이 없다 — 90번은 장부에 안 센다)' : '\n(예약 안 함 — --reserve --push 로 적는다)')) + '\n');
   } catch (e) { process.stderr.write('✗ ' + e.message + '\n'); process.exit(1); }
 }
-module.exports = { args, planBatch, lookCrowd, show, pathText, ownStep, ownDone, cosplayOf, recosplay, recosplayList };
+module.exports = { args, planBatch, lookCrowd, show, pathText, ownStep, ownDone, cosplayOf, shadeOf, recosplay, recosplayList };

@@ -176,8 +176,14 @@ const cosplayLine = g => g ? ' · 게임 코스프레 ' + g.game_ko + ' · ' + (
 function freeGuide(cut) { return cut.xfree ? '갈래 · 상황 자유(자유 장면)' : cut.sfree ? '장면 자유(자유 장면)' : cut.ofree ? '옷 자유' : ''; }
 /* 상황 노출(2026-11-09) — 계획의 situ */
 function situGuide(cut) { const c = (S.SITUATIONS || []).find(x => x.key === cut.situ); return c ? { key: c.key, ko: c.ko, en: c.en } : null; }
-/* 옷 색(2026-11-07) — 계획의 ocolor. 옷 직접 쓰기 글은 이 색 낱말을 하나는 쓴다(build 가 본다) */
-function colorGuide(cut) { const c = (S.OUTFIT_COLORS || []).find(x => x.key === cut.ocolor); return c ? { key: c.key, ko: c.ko, en: c.en, words: c.words } : null; }
+/* 옷 색(2026-11-07) — 계획의 ocolor. 옷 직접 쓰기 글은 이 색 낱말을 하나는 쓴다(build 가 본다).
+   2026-11-16 구체 색(shade) — 계획이 정한 그 묶음의 색 하나(지시문 Outfit colours 줄이 이 en 하나). 옷 직접 쓰기 글도 이 색으로 쓴다(낱말 검사는 묶음 낱말 그대로 — shade en 에 묶음 낱말이 들어 있다).
+   shade 가 없는 옛 계획 컷은 조립부가 카드 · 묶음으로 정한다 — shade: null */
+function colorGuide(cut) {
+  const c = (S.OUTFIT_COLORS || []).find(x => x.key === cut.ocolor), sh = c && (c.shades || []).find(x => x.key === cut.shade);
+  return c ? { key: c.key, ko: c.ko, en: c.en, words: c.words, shade: sh ? { key: sh.key, ko: sh.ko, en: sh.en } : null } : null;
+}
+const colorText = c => c ? c.ko + (c.shade ? ' — ' + c.shade.ko + ' (' + c.shade.en + ')' : ' (' + c.en + ' — 구체 색은 조립부가 정한다)') : '—';
 function guideOf(tree, cut) {
   const e = CT.era(tree, cut.era), p = CT.place(tree, cut.place), a = CT.act(tree, cut.act), f = CT.family(tree, cut.ofam), it = cut.item ? CT.item(tree, cut.ofam, cut.item) : null;
   const fam = CT.poseFamily(tree, cut.act), g = p && CT.group(tree, p.group);
@@ -430,7 +436,7 @@ function build(o) {
       '| 의상 | ' + (v.ofam ? v.ofam.ko : '—') + ' · ' + v.item.ko + ' | ' + (g.cosplay ? g.cosplay.text : v.item.en || (v.ofam ? v.ofam.en : '')) + ' |',
       '| 몸 자세 · 구도 | ' + (v.posture ? v.posture.ko : '—') + ' · ' + v.frame + ' · ' + (v.body ? v.body.ko : '—') + ' | ' + (v.posture ? v.posture.en : '') + ' |',
       '| 손 · 소품 동작 | ' + v.hands + (v.use ? ' · ' + v.use.prop + ' · ' + v.use.ko : '') + ' | ' + (v.use ? v.use.en : '') + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + cosplayLine(g.cosplay) + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + colorText(g.color) + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + cosplayLine(g.cosplay) + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
     if (g.cosplay && g.cosplay.kind === 'pick') lines.push('', '게임 코스프레 옛 1회차 pick 칸 — ' + g.cosplay.note);
   }
@@ -443,7 +449,7 @@ function build(o) {
       '| 하는 일 | ' + (t.act ? t.act.ko + (t.act.pose_family ? ' · ' + t.act.pose_family : '') : '—') + ' | ' + (t.act ? t.act.en : '') + ' |',
       '| 의상 계열 | ' + (t.ofam ? t.ofam.ko : '—') + ' | ' + (t.ofam ? t.ofam.en + (t.ofam.guide ? ' — ' + t.ofam.guide : '') : '') + ' |',
       '| 옷 | ' + t.item.ko + ' | ' + t.item.en + ' |', '',
-      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + (g.color ? g.color.ko + ' (' + g.color.en + ')' : '—') + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
+      '옷 종류 ' + (g.garments.join(' + ') || '—') + ' · 옷 색 ' + colorText(g.color) + (g.situ ? ' · 상황 ' + g.situ.ko : '') + (g.free ? ' · ' + g.free : '') + ' · 드러내기 ' + (g.expose.join(', ') || '—') + ' · 장면 칸 첫머리 ' + (g.lead || '—') +
       (Object.keys(r.ui.manual_inputs || {}).length ? ' · 직접 입력 ' + Object.keys(r.ui.manual_inputs).join(', ') : ''));
   }
   if (!o.slot) fs.writeFileSync(path.join(o.dir, 'INDEX.md'), lines.join('\n') + '\n');

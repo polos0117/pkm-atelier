@@ -350,5 +350,60 @@ assert(new Set(gcUsed.map(x => x.game)).size >= 3, '여덟 명이 여러 게임 
   fs.rmSync(path.join(tmp, 'records', 'pikachu-rc'), { recursive: true, force: true }); fs.rmSync(path.join(tmp, 'records', 'raichu-rc'), { recursive: true, force: true });
   gcn += 9;
 }
+/* 구체 색(shade, 2026-11-16 — 사용자 「수영복 중에 색이 분홍색으로 지정되어 있는게 있어?」 → 「응 너무 많아」 → 「응 그렇게 진행해줘」).
+   묶음(ocolor) 고르기는 그대로, 그 묶음 안 shade 하나 — 덜 쓴 것 먼저 · 머리 hue 피함 · 한 계획 안 겹침 없음 · 색 고정 옷 · 코스튬 · 코스프레 · 옷 자유엔 없음 · 이 공방 기록 + 예약을 센다 */
+let shn = 0;
+{
+  const hueOf = k => (S.OUTFIT_COLORS.flatMap(g => g.shades).find(x => x.key === k) || {}).hue;
+  const fixedCut = c => { const it = c.item ? CT.item(tree, c.ofam, c.item) : null, tx = it ? String(it.en || '').toLowerCase() : ''; return !!tx && S.OUTFIT_COLORS.some(g => g.words.some(w => new RegExp('\\b' + w + '\\b').test(tx))); };
+  let pinkSeen = 0, total = 0;
+  for (let i = 0; i < 6; i++) {
+    const p = P.planV2({ S, tree, tree2, subject: { gen: 1, color: 'pink' }, entries: [], card: '피카츄', seed: 'shade|' + i, shade: { used: {} } });
+    const sh = p.cuts.map(c => c.shade).filter(Boolean);
+    assert(sh.length >= 3, '계획에 shade ' + sh.length);
+    assert.equal(new Set(sh).size, sh.length, '한 계획 안 shade 겹침 없음');
+    assert.equal(new Set(sh.map(hueOf)).size, sh.length, '한 계획 안 hue 도 겹치지 않는다(묶음이 다르다)');
+    for (const c of p.cuts) {
+      const fam = CT.family(tree, c.ofam);
+      if (c.shade) { assert(P.shadesOf(S, c.ocolor).some(x => x.key === c.shade), c.cut + ' 그 묶음 안 열쇠 ' + c.ocolor + '/' + c.shade); total++; if (hueOf(c.shade) === 'pink') pinkSeen++; }
+      if (!c.ocolor || (fam && (fam.costume || fam.cosplay)) || c.ofree || c.xfree || fixedCut(c)) assert(!c.shade, c.cut + ' shade 를 안 붙이는 컷 ' + c.ofam + '/' + c.item);
+      else assert(c.shade, c.cut + ' 색 묶음이 있는 컷엔 shade');
+    }
+    const q = P.generatorQuery('피카츄', p.cuts.find(c => c.shade));
+    assert(JSON.parse(new URLSearchParams(q).get('casual')).shade, '생성기 주소에 shade');
+    shn += 4;
+  }
+  assert.equal(pinkSeen, 0, '분홍 머리(카드 색 pink) — 분홍 shade 없음 / ' + total);
+  assert.equal(P.hairHue(S, { color: 'gray' }), 'grey'); assert.equal(P.hairHue(S, { color: 'blue', hair: 'soft cherry-blossom pink' }), 'pink'); assert.equal(P.hairHue(S, { hair: 'unreadable' }), '');
+  /* 분포 — 같은 묶음 한 컷을 1000번: 기록이 없으면 고르게, 앞서 많이 쓴 shade 는 덜(덜 쓴 것 먼저) */
+  let seed = 7; const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+  const runN = (used, color, subj) => { const n = {}; for (let i = 0; i < 1000; i++) { const cuts = { 1: { ofam: 'everyday', item: '', ocolor: color } }; P.chooseShades(S, tree, [1], cuts, [], subj || { gen: 1, color: 'blue' }, used, [], () => false, rnd); n[cuts[1].shade] = (n[cuts[1].shade] || 0) + 1; } return n; };
+  const even = runN({}, 'red'), reds = P.shadesOf(S, 'red').map(x => x.key);
+  for (const k of reds) assert(even[k] > 140 && even[k] < 260, '고르게 ' + JSON.stringify(even));
+  const less = runN({ cherry: 4, crimson: 1 }, 'red');
+  assert(!less.cherry && !less.crimson && reds.filter(k => k !== 'cherry' && k !== 'crimson').every(k => less[k] > 250), '많이 쓴 shade 는 덜 ' + JSON.stringify(less));
+  /* 머리 hue — 그 묶음이 다 머리 hue 면 피하지 않는다(남는 게 없으면) */
+  assert.equal(Object.keys(runN({}, 'pink', { gen: 1, hair: 'pink' })).length, P.shadesOf(S, 'pink').length, '다 피하면 피하지 않는다');
+  /* 한 계획 안 같은 묶음 두 컷 — shade 는 다르게 · 피할 값 */
+  { const cuts = { 1: { ofam: 'everyday', ocolor: 'blue' }, 2: { ofam: 'everyday', ocolor: 'blue' } }; P.chooseShades(S, tree, [1, 2], cuts, [{ cut: 3, shade: 'navy' }], { gen: 1 }, {}, [], (n, f, v) => f === 'shade' && v === 'sky', rnd);
+    assert(cuts[1].shade !== cuts[2].shade && ![cuts[1].shade, cuts[2].shade].includes('navy') && ![cuts[1].shade, cuts[2].shade].includes('sky'), '같은 묶음 두 컷 · 만든 컷 · 피할 값 ' + cuts[1].shade + ' ' + cuts[2].shade); }
+  /* 같은 배치 — 앞 카드가 쓴 shade 도 센다 */
+  { const n = {}; for (let i = 0; i < 200; i++) { const cuts = { 1: { ofam: 'everyday', ocolor: 'green' } }; P.chooseShades(S, tree, [1], cuts, [], { gen: 1 }, {}, [{ card: 'x', cuts: [{ cut: 1, shade: 'sage' }, { cut: 2, shade: 'olive' }] }], () => false, rnd); n[cuts[1].shade] = 1; }
+    assert(!n.sage && !n.olive, '배치에서 쓴 shade 는 덜 ' + Object.keys(n)); }
+  /* 쓴 수 세기(shadeUsed) — 이 공방 그림 저장소의 그린 기록(scene.shade) + 계획 · 예약 · 장부 reserved, 같은 컷은 한 번(그린 기록이 있으면 기록), 다시 짜는 카드는 뺀다 */
+  { const repo = path.join(tmp, 'pkm-atelier-img-shade'), rec = path.join(repo, 'records');
+    fs.mkdirSync(path.join(rec, 'pikachu-1'), { recursive: true }); fs.mkdirSync(path.join(rec, 'casual-reservations'), { recursive: true }); fs.mkdirSync(path.join(rec, 'raichu-1'), { recursive: true });
+    fs.writeFileSync(path.join(rec, 'pikachu-1', 'casual3-ui.json'), JSON.stringify({ storage: { last: '피카츄', cards: { '피카츄': { scenes: { casual: { treeV: 2, ocolor: 'red', shade: 'cherry' } } } } } }));
+    fs.writeFileSync(path.join(rec, 'casual-reservations', 's1.json'), JSON.stringify({ session: 's1', characters: [{ card: '피카츄', at: '2026-11-16T00:00:00Z', cuts: [{ cut: 3, shade: 'crimson' }, { cut: 4, shade: 'cherry' }] }] }));
+    fs.writeFileSync(path.join(rec, 'raichu-1', 'plan-v2.json'), JSON.stringify({ characters: [{ card: '라이츄', cuts: [{ cut: 1, shade: 'navy' }, { cut: 2, shade: '' }] }] }));
+    fs.writeFileSync(path.join(rec, 'casual-ledger.json'), JSON.stringify({ entries: [{ card: '파이리', status: 'reserved', at: '2026-11-16T01:00:00Z', cuts: [{ cut: 5, shade: 'navy' }] }, { card: '꼬부기', status: 'done', cuts: [{ cut: 1, shade: 'mint' }] }] }));
+    const u = P.shadeUsed(null, [repo]);
+    assert.deepEqual(u.used, { cherry: 2, navy: 2 }, '그린 기록 + 예약 + 계획 + 장부 reserved — 그린 컷의 예약은 안 센다 ' + JSON.stringify(u.used));
+    assert.deepEqual(P.shadeUsed(null, [repo], { skip: x => x.card === '라이츄' }).used, { cherry: 2, navy: 1 }, '다시 짜는 카드의 계획은 뺀다');
+    /* 명령줄(tools/casual-plan.cjs shadeOf) — 이 공방 저장소(--repos)에서 센 수가 계획기로 */
+    const T = require('../tools/casual-plan.cjs'), o = T.args(['꼬부기', '--repos', repo, '--cosplay-repos']);
+    assert.deepEqual(T.shadeOf(o, [{ card: '이브이', status: 'reserved', cuts: [{ cut: 2, shade: 'sky' }] }]).used, { cherry: 2, navy: 2, sky: 1 }, '장부 view 의 예약도');
+    shn += 9; }
+}
 fs.rmSync(tmp, { recursive: true, force: true });
-console.log('PASS 계획기 버전2: 버전1 열 명 위에 ' + N_V2 + '명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸 · 게임 코스프레 ' + gcn + '가지(옛 구성 열여섯 명 그대로)');
+console.log('PASS 계획기 버전2: 버전1 열 명 위에 ' + N_V2 + '명(다시 정한 횟수 ' + tries + ') · 묶음 ' + groups.size + ' · 장소 ' + places.size + ' · 생성기 주소 · 피할 값 · 만든 컷 · 장부 비교 열쇠 · 예약 칸 · 게임 코스프레 ' + gcn + '가지(옛 구성 열여섯 명 그대로) · 구체 색 ' + shn + '가지');

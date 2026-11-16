@@ -11,6 +11,20 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-16 · claude · 일상컷 옷 색 — 묶음 글 대신 구체 색(shade) 하나
+- lib/prompt-spec.js — OUTFIT_COLORS 열두 묶음마다 구체 색 넷 ~ 다섯(shades: key · ko · en · hue, en 은 그 색 하나만) · 머리색 hue 정규식 HAIR_HUES · 카드 도감 색 → hue CARD_HUE. 묶음 글(「rose pink and blush」)을 주면 GPT 가 맨 앞 색으로 쏠렸다(사용자 「수영복 중에 … 분홍색」 → 「응 너무 많아」 → 「응 그렇게 진행해줘」)
+- lib/casual-plan.js — chooseShades: 묶음 고르기는 그대로, 그 안에서 이 공방이 그리고 예약한 수가 적은 shade 먼저 · 머리 hue 피함 · 한 계획 안 겹침 없음(따로 씨앗이라 다른 칸은 그대로). 색 고정 옷 · 코스튬 · 코스프레 · 옷 자유 · 갈래 자유엔 없음. shadeUsed(그린 기록 + 계획 · 예약 · 장부 reserved — 게임 코스프레 세기와 같은 길) · 주소 · 칸 목록에 shade
+- lib/game-cosplay.js — walkRepos · recordPlace 를 내보낸다(구체 색 세기가 같은 길로 읽는다)
+- lib/prompt-anthro.js — Outfit colours 줄 = shade 의 en. shade 없는 옛 장면은 outfitShade 가 카드 | 세계 | 번호 | 묶음 해시로 결정적(머리 hue 피함), 색 고정 옷은 묶음 글 그대로
+- lib/prompt-state.js — 계획 칸에 shade · 조립부 입력에 카드 색(cardColor)
+- lib/prompt-ui.js · lib/words.js — 일상컷 「옷 색」 아래 「색」 고르개(자동 · shade 직접, 묶음을 바꾸면 자동으로)
+- tools/casual-plan.cjs — 이 공방 그림 저장소에서 shade 쓴 수(shadeOf)를 계획기로, 화면에 옷 색 · 구체 색, --avoid 칸 shade
+- tools/casual-ledger.py — 기록 · 예약 칸에 shade, check 가 한 계획 안 같은 shade 두 컷을 건다
+- tools/prompt-pack.cjs — 안내 · 차례표에 구체 색(옛 계획은 「조립부가 정한다」)
+- tests/casual-plan-v2.cjs · tests/prompt-casual-v2.cjs · tests/prompt-pack.cjs · tests/prompt-casual-dom.cjs — shade 단언(묶음 안 열쇠 · 겹침 없음 · 분홍 머리 · 1000번 분포 · 덜 쓴 것 먼저 · 기록 + 예약 세기 · 지시문 글 · 옛 장면 결정적 · 붙이지 않는 컷 · 고르개)
+- IMAGE_RULES.md · AGENTS.md — 옷 색 절에 구체 색 규칙과 표 · 검사 설명
+- *.html — 바뀐 스크립트의 ?v= 를 shade1 로
+
 ## 2026-11-16 · gpt · 핫삼 선택 1번의 생성 결과 등록
 - data/img.json — 경장 1장과 일상 7장(90번 포함)을 추가. 일상 1~4번은 결과 미확보로 남김. 기존 화풍과 타 작업 항목 보존.
 

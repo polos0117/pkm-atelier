@@ -256,9 +256,23 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     r = run('build', '--dir', d7); assert.equal(r.status, 1);
     assert(/mecha\.set\.silhouette — 표에 없는 값/.test(r.stderr) && /타입은 electric/.test(r.stderr) && /aura 가 두 번/.test(r.stderr), r.stderr);
     /* 옷 색(2026-11-07) — 계획 색이 지시문 줄로, 옷 직접 쓰기 글은 그 색 낱말을 쓴다 */
-    const cc = p7.cuts.find(x => x.ocolor), slotC = 'casual' + cc.cut, colRow = S.OUTFIT_COLORS.find(x => x.key === cc.ocolor);
-    assert(fs.readFileSync(path.join(d7b, '..', 'pikachu-7', slotC + '-prompt.txt'), 'utf8').includes('Outfit colours: ' + colRow.en), '옷 색 줄');
+    /* 2026-11-16 구체 색(shade) — 지시문 줄은 묶음 글(「… and …」) 대신 계획의 shade 하나, 안내 · 차례표에도 shade */
+    const cc = p7.cuts.find(x => x.shade), slotC = 'casual' + cc.cut, colRow = S.OUTFIT_COLORS.find(x => x.key === cc.ocolor), shRow = colRow.shades.find(x => x.key === cc.shade);
+    { const txtC = fs.readFileSync(path.join(d7b, '..', 'pikachu-7', slotC + '-prompt.txt'), 'utf8');
+      assert(txtC.includes('Outfit colours: ' + shRow.en + ' — '), '옷 색 줄 = shade 글');
+      assert(!txtC.includes(colRow.en) && !/Outfit colours:[^\n]*such as/.test(txtC), '묶음 글 · 예시 나열 없음'); }
     assert.equal(s7.slots[slotC].guide.color.key, cc.ocolor, '안내에 옷 색');
+    assert.equal(s7.slots[slotC].guide.color.shade.key, cc.shade, '안내에 구체 색');
+    assert(fs.readFileSync(path.join(d7, 'INDEX.md'), 'utf8').includes(shRow.ko + ' (' + shRow.en + ')'), '차례표에 구체 색');
+    assert.equal(JSON.parse(fs.readFileSync(path.join(d7, slotC + '-ui.json'), 'utf8')).storage.cards['피카츄'].scenes.casual.shade, cc.shade, '저장값(기록)에 scene.shade');
+    /* shade 없는 옛 계획 — 조립부가 결정적으로(같은 입력 같은 색, 그 묶음의 shade 하나). 같은 폴더를 두 벌로 짓는다 */
+    { const old = p7.cuts.map(x => { const y = { ...x }; delete y.shade; return y; }), planOld = path.join(tmp, 'PLAN-7-old.json');
+      fs.writeFileSync(planOld, JSON.stringify({ session: 't7', characters: [{ card: '피카츄', cuts: old }] }));
+      const got = [1, 2].map(i => { const dd = path.join(tmp, 'pikachu-7-old' + i); fs.cpSync(d7, dd, { recursive: true });
+        r = run('build', '--dir', dd, '--slot', slotC, '--plan', planOld); assert.equal(r.status, 0, r.stderr);
+        return (/Outfit colours: ([^\n]*?) — /.exec(fs.readFileSync(path.join(dd, slotC + '-prompt.txt'), 'utf8')) || [])[1]; });
+      assert.equal(got[0], got[1], '옛 계획 — 같은 입력 같은 색');
+      assert(colRow.shades.some(x => x.en === got[0]), '옛 계획 — 그 묶음의 shade 하나: ' + got[0]); }
     const s7d = JSON.parse(JSON.stringify(s7b)); s7d.slots[slotC].outfit = 'a fitted dress with a short hem'; s7d.slots[slotC].why = { outfit: '옷 문장 다듬기' };
     fs.writeFileSync(path.join(d7b, 'settings.json'), JSON.stringify(s7d));
     r = run('build', '--dir', d7b); assert.equal(r.status, 1); assert(new RegExp(slotC + '.outfit — 계획의 옷 색').test(r.stderr), r.stderr);

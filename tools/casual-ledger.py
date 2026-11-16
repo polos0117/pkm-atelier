@@ -352,12 +352,12 @@ def read_records(repos):
                 files += mine
                 ax = c.get("axes") or {}
                 if is_v2(c):
-                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "situ": c.get("situ") or None, "cosplay": c.get("cosplay") or None, "ofree": bool(c.get("ofree")) or None, "sfree": bool(c.get("sfree")) or None, "xfree": bool(c.get("xfree")) or None, "expose": c.get("expose") or None,
+                    cuts.append({"cut": i, "treeV": 2, **{k: c.get(k) or None for k in V2_KEYS}, "ocolor": c.get("ocolor") or None, "shade": c.get("shade") or None, "situ": c.get("situ") or None, "cosplay": c.get("cosplay") or None, "ofree": bool(c.get("ofree")) or None, "sfree": bool(c.get("sfree")) or None, "xfree": bool(c.get("xfree")) or None, "expose": c.get("expose") or None,
                                  "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                                  "garments": garments_of(c.get("outfit"))})
                     continue
                 cuts.append({"cut": i, **{k: c.get(k) or None for k in
-                                          ("cat", "ex") + PATH_KEYS + ("ocolor", "cosplay", "expr", "pose", "orient", "frame", "lens")},
+                                          ("cat", "ex") + PATH_KEYS + ("ocolor", "shade", "cosplay", "expr", "pose", "orient", "frame", "lens")},
                              "axes": {k: ax.get(k) for k in ("action_level", "source_influence", "separates_preference")},
                              "expose": c.get("expose") or None, "garments": garments_of(c.get("outfit"))})
             if cuts:
@@ -453,7 +453,7 @@ def fresh(e):
     return (datetime.datetime.now(datetime.timezone.utc) - t).total_seconds() < RESERVE_HOURS * 3600
 
 
-RESERVE_TAIL = ("ocolor", "situ", "ofree", "sfree", "xfree", "axes", "garments", "expose", "lead", "kept", "cosplay")   # ocolor — 옷 색(2026-11-07) · situ — 상황 노출(2026-11-09) · cosplay — 게임 코스프레(2026-11-15, 세 공방이 같이 센다)
+RESERVE_TAIL = ("ocolor", "shade", "situ", "ofree", "sfree", "xfree", "axes", "garments", "expose", "lead", "kept", "cosplay")   # ocolor — 옷 색(2026-11-07) · shade — 그 묶음의 구체 색(2026-11-16, lib/casual-plan.js chooseShades) · situ — 상황 노출(2026-11-09) · cosplay — 게임 코스프레(2026-11-15, 세 공방이 같이 센다)
 
 
 def reserve_keys(c):
@@ -736,6 +736,10 @@ def check_plan(doc, plan, sp, ledger=None):
             over = sorted({x for x in cols if cols.count(x) > 2})
             if over:
                 bad("옷 색 %s 이 세 컷 이상" % over[0])
+            # 구체 색(2026-11-16, lib/casual-plan.js chooseShades) — 한 계획 안에서 같은 shade 는 한 컷
+            shs = [c.get("shade") for c in cuts if c.get("shade")]
+            if len(set(shs)) != len(shs):
+                bad("같은 구체 색 %s 을 두 컷에" % next(x for x in shs if shs.count(x) > 1))
         req = [c["cut"] for c in cuts if (req_of(c) if legacy else is_required(c, sp))]
         if legacy and not req:
             bad("필수 갈래(의상 계열 %s — 옛 칸 adult_roleplay·swimwear·lingerie·retro_glamour)가 없다" % "·".join(sorted(sp["required_legacy"])))
