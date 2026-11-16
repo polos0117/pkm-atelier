@@ -11,12 +11,6 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
-## 2026-11-17 · claude · 헤라크로스 새 묶음 이름을 기본 화풍으로 바로잡음
-- 사용자 「헤라크로스 메카 이미지 업로드만 되고, 썸네일은 안보이는데 … 파일 이름 잘못올린거 같거든?」 → 생성기 저장값 화풍이 glossy_promo 로 남은 채 그려져 새 메카 · 일상 열하나가 glossy_promo 이름으로 올라갔고, 메카 · 일상 1~3 은 닫힌 0번 저장소의 옛 그림을 덮어썼다(pkm-atelier-img deb911a) → 「1번으로 해줘」
-- pkm-atelier-img-5: 일상 4~10 · 90 이름을 헤라크로스_anime_25d_gloss_f_casualN 으로, 메카 · 일상 1~3 의 새 그림은 새 이름으로 여기(열린 저장소)에 — 썸네일 포함, records/heracross-20261116/RENAMED.md
-- pkm-atelier-img: 옛 glossy_promo 메카 · 일상 1~3 · 썸네일을 deb911a 앞 판으로 되돌림(같은 이름 교체)
-- data/img.json — 헤라크로스 glossy_promo 는 옛 넷만, anime_25d_gloss 에 메카(light) · 일상 1~10 · 90(where 4), 옮긴 것의 added · added_at 은 그대로. 검사: 중복 열쇠 없음 · img-shards · forms 통과
-
 ## 2026-11-16 · gpt · 핫삼 일상 1·4번 재설계 완료
 - data/img.json — 새 준비실 장면과 징크스 오락실 코스프레를 추가해 총 12장 완성. 기존 이미지와 타 작업 항목 보존.
 
