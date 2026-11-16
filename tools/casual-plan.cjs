@@ -132,6 +132,12 @@ function cosplayOf(o, entries) {
     const list = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null;
     const mine = new Set(o.repos.map(r => path.resolve(r)));
     const repos = [...new Set((o.cosplayRepos || GCM.COSPLAY_REPOS).map(r => path.resolve(path.isAbsolute(r) ? r : path.join(ROOT, '..', r))).concat([...mine]))];
+    /* 이 공방 그림 저장소가 하나도 없으면 멈춘다 — 쓴 캐릭터를 몰라 겹친다(2026-11-16 「공방별로 따로」). 일부만 없으면 알린다. --cosplay-repos 를 주면(검사 · 일부러 비우기) 믿는다 */
+    if (!o.cosplayRepos) {
+      const here = repos.filter(r => fs.existsSync(path.join(r, 'records'))), miss = repos.filter(r => !here.includes(r));
+      if (!here.length) throw new Error('게임 코스프레 — 이 공방 그림 저장소가 하나도 없다(' + repos.map(r => path.basename(r)).join(' · ') + ') — 옆 폴더에 받은 뒤 다시(쓴 캐릭터를 몰라 겹친다). 일부러 비우려면 --cosplay-repos 만');
+      if (miss.length) console.error('알림 — 게임 코스프레 쓴 것을 못 읽은 그림 저장소: ' + miss.map(r => path.basename(r)).join(' · ') + ' (받아 두면 그 기록 · 예약도 센다)');
+    }
     o._cosplay = list ? { list, got: GCM.cosplayUsed(null, repos, { family: d => mine.has(path.resolve(d)) ? PKM : '', skip: p => p.family === PKM && o.cards.includes(p.card) }) } : null;
   }
   if (!o._cosplay) return null;

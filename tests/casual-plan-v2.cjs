@@ -223,17 +223,20 @@ let gcn = 0;
   put('pkm-atelier-img-2', 'casual-reservations/s.json', { session: 's', at: '2026-11-16T00:00:00+09:00', characters: [{ card: '피카츄', at: '2026-11-16T00:00:00+09:00', cuts: [{ cut: 4, cosplay: { game: 'overwatch', character: '', cut: 'bodysuit', round: 1, used: [] } }, { cut: 6, cosplay: { game: 'league_of_legends', character: 'Ahri', cut: 'idol', round: 1 } }] }] });
   put('pkm-atelier-img-2', 'casual-ledger.json', { entries: [{ card: '라이츄', status: 'reserved', at: '2026-11-16T01:00:00+09:00', cuts: [{ cut: 2, cosplay: { game: 'overwatch', character: 'Ana', cut: 'corset', round: 1 } }] }, { card: '꼬부기', status: 'done', cuts: [{ cut: 1, cosplay: { game: 'overwatch', character: 'Sombra', cut: 'knit' } }] }] });
   const key = x => x.game + '/' + x.character + '/' + x.cut;
-  const used = G.cosplayUsage(base2).map(key).sort();
+  /* 읽는 법(꼴)은 세 공방 기록 모두로 본다 — 계획기 기본은 이 공방 저장소만(2026-11-16 「공방별로 따로」, 아래 COSPLAY_REPOS 단언) */
+  const ALL = ['sam-atelier-img', 'sam-atelier-img-2', 'element-atelier-img'].concat(G.COSPLAY_REPOS);
+  assert.deepEqual(G.cosplayUsage(base2).map(key).sort(), ['overwatch/D.Va/bodysuit'], '기본은 이 공방 기록만');
+  const used = G.cosplayUsage(base2, ALL).map(key).sort();
   assert.deepEqual(used, ['overwatch/D.Va/bodysuit', 'tomb_raider/Lara Croft/bikini'], '그린 기록만 ' + used);
-  const all = G.cosplayUsed(base2), allKeys = all.used.map(key).sort();
+  const all = G.cosplayUsed(base2, ALL), allKeys = all.used.map(key).sort();
   assert.deepEqual(allKeys, ['dark_souls/x/knit', 'league_of_legends/Ahri/idol', 'overwatch/Ana/corset', 'overwatch/D.Va/bodysuit', 'overwatch/Kiriko/leotard', 'tomb_raider/Lara Croft/bikini'], '그린 기록 + 예약(같은 컷 한 번 · replan · 장부 reserved) ' + allKeys);
   assert.deepEqual(all.pending.map(p => [p.family, p.card, p.world, p.no, p.game].join('|')), ['element-atelier|fe|mecha|4|overwatch'], '다시 짜기 대상 — 안 그린 pick 칸 ' + JSON.stringify(all.pending));
-  assert.deepEqual(G.cosplayUsed(base2, null, { skip: p => p.card === '피카츄' }).planned.map(key).sort(), ['dark_souls/x/knit', 'overwatch/Ana/corset', 'overwatch/Kiriko/leotard'], 'skip — 다시 짜는 카드의 예약은 안 센다');
+  assert.deepEqual(G.cosplayUsed(base2, ALL, { skip: p => p.card === '피카츄' }).planned.map(key).sort(), ['dark_souls/x/knit', 'overwatch/Ana/corset', 'overwatch/Kiriko/leotard'], 'skip — 다시 짜는 카드의 예약은 안 센다');
   /* 계획 파일에만 있는 캐릭터(Ana · Kiriko)는 1회차에서 빠진다 */
   { const ow3 = Object.assign({}, LIST, { games: [Object.assign({}, LIST.games.find(g => g.key === 'overwatch'), { characters: ['Ana', 'Kiriko', 'Tracer'].map(n => ({ name: n, female: true })) })] });
     const got = new Set(); for (let i = 0; i < 200; i++) got.add(G.pickCosplay(ow3, all.used, Math.random).character);
     assert.deepEqual([...got], ['Tracer'], '예약한 캐릭터는 빠진다 ' + [...got]); }
-  assert.deepEqual(G.COSPLAY_REPOS, ['sam-atelier-img', 'sam-atelier-img-2', 'element-atelier-img', 'pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5']);
+  assert.deepEqual(G.COSPLAY_REPOS, ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5'], '이 공방 그림 저장소만(2026-11-16 「공방별로 따로」)');
   fs.rmSync(base2, { recursive: true, force: true });
   gcn += 6;
 }
