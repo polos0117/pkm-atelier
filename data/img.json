@@ -19560,6 +19560,28 @@
        "f": "에이팜_mobility_overdrive_glossy_promo_f.webp"
       }
      }
+    },
+    "anime_25d_gloss": {
+     "casual": {
+      "f": [
+       "에이팜_anime_25d_gloss_f_casual1.webp",
+       "에이팜_anime_25d_gloss_f_casual2.webp",
+       "에이팜_anime_25d_gloss_f_casual3.webp",
+       "에이팜_anime_25d_gloss_f_casual4.webp",
+       "에이팜_anime_25d_gloss_f_casual5.webp",
+       "에이팜_anime_25d_gloss_f_casual6.webp",
+       "에이팜_anime_25d_gloss_f_casual7.webp",
+       "에이팜_anime_25d_gloss_f_casual8.webp",
+       "에이팜_anime_25d_gloss_f_casual9.webp",
+       "에이팜_anime_25d_gloss_f_casual10.webp",
+       "에이팜_anime_25d_gloss_f_casual90.webp"
+      ]
+     },
+     "byForm": {
+      "light": {
+       "f": "에이팜_light_anime_25d_gloss_f.webp"
+      }
+     }
     }
    }
   },
@@ -34296,6 +34318,18 @@
   "에이스번_light_overdrive_glossy_promo_f.webp": 2,
   "에이스번_mobility_glossy_promo_f.webp": 2,
   "에이스번_mobility_overdrive_glossy_promo_f.webp": 2,
+  "에이팜_anime_25d_gloss_f_casual1.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual10.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual2.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual3.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual4.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual5.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual6.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual7.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual8.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual9.webp": 4,
+  "에이팜_anime_25d_gloss_f_casual90.webp": 4,
+  "에이팜_light_anime_25d_gloss_f.webp": 4,
   "엑스레그_glossy_promo_f_casual1.webp": 2,
   "엑스레그_glossy_promo_f_casual2.webp": 2,
   "엑스레그_glossy_promo_f_casual3.webp": 2,
@@ -42873,11 +42907,23 @@
   "에이스번_light_overdrive_glossy_promo_f.webp": "2026-10-28",
   "에이스번_mobility_glossy_promo_f.webp": "2026-10-28",
   "에이스번_mobility_overdrive_glossy_promo_f.webp": "2026-10-28",
+  "에이팜_anime_25d_gloss_f_casual1.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual10.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual2.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual3.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual4.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual5.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual6.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual7.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual8.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual9.webp": "2026-11-16",
+  "에이팜_anime_25d_gloss_f_casual90.webp": "2026-11-16",
   "에이팜_glossy_promo_f_casual1.webp": "2026-10-12",
   "에이팜_glossy_promo_f_casual2.webp": "2026-10-12",
   "에이팜_glossy_promo_f_casual3.webp": "2026-10-12",
   "에이팜_heavy_glossy_promo_f.webp": "2026-10-12",
   "에이팜_heavy_overdrive_glossy_promo_f.webp": "2026-10-12",
+  "에이팜_light_anime_25d_gloss_f.webp": "2026-11-16",
   "에이팜_light_glossy_promo_f.webp": "2026-10-12",
   "에이팜_light_overdrive_glossy_promo_f.webp": "2026-10-12",
   "에이팜_mobility_glossy_promo_f.webp": "2026-10-12",
@@ -50389,6 +50435,18 @@
   "에이스번_light_overdrive_glossy_promo_f.webp": "2026-10-28T05:52:49Z",
   "에이스번_mobility_glossy_promo_f.webp": "2026-10-28T05:52:49Z",
   "에이스번_mobility_overdrive_glossy_promo_f.webp": "2026-10-28T05:52:49Z",
+  "에이팜_anime_25d_gloss_f_casual1.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual10.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual2.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual3.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual4.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual5.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual6.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual7.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual8.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual9.webp": "2026-11-16T04:27:27Z",
+  "에이팜_anime_25d_gloss_f_casual90.webp": "2026-11-16T04:27:27Z",
+  "에이팜_light_anime_25d_gloss_f.webp": "2026-11-16T04:27:27Z",
   "엑스레그_glossy_promo_f_casual1.webp": "2026-10-29T21:52:34Z",
   "엑스레그_glossy_promo_f_casual2.webp": "2026-10-29T21:52:34Z",
   "엑스레그_glossy_promo_f_casual3.webp": "2026-10-29T21:52:34Z",

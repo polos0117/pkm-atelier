@@ -4402,8 +4402,8 @@
      "job_ko": "과수원 견습",
      "base": "pw_town",
      "place": "an orchard in summer — rows of fruit trees, a tall wooden ladder, wicker harvest baskets, a dirt path",
-     "activity": "she is an orchard apprentice with one hand on her hip, looking down at a peach she just picked and eagerly eyeing the next",
-     "preset": "pocket_look",
+     "activity": "she is an orchard apprentice, inspecting a peach she just picked with one hand while her other hand rests naturally at her side, eagerly eyeing the next",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a freshly picked peach",
      "outfit": {
