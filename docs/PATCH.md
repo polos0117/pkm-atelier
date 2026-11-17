@@ -11,6 +11,13 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-17 · claude · 일상컷 색인 — 허브 「일상컷 목록」 자료
+- 사용자 「필수컷 만들 때 뜬 갈래랑 의상이랑, 게임코스튬 때 쓴 게임, 케릭터, 의상갈래 정도만 알 수 있으면 좋겠는데」 → 「응 그렇게 진행해줘. 우리쪽에서 고르는건 한글로 표시되게 해줘. gpt 쪽은 영어로 설계하니까 그건 어쩔 수 없이 놔두고」
+- tools/casual-index.cjs — 그림 저장소 다섯 records 의 일상 기록(casualN-refill → casualN, 곁가지 blocked · bold · attempts 는 한 컷으로)에서 한 컷 한 줄: 필수 표시(필수 갈래 · 포켓몬 코스튬 · 게임 코스프레 · 캐릭터만의 컷) · 의상 갈래 · 옷 · 옷 색(shade, 없으면 묶음) · 코스프레(게임 · 캐릭터 · 재단 · planner/gpt) · 자유 설계 Outfit 줄. 우리 값은 트리 · 목록 한글, GPT 가 지은 것은 영어. 등록부에 없는 컷은 뺀다
+- data/casual-index.json — 처음 씀(4521줄 · 필수 2090 · 코스프레 38(planner 33 · gpt 5) · 자유 설계 495(Outfit 줄 462))
+- .github/workflows/register-images.yml — 등록 뒤 색인을 다시 쓰고 같이 커밋(실패해도 등록은 커밋), 검사에 tests/casual-index.cjs
+- tests/casual-index.cjs — 임시 저장소 · 등록부 · 목록으로 꼴 · 한글 · 곁가지 합치기 · 필수 표시 · 코스프레 by · Outfit 줄 · built 그대로. AGENTS.md 에 도구 · 검사 한 줄
+
 ## 2026-11-17 · claude · 게임 코스프레 사본 — 원본과 다르면 계획기 경고
 - 사용자 「게임공방에 게임 자료를 늘리면 아까 추가한 게임코스튬 갈래도 더 추가되게 할 수있을까?」 · 「이제 게임공방에 데이터를 추가한다면」 → 「응 진행해줘」
 - data/game-cosplay.json — 게임공방 원본 sync(뺀 게임 excluded 칸이 더해짐 — 계획기는 games 만 읽는다)

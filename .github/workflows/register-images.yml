@@ -113,22 +113,29 @@ jobs:
           (cd rust && cargo build --release -p casual-look)
           ./rust/target/release/casual-look index
 
+      # 일상컷 색인(data/casual-index.json — 허브 「일상컷 목록」 이 읽는다, 2026-11-17) — 받아 둔 그림 저장소 records 의 일상컷 기록에서 한 컷 한 줄.
+      # 그림은 안 읽는다. 달라진 것이 없으면 파일이 그대로라(built 도) 커밋이 안 생긴다. 실패해도 등록은 커밋한다
+      - name: 일상컷 색인
+        continue-on-error: true
+        run: node tools/casual-index.cjs --repos img-repo img-repo-2 img-repo-3 img-repo-4 img-repo-5
+
       # 자료·등록기·화면이 같은 말을 하는지 — 깨지면 커밋하지 않는다
       - name: 검사
         run: |
           node tests/forms.cjs
           node tests/img-shards.cjs
           python3 tests/register-images.py
+          node tests/casual-index.cjs
 
       - name: 되커밋
         run: |
-          if git diff --quiet -- data/img.json data/casual-look.json; then
+          if git diff --quiet -- data/img.json data/casual-look.json data/casual-index.json; then
             echo "달라진 것 없음 — 커밋하지 않는다"
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/img.json data/casual-look.json
+          git add data/img.json data/casual-look.json data/casual-index.json
           git commit -m "자동 등록: 그림 저장소의 새 그림을 data/img.json 에 [skip actions]"
           for i in 1 2 3; do
             git push && exit 0
