@@ -86,6 +86,13 @@ body {color:var(--text);font-size:15px}
 .sec {margin:18px 0 8px;font:700 11px/1.6 var(--sans);color:var(--accent);font-variant-numeric:tabular-nums}
 .sec span {color:var(--muted);font-weight:400;letter-spacing:0;margin-left:8px}
 .note {margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.6;word-break:keep-all}
+/* 일상컷 한 줄(lib/casual-note.js, 2026-11-17) — 상세의 큰 그림 · 크게 보기에서만, 목록 칸엔 없다. 우리 값은 한글, GPT 글(Outfit)은 영어 그대로 · 길면 줄였다가 누르면 펼침 */
+.dex-page .cnote b {font-weight:700;color:var(--text)}
+.dex-page .cnote .cnote-gpt {margin-left:6px;font-size:11px;opacity:.75}
+.dex-page .cnote .cnote-more {display:inline;min-height:0;min-width:0;padding:0;border:0;border-radius:0;background:none;color:inherit;font:inherit;text-align:inherit;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+.dex-page .artwork-panel .dex-cnote {margin:10px 0 0;color:var(--muted);font-size:12px;line-height:1.6;text-align:center;word-break:keep-all;overflow-wrap:anywhere}
+.dex-page .zoom-layer .zoom-cnote {margin:0;padding:8px 24px 0;color:#d0ccc4;font-size:12px;line-height:1.5;text-align:center;word-break:keep-all;overflow-wrap:anywhere}
+.dex-page .zoom-layer .zoom-cnote b {color:#f5f0e5}
 .bar {display:flex;align-items:center;gap:10px;padding:12px 0 8px}
 .bar h2 {flex:1 1 auto;margin:0;font-size:19px;letter-spacing:-.02em;overflow-wrap:anywhere}
 .bar .n {flex:none;font:700 11px var(--sans);color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -175,7 +182,7 @@ body {color:var(--text);font-size:15px}
 .dot-badge{position:absolute;right:5px;top:5px;z-index:2;padding:2px 7px;border-radius:999px;background:#18242ccc;color:#c3f0e8;font-size:10px;font-weight:800;letter-spacing:.04em;pointer-events:none}
 </style>
 <script src="lib/workspace-theme.js?v=region10"></script>
-<script src="lib/words.js?v=shade1"></script>
+<script src="lib/words.js?v=cnote1"></script>
 <script src="lib/fresh.js"></script>
 <script src="lib/img.js?v=img5"></script>
 <script src="lib/dex-filter.js?v=3"></script>
@@ -199,6 +206,7 @@ import { useState, useEffect, useMemo, useRef, useLayoutEffect } from 'https://e
 import htm from 'https://esm.sh/htm@3.1.1';
 import { WorkspaceHeader } from './lib/workspace-ui.js?v=region8';
 import { modalFocus } from './lib/gallery.js?v=1';
+import { CasualNote } from './lib/casual-note.js?v=1';   /* 일상컷 한 줄 — 상세 · 크게 보기에서만(목록 칸엔 없다, 2026-11-17) */
 const html = htm.bind(h);
 const W = window.W, IMG = window.AtelierImg, FILTER = window.AtelierDexFilter, MOTION = window.AtelierMotion, FAV = window.AtelierFavorites;
 const FAV_HUB = '/favorites.html';
@@ -569,6 +577,7 @@ function Detail({ card, entry, defs, styleName, group, label, selection, nav, on
     ${focus && (focus.cut !== 'portrait' || !have.includes(focus.form)) ? html`
       <p class="sec">${shotLabel(focus, defs)}<span>${W('dex.selected')}</span></p>
       <div class="big" ref=${bigRef} data-particles=${ambient || undefined} ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${focus.file} alt=${card.name} /></button><div class="dex-motion-layer" aria-hidden="true"></div>${bigNav}${bigCount}</div>
+      ${focus.cut === 'casual' && html`<${CasualNote} file=${focus.file} cls="dex-cnote" />`}
     ` : form ? html`
       <p class="sec">${formName(defs, form)}<span>${(defs[baseForm(form)].layers || 0) + W('dex.layers')}</span></p>
       <div class="big" ref=${bigRef} data-particles=${ambient || undefined} ...${swipe}><button type="button" class="zoom" aria-label=${W('gallery.zoom')} onClick=${()=>setZoom(true)}><${Pic} full file=${IMG.formOf(bucket, form)[V]} alt=${card.name} /></button><div class="dex-motion-layer" aria-hidden="true"></div>${bigNav}${bigCount}</div>
@@ -711,6 +720,7 @@ function Zoom({ card, shots, at, canPrev, canNext, onMove, onClose, defs }) {
  return html`<div ref=${layer} class="zoom-layer" role="dialog" aria-modal="true" aria-label=${W('gallery.zoom')}>
   <div class="zoom-bar"><b>${card.name} · ${shotLabel(shot,defs)}</b><span aria-live="polite">${at+1} / ${shots.length}</span><button type="button" class="zoom-fav" id="zoom-fav" aria-pressed=${faved} disabled=${!FAV} title=${W('dex.fav.note')} onClick=${toggleFav}><span aria-hidden="true">${faved?'♥':'♡'}</span> ${W('dex.fav')}</button><button type="button" class="zoom-holo" aria-pressed=${holo} disabled=${actual} title=${W('gallery.holo.note')} onClick=${toggleHolo}>${W('gallery.holo')}</button><button type="button" class="zoom-open" aria-pressed=${actual} onClick=${()=>setActual(v=>!v)}>${W(actual?'gallery.fit':'gallery.original')}</button><button class="zoom-close" data-dialog-close onClick=${onClose} aria-label=${W('gallery.close')}>✕</button></div>
   <div class=${'zoom-body'+(actual?' actual':'')} ...${actual?{}:swipe}><${Pic} full file=${shot.file} alt=${card.name+' · '+shotLabel(shot,defs)} /><div class="zoom-nav"><button class="zoom-prev" disabled=${!canPrev} onClick=${()=>go(-1)} aria-label=${W('gallery.previous')}>‹</button><button class="zoom-next" disabled=${!canNext} onClick=${()=>go(1)} aria-label=${W('gallery.next')}>›</button></div></div>
+  ${shot.cut==='casual'&&html`<${CasualNote} file=${shot.file} cls="zoom-cnote" />`}
   <div class="fav-toast" role="status" aria-live="polite">${favMsg}</div>
   <div class="zoom-footer"><span class="viewer-keyboard">${W('gallery.viewer.hint')}</span><span class="viewer-touch">${W('gallery.viewer.touch')}</span></div>
  </div>`;
