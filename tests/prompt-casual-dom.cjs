@@ -86,11 +86,11 @@ const fixture=JSON.stringify({last:'피카츄',cards:{
   assert.equal(a.get('place').value,'berry_kitchen');assert.equal(a.get('lens').value,'wide24');assert.equal(a.get('outfit').value,'MY_OUTFIT');assert.equal(a.get('camera').value,'SAVED_CAMERA');
   assert.deepEqual(a.errors,[]);
   a.dom.window.close();
-  /* 게임 코스프레(2026-11-15) — 의상 계열이 게임 코스프레일 때만 게임 고르개(열아홉), 재단은 옷 칸, 등장인물 많은 게임은 캐릭터 칸(비우면 그리는 쪽이 고르는 「…」 자리) */
+  /* 게임 코스프레(2026-11-15) — 의상 계열이 게임 코스프레일 때만 게임 고르개(목록의 게임 수), 재단은 옷 칸, 등장인물 많은 게임은 캐릭터 칸(비우면 그리는 쪽이 고르는 「…」 자리) */
   a=await open(JSON.stringify({last:'피카츄',cards:{'피카츄':{mode:'casual',identityMode:'reference',scenes:{casual:{era:'now',place:'arcade_hall',act:'play_cabinet',ofam:'game_cosplay',item:'gc_bikini'}}}}}));
   {
    const g=a.get;
-   assert(g('cosplay-game'),'게임 고르개');assert.equal(g('cosplay-game').options.length,20,'고르지 않음 + 열아홉');
+   assert(g('cosplay-game'),'게임 고르개');assert.equal(g('cosplay-game').options.length,JSON.parse(require('node:fs').readFileSync(require('node:path').join(__dirname,'../data/game-cosplay.json'),'utf8')).games.length+1,'고르지 않음 + 목록의 게임 수');   /* 게임 수는 목록에서(2026-11-17 — 열아홉 → 스물넷, 게임이 늘면 박아 둔 20 이 깨졌다) */
    assert(a.output().includes('Outfit: a daring adult cosplay of a video-game character, cut as a bikini'),'게임 없음 — 옷 칸 글');
    assert(a.output().includes(a.w.AtelierSpec.PROMPT_LINES.casualOutputCosplay),'코스프레 OUTPUT');
    assert(g('ocolor').disabled&&g('situ').disabled,'옷 색 · 상황은 막힌다');
