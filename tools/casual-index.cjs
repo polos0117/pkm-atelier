@@ -126,10 +126,11 @@ function characterKo(gc, gameKey, name) {
   const g = GC.game(gc, gameKey);
   if (!g) return null;
   const k = GC.nameKey(name);
-  const c = k && (g.characters || []).filter((x) => x && GC.nameKey(x.name) === k)[0];
+  const c = k && (g.characters || []).filter((x) => x && [x.name].concat(x.aka || []).some((n) => GC.nameKey(n) === k))[0];   /* 다른 표기(aka — 2026-11-17)는 그 캐릭터 이름으로 */
   if (c && str(c.ko)) return str(c.ko);
   if (!g.many && str(g.character_ko)) return str(g.character_ko);
-  return null;
+  const rk = (((gc || {}).retired_ko || {})[gameKey] || {}), rn = Object.keys(rk).filter((n) => GC.nameKey(n) === k)[0];   /* 명단에서 뺀 캐릭터(2026-11-17) */
+  return rn ? rk[rn] : null;
 }
 function cosplayOf(T, sc, rec, item) {
   const s = sc.cosplay && typeof sc.cosplay === 'object' ? sc.cosplay : null, gen = (rec.generation || {}).cosplay || null;
