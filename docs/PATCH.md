@@ -11,6 +11,18 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-17 · claude · 게임 코스프레 사본 — 어린 캐릭터 뺌
+- 사용자 「그러면 어린케릭터는 빼자. 어차피 원신쪽은 잘 알지도 못하는 케릭터들인데」
+- data/game-cosplay.json — 게임공방 원본 sync: 어린 캐릭터 열셋(유피 포함)과 young 칸들이 빠짐. 이미 그린 그림은 그대로
+
+## 2026-11-17 · claude · 도감 상세 · 크게 보기 — 일상컷 한 줄(무엇으로 그렸나)
+- 사용자 「전체 목록리스트에서 보는건 지저분하니까, 상세보기나 크게보기 일 때만 보이도록」 · 「우리쪽에서 고르는건 한글로 표시되게 해줘. gpt 쪽은 영어로 설계하니까 그건 어쩔 수 없이 놔두고」
+- lib/casual-note.js — 새 모듈(삼국지 · 원소와 글자 하나 다르지 않게): data/casual-index.json 을 일상컷을 처음 크게 열 때 한 번만 받아 파일 이름(<카드>_<화풍>_f_casualN.webp)으로 줄을 찾고 「필수 · <갈래> — <옷> · <색>」 · 「필수 · 게임 코스프레 — <게임> · <캐릭터> · <재단>」(+GPT 고름) · 「<자유 설계 갈래> — <Outfit 영어, 길면 줄였다 누르면 펼침>」 · 「캐릭터만의 컷 — <직업>」 한 줄. 받기 실패 · 없는 줄이면 안 보인다
+- dex.html — 상세(포커스)의 큰 그림 아래 · 크게 보기 그림 아래에 일상컷이면 한 줄. 목록 격자 · 상세의 일상컷 칸은 그대로. 꼴은 머리 style 안 .cnote · .dex-cnote · .zoom-cnote, words.js ?v=cnote1
+- lib/words.js — dex.cnote.req · gpt · more · less
+- tests/dex-zoom-turn.cjs — fixture 색인 묶음: 목록 · 상세 칸엔 없음(색인도 안 받음) · 상세 필수 · 코스프레(캐릭터 한글 · GPT) · 크게 보기 · 자유 설계 줄였다 펼침 · 없는 컷 · 색인 한 번
+- 검사: tests/dex-zoom-turn.cjs 통과(30가지)
+
 ## 2026-11-17 · claude · 게임 코스프레 목록 사본 — 캐릭터 한글 이름 · 어린 캐릭터 young
 - 사용자 2026-11-17 「응 캐릭터 한글 이름도 채워줘」 · 「코스튬의상이라 나이는 상관없는데」 → 「응 그렇게 해줘」
 - data/game-cosplay.json — 원본(game-atelier tools/game-cosplay.cjs sync) 사본: 등장인물 많은 게임 열 곳의 characters 마다 ko, 어린 캐릭터 열둘 다시 넣음(테일즈위버 14 · 원신 124) · young: true(유피 포함 열셋) · young_cuts [knit, idol, mini_dress]. young 재단 고르기는 계획기 작업이 따로 한다
