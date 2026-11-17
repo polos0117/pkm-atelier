@@ -49,6 +49,9 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), cp = require('node:child_process');
 const ROOT = path.resolve(__dirname, '..');
+/* 게임 코스프레 사본이 원본(옆 game-atelier)과 다르면 알린다 — 게임을 더하고 sync 를 깜빡한 때(2026-11-16 사용자 「게임공방에 게임 자료를 늘리면 … 게임코스튬 갈래도 더 추가되게」) */
+if (require.main === module) { try { const gcSrc = path.join(ROOT, '..', 'game-atelier', 'data', 'game-cosplay.json'), gcMine = path.join(ROOT, 'data', 'game-cosplay.json');
+  if (fs.existsSync(gcSrc) && fs.existsSync(gcMine) && fs.readFileSync(gcSrc, 'utf8') !== fs.readFileSync(gcMine, 'utf8')) console.warn('경고: data/game-cosplay.json 이 게임공방 원본과 다르다(사본이 옛것) — 게임공방에서 node tools/game-cosplay.cjs sync 하고 이 저장소에서 커밋한다'); } catch (e) { /* 읽기 실패는 계획을 막지 않는다 */ } }
 const P = require(path.join(ROOT, 'lib', 'casual-plan.js'));
 const GENERATOR = 'https://polos0117.github.io/pkm-atelier/prompt.html';
 /* 허브 통합 생성기도 같은 주소 꼴(?a=pkm&mech=&casual=)을 받는다 — 값을 채우고 계획 칸은 랜덤이 안 바꾼다(2026-10-29) */
