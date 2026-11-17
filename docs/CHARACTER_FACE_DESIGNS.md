@@ -45,6 +45,7 @@
 (같은 진화면 같은 몸 · 같은 피부) 대표 종(능력치 합이 가장 큰 종)의 키 · 무게 · 가장 높은 능력치 · 타입 · 몸 형태 · 도감 색에 점수를 주고 `python3 tools/face-design.py spread` 로 고른다.
 
 - 체형은 볼륨 · 굴곡이 있는 열둘(삼국지 공방과 같은 글, `VOCAB_EN.body`)에서, 한 체형은 그 종들의 11% 까지. 손으로 정한 `CARD_BODY`(81종)가 이기고, 이 표는 그다음 — 일상컷 BODY TYPE 줄 · 지시문 묶음 외형 칸 body type. 그림이 있는 가족은 그대로(`CARD_FIGURE`).
+- 건장형(어깨 넓고 단단한 근육)은 큰 격투 · 땅 · 바위 · 강철 가족(대표 종 키 1.6m · 무게 100kg 이상, 아기 단계 없음)에만, 2% 까지 — 2026-11-17 「어깨 형님들 같아서」 로 줄였다(그 자리는 풍만 · 서양배 · 모래시계 · 굴곡 쪽). 이미 그린 가족은 그대로.
 - 피부는 외형 칸 skin tone 의 여덟 값에서, 한 값은 20% 까지. 새 인물(경장 ①)의 IMPRESSION 줄에 「… in her twenties with <피부>」 로 실리고, 피부를 직접 고르면 빠진다.
 - 앞머리 넷(시스루 · 베이비 뱅 · 얼굴을 감싸는 옆머리 · 뒤로 넘긴 앞머리)을 더하고, 잠기지 않은 종에서 많이 쓰인 값부터 고르게 옮겼다.
 - 얼굴형 둘(V라인 · 역삼각형) · 눈매 넷(봉황눈 · 덮인 눈 · 고양이 눈 · 도화눈)을 더하고, 그림 없는 종에서 한 얼굴형은 20% · 턱은 22% · 눈매는 17% 까지(`FACE_CAP` — 계란형 40% · 둥근 턱 39% · 가는 눈 32% 였다). 그림 있는 종의 얼굴은 움직이지 않는다.
@@ -6504,7 +6505,7 @@ HAIR: long winged sidelocks (side locks swept out like small wings), side-swept 
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 가볍게 친 페더컷 · 머리 길이 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 willowy_curvy · 피부 medium |
 
 **이유:** 강철 날개와 뾰족한 부리를 긴 윤곽과 긴 직선 콧대로 옮긴다.
 
@@ -6642,7 +6643,7 @@ HAIR: long wavy, choppy bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 짧은 머리 · 앞머리 커튼뱅 |
 | 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 curvy · 피부 bronze |
 
 **이유:** 작은 코끼리의 둥근 체적을 둥근 볼과 둥근 사람 코끝으로 옮긴다.
 
@@ -6677,7 +6678,7 @@ HAIR: short blocky layers (thick, blocky layered hair with heavy squared-off end
 | 입 | 보통 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 curvy · 피부 bronze |
 
 **이유:** 장갑과 바퀴 같은 단단한 몸을 넓은 하관과 낮고 굵은 눈썹으로 구분한다.
 
@@ -7145,7 +7146,7 @@ HAIR: giant twin tails (two huge, voluminous tails tied high and reaching past t
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 중간 길이 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 hourglass · 피부 bronze |
 
 **이유:** 바위 같은 면과 짧은 주둥이를 높은 광대와 짧은 사람 코로 옮긴다.
 
@@ -7180,7 +7181,7 @@ HAIR: medium blocky layers (thick, blocky layered hair with heavy squared-off en
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 hourglass · 피부 bronze |
 
 **이유:** 탄환 같은 매끈한 외피를 긴 타원 윤곽과 낮은 눈꺼풀로 해석한다.
 
@@ -7215,7 +7216,7 @@ HAIR: long blocky layers (thick, blocky layered hair with heavy squared-off ends
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 위엄 · 눈 emerald green · a bold, defined eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 hourglass · 피부 bronze |
 
 **이유:** 거대한 장갑과 뾰족한 윤곽을 각진 하관과 작고 강한 눈매로 구분한다.
 
@@ -8942,7 +8943,7 @@ HAIR: pixie cut, asymmetric bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 중간 길이 · 앞머리 이마가 비치는 시스루 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **이유:** 각진 화산암 체적은 넓고 각진 턱과 뚜렷한 광대로, 가느다란 눈 틈은 작은 수평 눈매로 해석한다. 큰 삼각형 나침반 코는 또렷한 사람 콧대와 코끝으로 옮기고 원작의 붉은 삼각형은 흉갑에만 남긴다.
 
@@ -9115,7 +9116,7 @@ HAIR: medium razor-cut points (razor-straight hair cut into sharp angled points)
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 hourglass · 피부 medium |
 
 **머리:** ‘platinum steel armor’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 짧은 머리 · 일자 앞머리
 
@@ -9148,7 +9149,7 @@ HAIR: short blunt cut, straight bangs.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 hourglass · 피부 medium |
 
 **머리:** ‘platinum iron armor’·강철 타입에서 끝을 일자로 자른 컷(곧은 결) · 중간 길이 · 일자 앞머리 — 가보리에서 이어 같은 묶음
 
@@ -9181,7 +9182,7 @@ HAIR: medium blunt cut, straight bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 hourglass · 피부 medium |
 
 **이유:** 거대한 강철 갑옷과 단단한 뿔을 넓고 각진 하관으로 옮긴다.
 
@@ -10269,7 +10270,7 @@ HAIR: long blocky layers (thick, blocky layered hair with heavy squared-off ends
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 이마가 비치는 시스루 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 voluptuous · 피부 tan |
 
 **이유:** 태양 광선의 직선과 넓고 둥근 암석 체적을 넓은 각진 윤곽, 좁은 눈과 사선 눈썹으로 해석. 경장 정본 확정.
 
@@ -10372,7 +10373,7 @@ HAIR: mermaid waves (loose mermaid waves to the waist), curtain bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뾰족 솟은 머리 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 초반 · 밝음 · 눈 garnet red · no eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 hourglass · 피부 medium |
 
 **이유:** 작은 가재의 가시와 둥근 체적을 둥근 얼굴 안의 선명한 눈매로 해석한다.
 
@@ -10405,7 +10406,7 @@ HAIR: medium spiky hair (big, gravity-defying spikes standing out in sharp point
 | 입 | 보통 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 쿨함 · 눈 garnet red · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 hourglass · 피부 medium |
 
 **머리:** ‘two spikes’·악 타입에서 좌우 길이가 다른 비대칭컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 가재군에서 이어 같은 묶음
 
@@ -10576,7 +10577,7 @@ HAIR: long box braids, straight bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 중간 길이 · 앞머리 짧은 베이비 뱅 |
 | 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** 몸 형태 armor에서 바위 단층 머리(층 낸 컷) · 중간 길이 · 일자 앞머리
 
@@ -10609,7 +10610,7 @@ HAIR: medium blocky layers (thick, blocky layered hair with heavy squared-off en
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 날개 옆머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** ‘two triangular, yellow-rimmed wings’·‘wing-like appendages’·벌레 타입에서 날개 옆머리(층 낸 컷) · 긴 머리 · 일자 앞머리 — 아노딥스에서 이어 같은 묶음
 
@@ -11495,7 +11496,7 @@ HAIR: long spiky ponytail (a long high ponytail flaring into spiky points), side
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 굵은 곱슬 · 머리 길이 중간 길이 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 voluptuous · 피부 light |
 
 **머리:** ‘nearly spherical head’·몸 형태 blob에서 굵은 곱슬(웨이브·곱슬) · 중간 길이 · 일자 앞머리
 
@@ -11528,7 +11529,7 @@ HAIR: medium curly, face-framing side locks.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 드릴 롤 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 voluptuous · 피부 light |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 드릴 롤(웨이브·곱슬) · 긴 머리 · 일자 앞머리 — 메탕에서 이어 같은 묶음
 
@@ -11559,7 +11560,7 @@ HAIR: long drill curls (glossy spiral drill curls hanging like springs), straigh
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 세 갈래 포니테일 · 머리 길이 긴 머리 · 앞머리 이마가 비치는 시스루 앞머리 |
 | 인상 | 20대 후반 · 쿨함 · 눈 sapphire blue · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 voluptuous · 피부 light |
 
 **이유:** 금속 면과 중심 대칭을 넓고 각진 얼굴 및 정돈된 이목구비로 해석한다.
 
@@ -11594,7 +11595,7 @@ HAIR: long triple ponytails (three high ponytails fanning out), wispy see-throug
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 pear_curvy · 피부 bronze |
 
 **머리:** ‘orange rocky spines’·바위 타입에서 바위 단층 머리(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -11798,7 +11799,7 @@ HAIR: long wet-look slick, no bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 칼날 직선 머리 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 voluptuous · 피부 tan |
 
 **이유:** 대지의 분절된 갑옷과 큰 발톱을 각진 하관과 강한 사선 눈썹으로 옮긴다.
 
@@ -11936,7 +11937,7 @@ HAIR: long chignon, face-framing side locks.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 두피에 붙여 땋은 콘로 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 온화 · 눈 jade green · no eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 pear_curvy · 피부 olive |
 
 **이유:** 거북의 둥근 등과 작은 새싹을 둥근 얼굴과 작은 입으로 옮긴다.
 
@@ -11971,7 +11972,7 @@ HAIR: short cornrows, no bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 어깨로 넘긴 땋은 머리 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 중반 · 온화 · 눈 emerald green · no eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 pear_curvy · 피부 olive |
 
 **이유:** 덤불과 단단해진 거북의 실루엣을 길어진 타원 얼굴로 구분한다.
 
@@ -12004,7 +12005,7 @@ HAIR: long side braid (a single thick braid draped over one shoulder), no bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 어깨로 넘긴 땋은 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 나른함 · 눈 jade green · a soft smudged liner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 pear_curvy · 피부 olive |
 
 **이유:** 대지와 큰 거북의 넓은 등판을 넓은 볼 및 단단한 하관으로 해석한다.
 
@@ -12661,7 +12662,7 @@ HAIR: long drill curls (glossy spiral drill curls hanging like springs), curtain
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뾰족 솟은 머리 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 curvy · 피부 light |
 
 **이유:** 단단한 돔 머리의 넓은 체적과 네 가시의 각을 넓은 각진 얼굴·명확한 턱으로, 갈고리 부리의 굴곡은 사람의 볼록한 콧대와 얇은 입술로 옮긴다. 붉은 눈의 긴장감을 날카로운 눈과 꺾인 눈썹으로 남기되 동물 부리는 복제하지 않는다.
 
@@ -12694,7 +12695,7 @@ HAIR: medium spiky hair (big, gravity-defying spikes standing out in sharp point
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 층감이 강한 울프컷 · 머리 길이 긴 머리 · 앞머리 이마를 드러내며 뒤로 넘긴 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 curvy · 피부 light |
 
 **머리:** ‘various spikes’·키 1.6m에서 층감이 강한 울프컷(층 낸 컷) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 두개도스에서 이어 같은 묶음
 
@@ -12727,7 +12728,7 @@ HAIR: long wolf cut, swept-back fringe.
 | 입 | 아랫입술이 더 도톰한 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 이마를 드러내며 뒤로 넘긴 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **이유:** 타원 방패 얼굴과 두드러진 눈썹을 넓은 윤곽과 굵은 낮은 눈썹으로 옮긴다.
 
@@ -12762,7 +12763,7 @@ HAIR: short blunt cut, swept-back fringe.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **이유:** 사각 방패 머리·삼각 코·등의 세 가시를 각진 하관, 위로 뻗는 가는 눈매와 사선 눈썹, 곧은 콧대로 해석했다. 방패톱스의 넓은 타원 얼굴·낮은 눈썹·둥근 코끝과 구분되는 별개의 성인 인물이다.
 
@@ -13593,7 +13594,7 @@ HAIR: medium spiky hair (big, gravity-defying spikes standing out in sharp point
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 파우호크 · 머리 길이 짧은 머리 · 앞머리 옆으로 넘긴 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 jade green · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 pear_curvy · 피부 light |
 
 **머리:** ‘plant-shaped back crest’·키 0.5m에서 파우호크(짧은 컷) · 짧은 머리 · 옆으로 넘긴 앞머리
 
@@ -13624,7 +13625,7 @@ HAIR: short fauxhawk (a sharp fauxhawk with a raised central ridge), side-swept 
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 짧은 베이비 뱅 |
 | 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 pear_curvy · 피부 light |
 
 **이유:** 청동 종의 사각 무늬와 네모 이빨의 직선을 날렵한 얼굴 윤곽·각진 눈썹·얇은 입술로, 무거운 속 빈 종의 안정감을 넓고 낮은 콧대로 해석했다. 청록 홍채는 사람의 녹색 눈으로 옮기며 사람 코·입을 유지한다.
 
@@ -13956,7 +13957,7 @@ HAIR: medium space buns, straight bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 사나움 · 눈 deep navy-blue · a crisp winged eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 busty_slender · 피부 bronze |
 
 **이유:** 작은 파동 수행자의 또렷한 실루엣을 작은 턱과 열린 눈매로 해석한다.
 
@@ -13989,7 +13990,7 @@ HAIR: medium high ponytail, no bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 긴 머리 · 앞머리 이마를 드러내며 뒤로 넘긴 앞머리 |
 | 인상 | 20대 후반 · 영리함 · 눈 sapphire blue · a thin, neat eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 busty_slender · 피부 bronze |
 
 **이유:** 긴 주둥이와 파동을 읽는 집중을 긴 중안부와 또렷한 수평 눈으로 옮긴다.
 
@@ -14905,7 +14906,7 @@ HAIR: long floating hair (long hair drifting weightlessly around her as if under
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **머리:** ‘big red hat-like magnet’·바위 타입에서 바위 단층 머리(층 낸 컷) · 긴 머리 · 일자 앞머리 — 코코파스에서 이어 같은 묶음
 
@@ -16547,7 +16548,7 @@ HAIR: long wolf cut, choppy bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 curvy · 피부 bronze |
 
 **머리:** ‘central yellow hexagonal ear opening’·‘navy-blue faceted rock’·바위 타입에서 바위 단층 머리(층 낸 컷) · 짧은 머리 · 일자 앞머리
 
@@ -16580,7 +16581,7 @@ HAIR: short blocky layers (thick, blocky layered hair with heavy squared-off end
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 칼날 직선 머리 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 curvy · 피부 bronze |
 
 **머리:** ‘reddish-orange crystals’에서 칼날 직선 머리(곧은 결) · 중간 길이 · 일자 앞머리 — 단굴에서 이어 더 공들인 묶음
 
@@ -16613,7 +16614,7 @@ HAIR: medium razor-cut points (razor-straight hair cut into sharp angled points)
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 칼날 직선 머리 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 sapphire blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 curvy · 피부 bronze |
 
 **머리:** ‘red-orange crystal spikes’·‘blue quadrupedal rock body’·키 1.7m에서 칼날 직선 머리(곧은 결) · 긴 머리 · 일자 앞머리 — 암트르에서 이어 같은 묶음
 
@@ -16712,7 +16713,7 @@ HAIR: very long wind-wing hair (long hair streaming back like a pair of swept wi
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뾰족 솟은 머리 · 머리 길이 짧은 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **머리:** ‘jagged, navy blue stripe’·키 0.3m에서 뾰족 솟은 머리(층 낸 컷) · 짧은 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -16745,7 +16746,7 @@ HAIR: short spiky hair (big, gravity-defying spikes standing out in sharp points
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **이유:** 드릴 날과 땅밑을 파는 단단한 힘을 각진 하관과 작은 깊은 눈으로 해석한다.
 
@@ -17644,7 +17645,7 @@ HAIR: medium spiky hair (big, gravity-defying spikes standing out in sharp point
 | 입 | 입이 작은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 garnet red · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 pear_curvy · 피부 tan |
 
 **이유:** 작은 돌집과 갑각류의 중심 몸을 작은 눈과 정돈된 타원 얼굴로 해석한다.
 
@@ -17679,7 +17680,7 @@ HAIR: short blunt cut, face-framing side locks.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 긴 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 pear_curvy · 피부 tan |
 
 **이유:** 거대한 바위집의 무게를 넓은 하관과 굵은 눈썹으로 구분한다.
 
@@ -19046,7 +19047,7 @@ HAIR: long asymmetric cut, choppy bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 초반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 petite_curvy · 피부 medium |
 
 **이유:** 작은 톱니바퀴의 원형 중심과 정렬을 둥근 얼굴와 대칭적인 두 눈으로 해석한다.
 
@@ -19079,7 +19080,7 @@ HAIR: short blunt cut, straight bangs.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 petite_curvy · 피부 medium |
 
 **이유:** 크기가 다른 톱니의 맞물림을 타원 윤곽과 정돈된 수평 눈으로 구분한다.
 
@@ -19114,7 +19115,7 @@ HAIR: medium blunt cut, straight bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 칼날 직선 머리 · 머리 길이 중간 길이 · 앞머리 일자 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 petite_curvy · 피부 medium |
 
 **이유:** 여러 톱니와 링의 단단한 결합을 각진 윤곽과 낮은 긴 눈으로 구분한다.
 
@@ -19790,7 +19791,7 @@ HAIR: long pompadour (a tall, sculpted pompadour swept up and back), no bangs.
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 긴 머리 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 중반 · 사나움 · 눈 garnet red · a crisp winged eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **머리:** ‘tall, conical, red spikes’·드래곤 타입에서 뾰족 끝 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -20155,7 +20156,7 @@ HAIR: segmented tail (a single very long tail bound at intervals by several hair
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 트윈테일 · 머리 길이 짧은 머리 · 앞머리 일자 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 petite_curvy · 피부 medium |
 
 **머리:** ‘two long antennae’·키 0.3m에서 트윈테일(묶은 꼬리) · 짧은 머리 · 일자 앞머리
 
@@ -20359,7 +20360,7 @@ HAIR: long winged sidelocks (side locks swept out like small wings), parted bang
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 칼날 직선 머리 · 머리 길이 매우 긴 머리 · 앞머리 긴 사이드뱅 |
 | 인상 | 20대 후반 · 과묵 · 눈 deep navy-blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 pear_curvy · 피부 light |
 
 **이유:** 철심의 단단함과 긴 뿔을 긴 윤곽과 곧은 콧대로 해석한다.
 
@@ -20394,7 +20395,7 @@ HAIR: very long razor-cut points (razor-straight hair cut into sharp angled poin
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 curvy_athletic · 피부 tan |
 
 **이유:** 암굴의 큰 체적과 둥근 뿔을 넓은 하관과 굵은 눈썹으로 해석한다.
 
@@ -20604,7 +20605,7 @@ HAIR: long slicked back, no bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 거대 한 갈래 땋기 · 머리 길이 매우 긴 머리 · 앞머리 짧은 베이비 뱅 |
 | 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 lean_toned · 피부 bronze |
 
 **이유:** 풍요의 둥근 구름과 안정적인 체적을 넓은 볼과 안정적인 눈매로 해석한다.
 
@@ -22059,7 +22060,7 @@ HAIR: long floating hair (long hair drifting weightlessly around her as if under
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 레트로 웨이브 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 voluptuous · 피부 bronze |
 
 **이유:** 두 손 같은 넓은 갑각의 체적을 넓은 얼굴와 열린 눈매로 해석한다.
 
@@ -22094,7 +22095,7 @@ HAIR: short finger waves, no bangs.
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 voluptuous · 피부 bronze |
 
 **머리:** ‘two gray rocks’에서 옆/뒤를 밀어낸 언더컷(짧은 컷) · 중간 길이 · 앞머리 없음 — 거북손손에서 이어 같은 묶음
 
@@ -23798,7 +23799,7 @@ HAIR: very long side ponytail, choppy bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 사나움 · 눈 violet · a crisp winged eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 pale |
+| 체형 · 피부 | 체형 voluptuous · 피부 pale |
 
 **이유:** 큰 권투 집게와 솟은 더듬이를 넓은 하관과 굵은 눈썹으로 해석한다.
 
@@ -23833,7 +23834,7 @@ HAIR: medium undercut, no bangs.
 | 입 | 보통 |
 | 머리 | 헤어스타일 높은 퐁파두르 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 열정 · 눈 silver · a short flick of eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 pale |
+| 체형 · 피부 | 체형 voluptuous · 피부 pale |
 
 **머리:** 격투 타입에서 높은 퐁파두르(짧은 컷) · 긴 머리 · 앞머리 없음 — 오기지게에서 이어 같은 묶음
 
@@ -24136,7 +24137,7 @@ HAIR: very long floating hair (long hair drifting weightlessly around her as if 
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 동물귀 번 · 머리 길이 중간 길이 · 앞머리 긴 사이드뱅 |
 | 인상 | 20대 초반 · 과묵 · 눈 chestnut brown · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 hourglass · 피부 bronze |
 
 **머리:** ‘long, pointed ears’·몸 형태 quadruped에서 동물귀 번(올림머리) · 중간 길이 · 긴 사이드뱅
 
@@ -24169,7 +24170,7 @@ HAIR: medium animal-ear buns (two buns on top of her head shaped like small anim
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 동물귀 번 · 머리 길이 긴 머리 · 앞머리 긴 사이드뱅 |
 | 인상 | 20대 후반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 hourglass · 피부 bronze |
 
 **이유:** 큰 말의 갈기와 강한 다리 체적을 긴 얼굴와 굵은 눈썹으로 해석한다.
 
@@ -24975,7 +24976,7 @@ HAIR: long layered, side-swept bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 짧은 머리 · 앞머리 이마를 드러내며 뒤로 넘긴 앞머리 |
 | 인상 | 20대 중반 · 과묵 · 눈 warm hazel · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 voluptuous · 피부 tan |
 
 **머리:** ‘rocky sphere divided into four plates’·‘five white spikes’·바위 타입에서 바위 단층 머리(층 낸 컷) · 짧은 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -25041,7 +25042,7 @@ HAIR: long lion mane (a huge mane of voluminous curls framing her face), long si
 | 입 | 보통 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 중반 · 열정 · 눈 garnet red · a short flick of eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 voluptuous · 피부 tan |
 
 **머리:** ‘spiny shell’·‘several spikes’·드래곤 타입에서 뾰족 끝 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -25243,7 +25244,7 @@ HAIR: very long floating hair (long hair drifting weightlessly around her as if 
 | 입 | 윗입술이 활 모양인 |
 | 머리 | 헤어스타일 뾰족 솟은 머리 · 머리 길이 중간 길이 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 초반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **머리:** ‘small, tooth-like spike’에서 뾰족 솟은 머리(층 낸 컷) · 중간 길이 · 끝을 불규칙하게 친 앞머리
 
@@ -25276,7 +25277,7 @@ HAIR: medium spiky hair (big, gravity-defying spikes standing out in sharp point
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 중반 · 위엄 · 눈 silver grey · a bold, defined eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **머리:** ‘small, white crest’·‘small spike’·드래곤 타입에서 높이 묶은 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 짜랑꼬에서 이어 더 공들인 묶음
 
@@ -25309,7 +25310,7 @@ HAIR: long high ponytail, choppy bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 긴 머리 · 앞머리 짧은 베이비 뱅 |
 | 인상 | 20대 후반 · 위엄 · 눈 steel blue · a bold, defined eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **머리:** ‘small, tooth-like spike’·드래곤 타입에서 뾰족 끝 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리 — 짜랑고우에서 이어 같은 묶음
 
@@ -25651,7 +25652,7 @@ HAIR: very long locs, wispy see-through bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 뾰족 끝 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 수줍음 · 눈 crimson red · no eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 golden beige |
+| 체형 · 피부 | 체형 willowy_curvy · 피부 golden beige |
 
 **이유:** 팽창한 근육과 긴 바늘 입을 넓은 하관과 긴 사람 콧대로 해석한다.
 
@@ -26980,7 +26981,7 @@ HAIR: segmented tail (a single very long tail bound at intervals by several hair
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뿔 모양 머리 · 머리 길이 짧은 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 쿨함 · 눈 emerald green · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** ‘short rock-hard orange horn’·키 0.3m에서 뿔 모양 머리(층 낸 컷) · 짧은 머리 · 앞머리 없음
 
@@ -27013,7 +27014,7 @@ HAIR: short horn locks (two stiff locks rising from her head like horns), no ban
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 뿔 모양 머리 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 쿨함 · 눈 jade green · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** ‘yellow horn’·‘long tail’에서 뿔 모양 머리(층 낸 컷) · 긴 머리 · 앞머리 없음 — 깨물부기에서 이어 같은 묶음
 
@@ -28355,7 +28356,7 @@ HAIR: very long hime cut, straight bangs.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 바위 단층 머리 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 중반 · 과묵 · 눈 steel blue · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 bronze |
+| 체형 · 피부 | 체형 pear_curvy · 피부 bronze |
 
 **머리:** ‘gray, rectangular body’·‘smaller rectangular stones’·바위 타입에서 바위 단층 머리(층 낸 컷) · 긴 머리 · 앞머리 없음
 
@@ -28489,7 +28490,7 @@ HAIR: short asymmetric cut, asymmetric bangs.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 젖은 듯 넘긴 스타일 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 초반 · 쿨함 · 눈 amber gold · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 젖은 듯 넘긴 스타일(곧은 결) · 중간 길이 · 앞머리 없음
 
@@ -28520,7 +28521,7 @@ HAIR: medium wet-look slick, no bangs.
 | 입 | 굴곡 없이 곧은 |
 | 머리 | 헤어스타일 뒤로 넘긴 스타일 · 머리 길이 긴 머리 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 쿨함 · 눈 emerald green · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 voluptuous · 피부 olive |
 
 **머리:** 원작 단서가 적어 분포가 빈 쪽에서 뒤로 넘긴 스타일(곧은 결) · 긴 머리 · 앞머리 없음 — 끼리동에서 이어 같은 묶음
 
@@ -29099,7 +29100,7 @@ HAIR: drill sidelocks (long straight hair with two drill-curled sidelocks framin
 | 입 | 보통 |
 | 머리 | 헤어스타일 포니테일 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 쿨함 · 눈 pale ice-blue · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 pale |
+| 체형 · 피부 | 체형 willowy_curvy · 피부 pale |
 
 **머리:** ‘thin tail’·‘ice spikes’·키 2.2m에서 포니테일(묶은 꼬리) · 긴 머리 · 끝을 불규칙하게 친 앞머리
 
@@ -30637,7 +30638,7 @@ HAIR: long wind-wing hair (long hair streaming back like a pair of swept wings),
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 사방 뻗친 머리 · 머리 길이 짧은 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 | 인상 | 20대 초반 · 쿨함 · 눈 warm hazel · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **이유:** 강한 작은 개의 턱과 넓은 입을 선명한 턱끝과 굵은 눈썹으로 해석한다.
 
@@ -30672,7 +30673,7 @@ HAIR: short wild flare (wild, untamed hair flaring out in every direction), long
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 층을 살린 레이어드 · 머리 길이 긴 머리 · 앞머리 한쪽 눈을 덮는 긴 사이드뱅 |
 | 인상 | 20대 후반 · 쿨함 · 눈 silver grey · a thin, sharp eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 voluptuous · 피부 medium |
 
 **이유:** 두목 개의 큰 털 체적과 낮은 시선을 넓은 하관과 낮은 눈꺼풀로 구분한다.
 
@@ -30903,7 +30904,7 @@ HAIR: long messy bun, curtain bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 끝을 일자로 자른 컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 중반 · 과묵 · 눈 crimson red · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 pear_curvy · 피부 tan |
 
 **이유:** 매복하는 큰 갑각과 네모 이빨을 넓은 하관과 긴 입선으로 해석한다.
 
@@ -32424,7 +32425,7 @@ HAIR: medium winged sidelocks (side locks swept out like small wings), no bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 번개 지그재그 머리 · 머리 길이 긴 머리 · 앞머리 끝을 불규칙하게 친 앞머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 emerald green · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 olive |
+| 체형 · 피부 | 체형 lean_toned · 피부 olive |
 
 **이유:** 기계 장갑의 육중한 체적을 넓은 하관 및 작은 깊은 눈으로 해석한다.
 
@@ -32828,7 +32829,7 @@ HAIR: very long ringlet curls, long side bangs.
 | 입 | 입이 넓은 |
 | 머리 | 헤어스타일 높이 묶은 포니테일 · 머리 길이 매우 긴 머리 · 앞머리 옆으로 넘긴 앞머리 |
 | 인상 | 20대 후반 · 위엄 · 눈 garnet red · a bold, defined eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 tan |
+| 체형 · 피부 | 체형 curvy · 피부 tan |
 
 **이유:** 고대 용의 강한 몸과 큰 볏을 넓은 하관 및 굵은 눈썹으로 해석한다.
 
@@ -33349,7 +33350,7 @@ HAIR: long wolf cut, choppy bangs.
 | 입 | 도톰한 입술 |
 | 머리 | 헤어스타일 좌우 길이가 다른 비대칭컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없이 얼굴을 감싸는 긴 옆머리 |
 | 인상 | 20대 후반 · 과묵 · 눈 silver grey · no eyeliner, natural strong brows |
-| 체형 · 피부 | 체형 strong_curvy · 피부 medium |
+| 체형 · 피부 | 체형 pear_curvy · 피부 medium |
 
 **이유:** 회전하는 도끼 뿔과 금속 능선을 각진 하관과 정돈된 수평 눈매로 해석한다.
 
@@ -33384,7 +33385,7 @@ HAIR: medium asymmetric cut, face-framing side locks.
 | 입 | 얇은 입술 |
 | 머리 | 헤어스타일 옆/뒤를 밀어낸 언더컷 · 머리 길이 중간 길이 · 앞머리 앞머리 없음 |
 | 인상 | 20대 후반 · 영리함 · 눈 deep navy-blue · a thin, neat eyeliner |
-| 체형 · 피부 | 체형 strong_curvy · 피부 light |
+| 체형 · 피부 | 체형 busty_slender · 피부 light |
 
 **이유:** 금속 염소의 뿔과 칼날 어깨의 긴 선을 긴 윤곽과 선명한 눈매로 해석한다.
 

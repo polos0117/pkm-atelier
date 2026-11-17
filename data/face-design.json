@@ -11190,7 +11190,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"willowy_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 방어 · 강철 타입 · 비행 타입 · 몸 형태 wings",
@@ -11404,7 +11404,7 @@
 "능력치 HP"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 120kg · 능력치 공격 · 땅 타입 · 몸 형태 quadruped",
@@ -11455,7 +11455,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 120kg · 능력치 공격 · 땅 타입 · 몸 형태 quadruped",
@@ -12155,7 +12155,7 @@
 "도감 글 잠 · 느긋함"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2m · 무게 202kg · 능력치 공격 · 바위 타입",
@@ -12210,7 +12210,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2m · 무게 202kg · 능력치 공격 · 바위 타입",
@@ -12267,7 +12267,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2m · 무게 202kg · 능력치 공격 · 바위 타입",
@@ -14985,7 +14985,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 340kg · 능력치 특방 · 바위 타입 · 강철 타입",
@@ -15252,7 +15252,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 2.1m · 무게 360kg · 능력치 방어 · 강철 타입",
@@ -15308,7 +15308,7 @@
 "도감 글 사나움"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 2.1m · 무게 360kg · 능력치 방어 · 강철 타입",
@@ -15364,7 +15364,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 2.1m · 무게 360kg · 능력치 방어 · 강철 타입",
@@ -17075,7 +17075,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"tan",
 "look_cues":[
 "체형 ← 무게 154kg · 능력치 공격 · 바위 타입 · 에스퍼 타입",
@@ -17237,7 +17237,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 공격 · 물 타입 · 악 타입 · 몸 형태 armor",
@@ -17293,7 +17293,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 공격 · 물 타입 · 악 타입 · 몸 형태 armor",
@@ -17558,7 +17558,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 능력치 공격 · 바위 타입 · 벌레 타입",
@@ -17615,7 +17615,7 @@
 "도감 글 잠 · 느긋함"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 능력치 공격 · 바위 타입 · 벌레 타입",
@@ -19020,7 +19020,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 550kg · 능력치 공격 · 강철 타입 · 에스퍼 타입",
@@ -19074,7 +19074,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 550kg · 능력치 공격 · 강철 타입 · 에스퍼 타입",
@@ -19128,7 +19128,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 550kg · 능력치 공격 · 강철 타입 · 에스퍼 타입",
@@ -19187,7 +19187,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 230kg · 능력치 방어 · 바위 타입 · 몸 형태 humanoid",
@@ -19522,7 +19522,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"tan",
 "look_cues":[
 "체형 ← 키 3.5m · 무게 950kg · 능력치 공격 · 땅 타입",
@@ -19736,7 +19736,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"olive",
 "look_cues":[
 "체형 ← 키 2.2m · 무게 310kg · 능력치 공격 · 풀 타입",
@@ -19785,7 +19785,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"olive",
 "look_cues":[
 "체형 ← 키 2.2m · 무게 310kg · 능력치 공격 · 풀 타입",
@@ -19839,7 +19839,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"olive",
 "look_cues":[
 "체형 ← 키 2.2m · 무게 310kg · 능력치 공격 · 풀 타입",
@@ -20840,7 +20840,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 102.5kg · 능력치 공격 · 바위 타입",
@@ -20898,7 +20898,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 102.5kg · 능력치 공격 · 바위 타입",
@@ -20951,7 +20951,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 149.5kg · 능력치 방어 · 바위 타입 · 강철 타입",
@@ -21007,7 +21007,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 149.5kg · 능력치 방어 · 바위 타입 · 강철 타입",
@@ -22340,7 +22340,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 187kg · 능력치 방어 · 강철 타입 · 에스퍼 타입",
@@ -22392,7 +22392,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 187kg · 능력치 방어 · 강철 타입 · 에스퍼 타입",
@@ -22899,7 +22899,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"busty_slender",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 54kg · 능력치 특공 · 격투 타입 · 강철 타입",
@@ -22955,7 +22955,7 @@
 "능력치 특공"
 ]
 },
-"body":"strong_curvy",
+"body":"busty_slender",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 54kg · 능력치 특공 · 격투 타입 · 강철 타입",
@@ -24380,7 +24380,7 @@
 "능력치 특방"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 340kg · 능력치 특방 · 바위 타입 · 강철 타입",
@@ -26946,7 +26946,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 260kg · 능력치 공격 · 바위 타입",
@@ -26998,7 +26998,7 @@
 "도감 글 분노"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 260kg · 능력치 공격 · 바위 타입",
@@ -27055,7 +27055,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 260kg · 능력치 공격 · 바위 타입",
@@ -27217,7 +27217,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.7m · 무게 40.4kg · 능력치 공격 · 땅 타입",
@@ -27268,7 +27268,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.7m · 무게 40.4kg · 능력치 공격 · 땅 타입",
@@ -28729,7 +28729,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"tan",
 "look_cues":[
 "체형 ← 무게 200kg · 능력치 방어 · 벌레 타입 · 바위 타입",
@@ -28783,7 +28783,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"tan",
 "look_cues":[
 "체형 ← 무게 200kg · 능력치 방어 · 벌레 타입 · 바위 타입",
@@ -30991,7 +30991,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"petite_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.6m · 무게 81kg · 능력치 방어 · 강철 타입",
@@ -31042,7 +31042,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"petite_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.6m · 무게 81kg · 능력치 방어 · 강철 타입",
@@ -31094,7 +31094,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"petite_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.6m · 무게 81kg · 능력치 방어 · 강철 타입",
@@ -32169,7 +32169,7 @@
 "도감 글 사나움"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 139kg · 능력치 공격 · 드래곤 타입",
@@ -32760,7 +32760,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"petite_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 키 0.3m · 무게 33kg · 능력치 방어 · 벌레 타입",
@@ -33089,7 +33089,7 @@
 "도감 글 상냥함"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"light",
 "look_cues":[
 "체형 ← 키 2.1m · 무게 250kg · 능력치 방어 · 강철 타입",
@@ -33146,7 +33146,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy_athletic",
 "skin":"tan",
 "look_cues":[
 "체형 ← 키 1.9m · 무게 260kg · 능력치 공격 · 바위 타입",
@@ -33481,7 +33481,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"lean_toned",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 능력치 공격 · 땅 타입 · 비행 타입",
@@ -35801,7 +35801,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 96kg · 능력치 방어 · 바위 타입 · 물 타입",
@@ -35852,7 +35852,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 무게 96kg · 능력치 방어 · 바위 타입 · 물 타입",
@@ -38583,7 +38583,7 @@
 "도감 글 분노"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"pale",
 "look_cues":[
 "체형 ← 무게 180kg · 능력치 공격 · 격투 타입 · 얼음 타입",
@@ -38639,7 +38639,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"pale",
 "look_cues":[
 "체형 ← 무게 180kg · 능력치 공격 · 격투 타입 · 얼음 타입",
@@ -39122,7 +39122,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2.5m · 무게 920kg · 능력치 공격 · 땅 타입",
@@ -39177,7 +39177,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"hourglass",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2.5m · 무게 920kg · 능력치 공격 · 땅 타입",
@@ -40447,7 +40447,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"tan",
 "look_cues":[
 "체형 ← 키 0.3m · 무게 40kg · 능력치 방어 · 바위 타입",
@@ -40555,7 +40555,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"tan",
 "look_cues":[
 "체형 ← 키 2m · 무게 212kg · 능력치 방어 · 불꽃 타입",
@@ -40886,7 +40886,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 방어 · 드래곤 타입 · 격투 타입",
@@ -40942,7 +40942,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 방어 · 드래곤 타입 · 격투 타입",
@@ -41000,7 +41000,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 능력치 방어 · 드래곤 타입 · 격투 타입",
@@ -41556,7 +41556,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"willowy_curvy",
 "skin":"golden beige",
 "look_cues":[
 "체형 ← 키 2.4m · 무게 333.6kg · 능력치 공격 · 벌레 타입",
@@ -43654,7 +43654,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 무게 115.5kg · 능력치 공격 · 물 타입 · 바위 타입",
@@ -43711,7 +43711,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 무게 115.5kg · 능력치 공격 · 물 타입 · 바위 타입",
@@ -45868,7 +45868,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"bronze",
 "look_cues":[
 "체형 ← 키 2.5m · 무게 520kg · 능력치 방어 · 바위 타입",
@@ -46077,7 +46077,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 키 3m · 무게 650kg · 능력치 공격 · 강철 타입",
@@ -46131,7 +46131,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"olive",
 "look_cues":[
 "체형 ← 키 3m · 무게 650kg · 능력치 공격 · 강철 타입",
@@ -47069,7 +47069,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"willowy_curvy",
 "skin":"pale",
 "look_cues":[
 "체형 ← 키 2.2m · 무게 800kg · 능력치 공격 · 얼음 타입",
@@ -49521,7 +49521,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 61kg · 능력치 공격 · 악 타입 · 몸 형태 quadruped",
@@ -49573,7 +49573,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"voluptuous",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 61kg · 능력치 공격 · 악 타입 · 몸 형태 quadruped",
@@ -49944,7 +49944,7 @@
 "능력치 방어"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"tan",
 "look_cues":[
 "체형 ← 무게 79kg · 능력치 방어 · 바위 타입 · 몸 형태 armor",
@@ -52386,7 +52386,7 @@
 "능력치 공격"
 ]
 },
-"body":"strong_curvy",
+"body":"lean_toned",
 "skin":"olive",
 "look_cues":[
 "체형 ← 무게 303kg · 능력치 공격 · 바위 타입 · 전기 타입",
@@ -53049,7 +53049,7 @@
 "희귀"
 ]
 },
-"body":"strong_curvy",
+"body":"curvy",
 "skin":"tan",
 "look_cues":[
 "체형 ← 키 2.5m · 무게 303kg · 능력치 공격 · 격투 타입",
@@ -53867,7 +53867,7 @@
 "능력치 스피드"
 ]
 },
-"body":"strong_curvy",
+"body":"pear_curvy",
 "skin":"medium",
 "look_cues":[
 "체형 ← 무게 162.5kg · 능력치 스피드 · 바위 타입 · 에스퍼 타입",
@@ -53923,7 +53923,7 @@
 "능력치 특공"
 ]
 },
-"body":"strong_curvy",
+"body":"busty_slender",
 "skin":"light",
 "look_cues":[
 "체형 ← 무게 156kg · 능력치 특공 · 강철 타입 · 에스퍼 타입",

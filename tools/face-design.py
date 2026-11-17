@@ -1317,21 +1317,30 @@ LOOK_KEEP = ('body', 'skin', 'look_cues')
 BODIES = ['hourglass', 'voluptuous', 'curvy_athletic', 'busty_slender', 'curvy', 'tall_curvy', 'strong_curvy', 'petite_curvy', 'pear_curvy',
           'willowy_curvy', 'lean_toned', 'petite_voluptuous']   # 삼국지 공방 BODY 와 같은 열둘(볼륨 · 굴곡이 있는 몸만)
 BODY_CAP, SKIN_CAP = .11, .2
+# 건장형(strong_curvy — 「strong and broad-shouldered with firm muscle …」)은 큰 격투 · 땅 · 바위 · 강철 가족에만, 그림 없는 종의 2% 까지(2026-11-17 사용자 「건장형이 너무 많은거 같아. 실제이미지로 만들면 너무 어깨 형님들같아서」 → 「응 그렇게 진행해줘」).
+# 대표 종(최종 진화) 키 1.6m · 무게 100kg 이상이고, 가족 안에 키 0.5m 이하(아기 단계)가 없을 때. 이미 그린 가족(단단지 · 깜지곰 · 링곰)은 그대로 둔다
+STRONG_CAP, STRONG_H, STRONG_W, STRONG_TYPES, STRONG_BABY_H = .02, 1.6, 100, ('fighting', 'ground', 'rock', 'steel'), .5
+
+
+def strong_ok(ms):
+    r = rep_of(ms)
+    return (r.get('h') or 0) >= STRONG_H and (r.get('w') or 0) >= STRONG_W and bool({r.get('element'), r.get('element2')} & set(STRONG_TYPES)) \
+        and not any(0 < (m.get('h') or 0) <= STRONG_BABY_H for m in ms)
 BODY_TYPE = {
-    'fighting': {'strong_curvy': 1, 'curvy_athletic': 1, 'lean_toned': -3},   # 격투는 일상컷 복근 줄이 따로 있다(2026-11-12) — 슬림 근육형과 겹치지 않게
-    'dragon': {'tall_curvy': 1, 'strong_curvy': .6}, 'fairy': {'petite_voluptuous': .8, 'petite_curvy': .6, 'busty_slender': .5},
+    'fighting': {'curvy_athletic': 1, 'strong_curvy': .5, 'lean_toned': -3},   # 격투는 일상컷 복근 줄이 따로 있다(2026-11-12) — 슬림 근육형과 겹치지 않게
+    'dragon': {'tall_curvy': 1, 'curvy_athletic': .5}, 'fairy': {'petite_voluptuous': .8, 'petite_curvy': .6, 'busty_slender': .5},
     'psychic': {'busty_slender': .8, 'willowy_curvy': .6, 'hourglass': .4}, 'normal': {'curvy': .8, 'petite_curvy': .4},
     'water': {'hourglass': .8, 'voluptuous': .6}, 'grass': {'pear_curvy': .8, 'curvy': .6}, 'fire': {'curvy_athletic': .8, 'voluptuous': .5},
-    'electric': {'lean_toned': .8, 'curvy_athletic': .6}, 'ice': {'willowy_curvy': .8, 'busty_slender': .6}, 'ground': {'pear_curvy': .8, 'strong_curvy': .6},
-    'rock': {'strong_curvy': .8, 'pear_curvy': .4}, 'steel': {'tall_curvy': .6, 'strong_curvy': .6}, 'poison': {'hourglass': .8, 'voluptuous': .5},
+    'electric': {'lean_toned': .8, 'curvy_athletic': .6}, 'ice': {'willowy_curvy': .8, 'busty_slender': .6}, 'ground': {'pear_curvy': .8, 'voluptuous': .5},
+    'rock': {'pear_curvy': .8, 'voluptuous': .5, 'curvy_athletic': .3}, 'steel': {'hourglass': .6, 'tall_curvy': .5, 'curvy_athletic': .4}, 'poison': {'hourglass': .8, 'voluptuous': .5},
     'bug': {'lean_toned': .6, 'petite_curvy': .6, 'willowy_curvy': .4}, 'ghost': {'willowy_curvy': .8, 'busty_slender': .6},
     'dark': {'hourglass': .8, 'lean_toned': .5}, 'flying': {'willowy_curvy': .6, 'busty_slender': .5, 'lean_toned': .4},
 }
-BODY_STAT = [{'voluptuous': .8, 'curvy': .5}, {'strong_curvy': .8, 'curvy_athletic': .8}, {'strong_curvy': .6, 'pear_curvy': .6},
+BODY_STAT = [{'voluptuous': .8, 'curvy': .5}, {'curvy_athletic': .8, 'voluptuous': .3}, {'pear_curvy': .6, 'voluptuous': .4},
              {'busty_slender': .8, 'willowy_curvy': .5}, {'hourglass': .8, 'curvy': .4}, {'lean_toned': 1, 'curvy_athletic': .6}]
 BODY_SHAPE = {'ball': {'petite_voluptuous': 1, 'voluptuous': .6}, 'blob': {'petite_voluptuous': .8, 'voluptuous': .8}, 'squiggle': {'willowy_curvy': 1},
               'fish': {'hourglass': .6}, 'humanoid': {'hourglass': .4, 'tall_curvy': .4}, 'quadruped': {'curvy_athletic': .5},
-              'wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'bug-wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'armor': {'strong_curvy': .8}}
+              'wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'bug-wings': {'willowy_curvy': .5, 'lean_toned': .4}, 'armor': {'hourglass': .5, 'curvy_athletic': .3}}
 SKIN_COLOR = {'white': {'pale': 1, 'light': .6}, 'pink': {'pale': .8, 'light': .6}, 'yellow': {'light': .6, 'golden beige': .8},
               'blue': {'pale': .5, 'light': .6, 'medium': .3}, 'purple': {'pale': .5, 'light': .5, 'olive': .3}, 'green': {'olive': .8, 'light': .4},
               'brown': {'tan': .8, 'bronze': .6, 'golden beige': .5}, 'red': {'golden beige': .4, 'tan': .5, 'medium': .4},
@@ -1377,9 +1386,9 @@ def body_score(c):
         for b, w in tab.items(): sc[b] += w
     h, w = c.get('h') or 0, c.get('w') or 0
     bmi = w / max(h, .1) ** 2
-    if h >= 1.8: add({'tall_curvy': 1.5, 'willowy_curvy': .8, 'strong_curvy': .4}, f'키 {h:g}m')
+    if h >= 1.8: add({'tall_curvy': 1.5, 'willowy_curvy': .8}, f'키 {h:g}m')
     elif 0 < h <= .7: add({'petite_curvy': 1.5, 'petite_voluptuous': 1.0}, f'키 {h:g}m')
-    if bmi >= 50: add({'strong_curvy': 1, 'voluptuous': 1, 'pear_curvy': .8}, f'무게 {w:g}kg')
+    if bmi >= 50: add({'voluptuous': 1, 'pear_curvy': 1}, f'무게 {w:g}kg')
     elif bmi >= 35: add({'voluptuous': .5, 'curvy': .5, 'pear_curvy': .5}, f'무게 {w:g}kg')
     elif bmi <= 17: add({'willowy_curvy': 1, 'busty_slender': 1, 'lean_toned': .6}, f'가벼운 몸 {w:g}kg')
     st = c.get('stats') or []
@@ -1404,7 +1413,7 @@ def skin_score(c, opts):
 LOOK_PREV_W = 2.0   # 앞서 정한 체형 · 피부를 지키는 가산점 — 새 그림이 올라와 한 가족이 빠져도 다른 가족이 밀리지 않게
 
 
-def assign(fams, scorer, cap, prev=None):
+def assign(fams, scorer, cap, prev=None, caps=None):
     """가족마다 점수 · 상한(종 수로 센다) — 가장 뚜렷한 가족(첫째 · 둘째 점수 차)부터 자리를 준다. prev 는 {뿌리: 앞선 값}"""
     pre = []
     for r, ms in fams.items():
@@ -1416,7 +1425,7 @@ def assign(fams, scorer, cap, prev=None):
     # 앞서 정한 가족은 그 값을 그대로 지킨다(상한은 새 가족에만 — 그림이 올라와 가족이 빠질 때마다 다른 가족이 밀리지 않게)
     for r, ms, order, cues, _ in sorted(pre, key=lambda x: (not (prev and prev.get(x[0]) in x[2]), -x[4], x[0])):
         keep = prev and prev.get(r) in order
-        v = prev[r] if keep else next((v for v in order if used.get(v, 0) + len(ms) <= cap), order[0])
+        v = prev[r] if keep else next((v for v in order if used.get(v, 0) + len(ms) <= (caps or {}).get(v, cap)), order[0])
         used[v] = used.get(v, 0) + len(ms); out[r] = (v, cues)
     return out, used
 
@@ -1431,13 +1440,21 @@ def spread():
     bf = {r: ms for r, ms in fams.items() if not any(m['name'] in L['card'] for m in ms)}
     n_body = sum(len(ms) for ms in bf.values())
     prev = {k: {r: faces[by_no[rep_of(ms)['name']]].get(k) for r, ms in fams.items()} for k in ('body', 'skin')}
-    bres, bused = assign(bf, body_score, max(1, int(n_body * BODY_CAP)), prev['body'])
+    # 건장형은 자격 있는 가족만 · 상한 안에서 — 앞선 건장형은 다 지키지 않고 다시 고른다(다른 체형 가족은 그대로)
+    ok = {r for r, ms in bf.items() if strong_ok(ms)}
+    for r in bf:
+        if prev['body'].get(r) == 'strong_curvy': prev['body'][r] = None   # 건장형은 상한(2%) 안에서 새로 — 앞선 값을 지키지 않는다
+    def bscore(c, _ok={rep_of(ms)['name'] for r, ms in bf.items() if r in ok}):
+        sc, cues = body_score(c)
+        if c['name'] not in _ok: sc['strong_curvy'] = -99.0
+        return sc, cues
+    bres, bused = assign(bf, bscore, max(1, int(n_body * BODY_CAP)), prev['body'], {'strong_curvy': max(1, int(n_body * STRONG_CAP))})
     sres, sused = assign(fams, lambda c: skin_score(c, L['skin']), max(1, int(sum(len(ms) for ms in fams.values()) * SKIN_CAP)), prev['skin'])
-    for f in faces.values():
-        for k in LOOK_KEEP: f.pop(k, None)
+    # 그림 없는 가족만 다시 쓴다 — 나눈 뒤 그림이 올라온 가족은 그 체형 · 피부를 그대로 둔다(그린 일상컷과 같은 몸 — 2026-11-17)
     for r, ms in fams.items():
         for m in ms:
             f = faces[by_no[m['name']]]; cues = []
+            for k in LOOK_KEEP: f.pop(k, None)
             if r in bres: f['body'] = bres[r][0]; cues += ['체형 ← ' + ' · '.join(bres[r][1][:4])]
             f['skin'] = sres[r][0]; cues += ['피부 ← ' + ' · '.join(sres[r][1][:3])]
             f['look_cues'] = cues + ['가족 ' + r + '(대표 ' + rep_of(ms)['name'] + ')']
@@ -1580,6 +1597,7 @@ def render():
         '(같은 진화면 같은 몸 · 같은 피부) 대표 종(능력치 합이 가장 큰 종)의 키 · 무게 · 가장 높은 능력치 · 타입 · 몸 형태 · 도감 색에 점수를 주고 `python3 tools/face-design.py spread` 로 고른다.',
         '',
         f'- 체형은 볼륨 · 굴곡이 있는 열둘(삼국지 공방과 같은 글, `VOCAB_EN.body`)에서, 한 체형은 그 종들의 {int(BODY_CAP * 100)}% 까지. 손으로 정한 `CARD_BODY`(81종)가 이기고, 이 표는 그다음 — 일상컷 BODY TYPE 줄 · 지시문 묶음 외형 칸 body type. 그림이 있는 가족은 그대로(`CARD_FIGURE`).',
+        f'- 건장형(어깨 넓고 단단한 근육)은 큰 격투 · 땅 · 바위 · 강철 가족(대표 종 키 {STRONG_H:g}m · 무게 {STRONG_W}kg 이상, 아기 단계 없음)에만, {int(STRONG_CAP * 100)}% 까지 — 2026-11-17 「어깨 형님들 같아서」 로 줄였다(그 자리는 풍만 · 서양배 · 모래시계 · 굴곡 쪽). 이미 그린 가족은 그대로.',
         f'- 피부는 외형 칸 skin tone 의 여덟 값에서, 한 값은 {int(SKIN_CAP * 100)}% 까지. 새 인물(경장 ①)의 IMPRESSION 줄에 「… in her twenties with <피부>」 로 실리고, 피부를 직접 고르면 빠진다.',
         '- 앞머리 넷(시스루 · 베이비 뱅 · 얼굴을 감싸는 옆머리 · 뒤로 넘긴 앞머리)을 더하고, 잠기지 않은 종에서 많이 쓰인 값부터 고르게 옮겼다.',
         '- 얼굴형 둘(V라인 · 역삼각형) · 눈매 넷(봉황눈 · 덮인 눈 · 고양이 눈 · 도화눈)을 더하고, 그림 없는 종에서 한 얼굴형은 20% · 턱은 22% · 눈매는 17% 까지(`FACE_CAP` — 계란형 40% · 둥근 턱 39% · 가는 눈 32% 였다). 그림 있는 종의 얼굴은 움직이지 않는다.',
