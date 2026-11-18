@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · ① GPT 임의 설계 — 칸 채우기(세 칸 규칙)
+- 사용자 「크게는 우리거를 따르는데, 헤어스타일, 의상은 무조건 다르게 … 의상만 우리 실루엣 안에서만」 → 「응 이대로 진행해줘」 — 삼국지 · 원소와 같은 꼴
+- light-free.txt 는 주문 아래 우리 경장 지시문을 통째로 싣고 칸만 비운다: [HAIRSTYLE: …] · [ARMOR SILHOUETTE: …](그 타입 추천 목록에서 우리 것 빼고, 글 그대로) · Design idea · Setting detail
+- Face · Impression · Type effects 줄은 고쳐도 되고 나머지 줄은 글자 그대로 — 같은 날 넣은 A안 · B안(목록 밖 외곽) 글은 이 꼴에서 안 쓴다(buildFreeOld 로 남김)
+- 검사 tools/world-fill-check.cjs(lib/prompt-anthro.js freeFillErrors — 칸 밖 고침 · 우리와 같은 머리 · 목록 밖 실루엣 · 두 장이 같음 · SUMMARY 없음), IMAGE_RULES 145 · 묶음 차례표 안내 · tests/prompt-pack.cjs
+
 ## 2026-11-18 · gpt · 뽀뽀라 전용컷 자세 수정
 - data/casual-own.json — 뷰티 카운터 견습의 소품 보기 자세를 주머니가 필요 없는 stand_inspect로 바꿔 일상 90번의 왼손 선택값 검사를 통과하게 했다.
 
