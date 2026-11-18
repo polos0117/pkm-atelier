@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-19 · claude · 칸 채우기 검사 말을 낱말 표로 — tests/words.cjs 통과
+- 같은 날 넣은 칸 채우기 검사(worldFillErrors · freeFillErrors)의 한글 오류 말이 조립부 코드에 박혀 tests/words.cjs 가 깨져 있었다(원소 근본 B 묶음 검사에서 드러남)
+- 말은 lib/prompt-spec.js 의 GPT 설계 주문 표(msg)로 옮기고 조립부는 FM(열쇠)로 읽는다 — 글은 그대로라 검사 · 도구 출력은 같다. ?v= 올림
+
 ## 2026-11-18 · gpt · 스이쿤 수질 검사원 컷 자세 수정
 - data/casual-own.json — 수질 검사원 의상에 맞는 자세로 바꾸고 시료병을 드는 손을 장면과 일치시켰다.
 
