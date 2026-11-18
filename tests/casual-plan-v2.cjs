@@ -255,7 +255,9 @@ for (let i = 0; i < 8; i++) {
     assert(st.length === 1 && st[0].ofam !== GCR.outfit && st[0].ofam !== 'pokemon_costume' && !st[0].ofree && !st[0].xfree && !st[0].sfree, card + ' 일반 컷 하나에 상황 ' + JSON.stringify(st.map(x => [x.cut, x.ofam, x.situ]))); }
   const g = gcs[0], x = g.cosplay;
   assert(x && LIST.games.some(gg => gg.key === x.game) && CUT_KEYS.includes(x.cut) && g.item === 'gc_' + x.cut, card + ' 게임 · 재단 · 옷 ' + JSON.stringify(g));
-  assert(x.character && !x.used && !x.again && !gcUsed.some(u => u.game === x.game && G.nameKey(u.character) === G.nameKey(x.character) && x.round === 1), card + ' 새 계획엔 pick 칸이 없다 — 캐릭터가 찬다 ' + JSON.stringify(x));
+  /* 주인공 하나 게임(many: false)은 같은 주인공이 안 입은 재단으로 다시 나온다(lib/game-cosplay.js 2) — 재단만 안 겹치면 된다(2026-11-18, 무작위 차례가 바뀌어 젤다가 두 번 뽑혔다) */
+  const solo = !(LIST.games.find(gg => gg.key === x.game) || {}).many;
+  assert(x.character && !x.used && !x.again && !gcUsed.some(u => u.game === x.game && G.nameKey(u.character) === G.nameKey(x.character) && x.round === 1 && (!solo || u.cut === x.cut)), card + ' 새 계획엔 pick 칸이 없다 — 캐릭터가 찬다 ' + JSON.stringify(x));
   assert(GCR.places.includes(g.place) || (GCR.water_cuts.includes(x.cut) && GCR.water_places.includes(g.place)), card + ' 장소 ' + g.place + ' ' + x.cut);
   assert(!GCR.not_frames.includes(g.frame) && !g.ocolor && !g.ofree && !g.xfree, card + ' 얼굴 클로즈업 · 옷 색 · 자유 칸 없음 ' + g.frame);
   assert.equal(ch.cuts.filter(y => y.ofree).length, 2, card + ' 옷 자유 둘'); assert.equal(ch.cuts.filter(y => y.xfree).length, 1, card + ' 갈래 · 상황 자유 하나');
