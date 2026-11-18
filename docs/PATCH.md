@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · 세계컷 GPT 설계 3단계 — 설계 요약 기록 · 비슷한 등록작 피하기
+- 사용자 2026-11-18 「응 허용하고 이순서대로 진행해줘」 — 세계컷 GPT 설계안 3단계: 설계 요약 기록 · 비슷한 등록작 피하기.
+- 주문(WORLD_FREE / FREE_DESIGN .summary)에 「지시문 첫 줄 SUMMARY: 얼굴 윤곽 · 눈매와 눈썹 · 표정 · 머리 외곽 · 의상(장갑) 큰 형태」, 기록 generation.summary(묶음 안내).
+- tools/design-near.cjs — 얼굴 설계표(얼굴형 · 턱 · 눈매 · 눈썹 · 헤어스타일)와 기록 light-ui.json 의 메카 실루엣으로 등록 ① 을 견주고(GPT 설계 ① 은 기록 요약 낱말 겹침), 점수 3 이상 셋을 light-free.txt 주문에(lib/prompt-anthro.js buildFree 넷째 인자). tests/design-near.cjs.
+
 ## 2026-11-18 · claude · 세계컷 GPT 설계 2단계 — B안(역할 · 기능 출발, 목록 밖 외곽 허용)
 - 사용자 2026-11-18 「응 허용하고 이순서대로 진행해줘」 — 세계컷 GPT 설계안 2단계: 둘째 GPT 설계(-gpt2)는 B안 — 목록 밖 외곽 허용.
 - lib/prompt-spec.js FREE_DESIGN.second → 「Silhouette — Design B」: 타입 · 특징에서 경장의 기능 하나를 골라, 고정 자세 · 구도 안에서 장갑판 · 기능 모듈 배치로 새 외곽(목록 밖도, 경장 폼 안에서), 관절 덮개 · 가벼운 타입 효과로 기능, 원작 특징은 읽히게. free 줄 — 실루엣은 A · B 안을 따른다.
