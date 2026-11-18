@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · 빈 일상컷 20장 API 로 채워 올림
+- 열세 카드의 막혀 비었던 열여섯 자리 + 꼬렛 8 · 9 · 10 · 왕눈해 10(열 장까지 늘림)을 tools/api-fill.cjs 로 그려 pkm-atelier-img-5 에 올렸다(사용자 2026-11-18 「응 왕눈해까지 다 올려줘」). 기록은 records/<종>-20261118-apifill/.
+- 남은 지시문이 있던 열두 자리는 그 글 그대로, 강철톤 2 · 갸라도스 8 · 노고치 2 · 이브이 3 과 새 자리는 계획기 다시 채우기(세션 api-fill-1118 예약). 막힌 컷 없음. 왕눈해 8 은 하의가 안 보여 qa 에 stronger 로 적고 그대로 올렸다.
+
 ## 2026-11-18 · claude · 빈 일상컷 API 채우기 도구 · 계획기 --count
 - tools/api-fill.cjs — 빈 일상컷을 그림 API(gpt-image-2.5-sunburst, images/edits)로 그린다. 지시문은 묶음의 <자리>-prompt.txt 그대로, 첨부는 ① 경장. 막히면 <이름>.blocked.json(request_id)을 남기고 3 으로 끝난다(다음 단계는 IMAGE_RULES 3절 7). webp(품질 85 · method 6) · sheet(붙여 보기).
 - tools/casual-plan.cjs --count <카드>=<장 수> — 일곱 · 아홉 장 캐릭터를 다시 채울 때 열 장까지 늘린다(사용자 2026-11-18 「꼬렛이랑 왕눈해 빈 묶음 채워서 같이 만들어줘」). 다시 채우기는 옷 자유 · 갈래 자유 칸을 남은 자리만큼만 담는다(lib/casual-plan.js).
