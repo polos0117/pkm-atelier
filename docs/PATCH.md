@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · 빈 일상컷 API 채우기 도구 · 계획기 --count
+- tools/api-fill.cjs — 빈 일상컷을 그림 API(gpt-image-2.5-sunburst, images/edits)로 그린다. 지시문은 묶음의 <자리>-prompt.txt 그대로, 첨부는 ① 경장. 막히면 <이름>.blocked.json(request_id)을 남기고 3 으로 끝난다(다음 단계는 IMAGE_RULES 3절 7). webp(품질 85 · method 6) · sheet(붙여 보기).
+- tools/casual-plan.cjs --count <카드>=<장 수> — 일곱 · 아홉 장 캐릭터를 다시 채울 때 열 장까지 늘린다(사용자 2026-11-18 「꼬렛이랑 왕눈해 빈 묶음 채워서 같이 만들어줘」). 다시 채우기는 옷 자유 · 갈래 자유 칸을 남은 자리만큼만 담는다(lib/casual-plan.js).
+
 ## 2026-11-18 · claude · 막힌 컷 빈칸 — 재생성 금지는 받은 그림에만 · skips 검사
 - 「재생성 금지」 는 이미 돌아온 그림에만 걸린다고 IMAGE_RULES 3절 7 · 묶음 안내에 적었다 — 그림이 안 돌아온 막힌 컷은 같은 지시문 한 번 → 노출 low 까지 → 다른 장면 → 다른 장소 묶음을 끝까지 밟고, 다 막혔을 때만 비운다(사용자 2026-11-18).
 - qa.json skipped 꼴을 tries(step · request_id · scene · group)로 정하고, tools/casual-ledger.py skips 가 단계가 모자라거나 「사용자 지시로 재시도 안 함」 을 사유로 멈춘 묶음을 덜 끝난 것으로 잡는다(1 로 끝남). 지금 기록에선 일곱 자리가 걸린다.

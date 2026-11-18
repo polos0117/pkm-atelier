@@ -2,7 +2,7 @@
 /* 일상컷 계획기 — 생성 전에 일상컷(새 캐릭터 열 장 — 2026-11-15 필수 셋 · 포켓몬 코스튬 · 게임 코스프레 · 옷 자유 둘 · 갈래 · 상황 자유 · 자유 둘, 일곱 장 · 아홉 장 · 세 장으로 등록된 캐릭터 다시 채우기는 그때 규칙)의 생성기 선택값을 도구가 정한다(lib/casual-plan.js). IMAGE_RULES.md 3절 "일상컷 장면 설정 순서" 0.
 
    node tools/casual-plan.cjs <카드> [<카드> …] --session <이름> [--reserve] [--push] [--v1]
-       [--refill <카드>] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4> <img-5>]
+       [--refill <카드> [--count <카드>=<장 수>]] [--avoid <카드>:<컷>:<칸>=<값>] [--keep <카드>:<컷,컷>] [--seed <씨앗>] [--out PLAN.json] [--no-pull] [--repos <img> <img-2> <img-3> <img-4> <img-5>]
        [--cosplay-full <게임 열쇠>] [--cosplay-repos <그림 저장소 …>]
    구체 색(shade, 2026-11-16 — IMAGE_RULES 3절 「옷 색」): 옷 색 묶음(ocolor) 안의 구체 색 하나를 정한다 — 이 공방 그림 저장소(--repos)가 그린 기록 + 계획 · 예약에서 덜 쓴 것 먼저,
    머리 hue(카드 도감 색) 피함, 한 계획 안 겹침 없음. --avoid 칸 shade=<열쇠>
@@ -75,6 +75,7 @@ function args(argv) {
     else if (a === '--own') o.ownOnly = true;
     else if (a === '--own-level') o.ownLevel = argv[++i];
     else if (a === '--refill') o.refill.push(argv[++i]);
+    else if (a === '--count') { const m = /^(.+?)=(\d+)$/.exec(argv[++i] || ''); if (!m) throw new Error('--count 는 카드=장수(10)'); (o.count = o.count || {})[m[1]] = Number(m[2]); }
     else if (a === '--avoid') o.avoid.push(argv[++i]);
     else if (a === '--keep') { const m = /^(.+?):([\d,]+)$/.exec(argv[++i] || ''); if (!m) throw new Error('--keep 은 카드:컷번호(1,3)'); o.keep[m[1]] = m[2].split(',').map(Number); }
     else if (a === '--repos') { o.repos = []; while (i + 1 < argv.length && !argv[i + 1].startsWith('--')) o.repos.push(argv[++i]); }
@@ -226,7 +227,8 @@ function planBatch(o, S, entries, look, cards, attempt) {
       kept = res.cuts.filter(c => o.keep[card].includes(c.cut)).map(c => ({ ...c, kept: true }));
     }
     /* 2026-11-09 아홉 장 — 세 장 · 일곱 장으로 등록된 캐릭터 다시 채우기는 그때 규칙(일곱 장은 상황 없이) */
-    const count = refill ? P.refillCount(mine) : P.CUTS;   /* 등록 시각이 NINE_SINCE 앞이고 7번까지면 일곱 장 */
+    /* --count 카드=N(2026-11-18 사용자 「꼬렛이랑 왕눈해 빈 묶음 채워서 같이 만들어줘」) — 일곱 · 아홉 장 캐릭터를 다시 채울 때 지금 장 수(열 장)까지 늘린다 */
+    const count = refill && o.count && o.count[card] ? o.count[card] : refill ? P.refillCount(mine) : P.CUTS;   /* 등록 시각이 NINE_SINCE 앞이고 7번까지면 일곱 장 */
     if (refill && kept.length >= count) throw new Error(card + ' 는 ' + count + '장이 다 있다');
     const avoid = o.avoid.map(a => { const m = /^(.+?):(\d+)?:(\w+)=(.+)$/.exec(a); if (!m) throw new Error('--avoid 는 카드:컷:칸=값'); return m; })
       .filter(m => m[1] === card).map(m => ({ cut: m[2] ? Number(m[2]) : null, field: m[3], value: m[4] }));
