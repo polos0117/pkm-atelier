@@ -246,15 +246,18 @@ st=m.storage_of(json.load(open(sys.argv[1]))); c=st['cards'][st['last']]['scenes
     assert(/^Hair: \[HAIRSTYLE: …\]\.$/m.test(lfTpl) && /\[ARMOR SILHOUETTE: …\]/.test(lfTpl) && /^Design idea: …$/m.test(lfTpl) && /^Setting detail: …$/m.test(lfTpl) && /^Type effects: \[TYPE EFFECTS: …\]$/m.test(lfTpl), '① 임의 설계 — 칸 다섯');
     const pkFx = (lt.match(/^Type effects: (.*)$/m) || [])[1] || '';
     assert(pkFx && lfHead.includes('Choose from ours — type effects') && pkFx.split(/(?<=\.) (?=[A-Z])/).every(x => lfHead.includes(x)) && !/Type effects line/.test(lfHead), '① 임의 설계 — 타입 효과는 우리 표의 손 · 몸 · 주변 문장에서(우리 것도 목록에)');
-    const tplRest = lfTpl.split('\n').filter(l => !/\[HAIRSTYLE|\[ARMOR SILHOUETTE|\[TYPE EFFECTS|^Design idea: …$|^Setting detail: …$/.test(l));
-    assert.deepEqual(tplRest, lt.replace(/\n$/, '').split('\n').filter(l => !/^Hair: |^Silhouette: |^Type effects: /.test(l)), '① 임의 설계 — 칸 밖은 우리 지시문 그대로');
-    const fillIt = (h, k) => 'SUMMARY: hairstyle ' + h + '\n' + lfTpl.replace('[HAIRSTYLE: …]', h).replace('[ARMOR SILHOUETTE: …]', pkList[k]).replace('Design idea: …', 'Design idea: a lightning-bolt cut-out along the hip plates.').replace('Setting detail: …', 'Setting detail: a storm-lit rooftop.').replace('[TYPE EFFECTS: …]', pkFx);
+    const tplRest = lfTpl.split('\n').filter(l => !/\[HAIRSTYLE|\[ARMOR SILHOUETTE|\[TYPE EFFECTS|\[BODY TYPE|^Design idea: …$|^Setting detail: …$/.test(l));
+    assert.deepEqual(tplRest, lt.replace(/\n$/, '').split('\n').filter(l => !/^Hair: |^Silhouette: |^Type effects: |^body type: /.test(l)), '① 임의 설계 — 칸 밖은 우리 지시문 그대로');
+    assert(/^body type: \[BODY TYPE: …\]$/m.test(lfTpl) && lfHead.includes('May keep or change — body type: ') && lfHead.includes(S.CARD_FIGURE) && Object.values(S.VOCAB_EN.body).every(x => lfHead.includes(x)), '① 임의 설계 — 체형 칸은 우리 체형 목록에서(2026-11-18)');
+    const fillIt = (h, k) => 'SUMMARY: hairstyle ' + h + '\n' + lfTpl.replace('[HAIRSTYLE: …]', h).replace('[ARMOR SILHOUETTE: …]', pkList[k]).replace('Design idea: …', 'Design idea: a lightning-bolt cut-out along the hip plates.').replace('Setting detail: …', 'Setting detail: a storm-lit rooftop.').replace('[TYPE EFFECTS: …]', pkFx).replace('[BODY TYPE: …]', S.VOCAB_EN.body.curvy);
     const pkSt = lu.storage.cards['피카츄'], g1 = fillIt('a short wavy bob', 0), g2 = fillIt('a high twin-tail', pkList.length > 1 ? 1 : 0);
     assert.deepEqual(P.freeFillErrors(lt.replace(/\n$/, ''), pkSt, CMT, g1, pkList.length > 1 ? g2 : null), [], '① 칸 채우기 — 칸만 채우면 통과');
     const bad = P.freeFillErrors(lt.replace(/\n$/, ''), pkSt, CMT, g1.replace(/^Pose: .*$/m, 'Pose: arms crossed.'), g1);
     assert(bad.some(e => /줄이 바뀌었다: Pose/.test(e)) && bad.some(e => /헤어스타일이 같다/.test(e)), '① 칸 채우기 — 칸 밖을 고치거나 둘이 같으면 걸린다: ' + bad.join(' / '));
     const badFx = P.freeFillErrors(lt.replace(/\n$/, ''), pkSt, CMT, g1.replace(/^Type effects: .*$/m, 'Type effects: Crackling purple lightning wraps her fists.'));
     assert(badFx.some(e => /타입 효과가 우리 표의 문장이 아니다/.test(e)), '① 칸 채우기 — 표 밖 타입 효과는 걸린다: ' + badFx.join(' / '));
+    const badBody = P.freeFillErrors(lt.replace(/\n$/, ''), pkSt, CMT, g1.replace(/^body type: .*$/m, 'body type: a giant muscular frame'));
+    assert(badBody.some(e => /체형이 우리 체형 목록의 글이 아니다/.test(e)), '① 칸 채우기 — 목록 밖 체형은 걸린다: ' + badBody.join(' / '));
     assert(idx.includes('light-free.txt') && idx.includes('멈추고 묻는다') && idx.includes('gpt_free'), '차례표에 ① 네 장 · 멈춤');
     assert(fs.readFileSync(path.join(d7, 'casual3-prompt.txt'), 'utf8').includes('BODY TYPE: ' + S.CARD_FIGURE + ' — '), '일상컷 몸 = 설계표 체형(2026-11-08)');
     /* mecha 를 바꾸면 사유, 표에 없는 값 · 다른 타입은 걸린다 */

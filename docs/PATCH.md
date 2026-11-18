@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · ① GPT 임의 설계 — 체형 칸 · 피부색 허용
+- 사용자 「피부랑 체형까지는 바꿈 허용해줘」 → 「응 A로 진행해줘」(우리 체형 목록 안에서만)
+- light-free.txt 의 body type 줄을 [BODY TYPE: …] 칸으로 — 주문에 우리 체형 목록(CARD_FIGURE + VOCAB_EN.body)을 싣고 하나를 글 그대로, 우리 것 그대로도 된다
+- Impression 줄의 피부색은 바꿔도 된다고 주문에 적었다. 검사 freeFillErrors · tools/world-fill-check.cjs — 목록 밖 · 고친 체형 글은 걸린다
+
 ## 2026-11-18 · claude · ① GPT 임의 설계 — 타입 효과도 우리 표 안에서
 - 사용자 「타입효과는 바꾸라고 허용은 해줬는데, 우리거 안에서 고르는 느낌이 안들던데」 → 「응 이대로 진행해줘」
 - light-free.txt 의 Type effects 줄을 [TYPE EFFECTS: …] 칸으로 — 우리 효과 표(data/concept-mecha.json fx × 그 종 타입)의 손 · 몸 · 주변 문장 목록을 주문에 싣고 하나씩 이 차례로 글 그대로(우리 것과 같아도 된다)
