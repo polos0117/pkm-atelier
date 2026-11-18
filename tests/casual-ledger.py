@@ -339,4 +339,26 @@ _old_ex = [k.split("/")[1] for k in LEG if k.startswith("everyday_basic/") and k
 _d = _doc(SAME, OTHER[3]); _d["entries"][len(hist)]["cuts"][0]["ex"] = _old_ex                          # 가장 오래된 예약의 예시
 _ex = copy.deepcopy(good); _ex["characters"][0]["cuts"][0].update(cat="everyday_basic", ex=_old_ex)
 assert [e for e in L.check_plan(_d, _ex, SP) if "이미 썼다" in e], L.check_plan(_d, _ex, SP)
-print("PASS 일상컷 장부: 열 장(필수 셋 한 장씩 · 상황 노출 한 장 · 갈래 · 상황 자유 한 장 · 장면 자유 한 장 · 같은 프레이밍 두 장까지 · 같은 짝 한 장) · 두 열쇠(옛 칸 ↔ 트리 길) · 트리 위의 길 · 장소 묶음 · 기록 읽기·옷 종류 · 장소·하는 일 10명·한 바퀴 · 구도 짝·새 값 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈")
+# 막혀 비운 컷(qa.json skipped) — 3절 7 순서를 끝까지 밟아야 한다(2026-11-18 「재생성 금지」 는 이미 받은 그림에만)
+_t = lambda step, g="beach", rid="r": {"step": step, "request_id": rid, "scene": "s-" + step, "group": g}
+_full = {"slot": "casual8", "tries": [_t("retry"), _t("moderate"), _t("low"), _t("replan"), _t("group", "city")]}
+assert L.skip_problems(_full) == [], L.skip_problems(_full)
+for _drop in ("retry", "low", "replan", "group"):
+    _e = {"slot": "casual8", "tries": [t for t in _full["tries"] if t["step"] != _drop]}
+    assert any(L.SKIP_STEP_KO[_drop] in p for p in L.skip_problems(_e)), (_drop, L.skip_problems(_e))
+assert any("request_id" in p for p in L.skip_problems({"slot": "c", "tries": _full["tries"][:-1] + [_t("group", "city", "")]}))
+assert any("장소 묶음" in p for p in L.skip_problems({"slot": "c", "tries": _full["tries"][:-1] + [_t("group", "beach")]}))
+assert any("사용자 지시" in p for p in L.skip_problems({"slot": "casual4", "reason": "Output safety rejection. No retry per user instruction."}))
+assert any("tries" in p for p in L.skip_problems({"slot": "casual4", "request_id": "x"}))
+with tempfile.TemporaryDirectory() as _td:
+    for _n, _sk in (("ok-1", [_full]), ("bad-1", {"casual8": [{"level": "low"}]}), ("none-1", [])):
+        os.makedirs(os.path.join(_td, "records", _n))
+        json.dump({"skipped": _sk}, open(os.path.join(_td, "records", _n, "qa.json"), "w"))
+    _out = io.StringIO()
+    with contextlib.redirect_stdout(_out):
+        try:
+            L.skips(type("A", (), {"plan": None, "repos": [_td]})()); _code = 0
+        except SystemExit as _x:
+            _code = _x.code
+    assert _code == 1 and "bad-1 casual8" in _out.getvalue() and "ok-1" not in _out.getvalue(), _out.getvalue()
+print("PASS 일상컷 장부: 열 장(필수 셋 한 장씩 · 상황 노출 한 장 · 갈래 · 상황 자유 한 장 · 장면 자유 한 장 · 같은 프레이밍 두 장까지 · 같은 짝 한 장) · 두 열쇠(옛 칸 ↔ 트리 길) · 트리 위의 길 · 장소 묶음 · 기록 읽기·옷 종류 · 장소·하는 일 10명·한 바퀴 · 구도 짝·새 값 · 세 축 · 채우기 문구 · 빈 장소 · 덮는 겉옷 · 배치 안 겹침 · 예약(세션별 파일)·도장·만료 · 등록 뒤 done · 다시 채우기 · 빈 컷은 안 셈 · 막혀 비운 컷은 순서를 끝까지(skips)")

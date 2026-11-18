@@ -22,6 +22,9 @@
                                                   보통은 node tools/casual-plan.cjs … --reserve --push 가 다 한다)
   python3 tools/casual-ledger.py verify [--session S] [--card C] — 예약이 reserve 가 적은 그대로인가(도장).
                                                   손으로 쓰거나 고친 예약이면 1 로 끝난다 — 생성 전에 본다
+  python3 tools/casual-ledger.py skips [기록 폴더] — qa.json 의 skipped(막혀 비운 컷)가 IMAGE_RULES 3절 7 순서
+                                                  (같은 지시문 한 번 → low 까지 → 다른 장면 → 다른 장소 묶음)를 끝까지
+                                                  밟았는가. 모자라면 1 로 끝난다 — 그 묶음은 덜 끝났다(올리기 전에 본다)
 
 예약 파일은 손으로 쓰거나 고치지 않는다 — reserve 가 캐릭터마다 도장(stamp: 그 칸의 sha256)을 같이 적는다.
 check 를 안 거친 예약은 도장이 없거나 안 맞는다(2026-10-25 히포포타스: 계획을 손으로 고쳐 레지스틸과 같은 장면 둘·
@@ -57,7 +60,7 @@ data/casual-tree.json)로 적는다. 옛 컷(갈래 cat · 예시 ex)은 트리 
 기본 경로는 이 저장소 옆의 ../pkm-atelier-img, ../pkm-atelier-img-2, ../pkm-atelier-img-3, ../pkm-atelier-img-4, ../pkm-atelier-img-5 다(--repos 로 바꾼다).
 장부·예약은 그대로 둘째 저장소에 — 새 그림의 기록은 열린 저장소(지금 넷째)에 쌓인다."""
 from pathlib import Path
-import argparse, datetime, importlib.util, json, os, re, subprocess, sys
+import argparse, datetime, glob, importlib.util, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REPOS = [os.path.join(os.path.dirname(ROOT), n) for n in ("pkm-atelier-img", "pkm-atelier-img-2", "pkm-atelier-img-3", "pkm-atelier-img-4", "pkm-atelier-img-5")]
@@ -941,9 +944,61 @@ def view(args):
     json.dump({"entries": es}, sys.stdout, ensure_ascii=False)
 
 
+SKIP_STEPS = ("retry", "low", "replan", "group")   # IMAGE_RULES 3절 7 — 같은 지시문 한 번 → low 까지 → 다른 장면 → 다른 장소 묶음
+SKIP_STEP_KO = {"retry": "같은 지시문 한 번 더", "low": "노출 low 까지 낮추기", "replan": "다른 장면으로 다시 계획", "group": "다른 장소 묶음"}
+SKIP_EXCUSE = re.compile(r"user instruction|per user|no retry|not retried|neither was retried|사용자 지시|재시도 안|재생성하지", re.I)
+
+
+def skip_problems(entry):
+    """막혀 비운 컷 하나(qa.json skipped 의 한 칸)가 3절 7 순서를 끝까지 밟았는가 — 모자란 단계를 돌려준다.
+    꼴: {"slot": "casual8", "tries": [{"step": "retry|moderate|low|situ|replan|group", "request_id": "…", "scene": "…", "group": "…"}]}.
+    막힌 시도마다 request_id 가 있어야 한다. 「사용자 지시로 재시도 안 함」 은 사유가 아니다 — 재생성 금지는 이미 받은 그림에만 걸린다(2026-11-18)"""
+    tries = entry.get("tries") if isinstance(entry, dict) else None
+    out = []
+    if SKIP_EXCUSE.search(json.dumps(entry, ensure_ascii=False)):
+        out.append("「재시도 안 함 · 사용자 지시」 를 사유로 멈췄다 — 재생성 금지는 이미 받은 그림에만 걸린다")
+    if not isinstance(tries, list) or not tries:
+        return out + ["tries(시도 순서) 가 없다 — 어떤 단계를 밟았는지 알 수 없다"]
+    steps = [t.get("step") for t in tries if isinstance(t, dict)]
+    out += ["%s 이 없다" % SKIP_STEP_KO[s] for s in SKIP_STEPS if s not in steps]
+    if any(isinstance(t, dict) and not t.get("request_id") for t in tries):
+        out.append("request_id 없는 시도가 있다 — 막힌 근거가 남아야 한다")
+    groups = {t.get("group") for t in tries if isinstance(t, dict) and t.get("step") in ("replan", "group") and t.get("group")}
+    if "group" in steps and len(groups) < 2:
+        out.append("다른 장소 묶음 시도의 group 이 앞 장면과 같거나 비었다")
+    return out
+
+
+def skips(args):
+    """qa.json 의 skipped(막혀 비운 컷)가 3절 7 순서를 끝까지 밟았는가. 경로를 주면 그 기록 폴더(또는 그림 저장소)만, 없으면 --repos 전부.
+    모자란 묶음이 있으면 1 로 끝난다 — 그 묶음은 덜 끝난 것이다(올리기 전에 세션이 돌린다)"""
+    roots = [args.plan] if args.plan else args.repos
+    files = []
+    for r in roots:
+        if os.path.isfile(os.path.join(r, "qa.json")):
+            files.append(os.path.join(r, "qa.json"))
+        files += sorted(glob.glob(os.path.join(r, "records", "*", "qa.json")))
+    bad = 0
+    for f in files:
+        try:
+            doc = load(f)
+        except Exception:
+            continue
+        sk = doc.get("skipped") if isinstance(doc, dict) else None
+        if isinstance(sk, dict):   # {"casual8": [...]} 꼴 — 옛 기록
+            sk = [{"slot": k, "tries": None, "old": v} for k, v in sk.items()]
+        for e in sk or []:
+            ps = skip_problems(e)
+            if ps:
+                bad += 1
+                print("%s %s — %s" % (os.path.basename(os.path.dirname(f)), (e or {}).get("slot", "?"), " · ".join(ps)))
+    print("막혀 비운 컷 중 순서를 다 안 밟은 것 %d" % bad)
+    sys.exit(1 if bad else 0)
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["build", "report", "check", "reserve", "view", "verify"])
+    ap.add_argument("cmd", choices=["build", "report", "check", "reserve", "view", "verify", "skips"])
     ap.add_argument("plan", nargs="?")
     ap.add_argument("--ledger", default=LEDGER)
     ap.add_argument("--repos", nargs="+", default=REPOS)
@@ -953,7 +1008,7 @@ def main():
     a = ap.parse_args()
     if a.cmd in ("check", "reserve") and not a.plan:
         ap.error("PLAN.json 이 필요하다")
-    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True), "view": view, "verify": verify}[a.cmd](a)
+    {"build": build, "report": report, "check": check, "reserve": lambda x: check(x, True), "view": view, "verify": verify, "skips": skips}[a.cmd](a)
 
 
 if __name__ == "__main__":
