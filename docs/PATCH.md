@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · ① GPT 임의 설계 — 타입 효과도 우리 표 안에서
+- 사용자 「타입효과는 바꾸라고 허용은 해줬는데, 우리거 안에서 고르는 느낌이 안들던데」 → 「응 이대로 진행해줘」
+- light-free.txt 의 Type effects 줄을 [TYPE EFFECTS: …] 칸으로 — 우리 효과 표(data/concept-mecha.json fx × 그 종 타입)의 손 · 몸 · 주변 문장 목록을 주문에 싣고 하나씩 이 차례로 글 그대로(우리 것과 같아도 된다)
+- 검사 freeFillErrors · tools/world-fill-check.cjs — 표 밖 문장 · 고친 글 · 개수나 차례가 틀리면 걸린다. 「바꿔도 되는 줄」 에서 Type effects 를 뺐다
+
 ## 2026-11-18 · claude · ① GPT 임의 설계 — 칸 채우기(세 칸 규칙)
 - 사용자 「크게는 우리거를 따르는데, 헤어스타일, 의상은 무조건 다르게 … 의상만 우리 실루엣 안에서만」 → 「응 이대로 진행해줘」 — 삼국지 · 원소와 같은 꼴
 - light-free.txt 는 주문 아래 우리 경장 지시문을 통째로 싣고 칸만 비운다: [HAIRSTYLE: …] · [ARMOR SILHOUETTE: …](그 타입 추천 목록에서 우리 것 빼고, 글 그대로) · Design idea · Setting detail
