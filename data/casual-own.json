@@ -5689,8 +5689,8 @@
      "job_ko": "수질 검사원",
      "base": "pw_town",
      "place": "a clear mountain stream bank — smooth stones, a sampling kit box, a small measuring pole, flowing water",
-     "activity": "she is a water inspector with one hand on her hip, looking down at a glass vial of clear stream water in the other hand",
-     "preset": "pocket_look",
+     "activity": "she is a water inspector looking down at a glass vial of clear stream water in her right hand, with her left arm resting naturally at her side",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a glass water sample vial",
      "outfit": {
