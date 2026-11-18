@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-18 · claude · 세계컷 GPT 설계 1단계 — A안 문구 · 우리 설계와 얼굴 · 외곽 대조
+- 사용자 2026-11-18 「응 허용하고 이순서대로 진행해줘」 — 세계컷 GPT 설계안(A: 지정 실루엣에서 소재 · 상징을 의상 구조로, B: 역할 · 기능에서 출발해 목록 밖 외곽도) 1단계.
+- lib/prompt-spec.js FREE_DESIGN.silhouette — 「Design A, your first design」: 타입 추천 실루엣 하나 + 원작에서 가장 알아보기 쉬운 형태 특징 하나를 장갑의 단면 · 겹침 · 절개 한 곳에, 전신에서 먼저 읽히는 윤곽을 적는다.
+- FREE_DESIGN.ours · check — 우리 지시문의 Face · Hair 줄(lib/prompt-anthro.js buildFree)과 다른 얼굴 인상 · 머리 외곽, 마지막에 대조. (tests/prompt-pack-screen.cjs 는 오늘 작업 전 커밋에서도 브라우저 대기 시간 초과 — 이 환경 문제)
+
 ## 2026-11-18 · claude · 단계 동작 문장 관사 겹침 고침
 - 단계 동작 영어 문장의 관사 겹침 고침 — 「the open {prop}」 꼴이 소품 이름의 a · an 과 겹쳐 「rests the open a red oil-paper umbrella」 가 됐다(잔 · 우산 · 부채 · 매니큐어 · 기름종이 우산).
 
