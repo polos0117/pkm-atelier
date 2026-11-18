@@ -5521,8 +5521,8 @@
      "job_ko": "뷰티 카운터 견습",
      "base": "pw_workshop",
      "place": "a cosmetics counter — a glass shelf of lipsticks, a lit mirror, a stool and pastel displays",
-     "activity": "she is a trainee with a hand at her waist, looking carefully at a lip brush",
-     "preset": "pocket_look",
+     "activity": "she is a trainee standing at the counter, carefully inspecting a lip brush held in one hand while the other hand rests naturally at her side",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a lip brush",
      "outfit": {
