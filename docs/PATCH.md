@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-19 · claude · ① GPT 임의 설계 — 얼굴 칸 일곱(우리와 다르게 · 두 장도 다르게)
+- 사용자 「같아도 되고 달라도 된다고 했더니 거의 같게 그리는거 같아 … gpt 세계컷에 얼굴까지 우리거랑 다르게 … GPT A랑 B가 또 다르게」 → 「Face 쪽은 다 다르게로 하자」 → 「응 진행해줘」 — 삼국지 · 원소와 같은 꼴
+- lib/prompt-anthro.js — 칸 채우기 틀의 Face 줄을 칸 일곱으로([FACE SHAPE] · [JAW] · [EYE SHAPE] · [EYE COLOUR] · [BROWS] · [NOSE] · [LIPS]), 칸마다 얼굴 설계표 선택지(PARAM_DEFS)에서 우리 것을 뺀 목록(freeFace — 우리 것은 Face · Impression 줄 글에서 찾는다). Impression 줄의 우리 눈색은 틀에서 뺀다
+- freeFillErrors — 목록 밖 · 빈 칸 · 두 설계 칸마다 같음은 오류. 칸 찾기를 한 표(PF_SLOTS)로. 인상 · 피부 칸은 이 공방 Face 줄에 없어 Impression 줄(자유)에 남는다
+- lib/prompt-spec.js FREE_DESIGN.fill.face · two · free · msg. 안내 IMAGE_RULES · 묶음 차례표 · world-fill-check 머리. 검사 prompt-pack. ?v= fill5
+
 ## 2026-11-19 · claude · 칸 채우기 검사 말을 낱말 표로 — tests/words.cjs 통과
 - 같은 날 넣은 칸 채우기 검사(worldFillErrors · freeFillErrors)의 한글 오류 말이 조립부 코드에 박혀 tests/words.cjs 가 깨져 있었다(원소 근본 B 묶음 검사에서 드러남)
 - 말은 lib/prompt-spec.js 의 GPT 설계 주문 표(msg)로 옮기고 조립부는 FM(열쇠)로 읽는다 — 글은 그대로라 검사 · 도구 출력은 같다. ?v= 올림
