@@ -214,7 +214,7 @@ assert.deepEqual(plan({ entries, card: 'X', seed: 's' }), plan({ entries, card: 
 {
   const LIST = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/game-cosplay.json'), 'utf8')), R = tree.cosplay_required;
   const r = batchPlan(entries, ['GC1'], 'gc1', { GC1: { cosplay: { list: LIST, used: [] } } }), cs = r.plan.characters[0].cuts, g = cs.filter(x => x.ofam === R.outfit);
-  assert.equal(g.length, 1, '게임 코스프레 한 장'); assert.equal(cs.filter(x => x.situ).length, 0, '상황 노출 없음');
+  assert.equal(g.length, 1, '게임 코스프레 한 장'); assert(cs.filter(x => x.situ).length <= 1, '상황 노출은 일반 컷 하나에 많아야 한 장(2026-11-16 「늘 1장은 나오게」 — 맞는 일반 컷이 없으면 건너뛴다. 2026-11-20 전엔 0 을 단언했는데 그 씨앗에서 우연히 건너뛴 것)');
   assert(g[0].item === 'gc_' + g[0].cosplay.cut && (R.places.includes(g[0].place) || R.water_places.includes(g[0].place)) && !R.not_frames.includes(g[0].frame), '버전1 코스프레 컷 ' + JSON.stringify(g[0]));
   n++;
 }

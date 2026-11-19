@@ -134,9 +134,10 @@ assert(!s1.st.scenes.casual.treeV && s1.st.scenes.casual.act === v1cut.act, '버
 /* 씨앗에 따라 「맞는 구도 없음」 으로 던질 수 있다 — 도구(tools/casual-plan.cjs)처럼 씨앗을 바꿔 다시 */
 const av = (() => { for (let i = 0; i < 20; i++) { try { return P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z' + (i || ''), avoid: [{ cut: null, field: 'place', value: cut0.place }, { cut: 1, field: 'frame', value: 'full_body' }] }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('피할 값 계획을 스무 번 안에 못 정했다'); })();
 assert(!av.cuts.some(x => x.place === cut0.place || (x.cut === 1 && x.frame === 'full_body')), '피할 값(장소는 모든 컷, 프레이밍은 한 컷 — 프레이밍 하나를 열 장에서 통째로 피하면 남는 다섯 × 두 장이 딱 열 장이라, 2026-11-13 조건이 늘어난 뒤로는 거의 못 맞춘다. 도구에서도 프레이밍은 컷마다 피한다)');
-const keep = P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z2', kept: [Object.assign({}, av.cuts[0], { kept: true })] });
+const keep = (() => { for (let i = 0; i < 20; i++) { try { return P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'z2' + (i || ''), kept: [Object.assign({}, av.cuts[0], { kept: true })] }); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('만든 컷 위 계획을 스무 번 안에 못 정했다'); })();   /* 2026-11-20 — 피할 값 계획처럼 씨앗을 돌린다(구도 제한을 풀자 z2 씨앗에서 몸 / 프레이밍 후보가 다 걸러졌다) */
 assert.deepEqual(keep.cuts[0].place, av.cuts[0].place); assert(keep.cuts[0].kept, '만든 컷은 그대로');
-assert.deepEqual(P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'same' }), P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'same' }), '같은 씨앗 같은 답');
+{ const sd = (() => { for (let i = 0; i < 20; i++) { try { P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: 'same' + (i || '') }); return 'same' + (i || ''); } catch (e) { if (!/^casual-plan/.test(e.message)) throw e; } } throw new Error('같은 씨앗 시험 — 스무 번 안에 못 정했다'); })();   /* 2026-11-20 — 계획이 서는 씨앗에서(구도 제한 풀기 뒤 'same' 씨앗이 막혔다) */
+  assert.deepEqual(P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: sd }), P.planV2({ S, tree, tree2, subject, entries, card: 'Z', seed: sd }), '같은 씨앗 같은 답'); }
 
 /* 4. 장부의 비교 열쇠 — 버전2 컷의 짓 · 몸+머리 가 같으면 check 가 건다 */
 const dup = JSON.parse(JSON.stringify(entries[entries.length - 1].cuts));
