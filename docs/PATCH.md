@@ -11,6 +11,9 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-23 · claude · core v7 나이 문장 — 20대 초 youthful · 중반 young-adult · 후반 clear adult
+- lib/prompt-spec.js — 화풍공방 core v7 블록 다시 옮김(나이 문장: 20대 초 youthful · 중반 young-adult · 후반 clear adult). prompt-spec ?v= 올림
+
 ## 2026-11-23 · claude · 일상컷 크기 — 같은 비율로 더 크게 온 원본(1:1 1254×1254)은 맞는 그림, WebP 로 바꿀 때 표준 크기로 줄인다
 - IMAGE_RULES.md — 크기 규칙에 같은 비율로 더 큰 원본은 맞고 표준 크기로 줄인다는 말
 - tools/image-runner.py — record 는 같은 비율(1% 안)로 그 크기 이상이면 받는다, webp() 가 표준 크기로 줄인다(LANCZOS)
