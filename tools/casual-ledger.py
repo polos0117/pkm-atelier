@@ -608,6 +608,14 @@ def group_counts(entries, sp):
             k = group_of(c, sp)
             if k in n:
                 n[k] += 1
+    # 장소가 다 새것(표 start_median — 2026-11-23 놀이공원)인 묶음은 쓴 묶음의 가운데 값에서 — 계획기(lib/casual-plan.js freshFill)와 같은 셈
+    used = sorted(v for v in n.values() if v > 0)
+    if used:
+        mid = used[len(used) // 2]
+        for g in n:
+            ps = [p for p in sp["places"].values() if p.get("group") == g]
+            if not n[g] and ps and all(p.get("start_median") for p in ps):
+                n[g] = mid
     return n
 
 

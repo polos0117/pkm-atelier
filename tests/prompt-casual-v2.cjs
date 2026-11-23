@@ -26,9 +26,14 @@ function look(sc, where, card) {
   assert.equal(sb.includes('Role: '), !!(u && u.role), where + ' 역할 줄');
   const comp = C.companionAt(t, r.place);
   assert.equal(text.includes(T.figureCompanion), comp, where + ' 동료 한 마리 줄');
-  assert.equal(text.includes(T.figure), !comp, where + ' 한 명만 줄');
+  /* 2026-11-23 — 일상컷은 figureCasual(작고 흐린 배경 인물은 되고 포켓몬 · 동물 없음), 포켓몬이 사는 장소(animals)는 figurePokemon(배경에만), 동료 묶음은 figureCompanion */
+  const pkmHere = !!(C.animalsAt && C.animalsAt(t, r.place));
+  assert.equal(text.includes(T.figureCasual), !comp && !pkmHere, where + ' 주인공 하나 줄(포켓몬 없음)');
+  assert.equal(text.includes(T.figurePokemon), !comp && pkmHere, where + ' 포켓몬은 배경에만 줄');
+  assert(!text.includes(T.figure), where + ' 카드 그림의 한 명만 줄은 일상컷에 안 쓴다');
   assert.equal(sb.includes(T.casualCompanionV2), comp, where + ' 동료 장면 줄');
-  assert.equal(text.includes(T.casualWorld), r.era === 'in_pokemon', where + ' 포켓몬 세계');
+  assert.equal(text.includes(T.casualWorld) || text.includes(T.casualWorldPokemon), r.era === 'in_pokemon', where + ' 포켓몬 세계');   /* 포켓몬이 사는 장소는 casualWorldPokemon(2026-11-23) */
+  if (r.era === 'in_pokemon') assert.equal(text.includes(T.casualWorldPokemon), !!(C.animalsAt && C.animalsAt(t, r.place)), where + ' 포켓몬 세계 — 포켓몬이 사는 장소만 배경 포켓몬');
   if (r.era === 'release') assert(text.includes(String(tree.gen_years[String(st.gen)])), where + ' 첫 등장의 해');
   const f = C.frame(t, r.frame);
   assert.equal(text.includes('\n\nCROP: '), !!f.close, where + ' 가까운 컷 CROP');
