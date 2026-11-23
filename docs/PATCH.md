@@ -16,6 +16,7 @@
 - lib/casual-tree-v2.js — presetBreadth(시대 × 장소 가운데 그 추천이 되는 몫) · presetBias(log2(몫 / 가운데 값), -1 ~ 1.5) · presetOnce(표 preset_once).
 - data/casual-tree-v2.json — preset_once [clasp_low · kneel_clasp · shush_close](한 캐릭터 한 장까지). 손 clasp_both 「가슴 앞에 두 손 모으기」 → 「허리 앞 깍지」(zone waist), kneel_clasp 손 → 한 손 무릎 위(lap · natural — 기도로 읽혔다, 한 손 동작은 양쪽에 같이 못 쓴다). 조건 없는 가슴 위 · 허리 위 추천 열(collarbone_chest · cheek_hip_waist · wave_waist · thumbs_chest · crossed_tilt_waist · behind_head_chest · hair_hip_waist · reach_chest · strap_chest(어깨끈 옷) · collar_waist(깃 옷)).
 - lib/casual-plan.js — 후보 점수에 presetBias(어디서나 되는 추천은 뒤로), preset_once 는 그 캐릭터 앞 컷 · 이 묶음에 있으면 후보에서 뺌(이 공방 계획기엔 가까운 컷 규칙이 없다). ?v casual-tree-v2 · casual-plan pose1.
+- 같이 고친 것: lib/casual-plan.js situText — 상황을 고를 때 지시문과 같은 옷 글(옷 글, 없으면 계열 글)을 본다. 옷 없이 계열만인 컷에서 계획기는 옷 종류 글로, 지시문은 계열 글로 맞는지 봐 상황 줄이 빠졌다(자세 무게가 바뀌어 tests/prompt-pack.cjs 에서 처음 드러남).
 
 ## 2026-11-23 · gpt · 지그제구리 애니 2.5D 광택
 - data/img.json — 지그제구리 경장 3번과 일상컷 1~10번·90번을 도감에 등록.
