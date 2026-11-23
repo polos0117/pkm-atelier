@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-23 · claude · 인상 열네 개 더함 — 섹시 · 도발 · 퇴폐 · 팜파탈 · 새침 · 도도 · 여우 · 몽환 · 신비 · 당당 · 냉미녀 · 수줍음 · 당찬 · 아련함
+- lib/prompt-spec.js — 인상 분위기 표(IMPRESSION_VIBES)에 열둘(seductive 섹시 · provocative 도발 · decadent 퇴폐 · femme_fatale 팜파탈 · coquettish 새침 · 애교 · haughty 도도 · mischievous 여우 · dreamy 몽환 · confident 당당 · icy 냉미녀 · sassy 당찬 · wistful 아련함 — 수줍음 · 신비는 이미 있다). 눈빛 낱말은 표의 규칙대로 눈 뜨는 정도 말 없이, 낱말 수는 있던 것만큼(앵커 예산 680). core v7 블록도 다시 옮김. 사용자 2026-11-23 「인상중에 뭔가 섹시,도발, 퇴폐 느낌이 없네」 → 「다 넣어주고 공방 다 적용해줘. 설계 있는거에서도 옮겨주고」. prompt-spec ?v=imp1
+- tools/face-design.py — 새 분위기 점수(타입 · 능력치 · 진화 단계 · 희귀 · 도감 글 낱말 — 독 · 어둠 → 팜파탈 · 퇴폐, 얼음 → 냉미녀, 꾀 · 훔치 → 여우, 꿈 → 몽환 …), 한 분위기 상한 12% → 4.5%(46종), 다시 돌릴 때 있던 분위기에 +0.8(IMP_KEEP — 새 분위기가 뚜렷할 때만 바뀐다), 처음 단계(진화 전)에는 팜파탈 · 섹시 · 퇴폐 · 도도 -0.7
+- data/face-design.json — python3 tools/face-design.py impression: 545종 분위기가 바뀜(새 열둘 416종). 온화 · 쿨함 · 과묵 123→46, 장난기 118→46, 밝음 106→46, 위엄 83→46 …, 새 열둘 20~46(예: 블래키 · 팬텀 퇴폐, 라프라스 · 프리져 냉미녀, 피카츄 당찬, 앱솔 도발, 이브이 새침, 마기라스 도도, 이상해꽃 섹시). 나이감 · 눈 색은 그대로. 이미 등록된 경장 ①은 IMPRESSION 줄을 다시 싣지 않는다
+- docs/CHARACTER_FACE_DESIGNS.md — render 로 다시 그림(분위기 스물여섯 · 4.5% 상한 글)
+
 ## 2026-11-23 · claude · core v7 나이 문장 — 20대 초 youthful · 중반 young-adult · 후반 clear adult
 - lib/prompt-spec.js — 화풍공방 core v7 블록 다시 옮김(나이 문장: 20대 초 youthful · 중반 young-adult · 후반 clear adult). prompt-spec ?v= 올림
 

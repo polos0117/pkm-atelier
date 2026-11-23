@@ -1192,9 +1192,25 @@ IMP_TYPE = {
     'dragon': {'regal': 1.5, 'fierce': 1, 'passionate': .5}, 'dark': {'cool': 1.1, 'mysterious': 1, 'fierce': .8, 'melancholic': 1},
     'steel': {'cool': 1.2, 'stoic': 1, 'clever': .6}, 'fairy': {'cheerful': 1, 'gentle': .9, 'elegant': 1, 'playful': .6},
 }
+# 인상 열둘 더함(2026-11-23 사용자 「인상중에 뭔가 섹시,도발, 퇴폐 느낌이 없네」 → 「다 넣어주고 공방 다 적용해줘」) — 타입마다 어울리는 새 분위기 점수
+for _t, _w in {
+    'normal': {'coquettish': .8, 'sassy': .5, 'mischievous': .4}, 'fire': {'sassy': 1.1, 'provocative': 1.3, 'seductive': .8, 'confident': .5},
+    'water': {'dreamy': .9, 'wistful': .7, 'seductive': .7}, 'grass': {'wistful': .7, 'dreamy': .7, 'coquettish': .4, 'seductive': .4},
+    'electric': {'sassy': .9, 'mischievous': 1.1, 'provocative': .6}, 'ice': {'icy': 2, 'haughty': .8, 'wistful': .5},
+    'fighting': {'confident': 1.5, 'sassy': .8, 'provocative': .8}, 'poison': {'femme_fatale': 1.4, 'seductive': 1.3, 'decadent': 1.5},
+    'ground': {'confident': .7, 'sassy': .4}, 'flying': {'confident': .7, 'coquettish': .6, 'haughty': .4},
+    'psychic': {'dreamy': 1.1, 'haughty': .6, 'femme_fatale': .4}, 'bug': {'coquettish': .7, 'mischievous': .8},
+    'rock': {'confident': .7, 'haughty': .3}, 'ghost': {'dreamy': .9, 'wistful': 1, 'decadent': 1.2, 'mischievous': .9},
+    'dragon': {'haughty': 1.2, 'confident': .9, 'provocative': .7}, 'dark': {'femme_fatale': 1.2, 'decadent': 1.5, 'provocative': 1.3, 'mischievous': 1.2},
+    'steel': {'icy': 1.2, 'haughty': .6, 'confident': .5}, 'fairy': {'coquettish': 1.2, 'dreamy': .8, 'seductive': .9},
+}.items():
+    for _v, _x in _w.items(): IMP_TYPE[_t][_v] = IMP_TYPE[_t].get(_v, 0) + _x
 IMP_STAT = [  # 가장 높은 능력치(hp, 공격, 방어, 특공, 특방, 스피드)
     {'gentle': .3, 'sleepy': .5}, {'fierce': .8, 'passionate': .4}, {'stoic': .8}, {'clever': .6, 'mysterious': .3},
     {'gentle': .5, 'elegant': .3}, {'playful': .6, 'cheerful': .3}]
+for _i, _w in enumerate([{'wistful': .3}, {'confident': .4, 'provocative': .3}, {'icy': .3, 'haughty': .2}, {'dreamy': .3, 'femme_fatale': .3},
+                         {'wistful': .3, 'haughty': .2}, {'sassy': .4, 'mischievous': .3, 'coquettish': .2}]):   # 2026-11-23 새 분위기
+    for _v, _x in _w.items(): IMP_STAT[_i][_v] = IMP_STAT[_i].get(_v, 0) + _x
 IMP_TEXT = [  # 도감 글(한글) 낱말 — (정규식, 단서 이름, {분위기: 점수})
     (r'잠|졸|느긋|하품', '잠 · 느긋함', {'sleepy': 2}), (r'겁|소심|숨어|수줍', '겁 · 소심', {'shy': 2}),
     (r'난폭|사납|공격적|흉포|거칠|맹렬|영역', '사나움', {'fierce': 2}), (r'장난', '장난', {'playful': 2}),
@@ -1203,12 +1219,20 @@ IMP_TEXT = [  # 도감 글(한글) 낱말 — (정규식, 단서 이름, {분위
     (r'상냥|온순|다정|얌전|친절', '상냥함', {'gentle': 1.5}), (r'쾌활|명랑|활발|밝은 성격', '명랑', {'cheerful': 1.5}),
     (r'차분|냉정|침착', '침착', {'cool': 1.5}), (r'자존심|거만|오만|위엄', '자존심', {'regal': 1}),
     (r'신비|수수께끼|정체', '신비', {'mysterious': 1.5}), (r'열정|불타오|투지|뜨거운', '열정', {'passionate': 1.5}),
+    # 2026-11-23 새 분위기
+    (r'유혹|매혹|홀리|홀려|향기', '유혹', {'seductive': 1.5, 'femme_fatale': .5}), (r'독을|독이|맹독|독침|독가스', '독', {'femme_fatale': 1, 'decadent': .3}),
+    (r'속이|속여|교활|꾀|훔치|훔쳐|장난을', '꾀', {'mischievous': 1.5}), (r'꿈|환상|환각|최면', '꿈', {'dreamy': 1.5}),
+    (r'얼음|얼어|냉기|차가운|눈보라', '냉기', {'icy': 1.2}), (r'춤|노래|애교|귀여움을', '춤 · 애교', {'coquettish': 1.2}),
+    (r'자존심|거만|오만|고고', '고고함', {'haughty': 1.2}), (r'그리|추억|떠나|기다리|헤어', '그리움', {'wistful': 1.3}),
+    (r'도발|덤벼|싸움을 걸|시비', '도발', {'provocative': 1.5}), (r'자신감|당당|겁없|용감', '당당함', {'confident': 1.3}),
+    (r'어둠|밤에|한밤|썩|더러운|쓰레기|진흙', '어둠 · 썩음', {'decadent': 1}), (r'기세|기운이 넘|성격이 급|화끈', '기세', {'sassy': 1.2}),
 ]
 IMP_EYES = {'red': ['crimson red', 'garnet red'], 'blue': ['sapphire blue', 'deep navy-blue'], 'yellow': ['amber gold', 'honey-gold'],
             'green': ['emerald green', 'jade green'], 'black': ['charcoal grey', 'dark violet-grey'], 'brown': ['warm hazel', 'chestnut brown'],
             'purple': ['violet', 'amethyst purple'], 'gray': ['silver grey', 'steel blue'], 'white': ['pale ice-blue', 'silver'],
             'pink': ['rose pink', 'soft magenta']}
-IMP_CAP = 0.12   # 한 분위기는 1,025종의 12% 까지
+IMP_CAP = 0.045   # 한 분위기는 1,025종의 4.5% 까지(2026-11-23 분위기가 열넷 → 스물여섯이 되어 12% 에서 낮춤 — 고르게 46종 안팎)
+IMP_KEEP = 0.8   # 다시 돌릴 때 있던 분위기에 주는 점수(2026-11-23 — 열둘을 더하며 바뀌는 종을 줄이려고)
 IMP_CAP_VIBE = {'fierce': 0.04}   # 사나움은 4% 까지(2026-11-09 사용자 「사나움을 많이 줄여줘」 — 12% 에서)
 
 
@@ -1234,8 +1258,8 @@ def h01(s):
     return h / 0xffffffff
 
 
-def design_impression(cards, J):
-    """종마다 {age, vibe, eyes, cues}. 점수 — 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글. 한 분위기 12% 상한(사나움 4%) — 점수 차가 큰 종부터 자리를 주고, 넘치면 다음 후보"""
+def design_impression(cards, J, prev=None):
+    """종마다 {age, vibe, eyes, cues}. 점수 — 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글. 한 분위기 4.5% 상한(사나움 4%) — 점수 차가 큰 종부터 자리를 주고, 넘치면 다음 후보"""
     by = {c['name']: c for c in cards}
     vibes = list(J['vibes'])
     caps = {v: int(len(cards) * IMP_CAP_VIBE.get(v, IMP_CAP)) for v in vibes}
@@ -1252,14 +1276,18 @@ def design_impression(cards, J):
             for v, w in IMP_STAT[k].items(): sc[v] += w
             cues.append('능력치 ' + ['HP', '공격', '방어', '특공', '특방', '스피드'][k])
         stage = stage_of(c, by)
-        if stage in ('final',): sc['regal'] += .6; sc['elegant'] += .6; sc['cool'] += .2
-        if stage == 'basic': sc['cheerful'] += .4; sc['shy'] += .3; sc['playful'] += .3
-        if c.get('rare'): sc['regal'] += 1.5; cues.append('희귀')
+        if stage in ('final',): sc['regal'] += .6; sc['elegant'] += .6; sc['cool'] += .2; sc['haughty'] += .5; sc['seductive'] += .3; sc['femme_fatale'] += .2
+        if stage == 'basic': sc['cheerful'] += .4; sc['shy'] += .3; sc['playful'] += .3; sc['coquettish'] += .3
+        if stage == 'basic':   # 처음 단계(아기 · 애벌레 · 고치)에는 무르익은 분위기를 덜 준다(2026-11-23)
+            for v in ('femme_fatale', 'seductive', 'decadent', 'haughty'): sc[v] -= .7
+        if stage == 'middle': sc['sassy'] += .3; sc['provocative'] += .2
+        if c.get('rare'): sc['regal'] += 1.5; sc['haughty'] += 1; sc['mysterious'] += .4; cues.append('희귀')
         for rx, name, w in IMP_TEXT:
             if re.search(rx, c.get('text') or ''):
                 for v, x in w.items(): sc[v] += x
                 cues.append('도감 글 ' + name)
         for v in vibes: sc[v] += h01(c['name'] + '|' + v) * .3   # 같은 점수를 고르게 가른다
+        if (prev or {}).get(str(c['no'])) in sc: sc[prev[str(c['no'])]] += IMP_KEEP   # 있던 분위기를 조금 더 — 새 분위기가 뚜렷이 앞설 때만 바꾼다(2026-11-23)
         order = sorted(vibes, key=lambda v: -sc[v])
         pre.append((c, sc, order, cues, stage))
     # 상한이 있는 분위기는 그 분위기가 가장 뚜렷한 종(첫째 · 둘째 점수 차가 큰 종)부터 자리를 준다 — 도감 번호 차례면 앞 세대가 자리를 다 썼다
@@ -1282,7 +1310,7 @@ def impression():
     J = imp_spec()
     cards, app, img = load_inputs()
     data = json.load(open(DATA))
-    imp = design_impression(cards, J)
+    imp = design_impression(cards, J, {no: (f.get('impression') or {}).get('vibe') for no, f in data['faces'].items()})
     for no, m in imp.items(): data['faces'][no]['impression'] = m
     with open(DATA, 'w', encoding='utf-8') as fh:   # build 와 같은 꼴
         json.dump(data, fh, ensure_ascii=False, indent=0, separators=(',', ':')); fh.write('\n')
@@ -1584,10 +1612,10 @@ def render():
         '## 인상',
         '',
         '전신 카드 크기에서는 턱 · 코 같은 구조 차이가 잘 안 보여 얼굴이 닮아 갔다(2026-11-09 사용자 「pkm쪽 얼굴 느낌을 지금보다 다양화」). 그래서 종마다',
-        '나이감(20대 초 · 중 · 후반) · 분위기 열넷(눈빛 · 아이라인이 따라온다) · 눈 색을 고르고, **생성기가 새 인물(경장 ①)에만 HAIR 뒤에 `IMPRESSION:` 줄로 싣는다**.',
+        '나이감(20대 초 · 중 · 후반) · 분위기 스물여섯(눈빛 · 아이라인이 따라온다 — 2026-11-23 섹시 · 도발 · 퇴폐 · 팜파탈 … 열둘 더함) · 눈 색을 고르고, **생성기가 새 인물(경장 ①)에만 HAIR 뒤에 `IMPRESSION:` 줄로 싣는다**.',
         '',
         '- 나이감은 진화 단계 — 처음 초반 · 가운데 중반 · 마지막 후반, 진화 없는 종은 희귀 · 능력치 합 500 이상 후반, 400 이상 중반.',
-        '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 12% 를, 사나움은 4% 를 넘지 않는다(2026-11-09).',
+        '- 분위기는 타입(둘째 타입은 반) · 가장 높은 능력치 · 진화 단계 · 희귀 · 도감 글 낱말에 점수를 주고, 한 분위기는 1,025종의 4.5% 를(2026-11-23 — 분위기가 스물여섯이 되어 12% 에서), 사나움은 4% 를 넘지 않는다(2026-11-09).',
         '- 눈 색은 도감 색에서 두 가지 중 하나. 생성기에서 눈 색을 직접 고르면 그 값이 이긴다(IMPRESSION 줄에서 눈 색만 빠진다).',
         '- 이미 등록된 그림은 그대로다 — 새로 그리는 ① 부터.',
         '',
