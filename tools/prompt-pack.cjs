@@ -419,8 +419,11 @@ function build(o) {
     '**노출은 세션이 줄이지 않는다.** 노출 · 의상 줄을 빼거나 누그러뜨리거나 고정값(강도 strong · 노출 bold)을 미리 낮추지 않는다 — 실제로 막혔을 때만 IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 한 단계씩 settings exposure · exposure_why → 계획기로 장면 다시). 검수 `qa.json` 에 컷마다 `exposure`(match · weaker · stronger + 근거).',
     '**「재생성 금지」 는 이미 받은 그림에만.** 돌아온 그림은 노출이 세 보여도 다시 만들지 않는다(검수에 적기만). 그림이 안 돌아온 막힌 컷은 상관없다 — IMAGE_RULES.md 3절 7 순서(같은 지시문 한 번 → 노출 low 까지 → 계획기로 다른 장면 → 다른 장소 묶음)를 끝까지 밟고, 다 막혔을 때만 비운다. 비운 컷은 `qa.json` skipped 에 `tries`(step · request_id · scene · group), 올리기 전 `python3 tools/casual-ledger.py skips <기록 폴더>` 가 통과해야 끝난 묶음이다.',
     '기록에는 `<자리>-ui.json`(생성기 저장값과 같은 꼴)과 지시문을 둔다 — 관리기를 쓰면 `python3 tools/image-runner.py intent --card ' + c.no + ' --slot <자리> --prompt <이 폴더>/<자리>-prompt.txt --ui <이 폴더>/<자리>-ui.json`.', '',
-    '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 올릴 파일 |', '|---|---|---|---|---|---|---|'];
-  for (const r of out) lines.push('| ' + SL[r.slot].n + ' | ' + r.slot + ' | ' + att(SL[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | `' + fileName(c.name, set.style, r.slot) + '` |');
+    '| 차례 | 자리 | 첨부 | 지시문 | 낱말 | sha256(앞 12) | 크기 | 올릴 파일 |', '|---|---|---|---|---|---|---|---|'];
+  /* 그 자리의 그림 크기(2026-11-23 일상컷 화면비) — 폼 초상 · 연출컷은 2:3, 일상컷은 저장값 scenes.casual.aspect(계획) */
+  const SIZE_OF = { '2:3': '1024×1536', '1:1': '1024×1024', '3:2': '1536×1024' };
+  const sizeOf = r => { const st = ((r.ui.storage || {}).cards || {})[c.name] || {}, a = /^casual/.test(r.slot) ? (((st.scenes || {}).casual || {}).aspect || '2:3') : '2:3'; return a + ' ' + (SIZE_OF[a] || SIZE_OF['2:3']); };
+  for (const r of out) lines.push('| ' + SL[r.slot].n + ' | ' + r.slot + ' | ' + att(SL[r.slot].attach) + ' | `' + r.slot + '-prompt.txt` | ' + P.words(r.text) + ' | `' + sha(r.text) + '` | ' + sizeOf(r) + ' | `' + fileName(c.name, set.style, r.slot) + '` |');
   /* 일상 컷마다 고른 길 — 트리 문장(지시문에 그대로 들어간다) */
   for (const r of out.filter(x => x.ui.plan && x.ui.plan.treeV === 2)) {
     if (r.ui.own) {   /* 캐릭터만의 컷 — 표의 글 그대로 */

@@ -6,13 +6,16 @@
 
    node tools/api-fill.cjs draw  --prompt <자리>-prompt.txt --ref <① webp> --out <폴더> --name <이름> [--model gpt-image-2.5-sunburst] [--quality medium] [--ref-size 768] [--step retry|moderate|low|replan|group]
         → <폴더>/<이름>.png · <이름>.gen.json(모델 · 엔드포인트 · 사용량 · png/지시문/첨부 sha256). 막히면 <이름>.blocked.json(request_id · 사유)
-   node tools/api-fill.cjs webp  <png> <out.webp>                   WebP 품질 85 · method 6(IMAGE_RULES 4절), 1024×1536 확인
+   node tools/api-fill.cjs webp  <png> <out.webp> [--size WxH]      WebP 품질 85 · method 6(IMAGE_RULES 4절), 크기 확인(1024×1536 · 일상컷은 1024×1024 · 1536×1024 도 — --size 면 그 크기)
    node tools/api-fill.cjs sheet <out.jpg> <그림>… [--labels a,b,…]  붙여 보기(사용자에게 보여 줄 때) */
 'use strict';
 const fs = require('fs'), path = require('path'), crypto = require('crypto'), cp = require('child_process');
 
 const BASE = process.env.API_DRAW_BASE || 'https://api.openai.com/v1';
 const SIZE = '1024x1536', MODEL = 'gpt-image-2.5-sunburst';
+/* 일상컷 화면비(2026-11-23) — 크기는 지시문의 FRAME 줄(계획 scene.aspect — 「FRAME: a horizontal 3:2 (1536×1024) image.」)대로. 줄이 없으면 2:3. 그림 API 가 받는 셋뿐 */
+const SIZES = ['1024x1536', '1024x1024', '1536x1024'];
+const sizeOf = prompt => { const m = /^FRAME: an? (?:vertical|square|horizontal) \d+:\d+ \((\d+)×(\d+)\)/m.exec(String(prompt || '')), v = m ? m[1] + 'x' + m[2] : SIZE; return SIZES.includes(v) ? v : SIZE; };
 const sha = b => crypto.createHash('sha256').update(b).digest('hex');
 function py(code, args) { const r = cp.spawnSync('python3', ['-c', code, ...args], { encoding: 'utf8' }); if (r.status) throw new Error(r.stderr || 'python 실패'); return r.stdout; }
 
@@ -50,11 +53,11 @@ async function draw(o) {
   const prompt = fs.readFileSync(o.prompt, 'utf8'), out = o.out, name = o.name;
   if (!prompt.trim() || !o.ref || !out || !name) throw new Error('--prompt · --ref · --out · --name 이 필요하다');
   fs.mkdirSync(out, { recursive: true });
-  const w = Number(o['ref-size']) || 0, sent = shrinkRef(o.ref, out, w), buf = fs.readFileSync(sent), t0 = Date.now();
+  const w = Number(o['ref-size']) || 0, sent = shrinkRef(o.ref, out, w), buf = fs.readFileSync(sent), t0 = Date.now(), size = sizeOf(prompt);
   const fd = new FormData();
-  fd.append('model', o.model); fd.append('prompt', prompt); fd.append('size', SIZE); fd.append('quality', o.quality); fd.append('n', '1');
+  fd.append('model', o.model); fd.append('prompt', prompt); fd.append('size', size); fd.append('quality', o.quality); fd.append('n', '1');
   fd.append('image[]', new Blob([buf], { type: 'image/png' }), path.basename(sent));
-  const base = { tool: 'tools/api-fill.cjs', model: o.model, endpoint: 'images/edits', size: [1024, 1536], quality: o.quality, step: o.step || 'first',
+  const base = { tool: 'tools/api-fill.cjs', model: o.model, endpoint: 'images/edits', size: size.split('x').map(Number), quality: o.quality, step: o.step || 'first',
     prompt_file: path.basename(o.prompt), prompt_sha256: sha(Buffer.from(prompt)), ref: path.basename(o.ref), ref_sha256: sha(fs.readFileSync(o.ref)),
     ref_sent: w ? { size: [w, Math.round(w * 1.5)], sha256: sha(buf) } : null, at: new Date().toISOString() };
   try {
@@ -73,21 +76,23 @@ async function draw(o) {
   }
 }
 
-function webp(src, dst) {
-  py(`import sys\nfrom PIL import Image\nim=Image.open(sys.argv[1])\nassert im.size==(1024,1536), im.size\nim.convert('RGB').save(sys.argv[2],'WEBP',quality=85,method=6)\nprint(Image.open(sys.argv[2]).format, Image.open(sys.argv[2]).size)`, [src, dst]);
+function webp(src, dst, o = {}) {
+  /* 받는 크기 — 셋 가운데 하나, --size WxH 를 주면 그 크기(일상컷 화면비 2026-11-23) */
+  const want = o.size ? [o.size.split('x').map(Number)] : SIZES.map(v => v.split('x').map(Number));
+  py(`import sys,json\nfrom PIL import Image\nim=Image.open(sys.argv[1])\nassert list(im.size) in json.loads(sys.argv[3]), im.size\nim.convert('RGB').save(sys.argv[2],'WEBP',quality=85,method=6)\nprint(Image.open(sys.argv[2]).format, Image.open(sys.argv[2]).size)`, [src, dst, JSON.stringify(want)]);
   return 0;
 }
 
 function sheet(o) {
   const [dst, ...imgs] = o._, labels = (o.labels || '').split(',');
-  py(`import sys,json\nfrom PIL import Image,ImageDraw,ImageFont\nfs=json.loads(sys.argv[2]);ls=json.loads(sys.argv[3])\nW,H=341,512;c=min(6,len(fs));r=(len(fs)+c-1)//c\nS=Image.new('RGB',(W*c,(H+34)*r),'white');d=ImageDraw.Draw(S)\ntry: f=ImageFont.truetype('/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc',22)\nexcept Exception:\n  try: f=ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',22)\n  except Exception: f=ImageFont.load_default()\nfor i,p in enumerate(fs):\n  x,y=(i%c)*W,(i//c)*(H+34)\n  S.paste(Image.open(p).convert('RGB').resize((W,H)),(x,y+34))\n  d.text((x+6,y+4),ls[i] if i<len(ls) else str(i+1),fill='black',font=f)\nS.save(sys.argv[1],quality=88)`, [dst, JSON.stringify(imgs), JSON.stringify(labels)]);
+  py(`import sys,json\nfrom PIL import Image,ImageDraw,ImageFont\nfs=json.loads(sys.argv[2]);ls=json.loads(sys.argv[3])\nW,H=341,512;c=min(6,len(fs));r=(len(fs)+c-1)//c\nS=Image.new('RGB',(W*c,(H+34)*r),'white');d=ImageDraw.Draw(S)\ntry: f=ImageFont.truetype('/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc',22)\nexcept Exception:\n  try: f=ImageFont.truetype('/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc',22)\n  except Exception: f=ImageFont.load_default()\nfor i,p in enumerate(fs):\n  x,y=(i%c)*W,(i//c)*(H+34)\n  t=Image.open(p).convert('RGB'); t.thumbnail((W,H)); S.paste(t,(x+(W-t.width)//2,y+34+(H-t.height)//2))\n  d.text((x+6,y+4),ls[i] if i<len(ls) else str(i+1),fill='black',font=f)\nS.save(sys.argv[1],quality=88)`, [dst, JSON.stringify(imgs), JSON.stringify(labels)]);
   return 0;
 }
 
 async function main() {
   const [cmd, ...rest] = process.argv.slice(2), o = args(rest);
   if (cmd === 'draw') return draw(o);
-  if (cmd === 'webp') return webp(o._[0], o._[1]);
+  if (cmd === 'webp') return webp(o._[0], o._[1], o);
   if (cmd === 'sheet') return sheet(o);
   console.error('draw · webp · sheet'); return 2;
 }

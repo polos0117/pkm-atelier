@@ -427,6 +427,20 @@ def prepare(state, owner, available, blocked, at, execution_id=None):
     return r
 
 
+# 일상컷 화면비(2026-11-23) — 계획 · 생성기 UI(storage.cards[last].scenes.casual.aspect)의 크기. 폼 초상 · 옛 UI 는 2:3 1024×1536
+ASPECT_SIZES = {'2:3': (1024, 1536), '1:1': (1024, 1024), '3:2': (1536, 1024)}
+
+
+def ui_aspect(path):
+    try:
+        v = json.loads(Path(path).read_text()); st = v.get('storage') or {}
+        card = (st.get('cards') or {}).get(st.get('last')) or {}
+        a = ((card.get('scenes') or {}).get('casual') or {}).get('aspect') if card.get('mode') == 'casual' else None
+    except Exception:
+        a = None
+    return a if a in ASPECT_SIZES else '2:3'
+
+
 def artifact(files, prefix, label, path):
     b = Path(path).read_bytes()
     target = prefix + '/' + label
@@ -450,7 +464,7 @@ def intent(run, slot, prompt, ui, files):
     if c['slots'].get(slot, {}).get('status') == 'blocked_dependency':
         c.setdefault('block_history', []).append(dict(c['slots'][slot], slot=slot, resolved_at=now()))
     c['slots'][slot] = {'status': 'in_flight', 'at': now(), 'prompt': artifact(files, prefix, 'prompt.txt', prompt),
-                        'ui': artifact(files, prefix, 'ui.json', ui),
+                        'ui': artifact(files, prefix, 'ui.json', ui), 'aspect': ui_aspect(ui),
                         'references': {ref: c['slots'][ref]['image']['sha256'] for ref in refs}}
     c['status'] = 'working'
 
@@ -480,7 +494,7 @@ def retry_intent(run, slot, prompt, ui, qa, approval, files):
     prefix += '/attempts/2'
     c['slots'][slot] = {'status': 'in_flight', 'attempt': 2, 'at': now(),
         'prefix': prefix, 'approval': artifact(files, prefix, 'approval.json', approval),
-        'prompt': artifact(files, prefix, 'prompt.txt', prompt), 'ui': artifact(files, prefix, 'ui.json', ui),
+        'prompt': artifact(files, prefix, 'prompt.txt', prompt), 'ui': artifact(files, prefix, 'ui.json', ui), 'aspect': ui_aspect(ui),
         'references': dict(old['references']), 'correction_reference': old['image']}
     run['status'] = 'active'; c['status'] = 'working'
 
@@ -514,7 +528,7 @@ def replan_rejected(run, slot, prompt, ui, failure, approval, files):
     auth = artifact(files, prefix, 'approval.json', approval)
     c['slots'][slot] = {'status': 'in_flight', 'attempt': 2, 'at': now(), 'prefix': prefix,
         'approval': auth, 'prompt': artifact(files, prefix, 'prompt.txt', prompt),
-        'ui': artifact(files, prefix, 'ui.json', ui), 'references': dict(old['references'])}
+        'ui': artifact(files, prefix, 'ui.json', ui), 'aspect': ui_aspect(ui), 'references': dict(old['references'])}
     c.setdefault('block_history', []).append({'reason': c['reason'], 'resolved_by': auth})
     run['status'] = 'active'; c['status'] = 'working'
 
@@ -527,8 +541,9 @@ def record(run, slot, image, files):
         raise ValueError('record requires an existing in_flight intent; do not generate again')
     with Image.open(image) as im:
         im.load()
-        if im.size != (1024, 1536) or im.format not in ('PNG', 'WEBP'):
-            raise ValueError('expected decoded PNG/WebP 1024x1536; preserve rejected original locally')
+        want = ASPECT_SIZES.get(item.get('aspect') or '2:3', (1024, 1536)) if slot.startswith('casual') else (1024, 1536)
+        if im.size != want or im.format not in ('PNG', 'WEBP'):
+            raise ValueError('expected decoded PNG/WebP %dx%d; preserve rejected original locally' % want)
         ext = '.png' if im.format == 'PNG' else '.webp'
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
     prefix = item.get('prefix', prefix)

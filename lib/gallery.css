@@ -100,6 +100,8 @@ body.dex-page{background-image:none}
 .grid .stripe{display:flex;height:4px}.grid .stripe u{flex:1}
 .dex-page .grid .face{aspect-ratio:3/4;border-radius:0}
 .dex-page .grid .cell .face img{object-fit:cover;object-position:50% 10%}
+/* 일상컷은 1:1 · 3:2 도 온다(2026-11-23 화면비) — 칸은 그대로, 자르지 않고 칸 안에 */
+.dex-page .grid>.cell[data-cut="casual"] .face img{object-fit:contain;object-position:center}
 .dex-page .grid .cap{padding:5px 7px 7px;border-top:1px dashed var(--line);line-height:1.35}
 .grid .cap .no{display:block;font:700 10px/1.5 var(--num);color:var(--accent)}
 .dex-page .grid .cap strong{font-size:12px;font-weight:750;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

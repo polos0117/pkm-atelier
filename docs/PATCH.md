@@ -11,6 +11,19 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-23 · claude · 일상컷 화면비 — 구도 · 자세에 따라 2:3 / 1:1 / 3:2
+- 사용자(도시 공방 파리 · 카이로 시험 뒤) 「배경이 보이니까 더 시원하네」 · 「다른 공방도 조금씩 해보자」 → 「응 그렇게 진행해줘」 — 눕는 자세 · 환경 컷 3:2, 허리 위 · 3/4 1:1, 선 전신 · 가슴 위 · 얼굴은 2:3. 이미 그린 그림은 2:3 그대로, 새 계획 · 지시문만
+- data/casual-tree-v2.json — aspect_rules(차례 규칙 · 기본 2:3 · 크기 셋 · keep_fams game_cosplay). 표만 고치면 조정된다
+- lib/casual-tree-v2.js — 공용 모듈 aspectFor(t, scene) · aspectSize(t, 화면비) — 도시 · 원소 · 삼국지 사본과 같은 덩어리
+- lib/casual-plan.js — 버전2 계획이 자유 설계 칸까지 정한 뒤 cut.aspect = aspectFor(자유 설계 · 게임 코스프레 2:3, 남겨 둔 컷은 그대로), 캐릭터만의 컷 90 도. V2_FIELDS 에 aspect(생성기 주소 · 지시문 묶음 — turn 이 빠졌던 일을 되풀이하지 않게)
+- lib/prompt-state.js PLAN_V2 · tools/casual-ledger.py V2_KEYS — aspect 를 같이 싣는다(장부 · 예약까지). 지시문은 그대로 ASPECT_FRAME(FRAME 줄)이 계획 aspect 를 받는다
+- tools/prompt-pack.cjs — INDEX.md 에 「크기」 칸. tools/api-fill.cjs — 지시문 FRAME 줄대로 크기(size · generation.size), webp 는 셋 가운데 하나(--size 로 정확히), sheet 는 칸 안에 맞춘다
+- tools/image-runner.py — intent 가 UI 의 화면비를 적고, record 는 일상컷이면 그 크기를 본다(폼 초상은 1024×1536)
+- tools/roster.py · tools/register-images.py — 폼 초상은 1024×1536 하나, 일상컷은 셋 가운데 하나이고 기록(records/<폴더>/casualN-ui.json 의 scenes.casual.aspect)이 있으면 그 크기인지 본다. tools/make-thumbs.py — 주석만(긴 변 512)
+- lib/gallery.css — 도감 목록의 일상컷 칸은 그대로, 그림만 object-fit: contain(1:1 · 3:2 를 자르지 않는다). 큰 그림 · 일상컷 줄 · 크게 보기는 이미 contain 이라 그대로. ?v= 올림
+- IMAGE_RULES.md — 화면 비율 고정값 → 계획대로, FRAME 줄 셋, 다시 만드는 크기, webp 크기
+- tests/casual-tree-v2.cjs · tests/register-images.py · tests/make-thumbs.py — 화면비 규칙 · 크기 검사 · 가로 · 정사각 썸네일
+
 ## 2026-11-23 · claude · 일상컷 장소 보충 — 놀이 · 겨울 · 물놀이 · 구경 · 관람 · 캠퍼스 장소, 필수 갈래 자리 넓히기 · 소품 · 상황 · 옷
 - 사용자 「장소 보충이랑 필수갈래 장소 넓히기, 소품, 상황, 의상 늘리기 같이 진행해줘. 도시공방 만들면서, 설계에는 장소가 다양하다보니 그전에 있던 장소적인 선택지가 부족한게 눈에 보이네.」 장소 163 → 206, 장소 × 의상 계열 쌍(받침 규칙 통과) 546 → 780, 필수 갈래가 서는 곳 란제리풍 7 → 19 · 수영복 21 → 32 · 역할극 11 → 25 · 게임 코스프레 장소표(cosplay_required places + water_places) 11 → 26. 네 공방 같이(도구 scratchpad add_places.py).
 - data/casual-tree.json — 새 묶음 다섯: play 실내 놀이 · winter 겨울 놀이 · shop 구경 · 꾸밈 · stadium 관람석 · 경기장 · campus 캠퍼스. 새 장소(지금 현실, 모두 start_median): 영화관 객석 · 로비, 볼링장, 보드게임 카페, 방탈출, 테마 카페, PC방 / 아이스링크, 스키 슬로프 · 리프트, 눈썰매장 / 파도풀, 슬라이드 착수장, 루프탑 풀 파티, 비치 클럽(물가), 온천 리조트 풀, 목욕탕 탈의실(스파) / 글램핑 텐트 · 호숫가 데크, 료칸 객실(여행), 호텔 스위트 발코니(저녁), 창가 자리(집) / 미술관 전시실, 서점 서가, 꽃집, 꽃 시장, 사진 스튜디오, 부두아르 세트, 미용실, 네일숍, 피팅룸 / 야구장 응원석, 축구장 관중석, e스포츠 경기장, 골프 연습장 · 그린, 펜싱장(스키 · 골프 · e스포츠 · 펜싱 옷이 설 자리) / 강의실, 캠퍼스 잔디밭, 대학 축제 부스. 포켓몬 세계 넷(눈 마을 언덕 · 꽃집 · 부티크 피팅룸 · 포켓몬 뮤지컬 극장). 보드게임 카페는 이미 있는 보드게임 라운지(버전2 extra)로 갈음. PC방 · e스포츠 · 방탈출 · 테마 카페 · 풀 파티 · 글램핑은 since(나온 해), 영화관 객석 · PC방 · e스포츠 경기장은 screens(화면은 추상 빛만).

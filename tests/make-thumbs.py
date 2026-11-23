@@ -18,4 +18,13 @@ with tempfile.TemporaryDirectory() as d:
     assert Image.open(img / "thumb" / thumbs[0]).size == (341, 512)
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "make-thumbs.py")], cwd=d, capture_output=True, text=True)
     assert r.returncode == 2 and "2장 유지" in r.stdout, r.stdout                     # 다시 돌려도 멀쩡한 것은 그대로, 깨진 것은 계속 알린다
-print("PASS 썸네일 도구: 열리지 않는 원본은 건너뛰고 나머지는 만든다 · 2 로 끝나고 ::error:: 를 적는다 · 다시 돌려도 계속 알린다")
+# 일상컷 화면비(2026-11-23) — 가로 3:2 · 정사각 1:1 도 긴 변 512
+with tempfile.TemporaryDirectory() as d:
+    img = Path(d) / "img"; img.mkdir()
+    Image.new("RGB", (1536, 1024), (90, 90, 90)).save(img / "a_w_s_f_casual1.webp", "WEBP")
+    Image.new("RGB", (1024, 1024), (90, 90, 90)).save(img / "a_w_s_f_casual2.webp", "WEBP")
+    r = subprocess.run([sys.executable, str(ROOT / "tools" / "make-thumbs.py")], cwd=d, capture_output=True, text=True)
+    assert r.returncode == 0, (r.stdout, r.stderr)
+    assert Image.open(img / "thumb" / "a_w_s_f_casual1.webp").size == (512, 341)
+    assert Image.open(img / "thumb" / "a_w_s_f_casual2.webp").size == (512, 512)
+print("PASS 썸네일 도구: 열리지 않는 원본은 건너뛰고 나머지는 만든다 · 2 로 끝나고 ::error:: 를 적는다 · 다시 돌려도 계속 알린다 · 가로 3:2 · 정사각 1:1 도 긴 변 512")

@@ -179,3 +179,20 @@ with tempfile.TemporaryDirectory() as root, patch.object(reg, 'today', return_va
     assert code == 0 and other['added_at'] == {}, other['added_at']                                 # 적힌 날짜와 커밋 날이 하루 넘게 다르면 메우지 않는다
     assert reg.utc_stamp('2026-10-22T08:36:09+09:00') == '2026-10-21T23:36:09Z' and reg.utc_stamp('nope') is None
 print('PASS image registration: 3 normal + 3 overdrive slots, independent action, legacy, repeat and invalid base · shards: where, open/closed, duplicate, missing repo, prune · added: today, kept, missing without history, git history, shallow ignored · added_at: now, recent only, history within a day')
+
+# 크기(2026-11-23 일상컷 화면비) — 폼 초상은 1024×1536 하나, 일상컷은 셋(1024×1536 · 1024×1024 · 1536×1024) 가운데 하나이고
+# 기록(records/<폴더>/casualN-ui.json — 생성기 저장값 scenes.casual.aspect)이 있으면 그 크기
+import json as _json, tempfile as _tf
+from pathlib import Path as _P
+from PIL import Image as _Image
+with _tf.TemporaryDirectory() as _t:
+    _img, _rec = _P(_t) / 'img', _P(_t) / 'records' / 'pikachu-20261123'; _img.mkdir(); _rec.mkdir(parents=True)
+    def _pic(name, wh): _Image.new('RGB', wh, (90, 90, 90)).save(_img / name, 'WEBP')
+    _pic('피카츄_light_s_f.webp', (1024, 1536)); _pic('이브이_light_s_f.webp', (1024, 1024))                   # 폼 초상이 정사각 — 걸림
+    _pic('피카츄_s_f_casual1.webp', (1536, 1024)); _pic('피카츄_s_f_casual2.webp', (1024, 1024))            # 2 는 계획이 3:2 — 걸림
+    _pic('피카츄_s_f_casual3.webp', (1024, 1536)); _pic('피카츄_s_f_casual4.webp', (1200, 900))             # 기록 없는 옛 컷 2:3 · 받지 않는 크기
+    for _n in (1, 2): (_rec / f'casual{_n}-ui.json').write_text(_json.dumps({'storage': {'last': '피카츄', 'cards': {'피카츄': {'style': 's', 'mode': 'casual', 'scenes': {'casual': {'aspect': '3:2'}}}}}}), encoding='utf-8')
+    _bad = {b[0]: b[3] for b in reg.roster.art_size([str(_img)])}
+    assert set(_bad) == {'이브이_light_s_f.webp', '피카츄_s_f_casual2.webp', '피카츄_s_f_casual4.webp'}, _bad
+    assert '3:2' in _bad['피카츄_s_f_casual2.webp'], _bad
+print('PASS 그림 크기: 폼 초상 2:3 · 일상컷 셋 · 계획 화면비(기록 scenes.casual.aspect)')
