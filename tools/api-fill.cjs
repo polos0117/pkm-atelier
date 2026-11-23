@@ -79,7 +79,8 @@ async function draw(o) {
 function webp(src, dst, o = {}) {
   /* 받는 크기 — 셋 가운데 하나, --size WxH 를 주면 그 크기(일상컷 화면비 2026-11-23) */
   const want = o.size ? [o.size.split('x').map(Number)] : SIZES.map(v => v.split('x').map(Number));
-  py(`import sys,json\nfrom PIL import Image\nim=Image.open(sys.argv[1])\nassert list(im.size) in json.loads(sys.argv[3]), im.size\nim.convert('RGB').save(sys.argv[2],'WEBP',quality=85,method=6)\nprint(Image.open(sys.argv[2]).format, Image.open(sys.argv[2]).size)`, [src, dst, JSON.stringify(want)]);
+  /* 같은 비율로 더 크게 온 원본(ChatGPT 화면의 1:1 1254×1254 등)은 표준 크기로 줄인다(2026-11-23) */
+  py(`import sys,json\nfrom PIL import Image\nim=Image.open(sys.argv[1])\nok=[s for s in json.loads(sys.argv[3]) if im.size[0]>=s[0] and im.size[1]>=s[1] and abs(im.size[0]*s[1]-im.size[1]*s[0])<=0.01*im.size[0]*s[1]]\nassert ok, im.size\nif list(im.size)!=ok[0]: im=im.convert('RGB').resize(tuple(ok[0]),Image.LANCZOS)\nim.convert('RGB').save(sys.argv[2],'WEBP',quality=85,method=6)\nprint(Image.open(sys.argv[2]).format, Image.open(sys.argv[2]).size)`, [src, dst, JSON.stringify(want)]);
   return 0;
 }
 

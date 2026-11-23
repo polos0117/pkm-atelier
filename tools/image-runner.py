@@ -188,9 +188,12 @@ def filename(card, slot):
 def webp(original):
     from PIL import Image
     with Image.open(io.BytesIO(original)) as im:
-        if im.format == 'WEBP':
+        # 같은 비율로 더 크게 온 원본(ChatGPT 화면의 1:1 1254×1254 등)은 표준 크기로 줄인다(2026-11-23)
+        std = next((s for s in ASPECT_SIZES.values() if s != im.size and same_aspect(im.size, s)), None)
+        if im.format == 'WEBP' and not std:
             return original
-        buf = io.BytesIO(); im.save(buf, format='WEBP', quality=85, method=6)
+        out = im.convert('RGB').resize(std, Image.LANCZOS) if std else im
+        buf = io.BytesIO(); out.save(buf, format='WEBP', quality=85, method=6)
         return buf.getvalue()
 
 
@@ -431,6 +434,13 @@ def prepare(state, owner, available, blocked, at, execution_id=None):
 ASPECT_SIZES = {'2:3': (1024, 1536), '1:1': (1024, 1024), '3:2': (1536, 1024)}
 
 
+def same_aspect(size, want):
+    """원본이 그 자리의 비율인가 — 크기가 같거나, 같은 비율(1% 안)로 더 크면 된다. ChatGPT 화면은 1:1 을 1254×1254 로 준다(2026-11-23).
+    원본은 그대로 두고, WebP 로 바꿀 때 표준 크기(ASPECT_SIZES)로 줄인다(IMAGE_RULES)"""
+    w, h = size; W, H = want
+    return w >= W and h >= H and abs(w * H - h * W) <= 0.01 * w * H
+
+
 def ui_aspect(path):
     try:
         v = json.loads(Path(path).read_text()); st = v.get('storage') or {}
@@ -542,8 +552,8 @@ def record(run, slot, image, files):
     with Image.open(image) as im:
         im.load()
         want = ASPECT_SIZES.get(item.get('aspect') or '2:3', (1024, 1536)) if slot.startswith('casual') else (1024, 1536)
-        if im.size != want or im.format not in ('PNG', 'WEBP'):
-            raise ValueError('expected decoded PNG/WebP %dx%d; preserve rejected original locally' % want)
+        if not same_aspect(im.size, want) or im.format not in ('PNG', 'WEBP'):
+            raise ValueError('expected decoded PNG/WebP %dx%d (same ratio, at least that size); preserve rejected original locally' % want)
         ext = '.png' if im.format == 'PNG' else '.webp'
     prefix = 'records/automation/runs/' + run['id'] + '/' + str(c['no']) + '/' + slot
     prefix = item.get('prefix', prefix)
