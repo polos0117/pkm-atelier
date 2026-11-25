@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 그림이 정본인 134종 머리 — 그림을 보고 읽어 설계표에
+- data/face-design.json — 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」: 경장 ① 이 정본인데 그림 기록에 머리 값이 없어 hair 가 비었던 134종(피카츄 · 이상해씨 …)의 정본 그림을 보고 머리를 읽어 채웠다(생성기 머리 낱말 그대로 — 대부분 긴 웨이브 · 생머리, 양갈래 · 땋기 · 포니테일 · 단발 · 삐죽 일부). hair_record {kind: image, path: 그 그림} · hair_why. 그래서 GPT 설계 주문 「ours is …」 · 우리 경장 지시문 Hair 줄이 생기고, 우리 갈래는 머리 갈래 짝에서 빠진다
+- tools/face-design.py — build 가 기록에 머리가 없을 때 그림에서 읽은 값을 지킨다. 그림에서 읽은 머리는 상한 · 계열 잇기 · 같은 계열 · 옆 번호 규칙에 세지 않는다(표가 고른 머리가 아니다 — 전엔 빈 머리, 그림 없는 종 설계는 그대로)
+- tests/face-design.cjs — 같은 규칙: 그림에서 읽은 머리는 생성기 낱말 · 그림 경로만 보고 규칙 셈에서 뺀다
+
 ## 2026-11-26 · claude · GPT 세계컷 주문서 머리 갈래 — 네 공방 같은 꼴
 - lib/prompt-spec.js · lib/prompt-anthro.js — 사용자 「아 gpt 헤어스타일 패치안. 삼국지, 포켓몬, 도시 쪽도 그런지 같이 검토해줘」 → 「꼴 맞추는게 나을거 같아 1-4 다 해줘」: FREE_DESIGN.fill.family · hairFamilies, buildFree 가 두 설계에 다른 갈래(종 이름으로 돌려 가며). 머리 열쇠가 없어 우리 지시문 머리 줄을 갈래 rx 로 맞춰 뺀다(머리 줄을 못 읽으면 — 지금 「ours is see the prompt」 — 빼지 않는다). GPT 설계 등록작은 아직 없다 — 미리
 - IMAGE_RULES.md — GPT 설계 기록: free_prompt(채운 지시문) · summary · hair_family

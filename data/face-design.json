@@ -664,11 +664,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/이상해씨_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"dreamy",
@@ -703,11 +713,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/이상해풀_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"femme_fatale",
@@ -742,11 +762,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/이상해꽃_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"seductive",
@@ -782,11 +812,21 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/파이리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"passionate",
@@ -826,11 +866,21 @@
 "‘slightly hooked tip’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/리자드_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"passionate",
@@ -868,11 +918,21 @@
 "‘paired backward horns’ → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/리자몽_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"passionate",
@@ -907,11 +967,21 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/꼬부기_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"medium"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"dreamy",
@@ -946,11 +1016,21 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/어니부기_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"cool",
@@ -985,11 +1065,21 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/거북왕_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"ponytail",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"elegant",
@@ -1218,11 +1308,21 @@
 "‘triangular eyes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/딱충이_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"femme_fatale",
@@ -1258,11 +1358,21 @@
 "몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/독침붕_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"femme_fatale",
@@ -1299,11 +1409,21 @@
 "‘short, stubby beak’ → 입술 입이 작은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/구구_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"gentle",
@@ -1339,11 +1459,21 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/피죤_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"sassy",
@@ -1379,11 +1509,21 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/피죤투_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"coquettish",
@@ -1418,11 +1558,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/꼬렛_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"coquettish",
@@ -1458,11 +1608,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/레트라_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"cheerful",
@@ -1499,14 +1659,20 @@
 "‘short, hooked beak’ → 코 곧고 가는 콧대"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/깨비참-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/깨비참-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/깨비참_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -1596,11 +1762,21 @@
 "‘slit-pupil eye’ → 눈매 가늘고 날카로운 눈"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/아보_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"decadent",
@@ -1636,11 +1812,21 @@
 "‘narrow eyes’ → 눈매 가늘고 날카로운 눈"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/아보크_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"mysterious",
@@ -1676,11 +1862,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/피카츄_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"sassy",
@@ -1715,14 +1911,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/라이츄-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/라이츄-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/라이츄_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -1759,14 +1961,20 @@
 "‘blue, almond-shaped eyes’ → 눈매 아몬드형 눈"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/모래두지-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/모래두지-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/모래두지_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -1803,14 +2011,20 @@
 "‘almond-shaped blue eyes’ → 눈매 아몬드형 눈"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 턱선과 골격이 날카로운 얼굴형 → 균형 잡힌 타원형",
-"hair":{},
+"hair":{
+"hairstyle":"wild flare",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/고지-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/고지-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/고지_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wild flare",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -1895,11 +2109,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/니드리나_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"decadent",
@@ -1936,11 +2160,21 @@
 "‘small horn’ → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/니드퀸_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"femme_fatale",
@@ -1981,11 +2215,21 @@
 "‘long, pointed horn’ → 입술 얇은 입술"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/니드런♂_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"mysterious",
@@ -2075,14 +2319,20 @@
 "‘long, venomous horn’ → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wild flare",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/니드킹-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/니드킹-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/니드킹_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wild flare",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -2123,14 +2373,20 @@
 "‘chubby, vaguely star-shaped body’ → 눈썹 가늘고 완만한 곡선"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 코끝이 둥근",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/삐삐-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/삐삐-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/삐삐_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"mid",
@@ -2170,14 +2426,20 @@
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 도톰한 입술 → 윗입술이 활 모양인",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/20261008-clefable-glossy-promo-f.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/20261008-clefable-glossy-promo-f.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/픽시_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -2214,14 +2476,20 @@
 "‘large, pointed ears’ → 눈썹 길고 바깥 아치가 선명한"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/식스테일-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/식스테일-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/식스테일_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -2262,14 +2530,20 @@
 "‘long, fluffy crest’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
-"hair":{},
+"hair":{
+"hairstyle":"floor-length hair",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/나인테일-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/나인테일-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/나인테일_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"floor-length hair",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -2312,14 +2586,20 @@
 "‘spherical body’ → 눈썹 가늘고 완만한 곡선"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/20261008-jigglypuff-glossy-promo-f.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/20261008-jigglypuff-glossy-promo-f.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/푸린_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -2358,14 +2638,20 @@
 "페어리 타입 → 눈썹 가늘고 완만한 곡선"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/20261008-wigglytuff-glossy-promo-f.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/20261008-wigglytuff-glossy-promo-f.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/푸크린_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -2404,14 +2690,20 @@
 "‘two fangs on each jaw’ → 입술 굴곡 없이 곧은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 굴곡 없이 곧은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/주뱃-glossy-promo-20261008.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/주뱃-glossy-promo-20261008.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/주뱃_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -2450,11 +2742,21 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/골뱃_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"femme_fatale",
@@ -2542,11 +2844,21 @@
 "‘thin lips’ → 입술 얇은 입술"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/냄새꼬_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"femme_fatale",
@@ -2673,11 +2985,21 @@
 "why":"거대한 버섯 아래 작은 머리를 좁은 얼굴과 고요한 수평 눈매로 해석한다. 흰 눈은 옅은 홍채로만 참고한다.",
 "cues":[],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/파라섹트_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"shy",
@@ -2717,11 +3039,21 @@
 "‘spherical body’ → 눈썹 가늘고 완만한 곡선"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 윗입술이 활 모양인 → 도톰한 입술",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/콘팡_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"shy",
@@ -2757,11 +3089,21 @@
 "몸 형태 bug-wings → 턱선 · 턱끝 아래로 갈수록 좁아지는 턱끝"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/도나리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"femme_fatale",
@@ -2796,11 +3138,21 @@
 "몸 형태 blob → 턱선 · 턱끝 부드럽고 둥근 턱"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/디그다_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"playful",
@@ -2836,14 +3188,20 @@
 "몸 형태 heads → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dugtrio-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/dugtrio-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/닥트리오_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -2879,14 +3237,20 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/meowth-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/meowth-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/나옹_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -2920,14 +3284,20 @@
 "why":"샴고양이의 매끈하고 길쭉한 실루엣을 긴 얼굴과 가는 눈매로 옮긴다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/persian-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/persian-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/페르시온_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -2964,14 +3334,20 @@
 "‘wide, flat cream-colored beak’ → 입술 입이 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/psyduck-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/psyduck-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/고라파덕_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -3010,14 +3386,20 @@
 "‘four horns’ → 입술 얇은 입술"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/golduck-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/golduck-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/골덕_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -3058,14 +3440,20 @@
 "‘round body’ → 코 코끝이 둥근"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"shaggy",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/mankey-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/mankey-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/망키_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"shaggy",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -3106,11 +3494,21 @@
 "‘round body’ → 코 코끝이 둥근"
 ],
 "adjusted":"같은 계열 망키와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 짧고 둥근",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/성원숭_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"fierce",
@@ -3145,11 +3543,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wild flare",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/가디_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wild flare",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"passionate",
@@ -3185,11 +3593,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"lion mane",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/윈디_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"lion mane",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"passionate",
@@ -3227,14 +3645,20 @@
 "몸 형태 legs → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 폭 넓은 얼굴 → 좁은 얼굴",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/poliwag-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/poliwag-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/발챙이_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -3369,14 +3793,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/abra-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/abra-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/캐이시_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -3413,14 +3843,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/kadabra-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/kadabra-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/윤겔라_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"mid",
@@ -3461,14 +3897,20 @@
 "‘ear-like spikes’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/alakazam-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/alakazam-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/후딘_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -3656,14 +4098,20 @@
 "‘beady black eyes’ → 눈 크기 작은 눈"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/bellsprout-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/bellsprout-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/모다피_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -3701,14 +4149,20 @@
 "몸 형태 blob → 입술 도톰한 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/weepinbell-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/weepinbell-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/우츠동_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -3746,14 +4200,20 @@
 "‘swollen pink lip’ → 입술 도톰한 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 턱끝이 뒤로 물러난",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/victreebel-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/victreebel-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/우츠보트_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -3938,14 +4398,20 @@
 "‘rocky crest’ → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/graveler-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/graveler-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/데구리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -3983,14 +4449,20 @@
 "‘spherical body’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 부드럽고 둥근 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/golem-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/golem-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/딱구리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -4026,14 +4498,20 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ponyta-20261010/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/ponyta-20261010/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/포니타_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -4074,14 +4552,20 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"같은 계열 포니타와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 길고 바깥 아치가 선명한 → 바깥에서 꺾이는 사선 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 턱선과 골격이 날카로운 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"windswept",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/rapidash-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/rapidash-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/날쌩마_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"windswept",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -4120,14 +4604,20 @@
 "에스퍼 타입 → 눈썹 가늘고 곧은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 가늘고 곧은",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/slowpoke-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/slowpoke-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/야돈_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -4164,14 +4654,20 @@
 "‘several spikes’ → 턱선 · 턱끝 각지고 또렷한 턱"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/slowbro-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/slowbro-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/야도란_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -4209,14 +4705,20 @@
 "‘gray, spherical metal body’ → 입술 얇은 입술"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/magnemite-20261011/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/magnemite-20261011/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/코일_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -4254,14 +4756,20 @@
 "‘gray spherical body’ → 코 코끝이 둥근"
 ],
 "adjusted":"같은 계열 코일와 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/magneton-20261011/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/magneton-20261011/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/레어코일_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -4295,14 +4803,20 @@
 "why":"납작한 부리와 결연한 인상을 넓은 입과 굵은 직선 눈썹으로 해석한다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/farfetchd-20261011/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/farfetchd-20261011/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/파오리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -4341,11 +4855,21 @@
 "‘long sharp beak’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 길이 긴 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"twin tail",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/두두_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin tail",
+"hair length":"medium"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"cheerful",
@@ -4381,11 +4905,21 @@
 "‘long, sharp beak’ → 코 크고 또렷한 코"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 크고 또렷한 코",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/두트리오_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"cheerful",
@@ -4421,11 +4955,21 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 균형 잡힌 타원형",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/쥬쥬_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"gentle",
@@ -4462,11 +5006,21 @@
 "몸 형태 fish → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"half-up",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/쥬레곤_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"half-up",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"icy",
@@ -4505,11 +5059,21 @@
 "‘gaping mouth’ → 입술 입이 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/질퍽이_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"decadent",
@@ -4548,11 +5112,21 @@
 "‘enormous mouth’ → 입술 입이 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/질뻐기_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"femme_fatale",
@@ -4592,14 +5166,20 @@
 "몸 형태 ball → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/shellder-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/shellder-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/셀러_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -4640,14 +5220,20 @@
 "‘one barb-like spike’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/cloyster-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/cloyster-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/파르셀_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -4686,14 +5272,20 @@
 "‘round body’ → 턱선 · 턱끝 부드럽고 둥근 턱"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
-"hair":{},
+"hair":{
+"hairstyle":"bob",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/gastly-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/gastly-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/고오스_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"bob",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -4732,11 +5324,21 @@
 "‘triangular eyes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"twin braids",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/고우스트_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin braids",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"mysterious",
@@ -4775,11 +5377,21 @@
 "‘numerous spikes’ → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"twin braids",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/팬텀_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin braids",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"decadent",
@@ -4819,11 +5431,21 @@
 "‘rocky spine’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/롱스톤_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"stoic",
@@ -4863,14 +5485,20 @@
 "‘tired-looking eyes’ → 눈꼬리 각도 처진 눈꼬리"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/drowzee-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/drowzee-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/슬리프_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"early",
@@ -4910,14 +5538,20 @@
 "‘large nose’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/hypno-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/hypno-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/슬리퍼_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -4952,14 +5586,20 @@
 "why":"게의 넓은 옆 실루엣과 집게의 분명한 윤곽을 넓은 얼굴과 짧은 코로 옮긴다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
-"hair":{},
+"hair":{
+"hairstyle":"space buns",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/krabby-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/krabby-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/크랩_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"space buns",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"early",
@@ -5155,11 +5795,21 @@
 "‘small mouth’ → 입술 입이 작은"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/아라리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"dreamy",
@@ -5198,11 +5848,21 @@
 "‘three round, light yellow heads’ → 코 코끝이 둥근"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"spiky ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/나시_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky ponytail",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"dreamy",
@@ -5241,11 +5901,21 @@
 "‘two rounded horns’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
-"hair":{},
+"hair":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/탕구리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"dreamy",
@@ -5285,11 +5955,21 @@
 "‘small spike’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
-"hair":{},
+"hair":{
+"hairstyle":"bob",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/텅구리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"bob",
+"hair length":"short"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"confident",
@@ -5326,11 +6006,21 @@
 "‘ovoid body’ → 눈썹 짧고 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 짧고 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 부드럽고 둥근 턱",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/시라소몬_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"confident",
@@ -5365,11 +6055,21 @@
 "격투 타입 → 눈썹 굵고 눈 가까이 낮은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-3/img/홍수몬_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"sleepy",
@@ -6155,14 +6855,20 @@
 "‘three blunt horns’ → 코 곧고 가는 콧대"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 턱선과 골격이 날카로운 얼굴형 → 각지고 선명한 얼굴형",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/scyther-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/scyther-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/스라크_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"early",
@@ -6250,14 +6956,20 @@
 "‘two long tufts’ → 눈썹 숱 많고 결이 보이는"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 굵고 눈 가까이 낮은 → 숱 많고 결이 보이는",
-"hair":{},
+"hair":{
+"hairstyle":"twin braids",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/electabuzz-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/electabuzz-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/에레브_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin braids",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -6296,14 +7008,20 @@
 "‘puckered tan beak’ → 입술 도톰한 입술"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"wild flare",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/magmar-20261012/light.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/magmar-20261012/light.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/마그마_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wild flare",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -6340,14 +7058,20 @@
 "‘triangular eyes’ → 눈꼬리 각도 올라간 눈꼬리"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 각지고 선명한 얼굴형 → 균형 잡힌 타원형",
-"hair":{},
+"hair":{
+"hairstyle":"buns with tails",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/pinsir-20261012/light.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/pinsir-20261012/light.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/쁘사이저_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"buns with tails",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -6596,14 +7320,20 @@
 "몸 형태 ball → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 입이 넓은 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ditto-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/ditto-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/메타몽_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"early",
@@ -6640,14 +7370,20 @@
 "‘small black nose’ → 코 작고 여린 코"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"twin tail",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/eevee-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/eevee-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/이브이_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin tail",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"early",
@@ -6685,14 +7421,20 @@
 "‘tiny black nose’ → 코 작고 여린 코"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wave-crest hair",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/vaporeon-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/vaporeon-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/샤미드_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wave-crest hair",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -6728,14 +7470,20 @@
 "‘small nose’ → 코 작고 여린 코"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운, 코 곧고 가는 콧대 → 작고 여린 코",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/jolteon-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/jolteon-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/쥬피썬더_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"late",
@@ -6771,14 +7519,20 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/flareon-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/flareon-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/부스터_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -6818,14 +7572,22 @@
 "‘pink, polyhedral head’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 보통 → 크고 또렷한 코",
-"hair":{},
+"hair":{
+"hairstyle":"bob",
+"hair length":"short",
+"bangs":"straight bangs"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/porygon-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/porygon-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/폴리곤_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"bob",
+"hair length":"short",
+"bangs":"straight bangs"
+}
 },
 "impression":{
 "age":"early",
@@ -6864,14 +7626,20 @@
 "몸 형태 tentacles → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 이마가 넓고 턱이 가는 하트형",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/omanyte-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/omanyte-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/암나이트_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -6909,14 +7677,20 @@
 "‘several sharp spikes’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"twin braids",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/omastar-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/omastar-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/암스타_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin braids",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -7001,14 +7775,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 넓은 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/kabutops-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/kabutops-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/투구푸스_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"late",
@@ -7047,14 +7827,20 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"braid",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/aerodactyl-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/aerodactyl-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/프테라_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"braid",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -7301,14 +8087,20 @@
 "‘blue serpentine body’ → 얼굴 길이 긴 얼굴"
 ],
 "adjusted":"",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dratini-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/dratini-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/미뇽_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -7349,14 +8141,20 @@
 "‘rounded snout’ → 코 코끝이 둥근"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dragonair-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/dragonair-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/신뇽_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"mid",
@@ -7396,14 +8194,20 @@
 "‘round snout’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
-"hair":{},
+"hair":{
+"hairstyle":"giant braid",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/dragonite-20261013/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/dragonite-20261013/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/망나뇽_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"giant braid",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -7441,14 +8245,20 @@
 "‘two short, blunt, ear-like horns’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 길고 세련된 얼굴형 → 각지고 선명한 얼굴형, 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/mewtwo-20261013/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/mewtwo-20261013/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-3/img/뮤츠_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -7683,11 +8493,21 @@
 "‘long, thin snout’ → 코 길고 코끝이 내려온"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/브케인_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"passionate",
@@ -7727,11 +8547,21 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 보통 → 코끝이 둥근 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/마그케인_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"medium"
+}
+},
 "impression":{
 "age":"mid",
 "vibe":"sassy",
@@ -7770,11 +8600,21 @@
 "‘short, rounded snout’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴 길이 보통 → 긴 얼굴, 눈매 가늘고 날카로운 눈 → 강하게 치켜올라간 눈",
-"hair":{},
+"hair":{
+"hairstyle":"wild flare",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/블레이범_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wild flare",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"passionate",
@@ -7963,14 +8803,20 @@
 "‘round body’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 균형 잡힌 타원형 → 부드럽고 둥근 얼굴형, 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/sentret-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/sentret-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/꼬리선_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -8005,14 +8851,20 @@
 "why":"길고 부드러운 몸통을 긴 타원 윤곽과 완만한 눈매로 구분한다.",
 "cues":[],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 사이가 가까운 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"floor-length hair",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/furret-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/furret-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/다꼬리_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"floor-length hair",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -8053,14 +8905,20 @@
 "몸 형태 wings → 눈 간격 눈 사이가 가까운"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/hoothoot-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/hoothoot-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/부우부_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"early",
@@ -8100,14 +8958,20 @@
 "‘bushy, cream-colored feather horns’ → 입술 얇은 입술"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"half-up",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/noctowl-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/noctowl-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/야부엉_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"half-up",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -8144,14 +9008,20 @@
 "몸 형태 wings → 코 곧고 가는 콧대"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대",
-"hair":{},
+"hair":{
+"hairstyle":"layered",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ledyba-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/ledyba-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/레디바_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"layered",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8189,14 +9059,20 @@
 "몸 형태 wings → 코 곧고 가는 콧대"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 곧고 가는 콧대",
-"hair":{},
+"hair":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ledian-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/ledian-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/레디안_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"high ponytail",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -8232,11 +9108,21 @@
 "‘white horn’ → 눈썹 바깥에서 꺾이는 사선"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 눈썹 가늘고 완만한 곡선 → 바깥에서 꺾이는 사선",
-"hair":{},
+"hair":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/페이검_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+}
+},
 "impression":{
 "age":"early",
 "vibe":"shy",
@@ -8276,11 +9162,21 @@
 "‘white horn’ → 코 크고 또렷한 코"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 곧고 가는 콧대 → 크고 또렷한 코 긴 얼굴 겹침을 줄임(2026-11-09) — 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/아리아도스_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"very long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"wistful",
@@ -8317,11 +9213,21 @@
 "‘small mouth’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 얇은 입술 → 입이 작은",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
-"hair_record":null,
+"hair_record":{
+"path":"pkm-atelier-img-4/img/크로뱃_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
+},
 "impression":{
 "age":"late",
 "vibe":"playful",
@@ -8361,14 +9267,20 @@
 "‘large yellow eyes’ → 눈 크기 큰 눈"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 짧고 코끝이 들린",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/chinchou-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/chinchou-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/초라기_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -8406,14 +9318,20 @@
 "몸 형태 fish → 입술 아랫입술이 더 도톰한"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 입술 보통 → 아랫입술이 더 도톰한",
-"hair":{},
+"hair":{
+"hairstyle":"braid",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/lanturn-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/lanturn-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/랜턴_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"braid",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -8449,14 +9367,20 @@
 "‘tiny nose’ → 코 작고 여린 코"
 ],
 "adjusted":"같은 계열 피카츄와 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 넓은 → 눈 하나 너비 안팎, 입술 입이 작은 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/pichu-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/pichu-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/피츄_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"spiky hair",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8497,14 +9421,20 @@
 "‘small mouth’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 짧고 응축된 얼굴형",
-"hair":{},
+"hair":{
+"hairstyle":"bob",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/cleffa-20261011/manifest.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/cleffa-20261011/manifest.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/삐_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"bob",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8543,14 +9473,20 @@
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
 "adjusted":"같은 계열 푸린와 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 부드럽고 둥근 얼굴형 → 이마가 넓고 턱이 가는 하트형",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/igglybuff-20261011/manifest.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/igglybuff-20261011/manifest.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/푸푸린_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8591,14 +9527,20 @@
 "‘five round-tipped, conical spikes’ → 입술 입이 작은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 코끝이 둥근",
-"hair":{},
+"hair":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/togepi-20261011/manifest.json)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/togepi-20261011/manifest.json",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/토게피_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8637,14 +9579,20 @@
 "페어리 타입 → 입술 윗입술이 활 모양인"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 부드럽고 둥근 턱 → 턱끝이 길고 턱선이 또렷한",
-"hair":{},
+"hair":{
+"hairstyle":"ringlet curls",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/togetic-20261011/prompts/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/togetic-20261011/prompts/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/토게틱_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"ringlet curls",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -8686,14 +9634,20 @@
 "‘yellow beak’ → 코 곧고 가는 콧대"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 사이가 가까운 → 눈 하나 너비 안팎, 코 작고 여린 코 → 곧고 가는 콧대",
-"hair":{},
+"hair":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/natu-20261011/prompts/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/natu-20261011/prompts/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/네이티_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"pixie cut",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -8733,14 +9687,20 @@
 "‘long, slightly hooked beak’ → 코 콧대가 볼록한 매부리코"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 길고 코끝이 내려온 → 콧대가 볼록한 매부리코 긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴 폭 좁은 얼굴 → 보통, 턱선 · 턱끝 턱끝이 길고 턱선이 또렷한 → 아래로 갈수록 좁아지는 턱끝",
-"hair":{},
+"hair":{
+"hairstyle":"straight",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/xatu-20261011/prompts/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/xatu-20261011/prompts/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/네이티오_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"straight",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"late",
@@ -8776,14 +9736,20 @@
 "몸 형태 quadruped → 눈 간격 눈 사이가 넓은"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 코끝이 둥근 → 짧고 코끝이 들린",
-"hair":{},
+"hair":{
+"hairstyle":"twin tail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/mareep-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/mareep-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/메리프_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin tail",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -8819,14 +9785,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 짧고 코끝이 들린",
-"hair":{},
+"hair":{
+"hairstyle":"side braid",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/flaaffy-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/flaaffy-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/보송송_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"side braid",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"mid",
@@ -8862,14 +9834,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"긴 얼굴 겹침을 줄임(2026-11-09) — 얼굴형 길고 세련된 얼굴형 → 균형 잡힌 타원형, 얼굴 폭 좁은 얼굴 → 보통",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/ampharos-20261011/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/ampharos-20261011/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/전룡_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",
@@ -9195,14 +10173,20 @@
 "‘round green body’ → 코 코끝이 둥근"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈 간격 눈 하나 너비 안팎 → 눈 사이가 가까운, 코 작고 여린 코 → 코끝이 둥근",
-"hair":{},
+"hair":{
+"hairstyle":"layered",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/skiploom-20261012/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/skiploom-20261012/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/두코_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"layered",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"mid",
@@ -9238,14 +10222,20 @@
 "‘red, pupilless, beady eyes’ → 눈 크기 작은 눈"
 ],
 "adjusted":"같은 계열 통통코와 겹쳐 원작 단서의 다음 후보로 옮김 — 코 작고 여린 코 → 크고 또렷한 코",
-"hair":{},
+"hair":{
+"hairstyle":"curly",
+"hair length":"medium"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/jumpluff-20261012/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/jumpluff-20261012/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/솜솜코_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"curly",
+"hair length":"medium"
+}
 },
 "impression":{
 "age":"late",
@@ -9282,14 +10272,20 @@
 "몸 형태 upright → 얼굴형 균형 잡힌 타원형"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 얼굴형 이마가 넓고 턱이 가는 하트형 → 균형 잡힌 타원형",
-"hair":{},
+"hair":{
+"hairstyle":"twin tail",
+"hair length":"long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/aipom-20261012/light-prompt.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/aipom-20261012/light-prompt.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/에이팜_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"twin tail",
+"hair length":"long"
+}
 },
 "impression":{
 "age":"early",
@@ -9623,14 +10619,20 @@
 "‘long, pointed ears’ → 눈썹 길고 바깥 아치가 선명한"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 중간 두께의 직선 → 길고 바깥 아치가 선명한",
-"hair":{},
+"hair":{
+"hairstyle":"bob",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/umbreon-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/umbreon-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/블래키_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"bob",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"late",
@@ -9670,14 +10672,20 @@
 "‘crooked, yellow beak’ → 코 곧고 가는 콧대"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 눈썹 바깥에서 꺾이는 사선 → 숱 많고 결이 보이는",
-"hair":{},
+"hair":{
+"hairstyle":"wolf cut",
+"hair length":"short"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/murkrow-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/murkrow-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/니로우_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wolf cut",
+"hair length":"short"
+}
 },
 "impression":{
 "age":"early",
@@ -9715,14 +10723,20 @@
 "에스퍼 타입 → 눈매 아몬드형 눈"
 ],
 "adjusted":"다른 종과 넷 이상 겹쳐 원작 단서의 다음 후보로 옮김 — 턱선 · 턱끝 넓고 묵직한 턱끝 → 각지고 또렷한 턱",
-"hair":{},
+"hair":{
+"hairstyle":"wavy",
+"hair length":"very long"
+},
 "hair_locked":true,
-"hair_why":"확정한 ① 그림이 정본 — 기록(pkm-atelier-img/records/slowking-20261012/light.txt)에 머리 선택이 없어(모델 기본) 표가 정하지 않는다",
+"hair_why":"정본 ① 그림을 보고 읽은 머리(2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」 — 그림 기록에 머리 값이 없어 표가 비워 두었고, GPT 설계 주문의 「ours」 가 비었다). 그림이 정본 — 값은 그 그림을 따른다",
 "hair_cues":[],
 "hair_record":{
-"path":"pkm-atelier-img/records/slowking-20261012/light.txt",
-"kind":"prompt",
-"raw":{}
+"path":"pkm-atelier-img-4/img/야도킹_light_anime_25d_gloss_f.webp",
+"kind":"image",
+"raw":{
+"hairstyle":"wavy",
+"hair length":"very long"
+}
 },
 "impression":{
 "age":"late",

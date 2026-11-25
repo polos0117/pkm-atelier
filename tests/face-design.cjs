@@ -161,6 +161,15 @@ const edgeOk = (p, c) => {
   return (HR.grow[fam(a)] || []).includes(fam(b)) && (HR.elab[b] ?? 1) >= (HR.elab[a] ?? 1) && longer;
 };
 const triple = h => HK.map(k => h[k]).join('|');
+/* 그림을 보고 읽은 머리(hair_record.kind image, 2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」) — 값은 생성기 낱말이고 그 그림 파일이 있어야 한다.
+   상한 · 계열 잇기 · 같은 계열 · 옆 번호 규칙엔 세지 않는다(표가 고른 머리가 아니다 — 전엔 빈 머리였다, tools/face-design.py 와 같게) */
+let imgRead = 0;
+for (const c of cards) { const f = F[c.no], r = f.hair_record || {};
+  if (!(f.hair_locked && r.kind === 'image')) continue; imgRead++;
+  for (const [k, v] of Object.entries(f.hair || {})) assert(HK.includes(k) && hopt[k].includes(v), c.name + ' 그림에서 읽은 머리 ' + k + '=' + v + ' 는 생성기에 없는 값');
+  assert(f.hair.hairstyle && /\/img\//.test(r.path || ''), c.name + ' 그림에서 읽은 머리 — 헤어스타일 · 그림 경로');
+  f.hair = {}; }
+assert(imgRead >= 100, '그림에서 읽은 머리 ' + imgRead + '종');
 const count = {}, lockedCount = {};
 let locked = 0, lockedWith = 0;
 for (const c of cards) {

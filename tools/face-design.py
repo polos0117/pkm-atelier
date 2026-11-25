@@ -663,6 +663,9 @@ def design_hair(cards, app, img, old, roots, H):
                 if any(e[3] for e in ev) and prev.get('hair'):   # HAIR 줄로 확정한 값은 잠근 뒤 다시 build 해도 보존한다
                     vals = {**{k: v for k, v in prev['hair'].items() if k in HAIR_KEYS}, **vals}
                 rec = {'path': path, 'kind': kind, 'raw': raw}
+                # 기록엔 머리 값이 없는데 정본 그림을 보고 읽어 둔 값(hair_record.kind image, 2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」)은 지킨다
+                if not vals and prev.get('hair_locked') and (prev.get('hair_record') or {}).get('kind') == 'image':
+                    vals, rec = prev.get('hair') or {}, prev['hair_record']
             elif prev.get('hair_locked'):   # 기록이 이 자리에 받아 둔 저장소에 없다(예: pkm-atelier-img-4) — 앞서 잠근 값을 지킨다
                 vals, rec = prev.get('hair') or {}, prev.get('hair_record')
                 if rec and os.path.isdir(os.path.join(ROOT, '..', rec['path'].split('/')[0])) and not os.path.exists(os.path.join(ROOT, '..', rec['path'])):
@@ -678,7 +681,9 @@ def design_hair(cards, app, img, old, roots, H):
         if v.get(HS): cnt[v[HS]] = cnt.get(v[HS], 0) + 1
         if v.get(HL): lcnt[v[HL]] = lcnt.get(v[HL], 0) + 1
         if v.get(HB): bcnt[v[HB]] = bcnt.get(v[HB], 0) + 1
-    for name, (v, _) in locked.items(): put(name, v)
+    # 그림을 보고 읽은 머리(hair_record.kind image, 2026-11-26)는 표가 고른 머리로 세지 않는다 — 상한 · 계열 잇기는 전처럼(그때는 빈 머리였다), 값만 표에 남긴다
+    img_read = {nm for nm, (v, rec) in locked.items() if (rec or {}).get('kind') == 'image'}
+    for name, (v, _) in locked.items(): put(name, {} if name in img_read else v)
     cap = {s: max(caps['bob' if s == 'bob' else 'all'], cnt.get(s, 0)) for s in H['opts'][HS]}
     target_s, target_l, target_b = n / len(styles), n / len(LENGTHS), n / len(H['opts'][HB])
     kids = {}
@@ -779,6 +784,7 @@ def design_hair(cards, app, img, old, roots, H):
         else:
             why = '확정한 ① 그림이 정본 — 머리 기록을 찾지 못해 표가 정하지 않는다'
         res[name] = {'cues': [], 'adjusted': '', 'why': why, 'record': rec}
+    for nm in img_read: out[nm] = locked[nm][0]
     return out, res, locked
 
 
@@ -814,7 +820,8 @@ def check_hair(faces, cards, img, H, quiet=False):
         if not f.get('hair_why'): bad.append(f"{c['name']} hair_why 없음")
         for k, v in h.items():
             if k not in HAIR_KEYS or v not in H['opts'][k]: bad.append(f"{c['name']} 머리 {k}={v} 는 생성기에 없는 값")
-        if h.get(HS):
+        img_read = f.get('hair_locked') and (f.get('hair_record') or {}).get('kind') == 'image'   # 그림을 보고 읽은 머리 — 상한 · 계열 잇기에 세지 않는다(2026-11-26)
+        if h.get(HS) and not img_read:
             cnt[h[HS]] = cnt.get(h[HS], 0) + 1
             if f.get('hair_locked'): lcnt[h[HS]] = lcnt.get(h[HS], 0) + 1
         if f.get('hair_locked'): continue
@@ -825,7 +832,7 @@ def check_hair(faces, cards, img, H, quiet=False):
     for s, k in cnt.items():
         cap = caps['bob' if s == 'bob' else 'all']
         if k > max(cap, lcnt.get(s, 0)): bad.append(f'헤어스타일 {s} {k}종 — 상한 {cap}(확정 그림 {lcnt.get(s, 0)})을 넘는다')
-    hair = {c['name']: (faces.get(str(c['no'])) or {}).get('hair') or {} for c in cards}
+    hair = {c['name']: ({} if (faces.get(str(c['no'])) or {}).get('hair_locked') and ((faces.get(str(c['no'])) or {}).get('hair_record') or {}).get('kind') == 'image' else (faces.get(str(c['no'])) or {}).get('hair') or {}) for c in cards}
     lock = {c['name']: bool((faces.get(str(c['no'])) or {}).get('hair_locked')) for c in cards}
     for c in cards:
         p = c.get('from')
