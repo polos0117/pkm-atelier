@@ -48,14 +48,18 @@ function look(sc, where, card) {
   return text;
 }
 /* 1. 자세 추천 × 쓸 수 있는 장소(장소마다 그 시대 하나) — 2026-11-12 다 돌지 않고 추천마다 · 장소마다 한 번은 + 열 쌍에 하나(이천여 쌍이 1분 걸렸다) */
+/*   옷에 기대는 손(옷깃 collar · 끈 strap · 주머니 pocket — outfit_features)의 추천은 그 특징이 기본인 의상 계열에서 본다(2026-11-23 collar_waist 는 깃 옷 —
+     everyday 기본엔 깃이 없어 work 에서). 특징이 필요 없거나 everyday 가 가진 추천은 그대로 everyday */
+const OF = tree2.outfit_features.defaults, needOf = pr => ['right', 'left'].map(s => (tree2.hands.find(h => h.key === pr[s]) || {}).outfit).filter(Boolean);
+const famOf = pr => { const need = needOf(pr); return ['everyday'].concat(Object.keys(OF)).find(f => need.every(x => OF[f].includes(x))) || 'everyday'; };
 const seenPr = new Set(), seenPl = new Set(); let pairs = 0;
-for (const pr of tree2.presets) for (const pl of C.allPlaces(t)) {
+for (const pr of tree2.presets) { const ofam = famOf(pr); for (const pl of C.allPlaces(t)) {
   const era = pl.eras.includes('now') ? 'now' : pl.eras[0];
-  if (!C.presetOk(t, { era, place: pl.key, ofam: 'everyday' }, pr.key)) continue;
+  if (!C.presetOk(t, { era, place: pl.key, ofam }, pr.key)) continue;
   if (seenPr.has(pr.key) && seenPl.has(pl.key) && pairs++ % 10) continue;
   seenPr.add(pr.key); seenPl.add(pl.key);
-  look(C.repair(t, C.applyPreset(t, { treeV: 2, era, place: pl.key, ofam: 'everyday' }, pr.key)), pr.key + ' @ ' + pl.key);
-}
+  look(C.repair(t, C.applyPreset(t, { treeV: 2, era, place: pl.key, ofam }, pr.key)), pr.key + ' @ ' + pl.key + (ofam === 'everyday' ? '' : ' · ' + ofam));
+} }
 assert(n > 200 && seenPr.size === tree2.presets.length, '추천 × 장소 ' + n + ' · 추천 ' + seenPr.size + '/' + tree2.presets.length);
 /* 2. 랜덤 — 카드 세대 · 표정 · 세부 강도 다섯을 다 얹어 가장 긴 것 */
 let s = 9, xf = 0; const rnd = () => (s = (s * 1103515245 + 12345) % 2147483648) / 2147483648;
@@ -69,7 +73,7 @@ for (let i = 0; i < 150; i++) {
     const fr = Object.assign({}, base, { mech: card.en, gen: card.gen }, sc, i % 2 ? { xfree: true } : { sfree: true, ofree: true }), tf = L.buildSingle(fr), F = S.FREE_SCENE;
     assert(tf.includes(F.head) && tf.includes(F.avoid) && tf.includes(i % 2 ? F.xfree : F.sfree) && !tf.includes(i % 2 ? F.sfree : F.xfree) && tf.includes(F.keep) && tf.includes(F.end), '랜덤 ' + i + ' 자유 주문');
     assert(!/^(Place|POSTURE|COMPOSITION|Lens \/ perspective|RIGHT HAND|LEFT HAND|BOTH HANDS|PROP|GAZE|Outfit|Outfit colours|Cut|Situation|action_level|separates_preference): /m.test(tf) && !/\n\n(CROP|WORLD|LOOK-BACK): /.test(tf) && !tf.includes(S.OUTFIT_FREE), '랜덤 ' + i + ' 자유 — 우리 장면 줄 없음');
-    assert(/\n\nFACE: /.test(tf) && /\n\nBODY TYPE: /.test(tf) && /\n\nSTYLE: /.test(tf) && tf.includes(T.anatomy) && tf.includes(T.bodyV2) && tf.includes(T.handsV2) && tf.includes(T.figure) && /^skin_exposure: /m.test(tf), '랜덤 ' + i + ' 자유 — 얼굴 · 화풍 · 인체 · 노출 강도 그대로');
+    assert(/\n\nFACE: /.test(tf) && /\n\nBODY TYPE: /.test(tf) && /\n\nSTYLE: /.test(tf) && tf.includes(T.anatomy) && tf.includes(T.bodyV2) && tf.includes(T.handsV2) && tf.includes(T.figureCasual) && !tf.includes(T.figure) && /^skin_exposure: /m.test(tf), '랜덤 ' + i + ' 자유 — 얼굴 · 화풍 · 인체 · 노출 강도 그대로(한 명 줄은 일상컷 figureCasual — 2026-11-23)');
     if (fr.expr) assert(/^EXPRESSION: /m.test(tf), '랜덤 ' + i + ' 자유 — 표정');
     assert(!/[가-힣]/.test(tf) && P.words(tf) <= LIMIT, '랜덤 ' + i + ' 자유 ' + P.words(tf));
     xf++;
@@ -110,7 +114,7 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(fixed.sb.includes('Outfit: a daring adult cosplay of Link from The Legend of Zelda — Link\'s outfit — a green belted tunic') && fixed.sb.includes('cut as a high-cut bodysuit'), '주인공 하나 ' + fixed.sb);
   assert(fixed.text.includes(T.casualOutputCosplay) && fixed.text.includes(T.casualWardrobeCosplay) && !fixed.text.includes(T.casualOutputV2) && !fixed.text.includes(T.casualWardrobe) && !fixed.text.includes(T.casualOutputCostume), '코스프레 OUTPUT · WARDROBE');
   assert(!/Outfit colours:|Situation:|source_influence:/.test(fixed.sb) && !/accessories and objects around her|her source belongs in accessories/.test(fixed.text), '색 · 상황 · 원작 영향도 · 「장신구로만」 줄 없음');
-  assert(/\n\nBODY TYPE: /.test(fixed.text) && fixed.text.includes(T.figure) && fixed.text.includes(T.bodyV2) && /^skin_exposure: bold/m.test(fixed.sb), '체형 · 인체 · 노출 줄 그대로');
+  assert(/\n\nBODY TYPE: /.test(fixed.text) && fixed.text.includes(T.figureCasual) && !fixed.text.includes(T.figure) && fixed.text.includes(T.bodyV2) && /^skin_exposure: bold/m.test(fixed.sb), '체형 · 인체 · 노출 줄 그대로(한 명 줄은 일상컷 figureCasual — 2026-11-23)');
   const abs = Object.keys((T.abs || {}).by || {})[0];
   if (abs) assert(run({ game: 'legend_of_zelda', character: 'Link', cut: 'bodysuit' }, { mech: abs }).text.includes(T.abs[T.abs.by[abs]]), '복근 줄 그대로');
   /* 2026-11-16 — 등장인물 많은 게임 1회차도 계획기가 정한 캐릭터(text.assigned). 옛 계획의 pick 칸(character 빈 칸)은 지시문 그대로 */
