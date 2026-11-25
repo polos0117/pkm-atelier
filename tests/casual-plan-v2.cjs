@@ -125,7 +125,10 @@ const st = ST.initial(S, CT, P, {}, tree, { name: '피카츄', gen: 1 }, q, { C2
 assert(st.plan && !st.plan.bad.length, '주소 값이 트리에 맞는다 ' + JSON.stringify(st.plan));
 const sc = st.st.scenes.casual;
 assert.equal(sc.treeV, 2); assert.equal(st.st.mode, 'casual');
-for (const k of P.V2_FIELDS) if (cut0[k]) { assert.deepEqual(sc[k], cut0[k], '주소 ' + k); if (k !== 'preset') assert(sc.randomLocks[k], '잠금 ' + k); }
+/* 잠그지 않는 칸 — 자세 추천 · 계획기가 나중에 얹는 고개 좌우(turn) · 옷 꾸밈(ostyle): 값은 넘기되 잠그지 않는다(lib/prompt-state.js plannedV2, 2026-11-23 — 이 줄이 그때 안 따라와 「잠금 turn」 으로 걸렸다) */
+const NO_LOCK = ['preset', 'turn', 'ostyle'];
+for (const k of P.V2_FIELDS) if (cut0[k]) { assert.deepEqual(sc[k], cut0[k], '주소 ' + k); if (!NO_LOCK.includes(k)) assert(sc.randomLocks[k], '잠금 ' + k); }
+assert(P.V2_FIELDS.includes('turn') && !sc.randomLocks.turn && !sc.randomLocks.ostyle, '고개 좌우 · 옷 꾸밈은 넘기되 잠그지 않는다');
 /* 버전1 계획기 주소는 버전1 장면 그대로 */
 const v1cut = entries[0].cuts[0], s1 = ST.initial(S, CT, P, {}, tree, { name: '피카츄', gen: 1 }, new URLSearchParams(P.generatorQuery('피카츄', v1cut)).get('casual'), { C2, tree2 });
 assert(!s1.st.scenes.casual.treeV && s1.st.scenes.casual.act === v1cut.act, '버전1 주소');
