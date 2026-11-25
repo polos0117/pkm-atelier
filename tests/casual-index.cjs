@@ -32,7 +32,8 @@ put(B, 'bulbasaur-20261001/casual1-ui.json', rec(BU, ST, { ofam: 'everyday', ite
 put(B, F + 'casual1-ui.json', rec(BU, ST, { ofam: 'roleplay', item: 'event_staff', ocolor: 'pink', shade: blush.key }));
 for (const side of ['casual1-blocked-ui.json', 'blocked-casual1-ui.json', 'casual1-bold-ui.json', 'attempts/casual1-ui.json', 'attempts/casual12-ui.json']) put(B, F + side, rec(BU, ST, { ofam: 'lingerie', item: '' }));
 put(B, F + 'casual2-ui.json', rec(BU, ST, { ofam: 'everyday', item: 'jeans_tee' }));
-put(B, F + 'casual2-refill-ui.json', rec(BU, ST, { ofam: 'swimwear', item: 'classic_bikini', ocolor: 'pink' }));
+put(B, F + 'casual2-refill-ui.json', rec(BU, ST, { ofam: 'swimwear', item: 'classic_bikini', ocolor: 'pink',
+  era: 'now', place: 'home_kitchen', posture: 'stand', frame: 'waist_up', body: 'front', camera: 'eye', gaze: 'camera', expr: 'calm', use: 'cup_hold', prop: 'cup', time: 'morning', weather: 'rain', aspect: '2:3', right: 'prop', left: 'out', support: 'none', head: 'tilt' }));
 put(B, F + 'casual3-ui.json', rec(BU, ST, { ofam: 'pokemon_costume', item: 'pc_mini_dress' }));
 put(B, F + 'casual4-ui.json', rec(BU, ST, { ofam: 'game_cosplay', item: 'gc_bodysuit', cosplay: { game: 'gx_many', character: ' joan ', cut: 'bodysuit', round: 1 } }));
 put(B, F + 'casual5-ui.json', rec(BU, ST, { ofam: 'game_cosplay', item: 'gc_mini_dress', cosplay: { game: 'gx_many', character: '', cut: 'mini_dress', round: 1, used: [] } },
@@ -62,8 +63,22 @@ const R = doc.rows, row = (card, style, n) => R.filter((r) => r.card === card &&
 assert.equal(doc.version, 1); assert.equal(doc.atelier, 'pkm'); assert.deepEqual(doc.source, X.REPOS.slice(0, 2));
 const KEYS = ['card', 'name', 'world', 'worldKo', 'n', 'date', 'style', 'path', 'required', 'requiredKo', 'family', 'familyKo', 'item', 'itemKo', 'shade', 'shadeKo', 'cosplay', 'free'];
 const HANGUL = /[가-힣]/;
+/* 장면 풀이 s(2026-11-25) — 줄 끝, 있을 때만. 칸은 짧은 열쇠, 빈 칸 · undefined 없음, 우리 값은 한글(en: 1 이면 GPT 가 지은 영어) */
+const S_KEYS = ['pl', 'act', 'fr', 'ex', 'gz', 'bd', 'cam', 'ln', 'lt', 'mo', 'cp', 'si', 'os', 'tm', 'ss', 'wt', 'era', 'ar', 'en'];
+function sShape(r) {
+  if (!('s' in r)) return;
+  assert.ok(r.s && Object.keys(r.s).length, r.path + ' s 가 있으면 비지 않는다');
+  for (const [k, v] of Object.entries(r.s)) {
+    assert.ok(S_KEYS.includes(k), r.path + ' s 칸 ' + k);
+    if (k === 'en') { assert.equal(v, 1); continue; }
+    assert.equal(typeof v, 'string'); assert.ok(v.trim() && !/undefined|null|\[object/.test(v), r.path + ' s.' + k + ' = ' + v);
+    if (!['ln', 'ar'].includes(k) && !(r.s.en && ['pl', 'act', 'fr'].includes(k))) assert.match(v, v === '3/4' ? /^3\/4$/ : HANGUL, r.path + ' s.' + k + ' 한글');
+  }
+}
 for (const r of R) {
-  assert.deepEqual(Object.keys(r), KEYS, '칸 차례 · 빠진 칸 없음 ' + r.path);
+  sShape(r);
+  assert.deepEqual(Object.keys(r).filter((k) => k !== 's'), KEYS, '칸 차례 · 빠진 칸 없음 ' + r.path);
+  if ('s' in r) assert.equal(Object.keys(r).pop(), 's', 's 는 줄 끝');
   for (const k of ['required', 'family', 'item', 'shade']) if (r[k] != null) assert.match(String(r[k + 'Ko']), HANGUL, k + ' 한글 ' + r.path);
   if (r.cosplay) {
     assert.deepEqual(Object.keys(r.cosplay), ['game', 'gameKo', 'character', 'characterKo', 'cut', 'cutKo', 'by', 'round']);
@@ -74,6 +89,10 @@ for (const r of R) {
 assert.equal(R.length, 14, '한 컷 한 줄 — 이상해씨 anime 열하나 + glossy 하나, 꼬부기 둘(옛 glossy · 이름 바꾼 anime) … ' + R.map((r) => r.card + r.style + r.n).join(','));
 for (let i = 1; i < R.length; i++) assert(R[i - 1].date >= R[i].date, '날짜 새것 먼저');
 assert.equal(R[0].date, '2026-11-17', '등록 날짜가 먼저');
+
+/* 장면 풀이 — 둘째 줄(장소 · 하는 일 · 구도) + 더 보기(손 · 받침 · 고개는 싣지 않는다). 장면 자유 컷은 GPT 가 채운 Place 줄(한 줄에 이은 칸은 앞 칸만) */
+assert.deepEqual(row(BU, ST, 2).s, { pl: '주방', act: '잔을 든다', fr: '허리 위', ex: '차분함', gz: '카메라', bd: '정면', cam: '눈높이', ln: '50mm 표준', tm: '아침', wt: '비', era: '지금 현실', ar: '2:3' });
+assert.deepEqual(row(BU, ST, 8).s, { pl: 'a bath.', en: 1 });
 
 /* 곁가지 · 겹침 · 등록 */
 const c1 = row(BU, ST, 1);

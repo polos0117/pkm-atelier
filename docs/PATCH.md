@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-25 · claude · 크게 보기 일상컷 설명 — 장소 · 하는 일 · 구도 + 더 보기
+- tools/casual-detail.cjs(새, 네 공방 같은 파일) — 사용자 「장소나 포즈, 표정, 구도 등 … 어디까지」 → 「응 그 범위로」: 색인 줄 끝 s 에 장면 풀이(둘째 줄 장소 · 하는 일 · 구도, 더 보기 표정 · 시선 · 몸 방향 · 카메라 · 렌즈 · 빛 · 시간대 · 날씨 · 순간 · 화면 구성 · 상황 노출 · 옷 꾸밈 · 시대 · 화면비). 손 · 받침 · 고개는 뺐다, 자유 설계 컷은 GPT 가 채운 줄만(영어), 옛 판(버전1) 컷은 있는 칸만
+- tools/casual-index.cjs · tests/casual-index.cjs · data/casual-index.json — s 를 줄 끝에(허브 일상컷 목록이 읽는 칸 · 차례는 그대로), 다시 지음
+- lib/casual-note.js · lib/words.js · dex.html — 상세 · 크게 보기 두 줄 + 「더 보기」(44px · aria-expanded · 이 탭 동안 기억). casual-note ?v=2 · words ?v=cnote1(도감)
+- tests/dex-zoom-turn.cjs — 상세 · 크게 보기 설명(둘째 줄 · 더 보기 · 자유 설계 영어)
+
 ## 2026-11-25 · claude · 허브 즐겨찾기 — 크게 보기 꽉 채우기 · 가로 보기 · 한도
 - lib/favorites.js — style-atelier shared 판(원본이 공방 모음에서 shared 로): 3000칸, 가득이면 오래된 것을 빼지 않고 거절 · error() · message() · room(), 저장 공간 모자람(QuotaExceededError)은 'quota'(담아 둔 칸 그대로)
 - lib/fill-view.js · lib/fill-core.js(새) — shared 판: 셈 · 두 번 누르기를 몸통 fill-core.js 로 뗐다(동작 같음 — tests/fill-view.cjs 통과)

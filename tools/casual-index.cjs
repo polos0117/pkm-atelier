@@ -25,6 +25,7 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const ROOT = path.resolve(__dirname, '..');
 const REPOS = ['pkm-atelier-img', 'pkm-atelier-img-2', 'pkm-atelier-img-3', 'pkm-atelier-img-4', 'pkm-atelier-img-5'];
 const GC = require(path.join(ROOT, 'lib', 'game-cosplay.js'));
+const makeDetail = require('./casual-detail.cjs');   /* 장면 풀이 s(2026-11-25 — 크게 보기 둘째 줄 · 더 보기) */
 const CAT_FAM = { adult_roleplay: 'roleplay', swimwear: 'swimwear', lingerie: 'lingerie', retro_glamour: 'retro' };   /* 장부 옛 칸의 필수 갈래 → 트리 의상 계열 */
 const RETRO_FROM = '2026-10-26', RETRO_TO = '2026-11-06';   /* 레트로 글래머가 필수였던 세 장 시절(IMAGE_RULES 3절 필수 갈래 표) */
 const FREE_KO = { ofree: '옷 자유', gfree: '갈래 자유', sfree: '장면 자유', xfree: '갈래 · 상황 자유' };
@@ -49,7 +50,7 @@ function tables(root) {
   (tree.outfits || []).forEach((o) => { fams[o.key] = o; (o.items || []).forEach((it) => { items[o.key + '/' + it.key] = it; if (!items['*/' + it.key]) items['*/' + it.key] = it; }); });
   const byEn = {};
   cards.forEach((c) => { if (c.en) byEn[String(c.en).toLowerCase().replace(/[^a-z0-9]/g, '')] = c.name; });
-  return { S, tree, gc, own, fams, items, byEn,
+  return { S, tree, gc, own, fams, items, byEn, detail: makeDetail(root),
     req: (tree.required || {}).outfits || [], reqLegacy: (tree.required || {}).legacy_outfits || [],
     costume: (tree.costume_required || {}).outfit || '', cosplay: (tree.cosplay_required || {}).outfit || '' };
 }
@@ -149,8 +150,13 @@ function legacyOutfit(T, sc) {
   if (v.preset) { const pr = (T.tree.presets || []).filter((p) => p.key === v.preset)[0] || {}; v = { outfit: pr.outfit, item: pr.item }; }
   return { fam: str(v.outfit), item: str(v.item) };
 }
-/* 한 컷 → 한 줄 */
+/* 한 컷 → 한 줄(장면 풀이 s 는 끝에 — 보일 것이 있을 때만) */
 function rowOf(T, c) {
+  const row = rowBase(T, c), det = T.detail && T.detail(c.scene, c.rec, c.card);
+  if (det) row.s = det;
+  return row;
+}
+function rowBase(T, c) {
   const sc = c.scene || {}, rec = c.rec || {};
   const free = sc.sfree ? 'sfree' : sc.xfree ? 'xfree' : sc.gfree ? 'gfree' : sc.ofree ? 'ofree' : null;
   const own = c.n === 90 || !!sc.own;

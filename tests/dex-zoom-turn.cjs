@@ -73,24 +73,30 @@ const enterFrom = p => p.evaluate(() => { const a = document.querySelector('.zoo
       const files = (await cells.locator('img').evaluateAll(es => es.map(e => decodeURIComponent(e.getAttribute('src').split('/').pop())))).slice(0, 4);
       const st = files[0].slice(card.length + 1, files[0].lastIndexOf('_f_casual')), outfit = 'an original plum fitted sleeveless romper with a deep square neckline, a separate curved chest yoke linked to the shorts by two slim side bridges';
       const base = f => ({ card, name: card, world: '', worldKo: '', n: +f.match(/_casual(\d+)\.webp$/)[1], date: '2026-11-17', style: st, path: '', required: null, requiredKo: null, family: null, familyKo: null, item: null, itemKo: null, shade: null, shadeKo: null, cosplay: null, free: null });
-      doc.rows = [Object.assign(base(files[0]), { required: 'swimwear', requiredKo: '노출 갈래(수영복)', family: 'adventure', familyKo: '모험가', item: 'aviatrix', itemKo: '비행사', shade: 'orange', shadeKo: '코랄 · 오렌지' }),
+      doc.rows = [Object.assign(base(files[0]), { required: 'swimwear', requiredKo: '노출 갈래(수영복)', family: 'adventure', familyKo: '모험가', item: 'aviatrix', itemKo: '비행사', shade: 'orange', shadeKo: '코랄 · 오렌지',
+          s: { pl: '주방', act: '잔을 든다', fr: '허리 위', ex: '차분함', tm: '아침', wt: '비', era: '지금 현실', ar: '2:3' } }),
         Object.assign(base(files[1]), { required: 'game_cosplay', requiredKo: '게임 코스프레', family: 'game_cosplay', familyKo: '게임 코스프레', item: 'gc_slit_gown', itemKo: '트임 롱드레스', cosplay: { game: 'war_of_genesis_3', gameKo: '창세기전 3 · 파트 2', character: 'Embla', characterKo: '엠블라', cut: 'slit_gown', cutKo: '트임 롱드레스', by: 'gpt', round: 1 } }),
-        Object.assign(base(files[2]), { free: { kind: 'sfree', kindKo: '장면 자유', outfit } })];
+        Object.assign(base(files[2]), { free: { kind: 'sfree', kindKo: '장면 자유', outfit }, s: { pl: 'a bath.', en: 1, ar: '2:3' } })];
       assert.equal(await r.locator('.cnote').count(), 0, '상세의 일상컷 칸엔 한 줄이 없다');
       await cells.nth(0).click(); const dn = r.locator('.artwork-panel .dex-cnote'); await dn.waitFor();
-      assert.equal(fetched, 1, '일상컷을 처음 열 때 색인 한 번'); assert.equal((await dn.textContent()).trim(), '필수 · 노출 갈래(수영복) — 비행사 · 코랄 · 오렌지', '상세 — 필수 한 줄');
+      assert.equal(fetched, 1, '일상컷을 처음 열 때 색인 한 번'); assert.equal((await dn.locator('.cnote-l1').textContent()).trim(), '필수 · 노출 갈래(수영복) — 비행사 · 코랄 · 오렌지', '상세 — 첫 줄 필수 · 옷 · 색');
+      assert.equal((await dn.locator('.cnote-l2').textContent()).trim(), '주방 · 잔을 든다 · 허리 위', '상세 — 둘째 줄 장소 · 하는 일 · 구도(2026-11-25)');
+      { const m = dn.locator('.cnote-more'), bb = await m.boundingBox(); assert(bb.height >= 44 && bb.width >= 44, '더 보기 44px'); assert.equal(await m.getAttribute('aria-expanded'), 'false');
+        await m.click(); assert.equal(await m.getAttribute('aria-expanded'), 'true'); assert.deepEqual(await dn.locator('.cnote-list dt').allTextContents(), ['표정', '시간대', '날씨', '시대', '화면비']);
+        await m.click(); assert.equal(await dn.locator('.cnote-list').isVisible(), false, '다시 접힘'); }
       await r.keyboard.press('ArrowRight'); await r.waitForFunction(() => /코스프레/.test((document.querySelector('.dex-cnote') || {}).textContent || ''));
-      assert.equal((await dn.textContent()).trim(), '필수 · 게임 코스프레 — 창세기전 3 · 파트 2 · 엠블라 · 트임 롱드레스GPT 고름', '상세 — 코스프레(캐릭터 한글 · GPT 고름)');
+      assert.equal((await dn.textContent()).trim(), '필수 · 게임 코스프레 — 창세기전 3 · 파트 2 · 엠블라 · 트임 롱드레스GPT 고름', '상세 — 코스프레(캐릭터 한글 · GPT 고름) · 장면 풀이 없는 옛 줄은 첫 줄만');
       await r.locator('.big .zoom').click(); const zn = r.locator('.zoom-layer .zoom-cnote'); await zn.waitFor();
-      assert.equal(await zn.locator('b').textContent(), '필수 · 게임 코스프레', '크게 보기에도 한 줄'); assert.equal(await zn.locator('.cnote-gpt').count(), 1);
+      assert.equal(await zn.locator('b').textContent(), '필수 · 게임 코스프레', '크게 보기에도'); assert.equal(await zn.locator('.cnote-gpt').count(), 1);
       await r.keyboard.press('ArrowRight'); await r.waitForSelector('.zoom-cnote .cnote-more');
-      const more = zn.locator('.cnote-more'); assert.equal(await zn.locator('b').textContent(), '장면 자유');
-      assert.equal(await more.getAttribute('aria-expanded'), 'false'); assert((await more.textContent()).endsWith('…'), '긴 Outfit 은 줄여 보인다');
-      await more.click(); assert.equal(await more.getAttribute('aria-expanded'), 'true'); assert.equal(await more.textContent(), outfit, '누르면 펼침(영어 그대로)');
+      const more = zn.locator('.cnote-more'), l1 = zn.locator('.cnote-l1'); assert.equal(await l1.locator('b').textContent(), '장면 자유');
+      assert.equal(await zn.locator('.cnote-l2 span[lang="en"]').textContent(), 'a bath.', '자유 설계 장면은 영어 그대로'); assert.equal(await zn.locator('.cnote-l2 .cnote-tag').textContent(), 'GPT 설계');
+      assert.equal(await more.getAttribute('aria-expanded'), 'false'); assert((await l1.locator('span[lang="en"]').textContent()).endsWith('…'), '긴 Outfit 은 줄여 보인다');
+      await more.click(); assert.equal(await more.getAttribute('aria-expanded'), 'true'); assert.equal(await l1.locator('span[lang="en"]').textContent(), outfit, '더 보기 — 다 보임(영어 그대로)');
       assert.equal(await r.locator('.zoom-layer').count(), 1, '펼쳐도 크게 보기 그대로');
       await r.keyboard.press('ArrowRight'); await r.waitForFunction(f => decodeURIComponent((document.querySelector('.zoom-body>img') || {}).getAttribute('src') || '').endsWith(f), files[3]);
       assert.equal(await r.locator('.cnote').count(), 0, '색인에 없는 컷은 아무것도 안 보인다'); assert.equal(fetched, 1, '색인은 한 번만');
-      assert(await r.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), '옆 넘침'); assert.deepEqual(c.errors, [], '오류'); n += 16;
+      assert(await r.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), '옆 넘침'); assert.deepEqual(c.errors, [], '오류'); n += 24;
       await c.close();
     }
     console.log('PASS 도감 크게 보기 넘기기 전환: ' + n + '가지 — 나가는 그림 사본 · 넘긴 쪽에서 들어옴 · 끝나면 정리 · 빠르게 넘겨도 하나 · 움직임 줄이기 · 일상컷 한 줄(상세 · 크게 보기에서만)');
