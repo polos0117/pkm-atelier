@@ -40,7 +40,7 @@ for(const p of jobs){
  assert(care.includes('exactly one Pokémon companion'),'partner_care allows one companion');
  assert(!care.includes('no creature beside her'),'partner_care must not forbid its own companion');
  const other=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music'});
- assert(other.includes(S.PROMPT_LINES.figureCasual)&&other.includes('No Pokémon beside her') && !other.includes('No Pokémon, animals or other creatures')&&!other.includes('Pokémon companion as the scene'),'other places stay one main figure — no Pokémon or creatures (2026-11-23 figureCasual)');
+ assert(other.includes(S.PROMPT_LINES.figureCasual)&&!other.includes('No Pokémon') && other.includes('Pokémon, animals or other creatures that belong to the place may appear')&&!other.includes('Pokémon companion as the scene'),'other places stay one main figure — place Pokémon may appear apart from her (2026-11-26 figureCasual)');
  for(const a of tree.activities.filter(a=>a.companion))for(const f of ['face_close','chest_up'])assert(!CT.frameOk(tree,a.key,f),a.key+' '+f+' crops the companion out');
 }
 /* 시대 줄 — 첫 등장 무렵은 세대의 해(1세대 1996 · 9세대 2022), 포켓몬 세계 안은 WORLD, 무대·환상은 SETTING */
@@ -51,7 +51,7 @@ for(const p of jobs){
  assert(r9.includes('around 2022'),'gen 9 → 2022');
  assert(!L.buildSingle(scene('now','home_living','read_book','everyday')).includes('ERA:'),'now has no ERA line');
  const pw=L.buildSingle(scene('in_pokemon','pw_center','center_wait','everyday'));
- assert(pw.includes('WORLD: this scene happens inside the Pokémon world')&&pw.includes('No Pokémon unless SCENE names her companion'),'Pokémon world');
+ assert(pw.includes('WORLD: this scene happens inside the Pokémon world')&&pw.includes('Pokémon that live there may appear')&&!pw.includes('No Pokémon'),'Pokémon world');
  assert(L.buildSingle(scene('fantasy','fx_studio','editorial_pose','editorial')).includes('SETTING: a stylised stage'),'fantasy');
  /* 첫 등장 해 전의 장소는 그 시대에 없다 — 인피니티 풀(2000)은 1세대 무렵엔 없다 */
  assert(!CT.places(tree,'release',{gen:1}).some(p=>p.key==='water_infinity')&&CT.places(tree,'release',{gen:9}).some(p=>p.key==='water_infinity'),'infinity pool after 2000');
