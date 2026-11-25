@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 일상컷 머리 연출 13가지 · 짧은 머리 거르기
+- lib/casual-tree-v2.js — style-atelier shared 원본에서 sync: ambience — 설계 헤어스타일(opts.hairKey)이 표 short_hairs 가운데면 긴 머리 연출(hair.*.long)을 안 고른다(포켓몬은 일상컷 머리 연출 칸이 없어 바뀌는 것 없음)
+- prompt.html — casual-tree-v2.js ?v=hair1
+
 ## 2026-11-25 · claude · 팔이 더 생기거나 잘리는 것 막기 — 카메라 쪽 팔 · 한 줄 팔
 - lib/casual-tree-v2.js — style-atelier shared 원본에서 sync: 손 줄 끝말 — 뒤 3/4 몸에도 카메라 쪽 팔(일하는 손 쪽 · 화면 그쪽) · 먼 팔(몸 뒤로 거의 숨고 손만 엉덩이 옆), 돌아보는 어깨도 일하는 손 쪽. 소품 · 손짓 손은 「어깨에서 손까지 한 팔, 아래팔을 소매 · 리본 · 장식이 덮지 않음」, 옆에 내려 드는 소품은 「몸 옆에 붙여, 카메라 쪽으로 내밀지 않음」
 - prompt.html — casual-tree-v2.js ?v=arm1
