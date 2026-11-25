@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-25 · claude · 허브 즐겨찾기 — 크게 보기 꽉 채우기 · 가로 보기 · 한도
+- lib/favorites.js — style-atelier shared 판(원본이 공방 모음에서 shared 로): 3000칸, 가득이면 오래된 것을 빼지 않고 거절 · error() · message() · room(), 저장 공간 모자람(QuotaExceededError)은 'quota'(담아 둔 칸 그대로)
+- lib/fill-view.js · lib/fill-core.js(새) — shared 판: 셈 · 두 번 누르기를 몸통 fill-core.js 로 뗐다(동작 같음 — tests/fill-view.cjs 통과)
+- dex.html — 상세 · 크게 보기 하트 알림이 가득 · 저장 공간이면 그 말(FAV.message()), fill-view ?v=2 · favorites ?v=2
+- AGENTS.md — 공용 파일 목록에 fill-core.js · favorites.js
+
 ## 2026-11-25 · claude · 공용 파일 한 곳에서 — style-atelier shared · sync
 - lib/casual-tree-v2.js — style-atelier shared 판으로(도시 · 삼국지 · 원소와 바이트까지 같다). pkm 사본에만 있던 why `raised`(가슴 위 · 얼굴 클로즈업에 두 손을 다 올리지 않기, 2026-11-09)는 코드에서 빼고 표로
 - data/casual-tree-v2.json — `raise_one` { frames: chest_up · face_close, zones: face · chest · overhead } · `note_raise_one`. 동작 그대로 — 계획기 planV2 열두 명 · 랜덤 400 · 바꾸기 300 · 고르기 1600 지문이 옮기기 앞뒤 같다
