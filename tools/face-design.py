@@ -565,6 +565,16 @@ def pick_record(ev):
     return sorted(ev, key=lambda e: (e[0] != 'ui', os.path.basename(e[1]) not in main, e[1]))[0]
 
 
+def pick_for(ev, f):
+    """잠글 때 적어 둔 기록(hair_record.path)을 먼저 — 같은 파일, 다음 같은 폴더, 없으면 pick_record(2026-11-26: 한 종에 옛 화풍 기록(10월)과 지금 정본 기록이 같이 있어 이름 순 첫 기록이 옛 것이었다)"""
+    p = ((f or {}).get('hair_record') or {}).get('path') or ''
+    same = [e for e in ev if p and e[1] == p] or [e for e in ev if p and os.path.dirname(e[1]) == os.path.dirname(p)]
+    return pick_record(same or ev)
+
+
+IMG_KINDS = ('image', 'image_checked')   # 정본 그림을 보고 읽었거나(그림 = 이 값) 그림으로 확인한(표 = 그림) 잠금 — 기록보다 먼저(2026-11-26)
+
+
 def hair_score(card, rec, depth, final, H):
     sc = {k: {o: 0.0 for o in H['opts'][k]} for k in HAIR_KEYS}
     for b, w in BANGS_BASE.items(): sc[HB][b] += w
@@ -658,13 +668,14 @@ def design_hair(cards, app, img, old, roots, H):
         if dirs:
             ev = found.get(c['name'], [])
             if ev:
-                kind, path, raw, line = pick_record(ev)
+                kind, path, raw, line = pick_for(ev, prev)
                 vals = norm_hair(raw, H)
                 if any(e[3] for e in ev) and prev.get('hair'):   # HAIR 줄로 확정한 값은 잠근 뒤 다시 build 해도 보존한다
                     vals = {**{k: v for k, v in prev['hair'].items() if k in HAIR_KEYS}, **vals}
                 rec = {'path': path, 'kind': kind, 'raw': raw}
-                # 기록엔 머리 값이 없는데 정본 그림을 보고 읽어 둔 값(hair_record.kind image, 2026-11-26 사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」)은 지킨다
-                if not vals and prev.get('hair_locked') and (prev.get('hair_record') or {}).get('kind') == 'image':
+                # 정본 그림을 보고 읽어 둔 값(hair_record.kind image, 2026-11-26)은 기록보다 먼저 지킨다 — 기록에 머리가 없었거나(사용자 「포켓몬 우리 머리 못 읽는 것도 고쳐줘」),
+                # GPT 설계를 골라 기록의 우리 지시문 HAIR 줄이 그림과 다르다(「새로 등록된거는 아마 내가 gpt 설계 이미지를 고른거 같은데」)
+                if prev.get('hair_locked') and (prev.get('hair_record') or {}).get('kind') in IMG_KINDS:
                     vals, rec = prev.get('hair') or {}, prev['hair_record']
             elif prev.get('hair_locked'):   # 기록이 이 자리에 받아 둔 저장소에 없다(예: pkm-atelier-img-4) — 앞서 잠근 값을 지킨다
                 vals, rec = prev.get('hair') or {}, prev.get('hair_record')
@@ -861,7 +872,10 @@ def check_hair(faces, cards, img, H, quiet=False):
             if not ev:
                 if f.get('hair_record'): bad.append(f"{c['name']} 잠근 기록 {f['hair_record'].get('path')} 을 찾지 못했다")
                 continue
-            kind, path, raw, _ = pick_record(ev)
+            if (f.get('hair_record') or {}).get('kind') in IMG_KINDS:   # 그림이 정본 — 그림 파일이 있으면 된다
+                if not os.path.exists(os.path.join(ROOT, '..', f['hair_record'].get('path') or '')): bad.append(f"{c['name']} 잠근 그림 {f['hair_record'].get('path')} 이 없다")
+                continue
+            kind, path, raw, _ = pick_for(ev, f)
             want = norm_hair(raw, H)
             if any(f['hair'].get(k) != v for k, v in want.items()): bad.append(f"{c['name']} 잠근 머리 {f['hair']} 가 기록 {path} {want} 와 다르다")
     if not quiet:

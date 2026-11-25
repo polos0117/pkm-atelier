@@ -214,6 +214,7 @@ let checkedRecords = 0;
 for (const c of cards) {
   const f = F[c.no], r = f.hair_record;
   if (!f.hair_locked || !r) continue;
+  if (['image', 'image_checked'].includes(r.kind)) { assert(fs.existsSync(require('node:path').join('..', r.path)) || !fs.existsSync(require('node:path').join('..', r.path.split('/')[0])), c.name + ' 잠근 그림 ' + r.path + ' 이 없다'); continue; }   /* 그림이 정본(2026-11-26) — 글 대조 없이 파일만 */
   const path = require('node:path').join('..', r.path);
   if (!fs.existsSync(path)) continue;
   const text = fs.readFileSync(path, 'utf8');
