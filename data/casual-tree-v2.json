@@ -22879,5 +22879,17 @@
     "why": "허리 위 · 3/4 — 1:1 에서 인물 크기는 그대로, 배경이 열린다"
    }
   ]
+ },
+ "note_raise_one": "raise_one(2026-11-09, 2026-11-25 모듈 코드에서 표로 옮김 — 공용 lib/casual-tree-v2.js 는 style-atelier shared 에서 온다) — 이 프레이밍(frames)에서 왼손 · 오른손이 둘 다 이 자리(zones — 얼굴 · 가슴 · 머리 위, 또는 소품)면 왼손을 거른다(why code raised). 가슴 위 · 얼굴 클로즈업에 두 손을 다 올리면 한 팔이 몸에서 떨어져 떠다니거나 팔 없는 몸통이 됐다 — 한 손만 올린다.",
+ "raise_one": {
+  "frames": [
+   "chest_up",
+   "face_close"
+  ],
+  "zones": [
+   "face",
+   "chest",
+   "overhead"
+  ]
  }
 }

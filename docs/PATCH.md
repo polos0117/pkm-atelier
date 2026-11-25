@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-25 · claude · 공용 파일 한 곳에서 — style-atelier shared · sync
+- lib/casual-tree-v2.js — style-atelier shared 판으로(도시 · 삼국지 · 원소와 바이트까지 같다). pkm 사본에만 있던 why `raised`(가슴 위 · 얼굴 클로즈업에 두 손을 다 올리지 않기, 2026-11-09)는 코드에서 빼고 표로
+- data/casual-tree-v2.json — `raise_one` { frames: chest_up · face_close, zones: face · chest · overhead } · `note_raise_one`. 동작 그대로 — 계획기 planV2 열두 명 · 랜덤 400 · 바꾸기 300 · 고르기 1600 지문이 옮기기 앞뒤 같다
+- AGENTS.md — 공용 파일(트리 둘 · fill-view)은 style-atelier `shared/` 에서만 고치고 `node shared/sync.cjs` 로 옮긴다
+
 ## 2026-11-25 · claude · 계획기 — 막히는 씨앗 · 속도
 - lib/casual-tree-v2.js — 속도만(결과는 같다): repair 가 지금 값이 맞으면 고를 거리를 다 거르지 않고, 골라도 되는 칸은 목록을 안 세고, 고르는 손이 없으면 첫 맞는 값만 찾는다. presetOk 는 몸 칸이 고쳐지는 순간 「안 된다」(손 둘은 끝까지), 손 소품은 맞는 동작 하나만 찾고(anyUse), 장소 · 어색한 조합 장소 펼치기 · 고를 거리 목록은 한 번만 센다. presetBreadth 는 의상 계열을 한 번만 고른다. 도시 · 삼국지 · 원소 공용 모듈과 같은 고침(이 사본의 가슴 위 두 손 규칙은 그대로). ?v 올림 — 계획기 planV2 여덟 명 103초 → 8초, 답 같음(sha 대조)
 - tests/casual-plan-v2.cjs — 「잠금 turn」 실패: 2026-11-23 옷 꾸밈 때 lib/prompt-state.js plannedV2 가 turn · ostyle 을 일부러 넘기되 잠그지 않게 했는데(계획기가 얹는 값이라 잠금 단추가 없다) 이 검사만 「preset 말고 V2_FIELDS 다 잠금」 을 기대했다. 검사가 틀렸다 — 잠그지 않는 칸(preset · turn · ostyle)을 빼고, 넘기되 안 잠그는지 한 줄 더 본다
