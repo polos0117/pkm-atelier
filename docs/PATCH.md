@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · GPT 세계컷 주문서 머리 갈래 — 네 공방 같은 꼴
+- lib/prompt-spec.js · lib/prompt-anthro.js — 사용자 「아 gpt 헤어스타일 패치안. 삼국지, 포켓몬, 도시 쪽도 그런지 같이 검토해줘」 → 「꼴 맞추는게 나을거 같아 1-4 다 해줘」: FREE_DESIGN.fill.family · hairFamilies, buildFree 가 두 설계에 다른 갈래(종 이름으로 돌려 가며). 머리 열쇠가 없어 우리 지시문 머리 줄을 갈래 rx 로 맞춰 뺀다(머리 줄을 못 읽으면 — 지금 「ours is see the prompt」 — 빼지 않는다). GPT 설계 등록작은 아직 없다 — 미리
+- IMAGE_RULES.md — GPT 설계 기록: free_prompt(채운 지시문) · summary · hair_family
+- ?v — prompt-spec · prompt-anthro hairfam1
+
 ## 2026-11-26 · claude · 일상컷 머리 연출 13가지 · 짧은 머리 거르기
 - lib/casual-tree-v2.js — style-atelier shared 원본에서 sync: ambience — 설계 헤어스타일(opts.hairKey)이 표 short_hairs 가운데면 긴 머리 연출(hair.*.long)을 안 고른다(포켓몬은 일상컷 머리 연출 칸이 없어 바뀌는 것 없음)
 - prompt.html — casual-tree-v2.js ?v=hair1
