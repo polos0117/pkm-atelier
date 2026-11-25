@@ -50,7 +50,9 @@ function look(sc, where, card) {
 /* 1. 자세 추천 × 쓸 수 있는 장소(장소마다 그 시대 하나) — 2026-11-12 다 돌지 않고 추천마다 · 장소마다 한 번은 + 열 쌍에 하나(이천여 쌍이 1분 걸렸다) */
 /*   옷에 기대는 손(옷깃 collar · 끈 strap · 주머니 pocket — outfit_features)의 추천은 그 특징이 기본인 의상 계열에서 본다(2026-11-23 collar_waist 는 깃 옷 —
      everyday 기본엔 깃이 없어 work 에서). 특징이 필요 없거나 everyday 가 가진 추천은 그대로 everyday */
-const OF = tree2.outfit_features.defaults, needOf = pr => ['right', 'left'].map(s => (tree2.hands.find(h => h.key === pr[s]) || {}).outfit).filter(Boolean);
+/* 옷 특징 — 손 자세가 바라는 것 + 그 추천의 자세에서 되는 소품 동작이 모두 바라는 것(2026-11-25 — 공기매트는 수영복 swimsuit) */
+const useNeed = pr => { if (!pr.prop_kind) return []; const us = tree2.prop_uses.filter(u => u.kind === pr.prop_kind && u.postures.includes(pr.posture) && u.frames.includes(pr.frame)); return us.length && us.every(u => u.outfit && u.outfit === us[0].outfit) ? [us[0].outfit] : []; };
+const OF = tree2.outfit_features.defaults, needOf = pr => ['right', 'left'].map(s => (tree2.hands.find(h => h.key === pr[s]) || {}).outfit).filter(Boolean).concat(useNeed(pr), (tree2.postures.find(p => p.key === pr.posture) || {}).outfit ? [tree2.postures.find(p => p.key === pr.posture).outfit] : []);
 const famOf = pr => { const need = needOf(pr); return ['everyday'].concat(Object.keys(OF)).find(f => need.every(x => OF[f].includes(x))) || 'everyday'; };
 const seenPr = new Set(), seenPl = new Set(); let pairs = 0;
 for (const pr of tree2.presets) { const ofam = famOf(pr); for (const pl of C.allPlaces(t)) {
@@ -171,4 +173,11 @@ assert(/Activity: /.test(v1) && !/POSTURE: /.test(v1) && v1.includes(T.handsCasu
   assert(!/Outfit colours:/.test(L.buildSingle(Object.assign({}, base, { ...sc0, ofree: true, ocolor: 'red', shade: 'cherry' }))), '옷 자유 — 옷 색 줄 없음');
 }
 assert(xf > 100, '자유 장면 ' + xf);
+/* 놀이터(k_kids, 2026-11-25) — 노출 축을 많이(bold)로 줘도 드러내는 노출 글 · 상황 노출이 없고, 배경 아이들 · 덮인 옷 줄이 실린다 */
+for (const era of ['now', 'release']) {
+  const txt = L.buildSingle(Object.assign({}, base, { era, place: 'playground', ofam: 'everyday', situ: 'wet', axes: { skin_exposure: 'bold' }, posture: 'swing_sit', frame: 'full_body' }));
+  assert(/children may appear only as small, soft-focus background figures/.test(txt) && /fully non-revealing/.test(txt), era + ' 놀이터 아이들 · 덮인 옷 줄');
+  assert(!/most revealing|natural cleavage|more scene-appropriate shoulder|skin clearly showing|Situation: right now/i.test(txt), era + ' 놀이터 노출 글\n' + txt);
+}
+
 console.log(`PASS 일상컷 버전2 지시문: ${n}개 · 가장 긴 것 ${most[0]}낱말(${most[1]}) · 상한 ${LIMIT} · 역할 · 동료 · 첫 등장의 해 · 자유 장면 ${xf} · 버전1 기록 · 게임 코스프레`);

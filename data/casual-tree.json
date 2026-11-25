@@ -4312,6 +4312,80 @@
     "evening"
    ],
    "start_median": true
+  },
+  {
+   "key": "baseball_diamond",
+   "group": "sports",
+   "ko": "야구장 그라운드",
+   "en": "a sunny baseball diamond — a dirt infield with white bases, a pitcher's mound and a chain-link backstop, empty bleachers beyond",
+   "eras": [
+    "now",
+    "release"
+   ],
+   "outfits": [
+    "active"
+   ],
+   "start_median": true
+  },
+  {
+   "key": "soccer_pitch",
+   "group": "sports",
+   "ko": "축구장",
+   "en": "a grass soccer pitch with crisp white lines, a goal net behind her and low floodlights at the edges",
+   "eras": [
+    "now",
+    "release"
+   ],
+   "outfits": [
+    "active"
+   ],
+   "start_median": true
+  },
+  {
+   "key": "beach_volleyball",
+   "group": "sports",
+   "ko": "비치발리볼 코트",
+   "en": "a beach volleyball court on soft sand, a net strung between two posts and the sea glittering beyond",
+   "eras": [
+    "now",
+    "release"
+   ],
+   "outfits": [
+    "active",
+    "swimwear"
+   ],
+   "start_median": true
+  },
+  {
+   "key": "indoor_court",
+   "group": "sports",
+   "ko": "실내 체육관 코트",
+   "en": "an indoor sports hall — a polished wooden court with painted lines, a volleyball net, basketball hoops and a table-tennis table at the side",
+   "eras": [
+    "now",
+    "release"
+   ],
+   "outfits": [
+    "active"
+   ],
+   "start_median": true
+  },
+  {
+   "key": "playground",
+   "group": "street",
+   "ko": "놀이터",
+   "en": "a neighbourhood playground in the late afternoon — swings, a slide, a seesaw and a climbing frame over soft rubber ground, benches around the edge",
+   "eras": [
+    "now",
+    "release"
+   ],
+   "outfits": [
+    "everyday",
+    "active",
+    "retro"
+   ],
+   "kids": true,
+   "start_median": true
   }
  ],
  "families": {
