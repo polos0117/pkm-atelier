@@ -180,7 +180,7 @@ function rowBase(T, c) {
   }
   const F = T.fams[fam], it = item ? itemOf(T, fam, item) : null;
   if (fam) { row.family = fam; row.familyKo = F ? F.ko : null; }
-  if (item) { row.item = item; row.itemKo = it ? it.ko : null; }
+  if (item) { row.item = item; row.itemKo = it ? it.ko : null; if (it && it.cls) { const cl = ((F && F.classes) || []).find((x) => x.key === it.cls); row.cls = it.cls; row.clsKo = (cl && cl.ko) || it.cls; } }
   if (fam === T.costume) Object.assign(row, { required: fam, requiredKo: F ? F.ko : null });
   else if (fam === T.cosplay) Object.assign(row, { required: fam, requiredKo: F ? F.ko : null });
   else {
