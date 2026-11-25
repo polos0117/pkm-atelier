@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 배경 인물은 같은 장면 안에 · 동물 금지 풀기
+- lib/prompt-spec.js — 사용자 「동물,다른 생물 없음은 규칙 이제 없애도 될 거 같은데. 배경속 인물들도 보면 메인 인물이랑 컷에서 잘 안어울리게 배치되서 그림이 어색해.」: 배경 인물 줄을 「작고 흐린 엑스트라」 에서 「같은 바닥 · 빛 · 화풍, 거리만큼의 크기, 제 할 일, 카메라를 보거나 그녀 옆에 서지 않음, 조용한 곳엔 아무도 없음」 으로(figureCasual · figurePokemon). figureCasual 의 「No Pokémon, animals or other creatures」 를 「곁에 포켓몬 없음(그녀 자신이 포켓몬) · 그 밖의 동물 · 생물은 떨어져 제 크기로」 로, 환상 시대 줄의 「no creatures」 를 뺀다(카드 그림 ① 의 「곁에 생물 없음」 은 그대로)
+- tests/prompt-engine.cjs · tests/prompt-casual-v2.cjs · tests/prompt-casual.cjs — 일상컷 상한 700 → 760 · 랜덤 1400 → 1450, 새 문구
+- prompt.html — prompt-spec.js ?v=crowd1
+
 ## 2026-11-26 · claude · 무중력 — 포켓몬에도 · 추천 16
 - data/casual-tree-v2.json — 사용자 「포켓몬에도 넣고, 추천조합 늘려줘.」: 무중력 — 우주 정거장 휴게실 · 관측창 · 수면 칸(orbit_* — 시대 지금 현실 · 환상, 묶음 orbit), 자세 float_zg · zg_sleep · float_flip · float_curl · float_cross(묶음 float), 받침 zero_g, 다리 둘, 장소 특징 zero_g · berth, 빨대 음료 파우치, 순간 셋(물방울 · 떠오른 머리 · 떠다니는 소품), 추천 16, 목욕 · 수영복 · 웨딩 차림은 정거장에 안 나옴. 정거장엔 시간대 · 날씨가 없다(timed). 계획기는 장소 묶음을 덜 쓴 것부터 고르니 따로 무게를 두지 않는다(묶음 계획 시험 290컷에 7컷)
 - data/casual-tree.json — 장소 묶음 orbit(궤도 정거장)

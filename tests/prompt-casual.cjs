@@ -40,7 +40,7 @@ for(const p of jobs){
  assert(care.includes('exactly one Pokémon companion'),'partner_care allows one companion');
  assert(!care.includes('no creature beside her'),'partner_care must not forbid its own companion');
  const other=L.buildSingle({...base,cat:'hobbies_leisure',ex:'hobby_music'});
- assert(other.includes(S.PROMPT_LINES.figureCasual)&&other.includes('No Pokémon, animals or other creatures')&&!other.includes('Pokémon companion as the scene'),'other places stay one main figure — no Pokémon or creatures (2026-11-23 figureCasual)');
+ assert(other.includes(S.PROMPT_LINES.figureCasual)&&other.includes('No Pokémon beside her') && !other.includes('No Pokémon, animals or other creatures')&&!other.includes('Pokémon companion as the scene'),'other places stay one main figure — no Pokémon or creatures (2026-11-23 figureCasual)');
  for(const a of tree.activities.filter(a=>a.companion))for(const f of ['face_close','chest_up'])assert(!CT.frameOk(tree,a.key,f),a.key+' '+f+' crops the companion out');
 }
 /* 시대 줄 — 첫 등장 무렵은 세대의 해(1세대 1996 · 9세대 2022), 포켓몬 세계 안은 WORLD, 무대·환상은 SETTING */

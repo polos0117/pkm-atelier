@@ -176,7 +176,7 @@ assert(sq.includes(S.PROMPT_LINES.handsDefault),'no chosen pose: the default han
 /* 일상컷 손 규칙 HAND TASK(2026-10-27) — 할 일 없는 손은 보이는 곳에 */
 assert(cas.includes(S.PROMPT_LINES.body)&&cas.includes(S.PROMPT_LINES.handsCasual),'casual carries the body and hand-task lines');
 /* 일상컷 FRAME 줄(2:3, 2026-10-28)로 21낱말, 옷은 첨부 그림의 색·무늬를 따르지 않는다는 말(2026-10-29)로 16낱말쯤 늘었다 */
-assert(words(cas)<=700,'casual budget: '+words(cas));   // 2026-11-25 +30 — 사용자 「낱말상한 올려줘」(그새 689낱말 · 일상컷 공용 줄이 늘었다) · 2026-11-09 +10 — CROP 어깨 · 위팔 · HAND TASK 손이 팔에 이어짐 · 2026-11-07 +20 — BODY LINE 골반 · 허벅지 · 머리 비율 · ANATOMY 7.5등신 · +50 — BODY LINE 줄 · 2026-11-03 +50 — 화풍 문장 대신 「첨부 그림 그대로」 · FACE 줄 · 표정 끝 한 마디 · 2026-11-06 +60 — FACE 줄 얼굴 고정 문장(카메라 · 자세가 얼굴을 길게 · 턱을 무겁게 만들지 않는다) · 금지 두 낱말
+assert(words(cas)<=760,'casual budget: '+words(cas));   // 2026-11-26 +60 — 배경 인물을 같은 장면 안에 · 동물 금지 풀기(사용자 「동물,다른 생물 없음은 규칙 이제 없애도…배경속 인물들도…어색해」) · 팔 잇기 · 2026-11-25 +30 — 사용자 「낱말상한 올려줘」(그새 689낱말 · 일상컷 공용 줄이 늘었다) · 2026-11-09 +10 — CROP 어깨 · 위팔 · HAND TASK 손이 팔에 이어짐 · 2026-11-07 +20 — BODY LINE 골반 · 허벅지 · 머리 비율 · ANATOMY 7.5등신 · +50 — BODY LINE 줄 · 2026-11-03 +50 — 화풍 문장 대신 「첨부 그림 그대로」 · FACE 줄 · 표정 끝 한 마디 · 2026-11-06 +60 — FACE 줄 얼굴 고정 문장(카메라 · 자세가 얼굴을 길게 · 턱을 무겁게 만들지 않는다) · 금지 두 낱말
 assert(cas.includes('jaw length and face length-to-width ratio')&&cas.includes('a face lengthened by the camera angle, a heavy jaw'),'casual FACE line keeps face length against camera angle');
 
 /* 1025종 전부 — 입는 법은 표에 있는 부위만, 몸 부위 소음 없음, 예산 안 */

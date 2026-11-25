@@ -13,7 +13,7 @@ const t = C.make(tree2, tree), T = S.PROMPT_LINES;
 const cards = Object.values(JSON.parse(fs.readFileSync('data/card.json', 'utf8')).cards).flat();
 const base = { mech: 'Pikachu', series: 'Electric', style: S.DEFAULT_STYLE, tree, tree2, gen: 1, treeV: 2 };
 const block = (s, k) => (s.split(k + ' (chosen):\n')[1] || '').split('\n\n')[0];
-const LIMIT = 1400;   /* 2026-11-11 1200 → 1400(사용자 「상한을 늘려서 지시문을 정확하게 써줘」 — 자유 장면 주문을 줄이지 않는다). 그 전엔 game 과 같은 1200(docs/CASUAL_TREE_V2.md 4절) */
+const LIMIT = 1450;   /* 2026-11-26 1400 → 1450(배경 인물 · 팔 잇기 · 뒷모습 줄 — 글은 줄이지 않고 상한을 올린다) · 2026-11-11 1200 → 1400(사용자 「상한을 늘려서 지시문을 정확하게 써줘」 — 자유 장면 주문을 줄이지 않는다). 그 전엔 game 과 같은 1200(docs/CASUAL_TREE_V2.md 4절) */
 let n = 0, most = [0, ''];
 function look(sc, where, card) {
   const st = Object.assign({}, base, card ? { mech: card.en, gen: card.gen } : {}, sc);
