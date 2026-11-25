@@ -7052,7 +7052,7 @@
      "base": "pw_workshop",
      "place": "a dental clinic — a reclining chair, an overhead lamp, trays of instruments",
      "activity": "she is a hygienist with one hand on her hip, looking down at a dental mirror",
-     "preset": "pocket_look",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a dental mirror",
      "outfit": {
