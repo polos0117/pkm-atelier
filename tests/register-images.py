@@ -200,3 +200,36 @@ with _tf.TemporaryDirectory() as _t:
     assert set(_bad) == {'이브이_light_s_f.webp', '피카츄_s_f_casual2.webp', '피카츄_s_f_casual4.webp'}, _bad
     assert '3:2' in _bad['피카츄_s_f_casual2.webp'], _bad
 print('PASS 그림 크기: 폼 초상 2:3 · 일상컷 셋 · 계획 화면비(기록 scenes.casual.aspect)')
+
+# 깨진 등록부(2026-11-25 — 84f889b 등 열 번, 파일 API 로 통째로 고쳐 올린 글이 「… N bytes omitted …」 로 잘렸다)
+# — 이력에서 마지막으로 읽히는 판을 찾아 그 위에서 등록한다. 이력에 읽히는 판이 없으면 멈춘다
+with _tf.TemporaryDirectory() as _t:
+    _repo = _P(_t); (_repo / 'data').mkdir()
+    sh(_repo, 'init', '-q')
+    _good = {'img': {'Pikachu': {'f': 'a.webp'}}, 'count': 1}
+    (_repo / 'data' / 'img.json').write_text(_json.dumps(_good), encoding='utf-8'); sh(_repo, 'add', '.'); sh(_repo, 'commit', '-qm', 'good')
+    _cut = '{"img": {"Pikachu": {"f": "a.webp"}, "코\n... 1043472 bytes omitted ...\nbp": "2026-11-18"}'
+    (_repo / 'data' / 'img.json').write_text(_cut, encoding='utf-8'); sh(_repo, 'commit', '-qam', 'cut')
+    with patch.object(reg.roster, 'DIR', str(_repo / 'data')), contextlib.redirect_stdout(io.StringIO()) as _out:
+        assert reg.read_img() == _good
+    assert '마지막으로 읽히는 판' in _out.getvalue(), _out.getvalue()
+    # 등록 전체도 그 판에서 이어 간다 — 깨진 커밋이 더하려던 그림이 그림 저장소에 있으면 다시 들어간다
+    (_repo / 'img').mkdir(); (_repo / 'img' / f'Eevee_light_{style}_f.webp').touch()
+    with patch.object(reg.roster, 'DIR', str(_repo / 'data')), patch.object(reg, 'IMG_DIR', str(_repo / 'img')), \
+         patch.object(reg, 'EXTRA_DIRS', []), patch.object(reg.roster, 'cards', return_value={'Pikachu': {}, 'Eevee': {}}), \
+         patch.object(reg.roster, 'styles', return_value={style: style}), patch.object(reg.roster, 'forms', return_value=forms), \
+         patch.object(reg.roster, 'art_size', return_value=[]), patch.object(reg.roster, 'write') as _write, \
+         patch.object(sys, 'argv', ['register-images.py']), contextlib.redirect_stdout(io.StringIO()):
+        reg.main()
+    _saved = _write.call_args[0][1]['img']
+    assert _saved['Pikachu'] == {'f': 'a.webp'} and _saved['Eevee']['byStyle'][style]['byForm']['light']['f'] == f'Eevee_light_{style}_f.webp', _saved
+    sh(_repo, 'checkout', '-q', '--orphan', 'empty'); sh(_repo, 'rm', '-q', '--cached', 'data/img.json')
+    sh(_repo, 'commit', '-q', '--allow-empty', '-m', 'none')
+    with patch.object(reg.roster, 'DIR', str(_repo / 'data')):
+        try:
+            reg.read_img()
+        except SystemExit as _e:
+            assert '읽히는 판이 없다' in str(_e), _e
+        else:
+            raise AssertionError('이력에 읽히는 판이 없으면 멈춰야 한다')
+print('PASS 깨진 등록부: 이력의 마지막 읽히는 판에서 다시 등록 · 읽히는 판이 없으면 멈춤')

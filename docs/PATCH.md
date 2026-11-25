@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-25 · claude · 그림 등록기 — 깨진 data/img.json 이면 이력의 읽히는 판에서 다시 등록
+- 원인 — data/img.json 이 JSON 으로 안 읽힌 커밋이 2026-11-14 ~ 11-25 사이 열 번(cc4df47 · 45f6bcf · 1d4cdec · f8a59ec · 36ef731 · 19f5009 · a60c4f8 · c62cfa7 · 6948b2b · 84f889b). 모두 등록기를 안 거치고 파일을 통째로 고쳐 올린 영어 「Register …」 커밋이다. 1 MB 넘는 파일을 도구 출력으로 읽으면 가운데가 「… 1043472 bytes omitted …」 로 잘리는데, 그 글을 그대로 다시 썼다. [skip actions] 라 검사가 안 돌았고, 바로 뒤 그림 저장소가 깨운 등록(1594번 실행)은 json.load 에서 죽어 고치지 못했다
+- tools/register-images.py — read_img: img.json 이 안 읽히면 git 이력(워크플로는 fetch-depth 0)에서 마지막으로 읽히는 판을 찾아 경고를 남기고 그 위에서 등록한다. 등록부는 그림 저장소의 파일 이름에서 다시 만들어지므로 깨진 커밋이 더하려던 그림도 다시 들어간다. 읽히는 판이 없으면 멈춘다. 84f889b 위에서 돌려 보면 818efc6(= 84f889b~1) 판을 찾는다
+- tests/register-images.py — 잘린 판 위 커밋에서 앞 판으로 돌아가 새 그림까지 등록 · 읽히는 판이 없으면 멈춤. 고치기 전 코드로는 같은 JSONDecodeError 로 실패하는 것을 먼저 봤다
+- IMAGE_RULES.md — 5단계에 까닭 한 줄: img.json 을 파일 API · 편집기로 통째로 올리지 않는다(잘린 글이 들어간다), 늦으면 Run workflow
+
 ## 2026-11-25 · claude · data/img.json 되살림 — 깨진 등록 커밋 바로잡기
 - data/img.json — 커밋 84f889b(Masquerain 등록)가 파일 가운데를 「… bytes omitted …」 글로 잘라 넣어 JSON 이 안 읽혔다(도감 · 계획기가 못 읽는다). 바로 앞 자동 등록 판(818efc6)으로 되돌리고, 그림 등록 워크플로를 다시 돌려 Masquerain 그림을 다시 싣는다
 

@@ -50,6 +50,7 @@ play.html과 dex.html은 검증된 data/img.json을 읽는다. GitHub 파일 목
 """
 import argparse
 import datetime
+import json
 import os
 import re
 import subprocess
@@ -314,6 +315,39 @@ def stamp_dates(doc, listed, new_files, owner, dirs, history):
     return fresh, filled, sum(1 for f in listed if f not in kept)
 
 
+def read_img():
+    """data/img.json 을 읽는다. JSON 이 깨져 있으면 git 이력에서 마지막으로 읽히는 판을 찾아 그 위에서 등록한다.
+
+    이 파일은 1 MB 가 넘는다. 등록기를 안 거치고 파일 API 로 통째로 고쳐 올리면, 읽어 온 글이
+    가운데가 「… 1043472 bytes omitted …」 로 잘린 채 그대로 다시 써진다 — 2026-11-14 ~ 11-25 사이
+    열 번(cc4df47 … 84f889b). 그 커밋은 [skip actions] 라 검사가 안 돌고, 바로 뒤 그림 저장소가 깨운 이
+    등록이 json.load 에서 죽어 아무도 몰랐다. 등록부는 그림 저장소의 파일 이름에서 다시 만들어지므로,
+    읽히는 앞 판에서 출발해 그대로 등록하면 깨진 커밋이 더하려던 그림도 다시 들어간다.
+    워크플로는 fetch-depth 0 으로 받으니 이력이 있다."""
+    try:
+        return roster.read("img")
+    except ValueError as e:
+        broken = e
+    root = os.path.dirname(roster.DIR)
+    rel = os.path.relpath(roster.path("img"), root)
+    try:
+        revs = subprocess.run(["git", "log", "--format=%H", "-n", "200", "--", rel], cwd=root,
+                              capture_output=True, text=True, check=True).stdout.split()
+    except (OSError, subprocess.CalledProcessError):
+        revs = []
+    for rev in revs:
+        try:
+            doc = json.loads(subprocess.run(["git", "show", "%s:%s" % (rev, rel)], cwd=root,
+                                            capture_output=True, check=True).stdout.decode("utf-8"))
+        except (subprocess.CalledProcessError, ValueError):
+            continue
+        msg = ("%s 이 JSON 으로 안 읽힌다(%s) — 마지막으로 읽히는 판 %s 에서 다시 등록한다. "
+               "그 뒤 손으로 넣은 값(얼굴 좌표 등)은 다시 넣어야 한다" % (rel, broken, rev[:7]))
+        print(("::warning::" if os.environ.get("GITHUB_ACTIONS") else "") + msg)
+        return doc
+    raise SystemExit("%s 이 JSON 으로 안 읽히고(%s), git 이력에도 읽히는 판이 없다" % (rel, broken))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
@@ -328,7 +362,7 @@ def main():
             raise SystemExit("--history 는 <%s>=<clone 경로> 꼴이다: %s" % ("|".join(SHARDS), h))
         history[k] = v
 
-    doc = roster.read("img")
+    doc = read_img()
     img = doc["img"]
     idx = card_index()
     styles = roster.styles()
