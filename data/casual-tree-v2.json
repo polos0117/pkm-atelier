@@ -210,6 +210,14 @@
   "k_kids": {
    "ko": "아이들이 오는 곳",
    "en": "a place where children may be around — only non-revealing outfits"
+  },
+  "zero_g": {
+   "ko": "무중력",
+   "en": "weightlessness — nothing stays on the floor, she and loose objects float"
+  },
+  "berth": {
+   "ko": "벽에 묶은 침낭",
+   "en": "a sleeping bag strapped to the wall"
   }
  },
  "frames": {
@@ -403,7 +411,8 @@
    "families": [
     "lie",
     "sit",
-    "low"
+    "low",
+    "float"
    ]
   }
  ],
@@ -566,6 +575,14 @@
     "behind_head"
    ],
    "note": "오른손은 매트 가장자리(소품 동작 float_*), 왼손은 자연스럽게 · 물에 담그기 · 머리 뒤"
+  },
+  {
+   "key": "zero_g",
+   "ko": "무중력(받침 없음)",
+   "en": "nothing holds her up — she floats free in weightlessness",
+   "needs": [
+    "zero_g"
+   ]
   }
  ],
  "postures": [
@@ -1489,6 +1506,101 @@
     "bar_overhead",
     "natural"
    ]
+  },
+  {
+   "key": "float_zg",
+   "ko": "무중력으로 떠 있기",
+   "family": "float",
+   "en": "floating weightless in mid-air with nothing beneath her — her body drifts at a gentle tilt, her feet touch no floor, and loose hair and fabric drift softly around her as if underwater",
+   "needs": [
+    "zero_g"
+   ],
+   "supports": [
+    "zero_g"
+   ],
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ]
+  },
+  {
+   "key": "zg_sleep",
+   "ko": "벽에 묶은 침낭에서 떠서 자기",
+   "family": "float",
+   "en": "asleep upright inside a sleeping bag strapped to the padded wall, floating weightless within it, her arms drifting loosely in front of her",
+   "needs": [
+    "zero_g",
+    "berth"
+   ],
+   "supports": [
+    "zero_g"
+   ],
+   "frames": [
+    "face_close",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body"
+   ]
+  },
+  {
+   "key": "float_flip",
+   "ko": "무중력으로 거꾸로 떠 있기",
+   "family": "float",
+   "en": "floating upside down in weightlessness relative to the camera — her head toward the bottom of the frame, her hair fanning out around her face, her body relaxed and drifting",
+   "needs": [
+    "zero_g"
+   ],
+   "supports": [
+    "zero_g"
+   ],
+   "frames": [
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ]
+  },
+  {
+   "key": "float_curl",
+   "ko": "무중력 공중제비로 몸 말기",
+   "family": "float",
+   "en": "curled mid-somersault in weightlessness, knees drawn to her chest, slowly turning in the air",
+   "needs": [
+    "zero_g"
+   ],
+   "supports": [
+    "zero_g"
+   ],
+   "frames": [
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ]
+  },
+  {
+   "key": "float_cross",
+   "ko": "허공에 책상다리로 떠 앉기",
+   "family": "float",
+   "en": "floating cross-legged in mid-air as if seated on nothing, drifting gently",
+   "needs": [
+    "zero_g"
+   ],
+   "supports": [
+    "zero_g"
+   ],
+   "frames": [
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ]
   }
  ],
  "hands": [
@@ -1518,7 +1630,9 @@
     "step_up",
     "lean_vehicle",
     "skate_glide",
-    "lean_in"
+    "lean_in",
+    "float_zg",
+    "float_cross"
    ]
   },
   {
@@ -1533,7 +1647,9 @@
     "lean_counter",
     "step_up",
     "lean_vehicle",
-    "lean_in"
+    "lean_in",
+    "float_zg",
+    "float_cross"
    ]
   },
   {
@@ -1553,7 +1669,9 @@
     "sit_sideways",
     "step_up",
     "lean_vehicle",
-    "ride_side"
+    "ride_side",
+    "float_zg",
+    "float_cross"
    ],
    "outfit": "pocket"
   },
@@ -1662,7 +1780,9 @@
     "sit_lean",
     "sit_sideways",
     "step_up",
-    "ride_side"
+    "ride_side",
+    "float_zg",
+    "float_cross"
    ]
   },
   {
@@ -1715,7 +1835,8 @@
     "lean_rail",
     "stand",
     "lean_counter",
-    "step_up"
+    "step_up",
+    "float_zg"
    ]
   },
   {
@@ -1729,7 +1850,9 @@
    "postures": [
     "stand",
     "lean_counter",
-    "step_up"
+    "step_up",
+    "float_zg",
+    "float_cross"
    ]
   },
   {
@@ -1845,7 +1968,9 @@
     "sit_lean",
     "sit_sideways",
     "step_up",
-    "lean_vehicle"
+    "lean_vehicle",
+    "float_zg",
+    "float_cross"
    ]
   },
   {
@@ -2538,6 +2663,30 @@
    ],
    "feet": false,
    "en": "legs stretched forward inside the boat, knees softly raised"
+  },
+  {
+   "key": "float_tucked",
+   "ko": "무릎을 살짝 끌어당겨 떠 있기",
+   "families": [
+    "float"
+   ],
+   "feet": false,
+   "en": "knees loosely drawn up, lower legs relaxed in the air",
+   "postures": [
+    "float_zg"
+   ]
+  },
+  {
+   "key": "float_drift",
+   "ko": "다리가 풀려 떠다님",
+   "families": [
+    "float"
+   ],
+   "feet": true,
+   "en": "legs drifting loosely apart behind her, toes softly pointed",
+   "postures": [
+    "float_zg"
+   ]
   }
  ],
  "places": {
@@ -5268,6 +5417,28 @@
    "slide",
    "seesaw",
    "climb_frame"
+  ],
+  "orbit_lounge": [
+   "zero_g",
+   "indoor",
+   "window",
+   "wall",
+   "timed",
+   "rail_waist"
+  ],
+  "orbit_cupola": [
+   "zero_g",
+   "indoor",
+   "window",
+   "timed"
+  ],
+  "orbit_berth": [
+   "zero_g",
+   "indoor",
+   "wall",
+   "berth",
+   "timed",
+   "k_private"
   ]
  },
  "props": [
@@ -5464,7 +5635,10 @@
     "tram_inside",
     "camper_van",
     "airship_cabin",
-    "canal_gondola"
+    "canal_gondola",
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
    ]
   },
   {
@@ -5968,7 +6142,10 @@
     "street_bookstall",
     "lecture_hall",
     "campus_lawn",
-    "escape_room"
+    "escape_room",
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
    ]
   },
   {
@@ -7699,6 +7876,16 @@
     "water_river"
    ],
    "start_median": true
+  },
+  {
+   "key": "drink_pouch",
+   "ko": "빨대 음료 파우치",
+   "en": "a squeezable drink pouch",
+   "places": [
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
+   ]
   }
  ],
  "prop_uses": [
@@ -7963,7 +8150,9 @@
     "sit_lean",
     "sit_sideways",
     "half_kneel",
-    "step_up"
+    "step_up",
+    "float_cross",
+    "float_zg"
    ]
   },
   {
@@ -7999,7 +8188,9 @@
     "sit_lean",
     "sit_sideways",
     "half_kneel",
-    "sit_boat"
+    "sit_boat",
+    "float_cross",
+    "float_zg"
    ],
    "gaze": "at_prop"
   },
@@ -9069,7 +9260,9 @@
     "stand",
     "lean_counter",
     "sit_sideways",
-    "half_kneel"
+    "half_kneel",
+    "float_cross",
+    "float_zg"
    ],
    "gaze": "at_prop",
    "needs_any": [
@@ -19350,6 +19543,51 @@
     "float_front"
    ],
    "outfit": "swimsuit"
+  },
+  {
+   "key": "pouch_sip",
+   "prop": "drink_pouch",
+   "kind": "raise",
+   "hands": "one",
+   "zone": "face",
+   "ko": "파우치 빨대를 문다",
+   "en": "sips from {prop} through its short straw",
+   "space": "mouth",
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "float_zg",
+    "float_cross"
+   ]
+  },
+  {
+   "key": "pouch_hold",
+   "prop": "drink_pouch",
+   "kind": "hold",
+   "hands": "one",
+   "zone": "chest",
+   "ko": "파우치를 가볍게 든다",
+   "en": "holds {prop} loosely at chest height",
+   "frames": [
+    "face_close",
+    "detail",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "postures": [
+    "float_zg",
+    "float_cross"
+   ]
   }
  ],
  "outfit_features": {
@@ -20176,6 +20414,19 @@
     "canal_gondola"
    ],
    "ko": "차에서 내리기 · 비행선 라운지 · 곤돌라 · 마차에 운동 · 작업 · 모험 차림"
+  },
+  {
+   "outfits": [
+    "bath",
+    "swimwear",
+    "bridal"
+   ],
+   "places": [
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
+   ],
+   "ko": "목욕 · 수영복 · 웨딩 차림으로 궤도 정거장 · 엘리베이터"
   }
  ],
  "presets": [
@@ -22726,6 +22977,249 @@
    "gaze": "camera",
    "act": "sport",
    "start_median": true
+  },
+  {
+   "key": "zg_sip",
+   "ko": "무중력으로 떠서 파우치 음료 마시기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "prop",
+   "left": "natural",
+   "prop_kind": "raise",
+   "legs": "float_tucked",
+   "gaze": "camera",
+   "act": "sip"
+  },
+  {
+   "key": "zg_window",
+   "ko": "떠서 관측창 밖 행성 내려다보기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "side",
+   "head": "with_body",
+   "camera": "eye",
+   "right": "wall_palm",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "window",
+   "act": "look"
+  },
+  {
+   "key": "zg_drift",
+   "ko": "무중력으로 둥실 떠다니기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_sleep_close",
+   "ko": "벽에 묶은 침낭에서 떠서 잠들기",
+   "posture": "zg_sleep",
+   "support": "zero_g",
+   "frame": "waist_up",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "",
+   "gaze": "down",
+   "act": "rest"
+  },
+  {
+   "key": "zg_read",
+   "ko": "떠서 책 읽기",
+   "posture": "float_cross",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "prop",
+   "left": "prop",
+   "prop_kind": "both",
+   "legs": "",
+   "gaze": "at_prop",
+   "act": "rest"
+  },
+  {
+   "key": "zg_window_close",
+   "ko": "관측창에 손 대고 가까이",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "chest_up",
+   "body": "side",
+   "head": "with_body",
+   "camera": "eye",
+   "right": "wall_palm",
+   "left": "natural",
+   "legs": "",
+   "gaze": "window",
+   "act": "look"
+  },
+  {
+   "key": "zg_wave",
+   "ko": "떠서 손 흔들기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "waist_up",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "wave",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_vsign",
+   "ko": "떠서 브이",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "v_sign",
+   "left": "natural",
+   "legs": "float_tucked",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_hair_tuck",
+   "ko": "떠오른 머리 귀 뒤로 넘기기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "chest_up",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "hair_tuck",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_rail",
+   "ko": "손잡이 잡고 떠 있기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front_3q",
+   "head": "with_body",
+   "camera": "eye",
+   "right": "rail",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "rest"
+  },
+  {
+   "key": "zg_lookback",
+   "ko": "떠서 어깨 너머 돌아보기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "rear_3q",
+   "head": "over_shoulder",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_tucked",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_flip",
+   "ko": "거꾸로 떠서 웃기",
+   "posture": "float_flip",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front",
+   "head": "with_body",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_curl",
+   "ko": "공중제비 도는 중",
+   "posture": "float_curl",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose"
+  },
+  {
+   "key": "zg_cross_sip",
+   "ko": "허공에 책상다리로 파우치 음료",
+   "posture": "float_cross",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "prop",
+   "left": "natural",
+   "prop_kind": "raise",
+   "legs": "",
+   "gaze": "camera",
+   "act": "sip"
+  },
+  {
+   "key": "zg_sleep_wide",
+   "ko": "침낭에서 잠든 모습 3/4",
+   "posture": "zg_sleep",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "",
+   "gaze": "down",
+   "act": "rest"
+  },
+  {
+   "key": "zg_top",
+   "ko": "위에서 내려다본 무중력",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front",
+   "head": "tilt",
+   "camera": "top",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "pose"
   }
  ],
  "expressions": {
@@ -23211,6 +23705,39 @@
    "eras": [
     "in_pokemon"
    ]
+  },
+  {
+   "key": "orbit_lounge",
+   "group": "orbit",
+   "ko": "우주 정거장 휴게실",
+   "en": "a weightless lounge module of an orbital space station — padded walls, handrails, velcro patches and a round window onto the planet far below",
+   "eras": [
+    "now",
+    "fantasy"
+   ],
+   "note": "2026-11-26 사용자 「우주공간이나, 무중력 상태에서 할 수 있는 일(공중에 떠서 음료마시기) 같은 각 세계만의 독특한 특징을 보여줄 수 있는 씬」 → 「무중력은 메카 세계, 사이버펑크도 될 거 같은데, 사이버펑크에 우주궤도 엘리베이터가 있어서」"
+  },
+  {
+   "key": "orbit_cupola",
+   "group": "orbit",
+   "ko": "우주 정거장 관측창",
+   "en": "a domed observation cupola of an orbital space station — a ring of large windows onto the curve of the planet and the stars",
+   "eras": [
+    "now",
+    "fantasy"
+   ],
+   "note": "2026-11-26 사용자 「우주공간이나, 무중력 상태에서 할 수 있는 일(공중에 떠서 음료마시기) 같은 각 세계만의 독특한 특징을 보여줄 수 있는 씬」 → 「무중력은 메카 세계, 사이버펑크도 될 거 같은데, 사이버펑크에 우주궤도 엘리베이터가 있어서」"
+  },
+  {
+   "key": "orbit_berth",
+   "group": "orbit",
+   "ko": "우주 정거장 수면 칸",
+   "en": "a narrow crew sleeping berth of an orbital space station — a sleeping bag strapped to the padded wall and a small reading light",
+   "eras": [
+    "now",
+    "fantasy"
+   ],
+   "note": "2026-11-26 사용자 「우주공간이나, 무중력 상태에서 할 수 있는 일(공중에 떠서 음료마시기) 같은 각 세계만의 독특한 특징을 보여줄 수 있는 씬」 → 「무중력은 메카 세계, 사이버펑크도 될 거 같은데, 사이버펑크에 우주궤도 엘리베이터가 있어서」"
   }
  ],
  "weather": [
@@ -24433,6 +24960,55 @@
    ],
    "eras": [
     "now"
+   ]
+  },
+  {
+   "key": "zg_droplets",
+   "ko": "공중에 뜬 물방울",
+   "en": "a few small round droplets of her drink float in the air beside her, catching the light",
+   "frames": [
+    "face_close",
+    "chest_up",
+    "waist_up",
+    "three_quarter"
+   ],
+   "places": [
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
+   ]
+  },
+  {
+   "key": "zg_hair",
+   "ko": "무중력에 떠오른 머리카락",
+   "en": "her hair drifts up and fans out softly around her head, weightless",
+   "frames": [
+    "face_close",
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body"
+   ],
+   "places": [
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
+   ]
+  },
+  {
+   "key": "zg_items",
+   "ko": "떠다니는 소품",
+   "en": "a pen, a small notebook and a few loose objects drift weightlessly around her",
+   "frames": [
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "places": [
+    "orbit_lounge",
+    "orbit_cupola",
+    "orbit_berth"
    ]
   }
  ],

@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 무중력 — 포켓몬에도 · 추천 16
+- data/casual-tree-v2.json — 사용자 「포켓몬에도 넣고, 추천조합 늘려줘.」: 무중력 — 우주 정거장 휴게실 · 관측창 · 수면 칸(orbit_* — 시대 지금 현실 · 환상, 묶음 orbit), 자세 float_zg · zg_sleep · float_flip · float_curl · float_cross(묶음 float), 받침 zero_g, 다리 둘, 장소 특징 zero_g · berth, 빨대 음료 파우치, 순간 셋(물방울 · 떠오른 머리 · 떠다니는 소품), 추천 16, 목욕 · 수영복 · 웨딩 차림은 정거장에 안 나옴. 정거장엔 시간대 · 날씨가 없다(timed). 계획기는 장소 묶음을 덜 쓴 것부터 고르니 따로 무게를 두지 않는다(묶음 계획 시험 290컷에 7컷)
+- data/casual-tree.json — 장소 묶음 orbit(궤도 정거장)
+
 ## 2026-11-26 · gpt · 입치트 직업컷 자세
 - data/casual-own.json — 치과 위생사 의상에 주머니가 없어 거부되던 pocket_look을 stand_inspect로 바꿔 치과 거울을 살피는 장면을 만들 수 있게 했다.
 
