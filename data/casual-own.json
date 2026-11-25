@@ -6955,8 +6955,8 @@
      "job_ko": "측량 보조",
      "base": "pw_town",
      "place": "a hilltop survey point — a tripod instrument, a stone marker, a trail map board",
-     "activity": "she is an assistant surveyor checking a compass with one hand on her hip",
-     "preset": "pocket_look",
+     "activity": "she is an assistant surveyor checking a compass held in one hand, with her other arm relaxed at her side",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a brass compass",
      "outfit": {
