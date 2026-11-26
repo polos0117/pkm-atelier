@@ -23418,7 +23418,10 @@
    "prop_kind": "raise",
    "legs": "float_tucked",
    "gaze": "camera",
-   "act": "sip"
+   "act": "sip",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_window",
@@ -23433,7 +23436,10 @@
    "left": "natural",
    "legs": "float_drift",
    "gaze": "window",
-   "act": "look"
+   "act": "look",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_drift",
@@ -23448,7 +23454,10 @@
    "left": "natural",
    "legs": "float_drift",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_sleep_close",
@@ -23463,7 +23472,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "down",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_read",
@@ -23479,7 +23491,10 @@
    "prop_kind": "both",
    "legs": "",
    "gaze": "at_prop",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_window_close",
@@ -23494,7 +23509,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "window",
-   "act": "look"
+   "act": "look",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_wave",
@@ -23509,7 +23527,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_vsign",
@@ -23524,7 +23545,10 @@
    "left": "natural",
    "legs": "float_tucked",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_hair_tuck",
@@ -23539,7 +23563,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_rail",
@@ -23554,7 +23581,10 @@
    "left": "natural",
    "legs": "float_drift",
    "gaze": "camera",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_lookback",
@@ -23569,7 +23599,10 @@
    "left": "natural",
    "legs": "float_tucked",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_flip",
@@ -23584,7 +23617,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_curl",
@@ -23599,7 +23635,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_cross_sip",
@@ -23615,7 +23654,10 @@
    "prop_kind": "raise",
    "legs": "",
    "gaze": "camera",
-   "act": "sip"
+   "act": "sip",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_sleep_wide",
@@ -23630,7 +23672,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "down",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "zg_top",
@@ -23645,7 +23690,10 @@
    "left": "natural",
    "legs": "float_drift",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ]
   },
   {
    "key": "mg_orb",
@@ -23660,7 +23708,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "down",
-   "act": "look"
+   "act": "look",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_rune",
@@ -23675,7 +23726,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "screen_right",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_lev",
@@ -23690,7 +23744,10 @@
    "left": "natural",
    "legs": "float_drift",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_meditate",
@@ -23705,7 +23762,10 @@
    "left": "natural",
    "legs": "",
    "gaze": "down",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_lev_read",
@@ -23721,7 +23781,10 @@
    "prop_kind": "both",
    "legs": "",
    "gaze": "at_prop",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_library",
@@ -23737,7 +23800,10 @@
    "prop_kind": "both",
    "legs": "",
    "gaze": "at_prop",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_isle",
@@ -23752,7 +23818,10 @@
    "left": "natural",
    "legs": "dangle_far",
    "gaze": "horizon",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_spring",
@@ -23767,7 +23836,11 @@
    "left": "natural",
    "legs": "",
    "gaze": "down",
-   "act": "rest"
+   "act": "rest",
+   "needs": [
+    "magic",
+    "water"
+   ]
   },
   {
    "key": "mg_potion",
@@ -23783,7 +23856,10 @@
    "prop_kind": "raise",
    "legs": "",
    "gaze": "at_prop",
-   "act": "look"
+   "act": "look",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_wand",
@@ -23799,7 +23875,10 @@
    "prop_kind": "hold",
    "legs": "",
    "gaze": "camera",
-   "act": "pose"
+   "act": "pose",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "mg_lantern",
@@ -23815,7 +23894,10 @@
    "prop_kind": "hold",
    "legs": "walk_stride",
    "gaze": "camera",
-   "act": "walk"
+   "act": "walk",
+   "needs": [
+    "magic"
+   ]
   },
   {
    "key": "shelf_high_look",
