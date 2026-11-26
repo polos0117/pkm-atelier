@@ -7191,7 +7191,7 @@
      "base": "pw_town",
      "place": "a village utility pole yard — a tall ladder, a pole with cables, a tool bag",
      "activity": "she is an apprentice lineworker, one hand on her hip, eyeing a voltage tester",
-     "preset": "pocket_look",
+     "preset": "stand_inspect",
      "use": "sig_hold",
      "prop": "a voltage tester",
      "outfit": {
