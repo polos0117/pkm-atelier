@@ -82,8 +82,9 @@ const enterFrom = p => p.evaluate(() => { const a = document.querySelector('.zoo
       assert.equal(fetched, 1, '일상컷을 처음 열 때 색인 한 번'); assert.equal((await dn.locator('.cnote-l1').textContent()).trim(), '필수 · 노출 갈래(수영복) — 비행사 · 코랄 · 오렌지', '상세 — 첫 줄 필수 · 옷 · 색');
       assert.equal((await dn.locator('.cnote-l2').textContent()).trim(), '주방 · 잔을 든다 · 허리 위', '상세 — 둘째 줄 장소 · 하는 일 · 구도(2026-11-25)');
       { const m = dn.locator('.cnote-more'), bb = await m.boundingBox(); assert(bb.height >= 44 && bb.width >= 44, '더 보기 44px'); assert.equal(await m.getAttribute('aria-expanded'), 'false');
-        await m.click(); assert.equal(await m.getAttribute('aria-expanded'), 'true'); assert.deepEqual(await dn.locator('.cnote-list dt').allTextContents(), ['표정', '시간대', '날씨', '시대', '화면비']);
-        await m.click(); assert.equal(await dn.locator('.cnote-list').isVisible(), false, '다시 접힘'); }
+        await m.click(); assert.equal(await m.getAttribute('aria-expanded'), 'true'); const sh = r.locator('.cnote-sheet'); await sh.waitFor();   /* 더 보기는 겹치는 판(2026-11-26) */
+        assert.deepEqual(await sh.locator('.cnote-list dt').allTextContents(), ['표정', '시간대', '날씨', '시대', '화면비']);
+        await r.keyboard.press('Escape'); assert.equal(await sh.count(), 0, 'Esc 로 판이 닫힌다'); assert.equal(await m.getAttribute('aria-expanded'), 'false', '다시 접힘'); }
       await r.keyboard.press('ArrowRight'); await r.waitForFunction(() => /코스프레/.test((document.querySelector('.dex-cnote') || {}).textContent || ''));
       assert.equal((await dn.textContent()).trim(), '필수 · 게임 코스프레 — 창세기전 3 · 파트 2 · 엠블라 · 트임 롱드레스GPT 고름', '상세 — 코스프레(캐릭터 한글 · GPT 고름) · 장면 풀이 없는 옛 줄은 첫 줄만');
       await r.locator('.big .zoom').click(); const zn = r.locator('.zoom-layer .zoom-cnote'); await zn.waitFor();
@@ -92,8 +93,12 @@ const enterFrom = p => p.evaluate(() => { const a = document.querySelector('.zoo
       const more = zn.locator('.cnote-more'), l1 = zn.locator('.cnote-l1'); assert.equal(await l1.locator('b').textContent(), '장면 자유');
       assert.equal(await zn.locator('.cnote-l2 span[lang="en"]').textContent(), 'a bath.', '자유 설계 장면은 영어 그대로'); assert.equal(await zn.locator('.cnote-l2 .cnote-tag').textContent(), 'GPT 설계');
       assert.equal(await more.getAttribute('aria-expanded'), 'false'); assert((await l1.locator('span[lang="en"]').textContent()).endsWith('…'), '긴 Outfit 은 줄여 보인다');
-      await more.click(); assert.equal(await more.getAttribute('aria-expanded'), 'true'); assert.equal(await l1.locator('span[lang="en"]').textContent(), outfit, '더 보기 — 다 보임(영어 그대로)');
-      assert.equal(await r.locator('.zoom-layer').count(), 1, '펼쳐도 크게 보기 그대로');
+      const zb = async () => Object.values(await r.locator('.zoom-body>img').boundingBox()); await r.waitForTimeout(800); const z0 = await zb(); const near = (x, y) => x.every((v, i) => Math.abs(v - y[i]) <= 2);   /* 넘김 움직임이 끝난 뒤에 재고, 소수점 흔들림은 봐준다 */
+      await more.click(); assert.equal(await more.getAttribute('aria-expanded'), 'true'); await r.locator('.cnote-sheet').waitFor();
+      assert.equal(await r.locator('.cnote-sheet .cnote-l1 span[lang="en"]').textContent(), outfit, '더 보기 판 — 다 보임(영어 그대로)');
+      { const z1 = await zb(); assert(near(z1, z0), '판이 떠도 그림 자리 · 크기는 그대로 ' + JSON.stringify([z0, z1])); }
+      await r.keyboard.press('Escape'); assert.equal(await r.locator('.cnote-sheet').count(), 0, 'Esc 는 판만 닫는다');
+      assert.equal(await r.locator('.zoom-layer').count(), 1, '판을 닫아도 크게 보기 그대로');
       await r.keyboard.press('ArrowRight'); await r.waitForFunction(f => decodeURIComponent((document.querySelector('.zoom-body>img') || {}).getAttribute('src') || '').endsWith(f), files[3]);
       assert.equal(await r.locator('.cnote').count(), 0, '색인에 없는 컷은 아무것도 안 보인다'); assert.equal(fetched, 1, '색인은 한 번만');
       assert(await r.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), '옆 넘침'); assert.deepEqual(c.errors, [], '오류'); n += 24;

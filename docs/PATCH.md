@@ -11,6 +11,11 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 크게 보기 설명 글 — 높이 한도 · 더 보기 겹침 판 · 펼침 기억 끄기
+- lib/casual-note.js — 사용자 「이미지 상세보기에서 gpt 설계문이나 길이가 긴 텍스트가 나오면 이미지가 작아지거나 아래로 밀려서 버튼 클릭을 못하는데, 어떻게 하는게 좋을까?」 → 「응 1~3 진행해줘」(네 공방 같은 파일): (1) 두 줄 칸(cnote-body)은 높이 4.8em 한도, 넘치면 그 칸 안에서만 굴림 (2) 「더 보기」 는 body 에 붙는 겹침 판(cnote-sheet — 아래에서 올라오는 판, 옷 글 통째 · 장면 · 더 보기 칸) — 그림 · 단추를 밀지 않는다. 바깥 · 접기 · Esc 로 닫고, Esc 는 판만(모듈을 불러올 때 건 창 키가 크게 보기의 Esc 보다 먼저), Tab 은 판 안, ← → 는 그림을 넘기지 않는다 (3) 펼침을 기억하지 않는다(sessionStorage cnote-open 안 씀) — 다른 그림이면 접힌 채
+- dex.html — casual-note.js ?v=3
+- tests/dex-zoom-turn.cjs — 상세 · 크게 보기의 판(겹침 · 그림 그대로 · Esc 는 판만, 크게 보기는 그대로)
+
 ## 2026-11-26 · claude · 공용 casual-tree.js 받기(세계 장면 장소)
 - lib/casual-tree.js — 공용(style-atelier/shared) 그대로: isRequired 가 required.world.scene_places 를 본다(삼국지 2026-11-26). 이 공방 표엔 그 칸이 없어 하는 일은 같다
 - prompt.html — casual-tree.js ?v=req1
