@@ -11,6 +11,10 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-26 · claude · 새 판 살피기 — 주소에 시각 붙이지 않기
+- lib/fresh.js — 사용자 「공방에서 뒤로가기로 허브 이동한때마다 떠」(GitHub Pages 「Rate limit exceeded」): 새 판을 묻는 HEAD 주소에서 `?_=시각` 을 뺐다. 시각을 붙이면 CDN 캐시를 건너뛰어 화면을 열 때마다 원본까지 갔다. 브라우저 캐시는 그대로 no-store 로 건너뛴다(Pages 가 십 분 캐시하므로 새 판은 늦어도 십 분 안에 보인다)
+- *.html — lib/fresh.js ?v=cdn1
+
 ## 2026-11-26 · claude · 일상컷 「곁에 포켓몬 없음」 풀기
 - lib/prompt-spec.js — 사용자 「응 없애줘」(곁에 포켓몬 없음 규칙): figureCasual 의 「No Pokémon beside her」 → 그 장소에 사는 포켓몬 · 동물 · 생물이 나와도 되고 그녀와 떨어져 제 크기로, casualWorld 의 「No Pokémon unless SCENE names her companion」 → 그곳에 사는 포켓몬이 제 크기로 떨어져 나와도 된다(알려진 트레이너 · 인물 · 로고 · 글자 금지는 그대로)
 - prompt.html — prompt-spec.js ?v=pkmok1
