@@ -108,7 +108,11 @@ for (let i = 0; i < 5; i++) batchPlan(entries, ['V' + i], 'after', false, { ['V'
 const v2cuts = entries.slice(10).flatMap(e => e.cuts);
 const groups = new Set(v2cuts.map(x => (C2.place(t, x.place) || {}).group)), places = new Set(v2cuts.map(x => x.place));
 assert(groups.size >= 12 && places.size >= 50, '묶음 ' + groups.size + ' · 장소 ' + places.size);
-assert(v2cuts.some(x => (C2.use(t, x.use) || {}).role), '역할 동작');
+/* 역할 동작 — 뽑혔거나, 역할 동작마다 제 장소에서 맞는 자세 · 구도가 있다(막힌 것 없음). 역할 동작은 160컷에 두세 장이라 씨앗 하나로는 0 일 수 있다
+   (2026-11-27 모자 · 안경 소품을 더하자 난수 길이 바뀌어 0 — 새 소품은 직업 · 열매 묶음에 닿지 않는다) */
+{ const picked = v2cuts.some(x => (C2.use(t, x.use) || {}).role);
+  const never = t.v2.prop_uses.filter(u => u.role).filter(u => !u.frames.some(f => u.postures.some(po => C2.useFits(t, { era: 'now', place: (u.places || [])[0], frame: f, posture: po, support: 'floor', body: 'front', head: 'with_body', camera: 'eye', right: 'prop', left: u.hands === 'both' ? 'prop' : 'natural', use: u.key, ofam: 'everyday' }, u, u.hands === 'both' ? 2 : 1))));
+  assert(picked || !never.length, '역할 동작 — 안 뽑혔고 막힌 것 ' + never.map(u => u.key).join(' · ')); }
 assert(v2cuts.some(x => x.era === 'in_pokemon'), '포켓몬 세계');
 assert(new Set(v2cuts.map(x => x.frame)).size >= 6 && new Set(v2cuts.map(x => x.body)).size >= 4, '구도가 퍼진다');
 assert(!v2cuts.some(x => x.body === 'back' || x.frame === 'detail'), '안 쓰는 값');
