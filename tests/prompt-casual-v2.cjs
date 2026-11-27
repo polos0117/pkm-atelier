@@ -52,15 +52,17 @@ function look(sc, where, card) {
      everyday 기본엔 깃이 없어 work 에서). 특징이 필요 없거나 everyday 가 가진 추천은 그대로 everyday */
 /* 옷 특징 — 손 자세가 바라는 것 + 그 추천의 자세에서 되는 소품 동작이 모두 바라는 것(2026-11-25 — 공기매트는 수영복 swimsuit) */
 const useNeed = pr => { if (!pr.prop_kind) return []; const us = tree2.prop_uses.filter(u => u.kind === pr.prop_kind && u.postures.includes(pr.posture) && u.frames.includes(pr.frame)); return us.length && us.every(u => u.outfit && u.outfit === us[0].outfit) ? [us[0].outfit] : []; };
-const OF = tree2.outfit_features.defaults, needOf = pr => ['right', 'left'].map(s => (tree2.hands.find(h => h.key === pr[s]) || {}).outfit).filter(Boolean).concat(useNeed(pr), (tree2.postures.find(p => p.key === pr.posture) || {}).outfit ? [tree2.postures.find(p => p.key === pr.posture).outfit] : []);
+const OF = tree2.outfit_features.defaults, needOf = pr => ['right', 'left'].map(s => (tree2.hands.find(h => h.key === pr[s]) || {}).outfit).filter(Boolean).concat((tree2.legs.find(l => l.key === pr.legs) || {}).outfit || [], useNeed(pr), (tree2.postures.find(p => p.key === pr.posture) || {}).outfit ? [tree2.postures.find(p => p.key === pr.posture).outfit] : []);
 const famOf = pr => { const need = needOf(pr); return ['everyday'].concat(Object.keys(OF)).find(f => need.every(x => OF[f].includes(x))) || 'everyday'; };
+/* 계열 기본엔 없고 옷마다 붙는 특징(스타킹 legwear · 하이힐 heels — 2026-11-27)은 그 특징을 가진 옷 하나로 본다 */
+const itemOf = pr => { const need = needOf(pr), f = famOf(pr); if (need.every(x => OF[f].includes(x))) return ''; const it = tree.outfits.flatMap(o => o.items.map(i => [o.key, i.key])).find(([o, i]) => need.every(x => C.features(t, o, i).includes(x))); return it || ''; };
 const seenPr = new Set(), seenPl = new Set(); let pairs = 0;
-for (const pr of tree2.presets) { const ofam = famOf(pr); for (const pl of C.allPlaces(t)) {
+for (const pr of tree2.presets) { const fi = itemOf(pr), ofam = fi ? fi[0] : famOf(pr), item = fi ? fi[1] : undefined; for (const pl of C.allPlaces(t)) {
   const era = pl.eras.includes('now') ? 'now' : pl.eras[0];
-  if (!C.presetOk(t, { era, place: pl.key, ofam }, pr.key)) continue;
+  if (!C.presetOk(t, { era, place: pl.key, ofam, item }, pr.key)) continue;
   if (seenPr.has(pr.key) && seenPl.has(pl.key) && pairs++ % 10) continue;
   seenPr.add(pr.key); seenPl.add(pl.key);
-  look(C.repair(t, C.applyPreset(t, { treeV: 2, era, place: pl.key, ofam }, pr.key)), pr.key + ' @ ' + pl.key + (ofam === 'everyday' ? '' : ' · ' + ofam));
+  look(C.repair(t, C.applyPreset(t, { treeV: 2, era, place: pl.key, ofam, item }, pr.key)), pr.key + ' @ ' + pl.key + (ofam === 'everyday' ? '' : ' · ' + ofam));
 } }
 assert(n > 200 && seenPr.size === tree2.presets.length, '추천 × 장소 ' + n + ' · 추천 ' + seenPr.size + '/' + tree2.presets.length);
 /* 2. 랜덤 — 카드 세대 · 표정 · 세부 강도 다섯을 다 얹어 가장 긴 것 */
