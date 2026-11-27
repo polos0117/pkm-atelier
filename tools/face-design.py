@@ -1320,7 +1320,9 @@ def design_impression(cards, J, prev=None):
         vibe = pick[c['name']]
         st = c.get('stats') or []
         total = sum(st) if len(st) == 6 else 400
-        age = {'basic': 'early', 'middle': 'mid', 'final': 'late'}.get(stage) or ('late' if c.get('rare') or total >= 500 else 'mid' if total >= 400 else 'early')
+        # 2026-11-27 사용자 「포켓몬공방은 케릭터들이 좀 귀염귀염 해야되는데, 키크고 성숙한 인상들이 많이 나오는거 같아」 → 「나이 20대 초반 위주」 — 20대 후반을 뺐다.
+        # 진화 전 · 중간은 초반, 최종 진화는 중반 / 진화 없는 종은 희귀 · 능력치 합 500 이상만 중반, 나머지 초반(전엔 basic 초반 · middle 중반 · final 후반, 희귀 · 500 이상 후반)
+        age = {'basic': 'early', 'middle': 'early', 'final': 'mid'}.get(stage) or ('mid' if c.get('rare') or total >= 500 else 'early')
         cols = IMP_EYES.get(c.get('color') or '', ['warm hazel', 'amber gold'])
         eyes = cols[0] if h01(c['name'] + '|eyes') < .5 else cols[1]
         out[str(c['no'])] = {'age': age, 'vibe': vibe, 'eyes': eyes, 'cues': cues}

@@ -11,6 +11,12 @@
 여기서부터 적기 시작했다. 그 전 것은 `git log` 에 있다.
 
 
+## 2026-11-27 · claude · 캐릭터를 더 귀엽게 — 7등신 · 화풍 얼굴 줄 · 20대 초반 위주
+- 사용자 「포켓몬공방은 케릭터들이 좀 귀염귀염 해야되는데, 키크고 성숙한 인상들이 많이 나오는거 같아」 → 비율 · 화풍 얼굴 줄 · 나이 셋. 최근 경장 지시문 455장 중 349장이 7.5등신, 나이는 20대 후반 91 · 초반 88 · 중반 41, 체형은 모래시계형 269. 일상컷에 노출 컷이 있어 아이 같은 비율 · 얼굴로는 가지 않는다(성인인데 귀여운 인상).
+- lib/prompt-spec.js — ANATOMY 「about 7.5 heads tall」 → 「about 7 heads tall」(경장 · 일상 같은 줄). 화풍 anime_25d · anime_25d_gloss(갑주 · 일상) 「A refined adult anime face」 → 「A bright, adorable adult anime face」. prompt.html ?v=pkmcute1
+- tools/face-design.py — 인상 나이: 진화 전 · 중간 초반, 최종 진화 중반 / 진화 없는 종은 희귀 · 능력치 합 500 이상만 중반(20대 후반 없앰). data/face-design.json — 나이만 다시(후반 496 → 0 · 초반 529 · 중반 496). impression 을 다시 돌리면 분위기 42종도 바뀌어서 분위기는 그대로 두고 나이 칸만 옮겼다.
+- 새로 그릴 그림부터 — 이미 올린 그림은 그대로. 일상컷은 경장 ① 을 붙여 그리므로 그 그림을 따른다. docs/CHARACTER_FACE_DESIGNS.md 는 다시 만들지 않았다(11-23 뒤 머리 잠금 등 다른 변경이 쌓여 있어 같이 섞인다 — 얼굴 규칙 위반 105 도 전부터 있던 것). IMAGE_RULES.md 두 줄.
+
 ## 2026-11-27 · claude · 유리 너머 추천 — 물속 관찰창 · 우주에서 창 너머로
 - data/casual-tree-v2.json — 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 GPT 자유 설계 — 베이징 이화원 사이버펑크 일상10, 수중 관찰창 너머): 자세 underwater_float(완전히 물속에 떠 있기 — 수영복, 받침 underwater 「물이 온몸을 감싸 수면 아래 떠 있다」), 장소 water_dive_pool(관찰창이 있는 깊은 다이빙 풀), 우주 엘리베이터 꼭대기 객차(orbit_elevator_top — 궤도 끝 무중력, 파노라마 창), 궤도 휴게실 · 관측창에 glass_wall. 구도 glass_water(물 밖에서 관찰창 너머로) · glass_space(우주 밖 어둠에서 두꺼운 창 너머로, 그녀는 불 켜진 객실 안에 떠 있음). 추천 여섯 — 물속에 떠서 · 유리에 손 뻗기 · 옆으로 떠가며(관찰창 너머), 떠 있는 그녀를 우주에서 · 창 너머 우주로 손 흔들기 · 행성을 내려다보는 그녀를 우주에서 — 추천이 구도를 못박는다(presets[].view)
 - lib/casual-tree-v2.js — 공용(style-atelier/shared): presets[].view
