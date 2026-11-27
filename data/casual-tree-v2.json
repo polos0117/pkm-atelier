@@ -608,6 +608,14 @@
    "needs": [
     "levitate"
    ]
+  },
+  {
+   "key": "underwater",
+   "ko": "물속(완전히 잠김)",
+   "en": "the water surrounds her completely — she hangs weightless below the surface, nothing else supports her",
+   "needs": [
+    "deep_water"
+   ]
   }
  ],
  "postures": [
@@ -1663,6 +1671,27 @@
     "full_body",
     "environmental"
    ]
+  },
+  {
+   "key": "underwater_float",
+   "ko": "물속에 떠 있기",
+   "family": "float",
+   "en": "floating fully underwater, suspended weightless in the clear water with her lips gently closed, hair and loose fabric drifting softly around her, a few small bubbles rising from her",
+   "needs": [
+    "deep_water"
+   ],
+   "supports": [
+    "underwater"
+   ],
+   "outfit": "swimsuit",
+   "frames": [
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "note": "2026-11-27 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 「유리나 건물 밖에서 안쪽의 사람을 보는거」 — 베이징 이화원 사이버펑크 일상10 수중 관찰창)"
   }
  ],
  "hands": [
@@ -1696,7 +1725,8 @@
     "float_zg",
     "float_cross",
     "levitate",
-    "levitate_cross"
+    "levitate_cross",
+    "underwater_float"
    ]
   },
   {
@@ -1852,7 +1882,8 @@
     "float_zg",
     "float_cross",
     "levitate",
-    "levitate_cross"
+    "levitate_cross",
+    "underwater_float"
    ]
   },
   {
@@ -2042,7 +2073,8 @@
     "float_zg",
     "float_cross",
     "levitate",
-    "levitate_cross"
+    "levitate_cross",
+    "underwater_float"
    ]
   },
   {
@@ -2782,7 +2814,8 @@
    "en": "knees loosely drawn up, lower legs relaxed in the air",
    "postures": [
     "float_zg",
-    "levitate"
+    "levitate",
+    "underwater_float"
    ]
   },
   {
@@ -2795,7 +2828,8 @@
    "en": "legs drifting loosely apart behind her, toes softly pointed",
    "postures": [
     "float_zg",
-    "levitate"
+    "levitate",
+    "underwater_float"
    ]
   },
   {
@@ -5561,14 +5595,16 @@
    "wall",
    "timed",
    "rail_waist",
-   "wfeat"
+   "wfeat",
+   "glass_wall"
   ],
   "orbit_cupola": [
    "zero_g",
    "indoor",
    "window",
    "timed",
-   "wfeat"
+   "wfeat",
+   "glass_wall"
   ],
   "orbit_berth": [
    "zero_g",
@@ -5630,6 +5666,23 @@
    "shelf_high",
    "wfeat",
    "magic"
+  ],
+  "water_dive_pool": [
+   "water",
+   "deep_water",
+   "indoor",
+   "glass_wall",
+   "wall",
+   "k_water"
+  ],
+  "orbit_elevator_top": [
+   "zero_g",
+   "indoor",
+   "window",
+   "glass_wall",
+   "rail_waist",
+   "wall",
+   "wfeat"
   ]
  },
  "props": [
@@ -8075,7 +8128,8 @@
    "places": [
     "orbit_lounge",
     "orbit_cupola",
-    "orbit_berth"
+    "orbit_berth",
+    "orbit_elevator_top"
    ]
   },
   {
@@ -24344,6 +24398,135 @@
    "legs": "",
    "gaze": "",
    "act": "fix"
+  },
+  {
+   "key": "uw_glass",
+   "ko": "물속에 떠서 — 관찰창 너머로",
+   "posture": "underwater_float",
+   "support": "underwater",
+   "frame": "full_body",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "rest",
+   "needs": [
+    "deep_water",
+    "glass_wall"
+   ],
+   "view": "glass_water"
+  },
+  {
+   "key": "uw_glass_reach",
+   "ko": "물속에서 유리에 손 뻗기 — 관찰창 너머로",
+   "posture": "underwater_float",
+   "support": "underwater",
+   "frame": "waist_up",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "reach",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose",
+   "needs": [
+    "deep_water",
+    "glass_wall"
+   ],
+   "view": "glass_water"
+  },
+  {
+   "key": "uw_glass_side",
+   "ko": "물속을 옆으로 떠가며 — 관찰창 너머로",
+   "posture": "underwater_float",
+   "support": "underwater",
+   "frame": "environmental",
+   "body": "side",
+   "head": "over_shoulder",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "rest",
+   "needs": [
+    "deep_water",
+    "glass_wall"
+   ],
+   "view": "glass_water"
+  },
+  {
+   "key": "zg_glass_out",
+   "ko": "떠 있는 그녀를 우주에서 창 너머로",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "full_body",
+   "body": "front_3q",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "natural",
+   "left": "natural",
+   "legs": "float_drift",
+   "gaze": "camera",
+   "act": "rest",
+   "needs": [
+    "zero_g"
+   ],
+   "view": "glass_space",
+   "needs_any": [
+    "window",
+    "glass_wall"
+   ]
+  },
+  {
+   "key": "zg_glass_wave",
+   "ko": "창 너머 우주로 손 흔들기",
+   "posture": "float_zg",
+   "support": "zero_g",
+   "frame": "waist_up",
+   "body": "front",
+   "head": "tilt",
+   "camera": "eye",
+   "right": "wave",
+   "left": "natural",
+   "legs": "",
+   "gaze": "camera",
+   "act": "pose",
+   "needs": [
+    "zero_g"
+   ],
+   "view": "glass_space",
+   "needs_any": [
+    "window",
+    "glass_wall"
+   ]
+  },
+  {
+   "key": "zg_glass_planet",
+   "ko": "행성을 내려다보는 그녀를 우주에서",
+   "posture": "float_cross",
+   "support": "zero_g",
+   "frame": "three_quarter",
+   "body": "side",
+   "head": "with_body",
+   "camera": "low",
+   "right": "natural",
+   "left": "natural",
+   "legs": "",
+   "gaze": "down",
+   "act": "look",
+   "needs": [
+    "zero_g"
+   ],
+   "view": "glass_space",
+   "needs_any": [
+    "window",
+    "glass_wall"
+   ]
   }
  ],
  "expressions": {
@@ -24912,6 +25095,27 @@
     "fantasy"
    ],
    "note": "2026-11-26 사용자 「판타지랑 스팀펑크,사이버펑크도 이런식으로 추가안 만들어줘. 판타지는 마법이나 정령같은 요소 넣으면 될거같은데」 → 「응 추가안 진행해줘」"
+  },
+  {
+   "key": "water_dive_pool",
+   "group": "water",
+   "ko": "관찰창이 있는 깊은 다이빙 풀",
+   "en": "a deep indoor diving pool with a large glass observation window set into its side wall, clear blue water and rippling light",
+   "eras": [
+    "now"
+   ],
+   "note": "2026-11-27 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 「유리나 건물 밖에서 안쪽의 사람을 보는거」 — 베이징 이화원 사이버펑크 일상10 수중 관찰창)"
+  },
+  {
+   "key": "orbit_elevator_top",
+   "group": "orbit",
+   "ko": "우주 엘리베이터 꼭대기 객차",
+   "en": "the glass-walled passenger car of a space elevator near the top of its tether, weightless at the edge of orbit — curved panoramic windows, padded handrails, the planet's curve and the thin tether line falling away below",
+   "eras": [
+    "now",
+    "fantasy"
+   ],
+   "note": "2026-11-27 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 「유리나 건물 밖에서 안쪽의 사람을 보는거」 — 베이징 이화원 사이버펑크 일상10 수중 관찰창)"
   }
  ],
  "weather": [
@@ -25100,6 +25304,42 @@
     "window",
     "glass_wall"
    ]
+  },
+  {
+   "key": "glass_water",
+   "ko": "물 밖에서 관찰창 너머로",
+   "en": "seen from outside the water: the camera looks in through a thick clear observation window set into the pool wall — its rounded frame edge shows at one side of the image, faint reflections lie on the glass, and she floats in the water beyond it, light rippling around her",
+   "needs": [
+    "deep_water",
+    "glass_wall"
+   ],
+   "frames": [
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "note": "2026-11-27 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 「유리나 건물 밖에서 안쪽의 사람을 보는거」 — 베이징 이화원 사이버펑크 일상10 수중 관찰창)"
+  },
+  {
+   "key": "glass_space",
+   "ko": "우주에서 창 너머로",
+   "en": "seen from outside in space: the camera hangs in the dark beyond the hull, looking in at her through a thick curved window — its metal rim frames the shot, faint reflections of stars and the planet's glow lie on the glass, and she floats inside the lit cabin",
+   "needs": [
+    "zero_g"
+   ],
+   "needs_any": [
+    "window",
+    "glass_wall"
+   ],
+   "frames": [
+    "chest_up",
+    "waist_up",
+    "three_quarter",
+    "full_body",
+    "environmental"
+   ],
+   "note": "2026-11-27 사용자 「응 만들어줘. 우주공간이나 다른 장면에서도 될 거 같은데. 우주 엘리베이터나 우주공간 밖에서 안에 떠 있는 사람을 본다거나 그런거」(앞서 「유리나 건물 밖에서 안쪽의 사람을 보는거」 — 베이징 이화원 사이버펑크 일상10 수중 관찰창)"
   }
  ],
  "light": [
@@ -26153,7 +26393,8 @@
    "places": [
     "orbit_lounge",
     "orbit_cupola",
-    "orbit_berth"
+    "orbit_berth",
+    "orbit_elevator_top"
    ]
   },
   {
@@ -26170,7 +26411,8 @@
    "places": [
     "orbit_lounge",
     "orbit_cupola",
-    "orbit_berth"
+    "orbit_berth",
+    "orbit_elevator_top"
    ]
   },
   {
@@ -26186,7 +26428,8 @@
    "places": [
     "orbit_lounge",
     "orbit_cupola",
-    "orbit_berth"
+    "orbit_berth",
+    "orbit_elevator_top"
    ]
   },
   {
